@@ -119,7 +119,7 @@
 				1FD6582A175878610007455B /* APIClient.h */,
 				1FD6582B175878610007455B /* APIClient.m */,
 			);
-			name = Networking;
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		1FD6582D175878D20007455B /* Constants */ = {
@@ -128,7 +128,7 @@
 				1FD6582E175878E20007455B /* Constants.h */,
 				1FD6582F1758790A0007455B /* HTTPStatusCodes.h */,
 			);
-			name = Constants;
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		9633992F1758512100AF9D89 = {
