@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
+		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
 		9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		963399401758512100AF9D89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993F1758512100AF9D89 /* CoreGraphics.framework */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		15682936FBA5486DAB10FFCA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9633993B1758512100AF9D89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9633993D1758512100AF9D89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -81,6 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FD65827175871670007455B /* AddressBook.framework in Frameworks */,
+				1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */,
 				96956452175866920081B349 /* MapKit.framework in Frameworks */,
 				9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */,
 				9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */,
@@ -125,6 +131,8 @@
 		9633993A1758512100AF9D89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FD65825175871670007455B /* AddressBook.framework */,
+				1FD65826175871670007455B /* AddressBookUI.framework */,
 				96956451175866920081B349 /* MapKit.framework */,
 				9633993B1758512100AF9D89 /* UIKit.framework */,
 				9633993D1758512100AF9D89 /* Foundation.framework */,
