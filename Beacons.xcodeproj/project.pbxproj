@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
+		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
 		9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		963399401758512100AF9D89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993F1758512100AF9D89 /* CoreGraphics.framework */; };
@@ -48,6 +49,10 @@
 		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		1FD6582A175878610007455B /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
+		1FD6582B175878610007455B /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
+		1FD6582E175878E20007455B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		1FD6582F1758790A0007455B /* HTTPStatusCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPStatusCodes.h; sourceTree = "<group>"; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9633993B1758512100AF9D89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9633993D1758512100AF9D89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -108,6 +113,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FD65829175878480007455B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				1FD6582A175878610007455B /* APIClient.h */,
+				1FD6582B175878610007455B /* APIClient.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		1FD6582D175878D20007455B /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				1FD6582E175878E20007455B /* Constants.h */,
+				1FD6582F1758790A0007455B /* HTTPStatusCodes.h */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +169,8 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				1FD6582D175878D20007455B /* Constants */,
+				1FD65829175878480007455B /* Networking */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
 				96956449175862790081B349 /* CenterNavigationController.h */,
@@ -343,6 +368,7 @@
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
 				969564551758691B0081B349 /* MenuViewController.m in Sources */,
+				1FD6582C175878610007455B /* APIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
