@@ -1,0 +1,16 @@
+PODS:
+  - CocoaLumberjack (1.6.2)
+  - MBProgressHUD (0.6)
+  - ViewDeck (2.2.11)
+
+DEPENDENCIES:
+  - CocoaLumberjack (~> 1.6.2)
+  - MBProgressHUD (~> 0.6)
+  - ViewDeck (~> 2.2.9)
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
+  MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
+  ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
+
+COCOAPODS: 0.20.2

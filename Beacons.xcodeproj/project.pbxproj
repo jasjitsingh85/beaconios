@@ -16,14 +16,19 @@
 		9633994E1758512100AF9D89 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9633994D1758512100AF9D89 /* Default.png */; };
 		963399501758512100AF9D89 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9633994F1758512100AF9D89 /* Default@2x.png */; };
 		963399521758512100AF9D89 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963399511758512100AF9D89 /* Default-568h@2x.png */; };
-		963399551758512100AF9D89 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 963399541758512100AF9D89 /* ViewController.m */; };
-		963399581758512100AF9D89 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 963399561758512100AF9D89 /* ViewController_iPhone.xib */; };
-		9633995B1758512100AF9D89 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 963399591758512100AF9D89 /* ViewController_iPad.xib */; };
 		963399631758512100AF9D89 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963399621758512100AF9D89 /* SenTestingKit.framework */; };
 		963399641758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
 		963399651758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		9633996D1758512100AF9D89 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9633996B1758512100AF9D89 /* InfoPlist.strings */; };
 		963399701758512100AF9D89 /* BeaconsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9633996F1758512100AF9D89 /* BeaconsTests.m */; };
+		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
+		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
+		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
+		9695644F1758642B0081B349 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644D1758642B0081B349 /* MapViewController.m */; };
+		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
+		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
+		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
+		BAACCCEC5337422D84F15434 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15682936FBA5486DAB10FFCA /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		15682936FBA5486DAB10FFCA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9633993B1758512100AF9D89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9633993D1758512100AF9D89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,16 +57,23 @@
 		9633994D1758512100AF9D89 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		9633994F1758512100AF9D89 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		963399511758512100AF9D89 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		963399531758512100AF9D89 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		963399541758512100AF9D89 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		963399571758512100AF9D89 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
-		9633995A1758512100AF9D89 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		963399611758512100AF9D89 /* BeaconsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		963399621758512100AF9D89 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		9633996A1758512100AF9D89 /* BeaconsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BeaconsTests-Info.plist"; sourceTree = "<group>"; };
 		9633996C1758512100AF9D89 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9633996E1758512100AF9D89 /* BeaconsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconsTests.h; sourceTree = "<group>"; };
 		9633996F1758512100AF9D89 /* BeaconsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsTests.m; sourceTree = "<group>"; };
+		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		96956449175862790081B349 /* CenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterNavigationController.h; sourceTree = "<group>"; };
+		9695644A175862790081B349 /* CenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterNavigationController.m; sourceTree = "<group>"; };
+		9695644C1758642B0081B349 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		9695644D1758642B0081B349 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		9695644E1758642B0081B349 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
+		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		969564531758691B0081B349 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		969564541758691B0081B349 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,9 +81,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96956452175866920081B349 /* MapKit.framework in Frameworks */,
 				9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */,
 				9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */,
 				963399401758512100AF9D89 /* CoreGraphics.framework in Frameworks */,
+				BAACCCEC5337422D84F15434 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +109,7 @@
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
 				963399391758512100AF9D89 /* Products */,
+				1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -108,10 +125,12 @@
 		9633993A1758512100AF9D89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96956451175866920081B349 /* MapKit.framework */,
 				9633993B1758512100AF9D89 /* UIKit.framework */,
 				9633993D1758512100AF9D89 /* Foundation.framework */,
 				9633993F1758512100AF9D89 /* CoreGraphics.framework */,
 				963399621758512100AF9D89 /* SenTestingKit.framework */,
+				15682936FBA5486DAB10FFCA /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,10 +140,16 @@
 			children = (
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
-				963399531758512100AF9D89 /* ViewController.h */,
-				963399541758512100AF9D89 /* ViewController.m */,
-				963399561758512100AF9D89 /* ViewController_iPhone.xib */,
-				963399591758512100AF9D89 /* ViewController_iPad.xib */,
+				96956449175862790081B349 /* CenterNavigationController.h */,
+				9695644A175862790081B349 /* CenterNavigationController.m */,
+				96956444175852990081B349 /* LoginViewController.h */,
+				96956445175852990081B349 /* LoginViewController.m */,
+				96956446175852990081B349 /* LoginViewController.xib */,
+				9695644C1758642B0081B349 /* MapViewController.h */,
+				9695644D1758642B0081B349 /* MapViewController.m */,
+				9695644E1758642B0081B349 /* MapViewController.xib */,
+				969564531758691B0081B349 /* MenuViewController.h */,
+				969564541758691B0081B349 /* MenuViewController.m */,
 				963399421758512100AF9D89 /* Supporting Files */,
 			);
 			path = Beacons;
@@ -170,9 +195,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 963399731758512100AF9D89 /* Build configuration list for PBXNativeTarget "Beacons" */;
 			buildPhases = (
+				EB6EA8C100714CE79F5A31EF /* Check Pods Manifest.lock */,
 				963399341758512100AF9D89 /* Sources */,
 				963399351758512100AF9D89 /* Frameworks */,
 				963399361758512100AF9D89 /* Resources */,
+				1DED3053DF5C4AE6AF98CCA8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -238,8 +265,8 @@
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				963399501758512100AF9D89 /* Default@2x.png in Resources */,
 				963399521758512100AF9D89 /* Default-568h@2x.png in Resources */,
-				963399581758512100AF9D89 /* ViewController_iPhone.xib in Resources */,
-				9633995B1758512100AF9D89 /* ViewController_iPad.xib in Resources */,
+				96956448175852990081B349 /* LoginViewController.xib in Resources */,
+				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +281,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1DED3053DF5C4AE6AF98CCA8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
 		9633995F1758512100AF9D89 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,6 +308,20 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		EB6EA8C100714CE79F5A31EF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -276,7 +331,10 @@
 			files = (
 				963399481758512100AF9D89 /* main.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
-				963399551758512100AF9D89 /* ViewController.m in Sources */,
+				96956447175852990081B349 /* LoginViewController.m in Sources */,
+				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
+				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
+				969564551758691B0081B349 /* MenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,22 +363,6 @@
 				963399451758512100AF9D89 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		963399561758512100AF9D89 /* ViewController_iPhone.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				963399571758512100AF9D89 /* en */,
-			);
-			name = ViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		963399591758512100AF9D89 /* ViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9633995A1758512100AF9D89 /* en */,
-			);
-			name = ViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 		9633996B1758512100AF9D89 /* InfoPlist.strings */ = {
@@ -394,6 +436,7 @@
 		};
 		963399741758512100AF9D89 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
@@ -405,6 +448,7 @@
 		};
 		963399751758512100AF9D89 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
@@ -467,6 +511,7 @@
 				963399751758512100AF9D89 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		963399761758512100AF9D89 /* Build configuration list for PBXNativeTarget "BeaconsTests" */ = {
 			isa = XCConfigurationList;
@@ -475,6 +520,7 @@
 				963399781758512100AF9D89 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
