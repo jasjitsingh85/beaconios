@@ -22,11 +22,14 @@
 {
     [super viewDidLoad];
     self.delegate = self;
-    self.menuButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.menuButton setTitle:@"ham" forState:UIControlStateNormal];
-    CGRect frame = CGRectMake(0, 0, 100, 30);
+    self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *menuButtonImage = [UIImage imageNamed:@"menuButton"];
+    CGRect frame;
+    frame.size = menuButtonImage.size;
     self.menuButton.frame = frame;
+    [self.menuButton setBackgroundImage:menuButtonImage forState:UIControlStateNormal];
     [self.menuButton addTarget:self.sideNavigationViewController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchDown];
+    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
 }
 
 
@@ -69,6 +72,7 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
+    viewController.navigationItem.title = @"Beacons";
 }
 
 @end
