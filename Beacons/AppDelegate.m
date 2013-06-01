@@ -30,7 +30,7 @@
         _sideNavigationViewController.closeSlideAnimationDuration = 0.2;
         _sideNavigationViewController.panningMode = IIViewDeckFullViewPanning;
         _sideNavigationViewController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-        _sideNavigationViewController.leftSize = 150;
+        _sideNavigationViewController.leftSize = 235;
     }
     return _sideNavigationViewController;
 }
