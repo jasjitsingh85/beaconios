@@ -10,6 +10,7 @@
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
+#import "LoginViewController.h"
 
 @implementation AppDelegate
 
@@ -60,6 +61,8 @@
     self.window.rootViewController = self.sideNavigationViewController;
 
     [self.window makeKeyAndVisible];
+    self.loginViewController = [LoginViewController new];
+    [self.window.rootViewController presentViewController:self.loginViewController animated:NO completion:nil];
     return YES;
 }
 

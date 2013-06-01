@@ -31,6 +31,9 @@
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
 		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
 		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
+		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
+		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
+		96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */; };
 		BAACCCEC5337422D84F15434 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15682936FBA5486DAB10FFCA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +86,9 @@
 		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		969564531758691B0081B349 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		969564541758691B0081B349 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
+		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
+		96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeButton@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +175,7 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				96C87C7A175A9A2C006EA3A3 /* Resources */,
 				1FD6582D175878D20007455B /* Constants */,
 				1FD65829175878480007455B /* Networking */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
@@ -219,6 +226,16 @@
 				9633996B1758512100AF9D89 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
+				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
+				96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +317,9 @@
 				963399521758512100AF9D89 /* Default-568h@2x.png in Resources */,
 				96956448175852990081B349 /* LoginViewController.xib in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
+				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
+				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
+				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
