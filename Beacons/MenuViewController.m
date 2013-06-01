@@ -9,6 +9,7 @@
 #import "MenuViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+#import "Theme.h"
 
 typedef enum {
     MenuTableViewRowHome=0,
@@ -51,7 +52,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 66;
+    return 80;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -122,16 +123,18 @@ typedef enum {
     
     //set up name label
     UILabel *label = [[UILabel alloc] init];
+    label.font = [ThemeManager boldFontOfSize:10];
     label.textAlignment = NSTextAlignmentCenter;
     label.tag = TEXT_LABEL_TAG;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     frame = CGRectZero;
     frame.size.width = [self visibleTableViewWidth];
-    frame.size.height = self.tableView.rowHeight;
+    frame.size.height = label.font.pointSize;
     frame.origin.x = 0;
-    frame.origin.y = 0.5*(self.tableView.rowHeight - frame.size.height);
+    frame.origin.y = self.tableView.rowHeight - frame.size.height - 10;
     label.frame = frame;
+    label.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [cell.contentView addSubview:label];
     
     UIImageView *hairlineImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hairline"]];
