@@ -21,6 +21,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //initially hide beacon collection view
+    self.beaconCollectionView.alpha = 0;
     self.beaconCollectionView.backgroundColor = [UIColor clearColor];
     self.beaconCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
     self.beaconCollectionView.pagingEnabled = NO;
@@ -30,6 +32,25 @@
     self.beaconCollectionView.collectionViewLayout = [LineLayout new];
     [self.beaconCollectionView registerClass:[BeaconCell class] forCellWithReuseIdentifier:@"MY_CELL"];
     [self.beaconCollectionView reloadData];
+    [self showBeaconCollectionViewAnimated:YES];
+}
+
+- (void)showBeaconCollectionViewAnimated:(BOOL)animated
+{
+    if (animated) {
+        self.beaconCollectionView.alpha = 0;
+        self.beaconCollectionView.transform = CGAffineTransformMakeTranslation(0, -self.beaconCollectionView.frame.size.height);
+    }
+    NSTimeInterval duration = animated ? 0.5 : 0.0;
+    [UIView animateWithDuration:duration
+                          delay:2
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.beaconCollectionView.alpha = 1;
+                         self.beaconCollectionView.transform = CGAffineTransformIdentity;
+                     } completion:^(BOOL finished) {
+                         
+                     }];
 }
 
 #pragma mark - UICollectionViewDelegate
