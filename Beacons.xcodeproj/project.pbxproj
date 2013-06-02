@@ -10,6 +10,8 @@
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
+		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
+		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
 		9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		963399401758512100AF9D89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993F1758512100AF9D89 /* CoreGraphics.framework */; };
@@ -64,6 +66,10 @@
 		1FD6582B175878610007455B /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		1FD6582E175878E20007455B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1FD6582F1758790A0007455B /* HTTPStatusCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPStatusCodes.h; sourceTree = "<group>"; };
+		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
+		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
+		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		9615F4E6175BEBE6005CF62D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9633993B1758512100AF9D89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9633993D1758512100AF9D89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +163,17 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		9615F4E0175BEBA9005CF62D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9615F4E1175BEBC6005CF62D /* Beacon.h */,
+				9615F4E2175BEBC6005CF62D /* Beacon.m */,
+				9615F4E5175BEBE6005CF62D /* User.h */,
+				9615F4E6175BEBE6005CF62D /* User.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +212,7 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				9615F4E0175BEBA9005CF62D /* Models */,
 				96C87C85175AB966006EA3A3 /* Theme */,
 				96C87C7A175A9A2C006EA3A3 /* Resources */,
 				1FD6582D175878D20007455B /* Constants */,
@@ -437,6 +455,8 @@
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
 				96C87C97175AC773006EA3A3 /* BeaconCell.m in Sources */,
 				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
+				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
+				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
