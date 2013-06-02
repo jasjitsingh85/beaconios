@@ -24,6 +24,7 @@
 		963399651758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		9633996D1758512100AF9D89 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9633996B1758512100AF9D89 /* InfoPlist.strings */; };
 		963399701758512100AF9D89 /* BeaconsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9633996F1758512100AF9D89 /* BeaconsTests.m */; };
+		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
 		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
@@ -40,6 +41,7 @@
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
 		96C87C8F175ABC66006EA3A3 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C8E175ABC66006EA3A3 /* navBar@2x.png */; };
 		96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C90175ABC94006EA3A3 /* menuButton@2x.png */; };
+		96C87C97175AC773006EA3A3 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C96175AC773006EA3A3 /* BeaconCell.m */; };
 		BAACCCEC5337422D84F15434 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15682936FBA5486DAB10FFCA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 		9633996C1758512100AF9D89 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9633996E1758512100AF9D89 /* BeaconsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconsTests.h; sourceTree = "<group>"; };
 		9633996F1758512100AF9D89 /* BeaconsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsTests.m; sourceTree = "<group>"; };
+		966070E0175AC989007379A0 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
+		966070E1175AC989007379A0 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		96C87C8E175ABC66006EA3A3 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C90175ABC94006EA3A3 /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
+		96C87C95175AC773006EA3A3 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
+		96C87C96175AC773006EA3A3 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +200,10 @@
 				1FD6582D175878D20007455B /* Constants */,
 				1FD65829175878480007455B /* Networking */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
+				966070E0175AC989007379A0 /* LineLayout.h */,
+				966070E1175AC989007379A0 /* LineLayout.m */,
+				96C87C95175AC773006EA3A3 /* BeaconCell.h */,
+				96C87C96175AC773006EA3A3 /* BeaconCell.m */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
 				96956449175862790081B349 /* CenterNavigationController.h */,
 				9695644A175862790081B349 /* CenterNavigationController.m */,
@@ -425,6 +435,8 @@
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
+				96C87C97175AC773006EA3A3 /* BeaconCell.m in Sources */,
+				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
