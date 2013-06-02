@@ -1,4 +1,5 @@
 .DS_Store
-xcuserdata
-Mutuality.xcworkspace
 Pods/*
+Beacons.xcodeproj/project.xcworkspace/*
+Beacons.xcodeproj/xcuserdata/*
+Beacons.xcworkspace/xcuserdata/*
