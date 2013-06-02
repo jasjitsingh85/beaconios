@@ -8,11 +8,13 @@
 
 #import "BeaconCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Beacon.h"
+#import "User.h"
 
 @interface BeaconCell()
 
 @property (strong, nonatomic) UIImageView *avatarImageView;
-@property (strong, nonatomic) UILabel *titleLable;
+@property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *addressLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
@@ -25,13 +27,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, frame.size.height)];
-        self.label.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-        self.label.textAlignment = NSTextAlignmentCenter;
-        self.label.font = [UIFont boldSystemFontOfSize:50.0];
-        self.label.backgroundColor = [UIColor whiteColor];
-        self.label.textColor = [UIColor blackColor];
-        [self.contentView addSubview:self.label];;
+        self.contentView.backgroundColor = [UIColor whiteColor];
         self.contentView.layer.cornerRadius = 2;
         self.contentView.clipsToBounds = YES;
         
@@ -42,8 +38,20 @@
         self.layer.shadowRadius = 1.0;
         self.layer.shadowOffset = CGSizeMake(0, 1);
         self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+        
+        self.titleLabel = [[UILabel alloc] initWithFrame:self.contentView.bounds];
+        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.textColor = [UIColor blackColor];
+        [self.contentView addSubview:self.titleLabel];
     }
     return self;
+}
+
+- (void)setBeacon:(Beacon *)beacon
+{
+    _beacon = beacon;
+    //set beacon title
+    self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
 }
 
 

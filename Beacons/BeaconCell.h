@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class Beacon;
 @interface BeaconCell : UICollectionViewCell
 
-@property (strong, nonatomic) UILabel* label;
+@property (strong, nonatomic) Beacon *beacon;
 
 @end
