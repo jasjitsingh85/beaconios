@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "MenuViewController.h"
 #import "LoginViewController.h"
+#import "APIClient.h"
 
 @implementation AppDelegate
 
@@ -64,6 +65,54 @@
     self.loginViewController = [LoginViewController new];
     [self.window.rootViewController presentViewController:self.loginViewController animated:NO completion:nil];
     return YES;
+}
+
+- (void)createAccount
+{
+    NSDictionary *parameters = @{@"username" : @"jeff",
+                                 @"password" : @"fuck",
+                                 @"email" : @"j@j.com",
+                                 @"phone_number" : @"6176337532"};
+    [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   //if the user already has a valid authorization token then the server retuns an empty response
+                                   if (operation.response.statusCode != kHTTPStatusCodeNoContent) {
+                                       id response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+                                       NSString *authorizationToken = response[@"token"];
+                                       [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
+                                   }
+                                   self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                                   [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+                                   [self getAccount];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [self getAccount];
+                               }];
+}
+
+- (void)getAccount
+{
+    [[APIClient sharedClient] getPath:@"user/me/" parameters:nil
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [self login];
+        
+    }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error){}];
+}
+
+- (void)login
+{
+    NSDictionary *parameters = @{@"username" : @"jeff",
+                                 @"password" : @"fuck",
+                                 @"email" : @"j@j.com",
+                                 @"phone_number" : @"6176337532"};
+    [[APIClient sharedClient] postPath:@"login/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                
+                                   }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   
+                               }];
 }
 
 @end

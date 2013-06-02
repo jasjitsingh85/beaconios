@@ -8,7 +8,6 @@
 
 #import "APIClient.h"
 #import "Constants.h"
-#import "HTTPStatusCodes.h"
 
 @implementation APIClient
 

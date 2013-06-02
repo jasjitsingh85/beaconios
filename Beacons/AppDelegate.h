@@ -23,4 +23,6 @@ MenuViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
+- (void)createAccount;
+
 @end

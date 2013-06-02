@@ -8,6 +8,7 @@
 
 #import "AFHTTPClient.h"
 #import <AFNetworking/AFNetworking.h>
+#import "HTTPStatusCodes.h"
 
 @interface APIClient : AFHTTPClient
 
