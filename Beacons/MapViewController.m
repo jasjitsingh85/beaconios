@@ -9,9 +9,13 @@
 #import "MapViewController.h"
 #import "BeaconCell.h"
 #import "LineLayout.h"
+#import "User.h"
+#import "Beacon.h"
 
 @interface MapViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) NSArray *beacons;
 
 @end
 
@@ -21,18 +25,45 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.beaconCollectionView.delegate = self;
+    self.beaconCollectionView.dataSource = self;
+    [self.beaconCollectionView registerClass:[BeaconCell class] forCellWithReuseIdentifier:@"MY_CELL"];
     //initially hide beacon collection view
     self.beaconCollectionView.alpha = 0;
     self.beaconCollectionView.backgroundColor = [UIColor clearColor];
     self.beaconCollectionView.decelerationRate = UIScrollViewDecelerationRateFast;
-    self.beaconCollectionView.pagingEnabled = NO;
-    self.beaconCollectionView.delegate = self;
-    self.beaconCollectionView.dataSource = self;
     [self.beaconCollectionView.collectionViewLayout invalidateLayout];
     self.beaconCollectionView.collectionViewLayout = [LineLayout new];
-    [self.beaconCollectionView registerClass:[BeaconCell class] forCellWithReuseIdentifier:@"MY_CELL"];
+    
+    self.mapView.delegate = self;
+    
+    [self createTestBeacons];
     [self.beaconCollectionView reloadData];
     [self showBeaconCollectionViewAnimated:YES];
+    [self centerMapOnBeacon:self.beacons[0] animated:YES];
+}
+
+- (void)createTestBeacons
+{
+    NSArray *userFirstNames = @[@"Jeff", @"Jas", @"Kamran"];
+    NSArray *userLastNames = @[@"Ames", @"Singh", @"Munshi"];
+    NSArray *latitudes = @[@47.573283, @47.559384, @47.576526];
+    NSArray *longitudes = @[@-122.229424, @-122.288132, @-122.383575];
+    NSMutableArray *users = [NSMutableArray new];
+    NSMutableArray *beacons = [NSMutableArray new];
+    for (NSInteger i=0; i<userFirstNames.count; i++) {
+        User *user = [User new];
+        user.firstName = userFirstNames[i];
+        user.lastName = userLastNames[i];
+        [users addObject:user];
+        
+        Beacon *beacon = [Beacon new];
+        beacon.creator = user;
+        beacon.coordinate = CLLocationCoordinate2DMake([latitudes[i] floatValue], [longitudes[i] floatValue]);
+        [beacons addObject:beacon];
+    }
+    self.beacons = [[NSArray alloc] initWithArray:beacons];
+
 }
 
 - (void)showBeaconCollectionViewAnimated:(BOOL)animated
@@ -43,7 +74,7 @@
     }
     NSTimeInterval duration = animated ? 0.5 : 0.0;
     [UIView animateWithDuration:duration
-                          delay:2
+                          delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.beaconCollectionView.alpha = 1;
@@ -56,13 +87,32 @@
 #pragma mark - UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 20;
+    return self.beacons.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     BeaconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
+    
+    Beacon *beacon = self.beacons[indexPath.row];
+    cell.beacon = beacon;
+    
     return cell;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSIndexPath *indexPath = [self.beaconCollectionView indexPathForItemAtPoint:CGPointMake(self.beaconCollectionView.center.x + self.beaconCollectionView.contentOffset.x, self.beaconCollectionView.center.y)];
+    Beacon *beacon = self.beacons[indexPath.row];
+    [self centerMapOnBeacon:beacon animated:YES];
+}
+
+- (void)centerMapOnBeacon:(Beacon *)beacon animated:(BOOL)animated
+{
+    CLLocationDistance distance = 1000 + (arc4random() % 10000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, distance, distance);
+    [self.mapView setRegion:region animated:animated];
 }
 
 @end
