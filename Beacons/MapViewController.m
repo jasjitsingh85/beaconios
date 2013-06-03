@@ -38,6 +38,8 @@
     self.beaconCollectionView.collectionViewLayout = [LineLayout new];
     
     self.mapView.delegate = self;
+    self.mapView.scrollEnabled = NO;
+    self.mapView.zoomEnabled = NO;
     
     [self createTestBeacons];
     [self.beaconCollectionView reloadData];
