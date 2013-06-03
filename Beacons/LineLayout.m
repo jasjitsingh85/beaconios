@@ -1,13 +1,12 @@
 #import "LineLayout.h"
 
 
-#define CELL_WIDTH 300.0
-#define CELL_HEIGHT 100.0
+#define CELL_WIDTH 280
+#define CELL_HEIGHT 160
 
 @implementation LineLayout
 
-#define ACTIVE_DISTANCE 300
-#define ZOOM_FACTOR 0.3
+#define ACTIVE_DISTANCE 280
 
 -(id)init
 {
@@ -15,7 +14,7 @@
     if (self) {
         self.itemSize = CGSizeMake(CELL_WIDTH, CELL_HEIGHT);
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        self.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
+        self.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20);
         self.minimumLineSpacing = 5;
     }
     return self;
@@ -24,6 +23,24 @@
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)oldBounds
 {
     return YES;
+}
+
+-(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
+{
+    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+    CGRect visibleRect;
+    visibleRect.origin = self.collectionView.contentOffset;
+    visibleRect.size = self.collectionView.bounds.size;
+    
+    for (UICollectionViewLayoutAttributes* attributes in array) {
+        if (CGRectIntersectsRect(attributes.frame, rect)) {
+            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
+            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
+            CGFloat alpha = 0.8 + 0.2*(1-ABS(normalizedDistance));
+            attributes.alpha = alpha;
+        }
+    }
+    return array;
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
