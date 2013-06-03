@@ -10,6 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "Theme.h"
+#import "CenterNavigationController.h"
+#import "LoginViewController.h"
+#import "MapViewController.h"
 
 typedef enum {
     MenuTableViewRowHome=0,
@@ -82,14 +85,26 @@ typedef enum {
         
     }
     else if (indexPath.row == MenuTableViewRowFind) {
-        
+        [self findSelected];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
 
     }
     else if (indexPath.row == MenuTableViewRowLogout) {
-        
+        [self logoutSelected];
     }
+}
+
+- (void)logoutSelected
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.centerNavigationController setSelectedViewController:[LoginViewController new] animated:YES];
+}
+
+- (void)findSelected
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
 }
 
 #pragma mark ABPeoplePickerNavigationControllerDelegate methods
@@ -152,7 +167,7 @@ typedef enum {
         label.text = @"You";
     }
     else if (indexPath.row == MenuTableViewRowFind) {
-        label.text = @"Account";
+        label.text = @"Find";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {

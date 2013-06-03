@@ -7,6 +7,7 @@
 //
 
 #import "CenterNavigationController.h"
+#import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 
 @interface CenterNavigationController ()
@@ -41,25 +42,22 @@
         [self setSelectedViewController:selectedViewController];
         return;
     }
+    UIGraphicsBeginImageContextWithOptions(self.topViewController.view.bounds.size, YES, 0.0f);
+    [self.topViewController.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    [selectedViewController.view addSubview:imageView];
     _selectedViewController = selectedViewController;
+    self.viewControllers = @[selectedViewController];
+    [UIView animateWithDuration:0.5 animations:^{
+        imageView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [imageView removeFromSuperview];
+    }];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    BOOL sideNavClosed = [appDelegate.sideNavigationViewController isSideClosed:IIViewDeckLeftSide];
-    CGFloat normalLeftSize = appDelegate.sideNavigationViewController.leftSize;
-    if (sideNavClosed) {
-        self.viewControllers = @[selectedViewController];
-        appDelegate.sideNavigationViewController.leftSize = normalLeftSize;
-    }
-    else {
-        __block IIViewDeckController *sideNav = appDelegate.sideNavigationViewController;
-        [sideNav setLeftSize:0 completion:^(BOOL completed) {
-            if (selectedViewController != self.topViewController) {
-                self.viewControllers = @[selectedViewController];
-            }
-            [appDelegate.sideNavigationViewController closeLeftViewAnimated:YES completion:^(IIViewDeckController *controller, BOOL completed) {
-                appDelegate.sideNavigationViewController.leftSize = normalLeftSize;
-            }];
-        }];
-    }
+    [appDelegate.sideNavigationViewController closeLeftViewAnimated:YES];
+
 }
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
