@@ -11,6 +11,8 @@
 #import "LineLayout.h"
 #import "User.h"
 #import "Beacon.h"
+#import "BeaconAnnotation.h"
+#import "BeaconAnnotationView.h"
 
 @interface MapViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -61,6 +63,9 @@
         beacon.creator = user;
         beacon.coordinate = CLLocationCoordinate2DMake([latitudes[i] floatValue], [longitudes[i] floatValue]);
         [beacons addObject:beacon];
+        
+        BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
+        beaconAnnotation.beacon = beacon;
     }
     self.beacons = [[NSArray alloc] initWithArray:beacons];
 
@@ -113,6 +118,50 @@
     CLLocationDistance distance = 1000 + (arc4random() % 10000);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, distance, distance);
     [self.mapView setRegion:region animated:animated];
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
+    beaconAnnotation.beacon = beacon;
+    [self.mapView addAnnotation:beaconAnnotation];
+}
+
+#pragma mark - MKMapViewDelegate
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // in case it's the user location, we already have an annotation, so just return nil
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+    {
+        return nil;
+    }
+    
+    // handle our three custom annotations
+    //
+    if ([annotation isKindOfClass:[BeaconAnnotation class]]) // for Golden Gate Bridge
+    {
+        // try to dequeue an existing pin view first
+        static NSString *BeaconAnnotationIdentifier = @"beaconAnnotationIdentifier";
+        
+        MKPinAnnotationView *pinView =
+        (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:BeaconAnnotationIdentifier];
+        if (pinView == nil)
+        {
+            // if an existing pin view was not available, create one
+            BeaconAnnotationView *customPinView = [[BeaconAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BeaconAnnotationIdentifier];
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = NO;
+            
+            
+            return customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+ 
+    
+    return nil;
 }
 
 @end

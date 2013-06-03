@@ -11,6 +11,9 @@
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
 		1FE67713175C08C4006F563C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE67712175C08C4006F563C /* CoreLocation.framework */; };
+		1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67715175C0EA0006F563C /* BeaconAnnotation.m */; };
+		1FE67719175C139C006F563C /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67718175C139C006F563C /* BeaconAnnotationView.m */; };
+		1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -68,6 +71,11 @@
 		1FD6582E175878E20007455B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1FD6582F1758790A0007455B /* HTTPStatusCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPStatusCodes.h; sourceTree = "<group>"; };
 		1FE67712175C08C4006F563C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotation.h; sourceTree = "<group>"; };
+		1FE67715175C0EA0006F563C /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotation.m; sourceTree = "<group>"; };
+		1FE67717175C139C006F563C /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
+		1FE67718175C139C006F563C /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
+		1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotation@2x.png"; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -180,6 +188,8 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1FE67717175C139C006F563C /* BeaconAnnotationView.h */,
+				1FE67718175C139C006F563C /* BeaconAnnotationView.m */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -238,6 +248,8 @@
 				969564531758691B0081B349 /* MenuViewController.h */,
 				969564541758691B0081B349 /* MenuViewController.m */,
 				963399421758512100AF9D89 /* Supporting Files */,
+				1FE67714175C0EA0006F563C /* BeaconAnnotation.h */,
+				1FE67715175C0EA0006F563C /* BeaconAnnotation.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -278,6 +290,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
 				96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */,
@@ -386,6 +399,7 @@
 				96C87C84175AB60C006EA3A3 /* hairline@2x.png in Resources */,
 				96C87C8F175ABC66006EA3A3 /* navBar@2x.png in Resources */,
 				96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */,
+				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +475,8 @@
 				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
 				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
+				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
+				1FE67719175C139C006F563C /* BeaconAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
