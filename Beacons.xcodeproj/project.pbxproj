@@ -15,6 +15,9 @@
 		1FE67719175C139C006F563C /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67718175C139C006F563C /* BeaconAnnotationView.m */; };
 		1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */; };
 		1FE67724175C20FC006F563C /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67723175C20FC006F563C /* LocationTracker.m */; };
+		1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67727175C25DC006F563C /* menuSettings@2x.png */; };
+		1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67729175C2CE2006F563C /* menuLogout@2x.png */; };
+		1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -43,7 +46,6 @@
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
 		96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */; };
 		96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C81175AA423006EA3A3 /* menuBackground@2x.png */; };
-		96C87C84175AB60C006EA3A3 /* hairline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C83175AB60C006EA3A3 /* hairline@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
 		96C87C8F175ABC66006EA3A3 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C8E175ABC66006EA3A3 /* navBar@2x.png */; };
@@ -79,6 +81,9 @@
 		1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotation@2x.png"; sourceTree = "<group>"; };
 		1FE67722175C20FC006F563C /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		1FE67723175C20FC006F563C /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		1FE67727175C25DC006F563C /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
+		1FE67729175C2CE2006F563C /* menuLogout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuLogout@2x.png"; sourceTree = "<group>"; };
+		1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hairlineSeparator@2x.png"; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -119,7 +124,6 @@
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
 		96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeButton@2x.png"; sourceTree = "<group>"; };
 		96C87C81175AA423006EA3A3 /* menuBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBackground@2x.png"; sourceTree = "<group>"; };
-		96C87C83175AB60C006EA3A3 /* hairline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hairline@2x.png"; sourceTree = "<group>"; };
 		96C87C86175AB97F006EA3A3 /* DefaultTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultTheme.h; sourceTree = "<group>"; };
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
@@ -308,9 +312,11 @@
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
 				96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */,
 				96C87C81175AA423006EA3A3 /* menuBackground@2x.png */,
-				96C87C83175AB60C006EA3A3 /* hairline@2x.png */,
 				96C87C8E175ABC66006EA3A3 /* navBar@2x.png */,
 				96C87C90175ABC94006EA3A3 /* menuButton@2x.png */,
+				1FE67727175C25DC006F563C /* menuSettings@2x.png */,
+				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
+				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -409,10 +415,12 @@
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 				96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */,
-				96C87C84175AB60C006EA3A3 /* hairline@2x.png in Resources */,
 				96C87C8F175ABC66006EA3A3 /* navBar@2x.png in Resources */,
 				96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */,
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
+				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
+				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
+				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

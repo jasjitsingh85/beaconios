@@ -39,6 +39,7 @@ typedef enum {
 
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = 65;
 }
 
 - (CGFloat)visibleTableViewWidth
@@ -50,10 +51,6 @@ typedef enum {
 
 #pragma mark - Table view data source
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 80;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -81,17 +78,18 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-	// Display only a person's phone, email, and birthdate
-	NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty],
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-	
-	
-	picker.displayedProperties = displayedItems;
-	// Show the picker
-	[self presentViewController:picker animated:YES completion:nil];
+    if (indexPath.row == MenuTableViewRowHome) {
+        
+    }
+    else if (indexPath.row == MenuTableViewRowFind) {
+        
+    }
+    else if (indexPath.row == MenuTableViewRowSettings) {
+
+    }
+    else if (indexPath.row == MenuTableViewRowLogout) {
+        
+    }
 }
 
 #pragma mark ABPeoplePickerNavigationControllerDelegate methods
@@ -112,10 +110,10 @@ typedef enum {
     
     //set up image view
     CGRect frame = CGRectZero;
-    frame.size.height = 28;
-    frame.size.width = 28;
-    frame.origin.y = 0.5*(self.tableView.rowHeight - frame.size.height);
-    frame.origin.x = 19;
+    frame.size.height = 32;
+    frame.size.width = 32;
+    frame.origin.y = 0.5*(self.tableView.rowHeight - frame.size.height) - 10;
+    frame.origin.x = 0.5*([self visibleTableViewWidth] - frame.size.height);
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
     imageView.tag = ICON_IMAGE_TAG;
     [cell.contentView addSubview:imageView];
@@ -134,10 +132,9 @@ typedef enum {
     frame.origin.x = 0;
     frame.origin.y = self.tableView.rowHeight - frame.size.height - 10;
     label.frame = frame;
-    label.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [cell.contentView addSubview:label];
     
-    UIImageView *hairlineImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hairline"]];
+    UIImageView *hairlineImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hairlineSeparator"]];
     frame = hairlineImageView.frame;
     frame.origin.y = CGRectGetHeight(cell.contentView.frame) - frame.size.height;
     hairlineImageView.frame = frame;
@@ -152,19 +149,19 @@ typedef enum {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
     if (indexPath.row == MenuTableViewRowHome) {
-        
+        label.text = @"You";
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         label.text = @"Account";
-        imageView.image = [UIImage imageNamed:@"menuButtonAccount"];
+        imageView.image = [UIImage imageNamed:@"menuSettings"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
-        label.text = @"Favorites";
-        imageView.image = [UIImage imageNamed:@"menuButtonFavorite"];
+        label.text = @"Settings";
+        imageView.image = [UIImage imageNamed:@"menuSettings"];
     }
     else if (indexPath.row == MenuTableViewRowLogout) {
         label.text = @"Logout";
-        imageView.image = [UIImage imageNamed:@"menuButtonLogout"];
+        imageView.image = [UIImage imageNamed:@"menuLogout"];
     }
 }
 
