@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
+		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
+		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
 		1FE67713175C08C4006F563C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE67712175C08C4006F563C /* CoreLocation.framework */; };
 		1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67715175C0EA0006F563C /* BeaconAnnotation.m */; };
-		1FE67719175C139C006F563C /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67718175C139C006F563C /* BeaconAnnotationView.m */; };
 		1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */; };
-		1FE67724175C20FC006F563C /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67723175C20FC006F563C /* LocationTracker.m */; };
 		1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67727175C25DC006F563C /* menuSettings@2x.png */; };
 		1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67729175C2CE2006F563C /* menuLogout@2x.png */; };
 		1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */; };
@@ -53,7 +54,6 @@
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
 		96C87C8F175ABC66006EA3A3 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C8E175ABC66006EA3A3 /* navBar@2x.png */; };
 		96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C90175ABC94006EA3A3 /* menuButton@2x.png */; };
-		96C87C97175AC773006EA3A3 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C96175AC773006EA3A3 /* BeaconCell.m */; };
 		BAACCCEC5337422D84F15434 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15682936FBA5486DAB10FFCA /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +70,12 @@
 /* Begin PBXFileReference section */
 		15682936FBA5486DAB10FFCA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
+		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
+		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
+		1F526388175C492800DD26E1 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
+		1F52638B175C496900DD26E1 /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
+		1F52638C175C496900DD26E1 /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
 		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		1FD6582A175878610007455B /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -79,11 +85,7 @@
 		1FE67712175C08C4006F563C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotation.h; path = ../BeaconAnnotation.h; sourceTree = "<group>"; };
 		1FE67715175C0EA0006F563C /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconAnnotation.m; path = ../BeaconAnnotation.m; sourceTree = "<group>"; };
-		1FE67717175C139C006F563C /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotationView.h; path = ../../BeaconAnnotationView.h; sourceTree = "<group>"; };
-		1FE67718175C139C006F563C /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconAnnotationView.m; path = ../../BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotation@2x.png"; sourceTree = "<group>"; };
-		1FE67722175C20FC006F563C /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
-		1FE67723175C20FC006F563C /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
 		1FE67727175C25DC006F563C /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		1FE67729175C2CE2006F563C /* menuLogout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuLogout@2x.png"; sourceTree = "<group>"; };
 		1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hairlineSeparator@2x.png"; sourceTree = "<group>"; };
@@ -136,8 +138,6 @@
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		96C87C8E175ABC66006EA3A3 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C90175ABC94006EA3A3 /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
-		96C87C95175AC773006EA3A3 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconCell.h; path = ../BeaconCell.h; sourceTree = "<group>"; };
-		96C87C96175AC773006EA3A3 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconCell.m; path = ../BeaconCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +174,6 @@
 			children = (
 				1FD6582A175878610007455B /* APIClient.h */,
 				1FD6582B175878610007455B /* APIClient.m */,
-				1FE67722175C20FC006F563C /* LocationTracker.h */,
-				1FE67723175C20FC006F563C /* LocationTracker.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -192,10 +190,10 @@
 		1FE6771E175C1DAA006F563C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				96C87C95175AC773006EA3A3 /* BeaconCell.h */,
-				96C87C96175AC773006EA3A3 /* BeaconCell.m */,
-				1FE67717175C139C006F563C /* BeaconAnnotationView.h */,
-				1FE67718175C139C006F563C /* BeaconAnnotationView.m */,
+				1F526385175C492800DD26E1 /* BeaconAnnotationView.h */,
+				1F526386175C492800DD26E1 /* BeaconAnnotationView.m */,
+				1F526387175C492800DD26E1 /* BeaconCell.h */,
+				1F526388175C492800DD26E1 /* BeaconCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,6 +279,8 @@
 				9695644E1758642B0081B349 /* MapViewController.xib */,
 				969564531758691B0081B349 /* MenuViewController.h */,
 				969564541758691B0081B349 /* MenuViewController.m */,
+				1F52638B175C496900DD26E1 /* LocationTracker.h */,
+				1F52638C175C496900DD26E1 /* LocationTracker.m */,
 				963399421758512100AF9D89 /* Supporting Files */,
 			);
 			path = Beacons;
@@ -512,13 +512,13 @@
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
-				96C87C97175AC773006EA3A3 /* BeaconCell.m in Sources */,
 				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
 				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
-				1FE67719175C139C006F563C /* BeaconAnnotationView.m in Sources */,
-				1FE67724175C20FC006F563C /* LocationTracker.m in Sources */,
+				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
+				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
+				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
