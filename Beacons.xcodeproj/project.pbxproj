@@ -71,10 +71,10 @@
 		1FD6582E175878E20007455B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1FD6582F1758790A0007455B /* HTTPStatusCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPStatusCodes.h; sourceTree = "<group>"; };
 		1FE67712175C08C4006F563C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotation.h; sourceTree = "<group>"; };
-		1FE67715175C0EA0006F563C /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotation.m; sourceTree = "<group>"; };
-		1FE67717175C139C006F563C /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
-		1FE67718175C139C006F563C /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
+		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotation.h; path = ../BeaconAnnotation.h; sourceTree = "<group>"; };
+		1FE67715175C0EA0006F563C /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconAnnotation.m; path = ../BeaconAnnotation.m; sourceTree = "<group>"; };
+		1FE67717175C139C006F563C /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotationView.h; path = ../../BeaconAnnotationView.h; sourceTree = "<group>"; };
+		1FE67718175C139C006F563C /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconAnnotationView.m; path = ../../BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotation@2x.png"; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		96C87C8E175ABC66006EA3A3 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C90175ABC94006EA3A3 /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
-		96C87C95175AC773006EA3A3 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
-		96C87C96175AC773006EA3A3 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
+		96C87C95175AC773006EA3A3 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconCell.h; path = ../BeaconCell.h; sourceTree = "<group>"; };
+		96C87C96175AC773006EA3A3 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconCell.m; path = ../BeaconCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,9 +174,22 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		1FE6771E175C1DAA006F563C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				96C87C95175AC773006EA3A3 /* BeaconCell.h */,
+				96C87C96175AC773006EA3A3 /* BeaconCell.m */,
+				1FE67717175C139C006F563C /* BeaconAnnotationView.h */,
+				1FE67718175C139C006F563C /* BeaconAnnotationView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9615F4E0175BEBA9005CF62D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1FE67714175C0EA0006F563C /* BeaconAnnotation.h */,
+				1FE67715175C0EA0006F563C /* BeaconAnnotation.m */,
 				9615F4E1175BEBC6005CF62D /* Beacon.h */,
 				9615F4E2175BEBC6005CF62D /* Beacon.m */,
 				9615F4E5175BEBE6005CF62D /* User.h */,
@@ -188,8 +201,6 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
-				1FE67717175C139C006F563C /* BeaconAnnotationView.h */,
-				1FE67718175C139C006F563C /* BeaconAnnotationView.m */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -226,6 +237,7 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				1FE6771E175C1DAA006F563C /* Views */,
 				9615F4E0175BEBA9005CF62D /* Models */,
 				96C87C85175AB966006EA3A3 /* Theme */,
 				96C87C7A175A9A2C006EA3A3 /* Resources */,
@@ -234,8 +246,6 @@
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				966070E0175AC989007379A0 /* LineLayout.h */,
 				966070E1175AC989007379A0 /* LineLayout.m */,
-				96C87C95175AC773006EA3A3 /* BeaconCell.h */,
-				96C87C96175AC773006EA3A3 /* BeaconCell.m */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
 				96956449175862790081B349 /* CenterNavigationController.h */,
 				9695644A175862790081B349 /* CenterNavigationController.m */,
@@ -248,8 +258,6 @@
 				969564531758691B0081B349 /* MenuViewController.h */,
 				969564541758691B0081B349 /* MenuViewController.m */,
 				963399421758512100AF9D89 /* Supporting Files */,
-				1FE67714175C0EA0006F563C /* BeaconAnnotation.h */,
-				1FE67715175C0EA0006F563C /* BeaconAnnotation.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
