@@ -18,6 +18,9 @@
 		1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67727175C25DC006F563C /* menuSettings@2x.png */; };
 		1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67729175C2CE2006F563C /* menuLogout@2x.png */; };
 		1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */; };
+		1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67732175C3C9F006F563C /* Lato-Bold.ttf */; };
+		1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67734175C3CB5006F563C /* Lato-Regular.ttf */; };
+		1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67736175C3F0D006F563C /* menuBeacons@2x.png */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -84,6 +87,9 @@
 		1FE67727175C25DC006F563C /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		1FE67729175C2CE2006F563C /* menuLogout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuLogout@2x.png"; sourceTree = "<group>"; };
 		1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hairlineSeparator@2x.png"; sourceTree = "<group>"; };
+		1FE67732175C3C9F006F563C /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		1FE67734175C3CB5006F563C /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		1FE67736175C3F0D006F563C /* menuBeacons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBeacons@2x.png"; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -192,6 +198,15 @@
 				1FE67718175C139C006F563C /* BeaconAnnotationView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1FE67731175C3C88006F563C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				1FE67732175C3C9F006F563C /* Lato-Bold.ttf */,
+				1FE67734175C3CB5006F563C /* Lato-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		9615F4E0175BEBA9005CF62D /* Models */ = {
@@ -307,6 +322,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1FE67731175C3C88006F563C /* Fonts */,
 				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
@@ -316,6 +332,7 @@
 				96C87C90175ABC94006EA3A3 /* menuButton@2x.png */,
 				1FE67727175C25DC006F563C /* menuSettings@2x.png */,
 				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
+				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
 				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
 			);
 			path = Resources;
@@ -421,6 +438,9 @@
 				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
 				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
+				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
+				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
+				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

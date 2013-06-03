@@ -12,12 +12,12 @@
 
 - (NSString *)regularFontName
 {
-    return @"Helvetica";
+    return @"Lato-Regular";
 }
 
 - (NSString *)boldFontName
 {
-    return @"Helvetica-Bold";
+    return @"Lato-Bold";
 }
 
 @end

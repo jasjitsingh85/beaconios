@@ -153,7 +153,7 @@ typedef enum {
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         label.text = @"Account";
-        imageView.image = [UIImage imageNamed:@"menuSettings"];
+        imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
         label.text = @"Settings";
