@@ -231,6 +231,8 @@ typedef enum {
                                        id response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
                                        NSString *authorizationToken = response[@"token"];
                                        [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
+                                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Nice" message:@"Logged In" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                       [alertView show];
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
