@@ -63,7 +63,8 @@
 
     [self.window makeKeyAndVisible];
     self.loginViewController = [LoginViewController new];
-//    [self.window.rootViewController presentViewController:self.loginViewController animated:NO completion:nil];
+    UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
     return YES;
 }
 

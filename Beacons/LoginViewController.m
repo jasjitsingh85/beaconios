@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "RegistrationViewController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -21,9 +22,14 @@
 {
     [super viewDidLoad];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 - (IBAction)registerButtonTouched:(id)sender {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate createAccount];
+    [self.navigationController pushViewController:[RegistrationViewController new] animated:YES];
 }
 - (IBAction)signInButtonTouched:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];

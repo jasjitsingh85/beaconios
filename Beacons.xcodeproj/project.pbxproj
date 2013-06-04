@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */; };
+		1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
@@ -70,6 +72,9 @@
 /* Begin PBXFileReference section */
 		15682936FBA5486DAB10FFCA /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationViewController.h; path = ../RegistrationViewController.h; sourceTree = "<group>"; };
+		1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationViewController.m; path = ../RegistrationViewController.m; sourceTree = "<group>"; };
+		1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegistrationViewController.xib; path = ../RegistrationViewController.xib; sourceTree = "<group>"; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
@@ -281,6 +286,9 @@
 				969564541758691B0081B349 /* MenuViewController.m */,
 				1F52638B175C496900DD26E1 /* LocationTracker.h */,
 				1F52638C175C496900DD26E1 /* LocationTracker.m */,
+				1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */,
+				1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */,
+				1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */,
 				963399421758512100AF9D89 /* Supporting Files */,
 			);
 			path = Beacons;
@@ -441,6 +449,7 @@
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
+				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +528,7 @@
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
+				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
