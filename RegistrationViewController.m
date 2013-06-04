@@ -11,6 +11,7 @@
 #import <BSKeyboardControls/BSKeyboardControls.h>
 #import "Theme.h"
 #import "APIClient.h"
+#import "AppDelegate.h"
 
 typedef enum {
     RegistrationTableViewRowUserName=0,
@@ -231,8 +232,8 @@ typedef enum {
                                        id response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
                                        NSString *authorizationToken = response[@"token"];
                                        [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
-                                       UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Nice" message:@"Logged In" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                       [alertView show];
+                                       AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                       [appDelegate loggedInToServer];
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {

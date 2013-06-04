@@ -21,6 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated

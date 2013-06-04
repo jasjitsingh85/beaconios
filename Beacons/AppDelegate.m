@@ -68,6 +68,12 @@
     return YES;
 }
 
+- (void)loggedInToServer
+{
+    self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)createAccount
 {
     NSDictionary *parameters = @{@"username" : @"jeff",
