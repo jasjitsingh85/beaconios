@@ -62,49 +62,21 @@
     self.window.rootViewController = self.sideNavigationViewController;
 
     [self.window makeKeyAndVisible];
-    self.loginViewController = [LoginViewController new];
-    UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
+    BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
+    if (!isLoggedIn) {
+        self.loginViewController = [LoginViewController new];
+        UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+        [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
+    }
     return YES;
 }
 
 - (void)loggedInToServer
 {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)createAccount
-{
-    NSDictionary *parameters = @{@"username" : @"jeff",
-                                 @"password" : @"fuck",
-                                 @"email" : @"j@j.com",
-                                 @"phone_number" : @"6176337532"};
-    [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   //if the user already has a valid authorization token then the server retuns an empty response
-                                   if (operation.response.statusCode != kHTTPStatusCodeNoContent) {
-                                       id response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-                                       NSString *authorizationToken = response[@"token"];
-                                       [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
-                                   }
-                                   self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                                   [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-                                   [self getAccount];
-                               }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   [self getAccount];
-                               }];
-}
-
-- (void)getAccount
-{
-    [[APIClient sharedClient] getPath:@"user/me/" parameters:nil
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  [self login];
-        
-    }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error){}];
 }
 
 - (void)login
