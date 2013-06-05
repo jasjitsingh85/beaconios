@@ -98,7 +98,7 @@ typedef enum {
 - (void)logoutSelected
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.centerNavigationController setSelectedViewController:[LoginViewController new] animated:YES];
+    [appDelegate logoutOfServer];
 }
 
 - (void)findSelected

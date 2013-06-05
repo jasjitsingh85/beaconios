@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "RegistrationViewController.h"
+#import "SignInViewController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -33,7 +34,7 @@
     [self.navigationController pushViewController:[RegistrationViewController new] animated:YES];
 }
 - (IBAction)signInButtonTouched:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController pushViewController:[SignInViewController new] animated:YES];
 }
 
 

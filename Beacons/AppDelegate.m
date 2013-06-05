@@ -94,4 +94,12 @@
                                }];
 }
 
+- (void)logoutOfServer
+{
+    self.loginViewController = [LoginViewController new];
+    UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
+    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
+    
+}
+
 @end

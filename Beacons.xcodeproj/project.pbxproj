@@ -12,6 +12,8 @@
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
+		1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */; };
+		1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */; };
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
@@ -24,6 +26,7 @@
 		1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67732175C3C9F006F563C /* Lato-Bold.ttf */; };
 		1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67734175C3CB5006F563C /* Lato-Regular.ttf */; };
 		1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67736175C3F0D006F563C /* menuBeacons@2x.png */; };
+		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -81,6 +84,9 @@
 		1F526388175C492800DD26E1 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
 		1F52638B175C496900DD26E1 /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		1F52638C175C496900DD26E1 /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		1FD6582A175878610007455B /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -97,6 +103,8 @@
 		1FE67732175C3C9F006F563C /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		1FE67734175C3CB5006F563C /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		1FE67736175C3F0D006F563C /* menuBeacons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBeacons@2x.png"; sourceTree = "<group>"; };
+		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -287,9 +295,14 @@
 				1F52638B175C496900DD26E1 /* LocationTracker.h */,
 				1F52638C175C496900DD26E1 /* LocationTracker.m */,
 				1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */,
+				1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */,
+				1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */,
+				1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */,
 				1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */,
 				1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */,
 				963399421758512100AF9D89 /* Supporting Files */,
+				1FEEFF10175EFF070091AD01 /* Utilities.h */,
+				1FEEFF11175EFF070091AD01 /* Utilities.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -450,6 +463,7 @@
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
+				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +543,8 @@
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
+				1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */,
+				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

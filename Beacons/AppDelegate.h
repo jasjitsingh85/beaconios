@@ -24,5 +24,6 @@ MenuViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
 - (void)loggedInToServer;
+- (void)logoutOfServer;
 
 @end
