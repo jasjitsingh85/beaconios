@@ -11,5 +11,6 @@
 @interface Utilities : NSObject
 
 + (BOOL)americanPhoneNumberIsValid:(NSString *)phoneNumber;
++ (BOOL)passwordIsValid:(NSString *)password;
 
 @end

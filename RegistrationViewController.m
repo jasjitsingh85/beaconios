@@ -192,16 +192,26 @@ typedef enum {
 {
     BOOL inputsAreValid = YES;
     NSString *alertMessage = @"";
+    
+    //name is valid
+    BOOL nameIsValid = self.firstNameTextField.text.length > 0 && self.lastNameTextField.text.length > 0;
+    if (!nameIsValid) {
+        alertMessage = @"please enter a valid name";
+    }
+    
+    //validate password
+    BOOL passwordIsValid = [Utilities passwordIsValid:self.passwordTextField.text];
+    if (!passwordIsValid) {
+        alertMessage = @"please enter a valid password 6 or more characters";
+    }
+    
     //validate phone number
     BOOL phoneValid = [Utilities americanPhoneNumberIsValid:self.phoneTextField.text];
     if (!phoneValid) {
         alertMessage = @"please enter a valid phone number";
     }
     
-    
-    //validate password
-    
-    inputsAreValid = phoneValid; //&& others valid
+    inputsAreValid = phoneValid && passwordIsValid && nameIsValid; //&& others valid
     if (!inputsAreValid) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oopsy" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];

@@ -20,4 +20,12 @@
     return [test evaluateWithObject:trimmedNumber];
 }
 
++ (BOOL)passwordIsValid:(NSString *)password
+{
+//    NSString *passwordRegex = @"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+    NSString *passwordRegex = @"(.{6,20})"; //between 6 and 20 characters long
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
+    return [test evaluateWithObject:password];
+}
+
 @end
