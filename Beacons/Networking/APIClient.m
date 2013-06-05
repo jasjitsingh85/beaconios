@@ -27,6 +27,20 @@ static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/
     return _sharedClient;
 }
 
+- (id)initWithBaseURL:(NSURL *)url {
+    self = [super initWithBaseURL:url];
+    if (!self) {
+        return nil;
+    }
+    
+    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    
+    [self setDefaultHeader:@"Accept" value:@"application/json"];
+    [self setDefaultHeader:@"Accept-Charset" value:@"utf-8"];
+    
+    return self;
+}
+
 - (void)setupAuthorization
 {
     NSString *authorizationToken = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyLastAuthorizationToken];

@@ -12,10 +12,11 @@
 #import "Theme.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
+#import "Utilities.h"
 
 typedef enum {
-    RegistrationTableViewRowUserName=0,
-    RegistrationTableViewRowName,
+    RegistrationTableViewRowFirstName=0,
+    RegistrationTableViewRowLastName,
     RegistrationTableViewRowEmail,
     RegistrationTableViewRowPhone,
     RegistrationTableViewRowPassword,
@@ -25,8 +26,8 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
-@property (strong, nonatomic) UITextField *usernameTextField;
-@property (strong, nonatomic) UITextField *nameTextField;
+@property (strong, nonatomic) UITextField *firstNameTextField;
+@property (strong, nonatomic) UITextField *lastNameTextField;
 @property (strong, nonatomic) UITextField *emailTextField;
 @property (strong, nonatomic) UITextField *phoneTextField;
 @property (strong, nonatomic) UITextField *passwordTextField;
@@ -36,27 +37,19 @@ typedef enum {
 
 @implementation RegistrationViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:244/255.0];
     
-    self.usernameTextField = [UITextField new];
-    self.nameTextField = [UITextField new];
+    self.firstNameTextField = [UITextField new];
+    self.lastNameTextField = [UITextField new];
     self.emailTextField = [UITextField new];
     self.phoneTextField = [UITextField new];
     self.passwordTextField = [UITextField new];
-    NSArray *textFields = @[self.usernameTextField, self.nameTextField, self.emailTextField, self.phoneTextField, self.passwordTextField];
+    NSArray *textFields = @[self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.phoneTextField, self.passwordTextField];
     for (UITextField *textField in textFields) {
-        textField.frame = CGRectMake(90, 0, self.tableView.frame.size.width - 90, self.tableView.rowHeight);
+        textField.frame = CGRectMake(100, 0, self.tableView.frame.size.width - 100, self.tableView.rowHeight);
         textField.font = [ThemeManager boldFontOfSize:16.0];
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.adjustsFontSizeToFitWidth = YES;
@@ -122,13 +115,13 @@ typedef enum {
     if (textField) {
         [textField removeFromSuperview];
     }
-    if (indexPath.row == RegistrationTableViewRowUserName) {
-        label.text = @"Username";
-        textField = self.usernameTextField;
+    if (indexPath.row == RegistrationTableViewRowFirstName) {
+        label.text = @"First Name";
+        textField = self.firstNameTextField;
     }
-    if (indexPath.row == RegistrationTableViewRowName) {
-        label.text = @"Full Name";
-        textField = self.nameTextField;
+    if (indexPath.row == RegistrationTableViewRowLastName) {
+        label.text = @"Last Name";
+        textField = self.lastNameTextField;
     }
     else if (indexPath.row == RegistrationTableViewRowEmail) {
         label.text = @"Email";
@@ -199,12 +192,16 @@ typedef enum {
 {
     BOOL inputsAreValid = YES;
     NSString *alertMessage = @"";
-    NSString *fullName = self.nameTextField.text;
-    NSArray *nameComponents = [fullName componentsSeparatedByString:@" "];
-    if (nameComponents.count < 2) {
-        inputsAreValid = NO;
-        alertMessage = @"Please enter a first and last name";
+    //validate phone number
+    BOOL phoneValid = [Utilities americanPhoneNumberIsValid:self.phoneTextField.text];
+    if (!phoneValid) {
+        alertMessage = @"please enter a valid phone number";
     }
+    
+    
+    //validate password
+    
+    inputsAreValid = phoneValid; //&& others valid
     if (!inputsAreValid) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oopsy" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
@@ -215,13 +212,8 @@ typedef enum {
 #pragma mark - Networking
 - (void)registerAccount
 {
-    NSString *fullName = self.nameTextField.text;
-    NSArray *nameComponents = [fullName componentsSeparatedByString:@" "];
-    NSString *firstName = nameComponents[0];
-    NSString *lastName = [nameComponents lastObject];
-    NSDictionary *parameters = @{@"username" : self.usernameTextField.text,
-                                 @"first_name" : firstName,
-                                 @"last_name" : lastName,
+    NSDictionary *parameters = @{@"first_name" : self.firstNameTextField.text,
+                                 @"last_name" : self.lastNameTextField.text,
                                  @"password" : self.passwordTextField.text,
                                  @"email" : self.emailTextField.text,
                                  @"phone_number" : self.phoneTextField.text};
@@ -229,16 +221,20 @@ typedef enum {
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    //if the user already has a valid authorization token then the server retuns an empty response
                                    if (operation.response.statusCode != kHTTPStatusCodeNoContent) {
-                                       id response = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-                                       NSString *authorizationToken = response[@"token"];
+                                       NSString *authorizationToken = responseObject[@"token"];
                                        [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
                                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                        [appDelegate loggedInToServer];
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"something went wrong" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                   NSString *message = @"Something went wrong";
+                                   if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
+                                       message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+                                   }
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                    [alertView show];
+                                       
                                }];
 }
 
