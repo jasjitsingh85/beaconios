@@ -13,20 +13,25 @@
 #import "Beacon.h"
 #import "BeaconAnnotation.h"
 #import "BeaconAnnotationView.h"
+#import "CreateBeaconViewController.h"
 
 @interface MapViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
+@property (strong, nonatomic) UIBarButtonItem *createBeaconButtonItem;
 
 @end
 
 @implementation MapViewController
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = self.createBeaconButtonItem;
+    
     self.beaconCollectionView.delegate = self;
     self.beaconCollectionView.dataSource = self;
     [self.beaconCollectionView registerClass:[BeaconCell class] forCellWithReuseIdentifier:@"MY_CELL"];
@@ -45,6 +50,26 @@
     [self.beaconCollectionView reloadData];
     [self showBeaconCollectionViewAnimated:YES];
     [self centerMapOnBeacon:self.beacons[0] animated:YES];
+}
+
+- (UIBarButtonItem *)createBeaconButtonItem
+{
+    if (!_createBeaconButtonItem) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"plus"];
+        [button setImage:buttonImage forState:UIControlStateNormal];
+        button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+        [button addTarget:self action:@selector(createBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        _createBeaconButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    }
+    return _createBeaconButtonItem;
+}
+
+- (void)createBeaconButtonTouched:(id)sender
+{
+    CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
+    [self.navigationController pushViewController:createBeaconViewController animated:YES];
+    
 }
 
 - (void)createTestBeacons

@@ -69,8 +69,10 @@
 #pragma mark - UINavigationBarDelegate methods
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
-    viewController.navigationItem.title = @"Beacons";
+    if (navigationController.viewControllers.count == 1) {
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
+        viewController.navigationItem.title = @"Beacons";
+    }
 }
 
 @end

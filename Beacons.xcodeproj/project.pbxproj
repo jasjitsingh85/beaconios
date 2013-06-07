@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */; };
 		1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */; };
+		1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */; };
+		1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */; };
+		1F465C061761849700F35A8B /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C051761849700F35A8B /* plus@2x.png */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
@@ -78,6 +81,10 @@
 		1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationViewController.h; path = ../RegistrationViewController.h; sourceTree = "<group>"; };
 		1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationViewController.m; path = ../RegistrationViewController.m; sourceTree = "<group>"; };
 		1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegistrationViewController.xib; path = ../RegistrationViewController.xib; sourceTree = "<group>"; };
+		1F465C0017617E3F00F35A8B /* CreateBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateBeaconViewController.h; sourceTree = "<group>"; };
+		1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateBeaconViewController.m; sourceTree = "<group>"; };
+		1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateBeaconViewController.xib; sourceTree = "<group>"; };
+		1F465C051761849700F35A8B /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
@@ -236,6 +243,9 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1F465C0017617E3F00F35A8B /* CreateBeaconViewController.h */,
+				1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */,
+				1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -355,6 +365,7 @@
 				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
 				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
 				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
+				1F465C051761849700F35A8B /* plus@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -464,6 +475,8 @@
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
+				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
+				1F465C061761849700F35A8B /* plus@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +558,7 @@
 				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
 				1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
+				1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
