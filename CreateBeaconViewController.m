@@ -8,6 +8,7 @@
 
 #import "CreateBeaconViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SelectLocationViewController.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
 
@@ -49,6 +50,19 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.containerView.layer.cornerRadius = 2;
     self.containerView.layer.borderWidth = 1;
     self.containerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
+    
+	UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(locationTouched:)];
+	tapGestureRecognizer.numberOfTapsRequired = 1;
+	[self.locationValueLabel addGestureRecognizer:tapGestureRecognizer];
+    self.locationValueLabel.userInteractionEnabled = YES;
+    
+}
+
+- (void)locationTouched:(id)sender
+{
+    SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
+    [self.navigationController pushViewController:selectLocationViewController animated:YES];
 }
 
 #pragma mark - Keyboard notifications
