@@ -3,6 +3,7 @@ PODS:
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
   - Facebook-iOS-SDK (3.5.1)
+  - Foursquare-API-v2 (1.2.1)
   - MBProgressHUD (0.6)
   - ViewDeck (2.2.11)
 
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - Facebook-iOS-SDK (~> 3.5.0)
+  - Foursquare-API-v2 (~> 1.2.1)
   - MBProgressHUD (~> 0.6)
   - ViewDeck (~> 2.2.9)
 
@@ -19,6 +21,7 @@ SPEC CHECKSUMS:
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
+  Foursquare-API-v2: f7343fca1caab4d789d024d61b03e646acc5b08f
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
