@@ -14,6 +14,13 @@
 		1F465C061761849700F35A8B /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C051761849700F35A8B /* plus@2x.png */; };
 		1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0817618B9200F35A8B /* SelectLocationViewController.m */; };
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
+		1F465C111763BAB300F35A8B /* BeaconDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0F1763BAB200F35A8B /* BeaconDetailViewController.m */; };
+		1F465C121763BAB300F35A8B /* BeaconDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C101763BAB200F35A8B /* BeaconDetailViewController.xib */; };
+		1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C131763BD6800F35A8B /* messageButton@2x.png */; };
+		1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C141763BD6900F35A8B /* getDirectionButton@2x.png */; };
+		1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */; };
+		1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */; };
+		1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
@@ -90,6 +97,15 @@
 		1F465C0717618B9200F35A8B /* SelectLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectLocationViewController.h; sourceTree = "<group>"; };
 		1F465C0817618B9200F35A8B /* SelectLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectLocationViewController.m; sourceTree = "<group>"; };
 		1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectLocationViewController.xib; sourceTree = "<group>"; };
+		1F465C0E1763BAB200F35A8B /* BeaconDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconDetailViewController.h; sourceTree = "<group>"; };
+		1F465C0F1763BAB200F35A8B /* BeaconDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconDetailViewController.m; sourceTree = "<group>"; };
+		1F465C101763BAB200F35A8B /* BeaconDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeaconDetailViewController.xib; sourceTree = "<group>"; };
+		1F465C131763BD6800F35A8B /* messageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messageButton@2x.png"; sourceTree = "<group>"; };
+		1F465C141763BD6900F35A8B /* getDirectionButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "getDirectionButton@2x.png"; sourceTree = "<group>"; };
+		1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupMessageButton@2x.png"; sourceTree = "<group>"; };
+		1F465C191763C96D00F35A8B /* BeaconUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconUserCell.h; sourceTree = "<group>"; };
+		1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconUserCell.m; sourceTree = "<group>"; };
+		1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendButton@2x.png"; sourceTree = "<group>"; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
@@ -219,6 +235,8 @@
 				1F526386175C492800DD26E1 /* BeaconAnnotationView.m */,
 				1F526387175C492800DD26E1 /* BeaconCell.h */,
 				1F526388175C492800DD26E1 /* BeaconCell.m */,
+				1F465C191763C96D00F35A8B /* BeaconUserCell.h */,
+				1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -248,6 +266,9 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1F465C0E1763BAB200F35A8B /* BeaconDetailViewController.h */,
+				1F465C0F1763BAB200F35A8B /* BeaconDetailViewController.m */,
+				1F465C101763BAB200F35A8B /* BeaconDetailViewController.xib */,
 				1F465C0717618B9200F35A8B /* SelectLocationViewController.h */,
 				1F465C0817618B9200F35A8B /* SelectLocationViewController.m */,
 				1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */,
@@ -374,6 +395,10 @@
 				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
 				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
 				1F465C051761849700F35A8B /* plus@2x.png */,
+				1F465C131763BD6800F35A8B /* messageButton@2x.png */,
+				1F465C141763BD6900F35A8B /* getDirectionButton@2x.png */,
+				1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */,
+				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -486,6 +511,11 @@
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C061761849700F35A8B /* plus@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
+				1F465C121763BAB300F35A8B /* BeaconDetailViewController.xib in Resources */,
+				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
+				1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */,
+				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
+				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +599,8 @@
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
 				1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
+				1F465C111763BAB300F35A8B /* BeaconDetailViewController.m in Sources */,
+				1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

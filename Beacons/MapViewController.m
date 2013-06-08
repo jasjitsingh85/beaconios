@@ -14,6 +14,7 @@
 #import "BeaconAnnotation.h"
 #import "BeaconAnnotationView.h"
 #import "CreateBeaconViewController.h"
+#import "BeaconDetailViewController.h"
 
 @interface MapViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -120,7 +121,7 @@
                      }];
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.beacons.count;
@@ -134,6 +135,15 @@
     cell.beacon = beacon;
     
     return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Beacon *beacon = self.beacons[indexPath.row];
+    BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
+    beaconDetailViewController.beacon = beacon;
+    [self.navigationController pushViewController:beaconDetailViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate

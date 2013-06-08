@@ -11,6 +11,6 @@
 @class Beacon;
 @interface BeaconCell : UICollectionViewCell
 
-@property (strong, nonatomic) Beacon *beacon;
+@property (weak, nonatomic) Beacon *beacon;
 
 @end
