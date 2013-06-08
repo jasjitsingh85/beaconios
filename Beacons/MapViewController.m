@@ -76,6 +76,8 @@
 {
     NSArray *userFirstNames = @[@"Jeff", @"Jas", @"Kamran"];
     NSArray *userLastNames = @[@"Ames", @"Singh", @"Munshi"];
+    NSArray *descriptions = @[@"Smoke weed at my house", @"go to a pool party with bitches", @"college freshman orgy"];
+    NSArray *addresses = @[@"14 Washington St.", @"201 E. Columbia", @"69 1st Ave."];
     NSArray *latitudes = @[@47.573283, @47.559384, @47.576526];
     NSArray *longitudes = @[@-122.229424, @-122.288132, @-122.383575];
     NSMutableArray *users = [NSMutableArray new];
@@ -89,6 +91,8 @@
         Beacon *beacon = [Beacon new];
         beacon.creator = user;
         beacon.coordinate = CLLocationCoordinate2DMake([latitudes[i] floatValue], [longitudes[i] floatValue]);
+        beacon.beaconDescription = descriptions[i];
+        beacon.address = addresses[i];
         [beacons addObject:beacon];
         
         BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];

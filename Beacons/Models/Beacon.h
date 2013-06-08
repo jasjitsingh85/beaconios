@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) User *creator;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, strong) NSString *beaconDescription;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSDate *time;
 

@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Beacon.h"
 #import "User.h"
+#import "Theme.h"
 
 @interface BeaconCell()
 
@@ -18,7 +19,8 @@
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *addressLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
-
+@property (strong, nonatomic) UIButton *textMessageButton;
+@property (strong, nonatomic) UIButton *confirmButton;
 @end
 
 @implementation BeaconCell
@@ -39,10 +41,55 @@
         self.layer.shadowOffset = CGSizeMake(0, 1);
         self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
         
-        self.titleLabel = [[UILabel alloc] initWithFrame:self.contentView.bounds];
+        
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 15, self.contentView.frame.size.width - 55, 15)];
         self.titleLabel.backgroundColor = [UIColor clearColor];
-        self.titleLabel.textColor = [UIColor blackColor];
+        self.titleLabel.textColor = [UIColor colorWithRed:71/255.0 green:197/255.0 blue:203/255.0 alpha:1];
+        self.titleLabel.font = [ThemeManager regularFontOfSize:14.0];
+        self.titleLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.titleLabel];
+        
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 45, self.contentView.frame.size.width - 55, 16)];
+        self.descriptionLabel.backgroundColor = [UIColor clearColor];
+        self.descriptionLabel.textColor = [UIColor colorWithRed:243/255.0 green:114/255.0 blue:59/255.0 alpha:1];
+        self.descriptionLabel.font = [ThemeManager regularFontOfSize:14.0];
+        self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:self.descriptionLabel];
+        
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(67, 68, 128, 10)];
+        self.addressLabel.backgroundColor = [UIColor clearColor];
+        self.addressLabel.textColor = [UIColor blackColor];
+        self.addressLabel.font = [ThemeManager regularFontOfSize:10];
+        self.addressLabel.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:self.addressLabel];
+        
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(216, 68, 128, 10)];
+        self.timeLabel.backgroundColor = [UIColor clearColor];
+        self.timeLabel.textColor = [UIColor blackColor];
+        self.timeLabel.font = [ThemeManager regularFontOfSize:10];
+        self.timeLabel.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:self.timeLabel];
+        
+        
+        UIImage *buttonImage = [UIImage imageNamed:@"orangeButton"];
+        self.textMessageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.textMessageButton.frame = CGRectMake(56, 103, 72, 24);
+        self.textMessageButton.titleEdgeInsets = UIEdgeInsetsMake(0, 9, 0, 9);
+        self.textMessageButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        self.textMessageButton.titleLabel.font  = [ThemeManager regularFontOfSize:10.0];
+        [self.textMessageButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.textMessageButton setTitle:@"Text" forState:UIControlStateNormal];
+        [self.contentView addSubview:self.textMessageButton];
+        
+        self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.confirmButton.frame = CGRectMake(136, 103, 50, 24);
+        self.confirmButton.titleEdgeInsets = UIEdgeInsetsMake(0, 9, 0, 9);
+        self.confirmButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        self.confirmButton.titleLabel.font = [ThemeManager regularFontOfSize:10.0];
+        [self.confirmButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.confirmButton setTitle:@"I'm in" forState:UIControlStateNormal];
+        [self.contentView addSubview:self.confirmButton];
+        
     }
     return self;
 }
@@ -52,6 +99,9 @@
     _beacon = beacon;
     //set beacon title
     self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
+    [self.textMessageButton setTitle:[NSString stringWithFormat:@"Text %@", beacon.creator.firstName] forState:UIControlStateNormal];
+    self.descriptionLabel.text = beacon.beaconDescription;
+    self.addressLabel.text = beacon.address;
 }
 
 
