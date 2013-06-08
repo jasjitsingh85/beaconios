@@ -21,6 +21,7 @@
 		1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */; };
 		1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */; };
 		1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */; };
+		1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
@@ -106,6 +107,8 @@
 		1F465C191763C96D00F35A8B /* BeaconUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconUserCell.h; sourceTree = "<group>"; };
 		1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconUserCell.m; sourceTree = "<group>"; };
 		1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendButton@2x.png"; sourceTree = "<group>"; };
+		1F465C1E1763E2EE00F35A8B /* FourSquareAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FourSquareAPIClient.h; sourceTree = "<group>"; };
+		1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourSquareAPIClient.m; sourceTree = "<group>"; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 			children = (
 				1FD6582A175878610007455B /* APIClient.h */,
 				1FD6582B175878610007455B /* APIClient.m */,
+				1F465C1E1763E2EE00F35A8B /* FourSquareAPIClient.h */,
+				1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -601,6 +606,7 @@
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				1F465C111763BAB300F35A8B /* BeaconDetailViewController.m in Sources */,
 				1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */,
+				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

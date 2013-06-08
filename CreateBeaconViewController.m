@@ -8,9 +8,10 @@
 
 #import "CreateBeaconViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import <Facebook-iOS-SDK/FacebookSDK/FBPlacePickerViewController.h>
+#import <Foursquare-iOS-API/BZFoursquare.h>
 #import "SelectLocationViewController.h"
 #import "LocationTracker.h"
+#import "FourSquareAPIClient.h"
 
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
@@ -71,14 +72,11 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)locationTouched:(id)sender
 {
     CLLocation *location = [LocationTracker sharedTracker].locationManager.location;
-    FBPlacePickerViewController *placePickerViewController = [[FBPlacePickerViewController alloc]
-                                  initWithNibName:nil bundle:nil];
-    placePickerViewController.locationCoordinate = location.coordinate;
-    placePickerViewController.radiusInMeters = 1000;
-    placePickerViewController.resultsLimit = 50;
-    placePickerViewController.searchText = @"restaurant";
-    [placePickerViewController loadData];
-    [self.navigationController pushViewController:placePickerViewController animated:YES];
+    [[FourSquareAPIClient sharedClient] searchVenuesNearLocation:location query:@"quad" radius:@10000 limit:@20 completion:^(id result, NSError *error) {
+        if (!error) {
+            
+        }
+    }];
 }
 
 - (void)timeTouched:(id)sender
