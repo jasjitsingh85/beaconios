@@ -21,6 +21,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) IBOutlet UILabel *locationValueLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeValueLabel;
+@property (strong, nonatomic) UIDatePicker *datePicker;
 @end
 
 @implementation CreateBeaconViewController
@@ -60,6 +61,11 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 	[self.locationValueLabel addGestureRecognizer:tapGestureRecognizer];
     self.locationValueLabel.userInteractionEnabled = YES;
     
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(timeTouched:)];
+    tapGestureRecognizer.numberOfTapsRequired = 1;
+    [self.timeValueLabel addGestureRecognizer:tapGestureRecognizer];
+    self.timeValueLabel.userInteractionEnabled = YES;
+    
 }
 
 - (void)locationTouched:(id)sender
@@ -73,6 +79,44 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     placePickerViewController.searchText = @"restaurant";
     [placePickerViewController loadData];
     [self.navigationController pushViewController:placePickerViewController animated:YES];
+}
+
+- (void)timeTouched:(id)sender
+{
+    self.datePicker = [[UIDatePicker alloc] init];
+    CGRect frame = CGRectZero;
+    frame.size = CGSizeMake(self.view.frame.size.width, 150);
+    frame.origin = CGPointMake(0, self.view.frame.size.height - frame.size.height);
+    self.datePicker.frame = frame;
+    self.datePicker.datePickerMode = UIDatePickerModeTime;
+    UIView *datePickerHeader = [[UIView alloc] init];
+    frame = CGRectZero;
+    frame.size = CGSizeMake(self.datePicker.frame.size.width, 30);
+    frame.origin.y = -frame.size.height;
+    datePickerHeader.frame = frame;
+    datePickerHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    [self.datePicker addSubview:datePickerHeader];
+    UIButton *datePickerDoneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    datePickerDoneButton.frame = CGRectMake(100, 0, 50, datePickerHeader.frame.size.height);
+    [datePickerDoneButton setTitle:@"Done" forState:UIControlStateNormal];
+    [datePickerHeader addSubview:datePickerDoneButton];
+    [self.view addSubview:self.datePicker];
+    [self showDatePicker];
+}
+
+- (void)showDatePicker
+{
+    self.datePicker.alpha = 0;
+    self.datePicker.transform = CGAffineTransformMakeTranslation(0, self.datePicker.frame.size.height);
+    [UIView animateWithDuration:0.5 animations:^{
+        self.datePicker.transform = CGAffineTransformIdentity;
+        self.datePicker.alpha = 1.0;
+    }];
+}
+
+- (void)hideDatePicker
+{
+    
 }
 
 #pragma mark - Keyboard notifications
