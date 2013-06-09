@@ -17,6 +17,7 @@
 typedef enum {
     MenuTableViewRowHome=0,
     MenuTableViewRowFind,
+    MenuTableViewRowAddFriend,
     MenuTableViewRowSettings,
     MenuTableViewRowLogout,
 } MenuTableViewRows;
@@ -62,7 +63,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -169,6 +170,10 @@ typedef enum {
     else if (indexPath.row == MenuTableViewRowFind) {
         label.text = @"Find";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
+    }
+    else if (indexPath.row == MenuTableViewRowAddFriend) {
+        label.text = @"Add Followers";
+        imageView.image = [UIImage imageNamed:@"menuAddFriend"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
         label.text = @"Settings";
