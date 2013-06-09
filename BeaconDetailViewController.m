@@ -8,10 +8,12 @@
 
 #import "BeaconDetailViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <MapKit/MapKit.h>
 #import "Beacon.h"
 #import "User.h"
 #import "Theme.h"
 #import "BeaconUserCell.h"
+#import "Utilities.h"
 
 #define kMaxTableHeight 227
 @interface BeaconDetailViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -115,6 +117,17 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+#pragma mark - Button Events
+- (IBAction)directionsButtonTouched:(id)sender
+{
+    NSDictionary *addressDictionary;
+    if (self.beacon.address) {
+//        addressDictionary=
+    }
+    [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:addressDictionary destinationName:self.beacon.beaconDescription];
+}
+
 
 
 @end
