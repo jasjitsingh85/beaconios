@@ -13,6 +13,7 @@
 #import "LocationTracker.h"
 #import "FourSquareAPIClient.h"
 #import "Venue.h"
+#import "APIClient.h"
 
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
@@ -25,17 +26,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) IBOutlet UILabel *timeValueLabel;
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIView *datePickerContainerView;
-@property (strong, nonatomic) NSDate *selectedDate;
+@property (strong, nonatomic) NSDate *beaconDate;
 @end
 
 @implementation CreateBeaconViewController
 
-- (NSDate *)selectedDate
+- (NSDate *)beaconDate
 {
-    if (!_selectedDate) {
-        _selectedDate = [NSDate date];
+    if (!_beaconDate) {
+        _beaconDate = [NSDate date];
     }
-    return _selectedDate;
+    return _beaconDate;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,9 +51,6 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     self.beaconDescriptionTextView.layer.cornerRadius = 2;
@@ -81,6 +79,11 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.timeValueLabel.userInteractionEnabled = YES;
     [self updateDateValue];
     
+}
+
+- (IBAction)postBeaconTouched:(id)sender
+{
+    [self setBeaconOnServer];
 }
 
 - (void)locationTouched:(id)sender
@@ -151,7 +154,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)datePickerValueChanged:(UIDatePicker *)datePicker
 {
-    self.selectedDate = datePicker.date;
+    self.beaconDate = datePicker.date;
     [self updateDateValue];
 }
 
@@ -165,7 +168,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"hh:mm a"];
 
-    NSString *dateString = [formatter stringFromDate:self.selectedDate];
+    NSString *dateString = [formatter stringFromDate:self.beaconDate];
     self.timeValueLabel.text = dateString;
 }
 
@@ -201,5 +204,20 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.locationValueLabel.text = @"Current Location";
 }
 
+#pragma mark - Networking
+- (void)setBeaconOnServer
+{
+    NSDictionary *parameters = @{@"description" : self.beaconDescriptionTextView.text,
+                                 @"time" : @(self.beaconDate.timeIntervalSince1970),
+                                 @"latitude" : @0.1,
+                                 @"longitude" : @0.1};
+    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [[[UIAlertView alloc] initWithTitle:@"success" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [[[UIAlertView alloc] initWithTitle:@"failure" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                               }];
+}
 
 @end

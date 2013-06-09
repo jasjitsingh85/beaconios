@@ -52,6 +52,8 @@ static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/
 
 - (void)setAuthorizationHeaderWithToken:(NSString *)token
 {
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:kDefaultsKeyLastAuthorizationToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self setDefaultHeader:@"Authorization" value:[NSString stringWithFormat:@"Token %@", token]];
 }
 
