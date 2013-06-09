@@ -71,12 +71,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)locationTouched:(id)sender
 {
-    CLLocation *location = [LocationTracker sharedTracker].locationManager.location;
-    [[FourSquareAPIClient sharedClient] searchVenuesNearLocation:location query:@"quad" radius:@10000 limit:@20 completion:^(id result, NSError *error) {
-        if (!error) {
-            
-        }
-    }];
+    SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
+    [self.navigationController pushViewController:selectLocationViewController animated:YES];
 }
 
 - (void)timeTouched:(id)sender

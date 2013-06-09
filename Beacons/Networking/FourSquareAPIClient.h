@@ -15,6 +15,6 @@
 
 + (FourSquareAPIClient *)sharedClient;
 
-- (void)searchVenuesNearLocation:(CLLocation *)location query:(NSString *)query radius:(NSNumber *)radius limit:(NSNumber *)limit completion:(void (^)(id result, NSError *error))completion;
+- (void)searchVenuesNearLocation:(CLLocation *)location query:(NSString *)query radius:(NSNumber *)radius limit:(NSNumber *)limit completion:(void (^)(id response, NSError *error))completion;
 
 @end

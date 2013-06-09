@@ -43,7 +43,7 @@ static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
     return self;
 }
 
-- (void)searchVenuesNearLocation:(CLLocation *)location query:(NSString *)query radius:(NSNumber *)radius limit:(NSNumber *)limit completion:(void (^)(id result, NSError *error))completion
+- (void)searchVenuesNearLocation:(CLLocation *)location query:(NSString *)query radius:(NSNumber *)radius limit:(NSNumber *)limit completion:(void (^)(id response, NSError *error))completion
 {
     NSDictionary *parameters = @{@"ll": [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude],
                                  @"query" : query,
@@ -76,7 +76,7 @@ static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
 - (void)executeCompletionBlockForRequest:(BZFoursquareRequest *)request error:(NSError *)error
 {
     NSInteger index = [self.requests indexOfObject:request];
-    void (^completion)(id result, NSError *) = [self.completionBlocks objectAtIndex:index];
+    void (^completion)(id response, NSError *) = [self.completionBlocks objectAtIndex:index];
     completion(request.response, error);
 }
 
