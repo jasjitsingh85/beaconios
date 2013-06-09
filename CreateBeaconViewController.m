@@ -24,9 +24,19 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) IBOutlet UILabel *locationValueLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeValueLabel;
 @property (strong, nonatomic) UIDatePicker *datePicker;
+@property (strong, nonatomic) UIView *datePickerContainerView;
+@property (strong, nonatomic) NSDate *selectedDate;
 @end
 
 @implementation CreateBeaconViewController
+
+- (NSDate *)selectedDate
+{
+    if (!_selectedDate) {
+        _selectedDate = [NSDate date];
+    }
+    return _selectedDate;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,11 +73,13 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 	tapGestureRecognizer.numberOfTapsRequired = 1;
 	[self.locationValueLabel addGestureRecognizer:tapGestureRecognizer];
     self.locationValueLabel.userInteractionEnabled = YES;
+    self.locationValueLabel.text = @"Current Location";
     
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(timeTouched:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
     [self.timeValueLabel addGestureRecognizer:tapGestureRecognizer];
     self.timeValueLabel.userInteractionEnabled = YES;
+    [self updateDateValue];
     
 }
 
@@ -80,52 +92,81 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)timeTouched:(id)sender
 {
-    self.datePicker = [[UIDatePicker alloc] init];
     CGRect frame = CGRectZero;
-    frame.size = CGSizeMake(self.view.frame.size.width, 150);
-    frame.origin = CGPointMake(0, self.view.frame.size.height - frame.size.height);
-    self.datePicker.frame = frame;
-    self.datePicker.datePickerMode = UIDatePickerModeTime;
     UIView *datePickerHeader = [[UIView alloc] init];
-    frame = CGRectZero;
-    frame.size = CGSizeMake(self.datePicker.frame.size.width, 30);
-    frame.origin.y = -frame.size.height;
+    frame.size = CGSizeMake(self.view.frame.size.width, 30);
     datePickerHeader.frame = frame;
     datePickerHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-    [self.datePicker addSubview:datePickerHeader];
+
+    
     UIButton *datePickerDoneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     datePickerDoneButton.frame = CGRectMake(100, 0, 50, datePickerHeader.frame.size.height);
     [datePickerDoneButton setTitle:@"Done" forState:UIControlStateNormal];
+    [datePickerDoneButton addTarget:self action:@selector(timePickerDoneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [datePickerHeader addSubview:datePickerDoneButton];
-    [self.view addSubview:self.datePicker];
+    
+    self.datePicker = [[UIDatePicker alloc] init];
+    frame = CGRectZero;
+    frame.size = CGSizeMake(self.view.frame.size.width, 150);
+    frame.origin.y = datePickerHeader.frame.size.height;
+    self.datePicker.frame = frame;
+    self.datePicker.datePickerMode = UIDatePickerModeTime;
+    [self.datePicker addTarget:self
+                   action:@selector(datePickerValueChanged:)
+         forControlEvents:UIControlEventValueChanged];
+    self.datePicker.date = [NSDate date];
+    
+    self.datePickerContainerView = [[UIView alloc] init];
+    frame.size.width = self.datePicker.frame.size.width;
+    frame.size.height = self.datePicker.frame.size.height + datePickerHeader.frame.size.height;
+    frame.origin.x = 0;
+    frame.origin.y = self.view.frame.size.height - frame.size.height;
+    self.datePickerContainerView.frame = frame;
+    [self.datePickerContainerView addSubview:self.datePicker];
+    [self.datePickerContainerView addSubview:datePickerHeader];
+    
+    [self.view addSubview:self.datePickerContainerView];
     [self showDatePicker];
 }
 
 - (void)showDatePicker
 {
-    self.datePicker.alpha = 0;
-    self.datePicker.transform = CGAffineTransformMakeTranslation(0, self.datePicker.frame.size.height);
+    self.datePickerContainerView.alpha = 0;
+    self.datePickerContainerView.transform = CGAffineTransformMakeTranslation(0, self.datePickerContainerView.frame.size.height);
     [UIView animateWithDuration:0.5 animations:^{
-        self.datePicker.transform = CGAffineTransformIdentity;
-        self.datePicker.alpha = 1.0;
+        self.datePickerContainerView.transform = CGAffineTransformIdentity;
+        self.datePickerContainerView.alpha = 1.0;
     }];
 }
 
 - (void)hideDatePicker
 {
-    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.datePickerContainerView.transform = CGAffineTransformMakeTranslation(0, self.datePickerContainerView.frame.size.height);
+        self.datePickerContainerView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self.datePickerContainerView removeFromSuperview];
+    }];
 }
 
-#pragma mark - Keyboard notifications
-
-- (void)keyboardWillShow:(NSNotification *)notification
+- (void)datePickerValueChanged:(UIDatePicker *)datePicker
 {
-    
+    self.selectedDate = datePicker.date;
+    [self updateDateValue];
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification
+- (void)timePickerDoneButtonTouched:(id)sender
 {
-    
+    [self hideDatePicker];
+}
+
+- (void)updateDateValue
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"hh:mm a"];
+
+    NSString *dateString = [formatter stringFromDate:self.selectedDate];
+    self.timeValueLabel.text = dateString;
 }
 
 #pragma mark - UITextViewDelegate
@@ -159,5 +200,6 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 {
     self.locationValueLabel.text = @"Current Location";
 }
+
 
 @end
