@@ -13,6 +13,7 @@
 #import "CenterNavigationController.h"
 #import "LoginViewController.h"
 #import "MapViewController.h"
+#import "FindFriendsViewController.h"
 
 typedef enum {
     MenuTableViewRowHome=0,
@@ -22,7 +23,7 @@ typedef enum {
     MenuTableViewRowLogout,
 } MenuTableViewRows;
 
-@interface MenuViewController ()
+@interface MenuViewController () 
 
 @end
 
@@ -76,43 +77,6 @@ typedef enum {
     [self configureCell:cell ForIndexPath:indexPath];
     
     return cell;
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == MenuTableViewRowHome) {
-        
-    }
-    else if (indexPath.row == MenuTableViewRowFind) {
-        [self findSelected];
-    }
-    else if (indexPath.row == MenuTableViewRowSettings) {
-
-    }
-    else if (indexPath.row == MenuTableViewRowLogout) {
-        [self logoutSelected];
-    }
-}
-
-- (void)logoutSelected
-{
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logoutOfServer];
-}
-
-- (void)findSelected
-{
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
-}
-
-#pragma mark ABPeoplePickerNavigationControllerDelegate methods
-
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
-{
-    [peoplePicker.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Cell Customization
@@ -184,6 +148,50 @@ typedef enum {
         imageView.image = [UIImage imageNamed:@"menuLogout"];
     }
 }
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == MenuTableViewRowHome) {
+        
+    }
+    else if (indexPath.row == MenuTableViewRowFind) {
+        [self findSelected];
+    }
+    else if (indexPath.row == MenuTableViewRowAddFriend) {
+        [self addFriendsSelected];
+    }
+    else if (indexPath.row == MenuTableViewRowSettings) {
+
+    }
+    else if (indexPath.row == MenuTableViewRowLogout) {
+        [self logoutSelected];
+    }
+}
+
+- (void)logoutSelected
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate logoutOfServer];
+}
+
+- (void)findSelected
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
+}
+
+- (void)addFriendsSelected
+{
+    FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:findFriendsViewController];
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
+}
+
+
+
 
 
 @end

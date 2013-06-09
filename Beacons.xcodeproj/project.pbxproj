@@ -24,6 +24,10 @@
 		1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */; };
 		1F465C231763F97D00F35A8B /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C221763F97D00F35A8B /* Venue.m */; };
 		1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C241764252200F35A8B /* menuAddFriend@2x.png */; };
+		1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C271764FB7600F35A8B /* FindFriendsViewController.m */; };
+		1F465C2B176510EB00F35A8B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C2A176510EB00F35A8B /* Contact.m */; };
+		1F465C2E1765183C00F35A8B /* addFriendNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */; };
+		1F465C2F1765183C00F35A8B /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C2D1765183C00F35A8B /* addFriendSelected@2x.png */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
@@ -114,6 +118,12 @@
 		1F465C211763F97D00F35A8B /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venue.h; sourceTree = "<group>"; };
 		1F465C221763F97D00F35A8B /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Venue.m; sourceTree = "<group>"; };
 		1F465C241764252200F35A8B /* menuAddFriend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuAddFriend@2x.png"; sourceTree = "<group>"; };
+		1F465C261764FB7600F35A8B /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsViewController.h; sourceTree = "<group>"; };
+		1F465C271764FB7600F35A8B /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsViewController.m; sourceTree = "<group>"; };
+		1F465C29176510EB00F35A8B /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		1F465C2A176510EB00F35A8B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addFriendNormal@2x.png"; path = "../Networking/addFriendNormal@2x.png"; sourceTree = "<group>"; };
+		1F465C2D1765183C00F35A8B /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addFriendSelected@2x.png"; path = "../Networking/addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
 		1F526387175C492800DD26E1 /* BeaconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconCell.h; sourceTree = "<group>"; };
@@ -271,6 +281,8 @@
 				9615F4E6175BEBE6005CF62D /* User.m */,
 				1F465C211763F97D00F35A8B /* Venue.h */,
 				1F465C221763F97D00F35A8B /* Venue.m */,
+				1F465C29176510EB00F35A8B /* Contact.h */,
+				1F465C2A176510EB00F35A8B /* Contact.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,6 +290,8 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1F465C261764FB7600F35A8B /* FindFriendsViewController.h */,
+				1F465C271764FB7600F35A8B /* FindFriendsViewController.m */,
 				1F465C0E1763BAB200F35A8B /* BeaconDetailViewController.h */,
 				1F465C0F1763BAB200F35A8B /* BeaconDetailViewController.m */,
 				1F465C101763BAB200F35A8B /* BeaconDetailViewController.xib */,
@@ -412,6 +426,8 @@
 				1F465C141763BD6900F35A8B /* getDirectionButton@2x.png */,
 				1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */,
 				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
+				1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */,
+				1F465C2D1765183C00F35A8B /* addFriendSelected@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -530,6 +546,8 @@
 				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
 				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 				1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */,
+				1F465C2E1765183C00F35A8B /* addFriendNormal@2x.png in Resources */,
+				1F465C2F1765183C00F35A8B /* addFriendSelected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +635,8 @@
 				1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */,
 				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
+				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
+				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
