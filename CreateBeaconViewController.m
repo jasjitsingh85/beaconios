@@ -12,11 +12,12 @@
 #import "SelectLocationViewController.h"
 #import "LocationTracker.h"
 #import "FourSquareAPIClient.h"
+#import "Venue.h"
 
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
 
-@interface CreateBeaconViewController () <UITextViewDelegate>
+@interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *beaconDescriptionTextView;
 @property (strong, nonatomic) IBOutlet UIButton *postBeaconButton;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -57,6 +58,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.containerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     
+    self.locationValueLabel.adjustsFontSizeToFitWidth = YES;
 	UITapGestureRecognizer* tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(locationTouched:)];
 	tapGestureRecognizer.numberOfTapsRequired = 1;
 	[self.locationValueLabel addGestureRecognizer:tapGestureRecognizer];
@@ -72,7 +74,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)locationTouched:(id)sender
 {
     SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
-    [self.navigationController pushViewController:selectLocationViewController animated:YES];
+    selectLocationViewController.delegate = self;
+    [self.navigationController presentViewController:selectLocationViewController animated:YES completion:nil];
 }
 
 - (void)timeTouched:(id)sender
@@ -144,6 +147,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
         return NO;
     }
     return YES;
+}
+
+#pragma mark - SelectLocationViewControllerDelegate
+- (void)didSelectVenue:(Venue *)venue
+{
+    self.locationValueLabel.text = venue.name;
+}
+
+- (void)didSelectCurrentLocation
+{
+    self.locationValueLabel.text = @"Current Location";
 }
 
 @end

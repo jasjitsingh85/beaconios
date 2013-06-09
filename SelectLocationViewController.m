@@ -24,8 +24,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     }
     return self;
 }
@@ -37,6 +35,9 @@
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
     self.venues = [NSArray new];
+    
+    self.searchBar.showsCancelButton = YES;
+    [self enableSearchBarCancelButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -56,6 +57,21 @@
     }];
 }
 
+//search we use the cancel button to dismiss the viewcontroller we always want it enabled.
+//by default the cancel button of a search bar is only enabled when the search bar contains text
+- (void)enableSearchBarCancelButton
+{
+    for (UIView *possibleButton in self.searchBar.subviews)
+    {
+        if ([possibleButton isKindOfClass:[UIButton class]])
+        {
+            UIButton *cancelButton = (UIButton*)possibleButton;
+            cancelButton.enabled = YES;
+            break;
+        }
+    }
+}
+
 - (void)parseVenuesFromFourSquareResponse:(NSDictionary *)response
 {
     NSArray *venueData = response[@"groups"][0][@"items"];
@@ -71,6 +87,28 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        [self currentLocationSelected];
+    }
+    else {
+        Venue *venue = self.venues[indexPath.row - 1];
+        [self venueSelected:venue];
+    }
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)currentLocationSelected
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectCurrentLocation)]) {
+        [self.delegate didSelectCurrentLocation];
+    }
+}
+
+- (void)venueSelected:(Venue *)venue
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectVenue:)]) {
+        [self.delegate didSelectVenue:venue];
+    }
 }
 
 
@@ -113,17 +151,7 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - keyboard notifications
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    [self.searchBar setShowsCancelButton:YES animated:YES];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification;
-{
-    [self.searchBar setShowsCancelButton:NO animated:YES];
-}
 @end

@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class Venue;
+@protocol SelectLocationViewControllerDelegate <NSObject>
+
+- (void)didSelectCurrentLocation;
+- (void)didSelectVenue:(Venue *)venue;
+
+@end
+
 @interface SelectLocationViewController : UIViewController
+
+@property (weak, nonatomic) id<SelectLocationViewControllerDelegate> delegate;
 
 @end
