@@ -100,7 +100,9 @@
     UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
     [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultsKeyIsLoggedIn];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kDefaultsKeyLastAuthorizationToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [[APIClient sharedClient] clearAuthorizationHeader];
     
 }
 
