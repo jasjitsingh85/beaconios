@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@class Beacon;
+@class Beacon, BeaconCell;
+
+@protocol BeaconCellDelegate <NSObject>
+
+- (void)beaconCellTextButtonTouched:(BeaconCell *)beaconCell;
+- (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell;
+
+@end
 @interface BeaconCell : UICollectionViewCell
 
 @property (weak, nonatomic) Beacon *beacon;
+@property (weak, nonatomic) id<BeaconCellDelegate> delegate;
 
 @end

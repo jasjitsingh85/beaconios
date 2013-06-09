@@ -15,8 +15,9 @@
 #import "BeaconAnnotationView.h"
 #import "CreateBeaconViewController.h"
 #import "BeaconDetailViewController.h"
+#import "TextMessageManager.h"
 
-@interface MapViewController ()
+@interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
@@ -79,6 +80,7 @@
     NSArray *userLastNames = @[@"Ames", @"Singh", @"Munshi"];
     NSArray *descriptions = @[@"Smoke weed at my house", @"go to a pool party with bitches", @"college freshman orgy"];
     NSArray *addresses = @[@"14 Washington St.", @"201 E. Columbia", @"69 1st Ave."];
+    NSArray *phoneNumbers = @[@"5555555555", @"6176337532", @"6502245573"];
     NSArray *latitudes = @[@47.573283, @47.559384, @47.576526];
     NSArray *longitudes = @[@-122.229424, @-122.288132, @-122.383575];
     NSMutableArray *users = [NSMutableArray new];
@@ -87,6 +89,7 @@
         User *user = [User new];
         user.firstName = userFirstNames[i];
         user.lastName = userLastNames[i];
+        user.phoneNumber = phoneNumbers[i];
         [users addObject:user];
         
         Beacon *beacon = [Beacon new];
@@ -130,7 +133,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     BeaconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
-    
+    cell.delegate = self;
     Beacon *beacon = self.beacons[indexPath.row];
     cell.beacon = beacon;
     
@@ -144,6 +147,18 @@
     BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
     beaconDetailViewController.beacon = beacon;
     [self.navigationController pushViewController:beaconDetailViewController animated:YES];
+}
+
+#pragma mark - BeaconCellDelegate
+- (void)beaconCellTextButtonTouched:(BeaconCell *)beaconCell
+{
+    Beacon *beacon = beaconCell.beacon;
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[beacon.creator.phoneNumber]];
+}
+
+- (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell
+{
+    
 }
 
 #pragma mark - UIScrollViewDelegate

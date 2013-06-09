@@ -79,6 +79,7 @@
         self.textMessageButton.titleLabel.font  = [ThemeManager regularFontOfSize:10.0];
         [self.textMessageButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [self.textMessageButton setTitle:@"Text" forState:UIControlStateNormal];
+        [self.textMessageButton addTarget:self action:@selector(textMessageButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.textMessageButton];
         
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -88,6 +89,7 @@
         self.confirmButton.titleLabel.font = [ThemeManager regularFontOfSize:10.0];
         [self.confirmButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [self.confirmButton setTitle:@"I'm in" forState:UIControlStateNormal];
+        [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.confirmButton];
         
     }
@@ -102,6 +104,20 @@
     [self.textMessageButton setTitle:[NSString stringWithFormat:@"Text %@", beacon.creator.firstName] forState:UIControlStateNormal];
     self.descriptionLabel.text = beacon.beaconDescription;
     self.addressLabel.text = beacon.address;
+}
+
+- (void)confirmButtonTouched:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellConfirmButtonTouched:)]) {
+        [self.delegate beaconCellConfirmButtonTouched:self];
+    }
+}
+
+- (void)textMessageButtonTouched:(id)sender
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellTextButtonTouched:)]) {
+        [self.delegate beaconCellTextButtonTouched:self];
+    }
 }
 
 
