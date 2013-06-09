@@ -9,6 +9,7 @@
 #import "FindFriendsViewController.h"
 #import "Contact.h"
 #import "Theme.h"
+#import "APIClient.h"
 
 @interface FindFriendsViewController ()
 
@@ -31,13 +32,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    
     self.contactList = @[];
     self.selectedContacts = [NSMutableDictionary new];
     [self fetchContacts:^(NSArray *contacts) {
         self.contactList = contacts;
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
-        self.contactList = [self.contactList sortedArrayUsingDescriptors:@[sortDescriptor]];
         [self.tableView reloadData];
+        [self requestFriendsOnBeacons];
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
@@ -94,6 +97,8 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
             fullName = contact.lastName;
         }
         contact.fullName = fullName;
+        //start fullName with a capital letter for sorting
+        contact.fullName = contact.fullName.capitalizedString;
         
         NSString* phone;
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
@@ -105,12 +110,14 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         }
         CFRelease(phoneNumbers);
         contact.phone = phone;
-        if (contact.phone) {
+        if (contact.phone && ![contact.fullName isEqualToString:@""]) {
             [contacts addObject:contact];
         }
     }
-    contacts = [NSArray arrayWithArray:contacts];
-    completion(contacts);
+    //sort in alphabetical order.
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
+    NSArray *sortedContacts = [contacts sortedArrayUsingDescriptors:@[sortDescriptor]];
+    completion(sortedContacts);
 }
 
 
@@ -194,7 +201,46 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 #pragma mark - buttons
 - (void)doneButtonTouched:(id)sender
 {
+    [self sendFollowersToServer];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Networking
+- (void)requestFriendsOnBeacons
+{
+    NSMutableArray *phoneNumbers = [NSMutableArray new];
+    for (Contact *contact in self.contactList) {
+        [phoneNumbers addObject:contact.phone];
+    }
+    NSDictionary *parameters = @{@"phone_number" : phoneNumbers};
+    [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   
+                               }];
+}
+
+- (void)sendFollowersToServer
+{
+    if (!self.selectedContacts.count) {
+        return;
+    }
+    NSMutableArray *nonUserFollows = [NSMutableArray new];
+    for (Contact *contact in self.selectedContacts.allValues) {
+        NSString *contactString = [NSString stringWithFormat:@"{name:%@, phone:%@}", contact.fullName, contact.phone];
+        [nonUserFollows addObject:contactString];
+    }
+    NSDictionary *parameters = @{@"userid" : @[],
+                                 @"contact" : nonUserFollows};
+    [[APIClient sharedClient] postPath:@"friends/broadcast/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   
+                               }];
 }
 
 @end
