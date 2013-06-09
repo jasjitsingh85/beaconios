@@ -79,21 +79,6 @@
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)login
-{
-    NSDictionary *parameters = @{@"username" : @"jeff",
-                                 @"password" : @"fuck",
-                                 @"email" : @"j@j.com",
-                                 @"phone_number" : @"6176337532"};
-    [[APIClient sharedClient] postPath:@"login/" parameters:parameters
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                
-                                   }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   
-                               }];
-}
-
 - (void)logoutOfServer
 {
     self.loginViewController = [LoginViewController new];
