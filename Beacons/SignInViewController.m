@@ -112,6 +112,7 @@ typedef enum {
     }
     else if (indexPath.row == SignInTableViewRowPassword) {
         textField = self.passwordTextField;
+        textField.secureTextEntry = YES;
         label.text = @"Password";
     }
     [cell.contentView addSubview:textField];
