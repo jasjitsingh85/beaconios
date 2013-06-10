@@ -7,6 +7,7 @@
 //
 
 #import "FindFriendsViewController.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 #import "Contact.h"
 #import "Theme.h"
 #import "APIClient.h"
@@ -275,6 +276,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 #pragma mark - Networking
 - (void)requestFriendsOnBeacons
 {
+    [self showLoadingIndicator];
     NSMutableArray *phoneNumbers = [NSMutableArray new];
     for (Contact *contact in self.nonuserList) {
         [phoneNumbers addObject:contact.phoneNumber];
@@ -282,6 +284,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
     NSDictionary *parameters = @{@"phone_number" : phoneNumbers};
     [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [self hideLoadingIndicator];
                                    for (NSDictionary *userData in responseObject) {
                                        NSString *phoneNumber = userData[@"phone_number"];
                                        NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
@@ -291,16 +294,18 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                    [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                                 }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   
+                                   [self hideLoadingIndicator];
                                }];
 }
 
 - (void)requestUserFollowers
 {
+    [self showLoadingIndicator];
     NSDictionary *parameters = @{@"type" : @"users"};
     [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                   for (NSDictionary *userData in responseObject) {
+                                      [self hideLoadingIndicator];
                                       NSString *phoneNumber = userData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
@@ -310,16 +315,19 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         
     }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  [self hideLoadingIndicator];
         
     }];
 }
 
 - (void)requestNonUserFollowers
 {
+    [self showLoadingIndicator];
     NSDictionary *parameters = @{@"type" : @"contacts"};
     [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                   for (NSDictionary *contactData in responseObject) {
+                                      [self hideLoadingIndicator];
                                       NSString *phoneNumber = contactData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
@@ -328,6 +336,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  [self hideLoadingIndicator];
         
     }];
 }
@@ -351,6 +360,20 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    
                                }];
+}
+
+#pragma mark - Loading Indicator
+- (void)showLoadingIndicator
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading...";
+}
+
+- (void)hideLoadingIndicator
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    });
 }
 
 @end
