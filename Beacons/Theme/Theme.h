@@ -22,6 +22,8 @@
 + (id <Theme>)sharedTheme;
 
 + (void)customizeAppAppearance;
++ (void)customizeViewAndSubviews:(UIView *)view;
++ (void)customizeLabel:(UILabel *)label;
 + (UIFont *)regularFontOfSize:(CGFloat)size;
 + (UIFont *)boldFontOfSize:(CGFloat)size;
 

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "RegistrationViewController.h"
 #import "SignInViewController.h"
+#import "Theme.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *signInButton;
@@ -22,6 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [ThemeManager customizeViewAndSubviews:self.view];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 

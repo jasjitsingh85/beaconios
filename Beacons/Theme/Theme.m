@@ -32,6 +32,22 @@
     navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 
++ (void)customizeViewAndSubviews:(UIView *)view
+{
+    if ([view isKindOfClass:[UILabel class]]) {
+        [ThemeManager customizeLabel:(UILabel *)view];
+    }
+    for (UIView *subview in view.subviews) {
+        [ThemeManager customizeViewAndSubviews:subview];
+    }
+}
+
++ (void)customizeLabel:(UILabel *)label
+{
+    id <Theme> theme = [self sharedTheme];
+    label.font = [UIFont fontWithName:[theme regularFontName] size:label.font.pointSize];
+}
+
 #pragma mark - Fonts
 + (UIFont *)regularFontOfSize:(CGFloat)size
 {
