@@ -331,7 +331,9 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                       NSString *phoneNumber = contactData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                      if (contact) {
+                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                      }
                                   }
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
     }
