@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *fullName;
 @property (strong, nonatomic) NSString *phoneNumber;
+@property (assign, nonatomic) BOOL isUser;
 
 /*you can not set the normalized number directly.
  It is computed when the phone number property is set*/

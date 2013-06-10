@@ -11,6 +11,7 @@
 #import "Theme.h"
 #import "APIClient.h"
 #import "User.h"
+#import "Utilities.h"
 
 typedef enum {
     FindFriendSectionUsers=0,
@@ -19,10 +20,10 @@ typedef enum {
 
 @interface FindFriendsViewController ()
 
-@property (strong, nonatomic) NSArray *contactList;
+@property (strong, nonatomic) NSArray *nonuserList;
 @property (strong, nonatomic) NSArray *userList;
+@property (strong, nonatomic) NSMutableDictionary *contactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedContacts;
-@property (strong, nonatomic) NSMutableDictionary *selectedUsers;
 
 @end
 
@@ -43,18 +44,22 @@ typedef enum {
     
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     
-    self.contactList = @[];
+    self.nonuserList = @[];
     self.userList = @[];
     self.selectedContacts = [NSMutableDictionary new];
-    self.selectedUsers = [NSMutableDictionary new];
+    self.contactDictionary = [NSMutableDictionary new];
     [self fetchContacts:^(NSArray *contacts) {
-        self.contactList = contacts;
-        [self.tableView reloadData];
+        self.contactDictionary = [NSMutableDictionary new];
+        for (Contact *contact in contacts) {
+            [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+        }
+        [self reloadData];
         [self requestFriendsOnBeacons];
+        [self requestUserFollowers];
+        [self requestNonUserFollowers];
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
-    [self requestNonUserFollowers];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -111,14 +116,12 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         contact.fullName = fullName;
         //start fullName with a capital letter for sorting
         contact.fullName = contact.fullName.capitalizedString;
-        
         NSString* phone;
         ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
                                                          kABPersonPhoneProperty);
         if (ABMultiValueGetCount(phoneNumbers) > 0) {
             phone = (__bridge_transfer NSString*)
             ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
-        } else {
         }
         CFRelease(phoneNumbers);
         contact.phoneNumber = phone;
@@ -126,10 +129,23 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
             [contacts addObject:contact];
         }
     }
-    //sort in alphabetical order.
+    completion(contacts);
+}
+
+- (void)reloadData
+{
+    NSArray *allContacts = self.contactDictionary.allValues;
+    //separate users and nonusers
+    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"isUser = %d",YES];
+    self.userList = [allContacts filteredArrayUsingPredicate:userPredicate];
+    NSPredicate *nonuserPredicate = [NSPredicate predicateWithFormat:@"isUser = %d", NO];
+    self.nonuserList = [allContacts filteredArrayUsingPredicate:nonuserPredicate];
+    
+    //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
-    NSArray *sortedContacts = [contacts sortedArrayUsingDescriptors:@[sortDescriptor]];
-    completion(sortedContacts);
+    self.userList = [self.userList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.nonuserList = [self.nonuserList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    [self.tableView reloadData];
 }
 
 - (NSArray *)contactsWhoAreNotUsers
@@ -139,7 +155,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         [userNumbers addObject:user.normalizedPhoneNumber];
     }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (normalizedPhoneNumber in %@)", userNumbers];
-    NSArray *contactsNotUsers = [self.contactList filteredArrayUsingPredicate:predicate];
+    NSArray *contactsNotUsers = [self.nonuserList filteredArrayUsingPredicate:predicate];
     return contactsNotUsers;
 }
 
@@ -170,7 +186,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         numRows = self.userList.count;
     }
     else if (section == FindFriendSectionContacts) {
-        numRows = self.contactList.count;
+        numRows = self.nonuserList.count;
     }
     return numRows;
 }
@@ -211,17 +227,18 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
     
     UILabel *nameLabel = (UILabel *)[cell.contentView viewWithTag:TAG_NAME_LABEL];
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
+    NSString *normalizedPhoneNumber;
+    Contact *contact;
     if (indexPath.section == FindFriendSectionUsers) {
-        User *user = self.userList[indexPath.row];
-        nameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+        contact = self.userList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
-        Contact *contact = self.contactList[indexPath.row];
-        nameLabel.text = contact.fullName;
-        
-        BOOL contactSelected = [self.selectedContacts.allKeys containsObject:contact.normalizedPhoneNumber];
-        addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
+        contact = self.nonuserList[indexPath.row];
     }
+    nameLabel.text = contact.fullName;
+    normalizedPhoneNumber = contact.normalizedPhoneNumber;
+    BOOL contactSelected = [self.selectedContacts.allKeys containsObject:normalizedPhoneNumber];
+    addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
     
     return cell;
 }
@@ -230,9 +247,16 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Contact *contact = self.contactList[indexPath.row];
-    BOOL contactSelected = [self.selectedContacts.allKeys containsObject:contact.normalizedPhoneNumber];
-    if (contactSelected) {
+    Contact *contact;
+    if (indexPath.section == FindFriendSectionUsers) {
+        contact = self.userList[indexPath.row];
+    }
+    else if (indexPath.section == FindFriendSectionContacts) {
+        contact = self.nonuserList[indexPath.row];
+    }
+    
+    BOOL currentlySelected = [self.selectedContacts.allKeys containsObject:contact.normalizedPhoneNumber];
+    if (currentlySelected) {
         [self.selectedContacts removeObjectForKey:contact.normalizedPhoneNumber];
     }
     else {
@@ -252,22 +276,19 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 - (void)requestFriendsOnBeacons
 {
     NSMutableArray *phoneNumbers = [NSMutableArray new];
-    for (Contact *contact in self.contactList) {
+    for (Contact *contact in self.nonuserList) {
         [phoneNumbers addObject:contact.phoneNumber];
     }
     NSDictionary *parameters = @{@"phone_number" : phoneNumbers};
     [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   //create users
-                                   NSMutableArray *userList = [NSMutableArray new];
                                    for (NSDictionary *userData in responseObject) {
-                                       User *user = [[User alloc] initWithData:userData];
-                                       [userList addObject:user];
+                                       NSString *phoneNumber = userData[@"phone_number"];
+                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                       contact.isUser = YES;
                                    }
-                                    self.userList = [NSArray arrayWithArray:userList];
-                                   //remove duplicates in contact list
-                                   self.contactList = [self contactsWhoAreNotUsers];
-                                   [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                                 }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    
@@ -277,9 +298,18 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 - (void)requestUserFollowers
 {
     NSDictionary *parameters = @{@"type" : @"users"};
-    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  for (NSDictionary *userData in responseObject) {
+                                      NSString *phoneNumber = userData[@"phone_number"];
+                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                      [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                  }
+                                  [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
 }
@@ -287,9 +317,17 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 - (void)requestNonUserFollowers
 {
     NSDictionary *parameters = @{@"type" : @"contacts"};
-    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  for (NSDictionary *contactData in responseObject) {
+                                      NSString *phoneNumber = contactData[@"phone_number"];
+                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                      [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                  }
+                                  [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
 }

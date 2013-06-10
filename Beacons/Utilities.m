@@ -30,15 +30,19 @@
 
 + (NSString *)normalizePhoneNumber:(NSString *)phoneNumber
 {
+    if (!phoneNumber) {
+        return nil;
+    }
     //must be consistent with server
     NSString *normalizedNumber = phoneNumber;
-    if ([[phoneNumber substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"1"]) {
-        normalizedNumber = [phoneNumber substringWithRange:NSMakeRange(1, phoneNumber.length)];
-    }
     //trim out parentheses, plus, minus, and space
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
     characterSet = [characterSet invertedSet];
     normalizedNumber = [[normalizedNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString: @""];
+    
+    if ([[normalizedNumber substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"1"]) {
+        normalizedNumber = [normalizedNumber substringWithRange:NSMakeRange(1, normalizedNumber.length-1)];
+    }
     return normalizedNumber;
 }
 
