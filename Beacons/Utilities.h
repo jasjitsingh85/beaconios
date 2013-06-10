@@ -13,6 +13,7 @@
 
 + (BOOL)americanPhoneNumberIsValid:(NSString *)phoneNumber;
 + (BOOL)passwordIsValid:(NSString *)password;
++ (NSString *)normalizePhoneNumber:(NSString *)phoneNumber;
 
 + (void)launchMapDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName;
 

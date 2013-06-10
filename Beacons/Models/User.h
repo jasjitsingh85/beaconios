@@ -17,4 +17,10 @@
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *phoneNumber;
 
+/*you can not set the normalized number directly.
+ It is computed when the phone number property is set*/
+@property (strong, nonatomic, readonly) NSString *normalizedPhoneNumber;
+
+- (id)initWithData:(NSDictionary *)userData;
+
 @end

@@ -13,7 +13,7 @@
 
 + (BOOL)americanPhoneNumberIsValid:(NSString *)phoneNumber
 {
-    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"()-"];
+    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"()-+"];
     NSString *trimmedNumber = [phoneNumber stringByTrimmingCharactersInSet:characterSet];
     NSString *phoneRegex = @"[1]?[235689]{1}[0-9]{9}";
     NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
@@ -26,6 +26,20 @@
     NSString *passwordRegex = @"(.{6,20})"; //between 6 and 20 characters long
     NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", passwordRegex];
     return [test evaluateWithObject:password];
+}
+
++ (NSString *)normalizePhoneNumber:(NSString *)phoneNumber
+{
+    //must be consistent with server
+    NSString *normalizedNumber = phoneNumber;
+    if ([[phoneNumber substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"1"]) {
+        normalizedNumber = [phoneNumber substringWithRange:NSMakeRange(1, phoneNumber.length)];
+    }
+    //trim out parentheses, plus, minus, and space
+    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    characterSet = [characterSet invertedSet];
+    normalizedNumber = [[normalizedNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString: @""];
+    return normalizedNumber;
 }
 
 + (void)launchMapDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName

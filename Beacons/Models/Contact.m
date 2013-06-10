@@ -7,7 +7,14 @@
 //
 
 #import "Contact.h"
+#import "Utilities.h"
 
 @implementation Contact
+
+- (void)setPhoneNumber:(NSString *)phoneNumber
+{
+    _phoneNumber = phoneNumber;
+    _normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+}
 
 @end
