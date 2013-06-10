@@ -30,7 +30,6 @@
     self.menuButton.frame = frame;
     [self.menuButton setBackgroundImage:menuButtonImage forState:UIControlStateNormal];
     [self.menuButton addTarget:self.sideNavigationViewController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchDown];
-    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
 }
 
 

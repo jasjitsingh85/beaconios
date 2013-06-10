@@ -23,6 +23,10 @@
 
 - (void)presentMessageComposeViewControllerFromViewController:(UIViewController *)viewController messageRecipients:(NSArray *)messageRecipients
 {
+    if (![MFMessageComposeViewController canSendText]) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Device can't send texts" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+        return;
+    }
     MFMessageComposeViewController *messageViewController = [MFMessageComposeViewController new];
     messageViewController.recipients = messageRecipients;
     messageViewController.messageComposeDelegate = self;

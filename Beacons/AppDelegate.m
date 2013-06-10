@@ -12,6 +12,7 @@
 #import "MenuViewController.h"
 #import "LoginViewController.h"
 #import "APIClient.h"
+#import "Theme.h"
 
 @implementation AppDelegate
 
@@ -54,6 +55,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [ThemeManager customizeAppAppearance];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.centerNavigationController.selectedViewController = self.mapViewController;

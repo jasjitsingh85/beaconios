@@ -20,4 +20,19 @@
     return @"Lato-Bold";
 }
 
+- (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
+{
+    return [UIImage imageNamed:@"navBar"];
+}
+
+- (NSDictionary *)navigationBarTitleAndTextAttributes
+{
+    return @{
+             UITextAttributeTextColor: [UIColor whiteColor],
+             UITextAttributeTextShadowColor: [UIColor blackColor],
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
+             UITextAttributeFont: [UIFont fontWithName:[self boldFontName] size:20.0f]
+             };
+}
+
 @end

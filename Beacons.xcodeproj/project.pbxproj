@@ -371,12 +371,12 @@
 				1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */,
 				1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */,
 				963399421758512100AF9D89 /* Supporting Files */,
+				1FA2D5081765398C00AB657F /* TextMessageManager.h */,
+				1FA2D5091765398C00AB657F /* TextMessageManager.m */,
 				96C87C85175AB966006EA3A3 /* Theme */,
 				1FEEFF10175EFF070091AD01 /* Utilities.h */,
 				1FEEFF11175EFF070091AD01 /* Utilities.m */,
 				1FE6771E175C1DAA006F563C /* Views */,
-				1FA2D5081765398C00AB657F /* TextMessageManager.h */,
-				1FA2D5091765398C00AB657F /* TextMessageManager.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";

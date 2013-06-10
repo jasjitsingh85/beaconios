@@ -81,6 +81,12 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationItem.title = @"Create Beacon";
+}
+
 - (IBAction)postBeaconTouched:(id)sender
 {
     [self setBeaconOnServer];

@@ -13,12 +13,15 @@
 - (NSString *)regularFontName;
 - (NSString *)boldFontName;
 
+- (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
+- (NSDictionary *)navigationBarTitleAndTextAttributes;
 @end
 
 @interface ThemeManager : NSObject
 
 + (id <Theme>)sharedTheme;
 
++ (void)customizeAppAppearance;
 + (UIFont *)regularFontOfSize:(CGFloat)size;
 + (UIFont *)boldFontOfSize:(CGFloat)size;
 

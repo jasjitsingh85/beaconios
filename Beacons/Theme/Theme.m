@@ -23,6 +23,15 @@
     return sharedTheme;
 }
 
+#pragma mark - Costumize Appearance
++ (void)customizeAppAppearance
+{
+    id <Theme> theme = [self sharedTheme];
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
+    [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
+}
+
 #pragma mark - Fonts
 + (UIFont *)regularFontOfSize:(CGFloat)size
 {

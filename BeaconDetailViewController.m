@@ -58,6 +58,7 @@
     //it's possible for this to be set before view is created so force creation of view
     [self view];
     self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon",beacon.creator.firstName];
+    self.navigationItem.title = self.titleLabel.text;
     self.beaconDescriptionLabel.text = beacon.beaconDescription;
     
     //change table view height depending on how many elements it will have

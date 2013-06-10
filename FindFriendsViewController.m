@@ -49,6 +49,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationItem.title = @"Add Followers";
     UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
     self.navigationItem.rightBarButtonItem = doneBarButtonItem;
 }
@@ -222,6 +223,26 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                }];
 }
 
+- (void)requestUserFollowers
+{
+    NSDictionary *parameters = @{@"type" : @"users"};
+    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
+- (void)requestNonUserFollowers
+{
+    NSDictionary *parameters = @{@"type" : @"contacts"};
+    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 - (void)sendFollowersToServer
 {
     if (!self.selectedContacts.count) {
@@ -229,7 +250,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
     }
     NSMutableArray *nonUserFollows = [NSMutableArray new];
     for (Contact *contact in self.selectedContacts.allValues) {
-        NSString *contactString = [NSString stringWithFormat:@"{name:%@, phone:%@}", contact.fullName, contact.phone];
+        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phone];
         [nonUserFollows addObject:contactString];
     }
     NSDictionary *parameters = @{@"userid" : @[],
