@@ -14,6 +14,7 @@
 #import "Theme.h"
 #import "BeaconUserCell.h"
 #import "Utilities.h"
+#import "TextMessageManager.h"
 
 #define kMaxTableHeight 227
 @interface BeaconDetailViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -44,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [ThemeManager customizeViewAndSubviews:self.view];
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     self.tableView.layer.cornerRadius = 4;
     self.tableView.layer.borderWidth = 1;
@@ -98,6 +100,7 @@
     BeaconUserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[BeaconUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.beacon = self.beacon;
     User *user;
@@ -129,6 +132,12 @@
     [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:addressDictionary destinationName:self.beacon.beaconDescription];
 }
 
+- (IBAction)textMessageButtonTouched:(id)sender
+{
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[self.beacon.creator]];
+}
 
+- (IBAction)groupTextMessageButtonTouched:(id)sender {
+}
 
 @end
