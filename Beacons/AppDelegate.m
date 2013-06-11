@@ -103,9 +103,21 @@
 {
     self.loginViewController = [LoginViewController new];
     UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
+    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:^{
+        //nil out any view controllers that have user data associated with them
+        self.mapViewController = nil;
+    }];
+    NSArray *objectsToRemove = @[kDefaultsFirstName,
+                                 kDefaultsKeyEmail,
+                                 kDefaultsKeyFacebookID,
+                                 kDefaultsKeyLastAuthorizationToken,
+                                 kDefaultsKeyName,
+                                 kDefaultsKeyPhone,
+                                 kDefaultsLastName];
+    for (NSString *key in objectsToRemove) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultsKeyIsLoggedIn];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kDefaultsKeyLastAuthorizationToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[APIClient sharedClient] clearAuthorizationHeader];
     
