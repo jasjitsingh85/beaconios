@@ -15,8 +15,8 @@
 {
     self = [super init];
     if (self) {
-        self.firstName = [userData valueForKeyPath:@"user.first_name"];
-        self.lastName = [userData valueForKeyPath:@"user.last_name"];
+        self.firstName = userData[@"first_name"];
+        self.lastName = userData[@"last_name"];
         self.phoneNumber = userData[@"phone_number"];
     }
     return self;

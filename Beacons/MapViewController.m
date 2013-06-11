@@ -49,8 +49,8 @@
     self.mapView.scrollEnabled = NO;
     self.mapView.zoomEnabled = NO;
     
-    [self createTestBeacons];
-    [self.beaconCollectionView reloadData];
+//    [self createTestBeacons];
+//    [self.beaconCollectionView reloadData];
     [self showBeaconCollectionViewAnimated:YES];
     [self centerMapOnBeacon:self.beacons[0] animated:YES];
 }
@@ -58,11 +58,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+    [self requestBeacons];
 }
 
 - (UIBarButtonItem *)createBeaconButtonItem
@@ -231,4 +227,18 @@
     return nil;
 }
 
+#pragma mark - Networking
+- (void)requestBeacons{
+    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *beacons = [NSMutableArray new];
+        for (NSDictionary *beaconData in responseObject) {
+            Beacon *beacon = [[Beacon alloc] initWithData:beaconData];
+            [beacons addObject:beacon];
+        }
+        self.beacons = [NSArray arrayWithArray:beacons];
+        [self.beaconCollectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 @end

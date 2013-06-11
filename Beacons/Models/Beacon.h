@@ -13,11 +13,14 @@
 @class User;
 @interface Beacon : NSObject
 
+@property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) User *creator;
 @property (nonatomic, strong) NSArray *confirmedGuests;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSString *beaconDescription;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSDate *time;
+
+- (id)initWithData:(NSDictionary *)data;
 
 @end

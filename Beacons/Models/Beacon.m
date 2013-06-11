@@ -7,7 +7,22 @@
 //
 
 #import "Beacon.h"
+#import "User.h"
 
 @implementation Beacon
+
+- (id)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        self.beaconID = data[@"id"];
+        self.creator = [[User alloc] initWithData:data[@"creator"]];
+        self.beaconDescription = data[@"description"];
+        NSNumber *latitude = data[@"latitude"];
+        NSNumber *longitude = data[@"longitude"];
+        self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
+    }
+    return self;
+}
 
 @end
