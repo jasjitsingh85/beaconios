@@ -276,7 +276,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 #pragma mark - Networking
 - (void)requestFriendsOnBeacons
 {
-    [self showLoadingIndicator];
+//    [self showLoadingIndicator];
     NSMutableArray *phoneNumbers = [NSMutableArray new];
     for (Contact *contact in self.nonuserList) {
         [phoneNumbers addObject:contact.phoneNumber];
@@ -300,12 +300,12 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 
 - (void)requestUserFollowers
 {
-    [self showLoadingIndicator];
+//    [self showLoadingIndicator];
     NSDictionary *parameters = @{@"type" : @"users"};
     [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [self hideLoadingIndicator];
                                   for (NSDictionary *userData in responseObject) {
-                                      [self hideLoadingIndicator];
                                       NSString *phoneNumber = userData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
@@ -322,12 +322,12 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 
 - (void)requestNonUserFollowers
 {
-    [self showLoadingIndicator];
+//    [self showLoadingIndicator];
     NSDictionary *parameters = @{@"type" : @"contacts"};
     [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [self hideLoadingIndicator];
                                   for (NSDictionary *contactData in responseObject) {
-                                      [self hideLoadingIndicator];
                                       NSString *phoneNumber = contactData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];

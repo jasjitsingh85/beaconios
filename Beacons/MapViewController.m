@@ -16,6 +16,7 @@
 #import "CreateBeaconViewController.h"
 #import "BeaconDetailViewController.h"
 #import "TextMessageManager.h"
+#import "APIClient.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -52,6 +53,16 @@
     [self.beaconCollectionView reloadData];
     [self showBeaconCollectionViewAnimated:YES];
     [self centerMapOnBeacon:self.beacons[0] animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 - (UIBarButtonItem *)createBeaconButtonItem
