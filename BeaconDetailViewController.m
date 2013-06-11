@@ -82,8 +82,8 @@
     if (self.beacon && self.beacon.creator) {
         numRows++;
     }
-    if (self.beacon && self.beacon.confirmedGuests) {
-        numRows += self.beacon.confirmedGuests.count;
+    if (self.beacon && self.beacon.going) {
+        numRows += self.beacon.going.count;
     }
     return numRows;
 }

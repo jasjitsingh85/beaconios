@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) User *creator;
-@property (nonatomic, strong) NSArray *confirmedGuests;
+@property (nonatomic, strong) NSArray *going;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSString *beaconDescription;
 @property (nonatomic, strong) NSString *address;
