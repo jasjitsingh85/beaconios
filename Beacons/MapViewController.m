@@ -51,14 +51,20 @@
     
 //    [self createTestBeacons];
 //    [self.beaconCollectionView reloadData];
-    [self showBeaconCollectionViewAnimated:YES];
-    [self centerMapOnBeacon:self.beacons[0] animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self requestBeacons];
+}
+
+- (void)reloadBeacons
+{
+    if (self.beacons.count) {
+        [self showBeaconCollectionViewAnimated:YES];
+        [self centerMapOnBeacon:self.beacons[0] animated:YES];
+    }
 }
 
 - (UIBarButtonItem *)createBeaconButtonItem
@@ -236,7 +242,7 @@
             [beacons addObject:beacon];
         }
         self.beacons = [NSArray arrayWithArray:beacons];
-        [self.beaconCollectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(reloadBeacons) withObject:nil waitUntilDone:NO];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];

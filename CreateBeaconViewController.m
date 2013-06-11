@@ -7,6 +7,7 @@
 //
 
 #import "CreateBeaconViewController.h"
+#import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <Foursquare-iOS-API/BZFoursquare.h>
 #import "SelectLocationViewController.h"
@@ -27,6 +28,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong, nonatomic) UIView *datePickerContainerView;
 @property (strong, nonatomic) NSDate *beaconDate;
+@property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
 @end
 
 @implementation CreateBeaconViewController
@@ -79,6 +81,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.timeValueLabel.userInteractionEnabled = YES;
     [self updateDateValue];
     
+    //by default set selected location as current location
+    self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -203,11 +207,13 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)didSelectVenue:(Venue *)venue
 {
     self.locationValueLabel.text = venue.name;
+    self.beaconCoordinate = venue.coordinate;
 }
 
 - (void)didSelectCurrentLocation
 {
     self.locationValueLabel.text = @"Current Location";
+    self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
 }
 
 #pragma mark - Networking
@@ -215,8 +221,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 {
     NSDictionary *parameters = @{@"description" : self.beaconDescriptionTextView.text,
                                  @"time" : @(self.beaconDate.timeIntervalSince1970),
-                                 @"latitude" : @0.1,
-                                 @"longitude" : @0.1};
+                                 @"latitude" : @(self.beaconCoordinate.latitude),
+                                 @"longitude" : @(self.beaconCoordinate.longitude)};
     [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    [[[UIAlertView alloc] initWithTitle:@"success" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
