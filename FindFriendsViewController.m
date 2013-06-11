@@ -125,8 +125,12 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
             ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
         }
         CFRelease(phoneNumbers);
+        
+        //only store contacts with a phone number and a name. Also don't store the user
+        NSString *usersNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyPhone];
+        NSString *normalizedUserNumber = [Utilities normalizePhoneNumber:usersNumber];
         contact.phoneNumber = phone;
-        if (contact.phoneNumber && ![contact.fullName isEqualToString:@""]) {
+        if (contact.phoneNumber && ![contact.fullName isEqualToString:@""] && ![contact.normalizedPhoneNumber isEqualToString:normalizedUserNumber]) {
             [contacts addObject:contact];
         }
     }
