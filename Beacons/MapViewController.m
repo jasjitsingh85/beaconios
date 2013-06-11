@@ -62,6 +62,7 @@
 - (void)reloadBeacons
 {
     if (self.beacons.count) {
+        [self.beaconCollectionView reloadData];
         [self showBeaconCollectionViewAnimated:YES];
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
     }
