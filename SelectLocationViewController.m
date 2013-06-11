@@ -77,8 +77,7 @@
     NSArray *venueData = response[@"groups"][0][@"items"];
     NSMutableArray *venues = [NSMutableArray new];
     for (NSDictionary *item in venueData) {
-        Venue *venue = [Venue new];
-        venue.name = item[@"name"];
+        Venue *venue = [[Venue alloc] initWithData:item];
         [venues addObject:venue];
     }
     self.venues = venues;

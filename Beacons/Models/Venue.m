@@ -10,4 +10,17 @@
 
 @implementation Venue
 
+- (id)initWithData:(NSDictionary *)data
+{
+    self = [super init];
+    if (self) {
+        self.name = data[@"name"];
+        NSNumber *latitude = [data valueForKeyPath:@"location.lat"];
+        NSNumber *longitude = [data valueForKeyPath:@"location.lng"];
+        self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
+        self.address = [data valueForKeyPath:@"location.address"];
+    }
+    return self;
+}
+
 @end

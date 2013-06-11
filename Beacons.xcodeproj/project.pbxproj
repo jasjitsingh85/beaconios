@@ -35,6 +35,7 @@
 		1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */; };
 		1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */; };
 		1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2D5091765398C00AB657F /* TextMessageManager.m */; };
+		1FC07DBB1767002C0011866A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC07DBA1767002C0011866A /* Icon@2x.png */; };
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
@@ -139,6 +140,7 @@
 		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		1FA2D5081765398C00AB657F /* TextMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMessageManager.h; sourceTree = "<group>"; };
 		1FA2D5091765398C00AB657F /* TextMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMessageManager.m; sourceTree = "<group>"; };
+		1FC07DBA1767002C0011866A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		1FD6582A175878610007455B /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1FC07DBA1767002C0011866A /* Icon@2x.png */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -561,6 +564,7 @@
 				1F465C2E1765183C00F35A8B /* addFriendNormal@2x.png in Resources */,
 				1F465C2F1765183C00F35A8B /* addFriendSelected@2x.png in Resources */,
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
+				1FC07DBB1767002C0011866A /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
