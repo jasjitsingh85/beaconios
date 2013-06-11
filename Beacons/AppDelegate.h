@@ -23,7 +23,7 @@ MenuViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
-- (void)loggedInToServer;
+- (void)loggedInToServerWithUserData:(NSDictionary *)userData;
 - (void)logoutOfServer;
 
 @end

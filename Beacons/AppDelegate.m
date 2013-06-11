@@ -73,8 +73,26 @@
     return YES;
 }
 
-- (void)loggedInToServer
+- (void)loggedInToServerWithUserData:(NSDictionary *)userData
 {
+    if (userData) {
+        NSString *firstName = userData[@"first_name"];
+        if (firstName) {
+            [[NSUserDefaults standardUserDefaults] setObject:firstName forKey:kDefaultsFirstName];
+        }
+        NSString *lastName = userData[@"last_name"];
+        if (lastName) {
+            [[NSUserDefaults standardUserDefaults] setObject:lastName forKey:kDefaultsLastName];
+        }
+        NSString *email = userData[@"email"];
+        if (email) {
+            [[NSUserDefaults standardUserDefaults] setObject:email forKey:kDefaultsKeyEmail];
+        }
+        NSString *phone = userData[@"phone_number"];
+        if (phone) {
+            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:kDefaultsKeyPhone];
+        }
+    }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

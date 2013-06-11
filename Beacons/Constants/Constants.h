@@ -1,5 +1,7 @@
 //user defaults keys
 #define kDefaultsKeyName @"defaultsKeyName"
+#define kDefaultsFirstName @"defaultsKeyFirstName"
+#define kDefaultsLastName @"defaultsKeyLastName"
 #define kDefaultsKeyEmail   @"defaultsKeyEmail"
 #define kDefaultsKeyPhone   @"defaultsKeyPhone"
 #define kDefaultsKeyFacebookID @"defaultsKeyFacebookID"
