@@ -353,8 +353,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
         NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
         [nonUserFollows addObject:contactString];
     }
-    NSDictionary *parameters = @{@"userid" : @[],
-                                 @"contact" : nonUserFollows};
+    NSDictionary *parameters = @{@"contact" : nonUserFollows};
     [[APIClient sharedClient] postPath:@"friends/broadcast/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    
