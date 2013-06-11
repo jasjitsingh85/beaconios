@@ -106,22 +106,18 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)timeTouched:(id)sender
 {
     CGRect frame = CGRectZero;
-    UIView *datePickerHeader = [[UIView alloc] init];
     frame.size = CGSizeMake(self.view.frame.size.width, 30);
-    datePickerHeader.frame = frame;
-    datePickerHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-
+    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
+    toolBar.barStyle = UIBarStyleBlackTranslucent;
     
-    UIButton *datePickerDoneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    datePickerDoneButton.frame = CGRectMake(100, 0, 50, datePickerHeader.frame.size.height);
-    [datePickerDoneButton setTitle:@"Done" forState:UIControlStateNormal];
-    [datePickerDoneButton addTarget:self action:@selector(timePickerDoneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [datePickerHeader addSubview:datePickerDoneButton];
+    UIBarButtonItem *timeDoneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(timePickerDoneButtonTouched:)];
+    toolBar.items = @[timeDoneButton];
+    
     
     self.datePicker = [[UIDatePicker alloc] init];
     frame = CGRectZero;
     frame.size = CGSizeMake(self.view.frame.size.width, 150);
-    frame.origin.y = datePickerHeader.frame.size.height;
+    frame.origin.y = toolBar.frame.size.height;
     self.datePicker.frame = frame;
     self.datePicker.datePickerMode = UIDatePickerModeTime;
     [self.datePicker addTarget:self
@@ -131,12 +127,12 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     
     self.datePickerContainerView = [[UIView alloc] init];
     frame.size.width = self.datePicker.frame.size.width;
-    frame.size.height = self.datePicker.frame.size.height + datePickerHeader.frame.size.height;
+    frame.size.height = self.datePicker.frame.size.height + toolBar.frame.size.height;
     frame.origin.x = 0;
     frame.origin.y = self.view.frame.size.height - frame.size.height;
     self.datePickerContainerView.frame = frame;
     [self.datePickerContainerView addSubview:self.datePicker];
-    [self.datePickerContainerView addSubview:datePickerHeader];
+    [self.datePickerContainerView addSubview:toolBar];
     
     [self.view addSubview:self.datePickerContainerView];
     [self showDatePicker];
