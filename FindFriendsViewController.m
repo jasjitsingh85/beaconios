@@ -92,7 +92,8 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
     // do stuff with addressBook
     NSMutableArray *contacts = [NSMutableArray new];
     CFArrayRef people  = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    for(int i = 0;i<ABAddressBookGetPersonCount(addressBook);i++)
+    int numPeople = ABAddressBookGetPersonCount(addressBook);
+    for(int i = 0;i<numPeople;i++)
     {
         ABRecordRef person = CFArrayGetValueAtIndex(people, i);
         NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person,
