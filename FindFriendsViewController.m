@@ -275,7 +275,9 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
 - (void)doneButtonTouched:(id)sender
 {
     [self sendFollowersToServer];
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
+        [self.delegate findFriendViewController:self didPickContacts:self.selectedContacts.allValues];
+    }
 }
 
 #pragma mark - Networking
@@ -314,7 +316,9 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
                                       NSString *phoneNumber = userData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                      if (contact) {
+                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                      }
                                   }
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         

@@ -11,15 +11,18 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Foursquare-iOS-API/BZFoursquare.h>
 #import "SelectLocationViewController.h"
+#import "FindFriendsViewController.h"
 #import "LocationTracker.h"
 #import "FourSquareAPIClient.h"
 #import "Venue.h"
 #import "APIClient.h"
-
+#import "AppDelegate.h"
+#import "CenterNavigationController.h"
+#import "MapViewController.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
 
-@interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate>
+@interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *beaconDescriptionTextView;
 @property (strong, nonatomic) IBOutlet UIButton *postBeaconButton;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -91,9 +94,11 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.navigationItem.title = @"Create Beacon";
 }
 
-- (IBAction)postBeaconTouched:(id)sender
+- (IBAction)nextButtonTouched:(id)sender
 {
-    [self setBeaconOnServer];
+    FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
+    findFriendsViewController.delegate = self;
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
 - (void)locationTouched:(id)sender
@@ -212,6 +217,12 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
 }
 
+#pragma mark - FindFriendsViewControllerDelegate
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
+{
+    [self setBeaconOnServer];
+}
+
 #pragma mark - Networking
 - (void)setBeaconOnServer
 {
@@ -222,6 +233,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    [[[UIAlertView alloc] initWithTitle:@"success" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                                   AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                   [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    [[[UIAlertView alloc] initWithTitle:@"failure" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
