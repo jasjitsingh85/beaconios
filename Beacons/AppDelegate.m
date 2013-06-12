@@ -11,6 +11,8 @@
 #import "MapViewController.h"
 #import "MenuViewController.h"
 #import "LoginViewController.h"
+#import "BeaconDetailViewController.h"
+#import "CreateBeaconViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 
@@ -43,6 +45,22 @@
         _mapViewController = [MapViewController new];
     }
     return _mapViewController;
+}
+
+- (CreateBeaconViewController *)createBeaconViewController
+{
+    if (!_createBeaconViewController) {
+        _createBeaconViewController = [CreateBeaconViewController new];
+    }
+    return _createBeaconViewController;
+}
+
+- (BeaconDetailViewController *)myBeaconViewController
+{
+    if (!_myBeaconViewController) {
+        _myBeaconViewController = [BeaconDetailViewController new];
+    }
+    return _myBeaconViewController;
 }
 
 - (MenuViewController *)menuViewController

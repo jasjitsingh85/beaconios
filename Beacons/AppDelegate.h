@@ -12,7 +12,9 @@
 @class CenterNavigationController,
 LoginViewController,
 MapViewController,
-MenuViewController;
+MenuViewController,
+CreateBeaconViewController,
+BeaconDetailViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -21,6 +23,8 @@ MenuViewController;
 @property (strong, nonatomic) IIViewDeckController *sideNavigationViewController;
 @property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
+@property (strong, nonatomic) CreateBeaconViewController *createBeaconViewController;
+@property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
 - (void)loggedInToServerWithUserData:(NSDictionary *)userData;

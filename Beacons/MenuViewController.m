@@ -14,9 +14,11 @@
 #import "LoginViewController.h"
 #import "MapViewController.h"
 #import "FindFriendsViewController.h"
+#import "BeaconDetailViewController.h"
+#import "CreateBeaconViewController.h"
 
 typedef enum {
-    MenuTableViewRowHome=0,
+    MenuTableViewRowMyBeacon=0,
     MenuTableViewRowFind,
     MenuTableViewRowLogout,
 } MenuTableViewRows;
@@ -126,7 +128,7 @@ typedef enum {
 {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
-    if (indexPath.row == MenuTableViewRowHome) {
+    if (indexPath.row == MenuTableViewRowMyBeacon) {
         label.text = @"You";
     }
     else if (indexPath.row == MenuTableViewRowFind) {
@@ -143,14 +145,25 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == MenuTableViewRowHome) {
-        
+    if (indexPath.row == MenuTableViewRowMyBeacon) {
+        [self myBeaconSelected];
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         [self findSelected];
     }
     else if (indexPath.row == MenuTableViewRowLogout) {
         [self logoutSelected];
+    }
+}
+
+- (void)myBeaconSelected
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if (appDelegate.myBeaconViewController.beacon) {
+        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.myBeaconViewController];
+    }
+    else {
+        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.createBeaconViewController animated:YES];
     }
 }
 

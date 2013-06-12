@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
-@property (strong, nonatomic) UIBarButtonItem *createBeaconButtonItem;
 
 @end
 
@@ -33,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = self.createBeaconButtonItem;
     
     self.beaconCollectionView.delegate = self;
     self.beaconCollectionView.dataSource = self;
@@ -68,25 +66,6 @@
     }
 }
 
-- (UIBarButtonItem *)createBeaconButtonItem
-{
-    if (!_createBeaconButtonItem) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *buttonImage = [UIImage imageNamed:@"plus"];
-        [button setImage:buttonImage forState:UIControlStateNormal];
-        button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-        [button addTarget:self action:@selector(createBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        _createBeaconButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    }
-    return _createBeaconButtonItem;
-}
-
-- (void)createBeaconButtonTouched:(id)sender
-{
-    CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
-    [self.navigationController pushViewController:createBeaconViewController animated:YES];
-    
-}
 
 - (void)createTestBeacons
 {
