@@ -18,8 +18,6 @@
 typedef enum {
     MenuTableViewRowHome=0,
     MenuTableViewRowFind,
-    MenuTableViewRowAddFriend,
-    MenuTableViewRowSettings,
     MenuTableViewRowLogout,
 } MenuTableViewRows;
 
@@ -135,14 +133,6 @@ typedef enum {
         label.text = @"Find";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
-    else if (indexPath.row == MenuTableViewRowAddFriend) {
-        label.text = @"Add Followers";
-        imageView.image = [UIImage imageNamed:@"menuAddFriend"];
-    }
-    else if (indexPath.row == MenuTableViewRowSettings) {
-        label.text = @"Settings";
-        imageView.image = [UIImage imageNamed:@"menuSettings"];
-    }
     else if (indexPath.row == MenuTableViewRowLogout) {
         label.text = @"Logout";
         imageView.image = [UIImage imageNamed:@"menuLogout"];
@@ -158,12 +148,6 @@ typedef enum {
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         [self findSelected];
-    }
-    else if (indexPath.row == MenuTableViewRowAddFriend) {
-        [self addFriendsSelected];
-    }
-    else if (indexPath.row == MenuTableViewRowSettings) {
-
     }
     else if (indexPath.row == MenuTableViewRowLogout) {
         [self logoutSelected];
