@@ -13,11 +13,10 @@
 
 + (BOOL)americanPhoneNumberIsValid:(NSString *)phoneNumber
 {
-    NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"()-+"];
-    NSString *trimmedNumber = [phoneNumber stringByTrimmingCharactersInSet:characterSet];
-    NSString *phoneRegex = @"[1]?[235689]{1}[0-9]{9}";
+    NSString *normalizedNumber = [self normalizePhoneNumber:phoneNumber];
+    NSString *phoneRegex = @"[1]?[2-9]{1}[0-9]{9}";
     NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
-    return [test evaluateWithObject:trimmedNumber];
+    return [test evaluateWithObject:normalizedNumber];
 }
 
 + (BOOL)passwordIsValid:(NSString *)password
