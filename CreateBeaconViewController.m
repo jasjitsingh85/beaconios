@@ -19,6 +19,7 @@
 #import "AppDelegate.h"
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
+#import "Contact.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
 
@@ -32,6 +33,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) UIView *datePickerContainerView;
 @property (strong, nonatomic) NSDate *beaconDate;
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
+@property (strong, nonatomic) NSArray *contacts;
 @end
 
 @implementation CreateBeaconViewController
@@ -220,6 +222,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 #pragma mark - FindFriendsViewControllerDelegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {
+    self.contacts = contacts;
     [self setBeaconOnServer];
 }
 
@@ -227,10 +230,18 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 - (void)setBeaconOnServer
 {
     NSString *beaconDescription = [self.beaconDescriptionTextView.text isEqualToString:kBeaconDescriptionPlaceholder] ? @"" : self.beaconDescriptionTextView.text;
+    
+    NSMutableArray *invites = [NSMutableArray new];
+    for (Contact *contact in self.contacts) {
+        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
+        [invites addObject:contactString];
+    }
+    
     NSDictionary *parameters = @{@"description" : beaconDescription,
                                  @"time" : @(self.beaconDate.timeIntervalSince1970),
                                  @"latitude" : @(self.beaconCoordinate.latitude),
-                                 @"longitude" : @(self.beaconCoordinate.longitude)};
+                                 @"longitude" : @(self.beaconCoordinate.longitude),
+                                 @"invite" : invites};
     [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    [[[UIAlertView alloc] initWithTitle:@"success" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
