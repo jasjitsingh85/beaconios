@@ -15,6 +15,7 @@
 #import "CreateBeaconViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
+#import "User.h"
 
 @implementation AppDelegate
 
@@ -71,6 +72,18 @@
     return _menuViewController;
 }
 
+- (User *)loggedInUser
+{
+    if (!_loggedInUser && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn]) {
+        _loggedInUser = [User new];
+        _loggedInUser.phoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyPhone];
+        _loggedInUser.firstName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyFirstName];
+        _loggedInUser.lastName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyLastName];
+        _loggedInUser.userID = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyUserID];
+    }
+    return _loggedInUser;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [ThemeManager customizeAppAppearance];
@@ -91,25 +104,28 @@
     return YES;
 }
 
-- (void)loggedInToServerWithUserData:(NSDictionary *)userData
+- (void)loggedIntoServerWithUser:(User *)user
 {
-    if (userData) {
-        NSString *firstName = userData[@"first_name"];
-        if (firstName) {
-            [[NSUserDefaults standardUserDefaults] setObject:firstName forKey:kDefaultsFirstName];
-        }
-        NSString *lastName = userData[@"last_name"];
-        if (lastName) {
-            [[NSUserDefaults standardUserDefaults] setObject:lastName forKey:kDefaultsLastName];
-        }
-        NSString *email = userData[@"email"];
-        if (email) {
-            [[NSUserDefaults standardUserDefaults] setObject:email forKey:kDefaultsKeyEmail];
-        }
-        NSString *phone = userData[@"phone_number"];
-        if (phone) {
-            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:kDefaultsKeyPhone];
-        }
+    self.loggedInUser = user;
+    NSString *firstName = user.firstName;
+    if (firstName) {
+        [[NSUserDefaults standardUserDefaults] setObject:firstName forKey:kDefaultsKeyFirstName];
+    }
+    NSString *lastName = user.lastName;
+    if (lastName) {
+        [[NSUserDefaults standardUserDefaults] setObject:lastName forKey:kDefaultsKeyLastName];
+    }
+    NSString *email = user.email;
+    if (email) {
+        [[NSUserDefaults standardUserDefaults] setObject:email forKey:kDefaultsKeyEmail];
+    }
+    NSString *phone = user.phoneNumber;
+    if (phone) {
+        [[NSUserDefaults standardUserDefaults] setObject:phone forKey:kDefaultsKeyPhone];
+    }
+    NSNumber *userID = user.userID;
+    if (userID) {
+        [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kDefaultsKeyUserID];
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -125,18 +141,18 @@
         //nil out any view controllers that have user data associated with them
         self.mapViewController = nil;
     }];
-    NSArray *objectsToRemove = @[kDefaultsFirstName,
+    NSArray *objectsToRemove = @[kDefaultsKeyFirstName,
                                  kDefaultsKeyEmail,
                                  kDefaultsKeyFacebookID,
                                  kDefaultsKeyLastAuthorizationToken,
-                                 kDefaultsKeyName,
                                  kDefaultsKeyPhone,
-                                 kDefaultsLastName];
+                                 kDefaultsKeyLastName];
     for (NSString *key in objectsToRemove) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     }
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    self.loggedInUser = nil;
     [[APIClient sharedClient] clearAuthorizationHeader];
     
 }

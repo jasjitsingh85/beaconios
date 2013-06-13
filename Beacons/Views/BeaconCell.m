@@ -100,7 +100,12 @@
 {
     _beacon = beacon;
     //set beacon title
-    self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
+    if (beacon.isUserBeacon) {
+        self.titleLabel.text = @"My Beacon";
+    }
+    else {
+        self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
+    }
     [self.textMessageButton setTitle:[NSString stringWithFormat:@"Text %@", beacon.creator.firstName] forState:UIControlStateNormal];
     self.descriptionLabel.text = beacon.beaconDescription;
     self.addressLabel.text = beacon.address;

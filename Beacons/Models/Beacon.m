@@ -8,6 +8,8 @@
 
 #import "Beacon.h"
 #import "User.h"
+#import "Constants.h"
+#import "AppDelegate.h"
 
 @implementation Beacon
 
@@ -23,6 +25,19 @@
         self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
     }
     return self;
+}
+
+- (BOOL)isUserBeacon
+{    
+    if (!self.creator) {
+        return NO;
+    }
+    //get logged in user id
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    if (appDelegate.loggedInUser && [appDelegate.loggedInUser.userID isEqualToNumber:self.creator.userID]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

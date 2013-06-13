@@ -14,7 +14,8 @@ LoginViewController,
 MapViewController,
 MenuViewController,
 CreateBeaconViewController,
-BeaconDetailViewController;
+BeaconDetailViewController,
+User;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -26,8 +27,9 @@ BeaconDetailViewController;
 @property (strong, nonatomic) CreateBeaconViewController *createBeaconViewController;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
+@property (strong, nonatomic) User *loggedInUser;
 
-- (void)loggedInToServerWithUserData:(NSDictionary *)userData;
+- (void)loggedIntoServerWithUser:(User *)user;
 - (void)logoutOfServer;
 
 @end

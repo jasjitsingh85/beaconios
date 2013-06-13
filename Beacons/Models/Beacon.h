@@ -13,6 +13,7 @@
 @class User;
 @interface Beacon : NSObject
 
+@property (readonly) BOOL isUserBeacon;
 @property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) User *creator;
 @property (nonatomic, strong) NSArray *going;

@@ -235,7 +235,8 @@ typedef enum {
                                        NSString *authorizationToken = responseObject[@"token"];
                                        [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
                                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                                       [appDelegate loggedInToServerWithUserData:parameters];
+                                       NSMutableDictionary *userData = [NSMutableDictionary new];
+                                       
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {

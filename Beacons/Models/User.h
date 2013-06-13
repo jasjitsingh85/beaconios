@@ -10,6 +10,7 @@
 
 @interface User : NSObject
 
+@property (strong, nonatomic) NSNumber *userID;
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *username;
@@ -22,5 +23,6 @@
 @property (strong, nonatomic, readonly) NSString *normalizedPhoneNumber;
 
 - (id)initWithData:(NSDictionary *)userData;
+- (id)initWithSignInData:(NSDictionary *)userData;
 
 @end

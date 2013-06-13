@@ -64,7 +64,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,7 +129,7 @@ typedef enum {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
     if (indexPath.row == MenuTableViewRowMyBeacon) {
-        label.text = @"You";
+        label.text = @"My Beacon";
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         label.text = @"Find";
