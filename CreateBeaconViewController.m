@@ -226,7 +226,8 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 #pragma mark - Networking
 - (void)setBeaconOnServer
 {
-    NSDictionary *parameters = @{@"description" : self.beaconDescriptionTextView.text,
+    NSString *beaconDescription = [self.beaconDescriptionTextView.text isEqualToString:kBeaconDescriptionPlaceholder] ? @"" : self.beaconDescriptionTextView.text;
+    NSDictionary *parameters = @{@"description" : beaconDescription,
                                  @"time" : @(self.beaconDate.timeIntervalSince1970),
                                  @"latitude" : @(self.beaconCoordinate.latitude),
                                  @"longitude" : @(self.beaconCoordinate.longitude)};
