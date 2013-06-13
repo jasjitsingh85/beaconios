@@ -1,12 +1,12 @@
 #import "LineLayout.h"
 
 
-#define CELL_WIDTH 280
-#define CELL_HEIGHT 142
+#define CELL_WIDTH 256
+#define CELL_HEIGHT 185
 
 @implementation LineLayout
 
-#define ACTIVE_DISTANCE 280
+#define ACTIVE_DISTANCE 256
 
 -(id)init
 {
@@ -14,7 +14,8 @@
     if (self) {
         self.itemSize = CGSizeMake(CELL_WIDTH, CELL_HEIGHT);
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        self.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20);
+        CGFloat horizontalInset = 0.5*(320 - CELL_WIDTH);
+        self.sectionInset = UIEdgeInsetsMake(15, horizontalInset, 15, horizontalInset);
         self.minimumLineSpacing = 5;
     }
     return self;
@@ -38,6 +39,7 @@
             CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
             CGFloat alpha = 0.8 + 0.2*(1-ABS(normalizedDistance));
             attributes.alpha = alpha;
+            attributes.transform3D = CATransform3DMakeScale(1, alpha, 1);
         }
     }
     return array;
