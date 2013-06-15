@@ -6,4 +6,5 @@
 #define kDefaultsKeyUserID @"defaultsKeyUserID"
 #define kDefaultsKeyFacebookID @"defaultsKeyFacebookID"
 #define kDefaultsKeyIsLoggedIn @"defaultsKeyIsLoggedIn"
+#define kDefaultsKeyAccountActivated @"defaultsKeyAccountActivated"
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"

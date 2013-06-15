@@ -22,14 +22,14 @@ User;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CenterNavigationController *centerNavigationController;
 @property (strong, nonatomic) IIViewDeckController *sideNavigationViewController;
-@property (strong, nonatomic) LoginViewController *loginViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) CreateBeaconViewController *createBeaconViewController;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) User *loggedInUser;
 
-- (void)loggedIntoServerWithUser:(User *)user;
+- (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;
+- (void)didActivateAccount;
 
 @end

@@ -13,9 +13,17 @@
 #import "LoginViewController.h"
 #import "BeaconDetailViewController.h"
 #import "CreateBeaconViewController.h"
+#import "ActivationViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
+
+@interface AppDelegate()
+
+@property (strong, nonatomic) LoginViewController *loginViewController;
+@property (strong, nonatomic) ActivationViewController *activationViewController;
+
+@end
 
 @implementation AppDelegate
 
@@ -96,16 +104,25 @@
 
     [self.window makeKeyAndVisible];
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
+    BOOL accountActivated = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyAccountActivated];
     if (!isLoggedIn) {
         self.loginViewController = [LoginViewController new];
         UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
         [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
     }
+    else if (!accountActivated) {
+        self.activationViewController = [ActivationViewController new];
+        [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
+    }
     return YES;
 }
 
-- (void)loggedIntoServerWithUser:(User *)user
+- (void)loggedIntoServerWithResponse:(NSDictionary *)response
 {
+    User *user = [[User alloc] initWithData:response];
+    NSString *authorizationToken = response[@"token"];
+    [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
+    BOOL activated = [response[@"activated"] boolValue];
     self.loggedInUser = user;
     NSString *firstName = user.firstName;
     if (firstName) {
@@ -127,8 +144,21 @@
     if (userID) {
         [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kDefaultsKeyUserID];
     }
+    [[NSUserDefaults standardUserDefaults] setBool:activated forKey:kDefaultsKeyAccountActivated];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.window.rootViewController dismissViewControllerAnimated:activated completion:^{
+        if (!activated) {
+            self.activationViewController = [ActivationViewController new];
+            [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
+        }
+    }];
+}
+
+- (void)didActivateAccount
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
 }

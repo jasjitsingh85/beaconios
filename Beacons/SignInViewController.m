@@ -138,12 +138,8 @@ typedef enum {
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    //if the user already has a valid authorization token then the server retuns an empty response
                                    if (operation.response.statusCode != kHTTPStatusCodeNoContent) {
-                                       
-                                       NSString *authorizationToken = responseObject[@"token"];
-                                       [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
-                                       User *user = [[User alloc] initWithSignInData:responseObject];
                                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                                       [appDelegate loggedIntoServerWithUser:user];
+                                       [appDelegate loggedIntoServerWithResponse:responseObject];
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {

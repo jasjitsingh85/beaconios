@@ -13,6 +13,7 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "Utilities.h"
+#import "User.h"
 
 typedef enum {
     RegistrationTableViewRowFirstName=0,
@@ -232,11 +233,8 @@ typedef enum {
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    //if the user already has a valid authorization token then the server retuns an empty response
                                    if (operation.response.statusCode != kHTTPStatusCodeNoContent) {
-                                       NSString *authorizationToken = responseObject[@"token"];
-                                       [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
                                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                                       NSMutableDictionary *userData = [NSMutableDictionary new];
-                                       
+                                       [appDelegate loggedIntoServerWithResponse:responseObject];
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -32,6 +32,8 @@
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
+		1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB39176D081500529037 /* ActivationViewController.m */; };
+		1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3A176D081500529037 /* ActivationViewController.xib */; };
 		1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */; };
 		1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */; };
 		1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2D5091765398C00AB657F /* TextMessageManager.m */; };
@@ -135,6 +137,9 @@
 		1F526388175C492800DD26E1 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
 		1F52638B175C496900DD26E1 /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		1F52638C175C496900DD26E1 /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		1F9CEB38176D081500529037 /* ActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivationViewController.h; sourceTree = "<group>"; };
+		1F9CEB39176D081500529037 /* ActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivationViewController.m; sourceTree = "<group>"; };
+		1F9CEB3A176D081500529037 /* ActivationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivationViewController.xib; sourceTree = "<group>"; };
 		1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
@@ -382,6 +387,9 @@
 				1FEEFF10175EFF070091AD01 /* Utilities.h */,
 				1FEEFF11175EFF070091AD01 /* Utilities.m */,
 				1FE6771E175C1DAA006F563C /* Views */,
+				1F9CEB38176D081500529037 /* ActivationViewController.h */,
+				1F9CEB39176D081500529037 /* ActivationViewController.m */,
+				1F9CEB3A176D081500529037 /* ActivationViewController.xib */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -565,6 +573,7 @@
 				1F465C2F1765183C00F35A8B /* addFriendSelected@2x.png in Resources */,
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
 				1FC07DBB1767002C0011866A /* Icon@2x.png in Resources */,
+				1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +664,7 @@
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
+				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
