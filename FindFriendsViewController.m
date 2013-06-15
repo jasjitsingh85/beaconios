@@ -13,6 +13,7 @@
 #import "APIClient.h"
 #import "User.h"
 #import "Utilities.h"
+#import "ContactManager.h"
 
 typedef enum {
     FindFriendSectionUsers=0,
@@ -49,7 +50,7 @@ typedef enum {
     self.userList = @[];
     self.selectedContacts = [NSMutableDictionary new];
     self.contactDictionary = [NSMutableDictionary new];
-    [self fetchContacts:^(NSArray *contacts) {
+    [[ContactManager sharedManager] fetchContacts:^(NSArray *contacts) {
         self.contactDictionary = [NSMutableDictionary new];
         for (Contact *contact in contacts) {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
@@ -69,73 +70,6 @@ typedef enum {
     self.navigationItem.title = @"Add Followers";
     UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
     self.navigationItem.rightBarButtonItem = doneBarButtonItem;
-}
-
-- (void)fetchContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure {
-    if (ABAddressBookRequestAccessWithCompletion) {
-        CFErrorRef err;
-        ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &err);
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            // ABAddressBook doesn't gaurantee execution of this block on main thread, but we want our callbacks to be
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (!granted) {
-                    failure((__bridge NSError *)error);
-                } else {
-                    readAddressBookContacts(addressBook, success);
-                }
-            });
-        });
-    }
-}
-
-static void readAddressBookContacts(ABAddressBookRef addressBook, void (^completion)(NSArray *contacts)) {
-    // do stuff with addressBook
-    NSMutableArray *contacts = [NSMutableArray new];
-    CFArrayRef people  = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    int numPeople = ABAddressBookGetPersonCount(addressBook);
-    for(int i = 0;i<numPeople;i++)
-    {
-        ABRecordRef person = CFArrayGetValueAtIndex(people, i);
-        NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person,
-                                                                             kABPersonFirstNameProperty);
-        NSString *lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person,
-                                                                            kABPersonLastNameProperty);
-        
-        Contact *contact = [Contact new];
-        contact.firstName = firstName;
-        contact.lastName = lastName;
-        //store a full name for sorting in alphabetical order. If first or last name nil then use empty string
-        NSString *fullName = @"";
-        if (contact.firstName && contact.lastName) {
-            fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-        }
-        else if (contact.firstName) {
-            fullName = contact.firstName;
-        }
-        else if (contact.lastName) {
-            fullName = contact.lastName;
-        }
-        contact.fullName = fullName;
-        //start fullName with a capital letter for sorting
-        contact.fullName = contact.fullName.capitalizedString;
-        NSString* phone;
-        ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
-                                                         kABPersonPhoneProperty);
-        if (ABMultiValueGetCount(phoneNumbers) > 0) {
-            phone = (__bridge_transfer NSString*)
-            ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
-        }
-        CFRelease(phoneNumbers);
-        
-        //only store contacts with a phone number and a name. Also don't store the user
-        NSString *usersNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyPhone];
-        NSString *normalizedUserNumber = [Utilities normalizePhoneNumber:usersNumber];
-        contact.phoneNumber = phone;
-        if (contact.phoneNumber && ![contact.fullName isEqualToString:@""] && ![contact.normalizedPhoneNumber isEqualToString:normalizedUserNumber]) {
-            [contacts addObject:contact];
-        }
-    }
-    completion(contacts);
 }
 
 - (void)reloadData
