@@ -17,6 +17,7 @@
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
+#import "ContactManager.h"
 
 @interface AppDelegate()
 
@@ -114,6 +115,9 @@
         self.activationViewController = [ActivationViewController new];
         [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
     }
+    else {
+        [[ContactManager sharedManager] syncContacts];
+    }
     return YES;
 }
 
@@ -160,7 +164,9 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
+        [[ContactManager sharedManager] syncContacts];
+    }];
 }
 
 - (void)logoutOfServer
@@ -184,7 +190,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.loggedInUser = nil;
     [[APIClient sharedClient] clearAuthorizationHeader];
-    
 }
 
 @end

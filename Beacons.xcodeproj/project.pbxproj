@@ -34,6 +34,7 @@
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
 		1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB39176D081500529037 /* ActivationViewController.m */; };
 		1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3A176D081500529037 /* ActivationViewController.xib */; };
+		1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3E176D1F2C00529037 /* ContactManager.m */; };
 		1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */; };
 		1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */; };
 		1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2D5091765398C00AB657F /* TextMessageManager.m */; };
@@ -140,6 +141,8 @@
 		1F9CEB38176D081500529037 /* ActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivationViewController.h; sourceTree = "<group>"; };
 		1F9CEB39176D081500529037 /* ActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivationViewController.m; sourceTree = "<group>"; };
 		1F9CEB3A176D081500529037 /* ActivationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivationViewController.xib; sourceTree = "<group>"; };
+		1F9CEB3D176D1F2C00529037 /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
+		1F9CEB3E176D1F2C00529037 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
@@ -390,6 +393,8 @@
 				1F9CEB38176D081500529037 /* ActivationViewController.h */,
 				1F9CEB39176D081500529037 /* ActivationViewController.m */,
 				1F9CEB3A176D081500529037 /* ActivationViewController.xib */,
+				1F9CEB3D176D1F2C00529037 /* ContactManager.h */,
+				1F9CEB3E176D1F2C00529037 /* ContactManager.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -665,6 +670,7 @@
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
+				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
