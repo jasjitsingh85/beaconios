@@ -18,7 +18,7 @@
     self = [super init];
     if (self) {
         self.beaconID = data[@"id"];
-        self.creator = [[User alloc] initWithData:data[@"creator"]];
+        self.creator = [[User alloc] initWithData:data[@"profile"]];
         self.beaconDescription = data[@"description"];
         NSNumber *latitude = data[@"latitude"];
         NSNumber *longitude = data[@"longitude"];
