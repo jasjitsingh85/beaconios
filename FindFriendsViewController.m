@@ -22,8 +22,8 @@ typedef enum {
 
 @interface FindFriendsViewController ()
 
-@property (strong, nonatomic) NSArray *nonuserList;
-@property (strong, nonatomic) NSArray *userList;
+@property (strong, nonatomic) NSArray *suggestedList;
+@property (strong, nonatomic) NSArray *nonSuggestedList;
 @property (strong, nonatomic) NSMutableDictionary *contactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedContacts;
 
@@ -46,8 +46,8 @@ typedef enum {
     
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     
-    self.nonuserList = @[];
-    self.userList = @[];
+    self.suggestedList = @[];
+    self.nonSuggestedList = @[];
     self.selectedContacts = [NSMutableDictionary new];
     self.contactDictionary = [NSMutableDictionary new];
     [[ContactManager sharedManager] fetchContacts:^(NSArray *contacts) {
@@ -74,29 +74,17 @@ typedef enum {
 {
     NSArray *allContacts = self.contactDictionary.allValues;
     //separate users and nonusers
-    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"isUser = %d",YES];
-    self.userList = [allContacts filteredArrayUsingPredicate:userPredicate];
-    NSPredicate *nonuserPredicate = [NSPredicate predicateWithFormat:@"isUser = %d", NO];
-    self.nonuserList = [allContacts filteredArrayUsingPredicate:nonuserPredicate];
+    NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d",YES];
+    self.suggestedList = [allContacts filteredArrayUsingPredicate:suggestedPredicate];
+    NSPredicate *nonSuggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d", NO];
+    self.nonSuggestedList = [allContacts filteredArrayUsingPredicate:nonSuggestedPredicate];
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
-    self.userList = [self.userList sortedArrayUsingDescriptors:@[sortDescriptor]];
-    self.nonuserList = [self.nonuserList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     [self.tableView reloadData];
 }
-
-- (NSArray *)contactsWhoAreNotUsers
-{
-    NSMutableArray *userNumbers = [NSMutableArray new];
-    for (User *user in self.userList) {
-        [userNumbers addObject:user.normalizedPhoneNumber];
-    }
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (normalizedPhoneNumber in %@)", userNumbers];
-    NSArray *contactsNotUsers = [self.nonuserList filteredArrayUsingPredicate:predicate];
-    return contactsNotUsers;
-}
-
 
 #pragma mark - Table view data source
 
@@ -121,10 +109,10 @@ typedef enum {
 {
     NSInteger numRows = 0;
     if (section == FindFriendSectionSuggested) {
-        numRows = self.userList.count;
+        numRows = self.suggestedList.count;
     }
     else if (section == FindFriendSectionContacts) {
-        numRows = self.nonuserList.count;
+        numRows = self.nonSuggestedList.count;
     }
     return numRows;
 }
@@ -168,10 +156,10 @@ typedef enum {
     NSString *normalizedPhoneNumber;
     Contact *contact;
     if (indexPath.section == FindFriendSectionSuggested) {
-        contact = self.userList[indexPath.row];
+        contact = self.suggestedList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
-        contact = self.nonuserList[indexPath.row];
+        contact = self.nonSuggestedList[indexPath.row];
     }
     nameLabel.text = contact.fullName;
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
@@ -187,10 +175,10 @@ typedef enum {
 {
     Contact *contact;
     if (indexPath.section == FindFriendSectionSuggested) {
-        contact = self.userList[indexPath.row];
+        contact = self.suggestedList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
-        contact = self.nonuserList[indexPath.row];
+        contact = self.nonSuggestedList[indexPath.row];
     }
     
     BOOL currentlySelected = [self.selectedContacts.allKeys containsObject:contact.normalizedPhoneNumber];
@@ -224,6 +212,7 @@ typedef enum {
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
                                       if (contact) {
+                                          contact.isSuggested = YES;
                                           [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
                                       }
                                   }
@@ -232,6 +221,7 @@ typedef enum {
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
                                       if (contact) {
+                                          contact.isSuggested = YES;
                                           contact.isUser = YES;
                                           [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
                                       }
