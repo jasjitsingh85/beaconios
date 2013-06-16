@@ -11,6 +11,12 @@
 #import "Utilities.h"
 #import "APIClient.h"
 
+@interface ContactManager()
+
+@property (strong, nonatomic) NSArray *cachedContacts;
+
+@end
+
 @implementation ContactManager
 
 + (ContactManager *)sharedManager
@@ -26,6 +32,10 @@
 
 - (void)fetchContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
 {
+    if (self.cachedContacts) {
+        success(self.cachedContacts);
+        return;
+    }
     if (ABAddressBookRequestAccessWithCompletion) {
         CFErrorRef err;
         ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &err);
@@ -35,15 +45,17 @@
                 if (!granted) {
                     failure((__bridge NSError *)error);
                 } else {
-                    readAddressBookContacts(addressBook, success);
+                    NSArray *contacts = [self addressBookContacts:addressBook];
+                    success(contacts);
+                    self.cachedContacts = contacts;
                 }
             });
         });
     }
 }
 
-static void readAddressBookContacts(ABAddressBookRef addressBook, void (^completion)(NSArray *contacts)) {
-    // do stuff with addressBook
+- (NSArray *)addressBookContacts:(ABAddressBookRef)addressBook
+{
     NSMutableArray *contacts = [NSMutableArray new];
     CFArrayRef people  = ABAddressBookCopyArrayOfAllPeople(addressBook);
     int numPeople = ABAddressBookGetPersonCount(addressBook);
@@ -89,7 +101,7 @@ static void readAddressBookContacts(ABAddressBookRef addressBook, void (^complet
             [contacts addObject:contact];
         }
     }
-    completion(contacts);
+    return contacts;
 }
 
 - (void)syncContacts
