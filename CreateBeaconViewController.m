@@ -34,6 +34,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (strong, nonatomic) NSDate *beaconDate;
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
 @property (strong, nonatomic) NSArray *contacts;
+@property (assign, nonatomic) BOOL useCurrentLocation;
 @end
 
 @implementation CreateBeaconViewController
@@ -88,12 +89,22 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     
     //by default set selected location as current location
     self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
+    self.useCurrentLocation = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kNotificationDidUpdateLocation object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Create Beacon";
+}
+
+- (void)didUpdateLocation:(NSNotification *)notification
+{
+    CLLocation *location = notification.userInfo[@"location"];
+    if (self.useCurrentLocation) {
+        self.beaconCoordinate = location.coordinate;
+    }
 }
 
 - (IBAction)nextButtonTouched:(id)sender
@@ -209,12 +220,14 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 #pragma mark - SelectLocationViewControllerDelegate
 - (void)didSelectVenue:(Venue *)venue
 {
+    self.useCurrentLocation = NO;
     self.locationValueLabel.text = venue.name;
     self.beaconCoordinate = venue.coordinate;
 }
 
 - (void)didSelectCurrentLocation
 {
+    self.useCurrentLocation = YES;
     self.locationValueLabel.text = @"Current Location";
     self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
 }

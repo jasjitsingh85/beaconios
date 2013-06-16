@@ -8,3 +8,6 @@
 #define kDefaultsKeyIsLoggedIn @"defaultsKeyIsLoggedIn"
 #define kDefaultsKeyAccountActivated @"defaultsKeyAccountActivated"
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"
+
+//notifications
+#define kNotificationDidUpdateLocation @"notificationDidUpdateLocation"

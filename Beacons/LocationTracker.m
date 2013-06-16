@@ -32,4 +32,10 @@
     return self;
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *location = [locations lastObject];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidUpdateLocation object:nil userInfo:@{@"location" : location}];
+}
+
 @end
