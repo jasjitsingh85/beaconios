@@ -13,6 +13,8 @@
 @protocol BeaconCellDelegate <NSObject>
 
 - (void)beaconCellTextButtonTouched:(BeaconCell *)beaconCell;
+- (void)beaconCellDirectionsButtonTouched:(BeaconCell *)beaconCell;
+- (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell;
 
 @end

@@ -153,12 +153,16 @@
 
 - (void)infoButtonTouched:(id)sender
 {
-    
+    if ([self.delegate respondsToSelector:@selector(beaconCellInfoButtonTouched:)]) {
+        [self.delegate beaconCellInfoButtonTouched:self];
+    }
 }
 
 - (void)directionsButtonTouched:(id)sender
 {
-    
+    if ([self.delegate respondsToSelector:@selector(beaconCellDirectionsButtonTouched:)]) {
+        [self.delegate beaconCellDirectionsButtonTouched:self];
+    }
 }
 
 

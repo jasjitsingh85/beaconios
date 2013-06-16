@@ -17,6 +17,7 @@
 #import "BeaconDetailViewController.h"
 #import "TextMessageManager.h"
 #import "APIClient.h"
+#import "Utilities.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -127,16 +128,20 @@
 {
     BeaconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
     cell.delegate = self;
-    Beacon *beacon = self.beacons[indexPath.row];
-    cell.beacon = beacon;
+    cell.beacon = [self beaconForIndexPath:indexPath];
     
     return cell;
+}
+
+- (Beacon *)beaconForIndexPath:(NSIndexPath *)indexPath
+{
+    return self.beacons[indexPath.row];
 }
 
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Beacon *beacon = self.beacons[indexPath.row];
+    Beacon *beacon = [self beaconForIndexPath:indexPath];
     BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
     beaconDetailViewController.beacon = beacon;
     [self.navigationController pushViewController:beaconDetailViewController animated:YES];
@@ -145,13 +150,26 @@
 #pragma mark - BeaconCellDelegate
 - (void)beaconCellTextButtonTouched:(BeaconCell *)beaconCell
 {
-    Beacon *beacon = beaconCell.beacon;
+    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[beacon.creator.phoneNumber]];
+}
+
+- (void)beaconCellDirectionsButtonTouched:(BeaconCell *)beaconCell
+{
+    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
+    [Utilities launchMapDirectionsToCoordinate:beacon.coordinate addressDictionary:nil destinationName:beacon.beaconDescription];
+}
+
+- (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell
+{
+    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
+    BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
+    beaconDetailViewController.beacon = beacon;
+    [self.navigationController pushViewController:beaconDetailViewController animated:YES];
 }
 
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell
 {
-    
 }
 
 #pragma mark - UIScrollViewDelegate
