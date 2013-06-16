@@ -16,7 +16,7 @@
 #import "ContactManager.h"
 
 typedef enum {
-    FindFriendSectionUsers=0,
+    FindFriendSectionSuggested=0,
     FindFriendSectionContacts,
 } FindFriendSection;
 
@@ -56,9 +56,7 @@ typedef enum {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
         }
         [self reloadData];
-        [self requestFriendsOnBeacons];
-        [self requestUserFollowers];
-        [self requestNonUserFollowers];
+        [self requestSuggested];
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
@@ -105,8 +103,8 @@ typedef enum {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *title = @"";
-    if (section == FindFriendSectionUsers) {
-        title = @"Users";
+    if (section == FindFriendSectionSuggested) {
+        title = @"Suggested";
     }
     else if (section == FindFriendSectionContacts) {
         title = @"Contacts";
@@ -122,7 +120,7 @@ typedef enum {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numRows = 0;
-    if (section == FindFriendSectionUsers) {
+    if (section == FindFriendSectionSuggested) {
         numRows = self.userList.count;
     }
     else if (section == FindFriendSectionContacts) {
@@ -169,7 +167,7 @@ typedef enum {
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     NSString *normalizedPhoneNumber;
     Contact *contact;
-    if (indexPath.section == FindFriendSectionUsers) {
+    if (indexPath.section == FindFriendSectionSuggested) {
         contact = self.userList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
@@ -188,7 +186,7 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Contact *contact;
-    if (indexPath.section == FindFriendSectionUsers) {
+    if (indexPath.section == FindFriendSectionSuggested) {
         contact = self.userList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
@@ -215,62 +213,13 @@ typedef enum {
 }
 
 #pragma mark - Networking
-- (void)requestFriendsOnBeacons
+- (void)requestSuggested
 {
-//    [self showLoadingIndicator];
-    NSMutableArray *phoneNumbers = [NSMutableArray new];
-    for (Contact *contact in self.nonuserList) {
-        [phoneNumbers addObject:contact.phoneNumber];
-    }
-    NSDictionary *parameters = @{@"phone_number" : phoneNumbers};
-    [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   [self hideLoadingIndicator];
-                                   for (NSDictionary *userData in responseObject) {
-                                       NSString *phoneNumber = userData[@"phone_number"];
-                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                       contact.isUser = YES;
-                                   }
-                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-                                }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   [self hideLoadingIndicator];
-                               }];
-}
-
-- (void)requestUserFollowers
-{
-//    [self showLoadingIndicator];
-    NSDictionary *parameters = @{@"type" : @"users"};
-    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
+    [[APIClient sharedClient] getPath:@"friends/" parameters:nil
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  [self hideLoadingIndicator];
-                                  for (NSDictionary *userData in responseObject) {
-                                      NSString *phoneNumber = userData[@"phone_number"];
-                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      if (contact) {
-                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
-                                      }
-                                  }
-                                  [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-    }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  [self hideLoadingIndicator];
-        
-    }];
-}
-
-- (void)requestNonUserFollowers
-{
-//    [self showLoadingIndicator];
-    NSDictionary *parameters = @{@"type" : @"contacts"};
-    [[APIClient sharedClient] getPath:@"friends/broadcast/" parameters:parameters
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  [self hideLoadingIndicator];
-                                  for (NSDictionary *contactData in responseObject) {
+                                  NSArray *contacts = responseObject[@"contacts"];
+                                  NSArray *users = responseObject[@"users"];
+                                  for (NSDictionary *contactData in contacts) {
                                       NSString *phoneNumber = contactData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
@@ -278,10 +227,19 @@ typedef enum {
                                           [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
                                       }
                                   }
+                                  for (NSDictionary *userData in users) {
+                                      NSString *phoneNumber = userData[@"phone_number"];
+                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                      if (contact) {
+                                          contact.isUser = YES;
+                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                      }
+                                  }
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        
     }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  [self hideLoadingIndicator];
         
     }];
 }
@@ -291,13 +249,13 @@ typedef enum {
     if (!self.selectedContacts.count) {
         return;
     }
-    NSMutableArray *nonUserFollows = [NSMutableArray new];
+    NSMutableArray *invites = [NSMutableArray new];
     for (Contact *contact in self.selectedContacts.allValues) {
         NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
-        [nonUserFollows addObject:contactString];
+        [invites addObject:contactString];
     }
-    NSDictionary *parameters = @{@"contact" : nonUserFollows};
-    [[APIClient sharedClient] postPath:@"friends/broadcast/" parameters:parameters
+    NSDictionary *parameters = @{@"invite" : invites};
+    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    
                                }
