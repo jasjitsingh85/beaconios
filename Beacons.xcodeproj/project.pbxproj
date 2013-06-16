@@ -150,7 +150,7 @@
 		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		1FA2D5081765398C00AB657F /* TextMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMessageManager.h; sourceTree = "<group>"; };
 		1FA2D5091765398C00AB657F /* TextMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMessageManager.m; sourceTree = "<group>"; };
-		1FC07DBA1767002C0011866A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		1FC07DBA1767002C0011866A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
 		1FD65825175871670007455B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		1FD65826175871670007455B /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		1FD6582A175878610007455B /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
@@ -310,7 +310,6 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
-				1FC07DBA1767002C0011866A /* Icon@2x.png */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -411,6 +410,7 @@
 				9633994D1758512100AF9D89 /* Default.png */,
 				9633994F1758512100AF9D89 /* Default@2x.png */,
 				963399511758512100AF9D89 /* Default-568h@2x.png */,
+				1FC07DBA1767002C0011866A /* Icon@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
