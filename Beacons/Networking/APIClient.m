@@ -70,4 +70,25 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
     }
 }
 
+#pragma mark - server calls
+- (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self beaconFollow:YES beaconID:beaconID success:success failure:failure];
+}
+
+- (void)cancelBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    [self beaconFollow:NO beaconID:beaconID success:success failure:failure];
+}
+
+- (void)beaconFollow:(BOOL)follow beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"beacon_id" : beaconID,
+                                 @"follow" : @(follow)};
+    [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
+}
+
 @end

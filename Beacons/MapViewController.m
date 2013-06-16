@@ -170,6 +170,12 @@
 
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell
 {
+    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
+    [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 #pragma mark - UIScrollViewDelegate
