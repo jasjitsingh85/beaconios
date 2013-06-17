@@ -119,10 +119,8 @@
         NSDictionary *parameters = @{@"contact" : contactParameter};
         [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       [[[UIAlertView alloc] initWithTitle:@"sync complete" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       [[[UIAlertView alloc] initWithTitle:@"sync fail" message:@"server" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
                                    }];
     } failure:^(NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"sync fail" message:@"fetch fail" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];

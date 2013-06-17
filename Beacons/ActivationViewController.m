@@ -77,10 +77,8 @@
      {
          AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
          [appDelegate didActivateAccount];
-        [[[UIAlertView alloc] initWithTitle:@"succes" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil] show];
     }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles: nil] show];
     }];
 }
 
