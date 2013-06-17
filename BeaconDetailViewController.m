@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import "Beacon.h"
 #import "User.h"
+#import "Contact.h"
 #import "Theme.h"
 #import "BeaconUserCell.h"
 #import "Utilities.h"
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *beaconDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) NSDictionary *attendingContactDictionary;
 
 @end
 
@@ -71,6 +73,13 @@
     CGRect frame = self.tableView.frame;
     frame.size.height = height;
     self.tableView.frame = frame;
+    
+    NSMutableDictionary *attendingContactDictionary = [NSMutableDictionary new];
+    for (Contact *contact in beacon.attending) {
+        [attendingContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+    }
+    self.attendingContactDictionary = [NSDictionary dictionaryWithDictionary:attendingContactDictionary];
+    
     [self.tableView reloadData];
 }
 
@@ -82,8 +91,8 @@
     if (self.beacon && self.beacon.creator) {
         numRows++;
     }
-    if (self.beacon && self.beacon.going) {
-        numRows += self.beacon.going.count;
+    if (self.beacon && self.beacon.invited) {
+        numRows += self.beacon.invited.count;
     }
     return numRows;
 }
@@ -106,8 +115,14 @@
     User *user;
     if (indexPath.row == 0) {
         user = self.beacon.creator;
+        cell.user = user;
+        cell.isAttending = YES;
     }
-    cell.user = user;
+    else {
+        Contact *contact = self.beacon.invited[indexPath.row - 1];
+        cell.contact = contact;
+        cell.isAttending = [self.attendingContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
+    }
     return cell;
 }
 
@@ -134,10 +149,16 @@
 
 - (IBAction)textMessageButtonTouched:(id)sender
 {
-    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[self.beacon.creator]];
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[self.beacon.creator.phoneNumber]];
 }
 
-- (IBAction)groupTextMessageButtonTouched:(id)sender {
+- (IBAction)groupTextMessageButtonTouched:(id)sender
+{
+    NSMutableArray *invitedNumbers = [NSMutableArray new];
+    for (Contact *contact in self.beacon.invited) {
+        [invitedNumbers addObject:contact.phoneNumber];
+    }
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:invitedNumbers];
 }
 
 @end

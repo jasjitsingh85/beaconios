@@ -8,6 +8,7 @@
 
 #import "Beacon.h"
 #import "User.h"
+#import "Contact.h"
 #import "Constants.h"
 #import "AppDelegate.h"
 
@@ -23,6 +24,26 @@
         NSNumber *latitude = data[@"latitude"];
         NSNumber *longitude = data[@"longitude"];
         self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
+        
+        NSMutableArray *attending = [NSMutableArray new];
+        for (NSDictionary *userData in data[@"followers"]) {
+            User *user = [[User alloc] initWithData:userData];
+            Contact *contact = [[Contact alloc] initWithUser:user];
+            [attending addObject:contact];
+        }
+        self.attending = [NSArray arrayWithArray:attending];
+        
+        NSMutableArray *invited = [NSMutableArray new];
+        for (NSDictionary *userData in data[@"profiles_invited"]) {
+            User *user = [[User alloc] initWithData:userData];
+            Contact *contact = [[Contact alloc] initWithUser:user];
+            [invited addObject:contact];
+        }
+        for (NSDictionary *contactData in data[@"contacts_invited"]) {
+            Contact *contact = [[Contact alloc] initWithData:contactData];
+            [invited addObject:contact];
+        }
+        self.invited = [NSArray arrayWithArray:invited];
     }
     return self;
 }

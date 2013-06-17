@@ -9,12 +9,13 @@
 #import "BeaconUserCell.h"
 #import "Theme.h"
 #import "User.h"
+#import "Contact.h"
 #import "Beacon.h"
 
 @interface BeaconUserCell()
 
 @property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UIButton *addFriendButton;
+@property (strong, nonatomic) UIButton *attendingButton;
 
 @end
 
@@ -37,16 +38,16 @@
         self.nameLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.nameLabel];
         
-        self.addFriendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *addFriendImage = [UIImage imageNamed:@"addFriendButton"];
-        [self.addFriendButton setImage:addFriendImage forState:UIControlStateNormal];
+        self.attendingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *attendingButtonImage = [UIImage imageNamed:@"attendingButton"];
+        [self.attendingButton setImage:attendingButtonImage forState:UIControlStateNormal];
         frame = CGRectZero;
-        frame.size = addFriendImage.size;
+        frame.size = attendingButtonImage.size;
         frame.origin.x = 207;
         frame.origin.y = 0.5*(self.frame.size.height - frame.size.height);
-        self.addFriendButton.frame = frame;
-        self.addFriendButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-        [self.contentView addSubview:self.addFriendButton];
+        self.attendingButton.frame = frame;
+        self.attendingButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        [self.contentView addSubview:self.attendingButton];
     }
     return self;
 }
@@ -56,10 +57,27 @@
     _beacon = beacon;
 }
 
+- (void)setContact:(Contact *)contact
+{
+    _contact = contact;
+    self.nameLabel.text = contact.fullName;
+}
+
 - (void)setUser:(User *)user
 {
     _user = user;
     self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+}
+
+- (void)setIsAttending:(BOOL)isAttending
+{
+    _isAttending = isAttending;
+    if (isAttending) {
+        [self.attendingButton setImage:[UIImage imageNamed:@"attendingButton"] forState:UIControlStateNormal];
+    }
+    else {
+        [self.attendingButton setImage:[UIImage imageNamed:@"invitedButton"] forState:UIControlStateNormal];
+    }
 }
 
 @end

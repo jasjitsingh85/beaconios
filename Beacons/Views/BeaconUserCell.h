@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class Beacon,
-User;
+User,
+Contact;
 @interface BeaconUserCell : UITableViewCell
 
 @property (weak, nonatomic) Beacon *beacon;
 @property (weak, nonatomic) User *user;
+@property (weak, nonatomic) Contact *contact;
+@property (assign, nonatomic) BOOL isAttending;
 
 @end

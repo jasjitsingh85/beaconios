@@ -13,7 +13,7 @@
 
 @interface ContactManager()
 
-@property (strong, nonatomic) NSArray *cachedContacts;
+@property (strong, nonatomic) NSDictionary *contactDictionary;
 
 @end
 
@@ -32,8 +32,8 @@
 
 - (void)fetchContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
 {
-    if (self.cachedContacts) {
-        success(self.cachedContacts);
+    if (self.contactDictionary.allValues) {
+        success(self.contactDictionary.allValues);
         return;
     }
     if (ABAddressBookRequestAccessWithCompletion) {
@@ -46,8 +46,12 @@
                     failure((__bridge NSError *)error);
                 } else {
                     NSArray *contacts = [self addressBookContacts:addressBook];
+                    NSMutableDictionary *contactDictionary = [NSMutableDictionary new];
+                    for (Contact *contact in contacts) {
+                        [contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+                    }
+                    self.contactDictionary = [[NSDictionary alloc] initWithDictionary:contactDictionary];
                     success(contacts);
-                    self.cachedContacts = contacts;
                 }
             });
         });

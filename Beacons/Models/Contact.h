@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class User;
 @interface Contact : NSObject
 
 @property (strong, nonatomic) NSString *firstName;
@@ -20,5 +21,8 @@
 /*you can not set the normalized number directly.
  It is computed when the phone number property is set*/
 @property (strong, nonatomic, readonly) NSString *normalizedPhoneNumber;
+
+- (id)initWithData:(NSDictionary *)data;
+- (id)initWithUser:(User *)user;
 
 @end
