@@ -45,11 +45,8 @@
     self.beaconCollectionView.collectionViewLayout = [LineLayout new];
     
     self.mapView.delegate = self;
-    self.mapView.scrollEnabled = NO;
-    self.mapView.zoomEnabled = NO;
-    
-//    [self createTestBeacons];
-//    [self.beaconCollectionView reloadData];
+    self.mapView.scrollEnabled = YES;
+    self.mapView.zoomEnabled = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -203,9 +200,17 @@
 
 - (void)centerMapOnBeacon:(Beacon *)beacon animated:(BOOL)animated
 {
+    //we want to center the map a little above the beacon. If we center on the beacon
+    //the beacon collection view occludes the beacon annotation
+    MKMapView *tmpMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
     CLLocationDistance distance = 1000 + (arc4random() % 10000);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, distance, distance);
-    [self.mapView setRegion:region animated:animated];
+    [tmpMapView setRegion:region];
+    
+    CGPoint adjustedCenter = CGPointMake(tmpMapView.center.x, tmpMapView.center.y - 50);
+    CLLocationCoordinate2D adjustedCenterCoordinate = [tmpMapView convertPoint:adjustedCenter toCoordinateFromView:tmpMapView];
+    MKCoordinateRegion adjustedRegion = MKCoordinateRegionMakeWithDistance(adjustedCenterCoordinate, distance, distance);
+    [self.mapView setRegion:adjustedRegion animated:animated];
     
     [self.mapView removeAnnotations:self.mapView.annotations];
     BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
