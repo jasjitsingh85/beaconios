@@ -12,6 +12,7 @@
 @implementation APIClient
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
+static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
 static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.herokuapp.com/api/";
 
 
@@ -20,7 +21,7 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
     static APIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURLStringDevelopment]];
+        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURLStringLAN]];
         [_sharedClient setupAuthorization];
         [[NSNotificationCenter defaultCenter] addObserver:_sharedClient selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
         
