@@ -17,6 +17,7 @@
 #import "Utilities.h"
 #import "TextMessageManager.h"
 #import "APIClient.h"
+#import "AppDelegate.h"
 
 #define kMaxTableHeight 227
 @interface BeaconDetailViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -155,11 +156,16 @@
 
 - (IBAction)groupTextMessageButtonTouched:(id)sender
 {
-    NSMutableArray *invitedNumbers = [NSMutableArray new];
+    NSMutableSet *invitedNumbers = [NSMutableSet new];
     for (Contact *contact in self.beacon.invited) {
-        [invitedNumbers addObject:contact.phoneNumber];
+        [invitedNumbers addObject:contact.normalizedPhoneNumber];
     }
-    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:invitedNumbers];
+    //also add creator
+    [invitedNumbers addObject:self.beacon.creator.normalizedPhoneNumber];
+    //remove user from this set
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [invitedNumbers removeObject:appDelegate.loggedInUser.normalizedPhoneNumber];
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:invitedNumbers.allObjects];
 }
 - (IBAction)confirmButtonTouched:(id)sender
 {
