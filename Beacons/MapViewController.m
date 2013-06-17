@@ -55,6 +55,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
 }
 
@@ -100,12 +102,26 @@
 
 }
 
-- (void)showBeaconCollectionViewAnimated:(BOOL)animated
+- (void)hideBeaconCollectionViewAnimated:(BOOL)animated
 {
-    if (animated) {
+    if (self.beaconCollectionView.alpha == 1) {
+        return;
+    }
+    
+    NSTimeInterval duration = animated ? 0.5 : 0.0;
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.beaconCollectionView.alpha = 0;
         self.beaconCollectionView.transform = CGAffineTransformMakeTranslation(0, -self.beaconCollectionView.frame.size.height);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)showBeaconCollectionViewAnimated:(BOOL)animated
+{
+    if (!self.beaconCollectionView.alpha == 0) {
+        return;
     }
+    
     NSTimeInterval duration = animated ? 0.5 : 0.0;
     [UIView animateWithDuration:duration
                           delay:0.0
@@ -114,7 +130,6 @@
                          self.beaconCollectionView.alpha = 1;
                          self.beaconCollectionView.transform = CGAffineTransformIdentity;
                      } completion:^(BOOL finished) {
-                         
                      }];
 }
 
