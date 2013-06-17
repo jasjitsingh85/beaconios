@@ -203,8 +203,10 @@ typedef enum {
 #pragma mark - Networking
 - (void)requestSuggested
 {
+    [self showLoadingIndicator];
     [[APIClient sharedClient] getPath:@"friends/" parameters:nil
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [self hideLoadingIndicator];
                                   NSArray *contacts = responseObject[@"contacts"];
                                   NSArray *users = responseObject[@"users"];
                                   for (NSDictionary *contactData in contacts) {
@@ -230,7 +232,7 @@ typedef enum {
         
     }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+                                  [self hideLoadingIndicator];
     }];
 }
 
