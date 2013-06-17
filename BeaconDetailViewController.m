@@ -16,6 +16,7 @@
 #import "BeaconUserCell.h"
 #import "Utilities.h"
 #import "TextMessageManager.h"
+#import "APIClient.h"
 
 #define kMaxTableHeight 227
 @interface BeaconDetailViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -159,6 +160,14 @@
         [invitedNumbers addObject:contact.phoneNumber];
     }
     [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:invitedNumbers];
+}
+- (IBAction)confirmButtonTouched:(id)sender
+{
+    [[APIClient sharedClient] confirmBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+    }];
 }
 
 @end

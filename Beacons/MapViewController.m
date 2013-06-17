@@ -172,9 +172,9 @@
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
     }];
 }
 
