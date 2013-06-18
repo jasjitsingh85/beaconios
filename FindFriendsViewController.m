@@ -92,7 +92,7 @@ typedef enum {
 {
     NSString *title = @"";
     if (section == FindFriendSectionSuggested) {
-        title = @"Suggested";
+        title = @"Close Friends";
     }
     else if (section == FindFriendSectionContacts) {
         title = @"Contacts";
