@@ -13,6 +13,7 @@
 
 + (AnalyticsManager *)sharedManager;
 
+- (void)setupForUser;
 - (void)appForeground;
 
 @end

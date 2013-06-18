@@ -164,6 +164,7 @@
             [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
         }
     }];
+    [[AnalyticsManager sharedManager] setupForUser];
 }
 
 - (void)didActivateAccount

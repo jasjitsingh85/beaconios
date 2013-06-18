@@ -7,6 +7,8 @@
 //
 
 #import "AnalyticsManager.h"
+#import "AppDelegate.h"
+#import "User.h"
 
 @implementation AnalyticsManager
 
@@ -26,12 +28,28 @@
     if (self) {
         // Mixpanel initialization
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+        [self setupForUser];
     }
     return self;
 }
 
 - (void)setupForUser
 {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    User *loggedInUser = appDelegate.loggedInUser;
+    if (!loggedInUser || !loggedInUser.userID) {
+        return;
+    }
+    Mixpanel *mixpanel = [Mixpanel sharedInstance];
+    [mixpanel identify:loggedInUser.userID.stringValue];
+    NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username"];
+    NSArray *userProperties = @[@"email", @"firstName", @"lastName", @"username"];
+    for (NSInteger i=0; i<mixpanelProperties.count; i++) {
+        id value = [loggedInUser valueForKeyPath:userProperties[i]];
+        if (value) {
+            [mixpanel.people set:mixpanelProperties[i] to:value];
+        }
+    }
 }
 
 - (void)sendEvent:(NSString *)event withProperties:(NSDictionary *)properties
