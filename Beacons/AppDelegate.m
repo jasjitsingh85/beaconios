@@ -98,7 +98,7 @@
     [ThemeManager customizeAppAppearance];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.centerNavigationController.selectedViewController = self.mapViewController;
+    self.centerNavigationController.selectedViewController = self.createBeaconViewController;
     self.sideNavigationViewController.centerController = self.centerNavigationController;
     self.sideNavigationViewController.leftController = self.menuViewController;
     self.window.rootViewController = self.sideNavigationViewController;
