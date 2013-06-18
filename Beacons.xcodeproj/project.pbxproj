@@ -55,6 +55,7 @@
 		1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67732175C3C9F006F563C /* Lato-Bold.ttf */; };
 		1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67734175C3CB5006F563C /* Lato-Regular.ttf */; };
 		1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67736175C3F0D006F563C /* menuBeacons@2x.png */; };
+		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
@@ -172,6 +173,8 @@
 		1FE67732175C3C9F006F563C /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		1FE67734175C3CB5006F563C /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		1FE67736175C3F0D006F563C /* menuBeacons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBeacons@2x.png"; sourceTree = "<group>"; };
+		1FEAEDFF17701C9B0090A7C2 /* LoadingIndictor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingIndictor.h; sourceTree = "<group>"; };
+		1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingIndictor.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 				1F9CEB3A176D081500529037 /* ActivationViewController.xib */,
 				1F9CEB3D176D1F2C00529037 /* ContactManager.h */,
 				1F9CEB3E176D1F2C00529037 /* ContactManager.m */,
+				1FEAEDFF17701C9B0090A7C2 /* LoadingIndictor.h */,
+				1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -683,6 +688,7 @@
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
+				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

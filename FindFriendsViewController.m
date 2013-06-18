@@ -7,13 +7,13 @@
 //
 
 #import "FindFriendsViewController.h"
-#import <MBProgressHUD/MBProgressHUD.h>
 #import "Contact.h"
 #import "Theme.h"
 #import "APIClient.h"
 #import "User.h"
 #import "Utilities.h"
 #import "ContactManager.h"
+#import "LoadingIndictor.h"
 
 typedef enum {
     FindFriendSectionSuggested=0,
@@ -203,10 +203,10 @@ typedef enum {
 #pragma mark - Networking
 - (void)requestSuggested
 {
-    [self showLoadingIndicator];
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] getPath:@"friends/" parameters:nil
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  [self hideLoadingIndicator];
+                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                                   NSArray *contacts = responseObject[@"contacts"];
                                   NSArray *users = responseObject[@"users"];
                                   for (NSDictionary *contactData in contacts) {
@@ -232,7 +232,7 @@ typedef enum {
         
     }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  [self hideLoadingIndicator];
+                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
 }
 
@@ -256,18 +256,5 @@ typedef enum {
                                }];
 }
 
-#pragma mark - Loading Indicator
-- (void)showLoadingIndicator
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Loading...";
-}
-
-- (void)hideLoadingIndicator
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    });
-}
 
 @end

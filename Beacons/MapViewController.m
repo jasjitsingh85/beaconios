@@ -18,6 +18,7 @@
 #import "TextMessageManager.h"
 #import "APIClient.h"
 #import "Utilities.h"
+#import "LoadingIndictor.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -47,12 +48,21 @@
     self.mapView.delegate = self;
     self.mapView.scrollEnabled = YES;
     self.mapView.zoomEnabled = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
+    [self hideBeaconCollectionViewAnimated:NO];
+    [self requestBeacons];
+}
+
+#pragma mark - Notifications
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
 }
@@ -101,7 +111,7 @@
 
 - (void)hideBeaconCollectionViewAnimated:(BOOL)animated
 {
-    if (self.beaconCollectionView.alpha == 1) {
+    if (!self.beaconCollectionView.alpha) {
         return;
     }
     
@@ -115,7 +125,7 @@
 
 - (void)showBeaconCollectionViewAnimated:(BOOL)animated
 {
-    if (!self.beaconCollectionView.alpha == 0) {
+    if (self.beaconCollectionView.alpha) {
         return;
     }
     
@@ -258,17 +268,22 @@
 }
 
 #pragma mark - Networking
-- (void)requestBeacons{
-    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *beacons = [NSMutableArray new];
-        for (NSDictionary *beaconData in responseObject) {
-            Beacon *beacon = [[Beacon alloc] initWithData:beaconData];
-            [beacons addObject:beacon];
-        }
-        self.beacons = [NSArray arrayWithArray:beacons];
-        [self performSelectorOnMainThread:@selector(reloadBeacons) withObject:nil waitUntilDone:NO];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+- (void)requestBeacons
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil
+                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                                  NSMutableArray *beacons = [NSMutableArray new];
+                                  for (NSDictionary *beaconData in responseObject) {
+                                      Beacon *beacon = [[Beacon alloc] initWithData:beaconData];
+                                      [beacons addObject:beacon];
+                                  }
+                                  self.beacons = [NSArray arrayWithArray:beacons];
+                                  [self performSelectorOnMainThread:@selector(reloadBeacons) withObject:nil waitUntilDone:NO];
+                              }
+                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                              }];
 }
 @end
