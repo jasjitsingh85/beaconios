@@ -257,12 +257,12 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
                                  @"invite" : invites};
     [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   [[[UIAlertView alloc] initWithTitle:@"success" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                                   [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   [[[UIAlertView alloc] initWithTitle:@"failure" message:@"yay" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                                   [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
                                }];
 }
 
