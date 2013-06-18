@@ -18,6 +18,7 @@
 #import "Theme.h"
 #import "User.h"
 #import "ContactManager.h"
+#import "AnalyticsManager.h"
 
 @interface AppDelegate()
 
@@ -119,6 +120,11 @@
         [[ContactManager sharedManager] syncContacts];
     }
     return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [[AnalyticsManager sharedManager] appForeground];
 }
 
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response
