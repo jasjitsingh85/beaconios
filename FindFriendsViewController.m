@@ -194,7 +194,6 @@ typedef enum {
 #pragma mark - buttons
 - (void)doneButtonTouched:(id)sender
 {
-    [self sendFollowersToServer];
     if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
         [self.delegate findFriendViewController:self didPickContacts:self.selectedContacts.allValues];
     }
@@ -234,26 +233,6 @@ typedef enum {
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
-}
-
-- (void)sendFollowersToServer
-{
-    if (!self.selectedContacts.count) {
-        return;
-    }
-    NSMutableArray *invites = [NSMutableArray new];
-    for (Contact *contact in self.selectedContacts.allValues) {
-        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
-        [invites addObject:contactString];
-    }
-    NSDictionary *parameters = @{@"invite" : invites};
-    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   
-                               }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   
-                               }];
 }
 
 
