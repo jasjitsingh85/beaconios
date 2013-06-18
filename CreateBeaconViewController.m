@@ -123,6 +123,10 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)timeTouched:(id)sender
 {
+    if (self.datePickerContainerView && self.datePickerContainerView.superview) {
+        return;
+    }
+    
     CGRect frame = CGRectZero;
     frame.size = CGSizeMake(self.view.frame.size.width, 30);
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:frame];
@@ -189,10 +193,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)updateDateValue
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"hh:mm a"];
-
-    NSString *dateString = [formatter stringFromDate:self.beaconDate];
+    NSString *dateString;
+    //if beaconDate is within 1 minutes of current time just say now
+    if (ABS([self.beaconDate timeIntervalSinceDate:[NSDate date]]) < 60*1) {
+        dateString = @"Now";
+    }
+    else {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"hh:mm a"];
+        dateString = [formatter stringFromDate:self.beaconDate];
+    }
+    
     self.timeValueLabel.text = dateString;
 }
 
