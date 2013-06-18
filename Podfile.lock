@@ -7,6 +7,7 @@ PODS:
     - JSONKit (~> 1.4)
   - JSONKit (1.5pre)
   - MBProgressHUD (0.6)
+  - Mixpanel (2.0.0)
   - ViewDeck (2.2.11)
 
 DEPENDENCIES:
@@ -14,8 +15,9 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - Facebook-iOS-SDK (~> 3.5.0)
-  - Foursquare-iOS-API
+  - Foursquare-iOS-API (~> 1.1.0)
   - MBProgressHUD (~> 0.6)
+  - Mixpanel (~> 2.0.0)
   - ViewDeck (~> 2.2.9)
 
 SPEC CHECKSUMS:
@@ -26,6 +28,7 @@ SPEC CHECKSUMS:
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
+  Mixpanel: d456c27f7520e22784a15d0bcd9d5c287080b0cd
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
 COCOAPODS: 0.20.2
