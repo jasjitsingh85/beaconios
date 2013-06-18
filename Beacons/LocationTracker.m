@@ -8,6 +8,12 @@
 
 #import "LocationTracker.h"
 
+@interface LocationTracker()
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
+@end
+
 @implementation LocationTracker
 
 + (LocationTracker *)sharedTracker
@@ -27,9 +33,27 @@
     if (self) {
         self.locationManager = [CLLocationManager new];
         self.locationManager.delegate = self;
-        [self.locationManager startUpdatingLocation];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+            [self.locationManager startUpdatingLocation];
+        }
     }
     return self;
+}
+
+- (void)requestLocationPermission
+{
+    [self.locationManager startUpdatingLocation];
+}
+
+- (CLLocation *)currentLocation
+{
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+        return self.locationManager.location;
+    }
+    NSLog(@"requested location before authorizing");
+    return [[CLLocation alloc] initWithLatitude:0 longitude:0];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -37,5 +61,32 @@
     CLLocation *location = [locations lastObject];
     [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidUpdateLocation object:nil userInfo:@{@"location" : location}];
 }
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusDenied) {
+        [[[UIAlertView alloc] initWithTitle:@"Enable Location Services" message:@"Go to Settings" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+    }
+    else if (status == kCLAuthorizationStatusRestricted) {
+     
+    }
+    else if (status == kCLAuthorizationStatusAuthorized) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
+#pragma mark - UIApplication Notifications
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    [self.locationManager stopUpdatingLocation];
+}
+
 
 @end

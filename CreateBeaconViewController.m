@@ -88,7 +88,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     [self updateDateValue];
     
     //by default set selected location as current location
-    self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
+    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kNotificationDidUpdateLocation object:nil];
 }
@@ -240,7 +240,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 {
     self.useCurrentLocation = YES;
     self.locationValueLabel.text = @"Current Location";
-    self.beaconCoordinate = [LocationTracker sharedTracker].locationManager.location.coordinate;
+    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
 
 #pragma mark - FindFriendsViewControllerDelegate

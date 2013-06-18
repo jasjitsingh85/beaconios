@@ -19,6 +19,7 @@
 #import "User.h"
 #import "ContactManager.h"
 #import "AnalyticsManager.h"
+#import "LocationTracker.h"
 
 @interface AppDelegate()
 
@@ -159,12 +160,16 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.window.rootViewController dismissViewControllerAnimated:activated completion:^{
-        if (!activated) {
+        if (activated) {
+            [[ContactManager sharedManager] syncContacts];
+            [[LocationTracker sharedTracker] requestLocationPermission];
+            [[AnalyticsManager sharedManager] setupForUser];
+        }
+        else {
             self.activationViewController = [ActivationViewController new];
             [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
         }
     }];
-    [[AnalyticsManager sharedManager] setupForUser];
 }
 
 - (void)didActivateAccount
@@ -173,6 +178,8 @@
     self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
         [[ContactManager sharedManager] syncContacts];
+        [[LocationTracker sharedTracker] requestLocationPermission];
+        [[AnalyticsManager sharedManager] setupForUser];
     }];
 }
 

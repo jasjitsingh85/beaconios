@@ -47,7 +47,7 @@
 
 - (void)searchForVenues
 {
-    CLLocation *location = [LocationTracker sharedTracker].locationManager.location;
+    CLLocation *location = [LocationTracker sharedTracker].currentLocation;
     NSString *query = self.searchBar.text ? self.searchBar.text : @"";
     [[FourSquareAPIClient sharedClient] searchVenuesNearLocation:location query:query radius:@10000 limit:@20 completion:^(id response, NSError *error) {
         if (!error) {

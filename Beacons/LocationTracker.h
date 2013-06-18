@@ -11,9 +11,9 @@
 
 @interface LocationTracker : NSObject <CLLocationManagerDelegate>
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
-
 + (LocationTracker *)sharedTracker;
+- (CLLocation *)currentLocation;
+- (void)requestLocationPermission;
 
 
 @end
