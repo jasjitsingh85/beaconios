@@ -81,7 +81,7 @@
         [attendingContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
     }
     self.attendingContactDictionary = [NSDictionary dictionaryWithDictionary:attendingContactDictionary];
-    
+    self.confirmButton.selected = self.beacon.userAttending;
     [self.tableView reloadData];
 }
 
@@ -169,11 +169,30 @@
 }
 - (IBAction)confirmButtonTouched:(id)sender
 {
-    [[APIClient sharedClient] confirmBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
-    }];
+    self.confirmButton.selected = !self.confirmButton.selected;
+    BOOL confirmed = self.confirmButton.selected;
+    if (confirmed && !self.beacon.userAttending) {
+        self.beacon.userAttending = YES;
+        [[APIClient sharedClient] confirmBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+        }];
+    }
+    else if (!confirmed && self.beacon.userAttending){
+        if (self.beacon.isUserBeacon) {
+            [[[UIAlertView alloc] initWithTitle:@"This is your own beacon" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+        }
+        else {
+            self.beacon.userAttending = NO;
+            [[APIClient sharedClient] cancelBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [[[UIAlertView alloc] initWithTitle:@"You have left this beacon" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+            }];
+        }
+    }
+    self.confirmButton.selected = self.beacon.userAttending;
 }
 
 @end
