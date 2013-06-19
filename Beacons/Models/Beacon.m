@@ -49,6 +49,16 @@
         if (!self.address) {
             [self geoCodeAddress];
         }
+        
+        //by default user is attending
+        self.userAttending = self.isUserBeacon;
+        if (!self.userAttending) {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            for (Contact *contact in self.attending) {
+                self.userAttending = self.userAttending || [appDelegate.loggedInUser.normalizedPhoneNumber isEqualToString:contact.normalizedPhoneNumber];
+            }
+        }
+        
     }
     return self;
 }

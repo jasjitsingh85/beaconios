@@ -83,12 +83,14 @@
         [self.contentView addSubview:self.timeLabel];
         
         UIImage *buttonImage = [UIImage imageNamed:@"orangeButton"];
+        UIImage *selectedButtonImage = [UIImage imageNamed:@"blueButton"];
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.confirmButton.frame = CGRectMake(185, 9, 68, 32);
         self.confirmButton.titleEdgeInsets = UIEdgeInsetsMake(0, 9, 0, 9);
         self.confirmButton.titleLabel.adjustsFontSizeToFitWidth = YES;
         self.confirmButton.titleLabel.font = [ThemeManager regularFontOfSize:15.0];
         [self.confirmButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [self.confirmButton setBackgroundImage:selectedButtonImage forState:UIControlStateSelected];
         [self.confirmButton setTitle:@"I'm in" forState:UIControlStateNormal];
         [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.confirmButton];
@@ -142,12 +144,14 @@
     if (self.beacon.address) {
         self.addressLabel.text = self.beacon.address;
     }
+    self.confirmButton.selected = self.beacon.userAttending;
 }
 
 - (void)confirmButtonTouched:(id)sender
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellConfirmButtonTouched:)]) {
-        [self.delegate beaconCellConfirmButtonTouched:self];
+    self.confirmButton.selected = !self.confirmButton.selected;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellConfirmButtonTouched:confirmed:)]) {
+        [self.delegate beaconCellConfirmButtonTouched:self confirmed:self.confirmButton.selected];
     }
 }
 

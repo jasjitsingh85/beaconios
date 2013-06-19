@@ -34,6 +34,7 @@
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
 		1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F52638C175C496900DD26E1 /* LocationTracker.m */; };
+		1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7743D917716C1000188500 /* blueButton@2x.png */; };
 		1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB39176D081500529037 /* ActivationViewController.m */; };
 		1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3A176D081500529037 /* ActivationViewController.xib */; };
 		1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3E176D1F2C00529037 /* ContactManager.m */; };
@@ -145,6 +146,7 @@
 		1F526388175C492800DD26E1 /* BeaconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconCell.m; sourceTree = "<group>"; };
 		1F52638B175C496900DD26E1 /* LocationTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationTracker.h; sourceTree = "<group>"; };
 		1F52638C175C496900DD26E1 /* LocationTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationTracker.m; sourceTree = "<group>"; };
+		1F7743D917716C1000188500 /* blueButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueButton@2x.png"; sourceTree = "<group>"; };
 		1F9CEB38176D081500529037 /* ActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivationViewController.h; sourceTree = "<group>"; };
 		1F9CEB39176D081500529037 /* ActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivationViewController.m; sourceTree = "<group>"; };
 		1F9CEB3A176D081500529037 /* ActivationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivationViewController.xib; sourceTree = "<group>"; };
@@ -453,6 +455,7 @@
 			children = (
 				1FE67731175C3C88006F563C /* Fonts */,
 				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
+				1F7743D917716C1000188500 /* blueButton@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */,
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
@@ -601,6 +604,7 @@
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,
+				1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

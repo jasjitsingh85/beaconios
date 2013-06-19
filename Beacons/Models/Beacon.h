@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString *beaconDescription;
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSDate *time;
+@property (nonatomic, assign) BOOL userAttending;
 
 - (id)initWithData:(NSDictionary *)data;
 
