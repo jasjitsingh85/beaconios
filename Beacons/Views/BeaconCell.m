@@ -68,17 +68,17 @@
         self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.descriptionLabel];
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(67, 68, 128, 10)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(27, 100, 130, 10)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
-        self.addressLabel.textColor = [UIColor blackColor];
-        self.addressLabel.font = [ThemeManager regularFontOfSize:10];
+        self.addressLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
+        self.addressLabel.font = [ThemeManager regularFontOfSize:11];
         self.addressLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.addressLabel];
         
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(216, 68, 128, 10)];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(197, 100, 50, 12)];
         self.timeLabel.backgroundColor = [UIColor clearColor];
-        self.timeLabel.textColor = [UIColor blackColor];
-        self.timeLabel.font = [ThemeManager regularFontOfSize:10];
+        self.timeLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
+        self.timeLabel.font = [ThemeManager regularFontOfSize:11];
         self.timeLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.timeLabel];
         
@@ -135,6 +135,13 @@
     }
     self.descriptionLabel.text = beacon.beaconDescription;
     self.addressLabel.text = beacon.address;
+    NSDateFormatter *timeFormatter = [NSDateFormatter new];
+    timeFormatter.dateFormat = @"hh:mm a";
+    self.timeLabel.text = [timeFormatter stringFromDate:self.beacon.time];
+    
+    if (self.beacon.address) {
+        self.addressLabel.text = self.beacon.address;
+    }
 }
 
 - (void)confirmButtonTouched:(id)sender

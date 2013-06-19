@@ -50,6 +50,8 @@
     self.mapView.zoomEnabled = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,6 +76,12 @@
         [self showBeaconCollectionViewAnimated:YES];
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
     }
+}
+
+- (void)beaconUpdated:(NSNotification *)notification
+{
+    NSIndexPath *indexPath = [self indexPathForBeacon:notification.object];
+    [self.beaconCollectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
 
 
@@ -158,6 +166,13 @@
 - (Beacon *)beaconForIndexPath:(NSIndexPath *)indexPath
 {
     return self.beacons[indexPath.row];
+}
+
+- (NSIndexPath *)indexPathForBeacon:(Beacon *)beacon
+{
+    NSInteger row = [self.beacons indexOfObject:beacon];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    return indexPath;
 }
 
 #pragma mark - UICollectionViewDelegate

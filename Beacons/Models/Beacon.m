@@ -44,6 +44,11 @@
             [invited addObject:contact];
         }
         self.invited = [NSArray arrayWithArray:invited];
+        self.time = [NSDate date];
+        
+        if (!self.address) {
+            [self geoCodeAddress];
+        }
     }
     return self;
 }
@@ -59,6 +64,19 @@
         return YES;
     }
     return NO;
+}
+
+- (void)geoCodeAddress
+{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count)
+        {
+            self.address = [placemarks[0] name];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBeaconUpdated object:self userInfo:nil];
+        }
+    }];
 }
 
 @end
