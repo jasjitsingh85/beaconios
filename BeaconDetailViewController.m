@@ -56,6 +56,10 @@
     self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.beaconDescriptionLabel.adjustsFontSizeToFitWidth = YES;
+    self.addressLabel.adjustsFontSizeToFitWidth = YES;
+    self.timeLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 - (void)setBeacon:(Beacon *)beacon
@@ -63,7 +67,13 @@
     _beacon = beacon;
     //it's possible for this to be set before view is created so force creation of view
     [self view];
-    self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon",beacon.creator.firstName];
+
+    if (beacon.isUserBeacon) {
+        self.titleLabel.text = @"My Beacon";
+    }
+    else {
+        self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
+    }
     self.navigationItem.title = self.titleLabel.text;
     self.beaconDescriptionLabel.text = beacon.beaconDescription;
     
@@ -82,6 +92,12 @@
     }
     self.attendingContactDictionary = [NSDictionary dictionaryWithDictionary:attendingContactDictionary];
     self.confirmButton.selected = self.beacon.userAttending;
+    if (self.beacon.address) {
+        self.addressLabel.text = self.beacon.address;
+    }
+    NSDateFormatter *timeFormatter = [NSDateFormatter new];
+    timeFormatter.dateFormat = @"hh:mm a";
+    self.timeLabel.text = [timeFormatter stringFromDate:self.beacon.time];
     [self.tableView reloadData];
 }
 
