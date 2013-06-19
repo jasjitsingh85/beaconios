@@ -35,6 +35,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
 @property (strong, nonatomic) NSArray *contacts;
 @property (assign, nonatomic) BOOL useCurrentLocation;
+@property (assign, nonatomic) BOOL keyboardHidden;
 @end
 
 @implementation CreateBeaconViewController
@@ -91,12 +92,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kNotificationDidUpdateLocation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Create Beacon";
+    [self.beaconDescriptionTextView becomeFirstResponder];
 }
 
 - (void)didUpdateLocation:(NSNotification *)notification
@@ -123,7 +129,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
 
 - (void)timeTouched:(id)sender
 {
-    if (self.datePickerContainerView && self.datePickerContainerView.superview) {
+    if (!self.keyboardHidden || (self.datePickerContainerView && self.datePickerContainerView.superview)) {
         return;
     }
     
@@ -275,6 +281,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon descripti
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
                                }];
+}
+
+#pragma mark - keyboard notifications
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    self.keyboardHidden = NO;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    self.keyboardHidden = YES;
 }
 
 @end
