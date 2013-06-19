@@ -21,7 +21,7 @@
 #import "MapViewController.h"
 #import "Contact.h"
 
-static NSString * const kBeaconDescriptionPlaceholder = @"enter beacon description";
+static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 
 @interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *beaconDescriptionTextView;
