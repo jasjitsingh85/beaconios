@@ -244,7 +244,7 @@
     //we want to center the map a little above the beacon. If we center on the beacon
     //the beacon collection view occludes the beacon annotation
     MKMapView *tmpMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
-    CLLocationDistance distance = 1000 + (arc4random() % 10000);
+    CLLocationDistance distance = 500 + (arc4random() % 2000);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, distance, distance);
     [tmpMapView setRegion:region];
     
