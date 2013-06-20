@@ -16,4 +16,7 @@
 - (void)setupForUser;
 - (void)appForeground;
 
+- (void)getDirectionsMapView;
+- (void)getDirectionsBeaconDetail;
+
 @end

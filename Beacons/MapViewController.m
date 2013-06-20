@@ -19,6 +19,7 @@
 #import "APIClient.h"
 #import "Utilities.h"
 #import "LoadingIndictor.h"
+#import "AnalyticsManager.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -195,6 +196,7 @@
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     [Utilities launchMapDirectionsToCoordinate:beacon.coordinate addressDictionary:nil destinationName:beacon.beaconDescription];
+    [[AnalyticsManager sharedManager] getDirectionsMapView];
 }
 
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell

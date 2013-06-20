@@ -18,6 +18,7 @@
 #import "TextMessageManager.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
+#import "AnalyticsManager.h"
 
 #define kMaxTableHeight 227
 @interface BeaconDetailViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -163,6 +164,7 @@
 //        addressDictionary=
     }
     [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:addressDictionary destinationName:self.beacon.beaconDescription];
+    [[AnalyticsManager sharedManager] getDirectionsBeaconDetail];
 }
 
 - (IBAction)textMessageButtonTouched:(id)sender

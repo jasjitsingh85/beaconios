@@ -67,4 +67,14 @@
     [self sendEvent:@"app_foreground" withProperties:nil];
 }
 
+- (void)getDirectionsBeaconDetail
+{
+    [self sendEvent:@"requested_directions" withProperties:@{@"location" : @"beacon_detail"}];
+}
+
+- (void)getDirectionsMapView
+{
+    [self sendEvent:@"requested_directions" withProperties:@{@"location" : @"map_view"}];
+}
+
 @end
