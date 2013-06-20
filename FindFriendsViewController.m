@@ -117,6 +117,36 @@ typedef enum {
     return numRows;
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+//    if (self.isDisplayingKeyboard) {
+//        return nil;
+//    }
+    return @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    BOOL found = NO;
+    NSInteger i = 0;
+    NSInteger newRow = 0;
+    while (!found && i < self.nonSuggestedList.count) {
+        Contact *contact = self.nonSuggestedList[i];
+        NSString *contactName = contact.firstName;
+        NSRange range = NSMakeRange(0, 1);
+        if (contactName.length && [[contactName substringWithRange:range] isEqualToString:title]) {
+            found = YES;
+            newRow = [self.nonSuggestedList indexOfObject:contact];
+        }
+        i++;
+    }
+    
+    if (found) {
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:FindFriendSectionContacts];
+        [tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }
+    return index;
+}
+
 #define TAG_NAME_LABEL 1
 #define TAG_CHECK_IMAGE 2
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
