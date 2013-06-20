@@ -60,6 +60,7 @@ typedef enum {
     self.tableView.layer.cornerRadius = 2;
     self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.tableView.layer.borderWidth = 1;
+    self.tableView.allowsSelection = NO;
     [self.tableView reloadData];
 }
 
@@ -124,10 +125,6 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    UITextField *textField = (UITextField *)[cell.contentView viewWithTag:CellTagTextField];
-    textField.enabled = YES;
-    [textField becomeFirstResponder];
 }
 
 - (IBAction)signInButtonTouched:(id)sender
