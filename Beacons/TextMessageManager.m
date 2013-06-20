@@ -9,10 +9,12 @@
 #import "TextMessageManager.h"
 #import "MapViewController.h"
 #import "BeaconDetailViewController.h"
+#import "AnalyticsManager.h"
 
 @interface TextMessageManager()
 
 @property (weak, nonatomic) UIViewController *presentingViewController;
+@property (strong, nonatomic) NSArray *recipients;
 
 @end
 
@@ -35,8 +37,10 @@
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Device can't send texts" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
+    self.presentingViewController = viewController;
     MFMessageComposeViewController *messageViewController = [MFMessageComposeViewController new];
     messageViewController.recipients = messageRecipients;
+    self.recipients = messageRecipients;
     messageViewController.messageComposeDelegate = self;
     [viewController presentViewController:messageViewController animated:YES completion:nil];
 }
@@ -44,11 +48,11 @@
 #pragma mark - MFMessageViewControllerDelegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-    if ([controller.presentingViewController isKindOfClass:[MapViewController class]]) {
-        
+    if ([self.presentingViewController isKindOfClass:[MapViewController class]]) {
+        [[AnalyticsManager sharedManager] sentText:AnalyticsLocationMapView recipients:self.recipients];
     }
-    else if ([controller.presentingViewController isKindOfClass:[BeaconDetailViewController class]]) {
-        
+    else if ([self.presentingViewController isKindOfClass:[BeaconDetailViewController class]]) {
+        [[AnalyticsManager sharedManager] sentText:AnalyticsLocationBeaconDetail recipients:self.recipients];
     }
     [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

@@ -164,7 +164,7 @@
 //        addressDictionary=
     }
     [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:addressDictionary destinationName:self.beacon.beaconDescription];
-    [[AnalyticsManager sharedManager] getDirectionsBeaconDetail];
+    [[AnalyticsManager sharedManager] getDirections:AnalyticsLocationBeaconDetail];
 }
 
 - (IBAction)textMessageButtonTouched:(id)sender

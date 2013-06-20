@@ -196,7 +196,7 @@
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     [Utilities launchMapDirectionsToCoordinate:beacon.coordinate addressDictionary:nil destinationName:beacon.beaconDescription];
-    [[AnalyticsManager sharedManager] getDirectionsMapView];
+    [[AnalyticsManager sharedManager] getDirections:AnalyticsLocationMapView];
 }
 
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell

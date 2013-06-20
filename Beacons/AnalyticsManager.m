@@ -10,16 +10,18 @@
 #import "AppDelegate.h"
 #import "User.h"
 
-static NSString * const kLocationKey = @"location";
-static NSString * const kRecipientKey = @"recipient";
 static NSString * const kLocationMapView = @"map_view";
 static NSString *const kLocationBeaconDetail = @"beacon_detail";
 static NSString * const kRecipientSingle = @"single";
 static NSString * const kRecipientGroup = @"group";
 
+static NSString * const kPropertyAppLocation = @"app_location";
+static NSString * const kPropertyRecipient = @"recipient";
+
 static NSString * const kEventAppForeground = @"app_foreground";
 static NSString * const kEventRequestedDirections = @"requested_directions";
 static NSString * const kEventSentText = @"sent_text";
+static NSString * const kEventAcceptInvite = @"accept_invite";
 
 @implementation AnalyticsManager
 
@@ -73,33 +75,35 @@ static NSString * const kEventSentText = @"sent_text";
     }
 }
 
+- (NSString *)stringForAnalyticsLocation:(AnalyticsLocation)analyticsLocation
+{
+    NSString *analyticsLocationString = @"";
+    if (analyticsLocation == AnalyticsLocationMapView) {
+        analyticsLocationString = kLocationMapView;
+    }
+    else if (analyticsLocation == AnalyticsLocationBeaconDetail) {
+        analyticsLocationString = kLocationBeaconDetail;
+    }
+    return analyticsLocationString;
+}
+
 - (void)appForeground
 {
     [self sendEvent:kEventAppForeground withProperties:nil];
 }
 
-- (void)getDirectionsBeaconDetail
+- (void)getDirections:(AnalyticsLocation)analyticsLocation
 {
-    [self sendEvent:kEventRequestedDirections withProperties:@{kLocationKey : kLocationBeaconDetail}];
+    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation]};
+    [self sendEvent:kEventRequestedDirections withProperties:properties];
 }
 
-- (void)getDirectionsMapView
-{
-    [self sendEvent:kEventRequestedDirections withProperties:@{kLocationKey : kLocationMapView}];
-}
-
-- (void)sentTextBeaconDetail:(NSArray *)recipients
+- (void)sentText:(AnalyticsLocation)analyticsLocation recipients:(NSArray *)recipients
 {
     NSString *recipient = recipients.count > 1 ? kRecipientGroup : kRecipientSingle;
-    [self sendEvent:kEventSentText withProperties:@{kRecipientKey : recipient,
-      kLocationKey : kLocationBeaconDetail}];
-}
-
-- (void)sentTextMapView:(NSArray *)recipients
-{
-    NSString *recipient = recipients.count > 1 ? kRecipientGroup : kRecipientSingle;
-    [self sendEvent:kEventSentText withProperties:@{kRecipientKey : recipient,
-      kLocationKey : kLocationMapView}];
+    NSString *appLocation = [self stringForAnalyticsLocation:analyticsLocation];
+    NSDictionary *properties = @{kPropertyAppLocation : appLocation, kPropertyRecipient : recipient};
+    [self sendEvent:kEventSentText withProperties:properties];
 }
 
 @end
