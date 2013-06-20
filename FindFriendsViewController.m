@@ -66,7 +66,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Add Followers";
-    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
+    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
     self.navigationItem.rightBarButtonItem = doneBarButtonItem;
 }
 
