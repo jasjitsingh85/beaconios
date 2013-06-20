@@ -26,6 +26,6 @@ typedef enum {
 - (void)getDirections:(AnalyticsLocation)analyticsLocation;
 - (void)sentText:(AnalyticsLocation)analyticsLocation recipients:(NSArray *)recipients;
 
-- (void)acceptInviteMapView:(Beacon *)beacon; 
+- (void)acceptInvite:(AnalyticsLocation)analyticsLocation beacon:(Beacon *)beacon;
 
 @end

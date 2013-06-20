@@ -9,6 +9,7 @@
 #import "AnalyticsManager.h"
 #import "AppDelegate.h"
 #import "User.h"
+#import "Beacon.h"
 
 static NSString * const kLocationMapView = @"map_view";
 static NSString *const kLocationBeaconDetail = @"beacon_detail";
@@ -17,6 +18,7 @@ static NSString * const kRecipientGroup = @"group";
 
 static NSString * const kPropertyAppLocation = @"app_location";
 static NSString * const kPropertyRecipient = @"recipient";
+static NSString * const kPropertyBeaconDescription = @"beacon_description"; 
 
 static NSString * const kEventAppForeground = @"app_foreground";
 static NSString * const kEventRequestedDirections = @"requested_directions";
@@ -104,6 +106,13 @@ static NSString * const kEventAcceptInvite = @"accept_invite";
     NSString *appLocation = [self stringForAnalyticsLocation:analyticsLocation];
     NSDictionary *properties = @{kPropertyAppLocation : appLocation, kPropertyRecipient : recipient};
     [self sendEvent:kEventSentText withProperties:properties];
+}
+
+- (void)acceptInvite:(AnalyticsLocation)analyticsLocation beacon:(Beacon *)beacon
+{
+    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation],
+                                 kPropertyBeaconDescription : beacon.beaconDescription};
+    [self sendEvent:kEventAcceptInvite withProperties:properties];
 }
 
 @end

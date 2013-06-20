@@ -213,6 +213,7 @@
     if (confirmed) {
         [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }];
