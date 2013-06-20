@@ -19,4 +19,7 @@
 - (void)getDirectionsMapView;
 - (void)getDirectionsBeaconDetail;
 
+- (void)sentTextMapView:(NSArray *)recipients;
+- (void)sentTextBeaconDetail:(NSArray *)recipients;
+
 @end

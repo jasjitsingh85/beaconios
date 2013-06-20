@@ -7,6 +7,14 @@
 //
 
 #import "TextMessageManager.h"
+#import "MapViewController.h"
+#import "BeaconDetailViewController.h"
+
+@interface TextMessageManager()
+
+@property (weak, nonatomic) UIViewController *presentingViewController;
+
+@end
 
 @implementation TextMessageManager
 
@@ -36,6 +44,12 @@
 #pragma mark - MFMessageViewControllerDelegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
+    if ([controller.presentingViewController isKindOfClass:[MapViewController class]]) {
+        
+    }
+    else if ([controller.presentingViewController isKindOfClass:[BeaconDetailViewController class]]) {
+        
+    }
     [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
