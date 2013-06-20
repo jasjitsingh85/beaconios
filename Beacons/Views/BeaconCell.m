@@ -69,7 +69,7 @@
         self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.descriptionLabel];
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(27, 100, 130, 10)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 100, 130, 10)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
         self.addressLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
         self.addressLabel.font = [ThemeManager regularFontOfSize:11];
