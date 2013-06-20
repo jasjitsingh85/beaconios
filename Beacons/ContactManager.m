@@ -123,7 +123,7 @@
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    }];
     } failure:^(NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"sync fail" message:@"fetch fail" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"sync fail" message:@"fetch fail" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 

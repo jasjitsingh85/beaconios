@@ -210,22 +210,22 @@
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     if (confirmed) {
         [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }];
     }
     else {
         if (beacon.isUserBeacon) {
             [self.beaconCollectionView reloadItemsAtIndexPaths:@[[self indexPathForBeacon:beacon]]];
-            [[[UIAlertView alloc] initWithTitle:@"This is your own beacon" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"This is your own beacon" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
         else {
             beacon.userAttending = NO;
             [[APIClient sharedClient] cancelBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [[[UIAlertView alloc] initWithTitle:@"You have left this beacon" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"You have left this beacon" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }];
         }
     }
