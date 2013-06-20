@@ -151,6 +151,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
     [self.datePicker addTarget:self
                    action:@selector(datePickerValueChanged:)
          forControlEvents:UIControlEventValueChanged];
+    self.datePicker.minuteInterval = 30;
     self.datePicker.date = [NSDate date];
     
     self.datePickerContainerView = [[UIView alloc] init];
