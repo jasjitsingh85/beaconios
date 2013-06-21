@@ -116,6 +116,10 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 
 - (IBAction)nextButtonTouched:(id)sender
 {
+    if ([self.beaconDescriptionTextView.text isEqualToString:@""] || [self.beaconDescriptionTextView.text isEqualToString:kBeaconDescriptionPlaceholder]) {
+        [[[UIAlertView alloc] initWithTitle:@"Hey!" message:@"Please set a beacon description" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
     FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
