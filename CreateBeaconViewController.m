@@ -36,6 +36,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 @property (strong, nonatomic) NSArray *contacts;
 @property (assign, nonatomic) BOOL useCurrentLocation;
 @property (assign, nonatomic) BOOL keyboardHidden;
+@property (assign, nonatomic) BOOL makingServerCall;
 @end
 
 @implementation CreateBeaconViewController
@@ -253,8 +254,10 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 #pragma mark - FindFriendsViewControllerDelegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {
-    self.contacts = contacts;
-    [self setBeaconOnServer];
+    if (!self.makingServerCall) {
+        self.contacts = contacts;
+        [self setBeaconOnServer];
+    }
 }
 
 #pragma mark - Networking
@@ -268,6 +271,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
         [invites addObject:contactString];
     }
     
+    self.makingServerCall = YES;
     NSDictionary *parameters = @{@"description" : beaconDescription,
                                  @"time" : @(self.beaconDate.timeIntervalSince1970),
                                  @"latitude" : @(self.beaconCoordinate.latitude),
@@ -278,9 +282,11 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
                                    [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
+                                   self.makingServerCall = NO;
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   self.makingServerCall = NO;
                                }];
 }
 
