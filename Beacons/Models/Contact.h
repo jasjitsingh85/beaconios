@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (assign, nonatomic) BOOL isUser;
 @property (assign, nonatomic) BOOL isSuggested;
+@property (assign, nonatomic) BOOL isRecent;
 
 /*you can not set the normalized number directly.
  It is computed when the phone number property is set*/

@@ -16,12 +16,14 @@
 #import "LoadingIndictor.h"
 
 typedef enum {
-    FindFriendSectionSuggested=0,
+    FindFriendSectionRecents=0,
+    FindFriendSectionSuggested,
     FindFriendSectionContacts,
 } FindFriendSection;
 
 @interface FindFriendsViewController ()
 
+@property (strong, nonatomic) NSArray *recentsList;
 @property (strong, nonatomic) NSArray *suggestedList;
 @property (strong, nonatomic) NSArray *nonSuggestedList;
 @property (strong, nonatomic) NSMutableDictionary *contactDictionary;
@@ -74,13 +76,16 @@ typedef enum {
 {
     NSArray *allContacts = self.contactDictionary.allValues;
     //separate users and nonusers
-    NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d",YES];
+    NSPredicate *recentPredicate = [NSPredicate predicateWithFormat:@"isRecent = %d", YES];
+    self.recentsList = [allContacts filteredArrayUsingPredicate:recentPredicate];
+    NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d && isRecent = %d",YES, NO];
     self.suggestedList = [allContacts filteredArrayUsingPredicate:suggestedPredicate];
     NSPredicate *nonSuggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d", NO];
     self.nonSuggestedList = [allContacts filteredArrayUsingPredicate:nonSuggestedPredicate];
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
+    self.recentsList = [self.recentsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     [self.tableView reloadData];
@@ -91,7 +96,10 @@ typedef enum {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *title = @"";
-    if (section == FindFriendSectionSuggested) {
+    if (section == FindFriendSectionRecents) {
+        title = @"Recents";
+    }
+    else if (section == FindFriendSectionSuggested) {
         title = @"Close Friends";
     }
     else if (section == FindFriendSectionContacts) {
@@ -102,13 +110,16 @@ typedef enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numRows = 0;
-    if (section == FindFriendSectionSuggested) {
+    if (section == FindFriendSectionRecents) {
+        numRows = self.recentsList.count;
+    }
+    else if (section == FindFriendSectionSuggested) {
         numRows = self.suggestedList.count;
     }
     else if (section == FindFriendSectionContacts) {
@@ -186,7 +197,10 @@ typedef enum {
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     NSString *normalizedPhoneNumber;
     Contact *contact;
-    if (indexPath.section == FindFriendSectionSuggested) {
+    if (indexPath.section == FindFriendSectionRecents) {
+        contact = self.recentsList[indexPath.row];
+    }
+    else if (indexPath.section == FindFriendSectionSuggested) {
         contact = self.suggestedList[indexPath.row];
     }
     else if (indexPath.section == FindFriendSectionContacts) {
@@ -239,12 +253,23 @@ typedef enum {
                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                                   NSArray *contacts = responseObject[@"contacts"];
                                   NSArray *users = responseObject[@"users"];
+                                  NSArray *recentUsers = responseObject[@"profile_recents"];
+                                  NSArray *recentContacts = responseObject[@"contacts_recents"];
                                   for (NSDictionary *contactData in contacts) {
                                       NSString *phoneNumber = contactData[@"phone_number"];
                                       NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
                                       Contact *contact = self.contactDictionary[normalizedPhoneNumber];
                                       if (contact) {
                                           contact.isSuggested = YES;
+                                      }
+                                  }
+                                  for (NSDictionary *contactData in recentContacts) {
+                                      NSString *phoneNumber = contactData[@"phone_number"];
+                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                      if (contact) {
+                                          contact.isSuggested = YES;
+                                          contact.isRecent = YES;
                                           [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
                                       }
                                   }
@@ -255,6 +280,16 @@ typedef enum {
                                       if (contact) {
                                           contact.isSuggested = YES;
                                           contact.isUser = YES;
+                                      }
+                                  }
+                                  for (NSDictionary *userData in recentUsers) {
+                                      NSString *phoneNumber = userData[@"phone_number"];
+                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+                                      if (contact) {
+                                          contact.isSuggested = YES;
+                                          contact.isUser = YES;
+                                          contact.isRecent = YES;
                                           [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
                                       }
                                   }
