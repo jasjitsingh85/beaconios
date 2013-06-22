@@ -10,6 +10,16 @@
 
 @implementation DefaultTheme
 
+- (UIColor *)cyanColor
+{
+    return [UIColor unnormalizedColorWithRed:92 green:206 blue:211 alpha:255];
+}
+
+- (UIColor *)orangeColor
+{
+    return [UIColor unnormalizedColorWithRed:243 green:114 blue:59 alpha:255];
+}
+
 - (NSString *)regularFontName
 {
     return @"Lato-Regular";

@@ -147,8 +147,8 @@ typedef enum {
     return index;
 }
 
-#define TAG_NAME_LABEL 1
-#define TAG_CHECK_IMAGE 2
+#define TAG_NAME_LABEL 2
+#define TAG_CHECK_IMAGE 3
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -156,6 +156,7 @@ typedef enum {
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundView = [UIView new];
         
         UILabel *nameLabel = [[UILabel alloc] init];
         CGRect frame = CGRectZero;
@@ -195,7 +196,7 @@ typedef enum {
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
     BOOL contactSelected = [self.selectedContacts.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
-    
+    cell.backgroundView.backgroundColor = contact.isUser ? [[ThemeManager sharedTheme] cyanColor] : [UIColor whiteColor];
     return cell;
 }
 

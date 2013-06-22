@@ -10,9 +10,10 @@
 
 @protocol Theme <NSObject>
 
+- (UIColor *)cyanColor;
+- (UIColor *)orangeColor;
 - (NSString *)regularFontName;
 - (NSString *)boldFontName;
-
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
 - (NSDictionary *)navigationBarTitleAndTextAttributes;
 @end
