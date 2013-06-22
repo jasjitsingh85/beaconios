@@ -48,6 +48,15 @@ typedef enum {
     
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationItem.title = @"Add Followers";
+    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
+    self.navigationItem.rightBarButtonItem = doneBarButtonItem;
+    
     self.suggestedList = @[];
     self.nonSuggestedList = @[];
     self.selectedContacts = [NSMutableDictionary new];
@@ -62,14 +71,6 @@ typedef enum {
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationItem.title = @"Add Followers";
-    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
-    self.navigationItem.rightBarButtonItem = doneBarButtonItem;
 }
 
 - (void)reloadData
