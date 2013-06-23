@@ -7,7 +7,8 @@
 //
 
 #import "APIClient.h"
-#import "Constants.h"
+#import "Beacon.h"
+#import "Contact.h"
 
 @implementation APIClient
 
@@ -21,7 +22,7 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
     static APIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURLStringLAN]];
+        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURLStringProduction]];
         [_sharedClient setupAuthorization];
         [[NSNotificationCenter defaultCenter] addObserver:_sharedClient selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
         
@@ -90,6 +91,19 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
                                  @"follow" : @(follow)};
     [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
+}
+
+- (void)inviteMoreContacts:(NSArray *)contacts toBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                   failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSMutableArray *invites = [NSMutableArray new];
+    for (Contact *contact in contacts) {
+        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
+        [invites addObject:contactString];
+    }
+    NSDictionary *paramaters = @{@"invite" : invites};
+    
+    [[APIClient sharedClient] putPath:@"beacon/me/" parameters:paramaters success:success failure:failure];
 }
 
 @end

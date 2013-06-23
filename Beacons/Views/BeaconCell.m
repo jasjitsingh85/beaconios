@@ -175,6 +175,7 @@
         self.inviteMoreButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.inviteMoreButton setBackgroundImage:[UIImage imageNamed:@"orangeButton"] forState:UIControlStateNormal];
         [self.inviteMoreButton setTitle:@"Invite more friends" forState:UIControlStateNormal];
+        [self.inviteMoreButton addTarget:self action:@selector(inviteMoreButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.inviteMoreButton];
         //invite more button is hidden by default. Only show for user's beacon
         self.inviteMoreButton.hidden = YES;
@@ -244,6 +245,13 @@
 {
     if ([self.delegate respondsToSelector:@selector(beaconCellDirectionsButtonTouched:)]) {
         [self.delegate beaconCellDirectionsButtonTouched:self];
+    }
+}
+
+- (void)inviteMoreButtonTouched:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(beaconCellInviteMoreButtonTouched:)]) {
+        [self.delegate beaconCellInviteMoreButtonTouched:self];
     }
 }
 

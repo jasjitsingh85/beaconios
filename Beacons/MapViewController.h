@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import "FindFriendsViewController.h"
 
-@interface MapViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MKMapViewDelegate>
+@interface MapViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, MKMapViewDelegate, FindFriendsViewControllerDelegate>
 
 @end

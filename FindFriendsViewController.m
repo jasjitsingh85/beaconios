@@ -27,11 +27,19 @@ typedef enum {
 @property (strong, nonatomic) NSArray *suggestedList;
 @property (strong, nonatomic) NSArray *nonSuggestedList;
 @property (strong, nonatomic) NSMutableDictionary *contactDictionary;
-@property (strong, nonatomic) NSMutableDictionary *selectedContacts;
+@property (strong, nonatomic) NSMutableDictionary *selectedContactDictionary;
 
 @end
 
 @implementation FindFriendsViewController
+
+- (NSMutableDictionary *)selectedContactDictionary
+{
+    if (!_selectedContactDictionary) {
+        _selectedContactDictionary = [NSMutableDictionary new];
+    }
+    return _selectedContactDictionary;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -59,7 +67,6 @@ typedef enum {
     
     self.suggestedList = @[];
     self.nonSuggestedList = @[];
-    self.selectedContacts = [NSMutableDictionary new];
     self.contactDictionary = [NSMutableDictionary new];
     [[ContactManager sharedManager] fetchContacts:^(NSArray *contacts) {
         self.contactDictionary = [NSMutableDictionary new];
@@ -68,6 +75,11 @@ typedef enum {
         }
         [self reloadData];
         [self requestSuggested];
+        if (self.selectedContacts) {
+            for (Contact *contact in self.selectedContacts) {
+                [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+            }
+        }
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
@@ -101,7 +113,7 @@ typedef enum {
         title = @"Recents";
     }
     else if (section == FindFriendSectionSuggested) {
-        title = @"Close Friends";
+        title = @"Suggested";
     }
     else if (section == FindFriendSectionContacts) {
         title = @"Contacts";
@@ -209,7 +221,7 @@ typedef enum {
     }
     nameLabel.text = contact.fullName;
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
-    BOOL contactSelected = [self.selectedContacts.allKeys containsObject:normalizedPhoneNumber];
+    BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
     cell.backgroundView.backgroundColor = contact.isUser ? [[ThemeManager sharedTheme] cyanColor] : [UIColor whiteColor];
     return cell;
@@ -230,12 +242,12 @@ typedef enum {
         contact = self.nonSuggestedList[indexPath.row];
     }
     
-    BOOL currentlySelected = [self.selectedContacts.allKeys containsObject:contact.normalizedPhoneNumber];
+    BOOL currentlySelected = [self.selectedContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
     if (currentlySelected) {
-        [self.selectedContacts removeObjectForKey:contact.normalizedPhoneNumber];
+        [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
     }
     else {
-        [self.selectedContacts setObject:contact forKey:contact.normalizedPhoneNumber];
+        [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
     }
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -244,7 +256,7 @@ typedef enum {
 - (void)doneButtonTouched:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
-        [self.delegate findFriendViewController:self didPickContacts:self.selectedContacts.allValues];
+        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues];
     }
 }
 
@@ -255,6 +267,9 @@ typedef enum {
     [[APIClient sharedClient] getPath:@"friends/" parameters:nil
                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                                  if (self.autoCheckSuggested) {
+                                      self.selectedContactDictionary = [NSMutableDictionary new];
+                                  }
                                   NSArray *contacts = responseObject[@"contacts"];
                                   NSArray *users = responseObject[@"users"];
                                   NSArray *recentUsers = responseObject[@"profile_recents"];
@@ -274,7 +289,9 @@ typedef enum {
                                       if (contact) {
                                           contact.isSuggested = YES;
                                           contact.isRecent = YES;
-                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                          if (self.autoCheckSuggested) {
+                                              [self.selectedContactDictionary setObject:contact forKey:normalizedPhoneNumber];
+                                          }
                                       }
                                   }
                                   for (NSDictionary *userData in users) {
@@ -294,7 +311,9 @@ typedef enum {
                                           contact.isSuggested = YES;
                                           contact.isUser = YES;
                                           contact.isRecent = YES;
-                                          [self.selectedContacts setObject:contact forKey:normalizedPhoneNumber];
+                                          if (self.autoCheckSuggested) {
+                                              [self.selectedContactDictionary setObject:contact forKey:normalizedPhoneNumber];
+                                          }
                                       }
                                   }
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];

@@ -20,6 +20,7 @@
 #import "Utilities.h"
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
+#import "FindFriendsViewController.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -234,6 +235,15 @@
     }
 }
 
+- (void)beaconCellInviteMoreButtonTouched:(BeaconCell *)beaconCell
+{
+    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
+    FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
+    findFriendsViewController.selectedContacts = beacon.invited;
+    findFriendsViewController.delegate = self;
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+}
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -301,6 +311,17 @@
     return nil;
 }
 
+#pragma mark - FindFriendsViewControllerDelegate
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
+{
+    [findFriendsViewController.navigationController popToViewController:self animated:YES];
+    [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[[UIAlertView alloc] initWithTitle:@"Invited more contacts" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
+}
+
 #pragma mark - Networking
 - (void)requestBeacons
 {
@@ -320,4 +341,5 @@
                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                               }];
 }
+
 @end

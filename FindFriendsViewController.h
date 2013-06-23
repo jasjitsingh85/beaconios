@@ -19,5 +19,7 @@
 @interface FindFriendsViewController : UITableViewController
 
 @property (weak, nonatomic) id<FindFriendsViewControllerDelegate>delegate;
+@property (assign, nonatomic) BOOL autoCheckSuggested;
+@property (strong, nonatomic) NSArray *selectedContacts;
 
 @end

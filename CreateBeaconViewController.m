@@ -123,6 +123,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
         return;
     }
     FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
+    findFriendsViewController.autoCheckSuggested = YES;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }

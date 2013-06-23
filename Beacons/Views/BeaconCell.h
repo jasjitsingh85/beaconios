@@ -16,6 +16,7 @@
 - (void)beaconCellDirectionsButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell confirmed:(BOOL)confirmed;
+- (void)beaconCellInviteMoreButtonTouched:(BeaconCell *)beaconCell;
 
 @end
 @interface BeaconCell : UICollectionViewCell
