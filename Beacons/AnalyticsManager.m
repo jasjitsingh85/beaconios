@@ -18,12 +18,16 @@ static NSString * const kRecipientGroup = @"group";
 
 static NSString * const kPropertyAppLocation = @"app_location";
 static NSString * const kPropertyRecipient = @"recipient";
-static NSString * const kPropertyBeaconDescription = @"beacon_description"; 
+static NSString * const kPropertyBeaconDescription = @"beacon_description";
+static NSString * const kPropertyBeaconInvites = @"beacon_invites";
+static NSString * const kPropertyBeaconTime = @"beacon_time";
+static NSString * const kPropertyBeaconLocation = @"beacon_location";
 
 static NSString * const kEventAppForeground = @"app_foreground";
 static NSString * const kEventRequestedDirections = @"requested_directions";
 static NSString * const kEventSentText = @"sent_text";
 static NSString * const kEventAcceptInvite = @"accept_invite";
+static NSString * const kEventCreatedBeacon = @"created_beacon";
 
 @implementation AnalyticsManager
 
@@ -113,6 +117,15 @@ static NSString * const kEventAcceptInvite = @"accept_invite";
     NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation],
                                  kPropertyBeaconDescription : beacon.beaconDescription};
     [self sendEvent:kEventAcceptInvite withProperties:properties];
+}
+
+- (void)createBeacon:(Beacon *)beacon
+{
+    NSDictionary *properties = @{kPropertyBeaconDescription : beacon.beaconDescription,
+                               kPropertyBeaconInvites : @(beacon.invited.count),
+                               kPropertyBeaconTime : [beacon.time formattedDate]};
+    [self sendEvent:kEventCreatedBeacon withProperties:properties];
+                               
 }
 
 @end

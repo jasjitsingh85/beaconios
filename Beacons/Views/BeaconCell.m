@@ -210,9 +210,7 @@
     self.textButtonLabel.text = [NSString stringWithFormat:@"Text %@", beacon.creator.firstName];
     self.descriptionLabel.text = beacon.beaconDescription;
     self.addressLabel.text = beacon.address;
-    NSDateFormatter *timeFormatter = [NSDateFormatter new];
-    timeFormatter.dateFormat = @"hh:mm a";
-    self.timeLabel.text = [timeFormatter stringFromDate:self.beacon.time];
+    self.timeLabel.text = [beacon.time formattedDate];
     
     if (self.beacon.address) {
         self.addressLabel.text = self.beacon.address;

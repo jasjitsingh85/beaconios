@@ -96,9 +96,8 @@
     if (self.beacon.address) {
         self.addressLabel.text = self.beacon.address;
     }
-    NSDateFormatter *timeFormatter = [NSDateFormatter new];
-    timeFormatter.dateFormat = @"hh:mm a";
-    self.timeLabel.text = [timeFormatter stringFromDate:self.beacon.time];
+
+    self.timeLabel.text = [self.beacon.time formattedDate];
     [self.tableView reloadData];
 }
 

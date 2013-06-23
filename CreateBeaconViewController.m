@@ -20,6 +20,8 @@
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "Contact.h"
+#import "AnalyticsManager.h"
+#import "Beacon.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 
@@ -211,9 +213,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
         dateString = @"Now";
     }
     else {
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"hh:mm a"];
-        dateString = [formatter stringFromDate:self.beaconDate];
+        dateString = [self.beaconDate formattedDate];
     }
     
     self.timeValueLabel.text = dateString;
@@ -283,17 +283,25 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
     }
     
     self.makingServerCall = YES;
-    NSDictionary *parameters = @{@"description" : beaconDescription,
-                                 @"time" : @(self.beaconDate.timeIntervalSince1970),
-                                 @"latitude" : @(self.beaconCoordinate.latitude),
-                                 @"longitude" : @(self.beaconCoordinate.longitude),
-                                 @"invite" : invites};
+    
+    Beacon *beacon = [Beacon new];
+    beacon.coordinate = self.beaconCoordinate;
+    beacon.time = self.beaconDate;
+    beacon.invited = self.contacts;
+    beacon.beaconDescription = beaconDescription;
+    NSDictionary *parameters = @{@"description" : beacon.beaconDescription,
+                                 @"time" : @(beacon.time.timeIntervalSince1970),
+                                 @"latitude" : @(beacon.coordinate.latitude),
+                                 @"longitude" : @(beacon.coordinate.longitude),
+                                 @"invite" : invites,
+                                 @"address" : self.locationValueLabel.text};
     [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
                                    self.makingServerCall = NO;
+                                   [[AnalyticsManager sharedManager] createBeacon:beacon];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
