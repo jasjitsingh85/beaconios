@@ -255,6 +255,13 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
 
+- (void)didSelectCustomLocation:(NSString *)customLocationName
+{
+    self.useCurrentLocation = NO;
+    self.locationValueLabel.text = customLocationName;
+    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+}
+
 #pragma mark - FindFriendsViewControllerDelegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {

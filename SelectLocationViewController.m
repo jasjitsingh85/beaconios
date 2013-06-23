@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *venues;
+@property (strong, nonatomic) NSString *customLocation;
 @end
 
 @implementation SelectLocationViewController
@@ -86,11 +87,14 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    if ([indexPath isEqual:[self indexPathForCurrentLocation]]) {
         [self currentLocationSelected];
     }
+    else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
+        [self customLocationSelected];
+    }
     else {
-        Venue *venue = self.venues[indexPath.row - 1];
+        Venue *venue = self.venues[indexPath.row - [self indexPathForFirstVenue].row];
         [self venueSelected:venue];
     }
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
@@ -103,6 +107,13 @@
     }
 }
 
+- (void)customLocationSelected
+{
+    if ([self.delegate respondsToSelector:@selector(didSelectCustomLocation:)]) {
+        [self.delegate didSelectCustomLocation:self.customLocation];
+    }
+}
+
 - (void)venueSelected:(Venue *)venue
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectVenue:)]) {
@@ -112,14 +123,54 @@
 
 
 #pragma mark - UITableViewDataSource
+- (BOOL)shouldShowCustomLocation
+{
+    NSInteger minCustomLocationLength = 5;
+    return self.customLocation && self.customLocation.length > minCustomLocationLength;
+}
+
+- (BOOL)shouldShowCurrentLocation
+{
+    return YES;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
+- (NSIndexPath *)indexPathForCurrentLocation
+{
+    NSInteger currentLocationIndex = -1;
+    if ([self shouldShowCurrentLocation]) {
+        currentLocationIndex = 0;
+    }
+    return [NSIndexPath indexPathForRow:currentLocationIndex inSection:0];
+}
+
+- (NSIndexPath *)indexPathForCustomLocation
+{
+    NSInteger customLocationIndex = -1;
+    if ([self shouldShowCurrentLocation] && [self shouldShowCustomLocation]) {
+        customLocationIndex = 1;
+    }
+    else if ([self shouldShowCustomLocation]) {
+        customLocationIndex = 0;
+    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:customLocationIndex inSection:0];
+    return indexPath;
+}
+
+- (NSIndexPath *)indexPathForFirstVenue
+{
+    NSInteger venueIndexOffset = [self shouldShowCustomLocation] + [self shouldShowCurrentLocation];
+    return [NSIndexPath indexPathForRow:venueIndexOffset inSection:0];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.venues.count + 1;
+
+    return self.venues.count + [self shouldShowCurrentLocation] + [self shouldShowCustomLocation];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,12 +181,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.textLabel.font = [ThemeManager regularFontOfSize:14.0];
     }
-    if (indexPath.row == 0) {
+    
+    if ([indexPath isEqual:[self indexPathForCurrentLocation]]) {
         cell.textLabel.text = @"Current Location";
         cell.textLabel.textColor = [UIColor blueColor];
     }
+    else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
+        cell.textLabel.text = self.customLocation;
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
     else {
-        Venue *venue = self.venues[indexPath.row - 1];
+        NSIndexPath *firstVenueIndexPath = [self indexPathForFirstVenue];
+        Venue *venue = self.venues[indexPath.row - firstVenueIndexPath.row];
         cell.textLabel.text = venue.name;
         cell.textLabel.textColor = [UIColor blackColor];
     }
@@ -145,6 +202,7 @@
 #pragma mark - UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    self.customLocation = searchText;
     [self searchForVenues];
 }
 

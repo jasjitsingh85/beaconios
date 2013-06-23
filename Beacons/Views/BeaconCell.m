@@ -22,8 +22,11 @@
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIButton *textMessageButton;
 @property (strong, nonatomic) UIButton *directionsButton;
+@property (strong, nonatomic) UILabel *directionsButtonLabel;
 @property (strong, nonatomic) UIButton *infoButton;
+@property (strong, nonatomic) UILabel *infoButtonLabel;
 @property (strong, nonatomic) UILabel *textButtonLabel;
+@property (strong, nonatomic) UIButton *inviteMoreButton;
 
 @end
 
@@ -127,19 +130,19 @@
         [self.directionsButton addTarget:self action:@selector(directionsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.directionsButton];
         
-        UILabel *directionsButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 10)];
-        directionsButtonLabel.center = self.directionsButton.center;
-        CGRect directionsButtonLabelFrame = directionsButtonLabel.frame;
+        self.directionsButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 10)];
+        self.directionsButtonLabel.center = self.directionsButton.center;
+        CGRect directionsButtonLabelFrame = self.directionsButtonLabel.frame;
         directionsButtonLabelFrame.origin.y = CGRectGetMaxY(self.directionsButton.frame);
-        directionsButtonLabel.frame = directionsButtonLabelFrame;
-        directionsButtonLabel.autoresizingMask = self.directionsButton.autoresizingMask;
-        directionsButtonLabel.backgroundColor = [UIColor clearColor];
-        directionsButtonLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
-        directionsButtonLabel.textAlignment = NSTextAlignmentCenter;
-        directionsButtonLabel.font = [ThemeManager regularFontOfSize:10];
-        directionsButtonLabel.text = @"Get Directions";
-        directionsButtonLabel.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:directionsButtonLabel];
+        self.directionsButtonLabel.frame = directionsButtonLabelFrame;
+        self.directionsButtonLabel.autoresizingMask = self.directionsButton.autoresizingMask;
+        self.directionsButtonLabel.backgroundColor = [UIColor clearColor];
+        self.directionsButtonLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
+        self.directionsButtonLabel.textAlignment = NSTextAlignmentCenter;
+        self.directionsButtonLabel.font = [ThemeManager regularFontOfSize:10];
+        self.directionsButtonLabel.text = @"Get Directions";
+        self.directionsButtonLabel.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:self.directionsButtonLabel];
         
         UIImage *infoButtonImage = [UIImage imageNamed:@"infoButton"];
         self.infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -149,20 +152,32 @@
         [self.infoButton addTarget:self action:@selector(infoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.infoButton];
         
-        UILabel *infoButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 10)];
-        infoButtonLabel.center = self.infoButton.center;
-        CGRect infoButtonLabelFrame = infoButtonLabel.frame;
+        self.infoButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 80, 10)];
+        self.infoButtonLabel.center = self.infoButton.center;
+        CGRect infoButtonLabelFrame = self.infoButtonLabel.frame;
         infoButtonLabelFrame.origin.y = CGRectGetMaxY(self.infoButton.frame);
-        infoButtonLabel.frame = infoButtonLabelFrame;
-        infoButtonLabel.autoresizingMask = self.infoButton.autoresizingMask;
-        infoButtonLabel.backgroundColor = [UIColor clearColor];
-        infoButtonLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
-        infoButtonLabel.textAlignment = NSTextAlignmentCenter;
-        infoButtonLabel.font = [ThemeManager regularFontOfSize:10];
-        infoButtonLabel.text = @"More Info";
-        infoButtonLabel.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:infoButtonLabel];
+        self.infoButtonLabel.frame = infoButtonLabelFrame;
+        self.infoButtonLabel.autoresizingMask = self.infoButton.autoresizingMask;
+        self.infoButtonLabel.backgroundColor = [UIColor clearColor];
+        self.infoButtonLabel.textColor = [UIColor colorWithRed:96/255.0 green:96/255.0 blue:96/255.0 alpha:1];
+        self.infoButtonLabel.textAlignment = NSTextAlignmentCenter;
+        self.infoButtonLabel.font = [ThemeManager regularFontOfSize:10];
+        self.infoButtonLabel.text = @"More Info";
+        self.infoButtonLabel.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:self.infoButtonLabel];
         
+        self.inviteMoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGRect inviteMoreButtonFrame = CGRectZero;
+        inviteMoreButtonFrame.size = CGSizeMake(184, 42);
+        inviteMoreButtonFrame.origin.x = 0.5*(self.contentView.frame.size.width - inviteMoreButtonFrame.size.width);
+        inviteMoreButtonFrame.origin.y = self.contentView.frame.size.height - inviteMoreButtonFrame.size.height - 15;
+        self.inviteMoreButton.frame = inviteMoreButtonFrame;
+        self.inviteMoreButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [self.inviteMoreButton setBackgroundImage:[UIImage imageNamed:@"orangeButton"] forState:UIControlStateNormal];
+        [self.inviteMoreButton setTitle:@"Invite more friends" forState:UIControlStateNormal];
+        [self.contentView addSubview:self.inviteMoreButton];
+        //invite more button is hidden by default. Only show for user's beacon
+        self.inviteMoreButton.hidden = YES;
         
     }
     return self;
@@ -174,9 +189,23 @@
     //set beacon title
     if (beacon.isUserBeacon) {
         self.titleLabel.text = @"My Beacon";
+        self.inviteMoreButton.hidden = NO;
+        self.directionsButtonLabel.hidden = YES;
+        self.directionsButton.hidden = YES;
+        self.infoButton.hidden = YES;
+        self.infoButtonLabel.hidden = YES;
+        self.textButtonLabel.hidden = YES;
+        self.textMessageButton.hidden = YES;
     }
     else {
         self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
+        self.inviteMoreButton.hidden = YES;
+        self.directionsButtonLabel.hidden = NO;
+        self.directionsButton.hidden = NO;
+        self.infoButton.hidden = NO;
+        self.infoButtonLabel.hidden = NO;
+        self.textButtonLabel.hidden = NO;
+        self.textMessageButton.hidden = NO;
     }
     self.textButtonLabel.text = [NSString stringWithFormat:@"Text %@", beacon.creator.firstName];
     self.descriptionLabel.text = beacon.beaconDescription;

@@ -220,6 +220,9 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Contact *contact;
+    if (indexPath.section == FindFriendSectionRecents) {
+        contact = self.recentsList[indexPath.row];
+    }
     if (indexPath.section == FindFriendSectionSuggested) {
         contact = self.suggestedList[indexPath.row];
     }

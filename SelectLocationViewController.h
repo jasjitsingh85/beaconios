@@ -13,6 +13,7 @@
 
 - (void)didSelectCurrentLocation;
 - (void)didSelectVenue:(Venue *)venue;
+- (void)didSelectCustomLocation:(NSString *)customLocationName;
 
 @end
 
