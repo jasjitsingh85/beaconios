@@ -23,7 +23,7 @@
 #import "AnalyticsManager.h"
 #import "Beacon.h"
 
-static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
+static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
 
 @interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *beaconDescriptionTextView;
@@ -105,7 +105,6 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Create Beacon";
-    [self.beaconDescriptionTextView becomeFirstResponder];
 }
 
 - (void)didUpdateLocation:(NSNotification *)notification
@@ -239,6 +238,14 @@ static NSString * const kBeaconDescriptionPlaceholder = @"Enter Beacon message";
         return NO;
     }
     return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = kBeaconDescriptionPlaceholder;
+        textView.textColor = [UIColor lightGrayColor];
+    }
 }
 
 #pragma mark - SelectLocationViewControllerDelegate
