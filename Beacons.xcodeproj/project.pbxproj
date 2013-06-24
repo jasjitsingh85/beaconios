@@ -795,13 +795,13 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F62F048A-AB0A-49D6-B9C3-B969F32B9934";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F62F048A-AB0A-49D6-B9C3-B969F32B9934";
+				PROVISIONING_PROFILE = "F62A9135-D9A5-41A6-9191-B9CE257D29BD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F62A9135-D9A5-41A6-9191-B9CE257D29BD";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
@@ -885,7 +885,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
@@ -898,7 +898,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
