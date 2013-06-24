@@ -13,7 +13,7 @@
 - (NSString *)formattedDate
 {
     NSDateFormatter *timeFormatter = [NSDateFormatter new];
-    timeFormatter.dateFormat = @"hh:mm a";
+    timeFormatter.dateFormat = @"h:mm a";
     return [timeFormatter stringFromDate:self];
 }
 
