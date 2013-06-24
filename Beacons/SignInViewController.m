@@ -68,6 +68,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationItem.title = @"Sign In";
 }
 
 
