@@ -61,7 +61,7 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Add Followers";
+    self.navigationItem.title = @"Invite Friends";
     UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
     self.navigationItem.rightBarButtonItem = doneBarButtonItem;
     
@@ -180,7 +180,6 @@ typedef enum {
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundView = [UIView new];
         
         UILabel *nameLabel = [[UILabel alloc] init];
         CGRect frame = CGRectZero;
@@ -223,7 +222,7 @@ typedef enum {
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
     BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
-    cell.backgroundView.backgroundColor = contact.isUser ? [[ThemeManager sharedTheme] cyanColor] : [UIColor whiteColor];
+    nameLabel.textColor = contact.isUser ? [[ThemeManager sharedTheme] orangeColor] : [UIColor blackColor];
     return cell;
 }
 
