@@ -38,6 +38,7 @@
     self.venues = [NSArray new];
     
     self.searchBar.showsCancelButton = YES;
+    self.searchBar.tintColor = [[ThemeManager sharedTheme] cyanColor];
     [self enableSearchBarCancelButton];
 }
 
