@@ -261,7 +261,7 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, distance, distance);
     [tmpMapView setRegion:region];
     
-    CGPoint adjustedCenter = CGPointMake(tmpMapView.center.x, tmpMapView.center.y - 50);
+    CGPoint adjustedCenter = CGPointMake(tmpMapView.center.x, tmpMapView.center.y - 75);
     CLLocationCoordinate2D adjustedCenterCoordinate = [tmpMapView convertPoint:adjustedCenter toCoordinateFromView:tmpMapView];
     MKCoordinateRegion adjustedRegion = MKCoordinateRegionMakeWithDistance(adjustedCenterCoordinate, distance, distance);
     [self.mapView setRegion:adjustedRegion animated:animated];
