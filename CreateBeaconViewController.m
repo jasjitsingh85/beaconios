@@ -22,6 +22,7 @@
 #import "Contact.h"
 #import "AnalyticsManager.h"
 #import "Beacon.h"
+#import "Theme.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
 
@@ -63,6 +64,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [ThemeManager customizeViewAndSubviews:self.view];
     
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     self.beaconDescriptionTextView.layer.cornerRadius = 2;
@@ -83,7 +85,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 	tapGestureRecognizer.numberOfTapsRequired = 1;
 	[self.locationValueLabel addGestureRecognizer:tapGestureRecognizer];
     self.locationValueLabel.userInteractionEnabled = YES;
-    self.locationValueLabel.text = @"Current Location";
+    [self didSelectCurrentLocation];
     
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(timeTouched:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
@@ -253,6 +255,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     self.useCurrentLocation = NO;
     self.locationValueLabel.text = venue.name;
+    self.locationValueLabel.textColor = [UIColor blackColor];
     self.beaconCoordinate = venue.coordinate;
 }
 
@@ -260,6 +263,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     self.useCurrentLocation = YES;
     self.locationValueLabel.text = @"Current Location";
+    self.locationValueLabel.textColor = [UIColor blueColor];
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
 
@@ -267,6 +271,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     self.useCurrentLocation = NO;
     self.locationValueLabel.text = customLocationName;
+    self.locationValueLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
 
