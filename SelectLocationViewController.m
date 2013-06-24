@@ -125,8 +125,8 @@
 #pragma mark - UITableViewDataSource
 - (BOOL)shouldShowCustomLocation
 {
-    NSInteger minCustomLocationLength = 5;
-    return self.customLocation && self.customLocation.length > minCustomLocationLength;
+    NSInteger minCustomLocationLength = 1;
+    return self.customLocation && self.customLocation.length >= minCustomLocationLength;
 }
 
 - (BOOL)shouldShowCurrentLocation
@@ -188,7 +188,7 @@
     }
     else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
         cell.textLabel.text = self.customLocation;
-        cell.textLabel.textColor = [UIColor blackColor];
+        cell.textLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
     }
     else {
         NSIndexPath *firstVenueIndexPath = [self indexPathForFirstVenue];
