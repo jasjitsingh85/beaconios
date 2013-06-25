@@ -100,7 +100,7 @@
     [ThemeManager customizeAppAppearance];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.centerNavigationController.selectedViewController = self.createBeaconViewController;
+    self.centerNavigationController.selectedViewController = self.mapViewController;
     self.sideNavigationViewController.centerController = self.centerNavigationController;
     self.sideNavigationViewController.leftController = self.menuViewController;
     self.window.rootViewController = self.sideNavigationViewController;
@@ -155,6 +155,7 @@
     if (userID) {
         [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kDefaultsKeyUserID];
     }
+    
     [[NSUserDefaults standardUserDefaults] setBool:activated forKey:kDefaultsKeyAccountActivated];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
