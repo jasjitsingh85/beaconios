@@ -159,7 +159,7 @@ typedef enum {
     [self.keyboardControls setActiveField:textField];
     CGPoint tableOffset = self.tableView.contentOffset;
     CGPoint point = [self.view convertPoint:textField.frame.origin fromView:textField];
-    CGFloat yOffset = MAX(0,point.y - tableOffset.y - (self.view.frame.size.height - 320));
+    CGFloat yOffset = MAX(0,point.y + tableOffset.y - (self.view.frame.size.height - 320));
     [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
 
