@@ -87,6 +87,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
     self.locationValueLabel.userInteractionEnabled = YES;
     [self didSelectCurrentLocation];
     
+    self.timeValueLabel.textColor = [[ThemeManager sharedTheme] cyanColor];
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(timeTouched:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
     [self.timeValueLabel addGestureRecognizer:tapGestureRecognizer];
@@ -226,7 +227,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     if ([textView.text isEqualToString:kBeaconDescriptionPlaceholder]) {
         textView.text = @"";
-        textView.textColor = [UIColor blackColor];
+        textView.textColor = [[ThemeManager sharedTheme] cyanColor];
     }
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -255,7 +256,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     self.useCurrentLocation = NO;
     self.locationValueLabel.text = venue.name;
-    self.locationValueLabel.textColor = [UIColor blackColor];
+    self.locationValueLabel.textColor = [[ThemeManager sharedTheme] cyanColor];
     self.beaconCoordinate = venue.coordinate;
 }
 
