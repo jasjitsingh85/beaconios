@@ -8,6 +8,7 @@
 
 #import "BeaconCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "Beacon.h"
 #import "User.h"
 #import "Theme.h"
@@ -47,6 +48,11 @@
         self.layer.shadowRadius = 1.0;
         self.layer.shadowOffset = CGSizeMake(0, 1);
         self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+        
+        self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 35, 35)];
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2.0;
+        self.avatarImageView.clipsToBounds = YES;
+        [self.contentView addSubview:self.avatarImageView];
         
         CGRect dividerFrame;
         dividerFrame.size = CGSizeMake(246, 1);
@@ -217,6 +223,13 @@
         self.addressLabel.text = self.beacon.address;
     }
     self.confirmButton.selected = self.beacon.userAttending;
+    if (beacon.creator.avatarURL) {
+        self.avatarImageView.alpha = 1;
+        [self.avatarImageView setImageWithURL:beacon.creator.avatarURL placeholderImage:nil];
+    }
+    else {
+        self.avatarImageView.alpha = 0;
+    }
 }
 
 - (void)confirmButtonTouched:(id)sender

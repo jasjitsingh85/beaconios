@@ -59,7 +59,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    self.navigationItem.title = @"Beacons";
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
 }

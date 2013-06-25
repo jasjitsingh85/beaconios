@@ -4,6 +4,7 @@
 #define kDefaultsKeyEmail   @"defaultsKeyEmail"
 #define kDefaultsKeyPhone   @"defaultsKeyPhone"
 #define kDefaultsKeyUserID @"defaultsKeyUserID"
+#define kDefaultsAvatarURLKey @"defaultsAvatarURL"
 #define kDefaultsKeyFacebookID @"defaultsKeyFacebookID"
 #define kDefaultsKeyIsLoggedIn @"defaultsKeyIsLoggedIn"
 #define kDefaultsKeyAccountActivated @"defaultsKeyAccountActivated"

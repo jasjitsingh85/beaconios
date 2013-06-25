@@ -70,7 +70,6 @@
 {
     if (navigationController.viewControllers.count == 1) {
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
-        viewController.navigationItem.title = @"Beacons";
     }
 }
 

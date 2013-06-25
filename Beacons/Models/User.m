@@ -19,18 +19,10 @@
         self.lastName = [userData valueForKeyPath:@"user.last_name"];
         self.userID = [userData valueForKeyPath:@"user.id"];
         self.phoneNumber = userData[@"phone_number"];
-    }
-    return self;
-}
-
-- (id)initWithSignInData:(NSDictionary *)userData
-{
-    self = [super init];
-    if (self) {
-        self.firstName = [userData valueForKeyPath:@"user.first_name"];
-        self.lastName = [userData valueForKeyPath:@"user.last_name"];
-        self.userID = [userData valueForKeyPath:@"user.id"];
-        self.phoneNumber = userData[@"phone_number"];
+        NSString *avatarString = userData[@"avatar_url"];
+        if (avatarString) {
+            self.avatarURL = [NSURL URLWithString:avatarString];
+        }
     }
     return self;
 }

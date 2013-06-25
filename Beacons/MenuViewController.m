@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "AppDelegate.h"
 #import "Theme.h"
 #import "CenterNavigationController.h"
@@ -16,6 +17,7 @@
 #import "FindFriendsViewController.h"
 #import "BeaconDetailViewController.h"
 #import "CreateBeaconViewController.h"
+#import "User.h"
 
 typedef enum {
     MenuTableViewRowMyBeacon=0,
@@ -45,6 +47,12 @@ typedef enum {
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 65;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (CGFloat)visibleTableViewWidth
@@ -128,8 +136,18 @@ typedef enum {
 {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
+    imageView.layer.cornerRadius = 0;
+    imageView.clipsToBounds = NO;
     if (indexPath.row == MenuTableViewRowMyBeacon) {
         label.text = @"My Beacon";
+        imageView.layer.cornerRadius = imageView.frame.size.width/2.0;
+        imageView.clipsToBounds = YES;
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        User *user = [appDelegate loggedInUser];
+        if (user && user.avatarURL) {
+            [imageView setImageWithURL:user.avatarURL];
+        }
+
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         label.text = @"Find";

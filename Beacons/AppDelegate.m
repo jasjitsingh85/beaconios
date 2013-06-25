@@ -91,6 +91,10 @@
         _loggedInUser.firstName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyFirstName];
         _loggedInUser.lastName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyLastName];
         _loggedInUser.userID = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyUserID];
+        NSString *avatarURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsAvatarURLKey];
+        if (avatarURLString) {
+            _loggedInUser.avatarURL = [NSURL URLWithString:avatarURLString];
+        }
     }
     return _loggedInUser;
 }
@@ -155,7 +159,10 @@
     if (userID) {
         [[NSUserDefaults standardUserDefaults] setObject:userID forKey:kDefaultsKeyUserID];
     }
-    
+    NSURL *avatarURL = user.avatarURL;
+    if (avatarURL) {
+        [[NSUserDefaults standardUserDefaults] setObject:avatarURL.absoluteString forKey:kDefaultsAvatarURLKey];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:activated forKey:kDefaultsKeyAccountActivated];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -197,7 +204,8 @@
                                  kDefaultsKeyFacebookID,
                                  kDefaultsKeyLastAuthorizationToken,
                                  kDefaultsKeyPhone,
-                                 kDefaultsKeyLastName];
+                                 kDefaultsKeyLastName,
+                                 kDefaultsAvatarURLKey];
     for (NSString *key in objectsToRemove) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     }
