@@ -39,7 +39,7 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:244/255.0];
+    self.view.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     
     self.nameTextField = [UITextField new];
     self.emailTextField = [UITextField new];

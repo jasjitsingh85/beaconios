@@ -7,16 +7,20 @@
 //
 
 #import "ActivationViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import <BSKeyboardControls/BSKeyboardControls.h>
 #import "APIClient.h"
 #import "AppDelegate.h"
+#import "Theme.h"
 
 @interface ActivationViewController () <UITextFieldDelegate, BSKeyboardControlsDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *activationCodeTextField;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
 @property (nonatomic, strong) BSKeyboardControls *keyboardControls;
-
+@property (strong, nonatomic) IBOutlet UILabel *codeLabel;
+@property (strong, nonatomic) IBOutlet UIView *labelBackgroundView;
+@property (assign, nonatomic) CGRect originalLabelFrame;
 @end
 
 @implementation ActivationViewController
@@ -33,14 +37,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
+    [ThemeManager customizeViewAndSubviews:self.view];
+    self.codeLabel.adjustsFontSizeToFitWidth = YES;
+    self.codeLabel.font = [ThemeManager boldFontOfSize:15];
     
+    self.labelBackgroundView.layer.cornerRadius = 4;
+    self.labelBackgroundView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.labelBackgroundView.layer.borderWidth = 1;
     NSArray *textFields = @[self.activationCodeTextField];
     for (UITextField *textField in textFields) {
         textField.delegate = self;
         textField.returnKeyType = UIReturnKeyDone;
+        textField.textColor = [[ThemeManager sharedTheme] cyanColor];
     }
     [self setKeyboardControls:[[BSKeyboardControls alloc] initWithFields:textFields]];
     self.keyboardControls.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
 }
 
 
@@ -63,6 +80,7 @@
     
 }
 
+
 #pragma mark - BSKeyboardControlsDelegate
 - (void)keyboardControlsDonePressed:(BSKeyboardControls *)keyboardControls
 {
@@ -79,6 +97,24 @@
          [appDelegate didActivateAccount];
     }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    self.originalLabelFrame = self.labelBackgroundView.frame;
+    [UIView animateWithDuration:0.25 animations:^{
+        CGRect frame = self.labelBackgroundView.frame;
+        frame.origin.y = MIN(frame.origin.y, self.view.frame.size.height - 259 - frame.size.height);
+        self.labelBackgroundView.frame = frame;
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.labelBackgroundView.frame = self.originalLabelFrame;
     }];
 }
 
