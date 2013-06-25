@@ -16,8 +16,7 @@
 #import "User.h"
 
 typedef enum {
-    RegistrationTableViewRowFirstName=0,
-    RegistrationTableViewRowLastName,
+    RegistrationTableViewRowName=0,
     RegistrationTableViewRowEmail,
     RegistrationTableViewRowPhone,
     RegistrationTableViewRowPassword,
@@ -27,8 +26,7 @@ typedef enum {
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIButton *submitButton;
-@property (strong, nonatomic) UITextField *firstNameTextField;
-@property (strong, nonatomic) UITextField *lastNameTextField;
+@property (strong, nonatomic) UITextField *nameTextField;
 @property (strong, nonatomic) UITextField *emailTextField;
 @property (strong, nonatomic) UITextField *phoneTextField;
 @property (strong, nonatomic) UITextField *passwordTextField;
@@ -43,12 +41,11 @@ typedef enum {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:244/255.0];
     
-    self.firstNameTextField = [UITextField new];
-    self.lastNameTextField = [UITextField new];
+    self.nameTextField = [UITextField new];
     self.emailTextField = [UITextField new];
     self.phoneTextField = [UITextField new];
     self.passwordTextField = [UITextField new];
-    NSArray *textFields = @[self.firstNameTextField, self.lastNameTextField, self.emailTextField, self.phoneTextField, self.passwordTextField];
+    NSArray *textFields = @[self.nameTextField, self.emailTextField, self.phoneTextField, self.passwordTextField];
     for (UITextField *textField in textFields) {
         textField.frame = CGRectMake(100, 0, self.tableView.frame.size.width - 100, self.tableView.rowHeight);
         textField.font = [ThemeManager boldFontOfSize:16.0];
@@ -90,7 +87,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 typedef enum {
@@ -118,13 +115,9 @@ typedef enum {
     if (textField) {
         [textField removeFromSuperview];
     }
-    if (indexPath.row == RegistrationTableViewRowFirstName) {
-        label.text = @"First Name";
-        textField = self.firstNameTextField;
-    }
-    if (indexPath.row == RegistrationTableViewRowLastName) {
-        label.text = @"Last Name";
-        textField = self.lastNameTextField;
+    if (indexPath.row == RegistrationTableViewRowName) {
+        label.text = @"Name";
+        textField = self.nameTextField;
     }
     else if (indexPath.row == RegistrationTableViewRowEmail) {
         label.text = @"Email";
@@ -164,8 +157,9 @@ typedef enum {
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.keyboardControls setActiveField:textField];
-    CGPoint point = [self.tableView convertPoint:textField.frame.origin fromView:textField];
-    CGFloat yOffset = MAX(0,point.y - 60);
+    CGPoint tableOffset = self.tableView.contentOffset;
+    CGPoint point = [self.view convertPoint:textField.frame.origin fromView:textField];
+    CGFloat yOffset = MAX(0,point.y - tableOffset.y - (self.view.frame.size.height - 320));
     [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
 
@@ -194,7 +188,7 @@ typedef enum {
     NSString *alertMessage = @"";
     
     //name is valid
-    BOOL nameIsValid = self.firstNameTextField.text.length > 0 && self.lastNameTextField.text.length > 0;
+    BOOL nameIsValid = self.nameTextField.text.length;
     if (!nameIsValid) {
         alertMessage = @"please enter a valid name";
     }
@@ -222,8 +216,14 @@ typedef enum {
 #pragma mark - Networking
 - (void)registerAccount
 {
-    NSDictionary *parameters = @{@"first_name" : self.firstNameTextField.text,
-                                 @"last_name" : self.lastNameTextField.text,
+    NSArray *nameComponents = [self.nameTextField.text componentsSeparatedByString:@" "];
+    NSString *firstName = nameComponents[0];
+    NSString *lastName = @"";
+    if (nameComponents.count > 1) {
+        lastName = [nameComponents lastObject];
+    }
+    NSDictionary *parameters = @{@"first_name" : firstName,
+                                 @"last_name" : lastName,
                                  @"password" : self.passwordTextField.text,
                                  @"email" : self.emailTextField.text,
                                  @"phone_number" : self.phoneTextField.text};
