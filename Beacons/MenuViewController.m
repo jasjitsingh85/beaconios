@@ -17,12 +17,13 @@
 #import "FindFriendsViewController.h"
 #import "BeaconDetailViewController.h"
 #import "CreateBeaconViewController.h"
+#import "SettingsViewController.h"
 #import "User.h"
 
 typedef enum {
     MenuTableViewRowMyBeacon=0,
     MenuTableViewRowFind,
-    MenuTableViewRowLogout,
+    MenuTableViewRowSettings,
 } MenuTableViewRows;
 
 @interface MenuViewController () 
@@ -153,9 +154,9 @@ typedef enum {
         label.text = @"Find";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
-    else if (indexPath.row == MenuTableViewRowLogout) {
-        label.text = @"Logout";
-        imageView.image = [UIImage imageNamed:@"menuLogout"];
+    else if (indexPath.row == MenuTableViewRowSettings) {
+        label.text = @"Settings";
+        imageView.image = [UIImage imageNamed:@"menuSettings"];
     }
 }
 
@@ -169,8 +170,8 @@ typedef enum {
     else if (indexPath.row == MenuTableViewRowFind) {
         [self findSelected];
     }
-    else if (indexPath.row == MenuTableViewRowLogout) {
-        [self logoutSelected];
+    else if (indexPath.row == MenuTableViewRowSettings) {
+        [self settingsSelected];
     }
 }
 
@@ -185,10 +186,11 @@ typedef enum {
     }
 }
 
-- (void)logoutSelected
+- (void)settingsSelected
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate logoutOfServer];
+    SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [appDelegate.centerNavigationController setSelectedViewController:settingsViewController animated:YES];
 }
 
 - (void)findSelected

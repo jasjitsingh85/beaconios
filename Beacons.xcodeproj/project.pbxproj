@@ -48,6 +48,7 @@
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
 		1FD65828175871670007455B /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65826175871670007455B /* AddressBookUI.framework */; };
 		1FD6582C175878610007455B /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6582B175878610007455B /* APIClient.m */; };
+		1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE443EC177ABCAE00469634 /* SettingsViewController.m */; };
 		1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */; };
 		1FE67713175C08C4006F563C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE67712175C08C4006F563C /* CoreLocation.framework */; };
 		1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67715175C0EA0006F563C /* BeaconAnnotation.m */; };
@@ -171,6 +172,8 @@
 		1FD6582B175878610007455B /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		1FD6582E175878E20007455B /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		1FD6582F1758790A0007455B /* HTTPStatusCodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPStatusCodes.h; sourceTree = "<group>"; };
+		1FE443EB177ABCAE00469634 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		1FE443EC177ABCAE00469634 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconLogoLarge@2x.png"; sourceTree = "<group>"; };
 		1FE67712175C08C4006F563C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotation.h; path = ../BeaconAnnotation.h; sourceTree = "<group>"; };
@@ -430,6 +433,8 @@
 				1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */,
 				1FEAEE0217702AD00090A7C2 /* AnalyticsManager.h */,
 				1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */,
+				1FE443EB177ABCAE00469634 /* SettingsViewController.h */,
+				1FE443EC177ABCAE00469634 /* SettingsViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -719,6 +724,7 @@
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
+				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
