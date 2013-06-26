@@ -268,12 +268,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
 
-- (void)didSelectCustomLocation:(NSString *)customLocationName
+- (void)didSelectCustomLocation:(CLLocation *)location withName:(NSString *)locationName
 {
     self.useCurrentLocation = NO;
-    self.locationValueLabel.text = customLocationName;
+    self.locationValueLabel.text = locationName;
     self.locationValueLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
-    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+    if (location) {
+        self.beaconCoordinate = location.coordinate;
+    }
+    else {
+        self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+    }
 }
 
 #pragma mark - FindFriendsViewControllerDelegate

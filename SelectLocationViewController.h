@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class Venue;
 @protocol SelectLocationViewControllerDelegate <NSObject>
 
 - (void)didSelectCurrentLocation;
 - (void)didSelectVenue:(Venue *)venue;
-- (void)didSelectCustomLocation:(NSString *)customLocationName;
+- (void)didSelectCustomLocation:(CLLocation *)location withName:(NSString *)locationName;
 
 @end
 

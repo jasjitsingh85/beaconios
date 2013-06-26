@@ -110,8 +110,18 @@
 
 - (void)customLocationSelected
 {
-    if ([self.delegate respondsToSelector:@selector(didSelectCustomLocation:)]) {
-        [self.delegate didSelectCustomLocation:self.customLocation];
+    if ([self.delegate respondsToSelector:@selector(didSelectCustomLocation:withName:)]) {
+        CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:[LocationTracker sharedTracker].currentLocation.coordinate radius:50000 identifier:@"Region"];
+        CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+        [geoCoder geocodeAddressString:self.customLocation inRegion:region completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (error || !placemarks.count) {
+                [self.delegate didSelectCustomLocation:nil withName:self.customLocation];
+            }
+            else {
+                CLPlacemark *placemark = placemarks[0];
+                [self.delegate didSelectCustomLocation:placemark.location withName:self.customLocation];
+            }
+        }];
     }
 }
 
