@@ -47,6 +47,8 @@
         frame.origin.y = 0.5*(self.frame.size.height - frame.size.height);
         self.attendingButton.frame = frame;
         self.attendingButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        //button no longer does anything
+        self.attendingButton.userInteractionEnabled = NO;
         [self.contentView addSubview:self.attendingButton];
     }
     return self;
