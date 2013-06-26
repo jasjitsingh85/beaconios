@@ -45,8 +45,8 @@
         }
         self.invited = [NSArray arrayWithArray:invited];
         self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
-        
-        if (!self.address) {
+        self.address = data[@"address"];
+        if (!self.address || [self.address isEqualToString:@""]) {
             [self geoCodeAddress];
         }
         

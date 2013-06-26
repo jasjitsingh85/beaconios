@@ -25,6 +25,7 @@
 #import "Theme.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
+static NSString * const kCurrentLocationString = @"Current Location";
 
 @interface CreateBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *beaconDescriptionTextView;
@@ -263,7 +264,7 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 - (void)didSelectCurrentLocation
 {
     self.useCurrentLocation = YES;
-    self.locationValueLabel.text = @"Current Location";
+    self.locationValueLabel.text = kCurrentLocationString;
     self.locationValueLabel.textColor = [UIColor blueColor];
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
 }
@@ -295,12 +296,6 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
 {
     NSString *beaconDescription = [self.beaconDescriptionTextView.text isEqualToString:kBeaconDescriptionPlaceholder] ? @"" : self.beaconDescriptionTextView.text;
     
-    NSMutableArray *invites = [NSMutableArray new];
-    for (Contact *contact in self.contacts) {
-        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
-        [invites addObject:contactString];
-    }
-    
     self.makingServerCall = YES;
     
     Beacon *beacon = [Beacon new];
@@ -308,24 +303,17 @@ static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight 
     beacon.time = self.beaconDate;
     beacon.invited = self.contacts;
     beacon.beaconDescription = beaconDescription;
-    NSDictionary *parameters = @{@"description" : beacon.beaconDescription,
-                                 @"time" : @(beacon.time.timeIntervalSince1970),
-                                 @"latitude" : @(beacon.coordinate.latitude),
-                                 @"longitude" : @(beacon.coordinate.longitude),
-                                 @"invite" : invites,
-                                 @"address" : self.locationValueLabel.text};
-    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                                   AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                                   [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
-                                   self.makingServerCall = NO;
-                                   [[AnalyticsManager sharedManager] createBeacon:beacon];
-                               }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                                   self.makingServerCall = NO;
-                               }];
+    beacon.address = [self.locationValueLabel.text isEqualToString:kCurrentLocationString] ? nil : self.locationValueLabel.text;
+    [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
+        self.makingServerCall = NO;
+        [[AnalyticsManager sharedManager] createBeacon:beacon];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        self.makingServerCall = NO;
+    }];
 }
 
 #pragma mark - keyboard notifications

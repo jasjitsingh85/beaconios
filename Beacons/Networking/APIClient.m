@@ -73,6 +73,26 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
 }
 
 #pragma mark - server calls
+- (void)postBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSArray *invites = [self paramArrayForContacts:beacon.invited];
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    [parameters setValue:beacon.beaconDescription forKey:@"description"];
+    [parameters setValue:@(beacon.time.timeIntervalSince1970) forKey:@"time"];
+    [parameters setValue:@(beacon.coordinate.latitude) forKey:@"latitude"];
+    [parameters setValue:@(beacon.coordinate.longitude) forKey:@"longitude"];
+    if (invites.count) {
+        [parameters setValue:invites forKey:@"invite"];
+    }
+    if (beacon.address) {
+        [parameters setValue:beacon.address forKey:@"address"];
+    }
+    else {
+        [parameters setValue:@"" forKey:@"address"];
+    }
+    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters success:success failure:failure];
+}
 - (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
@@ -104,6 +124,23 @@ static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.her
     NSDictionary *paramaters = @{@"invite" : invites};
     
     [[APIClient sharedClient] putPath:@"beacon/me/" parameters:paramaters success:success failure:failure];
+}
+
+#pragma mark - Private
+- (NSString *)stringForContact:(Contact *)contact
+{
+    NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
+    return contactString;
+}
+
+- (NSArray *)paramArrayForContacts:(NSArray *)contacts
+{
+    NSMutableArray *array = [NSMutableArray new];
+    for (Contact *contact in contacts) {
+        NSString *contactString = [self stringForContact:contact];
+        [array addObject:contactString];
+    }
+    return array;
 }
 
 @end
