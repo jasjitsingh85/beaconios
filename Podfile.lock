@@ -1,5 +1,6 @@
 PODS:
   - AFNetworking (1.2.1)
+  - AHAlertView (0.0.2)
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
   - Facebook-iOS-SDK (3.5.1)
@@ -12,6 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 1.2)
+  - AHAlertView (~> 0.0.2)
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - Facebook-iOS-SDK (~> 3.5.0)
@@ -22,6 +24,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
+  AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12

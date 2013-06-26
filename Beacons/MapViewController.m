@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import <AHAlertView/AHAlertView.h>
 #import "BeaconCell.h"
 #import "LineLayout.h"
 #import "User.h"
@@ -212,12 +213,20 @@
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     if (confirmed) {
-        [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        AHAlertView *alert = [[AHAlertView alloc] initWithTitle:@"Joined Beacon" message:@"Would you like to notify friends?"];
+        [alert setCancelButtonTitle:@"Not Now" block:^{
+            [self confirmBeacon:beacon notifyFriends:NO];
         }];
+        [alert addButtonWithTitle:@"OK" block:^{
+            [self confirmBeacon:beacon notifyFriends:YES];
+        }];
+        [alert show];
+//        [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//            [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//        }];
     }
     else {
         if (beacon.isUserBeacon) {
@@ -320,6 +329,25 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+- (void)confirmBeacon:(Beacon *)beacon notifyFriends:(BOOL)notify
+{
+    if (notify) {
+        CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
+        createBeaconViewController.beacon = beacon;
+        [self.navigationController pushViewController:createBeaconViewController animated:YES];
+    }
+    else {
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+        [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+            [self requestBeacons];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+            [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"to create beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
+    }
 }
 
 #pragma mark - Networking

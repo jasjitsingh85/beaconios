@@ -2,6 +2,7 @@ platform :ios, '6.0'
 
 inhibit_all_warnings!
 
+pod 'AHAlertView', '~> 0.0.2'
 pod 'Mixpanel', '~> 2.0.0'
 pod 'Foursquare-iOS-API', '~> 1.1.0'
 pod 'AFNetworking', '~> 1.2'

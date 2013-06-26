@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class Beacon;
 @interface CreateBeaconViewController : UIViewController
+
+@property (strong, nonatomic) Beacon *beacon;
 
 @end

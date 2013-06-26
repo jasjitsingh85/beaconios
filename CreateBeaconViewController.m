@@ -111,6 +111,25 @@ static NSString * const kCurrentLocationString = @"Current Location";
     self.navigationItem.title = @"Create Beacon";
 }
 
+- (void)setBeacon:(Beacon *)beacon
+{
+    _beacon = beacon;
+    
+    //it's possible for this to be called before view did load so force this to execute
+    [self view];
+    
+    self.locationValueLabel.text = beacon.address;
+    self.beaconDescriptionTextView.text = beacon.beaconDescription;
+    self.beaconDate = beacon.time;
+    [self updateDateValue];
+    
+    self.beaconCoordinate = beacon.coordinate;
+    Venue *venue = [Venue new];
+    venue.name = self.beacon.address;
+    venue.coordinate = self.beaconCoordinate;
+    [self didSelectVenue:venue];
+}
+
 - (void)didUpdateLocation:(NSNotification *)notification
 {
     CLLocation *location = notification.userInfo[@"location"];
