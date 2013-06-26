@@ -21,8 +21,8 @@
 #import "User.h"
 
 typedef enum {
-    MenuTableViewRowMyBeacon=0,
-    MenuTableViewRowFind,
+    MenuTableViewRowFind=0,
+    MenuTableViewRowMyBeacon,
     MenuTableViewRowSettings,
 } MenuTableViewRows;
 
@@ -140,7 +140,7 @@ typedef enum {
     imageView.layer.cornerRadius = 0;
     imageView.clipsToBounds = NO;
     if (indexPath.row == MenuTableViewRowMyBeacon) {
-        label.text = @"My Beacon";
+        label.text = @"Profile";
         imageView.layer.cornerRadius = imageView.frame.size.width/2.0;
         imageView.clipsToBounds = YES;
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -151,7 +151,7 @@ typedef enum {
 
     }
     else if (indexPath.row == MenuTableViewRowFind) {
-        label.text = @"Find";
+        label.text = @"Home";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
