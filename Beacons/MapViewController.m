@@ -232,12 +232,10 @@
             [self confirmBeacon:beacon notifyFriends:YES];
         }];
         [alert show];
-//        [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//            [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//        }];
+        [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
     }
     else {
         if (beacon.isUserBeacon) {
