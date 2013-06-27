@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "AppDelegate.h"
 #import "Theme.h"
+#import "WebViewController.h"
 
 @interface SettingsViewController ()
 
@@ -78,11 +79,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self privacySelected];
+        }
+        if (indexPath.row == 1) {
+            [self termsSelected];
+        }
+    }
+    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [self logoutSelected];
         }
     }
+}
+
+- (void)termsSelected
+{
+    NSURL *termsURL = [NSURL URLWithString:@"http://mighty-reef-7102.herokuapp.com/terms"];
+    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Terms" andURL:termsURL];
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+- (void)privacySelected
+{
+    NSURL *privacyURL = [NSURL URLWithString:@"http://mighty-reef-7102.herokuapp.com/privacy"];
+    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)logoutSelected
