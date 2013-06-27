@@ -12,6 +12,7 @@
 #import "Beacon.h"
 #import "User.h"
 #import "Theme.h"
+#import "AppDelegate.h"
 
 @interface BeaconCell()
 
@@ -28,6 +29,8 @@
 @property (strong, nonatomic) UILabel *infoButtonLabel;
 @property (strong, nonatomic) UILabel *textButtonLabel;
 @property (strong, nonatomic) UIButton *inviteMoreButton;
+@property (strong, nonatomic) UIButton *createBeaconButton;
+@property (strong, nonatomic) UILabel *createBeaconLabel;
 
 @end
 
@@ -180,11 +183,42 @@
         self.inviteMoreButton.frame = inviteMoreButtonFrame;
         self.inviteMoreButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
         [self.inviteMoreButton setBackgroundImage:[UIImage imageNamed:@"orangeButton"] forState:UIControlStateNormal];
+        self.inviteMoreButton.titleLabel.font = [ThemeManager boldFontOfSize:13.0];
         [self.inviteMoreButton setTitle:@"Invite more friends" forState:UIControlStateNormal];
         [self.inviteMoreButton addTarget:self action:@selector(inviteMoreButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.inviteMoreButton];
         //invite more button is hidden by default. Only show for user's beacon
         self.inviteMoreButton.hidden = YES;
+        
+        self.createBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        CGRect createBeaconButtonFrame = CGRectZero;
+        createBeaconButtonFrame.size = CGSizeMake(184, 42);
+        createBeaconButtonFrame.origin.x = 0.5*(self.contentView.frame.size.width - createBeaconButtonFrame.size.width);
+        createBeaconButtonFrame.origin.y = self.contentView.frame.size.height - createBeaconButtonFrame.size.height - 15;
+        self.createBeaconButton.frame = createBeaconButtonFrame;
+        [self.createBeaconButton setBackgroundImage:[UIImage imageNamed:@"orangeButton"] forState:UIControlStateNormal];
+        [self.createBeaconButton setTitle:@"Create a Beacon" forState:UIControlStateNormal];
+        self.createBeaconButton.titleLabel.font = [ThemeManager boldFontOfSize:13.0];
+        self.createBeaconButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [self.createBeaconButton setTitle:@"Create a Beacon" forState:UIControlStateNormal];
+        [self.createBeaconButton addTarget:self action:@selector(createBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:self.createBeaconButton];
+        self.createBeaconButton.hidden = YES;
+        
+        self.createBeaconLabel = [[UILabel alloc] init];
+        self.createBeaconLabel.backgroundColor = [UIColor clearColor];
+        CGRect createBeaconLabelFrame = CGRectZero;
+        createBeaconLabelFrame.size = CGSizeMake(226, 65);
+        createBeaconLabelFrame.origin.x = 0.5*(self.contentView.frame.size.width - createBeaconLabelFrame.size.width);
+        createBeaconLabelFrame.origin.y = 50;
+        self.createBeaconLabel.frame = createBeaconLabelFrame;
+        self.createBeaconLabel.text = @"Instead of sending out multiple text messages, simply set a Beacon to easily invite your friends to impromptu gatherings - from catching a late-night movie to bar-hopping on a Friday night.";
+        self.createBeaconLabel.numberOfLines = 4;
+        self.createBeaconLabel.textAlignment = NSTextAlignmentCenter;
+        self.createBeaconLabel.adjustsFontSizeToFitWidth = YES;
+        self.createBeaconLabel.font = [ThemeManager regularFontOfSize:10.0];
+        [self.contentView addSubview:self.createBeaconLabel];
+        self.createBeaconLabel.hidden = YES;
         
     }
     return self;
@@ -222,6 +256,7 @@
     if (self.beacon.address) {
         self.addressLabel.text = self.beacon.address;
     }
+    self.confirmButton.hidden = NO;
     self.confirmButton.selected = self.beacon.userAttending;
     if (beacon.creator.avatarURL) {
         self.avatarImageView.alpha = 1;
@@ -230,6 +265,25 @@
     else {
         self.avatarImageView.alpha = 0;
     }
+    self.createBeaconButton.hidden = YES;
+    self.createBeaconLabel.hidden = YES;
+}
+
+- (void)configureEmptyBeacon
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    self.titleLabel.text = @"My Beacon";
+    [self.avatarImageView setImageWithURL:appDelegate.loggedInUser.avatarURL];
+    self.createBeaconButton.hidden = NO;
+    self.createBeaconLabel.hidden = NO;
+    self.infoButton.hidden = YES;
+    self.directionsButtonLabel.hidden = YES;
+    self.directionsButton.hidden = YES;
+    self.infoButton.hidden = YES;
+    self.infoButtonLabel.hidden = YES;
+    self.textButtonLabel.hidden = YES;
+    self.textMessageButton.hidden = YES;
+    self.confirmButton.hidden = YES;
 }
 
 - (void)confirmButtonTouched:(id)sender
@@ -265,6 +319,13 @@
 {
     if ([self.delegate respondsToSelector:@selector(beaconCellInviteMoreButtonTouched:)]) {
         [self.delegate beaconCellInviteMoreButtonTouched:self];
+    }
+}
+
+- (void)createBeaconButtonTouched:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(beaconCellCreateBeaconButtonTouched:)]) {
+        [self.delegate beaconCellCreateBeaconButtonTouched:self];
     }
 }
 

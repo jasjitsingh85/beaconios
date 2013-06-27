@@ -17,11 +17,14 @@
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell confirmed:(BOOL)confirmed;
 - (void)beaconCellInviteMoreButtonTouched:(BeaconCell *)beaconCell;
+- (void)beaconCellCreateBeaconButtonTouched:(BeaconCell *)beaconCell;
 
 @end
 @interface BeaconCell : UICollectionViewCell
 
 @property (weak, nonatomic) Beacon *beacon;
 @property (weak, nonatomic) id<BeaconCellDelegate> delegate;
+
+- (void)configureEmptyBeacon;
 
 @end

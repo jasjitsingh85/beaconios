@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
+@property (assign, nonatomic) BOOL showCreateBeaconCell;
 
 @end
 
@@ -75,10 +76,14 @@
 - (void)reloadBeacons
 {
     if (self.beacons.count) {
-        [self.beaconCollectionView reloadData];
-        [self showBeaconCollectionViewAnimated:YES];
+        self.showCreateBeaconCell = NO;
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
     }
+    else {
+        self.showCreateBeaconCell = YES;
+    }
+    [self.beaconCollectionView reloadData];
+    [self showBeaconCollectionViewAnimated:YES];
 }
 
 - (void)beaconUpdated:(NSNotification *)notification
@@ -154,14 +159,20 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.beacons.count;
+    NSInteger numItems = self.beacons.count + self.showCreateBeaconCell;
+    return numItems;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     BeaconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
     cell.delegate = self;
-    cell.beacon = [self beaconForIndexPath:indexPath];
+    if (!self.showCreateBeaconCell) {
+        cell.beacon = [self beaconForIndexPath:indexPath];
+    }
+    else {
+        [cell configureEmptyBeacon];
+    }
     
     return cell;
 }
@@ -251,6 +262,12 @@
     findFriendsViewController.selectedContacts = beacon.invited;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
+}
+
+- (void)beaconCellCreateBeaconButtonTouched:(BeaconCell *)beaconCell
+{
+    CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
+    [self.navigationController pushViewController:createBeaconViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
