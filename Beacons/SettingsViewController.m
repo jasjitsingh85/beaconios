@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "AppDelegate.h"
+#import "Theme.h"
 
 @interface SettingsViewController ()
 
@@ -29,6 +30,8 @@
     [super viewDidLoad];
 
     self.navigationItem.title = @"Settings";
+    self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
+    self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
 }
 
 #pragma mark - Table view data source
