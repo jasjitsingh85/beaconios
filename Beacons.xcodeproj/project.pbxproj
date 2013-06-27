@@ -30,6 +30,9 @@
 		1F465C2B176510EB00F35A8B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C2A176510EB00F35A8B /* Contact.m */; };
 		1F465C2E1765183C00F35A8B /* addFriendNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */; };
 		1F465C2F1765183C00F35A8B /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C2D1765183C00F35A8B /* addFriendSelected@2x.png */; };
+		1F49B836177BFB2200117857 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B835177BFB2200117857 /* Icon.png */; };
+		1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B837177BFD7C00117857 /* Icon-72@2x.png */; };
+		1F49B83A177BFD8000117857 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B839177BFD8000117857 /* Icon-72.png */; };
 		1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D658A17653C9D00D02369 /* MessageUI.framework */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
@@ -143,6 +146,9 @@
 		1F465C2A176510EB00F35A8B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addFriendNormal@2x.png"; path = "../Networking/addFriendNormal@2x.png"; sourceTree = "<group>"; };
 		1F465C2D1765183C00F35A8B /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addFriendSelected@2x.png"; path = "../Networking/addFriendSelected@2x.png"; sourceTree = "<group>"; };
+		1F49B835177BFB2200117857 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		1F49B837177BFD7C00117857 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		1F49B839177BFD8000117857 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		1F4D658A17653C9D00D02369 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
@@ -345,6 +351,8 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				1F49B839177BFD8000117857 /* Icon-72.png */,
+				1F49B837177BFD7C00117857 /* Icon-72@2x.png */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
@@ -455,6 +463,7 @@
 				9633994F1758512100AF9D89 /* Default@2x.png */,
 				963399511758512100AF9D89 /* Default-568h@2x.png */,
 				1FC07DBA1767002C0011866A /* Icon@2x.png */,
+				1F49B835177BFB2200117857 /* Icon.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -633,6 +642,9 @@
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,
 				1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */,
+				1F49B836177BFB2200117857 /* Icon.png in Resources */,
+				1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */,
+				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,6 +826,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "22B4906E-9B22-4A2C-891C-966541FEB090";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "22B4906E-9B22-4A2C-891C-966541FEB090";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Ad Hoc";
@@ -879,7 +892,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -887,6 +901,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "B6F4ABCC-73AD-400E-A33C-7FE502E486E3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B6F4ABCC-73AD-400E-A33C-7FE502E486E3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -902,6 +918,7 @@
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -915,6 +932,7 @@
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
