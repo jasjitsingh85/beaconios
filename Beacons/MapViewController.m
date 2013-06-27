@@ -356,6 +356,8 @@
         [self.navigationController pushViewController:createBeaconViewController animated:YES];
     }
     else {
+        //set invited list to empty
+        beacon.invited = @[];
         [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
         [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
