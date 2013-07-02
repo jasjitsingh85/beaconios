@@ -137,21 +137,13 @@ typedef enum {
 {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
-    imageView.layer.cornerRadius = 0;
-    imageView.clipsToBounds = NO;
     if (indexPath.row == MenuTableViewRowMyBeacon) {
-        label.text = @"Profile";
-        imageView.layer.cornerRadius = imageView.frame.size.width/2.0;
-        imageView.clipsToBounds = YES;
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        User *user = [appDelegate loggedInUser];
-        if (user && user.avatarURL) {
-            [imageView setImageWithURL:user.avatarURL];
-        }
+        label.text = @"Set Beacon";
+        imageView.image = [UIImage imageNamed:@"menuAdd"];
 
     }
     else if (indexPath.row == MenuTableViewRowFind) {
-        label.text = @"Home";
+        label.text = @"Browse Beacons";
         imageView.image = [UIImage imageNamed:@"menuBeacons"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {

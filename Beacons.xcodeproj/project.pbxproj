@@ -33,6 +33,7 @@
 		1F49B836177BFB2200117857 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B835177BFB2200117857 /* Icon.png */; };
 		1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B837177BFD7C00117857 /* Icon-72@2x.png */; };
 		1F49B83A177BFD8000117857 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B839177BFD8000117857 /* Icon-72.png */; };
+		1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B83B1782A1FC00117857 /* menuAdd@2x.png */; };
 		1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D658A17653C9D00D02369 /* MessageUI.framework */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
 		1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526388175C492800DD26E1 /* BeaconCell.m */; };
@@ -149,6 +150,7 @@
 		1F49B835177BFB2200117857 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
 		1F49B837177BFD7C00117857 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		1F49B839177BFD8000117857 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		1F49B83B1782A1FC00117857 /* menuAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuAdd@2x.png"; sourceTree = "<group>"; };
 		1F4D658A17653C9D00D02369 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
 		1F526386175C492800DD26E1 /* BeaconAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotationView.m; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				96C87C81175AA423006EA3A3 /* menuBackground@2x.png */,
 				96C87C8E175ABC66006EA3A3 /* navBar@2x.png */,
 				96C87C90175ABC94006EA3A3 /* menuButton@2x.png */,
+				1F49B83B1782A1FC00117857 /* menuAdd@2x.png */,
 				1FE67727175C25DC006F563C /* menuSettings@2x.png */,
 				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
 				1F465C241764252200F35A8B /* menuAddFriend@2x.png */,
@@ -645,6 +648,7 @@
 				1F49B836177BFB2200117857 /* Icon.png in Resources */,
 				1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */,
 				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
+				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

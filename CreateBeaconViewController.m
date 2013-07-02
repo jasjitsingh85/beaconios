@@ -108,7 +108,7 @@ static NSString * const kCurrentLocationString = @"Current Location";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Create Beacon";
+    self.navigationItem.title = @"Set Beacon";
 }
 
 - (void)setBeacon:(Beacon *)beacon
