@@ -33,6 +33,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) NSDictionary *attendingContactDictionary;
+@property (strong, nonatomic) IBOutlet UIButton *deleteBeaconButton;
+@property (strong, nonatomic) IBOutlet UILabel *groupMessageLabel;
+@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
+@property (strong, nonatomic) IBOutlet UILabel *directionLabel;
 
 @end
 
@@ -75,6 +79,15 @@
     else {
         self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
     }
+    self.deleteBeaconButton.hidden = !beacon.isUserBeacon;
+    self.directionsButton.hidden = beacon.isUserBeacon;
+    self.groupMessageButton.hidden = beacon.isUserBeacon;
+    self.messageButton.hidden = beacon.isUserBeacon;
+    self.directionLabel.hidden = beacon.isUserBeacon;
+    self.messageLabel.hidden = beacon.isUserBeacon;
+    self.groupMessageButton.hidden = beacon.isUserBeacon;
+    self.groupMessageLabel.hidden = beacon.isUserBeacon;
+    
     self.navigationItem.title = self.titleLabel.text;
     self.beaconDescriptionLabel.text = beacon.beaconDescription;
     
@@ -211,6 +224,16 @@
         }
     }
     self.confirmButton.selected = self.beacon.userAttending;
+}
+- (IBAction)deleteButtonTouched:(id)sender
+{
+    [[APIClient sharedClient] deleteBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (self.navigationController && self.navigationController.viewControllers.count > 1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Failed" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
 }
 
 @end
