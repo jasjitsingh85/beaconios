@@ -22,12 +22,14 @@
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
 #import "FindFriendsViewController.h"
+#import "AppDelegate.h"
 
 @interface MapViewController () <BeaconCellDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
 @property (assign, nonatomic) BOOL showCreateBeaconCell;
+@property (strong, nonatomic) UIButton *createBeaconButton;
 
 @end
 
@@ -64,6 +66,19 @@
     self.navigationItem.title = @"Beacons";
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.createBeaconButton];
+}
+
+- (UIButton *)createBeaconButton
+{
+    if (!_createBeaconButton) {
+        _createBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"plus"];
+        [_createBeaconButton setImage:buttonImage forState:UIControlStateNormal];
+        _createBeaconButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+        [_createBeaconButton addTarget:self action:@selector(createBeaconTouched:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _createBeaconButton;
 }
 
 #pragma mark - Notifications
@@ -385,6 +400,13 @@
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                               }];
+}
+
+#pragma mark - Button Events
+- (void)createBeaconTouched:(id)sender
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [self.navigationController pushViewController:appDelegate.createBeaconViewController animated:YES];
 }
 
 @end
