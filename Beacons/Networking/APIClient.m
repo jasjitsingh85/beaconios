@@ -14,7 +14,7 @@
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
-static NSString * const kBaseURLStringProduction = @"http://mighty-reef-7102.herokuapp.com/api/";
+static NSString * const kBaseURLStringProduction = @"https://getbeacons.com/api/";
 
 
 + (APIClient *)sharedClient
