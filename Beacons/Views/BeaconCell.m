@@ -212,7 +212,7 @@
         createBeaconLabelFrame.origin.x = 0.5*(self.contentView.frame.size.width - createBeaconLabelFrame.size.width);
         createBeaconLabelFrame.origin.y = 50;
         self.createBeaconLabel.frame = createBeaconLabelFrame;
-        self.createBeaconLabel.text = @"Instead of sending out multiple text messages, simply set a Beacon to easily invite your friends to impromptu gatherings - from catching a late-night movie to bar-hopping on a Friday night.";
+        self.createBeaconLabel.text = @"Instead of sending multiple texts, set a Beacon to invite friends to hang out";
         self.createBeaconLabel.numberOfLines = 4;
         self.createBeaconLabel.textAlignment = NSTextAlignmentCenter;
         self.createBeaconLabel.adjustsFontSizeToFitWidth = YES;
