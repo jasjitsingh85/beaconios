@@ -7,8 +7,11 @@
 //
 
 #import "BeaconDetailViewController.h"
+#import <AHAlertView/AHAlertView.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MapKit/MapKit.h>
+#import "LoadingIndictor.h"
+#import "CreateBeaconViewController.h"
 #import "Beacon.h"
 #import "User.h"
 #import "Contact.h"
@@ -201,16 +204,22 @@
 {
     self.confirmButton.selected = !self.confirmButton.selected;
     BOOL confirmed = self.confirmButton.selected;
-    if (confirmed && !self.beacon.userAttending) {
+    if (confirmed) {
         self.beacon.userAttending = YES;
+        AHAlertView *alert = [[AHAlertView alloc] initWithTitle:@"Joined Beacon" message:@"Would you like to notify friends?"];
+        [alert setCancelButtonTitle:@"Not Now" block:^{
+            [self confirmBeacon:self.beacon notifyFriends:NO];
+        }];
+        [alert addButtonWithTitle:@"OK" block:^{
+            [self confirmBeacon:self.beacon notifyFriends:YES];
+        }];
+        [alert show];
         [[APIClient sharedClient] confirmBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [[[UIAlertView alloc] initWithTitle:@"Confirmed" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationBeaconDetail beacon:self.beacon];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }];
     }
-    else if (!confirmed && self.beacon.userAttending){
+    else {
         if (self.beacon.isUserBeacon) {
             [[[UIAlertView alloc] initWithTitle:@"This is your own beacon" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
@@ -234,6 +243,25 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+- (void)confirmBeacon:(Beacon *)beacon notifyFriends:(BOOL)notify
+{
+    if (notify) {
+        CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
+        createBeaconViewController.beacon = beacon;
+        [self.navigationController pushViewController:createBeaconViewController animated:YES];
+    }
+    else {
+        //set invited list to empty
+        beacon.invited = @[];
+        [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+            [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"to create beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
+    }
 }
 
 @end
