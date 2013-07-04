@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "Utilities.h"
 #import "User.h"
+#import "AnalyticsManager.h"
 
 typedef enum {
     RegistrationTableViewRowName=0,
@@ -76,6 +77,12 @@ typedef enum {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationItem.title = @"Register";
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedManager] viewPage:AnalyticsLocationRegistration];
 }
 
 

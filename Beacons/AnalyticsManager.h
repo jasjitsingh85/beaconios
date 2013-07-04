@@ -12,6 +12,9 @@
 typedef enum {
     AnalyticsLocationMapView=0,
     AnalyticsLocationBeaconDetail,
+    AnalyticsLocationRegistration,
+    AnalyticsLocationSignIn,
+    AnalyticsLocationActivation,
 } AnalyticsLocation;
 
 
@@ -22,7 +25,7 @@ typedef enum {
 
 - (void)setupForUser;
 - (void)appForeground;
-
+- (void)viewPage:(AnalyticsLocation)location;
 - (void)getDirections:(AnalyticsLocation)analyticsLocation;
 - (void)sentText:(AnalyticsLocation)analyticsLocation recipients:(NSArray *)recipients;
 

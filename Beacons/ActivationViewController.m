@@ -12,6 +12,7 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "Theme.h"
+#import "AnalyticsManager.h"
 
 @interface ActivationViewController () <UITextFieldDelegate, BSKeyboardControlsDelegate>
 
@@ -58,6 +59,12 @@
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedManager] viewPage:AnalyticsLocationRegistration];
 }
 
 

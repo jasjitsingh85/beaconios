@@ -12,7 +12,10 @@
 #import "Beacon.h"
 
 static NSString * const kLocationMapView = @"map_view";
-static NSString *const kLocationBeaconDetail = @"beacon_detail";
+static NSString * const kLocationBeaconDetail = @"beacon_detail";
+static NSString * const kLocationRegistration = @"registration";
+static NSString * const kLocationSignIn = @"sign_in";
+static NSString * const kLocationActivation = @"activation";
 static NSString * const kRecipientSingle = @"single";
 static NSString * const kRecipientGroup = @"group";
 
@@ -28,6 +31,7 @@ static NSString * const kEventRequestedDirections = @"requested_directions";
 static NSString * const kEventSentText = @"sent_text";
 static NSString * const kEventAcceptInvite = @"accept_invite";
 static NSString * const kEventCreatedBeacon = @"created_beacon";
+static NSString * const kEventViewPage = @"view_page";
 
 @implementation AnalyticsManager
 
@@ -90,12 +94,27 @@ static NSString * const kEventCreatedBeacon = @"created_beacon";
     else if (analyticsLocation == AnalyticsLocationBeaconDetail) {
         analyticsLocationString = kLocationBeaconDetail;
     }
+    else if (analyticsLocation == AnalyticsLocationActivation) {
+        analyticsLocationString = kLocationActivation;
+    }
+    else if (analyticsLocation == AnalyticsLocationRegistration) {
+        analyticsLocationString = kLocationRegistration;
+    }
+    else if (analyticsLocation == AnalyticsLocationSignIn) {
+        analyticsLocationString = kLocationSignIn;
+    }
     return analyticsLocationString;
 }
 
 - (void)appForeground
 {
     [self sendEvent:kEventAppForeground withProperties:nil];
+}
+
+- (void)viewPage:(AnalyticsLocation)analyticsLocation
+{
+    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation]};
+    [self sendEvent:kEventViewPage withProperties:properties];
 }
 
 - (void)getDirections:(AnalyticsLocation)analyticsLocation

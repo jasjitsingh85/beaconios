@@ -13,6 +13,7 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "User.h"
+#import "AnalyticsManager.h"
 
 typedef enum {
     SignInTableViewRowPhone=0,
@@ -69,6 +70,12 @@ typedef enum {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationItem.title = @"Sign In";
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[AnalyticsManager sharedManager] viewPage:AnalyticsLocationSignIn];
 }
 
 
