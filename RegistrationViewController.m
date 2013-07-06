@@ -241,6 +241,7 @@ typedef enum {
                                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                        [appDelegate loggedIntoServerWithResponse:responseObject];
                                    }
+                                   [[AnalyticsManager sharedManager] didRegister];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    NSString *message = @"Something went wrong";

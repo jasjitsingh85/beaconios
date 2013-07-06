@@ -32,6 +32,7 @@ static NSString * const kEventSentText = @"sent_text";
 static NSString * const kEventAcceptInvite = @"accept_invite";
 static NSString * const kEventCreatedBeacon = @"created_beacon";
 static NSString * const kEventViewPage = @"view_page";
+static NSString * const kEventDidRegister = @"did_register";
 
 @implementation AnalyticsManager
 
@@ -129,6 +130,12 @@ static NSString * const kEventViewPage = @"view_page";
     NSString *appLocation = [self stringForAnalyticsLocation:analyticsLocation];
     NSDictionary *properties = @{kPropertyAppLocation : appLocation, kPropertyRecipient : recipient};
     [self sendEvent:kEventSentText withProperties:properties];
+}
+
+- (void)didRegister
+{
+    [self setupForUser];
+    [self sendEvent:kEventDidRegister withProperties:nil];
 }
 
 - (void)acceptInvite:(AnalyticsLocation)analyticsLocation beacon:(Beacon *)beacon
