@@ -28,6 +28,7 @@ typedef enum {
 @property (strong, nonatomic) NSArray *nonSuggestedList;
 @property (strong, nonatomic) NSMutableDictionary *contactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedContactDictionary;
+@property (strong, nonatomic) NSMutableDictionary *inactiveContactDictionary;
 
 @end
 
@@ -39,6 +40,14 @@ typedef enum {
         _selectedContactDictionary = [NSMutableDictionary new];
     }
     return _selectedContactDictionary;
+}
+
+- (NSMutableDictionary *)inactiveContactDictionary
+{
+    if (!_inactiveContactDictionary) {
+        _inactiveContactDictionary = [NSMutableDictionary new];
+    }
+    return _inactiveContactDictionary;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -78,6 +87,11 @@ typedef enum {
         if (self.selectedContacts) {
             for (Contact *contact in self.selectedContacts) {
                 [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+            }
+        }
+        if (self.inactiveContacts) {
+            for (Contact *contact in self.inactiveContacts) {
+                [self.inactiveContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
             }
         }
     } failure:^(NSError *error) {
@@ -220,9 +234,15 @@ typedef enum {
     }
     nameLabel.text = contact.fullName;
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
+    BOOL contactInactive = [self.inactiveContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
-    nameLabel.textColor = contact.isUser ? [[ThemeManager sharedTheme] orangeColor] : [UIColor blackColor];
+    if (contactInactive) {
+        nameLabel.textColor = [UIColor lightGrayColor];
+    }
+    else {
+        nameLabel.textColor = contact.isUser ? [[ThemeManager sharedTheme] orangeColor] : [UIColor blackColor];
+    }
     return cell;
 }
 
@@ -241,6 +261,11 @@ typedef enum {
         contact = self.nonSuggestedList[indexPath.row];
     }
     
+    BOOL inactiveContact = [self.inactiveContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
+    if (inactiveContact) {
+        return;
+    }
+    
     BOOL currentlySelected = [self.selectedContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
     if (currentlySelected) {
         [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
@@ -255,7 +280,9 @@ typedef enum {
 - (void)doneButtonTouched:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
-        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues];
+        NSMutableSet *contactSet = [NSMutableSet setWithArray:self.selectedContactDictionary.allValues];
+        [contactSet minusSet:[NSSet setWithArray:self.inactiveContactDictionary.allValues]];
+        [self.delegate findFriendViewController:self didPickContacts:contactSet.allObjects];
     }
 }
 

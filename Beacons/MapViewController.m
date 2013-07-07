@@ -264,6 +264,7 @@
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
     FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
     findFriendsViewController.selectedContacts = beacon.invited;
+    findFriendsViewController.inactiveContacts = beacon.invited;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
