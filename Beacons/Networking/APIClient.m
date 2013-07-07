@@ -70,6 +70,12 @@ static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/
     if ([operation.response statusCode] == kHTTPStatusCodeUnauthorized) {
         // enqueue a new request operation here
     }
+
+#ifdef DEBUG
+    if (operation.error) {
+        [[[UIAlertView alloc] initWithTitle:@"Server Error" message:operation.error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+#endif
 }
 
 #pragma mark - server calls
