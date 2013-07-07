@@ -11,5 +11,6 @@
 @interface BeaconAnnotationView : MKAnnotationView
 
 @property (assign, nonatomic) BOOL animatesDrop;
+@property (assign, nonatomic) BOOL active;
 
 @end

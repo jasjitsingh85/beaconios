@@ -24,12 +24,13 @@
 #import "FindFriendsViewController.h"
 #import "AppDelegate.h"
 
-@interface MapViewController () <BeaconCellDelegate>
+@interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
 @property (assign, nonatomic) BOOL showCreateBeaconCell;
 @property (strong, nonatomic) UIButton *createBeaconButton;
+@property (strong, nonatomic) NSMutableDictionary *beaconAnnotationDictionary;
 
 @end
 
@@ -54,6 +55,12 @@
     self.mapView.delegate = self;
     self.mapView.scrollEnabled = YES;
     self.mapView.zoomEnabled = YES;
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePinchOrPan:)];
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didRecognizePinchOrPan:)];
+    pan.delegate = self;
+    pinch.delegate = self;
+    [self.mapView addGestureRecognizer:pan];
+    [self.mapView addGestureRecognizer:pinch];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
@@ -91,6 +98,15 @@
 - (void)reloadBeacons
 {
     if (self.beacons.count) {
+        //add beacon annotations to map
+        [self.mapView removeAnnotations:self.mapView.annotations];
+        self.beaconAnnotationDictionary = [NSMutableDictionary new];
+        for (Beacon *beacon in self.beacons) {
+            BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
+            beaconAnnotation.beacon = beacon;
+            [self.mapView addAnnotation:beaconAnnotation];
+            [self.beaconAnnotationDictionary setObject:beaconAnnotation forKey:beacon.beaconID];
+        }
         self.showCreateBeaconCell = NO;
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
     }
@@ -105,39 +121,6 @@
 {
     NSIndexPath *indexPath = [self indexPathForBeacon:notification.object];
     [self.beaconCollectionView reloadItemsAtIndexPaths:@[indexPath]];
-}
-
-
-- (void)createTestBeacons
-{
-    NSArray *userFirstNames = @[@"Jeff", @"Jas", @"Kamran"];
-    NSArray *userLastNames = @[@"Ames", @"Singh", @"Munshi"];
-    NSArray *descriptions = @[@"Smoke weed at my house", @"go to a pool party with bitches", @"college freshman orgy"];
-    NSArray *addresses = @[@"14 Washington St.", @"201 E. Columbia", @"69 1st Ave."];
-    NSArray *phoneNumbers = @[@"5555555555", @"6176337532", @"6502245573"];
-    NSArray *latitudes = @[@47.573283, @47.559384, @47.576526];
-    NSArray *longitudes = @[@-122.229424, @-122.288132, @-122.383575];
-    NSMutableArray *users = [NSMutableArray new];
-    NSMutableArray *beacons = [NSMutableArray new];
-    for (NSInteger i=0; i<userFirstNames.count; i++) {
-        User *user = [User new];
-        user.firstName = userFirstNames[i];
-        user.lastName = userLastNames[i];
-        user.phoneNumber = phoneNumbers[i];
-        [users addObject:user];
-        
-        Beacon *beacon = [Beacon new];
-        beacon.creator = user;
-        beacon.coordinate = CLLocationCoordinate2DMake([latitudes[i] floatValue], [longitudes[i] floatValue]);
-        beacon.beaconDescription = descriptions[i];
-        beacon.address = addresses[i];
-        [beacons addObject:beacon];
-        
-        BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
-        beaconAnnotation.beacon = beacon;
-    }
-    self.beacons = [[NSArray alloc] initWithArray:beacons];
-
 }
 
 - (void)hideBeaconCollectionViewAnimated:(BOOL)animated
@@ -169,6 +152,14 @@
                          self.beaconCollectionView.transform = CGAffineTransformIdentity;
                      } completion:^(BOOL finished) {
                      }];
+}
+
+- (void)deactivateAllBeaconAnnotationViews
+{
+    for (BeaconAnnotation *annotation in self.mapView.annotations) {
+        BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:annotation];
+        view.active = NO;
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -305,10 +296,11 @@
     MKCoordinateRegion adjustedRegion = MKCoordinateRegionMakeWithDistance(adjustedCenterCoordinate, distance, distance);
     [self.mapView setRegion:adjustedRegion animated:animated];
     
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
-    beaconAnnotation.beacon = beacon;
-    [self.mapView addAnnotation:beaconAnnotation];
+    [self deactivateAllBeaconAnnotationViews];
+    BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:[self annotationForBeacon:beacon]];
+    if (view) {
+        view.active = YES;
+    }
 }
 
 #pragma mark - MKMapViewDelegate
@@ -335,7 +327,9 @@
             BeaconAnnotationView *customPinView = [[BeaconAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BeaconAnnotationIdentifier];
             customPinView.animatesDrop = YES;
             customPinView.canShowCallout = NO;
-            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(beaconAnnotationViewTapped:)];
+            tapGesture.numberOfTapsRequired = 1;
+            [customPinView addGestureRecognizer:tapGesture];
             
             return customPinView;
         }
@@ -348,6 +342,40 @@
  
     
     return nil;
+}
+
+- (void)beaconAnnotationViewTapped:(id)sender
+{
+    BeaconAnnotationView *beaconAnnotationView = (BeaconAnnotationView *)[sender view];
+    //deactivate other annotions
+    [self deactivateAllBeaconAnnotationViews];
+    beaconAnnotationView.active = YES;
+    
+    [self showBeaconCollectionViewAnimated:YES];
+    BeaconAnnotation *beaconAnnotation = beaconAnnotationView.annotation;
+    NSIndexPath *indexPath = [self indexPathForBeacon:beaconAnnotation.beacon];
+    [self.beaconCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    [self centerMapOnBeacon:beaconAnnotation.beacon animated:YES];
+}
+
+- (BeaconAnnotation *)annotationForBeacon:(Beacon *)beacon
+{
+    return self.beaconAnnotationDictionary[beacon.beaconID];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+	return YES;
+}
+
+- (void)didRecognizePinchOrPan:(id)sender
+{
+    [self hideBeaconCollectionViewAnimated:YES];
+    for (BeaconAnnotation *annotation in self.mapView.annotations) {
+        BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:annotation];
+        view.active  = NO;
+    }
 }
 
 #pragma mark - FindFriendsViewControllerDelegate

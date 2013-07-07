@@ -91,6 +91,7 @@
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
 		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
 		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
+		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
 		96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */; };
@@ -238,6 +239,7 @@
 		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		969564531758691B0081B349 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		969564541758691B0081B349 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
 		96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeButton@2x.png"; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			children = (
 				1FE67731175C3C88006F563C /* Fonts */,
 				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
+				96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */,
 				1F7743D917716C1000188500 /* blueButton@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */,
@@ -649,6 +652,7 @@
 				1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */,
 				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
 				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
+				96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

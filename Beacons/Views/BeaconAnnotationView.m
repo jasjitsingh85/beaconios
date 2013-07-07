@@ -8,6 +8,12 @@
 
 #import "BeaconAnnotationView.h"
 
+@interface BeaconAnnotationView()
+@property (readonly) UIImage *normalImage;
+@property (readonly) UIImage *activeImage;
+
+@end
+
 @implementation BeaconAnnotationView
 
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier
@@ -20,6 +26,24 @@
     
     return self;
 }
+
+- (UIImage *)normalImage
+{
+    return [UIImage imageNamed:@"beaconAnnotation"];
+}
+
+- (UIImage *)activeImage
+{
+    return [UIImage imageNamed:@"beaconAnnotationActive"];
+}
+
+- (void)setActive:(BOOL)active
+{
+    _active = active;
+    self.image = active ? [self activeImage] : [self normalImage];
+}
+
+
 
 
 @end
