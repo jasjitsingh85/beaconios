@@ -124,6 +124,9 @@
     else {
         [[ContactManager sharedManager] syncContacts];
     }
+    
+    //register for push notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     return YES;
 }
 
@@ -213,6 +216,17 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.loggedInUser = nil;
     [[APIClient sharedClient] clearAuthorizationHeader];
+}
+
+#pragma mark - Push Notifications
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
+    NSLog(@"Got device token: %@", [devToken description]);
+    
+//    [self sendProviderDeviceToken:[devToken bytes]];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Error in registration. Error: %@", err);
 }
 
 @end
