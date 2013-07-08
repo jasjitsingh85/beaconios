@@ -248,6 +248,9 @@
         self.textButtonLabel.hidden = NO;
         self.textMessageButton.hidden = NO;
     }
+    self.descriptionLabel.hidden = NO;
+    self.timeLabel.hidden = NO;
+    self.addressLabel.hidden = NO;
     self.textButtonLabel.text = [NSString stringWithFormat:@"Text %@", beacon.creator.firstName];
     self.descriptionLabel.text = beacon.beaconDescription;
     self.addressLabel.text = beacon.address;
@@ -284,6 +287,9 @@
     self.textButtonLabel.hidden = YES;
     self.textMessageButton.hidden = YES;
     self.confirmButton.hidden = YES;
+    self.descriptionLabel.hidden = YES;
+    self.timeLabel.hidden = YES;
+    self.addressLabel.hidden = YES;
 }
 
 - (void)confirmButtonTouched:(id)sender
