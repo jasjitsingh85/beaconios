@@ -23,6 +23,7 @@
 #import "AnalyticsManager.h"
 #import "Beacon.h"
 #import "Theme.h"
+#import "LoadingIndictor.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
 static NSString * const kCurrentLocationString = @"Current Location";
@@ -323,13 +324,18 @@ static NSString * const kCurrentLocationString = @"Current Location";
     beacon.invited = self.contacts;
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationValueLabel.text isEqualToString:kCurrentLocationString] ? nil : self.locationValueLabel.text;
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *view = appDelegate.window.rootViewController.view;
+    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
         self.makingServerCall = NO;
         [[AnalyticsManager sharedManager] createBeacon:beacon];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         self.makingServerCall = NO;
     }];
