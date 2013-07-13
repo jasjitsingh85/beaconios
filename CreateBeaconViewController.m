@@ -256,7 +256,7 @@ static NSString * const kCurrentLocationString = @"Current Location";
         [textView resignFirstResponder];
         return NO;
     }
-    NSInteger maxLength = 100;
+    NSInteger maxLength = 50;
     if (textView.text.length > maxLength) {
         return NO;
     }

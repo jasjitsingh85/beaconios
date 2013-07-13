@@ -74,7 +74,7 @@
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.titleLabel];
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, self.contentView.frame.size.width - 15, 16)];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, self.contentView.frame.size.width - 15*2, 16)];
         self.descriptionLabel.backgroundColor = [UIColor clearColor];
         self.descriptionLabel.textColor = [UIColor colorWithRed:243/255.0 green:114/255.0 blue:59/255.0 alpha:1];
         self.descriptionLabel.font = [ThemeManager boldFontOfSize:15.0];
