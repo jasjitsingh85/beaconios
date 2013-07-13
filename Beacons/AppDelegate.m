@@ -221,8 +221,21 @@
 #pragma mark - Push Notifications
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
     NSLog(@"Got device token: %@", [devToken description]);
-    
-//    [self sendProviderDeviceToken:[devToken bytes]];
+    NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    AFHTTPClient *client = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://0.0.0.0:8000/ios-notifications/"]];
+    NSDictionary *parameters = @{@"token" : deviceToken,
+                                 @"service" : @(1)};
+    [client postPath:@"device/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //update user with device token
+        NSDictionary *params = @{@"device_token" : deviceToken};
+        [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
