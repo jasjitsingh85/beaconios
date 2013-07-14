@@ -242,4 +242,10 @@
     NSLog(@"Error in registration. Error: %@", err);
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
+    [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+}
+
 @end
