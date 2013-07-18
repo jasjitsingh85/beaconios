@@ -20,6 +20,7 @@
 #import "ContactManager.h"
 #import "AnalyticsManager.h"
 #import "LocationTracker.h"
+#import "PushNotificationManager.h"
 
 @interface AppDelegate()
 
@@ -122,11 +123,9 @@
         [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
     }
     else {
+        [[PushNotificationManager sharedManager] registerForRemoteNotifications];
         [[ContactManager sharedManager] syncContacts];
     }
-    
-    //register for push notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
     return YES;
 }
 
@@ -174,6 +173,7 @@
         if (activated) {
             [[ContactManager sharedManager] syncContacts];
             [[LocationTracker sharedTracker] requestLocationPermission];
+            [[PushNotificationManager sharedManager] registerForRemoteNotifications];
             [[AnalyticsManager sharedManager] setupForUser];
         }
         else {
@@ -219,33 +219,19 @@
 }
 
 #pragma mark - Push Notifications
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken {
-    NSLog(@"Got device token: %@", [devToken description]);
-    NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    AFHTTPClient *client = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://0.0.0.0:8000/ios-notifications/"]];
-    NSDictionary *parameters = @{@"token" : deviceToken,
-                                 @"service" : @(1)};
-    [client postPath:@"device/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //update user with device token
-        NSDictionary *params = @{@"device_token" : deviceToken};
-        [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-        }];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [[PushNotificationManager sharedManager] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
-    NSLog(@"Error in registration. Error: %@", err);
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    [[PushNotificationManager sharedManager] application:application didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
-    [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    [[PushNotificationManager sharedManager] application:application didReceiveRemoteNotification:userInfo];
 }
 
 @end

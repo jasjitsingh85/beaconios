@@ -14,7 +14,8 @@
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
-static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
+static NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/api/";
+static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokuapp.com/api/";
 
 
 + (APIClient *)sharedClient
@@ -103,7 +104,7 @@ static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/
 - (void)deleteBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSDictionary *parameters = @{@"isActivated" : @(NO)};
+    NSDictionary *parameters = @{@"isActivated" : @"False"};
     [[APIClient sharedClient] putPath:@"beacon/me/" parameters:parameters success:success failure:failure];
 }
 
@@ -122,8 +123,9 @@ static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/
 - (void)beaconFollow:(BOOL)follow beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
+    NSString *boolString = follow ? @"True" : @"False";
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
-                                 @"follow" : @(follow)};
+                                 @"follow" : boolString};
     [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
 }
 
