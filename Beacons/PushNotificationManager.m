@@ -39,7 +39,6 @@ NSInteger const kAPNSServerProduction = 3;
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {    
-    [[[UIAlertView alloc] initWithTitle:@"Thank fucking god" message:[devToken description] delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
     NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     AFHTTPClient *client = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kPushNotificationURLStringProduction]];
@@ -61,7 +60,6 @@ NSInteger const kAPNSServerProduction = 3;
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     NSLog(@"Error in registration. Error: %@", err);
-    [[[UIAlertView alloc] initWithTitle:@"" message:err.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
