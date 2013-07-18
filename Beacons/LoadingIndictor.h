@@ -11,7 +11,7 @@
 
 @interface LoadingIndictor : NSObject
 
-+ (void)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated;
++ (MBProgressHUD *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated;
 
 + (void)hideLoadingIndicatorForView:(UIView *)view animated:(BOOL)animated;
 

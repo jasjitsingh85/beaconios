@@ -198,6 +198,9 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!self.beacons.count) {
+        return;
+    }
     Beacon *beacon = [self beaconForIndexPath:indexPath];
     BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
     beaconDetailViewController.beacon = beacon;

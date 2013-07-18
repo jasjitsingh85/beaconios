@@ -20,6 +20,7 @@
 #import "ContactManager.h"
 #import "AnalyticsManager.h"
 #import "LocationTracker.h"
+#import "PushNotificationManager.h"
 
 @interface AppDelegate()
 
@@ -122,6 +123,7 @@
         [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
     }
     else {
+        [[PushNotificationManager sharedManager] registerForRemoteNotifications];
         [[ContactManager sharedManager] syncContacts];
     }
     return YES;
@@ -171,6 +173,7 @@
         if (activated) {
             [[ContactManager sharedManager] syncContacts];
             [[LocationTracker sharedTracker] requestLocationPermission];
+            [[PushNotificationManager sharedManager] registerForRemoteNotifications];
             [[AnalyticsManager sharedManager] setupForUser];
         }
         else {
@@ -213,6 +216,22 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     self.loggedInUser = nil;
     [[APIClient sharedClient] clearAuthorizationHeader];
+}
+
+#pragma mark - Push Notifications
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [[PushNotificationManager sharedManager] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    [[PushNotificationManager sharedManager] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [[PushNotificationManager sharedManager] application:application didReceiveRemoteNotification:userInfo];
 }
 
 @end

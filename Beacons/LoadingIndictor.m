@@ -10,10 +10,11 @@
 
 @implementation LoadingIndictor
 
-+ (void)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
++ (MBProgressHUD *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:animated];
     hud.labelText = @"Loading...";
+    return hud;
 }
 
 + (void)hideLoadingIndicatorForView:(UIView *)view animated:(BOOL)animated
