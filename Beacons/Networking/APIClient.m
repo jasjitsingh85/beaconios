@@ -71,10 +71,10 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     if ([operation.response statusCode] == kHTTPStatusCodeUnauthorized) {
         // enqueue a new request operation here
     }
-
-#ifdef DEBUG
+#if DEBUG
     if (operation.error) {
-        [[[UIAlertView alloc] initWithTitle:@"Server Error" message:operation.error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        NSString *title = [NSString stringWithFormat:@"error request: %@", operation.request];
+        [[[UIAlertView alloc] initWithTitle:title message:operation.error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 #endif
 }
