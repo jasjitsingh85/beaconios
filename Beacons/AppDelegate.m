@@ -21,6 +21,7 @@
 #import "AnalyticsManager.h"
 #import "LocationTracker.h"
 #import "PushNotificationManager.h"
+#import "CrashManager.h"
 
 @interface AppDelegate()
 
@@ -102,9 +103,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [ThemeManager customizeAppAppearance];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [CrashManager enableCrittercism];
     
+    [ThemeManager customizeAppAppearance];
     self.centerNavigationController.selectedViewController = self.mapViewController;
     self.sideNavigationViewController.centerController = self.centerNavigationController;
     self.sideNavigationViewController.leftController = self.menuViewController;
@@ -175,6 +177,7 @@
             [[LocationTracker sharedTracker] requestLocationPermission];
             [[PushNotificationManager sharedManager] registerForRemoteNotifications];
             [[AnalyticsManager sharedManager] setupForUser];
+            [CrashManager setupForUser];
         }
         else {
             self.activationViewController = [ActivationViewController new];
@@ -191,6 +194,7 @@
         [[ContactManager sharedManager] syncContacts];
         [[LocationTracker sharedTracker] requestLocationPermission];
         [[AnalyticsManager sharedManager] setupForUser];
+        [CrashManager setupForUser];
     }];
 }
 

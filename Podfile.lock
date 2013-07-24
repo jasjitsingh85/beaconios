@@ -3,6 +3,7 @@ PODS:
   - AHAlertView (0.0.2)
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
+  - CrittercismSDK (4.0.2)
   - Facebook-iOS-SDK (3.5.1)
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - AHAlertView (~> 0.0.2)
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
+  - CrittercismSDK
   - Facebook-iOS-SDK (~> 3.5.0)
   - Foursquare-iOS-API (~> 1.1.0)
   - MBProgressHUD (~> 0.6)
@@ -27,6 +29,7 @@ SPEC CHECKSUMS:
   AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
+  CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
