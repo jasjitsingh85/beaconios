@@ -110,8 +110,7 @@ typedef enum {
     self.recentsList = [allContacts filteredArrayUsingPredicate:recentPredicate];
     NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d && isRecent = %d",YES, NO];
     self.suggestedList = [allContacts filteredArrayUsingPredicate:suggestedPredicate];
-    NSPredicate *nonSuggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d", NO];
-    self.nonSuggestedList = [allContacts filteredArrayUsingPredicate:nonSuggestedPredicate];
+    self.nonSuggestedList = allContacts;
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
