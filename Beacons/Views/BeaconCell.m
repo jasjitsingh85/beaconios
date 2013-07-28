@@ -105,6 +105,7 @@
         [self.confirmButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [self.confirmButton setBackgroundImage:selectedButtonImage forState:UIControlStateSelected];
         [self.confirmButton setTitle:@"I'm in" forState:UIControlStateNormal];
+        [self.confirmButton setTitle:@"I'm out" forState:UIControlStateSelected];
         [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.confirmButton];
         
@@ -237,6 +238,7 @@
         self.infoButtonLabel.hidden = YES;
         self.textButtonLabel.hidden = YES;
         self.textMessageButton.hidden = YES;
+        self.confirmButton.hidden = YES;
     }
     else {
         self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
@@ -247,6 +249,7 @@
         self.infoButtonLabel.hidden = NO;
         self.textButtonLabel.hidden = NO;
         self.textMessageButton.hidden = NO;
+        self.confirmButton.hidden = NO;
     }
     self.descriptionLabel.hidden = NO;
     self.timeLabel.hidden = NO;
@@ -259,7 +262,7 @@
     if (self.beacon.address) {
         self.addressLabel.text = self.beacon.address;
     }
-    self.confirmButton.hidden = NO;
+
     self.confirmButton.selected = self.beacon.userAttending;
     if (beacon.creator.avatarURL) {
         self.avatarImageView.alpha = 1;
