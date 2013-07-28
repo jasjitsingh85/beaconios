@@ -7,6 +7,7 @@
 //
 
 #import "LocationTracker.h"
+#import "APIClient.h"
 
 @interface LocationTracker()
 
@@ -75,11 +76,19 @@
     }
 }
 
+- (void)sendLocationToServer
+{
+    [[APIClient sharedClient] postLocation:self.locationManager.location success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+}
+
 #pragma mark - UIApplication Notifications
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
         [self.locationManager startUpdatingLocation];
+        [self performSelector:@selector(sendLocationToServer) withObject:self afterDelay:10];
     }
 }
 

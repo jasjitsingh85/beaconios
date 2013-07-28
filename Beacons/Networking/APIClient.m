@@ -142,6 +142,14 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     [[APIClient sharedClient] putPath:@"beacon/me/" parameters:paramaters success:success failure:failure];
 }
 
+- (void)postLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"latitude" : @(location.coordinate.latitude),
+                                 @"longitude" : @(location.coordinate.longitude)};
+    [[APIClient sharedClient] postPath:@"location/" parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {
