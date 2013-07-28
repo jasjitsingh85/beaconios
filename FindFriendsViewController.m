@@ -7,6 +7,7 @@
 //
 
 #import "FindFriendsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import "Contact.h"
 #import "Theme.h"
 #import "APIClient.h"
@@ -29,6 +30,8 @@ typedef enum {
 @property (strong, nonatomic) NSMutableDictionary *contactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *selectedContactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *inactiveContactDictionary;
+@property (strong, nonatomic) NSMutableDictionary *tableViewHeaderPool;
+@property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
 
 @end
 
@@ -119,6 +122,91 @@ typedef enum {
 }
 
 #pragma mark - Table view data source
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (!self.tableViewHeaderPool) {
+        self.tableViewHeaderPool = [NSMutableDictionary new];
+    }
+    NSString *key = @(section).stringValue;
+    if ([self.tableViewHeaderPool valueForKey:key]) {
+        return [self.tableViewHeaderPool valueForKey:key];
+    }
+    CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
+    view.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.95];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, height)];
+    title.backgroundColor = [UIColor clearColor];
+    title.font = [ThemeManager boldFontOfSize:14.0];
+    title.textColor = [UIColor whiteColor];
+    [view addSubview:title];
+    title.text = [self tableView:tableView titleForHeaderInSection:section];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect buttonFrame = CGRectZero;
+    buttonFrame.size = CGSizeMake(80, 3/4.0*height);
+    buttonFrame.origin.x = self.tableView.frame.size.width - buttonFrame.size.width - 30;
+    buttonFrame.origin.y = 0.5*(height - buttonFrame.size.height);
+    button.frame = buttonFrame;
+    [view addSubview:button];
+    button.titleLabel.font = [ThemeManager boldFontOfSize:12.0];
+    [button setTitle:@"Select All" forState:UIControlStateNormal];
+    [button setTitle:@"Unselect All" forState:UIControlStateSelected];
+    [button addTarget:self action:@selector(selectAllButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    button.layer.cornerRadius = 10;
+    [button setBackgroundColor:[UIColor darkGrayColor]];
+    [self.tableViewHeaderPool setValue:view forKey:key];
+    [self setSelectAllButton:button forSection:section];
+    return view;
+}
+
+- (void)setSelectAllButton:(UIButton *)button forSection:(NSInteger)section
+{
+    if (!self.selectAllButtonPool) {
+        self.selectAllButtonPool = [NSMutableDictionary new];
+    }
+    NSString *key = @(section).stringValue;
+    [self.selectAllButtonPool setValue:button forKey:key];
+}
+
+- (UIButton *)selectAllButtonForSection:(NSInteger)section
+{
+    return [self.selectAllButtonPool valueForKey:@(section).stringValue];
+}
+
+- (void)selectAllButtonTouched:(UIButton *)button
+{
+    button.selected = !button.selected;
+    NSInteger section = [[self.selectAllButtonPool allKeysForObject:button][0] integerValue];
+    [self setSelected:button.selected forAllContactsInSection:section];
+}
+
+- (void)setSelected:(BOOL)selected forAllContactsInSection:(FindFriendSection)section
+{
+    NSArray *contactList;
+    if (section == FindFriendSectionRecents) {
+        contactList = self.recentsList;
+    }
+    else if (section == FindFriendSectionSuggested) {
+        contactList = self.suggestedList;
+    }
+    else if (section == FindFriendSectionContacts) {
+        contactList = self.nonSuggestedList;
+    }
+    for (Contact *contact in contactList) {
+        if (selected) {
+            [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+        }
+        else {
+            [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
+        }
+    }
+    UIButton *selectAllButton = [self.selectAllButtonPool valueForKey:@(section).stringValue];
+    selectAllButton.selected = selected;
+    [self.tableView reloadData];
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -315,9 +403,6 @@ typedef enum {
                                       if (contact) {
                                           contact.isSuggested = YES;
                                           contact.isRecent = YES;
-                                          if (self.autoCheckSuggested) {
-                                              [self.selectedContactDictionary setObject:contact forKey:normalizedPhoneNumber];
-                                          }
                                       }
                                   }
                                   for (NSDictionary *userData in users) {
@@ -337,10 +422,10 @@ typedef enum {
                                           contact.isSuggested = YES;
                                           contact.isUser = YES;
                                           contact.isRecent = YES;
-                                          if (self.autoCheckSuggested) {
-                                              [self.selectedContactDictionary setObject:contact forKey:normalizedPhoneNumber];
-                                          }
                                       }
+                                  }
+                                  if (self.autoCheckSuggested) {
+                                      [self setSelected:YES forAllContactsInSection:FindFriendSectionRecents];
                                   }
                                   [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         
