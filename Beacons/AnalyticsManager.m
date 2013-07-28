@@ -66,8 +66,8 @@ static NSString * const kEventDidRegister = @"did_register";
     }
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:loggedInUser.userID.stringValue];
-    NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username"];
-    NSArray *userProperties = @[@"email", @"firstName", @"lastName", @"username"];
+    NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username", @"phone_number"];
+    NSArray *userProperties = @[@"email", @"firstName", @"lastName", @"username", @"phoneNumber"];
     for (NSInteger i=0; i<mixpanelProperties.count; i++) {
         id value = [loggedInUser valueForKeyPath:userProperties[i]];
         if (value) {
