@@ -23,6 +23,7 @@
 #import "AnalyticsManager.h"
 #import "FindFriendsViewController.h"
 #import "AppDelegate.h"
+#import "LocationTracker.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -64,7 +65,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kNotificationDidUpdateLocation object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        self.mapView.showsUserLocation = YES;
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -376,7 +379,10 @@
 - (void)didRecognizePinchOrPan:(id)sender
 {
     [self hideBeaconCollectionViewAnimated:YES];
-    for (BeaconAnnotation *annotation in self.mapView.annotations) {
+    NSArray *beaconAnnotations = [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject isKindOfClass:[BeaconAnnotation class]];
+    }]];
+    for (BeaconAnnotation *annotation in beaconAnnotations) {
         BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:annotation];
         view.active  = NO;
     }
@@ -414,6 +420,23 @@
     }
 }
 
+- (void)filterBeaconsByLocation
+{
+    CGFloat filterRadius = 20000;
+    CLLocation *currentLocation = [[LocationTracker sharedTracker] currentLocation];
+    NSMutableArray *filteredBeacons = [NSMutableArray arrayWithArray:self.beacons];
+    if (currentLocation) {
+        for (Beacon *beacon in self.self.beacons) {
+            CLLocation *beaconLocation = [[CLLocation alloc] initWithLatitude:beacon.coordinate.latitude longitude:beacon.coordinate.longitude];
+            CLLocationDistance distance = [currentLocation distanceFromLocation:beaconLocation];
+            if (distance > filterRadius) {
+                [filteredBeacons removeObject:beacon];
+            }
+        }
+    }
+    self.beacons = [NSArray arrayWithArray:filteredBeacons];
+}
+
 #pragma mark - Networking
 - (void)requestBeacons
 {
@@ -427,6 +450,7 @@
                                       [beacons addObject:beacon];
                                   }
                                   self.beacons = [NSArray arrayWithArray:beacons];
+                                  [self filterBeaconsByLocation];
                                   [self performSelectorOnMainThread:@selector(reloadBeacons) withObject:nil waitUntilDone:NO];
                               }
                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {

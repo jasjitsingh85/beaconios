@@ -54,7 +54,7 @@
         return self.locationManager.location;
     }
     NSLog(@"requested location before authorizing");
-    return [[CLLocation alloc] initWithLatitude:0 longitude:0];
+    return nil;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
