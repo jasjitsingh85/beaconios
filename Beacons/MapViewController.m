@@ -32,6 +32,7 @@
 @property (assign, nonatomic) BOOL showCreateBeaconCell;
 @property (strong, nonatomic) UIButton *createBeaconButton;
 @property (strong, nonatomic) NSMutableDictionary *beaconAnnotationDictionary;
+@property (readonly, nonatomic) NSArray *beaconAnnotations;
 
 @end
 
@@ -79,6 +80,14 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.createBeaconButton];
 }
 
+- (NSArray *)beaconAnnotations
+{
+    NSArray *beaconAnnotations = [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject isKindOfClass:[BeaconAnnotation class]];
+    }]];
+    return beaconAnnotations;
+}
+
 - (UIButton *)createBeaconButton
 {
     if (!_createBeaconButton) {
@@ -102,7 +111,7 @@
 {
     if (self.beacons.count) {
         //add beacon annotations to map
-        [self.mapView removeAnnotations:self.mapView.annotations];
+        [self.mapView removeAnnotations:self.beaconAnnotations];
         self.beaconAnnotationDictionary = [NSMutableDictionary new];
         for (Beacon *beacon in self.beacons) {
             BeaconAnnotation *beaconAnnotation = [BeaconAnnotation new];
@@ -159,7 +168,7 @@
 
 - (void)deactivateAllBeaconAnnotationViews
 {
-    for (BeaconAnnotation *annotation in self.mapView.annotations) {
+    for (BeaconAnnotation *annotation in self.beaconAnnotations) {
         BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:annotation];
         view.active = NO;
     }
@@ -379,10 +388,7 @@
 - (void)didRecognizePinchOrPan:(id)sender
 {
     [self hideBeaconCollectionViewAnimated:YES];
-    NSArray *beaconAnnotations = [self.mapView.annotations filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        return [evaluatedObject isKindOfClass:[BeaconAnnotation class]];
-    }]];
-    for (BeaconAnnotation *annotation in beaconAnnotations) {
+    for (BeaconAnnotation *annotation in self.beaconAnnotations) {
         BeaconAnnotationView *view = (BeaconAnnotationView *)[self.mapView viewForAnnotation:annotation];
         view.active  = NO;
     }
