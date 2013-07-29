@@ -184,6 +184,7 @@ typedef enum {
 
 - (void)setSelected:(BOOL)selected forAllContactsInSection:(FindFriendSection)section
 {
+    [self reloadData];
     NSArray *contactList;
     if (section == FindFriendSectionRecents) {
         contactList = self.recentsList;
