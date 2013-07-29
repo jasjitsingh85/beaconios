@@ -840,7 +840,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
@@ -937,7 +937,7 @@
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
@@ -954,7 +954,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
