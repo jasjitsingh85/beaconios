@@ -127,6 +127,7 @@
     else {
         [[PushNotificationManager sharedManager] registerForRemoteNotifications];
         [[ContactManager sharedManager] syncContacts];
+        [CrashManager setupForUser];
     }
     return YES;
 }
