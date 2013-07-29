@@ -134,6 +134,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[AnalyticsManager sharedManager] appForeground];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response
