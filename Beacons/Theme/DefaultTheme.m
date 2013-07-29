@@ -44,9 +44,8 @@
 {
     return @{
              UITextAttributeTextColor: [UIColor whiteColor],
-             UITextAttributeTextShadowColor: [UIColor blackColor],
-             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-             UITextAttributeFont: [UIFont fontWithName:[self boldFontName] size:20.0f]
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 0.0f)],
+             UITextAttributeFont: [UIFont fontWithName:[self boldFontName] size:18.0f]
              };
 }
 

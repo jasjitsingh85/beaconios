@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import <AHAlertView/AHAlertView.h>
 #import "BeaconCell.h"
 #import "LineLayout.h"
@@ -24,13 +25,14 @@
 #import "FindFriendsViewController.h"
 #import "AppDelegate.h"
 #import "LocationTracker.h"
+#import "Theme.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
 @property (assign, nonatomic) BOOL showCreateBeaconCell;
-@property (strong, nonatomic) UIButton *createBeaconButton;
+@property (strong, nonatomic) IBOutlet UIButton *createBeaconButton;
 @property (strong, nonatomic) NSMutableDictionary *beaconAnnotationDictionary;
 @property (readonly, nonatomic) NSArray *beaconAnnotations;
 
@@ -69,6 +71,18 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:kNotificationDidUpdateLocation object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         self.mapView.showsUserLocation = YES;
     }];
+    
+    self.createBeaconButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.createBeaconButton.layer.shadowColor = [[UIColor blackColor] CGColor];
+    self.createBeaconButton.layer.shadowOpacity = 0.5;
+    self.createBeaconButton.layer.shadowRadius = 1.0;
+    self.createBeaconButton.layer.shadowOffset = CGSizeMake(0, -1);
+    self.createBeaconButton.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.createBeaconButton.bounds].CGPath;
+    UIImage *createBeaconImage = [UIImage imageNamed:@"plus"];
+    [self.createBeaconButton setImage:createBeaconImage forState:UIControlStateNormal];
+    CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithFont:self.createBeaconButton.titleLabel.font].width;
+    self.createBeaconButton.imageEdgeInsets = UIEdgeInsetsMake(0, -widthOfTitleAndImage/4.0, 0, 0);
+    [self.createBeaconButton addTarget:self action:@selector(createBeaconTouched:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -77,7 +91,6 @@
     self.navigationItem.title = @"Beacons";
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.createBeaconButton];
 }
 
 - (NSArray *)beaconAnnotations
@@ -86,18 +99,6 @@
         return [evaluatedObject isKindOfClass:[BeaconAnnotation class]];
     }]];
     return beaconAnnotations;
-}
-
-- (UIButton *)createBeaconButton
-{
-    if (!_createBeaconButton) {
-        _createBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *buttonImage = [UIImage imageNamed:@"plus"];
-        [_createBeaconButton setImage:buttonImage forState:UIControlStateNormal];
-        _createBeaconButton.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-        [_createBeaconButton addTarget:self action:@selector(createBeaconTouched:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _createBeaconButton;
 }
 
 #pragma mark - Notifications
