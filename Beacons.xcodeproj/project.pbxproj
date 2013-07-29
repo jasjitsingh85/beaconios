@@ -10,6 +10,7 @@
 		1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1E7808176E91F400F0E853 /* attendingButton@2x.png */; };
 		1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1E780A176E91F800F0E853 /* invitedButton@2x.png */; };
 		1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */; };
+		1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85517A6170F00D12CB8 /* backArrow@2x.png */; };
 		1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */; };
 		1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */; };
 		1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* PushNotificationManager.m */; };
@@ -122,6 +123,7 @@
 		1F1E7808176E91F400F0E853 /* attendingButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attendingButton@2x.png"; sourceTree = "<group>"; };
 		1F1E780A176E91F800F0E853 /* invitedButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButton@2x.png"; sourceTree = "<group>"; };
 		1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeNav@2x.png"; sourceTree = "<group>"; };
+		1F36E85517A6170F00D12CB8 /* backArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backArrow@2x.png"; sourceTree = "<group>"; };
 		1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationViewController.h; path = ../RegistrationViewController.h; sourceTree = "<group>"; };
 		1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationViewController.m; path = ../RegistrationViewController.m; sourceTree = "<group>"; };
 		1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegistrationViewController.xib; path = ../RegistrationViewController.xib; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			children = (
 				1FE67731175C3C88006F563C /* Fonts */,
 				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
+				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
 				96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */,
 				1F7743D917716C1000188500 /* blueButton@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
@@ -667,6 +670,7 @@
 				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
 				96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */,
 				1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */,
+				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 @interface CenterNavigationController ()
 
 @property (strong, nonatomic) UIButton *menuButton;
+@property (strong, nonatomic) UIButton *backButton;
 
 @end
 
@@ -65,12 +66,37 @@
     self.viewControllers = @[selectedViewController];
 }
 
+- (UIButton *)backButton
+{
+    if (!_backButton) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImage *buttonImage = [UIImage imageNamed:@"backArrow"];
+        [button setImage:buttonImage forState:UIControlStateNormal];
+        button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
+        [button addTarget:self action:@selector(backButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        _backButton = button;
+    }
+    return _backButton;
+}
+
+- (void)backButtonTouched:(id)sender
+{
+    [self popViewControllerAnimated:YES];
+}
+
 #pragma mark - UINavigationBarDelegate methods
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (navigationController.viewControllers.count == 1) {
+    BOOL showMenuButton = self.viewControllers.count == 1;
+    if (showMenuButton) {
+        self.navigationItem.hidesBackButton = NO;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
     }
+    else {
+        self.navigationItem.hidesBackButton = YES;
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backButton];
+    }
 }
+
 
 @end
