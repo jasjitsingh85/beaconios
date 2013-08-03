@@ -148,7 +148,7 @@ typedef enum {
                                    }
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   NSString *message = @"Something went wrong";
+                                   NSString *message = @"incorrect email or password";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
                                        message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
                                    }
