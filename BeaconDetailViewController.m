@@ -90,6 +90,7 @@
     self.messageLabel.hidden = beacon.isUserBeacon;
     self.groupMessageButton.hidden = beacon.isUserBeacon;
     self.groupMessageLabel.hidden = beacon.isUserBeacon;
+    self.confirmButton.hidden = beacon.isUserBeacon;
     
     self.navigationItem.title = self.titleLabel.text;
     self.beaconDescriptionLabel.text = beacon.beaconDescription;
