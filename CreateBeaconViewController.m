@@ -96,6 +96,8 @@ static NSString * const kCurrentLocationString = @"Current Location";
     self.timeValueLabel.userInteractionEnabled = YES;
     [self updateDateValue];
     
+    self.keyboardHidden = YES;
+    
     //by default set selected location as current location
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
