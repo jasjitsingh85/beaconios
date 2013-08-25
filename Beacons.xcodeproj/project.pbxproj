@@ -601,6 +601,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Jeff Ames";
+				TargetAttributes = {
+					963399371758512100AF9D89 = {
+						DevelopmentTeam = E5Y3J9RGBG;
+					};
+				};
 			};
 			buildConfigurationList = 963399331758512100AF9D89 /* Build configuration list for PBXProject "Beacons" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -834,8 +839,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "464941E3-A954-4DBF-8AA1-282F3C3DB3BB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "464941E3-A954-4DBF-8AA1-282F3C3DB3BB";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -846,16 +849,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "464941E3-A954-4DBF-8AA1-282F3C3DB3BB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "464941E3-A954-4DBF-8AA1-282F3C3DB3BB";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -932,8 +933,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "A77951D3-8AE8-4ADD-869B-00FF2E375776";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A77951D3-8AE8-4ADD-869B-00FF2E375776";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -945,12 +944,15 @@
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -960,16 +962,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 13;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A77951D3-8AE8-4ADD-869B-00FF2E375776";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A77951D3-8AE8-4ADD-869B-00FF2E375776";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
