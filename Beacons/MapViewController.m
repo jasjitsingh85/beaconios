@@ -248,30 +248,14 @@
     if (confirmed) {
         AHAlertView *alert = [[AHAlertView alloc] initWithTitle:@"Joined Beacon" message:@"Would you like to notify friends?"];
         [alert setCancelButtonTitle:@"Not Now" block:^{
-            [self confirmBeacon:beacon notifyFriends:NO];
         }];
         [alert addButtonWithTitle:@"OK" block:^{
-            [self confirmBeacon:beacon notifyFriends:YES];
         }];
         [alert show];
         [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [[AnalyticsManager sharedManager] acceptInvite:AnalyticsLocationMapView beacon:beacon];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
-    }
-    else {
-        if (beacon.isUserBeacon) {
-            [self.beaconCollectionView reloadItemsAtIndexPaths:@[[self indexPathForBeacon:beacon]]];
-            [[[UIAlertView alloc] initWithTitle:@"This is your own beacon" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
-        else {
-            beacon.userAttending = NO;
-            [[APIClient sharedClient] cancelBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [[[UIAlertView alloc] initWithTitle:@"You have left this beacon" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            }];
-        }
     }
 }
 
@@ -404,27 +388,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
-}
-
-- (void)confirmBeacon:(Beacon *)beacon notifyFriends:(BOOL)notify
-{
-    if (notify) {
-        CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
-        createBeaconViewController.beacon = beacon;
-        [self.navigationController pushViewController:createBeaconViewController animated:YES];
-    }
-    else {
-        //set invited list to empty
-        beacon.invited = @[];
-        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-        [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-            [self requestBeacons];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-            [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"to create beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }];
-    }
 }
 
 - (void)filterBeaconsByLocation
