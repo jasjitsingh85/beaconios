@@ -24,6 +24,7 @@
 #import "Beacon.h"
 #import "Theme.h"
 #import "LoadingIndictor.h"
+#import "BeaconManager.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
 static NSString * const kCurrentLocationString = @"Current Location";
@@ -101,7 +102,7 @@ static NSString * const kCurrentLocationString = @"Current Location";
     //by default set selected location as current location
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kNotificationDidUpdateLocation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -329,14 +330,14 @@ static NSString * const kCurrentLocationString = @"Current Location";
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
         self.makingServerCall = NO;
         [[AnalyticsManager sharedManager] createBeacon:beacon];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         self.makingServerCall = NO;

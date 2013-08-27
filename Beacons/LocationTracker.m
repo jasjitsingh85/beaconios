@@ -9,6 +9,11 @@
 #import "LocationTracker.h"
 #import "APIClient.h"
 
+NSString * const kDidEnterRegionNotification = @"didEnterRegionNotification";
+NSString * const kDidExitRegionNotification = @"didExitRegionNotification";
+NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotification";
+
+
 @interface LocationTracker()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -57,10 +62,32 @@
     return nil;
 }
 
+- (void)monitorRegion:(CLRegion *)region
+{
+    [self.locationManager startMonitoringForRegion:region];
+}
+
+- (void)stopMonitoringForRegion:(CLRegion *)region
+{
+    [self.locationManager stopMonitoringForRegion:region];
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidEnterRegionNotification object:self userInfo:@{@"region" : region}];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidExitRegionNotification object:self userInfo:@{@"region" : region}];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidUpdateLocation object:nil userInfo:@{@"location" : location}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidUpdateLocationNotification object:nil userInfo:@{@"location" : location}];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status

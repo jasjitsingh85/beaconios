@@ -11,7 +11,8 @@
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"
 
 //notifications
-#define kNotificationDidUpdateLocation @"notificationDidUpdateLocation"
+
+//location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
 
 //analytics
