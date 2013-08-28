@@ -35,9 +35,9 @@
     if (!self) {
         return self;
     }
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
-return self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
+    return self;
 }
 
 - (void)getBeacons:(void (^)(NSArray *, BOOL))success failure:(void (^)(NSError *))failure
@@ -70,7 +70,7 @@ return self;
 
 - (void)postBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    
+    self.currentBeacon = beacon;
     [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         beacon.beaconID = [responseObject valueForKeyPath:@"beacon.id"];
         CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
@@ -83,6 +83,7 @@ return self;
 
 - (void)confirmBeacon:(Beacon *)beacon
 {
+    self.currentBeacon = beacon;
     [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:nil failure:nil];
     CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
     [[LocationTracker sharedTracker] monitorRegion:region];
@@ -90,15 +91,17 @@ return self;
 
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
 {
+    [[APIClient sharedClient] arriveBeacon:self.currentBeacon.beaconID success:nil failure:nil];
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"entered beacon";
+    localNotification.alertBody = @"you arrived at the beacon!";
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:self.currentBeacon.beaconID.stringValue];
 }
 
 - (void)receivedDidExitRegionNotification:(NSNotification *)notification
 {
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"exited beacon";
+    localNotification.alertBody = @"you left the beacon!";
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
 

@@ -67,9 +67,13 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
     [self.locationManager startMonitoringForRegion:region];
 }
 
-- (void)stopMonitoringForRegion:(CLRegion *)region
+- (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier
 {
-    [self.locationManager stopMonitoringForRegion:region];
+    NSSet *regions = [self.locationManager.monitoredRegions filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"identifier = %@", regionIdentifier]];
+    CLRegion *region = [regions anyObject];
+    if (region) {
+        [self.locationManager stopMonitoringForRegion:region];
+    }
 }
 
 #pragma mark - CLLocationManagerDelegate

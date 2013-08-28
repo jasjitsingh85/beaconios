@@ -20,7 +20,7 @@ extern NSString * const kDidUpdateLocationNotification;
 - (void)requestLocationPermission;
 
 - (void)monitorRegion:(CLRegion *)region;
-- (void)stopMonitoringForRegion:(CLRegion *)region;
+- (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier;
 
 
 @end

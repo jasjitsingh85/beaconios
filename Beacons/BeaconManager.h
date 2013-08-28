@@ -11,7 +11,8 @@
 @class Beacon;
 @interface BeaconManager : NSObject
 
-@property (nonatomic, strong) NSArray *beacons;
+@property (strong, nonatomic) NSArray *beacons;
+@property (strong, nonatomic) Beacon *currentBeacon;
 
 + (BeaconManager *)sharedManager;
 - (void)updateBeacons:(void (^)(NSArray *beacons))success

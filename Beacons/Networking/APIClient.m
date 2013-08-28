@@ -111,21 +111,26 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self beaconFollow:YES beaconID:beaconID success:success failure:failure];
+    [self beaconFollow:@"Attending" beaconID:beaconID success:success failure:failure];
 }
 
 - (void)cancelBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self beaconFollow:NO beaconID:beaconID success:success failure:failure];
+    [self beaconFollow:@"Not Attending" beaconID:beaconID success:success failure:failure];
 }
 
-- (void)beaconFollow:(BOOL)follow beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+- (void)arriveBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSString *boolString = follow ? @"True" : @"False";
+    [self beaconFollow:@"Here" beaconID:beaconID success:success failure:failure];
+}
+
+- (void)beaconFollow:(NSString *)followStatus beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
-                                 @"follow" : boolString};
+                                 @"follow" : followStatus};
     [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
 }
 
