@@ -21,6 +21,7 @@ extern NSString * const kDidUpdateLocationNotification;
 
 - (void)monitorRegion:(CLRegion *)region;
 - (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier;
+- (void)stopMonitoringAllRegions;
 
 
 @end

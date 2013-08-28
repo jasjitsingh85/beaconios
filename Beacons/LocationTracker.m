@@ -76,6 +76,13 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
     }
 }
 
+- (void)stopMonitoringAllRegions
+{
+    for (CLRegion *region in self.locationManager.monitoredRegions) {
+        [self.locationManager stopMonitoringForRegion:region];
+    }
+}
+
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region

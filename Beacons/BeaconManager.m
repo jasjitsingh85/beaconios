@@ -40,6 +40,14 @@
     return self;
 }
 
+- (void)setCurrentBeacon:(Beacon *)currentBeacon
+{
+    _currentBeacon = currentBeacon;
+    [[LocationTracker sharedTracker] stopMonitoringAllRegions];
+    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:currentBeacon.coordinate radius:100 identifier:currentBeacon.beaconID.stringValue];
+    [[LocationTracker sharedTracker] monitorRegion:region];
+}
+
 - (void)getBeacons:(void (^)(NSArray *, BOOL))success failure:(void (^)(NSError *))failure
 {
     if (self.beacons) {
@@ -70,11 +78,9 @@
 
 - (void)postBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    self.currentBeacon = beacon;
     [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         beacon.beaconID = [responseObject valueForKeyPath:@"beacon.id"];
-        CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
-        [[LocationTracker sharedTracker] monitorRegion:region];
+        self.currentBeacon = beacon;
         success();
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -85,8 +91,6 @@
 {
     self.currentBeacon = beacon;
     [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:nil failure:nil];
-    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
-    [[LocationTracker sharedTracker] monitorRegion:region];
 }
 
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
