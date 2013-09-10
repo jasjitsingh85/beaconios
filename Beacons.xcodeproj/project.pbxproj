@@ -16,7 +16,6 @@
 		1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* PushNotificationManager.m */; };
 		1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */; };
 		1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */; };
-		1F465C061761849700F35A8B /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C051761849700F35A8B /* plus@2x.png */; };
 		1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0817618B9200F35A8B /* SelectLocationViewController.m */; };
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
 		1F465C111763BAB300F35A8B /* BeaconDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0F1763BAB200F35A8B /* BeaconDetailViewController.m */; };
@@ -88,6 +87,7 @@
 		9633996D1758512100AF9D89 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9633996B1758512100AF9D89 /* InfoPlist.strings */; };
 		963399701758512100AF9D89 /* BeaconsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9633996F1758512100AF9D89 /* BeaconsTests.m */; };
 		9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */; };
+		9647102E17DEEB5700878C19 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102D17DEEB5700878C19 /* plus@2x.png */; };
 		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
@@ -138,7 +138,6 @@
 		1F465C0017617E3F00F35A8B /* CreateBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateBeaconViewController.h; path = ../CreateBeaconViewController.h; sourceTree = "<group>"; };
 		1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateBeaconViewController.m; path = ../CreateBeaconViewController.m; sourceTree = "<group>"; };
 		1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateBeaconViewController.xib; path = ../CreateBeaconViewController.xib; sourceTree = "<group>"; };
-		1F465C051761849700F35A8B /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		1F465C0717618B9200F35A8B /* SelectLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectLocationViewController.h; path = ../SelectLocationViewController.h; sourceTree = "<group>"; };
 		1F465C0817618B9200F35A8B /* SelectLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectLocationViewController.m; path = ../SelectLocationViewController.m; sourceTree = "<group>"; };
 		1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectLocationViewController.xib; path = ../SelectLocationViewController.xib; sourceTree = "<group>"; };
@@ -243,6 +242,7 @@
 		9633996E1758512100AF9D89 /* BeaconsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconsTests.h; sourceTree = "<group>"; };
 		9633996F1758512100AF9D89 /* BeaconsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsTests.m; sourceTree = "<group>"; };
 		9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNav@2x.png"; sourceTree = "<group>"; };
+		9647102D17DEEB5700878C19 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		966070E0175AC989007379A0 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
 		966070E1175AC989007379A0 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		966AC11B17CADBFA0093BB69 /* BeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconManager.h; sourceTree = "<group>"; };
@@ -556,8 +556,8 @@
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */,
-				1F465C051761849700F35A8B /* plus@2x.png */,
 				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
+				9647102D17DEEB5700878C19 /* plus@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -688,7 +688,6 @@
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
-				1F465C061761849700F35A8B /* plus@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				1F465C121763BAB300F35A8B /* BeaconDetailViewController.xib in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
@@ -701,6 +700,7 @@
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
 				1FC07DBB1767002C0011866A /* Icon@2x.png in Resources */,
 				1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */,
+				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,

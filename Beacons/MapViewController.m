@@ -79,6 +79,7 @@
     self.createBeaconButton.layer.shadowRadius = 1.0;
     self.createBeaconButton.layer.shadowOffset = CGSizeMake(0, -1);
     self.createBeaconButton.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.createBeaconButton.bounds].CGPath;
+    self.createBeaconButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
     UIImage *createBeaconImage = [UIImage imageNamed:@"plus"];
     [self.createBeaconButton setImage:createBeaconImage forState:UIControlStateNormal];
     CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithFont:self.createBeaconButton.titleLabel.font].width;
