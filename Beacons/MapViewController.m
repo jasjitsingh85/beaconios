@@ -89,9 +89,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Beacons";
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
+    
+    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+    [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
 }
 
 - (NSArray *)beaconAnnotations

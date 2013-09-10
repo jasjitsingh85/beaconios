@@ -33,8 +33,6 @@
     [self.menuButton addTarget:self.sideNavigationViewController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchDown];
 }
 
-
-
 #pragma mark - setters
 - (void)setSelectedViewController:(UIViewController *)selectedViewController animated:(BOOL)animated
 {
