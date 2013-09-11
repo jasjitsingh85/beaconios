@@ -15,19 +15,45 @@
 @interface ChatViewController ()
 
 @property (strong, nonatomic) NSArray *messages;
+@property (strong, nonatomic) UITextView *textView;
 
 @end
 
 @implementation ChatViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)init
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        self.messages = [ChatTest testMessages];
-        self.view.backgroundColor = [[ThemeManager sharedTheme] darkColor];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self = [super init];
+    if (!self) {
+        return nil;
     }
+    
+    CGRect textViewFrame;
+    textViewFrame.size = CGSizeMake(300, 45);
+    textViewFrame.origin.x = 0.5*(self.view.frame.size.width - textViewFrame.size.width);
+    textViewFrame.origin.y = self.view.frame.size.height - textViewFrame.size.height;
+    self.textView = [[UITextView alloc] initWithFrame:textViewFrame];
+    self.textView.delegate = self;
+    [self.view addSubview:self.textView];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view insertSubview:self.tableView belowSubview:self.textView];
+    self.tableView.backgroundColor = [[ThemeManager sharedTheme] darkColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+    self.tableView.contentInset = contentInsets;
+    self.tableView.scrollIndicatorInsets = contentInsets;
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
+    
+    self.messages = [ChatTest testMessages];
+    [self reloadMessages];
     return self;
 }
 
@@ -81,6 +107,61 @@
 {
     self.messages = [ChatTest updateFromMessages:self.messages];
     [self reloadMessages];
+}
+
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    
+    CGRect textViewFrame = self.textView.frame;
+    textViewFrame.origin.y -= kbSize.height;
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.textView.frame = textViewFrame;
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - textViewFrame.origin.y, 0.0);
+        self.tableView.contentInset = contentInsets;
+        self.tableView.scrollIndicatorInsets = contentInsets;
+    }];
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    NSIndexPath *lastRow = [NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:lastRow atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    CGRect textViewFrame = self.textView.frame;
+    textViewFrame.origin.y += kbSize.height;
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.textView.frame = textViewFrame;
+        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        self.tableView.contentInset = contentInsets;
+        self.tableView.scrollIndicatorInsets = contentInsets;
+    }];
+}
+
+
+#pragma mark - UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    NSInteger maxLength = 50;
+    if (textView.text.length > maxLength) {
+        return NO;
+    }
+    return YES;
 }
 
 @end
