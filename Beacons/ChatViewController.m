@@ -10,7 +10,9 @@
 #import "ChatMessage.h"
 #import "ChatTableViewCell.h"
 #import "ChatTest.h"
+#import "User.h"
 #import "Theme.h"
+#import "AppDelegate.h"
 
 @interface ChatViewController ()
 
@@ -66,6 +68,11 @@
 - (void)reloadMessages
 {
     [self.tableView reloadData];
+    [UIView animateWithDuration:0.5 animations:^{
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+        self.tableView.contentInset = contentInsets;
+        self.tableView.scrollIndicatorInsets = contentInsets;
+    }];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
@@ -155,6 +162,10 @@
     
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
+        if (![textView.text isEqualToString:@""]) {
+            [self createChatMessageWithString:textView.text];
+        }
+        textView.text = @"";
         return NO;
     }
     NSInteger maxLength = 50;
@@ -162,6 +173,23 @@
         return NO;
     }
     return YES;
+}
+
+- (void)createChatMessageWithString:(NSString *)messageString
+{
+    ChatMessage *chatMessage = [[ChatMessage alloc] init];
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    chatMessage.sender = appDelegate.loggedInUser;
+    chatMessage.messageString = messageString;
+    [self addChatMessage:chatMessage];
+}
+
+- (void)addChatMessage:(ChatMessage *)chatMessage
+{
+    NSMutableArray *chatMessages = [[NSMutableArray alloc] initWithArray:self.messages];
+    [chatMessages addObject:chatMessage];
+    self.messages = [NSArray arrayWithArray:chatMessages];
+    [self reloadMessages];
 }
 
 @end
