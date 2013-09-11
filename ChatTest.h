@@ -11,5 +11,6 @@
 @interface ChatTest : NSObject
 
 + (NSArray *)testMessages;
++ (NSArray *)updateFromMessages:(NSArray *)messages;
 
 @end

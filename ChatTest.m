@@ -14,12 +14,15 @@
 
 + (NSArray *)testMessages
 {
-    NSArray *messageTexts = @[@"hey", @"hello", @"wanna party?", @"yeah im down", @"you got blow", @"no but I know where to get some"];
+    NSArray *messageTexts = @[@"hey", @"hello", @"wanna party?", @"yeah im down", @"you got blow", @"no but I know where to get some. There's this sketchy place downtown."];
     NSArray *userNames = @[@"jeff", @"jas", @"jenn"];
+    NSArray *userPictures = @[@"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc1/372183_100002526091955_998385602_q.jpg", @"https://graph.facebook.com/jasjitsingh85/picture", @"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc1/372183_100002526091955_998385602_q.jpg"];
     NSMutableArray *users = [[NSMutableArray alloc] initWithCapacity:userNames.count];
-    for (NSString *userName in userNames) {
+    for (NSInteger i=0; i<userNames.count; i++) {
+        NSString *userName = userNames[i];
         User *user = [[User alloc] init];
         user.firstName = userName;
+        user.avatarURL = [NSURL URLWithString:userPictures[i]];
         [users addObject:user];
     }
     
@@ -29,11 +32,28 @@
         User *user = [users objectAtIndex:i%users.count];
         ChatMessage *chatMessage = [[ChatMessage alloc] init];
         chatMessage.sender = user;
+        chatMessage.isUserMessage = [user.firstName isEqualToString:userNames[0]];
         chatMessage.sentDate = [NSDate dateWithTimeInterval:i sinceDate:[NSDate date]];
         chatMessage.messageString = messageText;
         [chatMessages addObject:chatMessage];
     }
     return chatMessages;
 }
+
++ (NSArray *)updateFromMessages:(NSArray *)messages
+{
+    NSMutableArray *messagesMutable = [[NSMutableArray alloc] initWithArray:messages];
+    ChatMessage *randomMessage = [messagesMutable objectAtIndex:arc4random_uniform(messages.count)];
+    User *user = randomMessage.sender;
+    NSString *messageString = @"blah";
+    ChatMessage *chatMessage = [[ChatMessage alloc] init];
+    chatMessage.sender = user;
+    chatMessage.isUserMessage = [chatMessage.sender.firstName isEqualToString:@"jeff"];
+    chatMessage.messageString = messageString;
+    [messagesMutable addObject:chatMessage];
+    return [[NSArray alloc] initWithArray:messagesMutable];
+}
+
+
 
 @end

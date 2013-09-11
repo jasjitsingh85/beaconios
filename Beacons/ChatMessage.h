@@ -14,5 +14,6 @@
 @property (strong, nonatomic) NSString *messageString;
 @property (strong, nonatomic) NSDate *sentDate;
 @property (strong, nonatomic) User *sender;
+@property (assign, nonatomic) BOOL isUserMessage;
 
 @end

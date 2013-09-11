@@ -10,6 +10,7 @@
 #import "ChatMessage.h"
 #import "ChatTableViewCell.h"
 #import "ChatTest.h"
+#import "Theme.h"
 
 @interface ChatViewController ()
 
@@ -23,8 +24,9 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        //        testing
         self.messages = [ChatTest testMessages];
+        self.view.backgroundColor = [[ThemeManager sharedTheme] darkColor];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }
@@ -35,6 +37,12 @@
 }
 
 #pragma mark - Table view data source
+- (void)reloadMessages
+{
+    [self.tableView reloadData];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -66,9 +74,13 @@
     ChatMessage *chatMessage = self.messages[indexPath.row];
     cell.chatMessage = chatMessage;
     
-    // Configure the cell...
-    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.messages = [ChatTest updateFromMessages:self.messages];
+    [self reloadMessages];
 }
 
 @end

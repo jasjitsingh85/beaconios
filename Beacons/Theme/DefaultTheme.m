@@ -30,6 +30,11 @@
     return [UIColor unnormalizedColorWithRed:120 green:183 blue:200 alpha:255];
 }
 
+- (UIColor *)darkColor
+{
+    return [UIColor unnormalizedColorWithRed:54 green:54 blue:57 alpha:255];
+}
+
 - (NSString *)regularFontName
 {
     return @"Lato-Regular";

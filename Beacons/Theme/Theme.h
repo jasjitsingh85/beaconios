@@ -14,6 +14,7 @@
 - (UIColor *)orangeColor;
 - (UIColor *)lightGrayColor;
 - (UIColor *)blueColor;
+- (UIColor *)darkColor;
 - (NSString *)regularFontName;
 - (NSString *)boldFontName;
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
