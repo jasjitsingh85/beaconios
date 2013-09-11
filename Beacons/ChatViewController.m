@@ -36,6 +36,7 @@
     textViewFrame.origin.y = self.view.frame.size.height - textViewFrame.size.height;
     self.textView = [[UITextView alloc] initWithFrame:textViewFrame];
     self.textView.delegate = self;
+    self.textView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.textView];
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
@@ -47,6 +48,7 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
