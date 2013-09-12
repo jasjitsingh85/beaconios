@@ -154,7 +154,7 @@
     textViewFrame.origin.y += kbSize.height;
     [UIView animateWithDuration:animationDuration animations:^{
         self.textView.frame = textViewFrame;
-        UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
@@ -172,8 +172,9 @@
         textView.text = @"";
         return NO;
     }
-    NSInteger maxLength = 50;
-    if (textView.text.length > maxLength) {
+    NSInteger maxLength = 200;
+    if (text.length && textView.text.length > maxLength) {
+        [[[UIAlertView alloc] initWithTitle:@"Max character limit reached" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return NO;
     }
     return YES;
