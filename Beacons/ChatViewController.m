@@ -16,7 +16,6 @@
 
 @interface ChatViewController ()
 
-@property (strong, nonatomic) NSArray *messages;
 @property (strong, nonatomic) UITextView *textView;
 
 @end
@@ -56,8 +55,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
     
-    self.messages = [ChatTest testMessages];
-    [self reloadMessages];
     return self;
 }
 
@@ -75,6 +72,18 @@
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
+    if (!self.messages || !self.messages.count) {
+        return;
+    }
+    
+    [self scrollToBottom];
+}
+
+- (void)scrollToBottom
+{
+    if (!self.messages || !self.messages.count) {
+        return;
+    }
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
@@ -114,8 +123,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.messages = [ChatTest updateFromMessages:self.messages];
-    [self reloadMessages];
 }
 
 #pragma mark - Keyboard
@@ -135,12 +142,7 @@
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
     
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your application might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= kbSize.height;
-    NSIndexPath *lastRow = [NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:lastRow atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self scrollToBottom];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
@@ -165,7 +167,7 @@
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
         if (![textView.text isEqualToString:@""]) {
-            [self createChatMessageWithString:textView.text];
+            [self didEnterText:textView.text];
         }
         textView.text = @"";
         return NO;
@@ -177,21 +179,10 @@
     return YES;
 }
 
-- (void)createChatMessageWithString:(NSString *)messageString
+- (void)didEnterText:(NSString *)text
 {
-    ChatMessage *chatMessage = [[ChatMessage alloc] init];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    chatMessage.sender = appDelegate.loggedInUser;
-    chatMessage.messageString = messageString;
-    [self addChatMessage:chatMessage];
+    
 }
 
-- (void)addChatMessage:(ChatMessage *)chatMessage
-{
-    NSMutableArray *chatMessages = [[NSMutableArray alloc] initWithArray:self.messages];
-    [chatMessages addObject:chatMessage];
-    self.messages = [NSArray arrayWithArray:chatMessages];
-    [self reloadMessages];
-}
 
 @end

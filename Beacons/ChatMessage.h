@@ -16,4 +16,6 @@
 @property (strong, nonatomic) User *sender;
 @property (assign, nonatomic) BOOL isUserMessage;
 
+- (id)initWithData:(NSDictionary *)messageData;
+
 @end

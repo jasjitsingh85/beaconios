@@ -14,6 +14,7 @@
 
 //location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
+#define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 
 //analytics
 #define MIXPANEL_TOKEN @"ea199a5c35552a95a448a43497dd3ac6"

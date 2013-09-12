@@ -65,7 +65,14 @@ NSInteger const kAPNSServerProduction = 3;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
-    [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    NSString *notificationType = [userInfo valueForKeyPath:@"type"];
+    if ([notificationType isEqualToString:@"Message"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
+        
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 @end

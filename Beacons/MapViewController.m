@@ -27,6 +27,7 @@
 #import "LocationTracker.h"
 #import "Theme.h"
 #import "BeaconManager.h"
+#import "BeaconChatViewController.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -221,7 +222,9 @@
     Beacon *beacon = [self beaconForIndexPath:indexPath];
     BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
     beaconDetailViewController.beacon = beacon;
-    [self.navigationController pushViewController:beaconDetailViewController animated:YES];
+    BeaconChatViewController *beaconChatViewController = [BeaconChatViewController new];
+    beaconChatViewController.beacon = beacon;
+    [self.navigationController pushViewController:beaconChatViewController animated:YES];
 }
 
 #pragma mark - BeaconCellDelegate
