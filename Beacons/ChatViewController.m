@@ -30,7 +30,7 @@
     }
     
     CGRect textViewFrame;
-    textViewFrame.size = CGSizeMake(300, 45);
+    textViewFrame.size = CGSizeMake(self.view.frame.size.width, 35);
     textViewFrame.origin.x = 0.5*(self.view.frame.size.width - textViewFrame.size.width);
     textViewFrame.origin.y = self.view.frame.size.height - textViewFrame.size.height;
     self.textView = [[UITextView alloc] initWithFrame:textViewFrame];
@@ -48,6 +48,8 @@
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    self.desiredEdgeInsets = UIEdgeInsetsZero;
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -63,12 +65,14 @@
     [super viewDidLoad];
 }
 
+
 #pragma mark - Table view data source
 - (void)reloadMessages
 {
     [self.tableView reloadData];
     [UIView animateWithDuration:0.5 animations:^{
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+        UIEdgeInsets contentInsets = self.desiredEdgeInsets;
+        contentInsets.bottom = self.view.frame.size.height - self.textView.frame.origin.y;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
@@ -125,6 +129,7 @@
 {
 }
 
+
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -137,7 +142,8 @@
     textViewFrame.origin.y -= kbSize.height;
     [UIView animateWithDuration:animationDuration animations:^{
         self.textView.frame = textViewFrame;
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - textViewFrame.origin.y, 0.0);
+        UIEdgeInsets contentInsets = self.desiredEdgeInsets;
+        contentInsets.bottom = self.view.frame.size.height - textViewFrame.origin.y;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
@@ -154,7 +160,8 @@
     textViewFrame.origin.y += kbSize.height;
     [UIView animateWithDuration:animationDuration animations:^{
         self.textView.frame = textViewFrame;
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+        UIEdgeInsets contentInsets = self.desiredEdgeInsets;
+        contentInsets.bottom = self.view.frame.size.height - self.textView.frame.origin.y;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];

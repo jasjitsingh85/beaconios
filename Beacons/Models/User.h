@@ -24,5 +24,7 @@
 @property (strong, nonatomic, readonly) NSString *normalizedPhoneNumber;
 
 - (id)initWithData:(NSDictionary *)userData;
+- (NSString *)fullName;
+- (NSString *)abbreviatedName;
 
 @end

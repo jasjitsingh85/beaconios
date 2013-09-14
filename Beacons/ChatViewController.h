@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *messages;
+@property (assign, nonatomic) UIEdgeInsets desiredEdgeInsets;
 
 - (void)didEnterText:(NSString *)text;
 - (void)reloadMessages;

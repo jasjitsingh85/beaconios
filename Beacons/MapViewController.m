@@ -27,7 +27,7 @@
 #import "LocationTracker.h"
 #import "Theme.h"
 #import "BeaconManager.h"
-#import "BeaconChatViewController.h"
+#import "BeaconProfileViewController.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
@@ -220,11 +220,9 @@
         return;
     }
     Beacon *beacon = [self beaconForIndexPath:indexPath];
-    BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
-    beaconDetailViewController.beacon = beacon;
-    BeaconChatViewController *beaconChatViewController = [BeaconChatViewController new];
-    beaconChatViewController.beacon = beacon;
-    [self.navigationController pushViewController:beaconChatViewController animated:YES];
+    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
+    beaconProfileViewController.beacon = beacon;
+    [self.navigationController pushViewController:beaconProfileViewController animated:YES];
 }
 
 #pragma mark - BeaconCellDelegate
@@ -244,9 +242,9 @@
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
-    BeaconDetailViewController *beaconDetailViewController = [BeaconDetailViewController new];
-    beaconDetailViewController.beacon = beacon;
-    [self.navigationController pushViewController:beaconDetailViewController animated:YES];
+    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
+    beaconProfileViewController.beacon = beacon;
+    [self.navigationController pushViewController:beaconProfileViewController animated:YES];
 }
 
 - (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell confirmed:(BOOL)confirmed

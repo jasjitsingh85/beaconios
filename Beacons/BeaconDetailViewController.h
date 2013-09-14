@@ -2,7 +2,7 @@
 //  BeaconDetailViewController.h
 //  Beacons
 //
-//  Created by Jeffrey Ames on 6/8/13.
+//  Created by Jeff Ames on 9/12/13.
 //  Copyright (c) 2013 Jeff Ames. All rights reserved.
 //
 

@@ -33,4 +33,30 @@
     _normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
 }
 
+- (NSString *)fullName
+{
+    BOOL hasFirstName = self.firstName && self.firstName.length > 0;
+    BOOL hasLastName = self.lastName && self.lastName.length > 0;
+    if (hasFirstName && !hasLastName) {
+        return self.firstName;
+    }
+    else if (hasFirstName && hasLastName) {
+        return [NSString stringWithFormat:@"%@ %@",self.firstName, self.lastName];
+    }
+    return nil;
+}
+
+- (NSString *)abbreviatedName
+{
+    BOOL hasFirstName = self.firstName && self.firstName.length > 0;
+    BOOL hasLastName = self.lastName && self.lastName.length > 0;
+    if (hasFirstName && !hasLastName) {
+        return self.firstName;
+    }
+    else if (hasFirstName && hasLastName) {
+        return [NSString stringWithFormat:@"%@ %@.",self.firstName, [self.lastName substringToIndex:1]];
+    }
+    return nil;
+}
+
 @end
