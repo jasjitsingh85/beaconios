@@ -15,8 +15,11 @@
 #import "Theme.h"
 #import "User.h"
 #import "BeaconManager.h"
+#import "FindFriendsViewController.h"
+#import "APIClient.h"
+#import "LoadingIndictor.h"
 
-@interface BeaconProfileViewController ()
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -269,6 +272,34 @@
     if (!self.joinButton.selected) {
         [[BeaconManager sharedManager] confirmBeacon:self.beacon];
     }
+    else {
+        FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+        findFriendsViewController.delegate = self;
+        findFriendsViewController.selectedContacts = [self.beacon.invited valueForKey:@"contact"];
+        findFriendsViewController.inactiveContacts = findFriendsViewController.selectedContacts;
+        [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    }
+}
+
+#pragma mark - FindFriendsViewControllerDelegate
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
+{
+    [self.navigationController popToViewController:self animated:YES];
+    if (!contacts || !contacts.count) {
+        return;
+    }
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        NSString *message = [NSString stringWithFormat:@"invited %@", [contacts[0] firstName]];
+        if (contacts.count > 1) {
+            message = [message stringByAppendingString:[NSString stringWithFormat:@" and %d others", contacts.count - 1]];
+        }
+        [[[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
 }
 
 
