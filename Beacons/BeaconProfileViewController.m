@@ -14,6 +14,7 @@
 #import "Beacon.h"
 #import "Theme.h"
 #import "User.h"
+#import "BeaconManager.h"
 
 @interface BeaconProfileViewController ()
 
@@ -28,7 +29,6 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
-@property (assign, nonatomic) BOOL chatTabSelected;
 @end
 
 @implementation BeaconProfileViewController
@@ -55,7 +55,6 @@
     [self.view addSubview:self.beaconChatViewController.view];
     self.beaconChatViewController.view.frame = self.view.bounds;
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.chatTabSelected = YES;
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
@@ -76,25 +75,40 @@
     [self.descriptionView addSubview:self.imageView];
     [self updateChatDesiredInsets];
     
-    self.chatTabButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.chatTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect chatTabButtonFrame;
     chatTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
     chatTabButtonFrame.origin = CGPointMake(0, self.descriptionView.frame.size.height - chatTabButtonFrame.size.height);
     self.chatTabButton.frame = chatTabButtonFrame;
-    [self.chatTabButton setTitle:@"chat" forState:UIControlStateNormal];
-    self.chatTabButton.backgroundColor = [UIColor greenColor];
+    [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonNormal"] forState:UIControlStateNormal];
+    [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonSelected"] forState:UIControlStateSelected];
     [self.chatTabButton addTarget:self action:@selector(chatButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.chatTabButton];
+    self.chatTabButton.selected = YES;
     
-    self.inviteTabButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.inviteTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect inviteTabButtonFrame;
     inviteTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
     inviteTabButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.chatTabButton.frame), self.descriptionView.frame.size.height - inviteTabButtonFrame.size.height);
     self.inviteTabButton.frame = inviteTabButtonFrame;
-    [self.inviteTabButton setTitle:@"invited" forState:UIControlStateNormal];
-    self.inviteTabButton.backgroundColor = [UIColor purpleColor];
+    [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonNormal"] forState:UIControlStateNormal];
+    [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonSelected"] forState:UIControlStateSelected];
     [self.inviteTabButton addTarget:self action:@selector(invitedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteTabButton];
+    
+//    UIView *horizontalDivider = [[UIView alloc] initWithFrame:CGRectMake(0, self.descriptionView.frame.size.height - 1, self.descriptionView.frame.size.width, 1)];
+//    horizontalDivider.backgroundColor = [UIColor darkGrayColor];
+//    [self.descriptionView addSubview:horizontalDivider];
+//    
+//    UIView *verticalDivider = [[UIView alloc] init];
+//    CGRect verticalDividerFrame;
+//    verticalDividerFrame.size = CGSizeMake(1, 45);
+//    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
+//    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
+//    verticalDivider.frame = verticalDividerFrame;
+//    verticalDivider.backgroundColor = [UIColor darkGrayColor];
+//    [self.descriptionView addSubview:verticalDivider];
+    
     
     UIImageView *backgroundGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
     CGRect backgroundGradientFrame = backgroundGradient.frame;
@@ -125,6 +139,7 @@
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.joinButton.frame = CGRectMake(226, 125, 73, 31);
     [self.joinButton setTitle:@"join" forState:UIControlStateNormal];
+    [self.joinButton setTitle:@"invite" forState:UIControlStateSelected];
     [self.joinButton setTitleColor:[[ThemeManager sharedTheme] orangeColor] forState:UIControlStateNormal];
     self.joinButton.layer.cornerRadius = 2;
     self.joinButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -160,6 +175,8 @@
     [self updateInvitedLabel];
     
     self.inviteListViewController.beaconStatuses = beacon.invited;
+    
+    self.joinButton.selected = beacon.userAttending;
 }
 
 - (void)updateInvitedLabel
@@ -231,7 +248,8 @@
 #pragma mark - Buttons 
 - (void)chatButtonTouched:(id)sender
 {
-    self.chatTabSelected = YES;
+    self.chatTabButton.selected = YES;
+    self.inviteTabButton.selected = NO;
     [self showFullDescriptionViewAnimated:YES];
     self.inviteListViewController.view.alpha = 0.0;
     [self.beaconChatViewController dismissKeyboard];
@@ -239,7 +257,8 @@
 
 - (void)invitedButtonTouched:(id)sender
 {
-    self.chatTabSelected = NO;
+    self.chatTabButton.selected = NO;
+    self.inviteTabButton.selected = YES;
     [self showFullDescriptionViewAnimated:YES];
     self.inviteListViewController.view.alpha = 1.0;
     [self.beaconChatViewController dismissKeyboard];
@@ -247,7 +266,9 @@
 
 - (void)joinButtonTouched:(id)sender
 {
-    
+    if (!self.joinButton.selected) {
+        [[BeaconManager sharedManager] confirmBeacon:self.beacon];
+    }
 }
 
 

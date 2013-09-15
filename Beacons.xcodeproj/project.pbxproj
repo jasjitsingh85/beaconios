@@ -103,6 +103,10 @@
 		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
 		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
 		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
+		96A9872617E64D4C007D77B8 /* invitedButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */; };
+		96A9872717E64D4C007D77B8 /* invitedButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */; };
+		96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */; };
+		96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
@@ -272,6 +276,10 @@
 		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
 		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconStatus.h; sourceTree = "<group>"; };
 		96A9872017E517FB007D77B8 /* BeaconStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconStatus.m; sourceTree = "<group>"; };
+		96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonNormal@2x.png"; sourceTree = "<group>"; };
+		96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonSelected@2x.png"; sourceTree = "<group>"; };
+		96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonNormal@2x.png"; sourceTree = "<group>"; };
+		96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonSelected@2x.png"; sourceTree = "<group>"; };
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
@@ -585,6 +593,10 @@
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */,
 				9647102D17DEEB5700878C19 /* plus@2x.png */,
+				96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */,
+				96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */,
+				96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */,
+				96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -704,6 +716,7 @@
 				96956448175852990081B349 /* LoginViewController.xib in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
+				96A9872717E64D4C007D77B8 /* invitedButtonSelected@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
@@ -713,10 +726,12 @@
 				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
 				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
+				96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
+				96A9872617E64D4C007D77B8 /* invitedButtonNormal@2x.png in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
@@ -731,6 +746,7 @@
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
 				1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
+				96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */,
