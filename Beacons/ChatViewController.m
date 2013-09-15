@@ -131,6 +131,11 @@
 
 
 #pragma mark - Keyboard
+- (void)dismissKeyboard
+{
+    [self.textView resignFirstResponder];
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     NSDictionary* info = [notification userInfo];

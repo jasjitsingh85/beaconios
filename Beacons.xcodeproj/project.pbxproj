@@ -101,6 +101,8 @@
 		96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */; };
 		96A9871917E4FB40007D77B8 /* beaconImageTest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */; };
 		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
+		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
+		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
@@ -266,6 +268,10 @@
 		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
 		96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconImageTest@2x.png"; sourceTree = "<group>"; };
 		96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundGradient@2x.png"; sourceTree = "<group>"; };
+		96A9871C17E51753007D77B8 /* InviteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteListViewController.h; sourceTree = "<group>"; };
+		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
+		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconStatus.h; sourceTree = "<group>"; };
+		96A9872017E517FB007D77B8 /* BeaconStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconStatus.m; sourceTree = "<group>"; };
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
@@ -497,6 +503,10 @@
 				96FA824617E2C2B30095AF22 /* BeaconDetailViewController.m */,
 				96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */,
 				96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */,
+				96A9871C17E51753007D77B8 /* InviteListViewController.h */,
+				96A9871D17E51753007D77B8 /* InviteListViewController.m */,
+				96A9871F17E517FB007D77B8 /* BeaconStatus.h */,
+				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -806,6 +816,7 @@
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
 				969564551758691B0081B349 /* MenuViewController.m in Sources */,
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
+				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96F14C1F17D84A890093C976 /* ChatTest.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
@@ -816,6 +827,7 @@
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
+				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
 				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
 				1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,

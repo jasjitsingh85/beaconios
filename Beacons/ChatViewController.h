@@ -17,5 +17,6 @@
 
 - (void)didEnterText:(NSString *)text;
 - (void)reloadMessages;
+- (void)dismissKeyboard;
 
 @end

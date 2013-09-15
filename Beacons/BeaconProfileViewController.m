@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "NSDate+FormattedDate.h"
 #import "BeaconChatViewController.h"
+#import "InviteListViewController.h"
 #import "Beacon.h"
 #import "Theme.h"
 #import "User.h"
@@ -17,6 +18,7 @@
 @interface BeaconProfileViewController ()
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
+@property (strong, nonatomic) InviteListViewController *inviteListViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIButton *chatTabButton;
@@ -26,6 +28,7 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
+@property (assign, nonatomic) BOOL chatTabSelected;
 @end
 
 @implementation BeaconProfileViewController
@@ -35,6 +38,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.beaconChatViewController = [[BeaconChatViewController alloc] init];
+        self.inviteListViewController = [[InviteListViewController alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -46,8 +50,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     [self addChildViewController:self.beaconChatViewController];
     [self.view addSubview:self.beaconChatViewController.view];
+    self.beaconChatViewController.view.frame = self.view.bounds;
+    self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.chatTabSelected = YES;
+    
+    [self addChildViewController:self.inviteListViewController];
+    [self.view addSubview:self.inviteListViewController.view];
+    self.inviteListViewController.view.alpha = 0;
+    self.inviteListViewController.view.frame = self.view.bounds;
+    self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 226)];
     self.descriptionView.backgroundColor = [UIColor whiteColor];
@@ -77,8 +91,9 @@
     inviteTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
     inviteTabButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.chatTabButton.frame), self.descriptionView.frame.size.height - inviteTabButtonFrame.size.height);
     self.inviteTabButton.frame = inviteTabButtonFrame;
-    [self.inviteTabButton setTitle:@"invite" forState:UIControlStateNormal];
+    [self.inviteTabButton setTitle:@"invited" forState:UIControlStateNormal];
     self.inviteTabButton.backgroundColor = [UIColor purpleColor];
+    [self.inviteTabButton addTarget:self action:@selector(invitedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteTabButton];
     
     UIImageView *backgroundGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
@@ -128,6 +143,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self updateInviteListInsets];
     [self updateChatDesiredInsets];
 }
 
@@ -142,6 +158,8 @@
     self.descriptionLabel.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
     [self updateInvitedLabel];
+    
+    self.inviteListViewController.beaconStatuses = beacon.invited;
 }
 
 - (void)updateInvitedLabel
@@ -167,6 +185,15 @@
     UIEdgeInsets insets = self.beaconChatViewController.tableView.contentInset;
     insets.top = self.beaconChatViewController.desiredEdgeInsets.top;
     self.beaconChatViewController.tableView.contentInset = insets;
+}
+
+- (void)updateInviteListInsets
+{
+    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame);
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    insets.top = topInset;
+    self.inviteListViewController.tableView.contentInset = insets;
+    self.inviteListViewController.view.backgroundColor = [UIColor brownColor];
 }
 
 - (void)showPartialDescriptionViewAnimated:(BOOL)animated
@@ -204,12 +231,18 @@
 #pragma mark - Buttons 
 - (void)chatButtonTouched:(id)sender
 {
+    self.chatTabSelected = YES;
     [self showFullDescriptionViewAnimated:YES];
+    self.inviteListViewController.view.alpha = 0.0;
+    [self.beaconChatViewController dismissKeyboard];
 }
 
 - (void)invitedButtonTouched:(id)sender
 {
-    
+    self.chatTabSelected = NO;
+    [self showFullDescriptionViewAnimated:YES];
+    self.inviteListViewController.view.alpha = 1.0;
+    [self.beaconChatViewController dismissKeyboard];
 }
 
 - (void)joinButtonTouched:(id)sender
