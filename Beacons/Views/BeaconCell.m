@@ -40,17 +40,26 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1];
-        self.contentView.layer.cornerRadius = 2;
-        self.contentView.clipsToBounds = YES;
+//        self.contentView.layer.cornerRadius = 2;
+//        self.contentView.clipsToBounds = YES;
+        UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beaconCellGreen"]];
+        [self.contentView addSubview:background];
+        
+        CALayer *mask = [CALayer layer];
+        mask.contents = (id)[[UIImage imageNamed:@"beaconCellGreen"] CGImage];
+        mask.frame = CGRectMake(0, 0, background.frame.size.width, background.frame.size.height);
+        UIView *test = [[UIView alloc] initWithFrame:CGRectMake(0, 0, background.frame.size.width, 100)];
+        test.backgroundColor = [UIColor orangeColor];
+        test.layer.mask = mask;
+        [background addSubview:test];
         
         //add drop shadow. Must be applied to contentView's superview since contentView clips to bounds
-        self.layer.cornerRadius = self.contentView.layer.cornerRadius;
-        self.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.layer.shadowOpacity = 1;
-        self.layer.shadowRadius = 1.0;
-        self.layer.shadowOffset = CGSizeMake(0, 1);
-        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+//        self.layer.cornerRadius = self.contentView.layer.cornerRadius;
+//        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+//        self.layer.shadowOpacity = 1;
+//        self.layer.shadowRadius = 1.0;
+//        self.layer.shadowOffset = CGSizeMake(0, 1);
+//        self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
         
         self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 35, 35)];
         self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2.0;

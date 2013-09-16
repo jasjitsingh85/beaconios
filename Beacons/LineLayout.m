@@ -1,8 +1,8 @@
 #import "LineLayout.h"
 
 
-#define CELL_WIDTH 256
-#define CELL_HEIGHT 185
+#define CELL_WIDTH 525/2.0
+#define CELL_HEIGHT 440/2.0
 
 @implementation LineLayout
 
@@ -15,7 +15,8 @@
         self.itemSize = CGSizeMake(CELL_WIDTH, CELL_HEIGHT);
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         CGFloat horizontalInset = 0.5*(320 - CELL_WIDTH);
-        self.sectionInset = UIEdgeInsetsMake(15, horizontalInset, 15, horizontalInset);
+        CGFloat verticalInset = 0.5*(240 - CELL_HEIGHT);
+        self.sectionInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
         self.minimumLineSpacing = 5;
     }
     return self;
