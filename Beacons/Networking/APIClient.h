@@ -35,5 +35,7 @@
                            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)postMessageWithText:(NSString *)messageText forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)postImage:(UIImage *)image forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

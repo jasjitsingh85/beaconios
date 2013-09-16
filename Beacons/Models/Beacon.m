@@ -78,6 +78,8 @@
             }
         }
         
+        self.imageURLs = data[@"images"];
+        
     }
     return self;
 }

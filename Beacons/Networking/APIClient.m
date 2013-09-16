@@ -170,6 +170,21 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     [[APIClient sharedClient] postPath:@"message/" parameters:parameters success:success failure:failure];
 }
 
+- (void)postImage:(UIImage *)image forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
+    NSDictionary *parameters = @{@"beacon" : beaconID};
+    NSString *imageName = beaconID.stringValue;
+    NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:@"image/" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"image" fileName:[imageName stringByAppendingString:@".jpg"] mimeType:@"image/jpg"];
+    }];
+    request.timeoutInterval = 10*60;
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {

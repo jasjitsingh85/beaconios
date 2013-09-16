@@ -107,6 +107,8 @@
 		96A9872717E64D4C007D77B8 /* invitedButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */; };
 		96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */; };
 		96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */; };
+		96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */; };
+		96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872F17E68C44007D77B8 /* PhotoManager.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
@@ -280,6 +282,9 @@
 		96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonSelected@2x.png"; sourceTree = "<group>"; };
 		96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonNormal@2x.png"; sourceTree = "<group>"; };
 		96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonSelected@2x.png"; sourceTree = "<group>"; };
+		96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraLarge@2x.png"; sourceTree = "<group>"; };
+		96A9872E17E68C44007D77B8 /* PhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
+		96A9872F17E68C44007D77B8 /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
@@ -515,6 +520,8 @@
 				96A9871D17E51753007D77B8 /* InviteListViewController.m */,
 				96A9871F17E517FB007D77B8 /* BeaconStatus.h */,
 				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
+				96A9872E17E68C44007D77B8 /* PhotoManager.h */,
+				96A9872F17E68C44007D77B8 /* PhotoManager.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -557,6 +564,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
 				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
 				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
 				1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */,
@@ -733,6 +741,7 @@
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
 				96A9872617E64D4C007D77B8 /* invitedButtonNormal@2x.png in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
+				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
@@ -869,6 +878,7 @@
 				1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */,
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
+				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

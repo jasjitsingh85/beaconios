@@ -18,13 +18,15 @@
 #import "FindFriendsViewController.h"
 #import "APIClient.h"
 #import "LoadingIndictor.h"
+#import "PhotoManager.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIView *imageViewGradient;
 @property (strong, nonatomic) UIButton *chatTabButton;
 @property (strong, nonatomic) UIButton *inviteTabButton;
 @property (strong, nonatomic) UILabel *timeLabel;
@@ -32,6 +34,7 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
+@property (strong, nonatomic) UIView *addPictureView;
 @end
 
 @implementation BeaconProfileViewController
@@ -75,6 +78,10 @@
     [self.view addSubview:self.descriptionView];
     
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 110)];
+    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+    imageTap.numberOfTapsRequired = 1;
+    [self.imageView addGestureRecognizer:imageTap];
+    self.imageView.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.imageView];
     [self updateChatDesiredInsets];
     
@@ -113,11 +120,11 @@
 //    [self.descriptionView addSubview:verticalDivider];
     
     
-    UIImageView *backgroundGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
-    CGRect backgroundGradientFrame = backgroundGradient.frame;
+    self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
+    CGRect backgroundGradientFrame = self.imageViewGradient.frame;
     backgroundGradientFrame.origin.y = self.imageView.frame.size.height - backgroundGradientFrame.size.height;
-    backgroundGradient.frame = backgroundGradientFrame;
-    [self.imageView addSubview:backgroundGradient];
+    self.imageViewGradient.frame = backgroundGradientFrame;
+    [self.imageView addSubview:self.imageViewGradient];
     
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 58, 100, 21)];
     self.timeLabel.font = [ThemeManager regularFontOfSize:21];
@@ -170,7 +177,10 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-    self.imageView.image = [UIImage imageNamed:@"beaconImageTest"];
+    if (!beacon.imageURLs || !beacon.imageURLs.count) {
+        self.imageView.image = [UIImage imageNamed:@"cameraLarge"];
+        self.imageViewGradient.hidden = YES;
+    }
     
     self.timeLabel.text = [beacon.time formattedDate];
     self.descriptionLabel.text = beacon.beaconDescription;
@@ -279,6 +289,39 @@
         findFriendsViewController.inactiveContacts = findFriendsViewController.selectedContacts;
         [self.navigationController pushViewController:findFriendsViewController animated:YES];
     }
+}
+
+- (void)imageViewTapped:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"want to add a photo?" delegate:self cancelButtonTitle:@"not now" destructiveButtonTitle:nil otherButtonTitles:@"take a photo", @"add from library", nil];
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"index %d", buttonIndex);
+    if (buttonIndex == 2) {
+        return;
+    }
+    UIImagePickerControllerSourceType source;
+    if (buttonIndex == 0) {
+        source = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        source = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
+        if (image) {
+            self.imageView.image = image;
+            [[APIClient sharedClient] postImage:image forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+            }];
+        }
+    }];
 }
 
 #pragma mark - FindFriendsViewControllerDelegate
