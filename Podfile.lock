@@ -8,8 +8,22 @@ PODS:
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
   - JSONKit (1.5pre)
+  - libwebp (0.3.0-rc7):
+    - libwebp/dec
+    - libwebp/dsp
+    - libwebp/utils
+    - libwebp/webp
+  - libwebp/dec (0.3.0-rc7)
+  - libwebp/dsp (0.3.0-rc7)
+  - libwebp/utils (0.3.0-rc7)
+  - libwebp/webp (0.3.0-rc7)
   - MBProgressHUD (0.6)
   - Mixpanel (2.0.0)
+  - SDWebImage (3.4):
+    - libwebp
+    - SDWebImage/MapKit
+  - SDWebImage/MapKit (3.4):
+    - libwebp
   - ViewDeck (2.2.11)
 
 DEPENDENCIES:
@@ -22,6 +36,7 @@ DEPENDENCIES:
   - Foursquare-iOS-API (~> 1.1.0)
   - MBProgressHUD (~> 0.6)
   - Mixpanel (~> 2.0.0)
+  - SDWebImage (~> 3.4)
   - ViewDeck (~> 2.2.9)
 
 SPEC CHECKSUMS:
@@ -33,8 +48,10 @@ SPEC CHECKSUMS:
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
+  libwebp: 40517fa1fd3716eded73b4696c45fc0b66e4b414
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
   Mixpanel: e4af97adb60a10541b7869929a83d734025058a6
+  SDWebImage: f13f791e411c632489824aa7f129e230b52bf5c4
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
 COCOAPODS: 0.24.0

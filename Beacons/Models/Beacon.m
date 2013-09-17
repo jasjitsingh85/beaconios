@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "AppDelegate.h"
 #import "BeaconStatus.h"
+#import "BeaconImage.h"
 
 @implementation Beacon
 
@@ -78,7 +79,14 @@
             }
         }
         
-        self.imageURLs = data[@"images"];
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+        for (NSDictionary *imageData in data[@"images"]) {
+            BeaconImage *beaconImage = [[BeaconImage alloc] init];
+            beaconImage.uploader = [[User alloc] initWithData:imageData[@"user"]];
+            beaconImage.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
+            [images addObject:beaconImage];
+        }
+        self.images = [NSArray arrayWithArray:images];
         
     }
     return self;

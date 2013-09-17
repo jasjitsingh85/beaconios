@@ -8,6 +8,7 @@
 
 #import "BeaconProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "NSDate+FormattedDate.h"
 #import "BeaconChatViewController.h"
 #import "InviteListViewController.h"
@@ -19,6 +20,7 @@
 #import "APIClient.h"
 #import "LoadingIndictor.h"
 #import "PhotoManager.h"
+#import "BeaconImage.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, UIActionSheetDelegate>
 
@@ -61,6 +63,7 @@
     [self.view addSubview:self.beaconChatViewController.view];
     self.beaconChatViewController.view.frame = self.view.bounds;
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.beaconChatViewController.cameraButton addTarget:self action:@selector(chatCameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
@@ -177,9 +180,13 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-    if (!beacon.imageURLs || !beacon.imageURLs.count) {
+    if (!beacon.images || !beacon.images.count) {
         self.imageView.image = [UIImage imageNamed:@"cameraLarge"];
         self.imageViewGradient.hidden = YES;
+    }
+    else {
+        BeaconImage *beaconImage = [beacon.images lastObject];
+        [self.imageView setImageWithURL:beaconImage.imageURL];
     }
     
     self.timeLabel.text = [beacon.time formattedDate];
@@ -268,6 +275,11 @@
     [self.beaconChatViewController dismissKeyboard];
 }
 
+- (void)chatCameraButtonTouched:(id)sender
+{
+    [self showCameraActionSheet];
+}
+
 - (void)invitedButtonTouched:(id)sender
 {
     self.chatTabButton.selected = NO;
@@ -292,6 +304,11 @@
 }
 
 - (void)imageViewTapped:(id)sender
+{
+    [self showCameraActionSheet];
+}
+
+- (void)showCameraActionSheet
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"want to add a photo?" delegate:self cancelButtonTitle:@"not now" destructiveButtonTitle:nil otherButtonTitles:@"take a photo", @"add from library", nil];
     [actionSheet showInView:self.view];

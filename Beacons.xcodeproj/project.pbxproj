@@ -109,6 +109,7 @@
 		96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */; };
 		96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */; };
 		96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872F17E68C44007D77B8 /* PhotoManager.m */; };
+		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
@@ -119,6 +120,7 @@
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
 		96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C90175ABC94006EA3A3 /* menuButton@2x.png */; };
+		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
@@ -285,6 +287,8 @@
 		96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraLarge@2x.png"; sourceTree = "<group>"; };
 		96A9872E17E68C44007D77B8 /* PhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
 		96A9872F17E68C44007D77B8 /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
+		96A9873317E6A6C6007D77B8 /* BeaconImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconImage.h; sourceTree = "<group>"; };
+		96A9873417E6A6C6007D77B8 /* BeaconImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconImage.m; sourceTree = "<group>"; };
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
@@ -298,6 +302,7 @@
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
 		96C87C90175ABC94006EA3A3 /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
+		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		96F14C1D17D84A890093C976 /* ChatTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTest.h; path = ../ChatTest.h; sourceTree = "<group>"; };
@@ -406,6 +411,8 @@
 				1F465C221763F97D00F35A8B /* Venue.m */,
 				1F465C29176510EB00F35A8B /* Contact.h */,
 				1F465C2A176510EB00F35A8B /* Contact.m */,
+				96A9873317E6A6C6007D77B8 /* BeaconImage.h */,
+				96A9873417E6A6C6007D77B8 /* BeaconImage.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -565,6 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
+				96D1D0D617E818A90033396F /* cameraSmall@2x.png */,
 				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
 				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
 				1F465C2C1765183C00F35A8B /* addFriendNormal@2x.png */,
@@ -732,6 +740,7 @@
 				96C87C91175ABC94006EA3A3 /* menuButton@2x.png in Resources */,
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
 				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
+				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
 				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
 				96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */,
@@ -871,6 +880,7 @@
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
+				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,

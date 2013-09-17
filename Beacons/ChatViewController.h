@@ -11,10 +11,12 @@
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
+@property (strong, nonatomic) UIButton *cameraButton;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *messages;
 @property (assign, nonatomic) UIEdgeInsets desiredEdgeInsets;
 
+- (void)cameraButtonTouched:(id)sender;
 - (void)didEnterText:(NSString *)text;
 - (void)reloadMessages;
 - (void)dismissKeyboard;

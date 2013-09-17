@@ -16,6 +16,7 @@
 
 @interface ChatViewController ()
 
+@property (strong, nonatomic) UIView *textViewContainer;
 @property (strong, nonatomic) UITextView *textView;
 
 @end
@@ -29,19 +30,47 @@
         return nil;
     }
     
+
+    
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    CGRect textViewContainerFrame;
+    textViewContainerFrame.size = CGSizeMake(self.view.frame.size.width, 44);
+    textViewContainerFrame.origin = CGPointMake(0, self.view.frame.size.height - textViewContainerFrame.size.height);
+    self.textViewContainer = [[UIView alloc] initWithFrame:textViewContainerFrame];
+    self.textViewContainer.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
+    self.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:self.textViewContainer];
+    
+    self.cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect cameraButtonFrame;
+    cameraButtonFrame.size = CGSizeMake(44, 44);
+    cameraButtonFrame.origin = CGPointMake(0, 0.5*(self.textViewContainer.frame.size.height - cameraButtonFrame.size.height));
+    self.cameraButton.frame = cameraButtonFrame;
+    [self.cameraButton setImage:[UIImage imageNamed:@"cameraSmall"] forState:UIControlStateNormal];
+    [self.textViewContainer addSubview:self.cameraButton];
+    
     CGRect textViewFrame;
-    textViewFrame.size = CGSizeMake(self.view.frame.size.width, 35);
-    textViewFrame.origin.x = 0.5*(self.view.frame.size.width - textViewFrame.size.width);
-    textViewFrame.origin.y = self.view.frame.size.height - textViewFrame.size.height;
+    textViewFrame.size = CGSizeMake(self.view.frame.size.width - cameraButtonFrame.size.width - 10, 28);
+    textViewFrame.origin.x = cameraButtonFrame.size.width;
+    textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
     self.textView = [[UITextView alloc] initWithFrame:textViewFrame];
+    self.textView.layer.cornerRadius = 4;
+    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.textView.layer.borderWidth = 0.5;
     self.textView.delegate = self;
-    self.textView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [self.view addSubview:self.textView];
+    [self.textViewContainer addSubview:self.textView];
+    
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.view insertSubview:self.tableView belowSubview:self.textView];
+    [self.view insertSubview:self.tableView belowSubview:self.textViewContainer];
     self.tableView.backgroundColor = [[ThemeManager sharedTheme] darkColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
@@ -50,19 +79,12 @@
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     self.desiredEdgeInsets = UIEdgeInsetsZero;
-
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
-    
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 
@@ -72,7 +94,7 @@
     [self.tableView reloadData];
     [UIView animateWithDuration:0.5 animations:^{
         UIEdgeInsets contentInsets = self.desiredEdgeInsets;
-        contentInsets.bottom = self.view.frame.size.height - self.textView.frame.origin.y;
+        contentInsets.bottom = self.view.frame.size.height - self.textViewContainer.frame.origin.y;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
@@ -143,10 +165,10 @@
     CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
     
-    CGRect textViewFrame = self.textView.frame;
+    CGRect textViewFrame = self.textViewContainer.frame;
     textViewFrame.origin.y -= kbSize.height;
     [UIView animateWithDuration:animationDuration animations:^{
-        self.textView.frame = textViewFrame;
+        self.textViewContainer.frame = textViewFrame;
         UIEdgeInsets contentInsets = self.desiredEdgeInsets;
         contentInsets.bottom = self.view.frame.size.height - textViewFrame.origin.y;
         self.tableView.contentInset = contentInsets;
@@ -161,12 +183,12 @@
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-    CGRect textViewFrame = self.textView.frame;
+    CGRect textViewFrame = self.textViewContainer.frame;
     textViewFrame.origin.y += kbSize.height;
     [UIView animateWithDuration:animationDuration animations:^{
-        self.textView.frame = textViewFrame;
+        self.textViewContainer.frame = textViewFrame;
         UIEdgeInsets contentInsets = self.desiredEdgeInsets;
-        contentInsets.bottom = self.view.frame.size.height - self.textView.frame.origin.y;
+        contentInsets.bottom = self.view.frame.size.height - self.textViewContainer.frame.origin.y;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];
