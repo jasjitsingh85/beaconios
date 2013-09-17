@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class ChatViewController;
+@protocol ChatViewControllerDelegate <NSObject>
+
+- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity;
+
+@end
+
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
@@ -15,6 +22,7 @@
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *messages;
 @property (assign, nonatomic) UIEdgeInsets desiredEdgeInsets;
+@property (weak, nonatomic) id<ChatViewControllerDelegate>  chatViewControllerDelegate;
 
 - (void)cameraButtonTouched:(id)sender;
 - (void)didEnterText:(NSString *)text;

@@ -151,6 +151,14 @@
 {
 }
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if ([self.chatViewControllerDelegate respondsToSelector:@selector(chatViewController:willEndDraggingWithVelocity:)]) {
+        [self.chatViewControllerDelegate chatViewController:self willEndDraggingWithVelocity:velocity];
+    }
+}
+
 
 #pragma mark - Keyboard
 - (void)dismissKeyboard

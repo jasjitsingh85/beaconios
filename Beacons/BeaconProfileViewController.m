@@ -22,7 +22,7 @@
 #import "PhotoManager.h"
 #import "BeaconImage.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, UIActionSheetDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -46,6 +46,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.beaconChatViewController = [[BeaconChatViewController alloc] init];
+        self.beaconChatViewController.chatViewControllerDelegate = self;
         self.inviteListViewController = [[InviteListViewController alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
@@ -339,6 +340,14 @@
             }];
         }
     }];
+}
+
+#pragma mark - ChatViewControllerDelegate
+- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
+{
+    if (ABS(velocity.y) > 1) {
+        [self showPartialDescriptionViewAnimated:YES];
+    }
 }
 
 #pragma mark - FindFriendsViewControllerDelegate
