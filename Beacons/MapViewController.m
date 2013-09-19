@@ -193,6 +193,7 @@
     cell.delegate = self;
     if (!self.showCreateBeaconCell) {
         cell.beacon = [self beaconForIndexPath:indexPath];
+        [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
     }
     else {
         [cell configureEmptyBeacon];

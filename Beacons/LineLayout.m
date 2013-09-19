@@ -1,8 +1,8 @@
 #import "LineLayout.h"
 
 
-#define CELL_WIDTH 256
-#define CELL_HEIGHT 185
+#define CELL_WIDTH 271.5
+#define CELL_HEIGHT 225
 
 @implementation LineLayout
 
@@ -15,7 +15,8 @@
         self.itemSize = CGSizeMake(CELL_WIDTH, CELL_HEIGHT);
         self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         CGFloat horizontalInset = 0.5*(320 - CELL_WIDTH);
-        self.sectionInset = UIEdgeInsetsMake(15, horizontalInset, 15, horizontalInset);
+        CGFloat verticalInset = 0.5*(240 - CELL_HEIGHT);
+        self.sectionInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
         self.minimumLineSpacing = 5;
     }
     return self;
@@ -47,27 +48,8 @@
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
-    CGPoint currentOffset = self.collectionView.contentOffset;
-    if (velocity.x > 0) {
-        proposedContentOffset.x = currentOffset.x + CELL_WIDTH/2.0;
-    }
-    else if (velocity.x < 0) {
-        proposedContentOffset.x = currentOffset.x - CELL_WIDTH/2.0;
-    }
-    
-    CGFloat offsetAdjustment = MAXFLOAT;
-    CGFloat horizontalCenter = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);
-    
-    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0.0, self.collectionView.bounds.size.width, self.collectionView.bounds.size.height);
-    NSArray* array = [super layoutAttributesForElementsInRect:targetRect];
-    
-    for (UICollectionViewLayoutAttributes* layoutAttributes in array) {
-        CGFloat itemHorizontalCenter = layoutAttributes.center.x;
-        if (ABS(itemHorizontalCenter - horizontalCenter) < ABS(offsetAdjustment)) {
-            offsetAdjustment = itemHorizontalCenter - horizontalCenter;
-        }
-    }
-    return CGPointMake(proposedContentOffset.x + offsetAdjustment, proposedContentOffset.y);
+    NSInteger idx = round(proposedContentOffset.x/CELL_WIDTH);
+    return CGPointMake(idx*CELL_WIDTH, proposedContentOffset.y);
 }
 
 @end

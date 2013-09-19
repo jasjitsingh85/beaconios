@@ -26,5 +26,5 @@
 @property (weak, nonatomic) id<BeaconCellDelegate> delegate;
 
 - (void)configureEmptyBeacon;
-
+- (void)configureForBeacon:(Beacon *)beacon atIndexPath:(NSIndexPath *)indexPath;
 @end
