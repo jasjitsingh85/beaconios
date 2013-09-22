@@ -24,6 +24,7 @@
 
 @property (weak, nonatomic) Beacon *beacon;
 @property (weak, nonatomic) id<BeaconCellDelegate> delegate;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
 
 - (void)configureEmptyBeacon;
 - (void)configureForBeacon:(Beacon *)beacon atIndexPath:(NSIndexPath *)indexPath;

@@ -12,6 +12,9 @@
 #import "AppDelegate.h"
 #import "APIClient.h"
 #import "Beacon.h"
+#import "ChatTableViewCell.h"
+#import "ImageViewController.h"
+#import "SoundPlayer.h"
 
 @interface BeaconChatViewController ()
 
@@ -29,25 +32,30 @@
 - (void)setBeacon:(Beacon *)beacon
 {
     _beacon = beacon;
-    [self reloadMessagesFromServer];
+    [self reloadMessagesFromServerCompletion:nil];
 }
 
 - (void)receivedPushNotificationMessage:(NSNotification *)notification
 {
-    [self reloadMessagesFromServer];
+    [self reloadMessagesFromServerCompletion:^{
+        [[SoundPlayer sharedPlayer] vibrate];
+    }];
 }
 
 - (void)receivedWillEnterForegroundNotification:(NSNotification *)notification
 {
-    [self reloadMessagesFromServer];
+    [self reloadMessagesFromServerCompletion:nil];
 }
 
-- (void)reloadMessagesFromServer
+- (void)reloadMessagesFromServerCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getMessagesForBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self parseMessages:responseObject withCompletion:^(NSArray *messages) {
             self.messages = messages;
             [self reloadMessages];
+            if (completion) {
+                completion();
+            }
         }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -86,6 +94,17 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"fail" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+- (void)createChatMessageWithImage:(UIImage *)image
+{
+    ChatMessage *chatMessage = [[ChatMessage alloc] init];
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    chatMessage.sender = appDelegate.loggedInUser;
+    chatMessage.isUserMessage = YES;
+    chatMessage.cachedImage = image;
+    //right now we don't send image messages to server in the same way we send text messages
+    [self addChatMessage:chatMessage];
 }
 
 - (void)addChatMessage:(ChatMessage *)chatMessage

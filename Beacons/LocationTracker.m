@@ -135,5 +135,12 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
     [self.locationManager stopUpdatingLocation];
 }
 
+#pragma mark - other
+- (CLLocationDistance)distanceFromCurrentLocationToCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    return [self.locationManager.location distanceFromLocation:location];
+}
+
 
 @end

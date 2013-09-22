@@ -14,6 +14,7 @@
 #import "Theme.h"
 #import "AppDelegate.h"
 #import "BeaconImage.h"
+#import "LocationTracker.h"
 
 @interface BeaconCell()
 
@@ -33,7 +34,6 @@
 @property (strong, nonatomic) UIButton *createBeaconButton;
 @property (strong, nonatomic) UILabel *createBeaconLabel;
 @property (strong, nonatomic) UIImageView *beaconImageView;
-@property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (strong, nonatomic) UILabel *invitedLabel;
 
 @end
@@ -104,7 +104,7 @@
         self.confirmButton.titleLabel.font = [ThemeManager regularFontOfSize:15.0];
         self.confirmButton.backgroundColor = [UIColor whiteColor];
         [self.confirmButton setTitleColor:[UIColor colorWithRed:207/255.0 green:176/255.0 blue:171/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.confirmButton setTitle:@"I'm in" forState:UIControlStateNormal];
+        [self.confirmButton setTitle:@"Join" forState:UIControlStateNormal];
         [self.confirmButton setTitle:@"I'm out" forState:UIControlStateSelected];
         [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         self.confirmButton.layer.cornerRadius = 4;
@@ -259,7 +259,16 @@
     self.timeLabel.text = [beacon.time formattedDate];
     
     if (self.beacon.address) {
-        self.addressLabel.text = self.beacon.address;
+        CGFloat distance = [[LocationTracker sharedTracker] distanceFromCurrentLocationToCoordinate:self.beacon.coordinate];
+        CGFloat distanceMiles = METERS_TO_MILES*distance;
+        NSString *distanceString;
+        if (distanceMiles < 0.25) {
+            distanceString = [NSString stringWithFormat:@"(%0.0f feet)", METERS_TO_FEET*distance];
+        }
+        else {
+            distanceString = [NSString stringWithFormat:@"(%0.3f mi)", METERS_TO_MILES*distance];
+        }
+        self.addressLabel.text = [NSString stringWithFormat:@"%@ %@", self.beacon.address, distanceString];
     }
     
     self.confirmButton.selected = self.beacon.userAttending;
@@ -278,11 +287,6 @@
         [self.beaconImageView setImageWithURL:beaconImage.imageURL];
     }
     [self updateInvitedLabel];
-    
-//    change background based on index path
-    NSArray *backgroundImageNames = @[@"beaconCellBackgroundBlue", @"beaconCellBackgroundPink", @"beaconCellBackgroundYellow", @"beaconCellBackgroundGreen", @"beaconCellBackgroundOrange", @"beaconCellBackgroundPurple"];
-    NSString *backgroundImageName = backgroundImageNames[indexPath.row % backgroundImageNames.count];
-    self.backgroundImageView.image = [UIImage imageNamed:backgroundImageName];
 }
 
 - (void)updateInvitedLabel

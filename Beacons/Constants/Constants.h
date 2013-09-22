@@ -18,3 +18,7 @@
 
 //analytics
 #define MIXPANEL_TOKEN @"ea199a5c35552a95a448a43497dd3ac6"
+
+//conversions
+#define METERS_TO_MILES 0.000621371
+#define METERS_TO_FEET 3.28084

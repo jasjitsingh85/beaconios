@@ -17,7 +17,7 @@
 
 - (UIColor *)orangeColor
 {
-    return [UIColor unnormalizedColorWithRed:243 green:114 blue:59 alpha:255];
+    return [UIColor unnormalizedColorWithRed:254 green:216 blue:209 alpha:255];
 }
 
 - (UIColor *)lightGrayColor
@@ -25,14 +25,34 @@
     return [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:244/255.0];
 }
 
+- (UIColor *)darkBlueColor
+{
+    return [UIColor unnormalizedColorWithRed:116 green:154 blue:194 alpha:255];
+}
+
 - (UIColor *)blueColor
 {
-    return [UIColor unnormalizedColorWithRed:120 green:183 blue:200 alpha:255];
+    return [UIColor unnormalizedColorWithRed:219 green:237 blue:240 alpha:255];
 }
 
 - (UIColor *)darkColor
 {
     return [UIColor unnormalizedColorWithRed:54 green:54 blue:57 alpha:255];
+}
+
+- (UIColor *)pinkColor
+{
+    return [UIColor unnormalizedColorWithRed:244 green:216 blue:209 alpha:255];
+}
+
+- (UIColor *)greenColor
+{
+    return [UIColor unnormalizedColorWithRed:227 green:335 blue:209 alpha:255];
+}
+
+- (UIColor *)yellowColor
+{
+    return [UIColor unnormalizedColorWithRed:247 green:238 blue:200 alpha:255];
 }
 
 - (NSString *)regularFontName

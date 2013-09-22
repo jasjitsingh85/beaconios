@@ -71,7 +71,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
     [[NSNotificationCenter defaultCenter] addObserverForName:kDidUpdateLocationNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        self.mapView.showsUserLocation = YES;
+//        self.mapView.showsUserLocation = YES;
     }];
     
     self.createBeaconButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
@@ -80,7 +80,7 @@
     self.createBeaconButton.layer.shadowRadius = 1.0;
     self.createBeaconButton.layer.shadowOffset = CGSizeMake(0, -1);
     self.createBeaconButton.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.createBeaconButton.bounds].CGPath;
-    self.createBeaconButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    self.createBeaconButton.backgroundColor = [[ThemeManager sharedTheme] darkBlueColor];
     UIImage *createBeaconImage = [UIImage imageNamed:@"plus"];
     [self.createBeaconButton setImage:createBeaconImage forState:UIControlStateNormal];
     CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithFont:self.createBeaconButton.titleLabel.font].width;
@@ -127,6 +127,10 @@
         }
         self.showCreateBeaconCell = NO;
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
+        BeaconAnnotation *beaconAnnotation = [self annotationForBeacon:self.beacons[0]];
+        BeaconAnnotationView *annotationView = (BeaconAnnotationView *)[self mapView:self.mapView viewForAnnotation:beaconAnnotation];
+        annotationView.active = YES;
+        NSLog(@"anno view %@", annotationView);
     }
     else {
         self.showCreateBeaconCell = YES;
@@ -194,6 +198,7 @@
     if (!self.showCreateBeaconCell) {
         cell.beacon = [self beaconForIndexPath:indexPath];
         [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
+        cell.backgroundImageView.image = [self backgroundImageForIndexPath:indexPath];
     }
     else {
         [cell configureEmptyBeacon];
@@ -320,11 +325,12 @@
     //
     if ([annotation isKindOfClass:[BeaconAnnotation class]]) // for Golden Gate Bridge
     {
+        BeaconAnnotation *beaconAnnotation = (BeaconAnnotation *)annotation;
         // try to dequeue an existing pin view first
         static NSString *BeaconAnnotationIdentifier = @"beaconAnnotationIdentifier";
         
-        MKPinAnnotationView *pinView =
-        (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:BeaconAnnotationIdentifier];
+        BeaconAnnotationView *pinView =
+        (BeaconAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:BeaconAnnotationIdentifier];
         if (pinView == nil)
         {
             // if an existing pin view was not available, create one
@@ -334,13 +340,11 @@
             UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(beaconAnnotationViewTapped:)];
             tapGesture.numberOfTapsRequired = 1;
             [customPinView addGestureRecognizer:tapGesture];
-            
+            customPinView.color = [self colorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
             return customPinView;
         }
-        else
-        {
-            pinView.annotation = annotation;
-        }
+        pinView.annotation = beaconAnnotation;
+        pinView.color = [self colorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
         return pinView;
     }
  
@@ -429,6 +433,21 @@
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [self.navigationController pushViewController:appDelegate.createBeaconViewController animated:YES];
+}
+
+#pragma mark - UI
+- (UIColor *)colorForIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *colors = @[[[ThemeManager sharedTheme] blueColor], [[ThemeManager sharedTheme] pinkColor], [[ThemeManager sharedTheme] greenColor], [[ThemeManager sharedTheme] orangeColor], [[ThemeManager sharedTheme] orangeColor]];
+    UIColor *color = colors[indexPath.row % colors.count];
+    return color;
+}
+
+- (UIImage *)backgroundImageForIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *backgroundImageNames = @[@"beaconCellBackgroundBlue", @"beaconCellBackgroundPink", @"beaconCellBackgroundYellow", @"beaconCellBackgroundGreen", @"beaconCellBackgroundOrange", @"beaconCellBackgroundPurple"];
+    NSString *backgroundImageName = backgroundImageNames[indexPath.row % backgroundImageNames.count];
+    return [UIImage imageNamed:backgroundImageName];
 }
 
 @end

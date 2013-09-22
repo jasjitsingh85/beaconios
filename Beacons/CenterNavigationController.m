@@ -87,11 +87,11 @@
 {
     BOOL showMenuButton = self.viewControllers.count == 1;
     if (showMenuButton) {
-        self.navigationItem.hidesBackButton = NO;
+        viewController.navigationItem.hidesBackButton = NO;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
     }
     else {
-        self.navigationItem.hidesBackButton = YES;
+        viewController.navigationItem.hidesBackButton = YES;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backButton];
     }
 }

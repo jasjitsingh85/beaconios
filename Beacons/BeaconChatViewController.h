@@ -13,4 +13,7 @@
 
 @property (strong, nonatomic) Beacon *beacon;
 
+- (void)createChatMessageWithString:(NSString *)messageString;
+- (void)createChatMessageWithImage:(UIImage *)image;
+
 @end

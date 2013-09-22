@@ -21,6 +21,8 @@
 #import "LoadingIndictor.h"
 #import "PhotoManager.h"
 #import "BeaconImage.h"
+#import "ChatMessage.h"
+#import "ImageViewController.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate>
 
@@ -37,6 +39,7 @@
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
 @property (strong, nonatomic) UIView *addPictureView;
+@property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @end
 
 @implementation BeaconProfileViewController
@@ -80,6 +83,7 @@
     self.descriptionView.layer.shadowOffset = CGSizeMake(0, 2);
     self.descriptionView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.descriptionView.bounds cornerRadius:self.descriptionView.layer.cornerRadius].CGPath;
     [self.view addSubview:self.descriptionView];
+    self.fullDescriptionViewShown = YES;
     
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 110)];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
@@ -218,7 +222,7 @@
 
 - (void)updateChatDesiredInsets
 {
-    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame) + self.navigationController.navigationBar.frame.size.height;
+    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame) + self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
     self.beaconChatViewController.desiredEdgeInsets = UIEdgeInsetsMake(topInset, 0, 0, 0);
     UIEdgeInsets insets = self.beaconChatViewController.tableView.contentInset;
     insets.top = self.beaconChatViewController.desiredEdgeInsets.top;
@@ -236,6 +240,7 @@
 
 - (void)showPartialDescriptionViewAnimated:(BOOL)animated
 {
+    self.fullDescriptionViewShown = NO;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
         CGRect frame = self.descriptionView.frame;
@@ -247,6 +252,7 @@
 
 - (void)showFullDescriptionViewAnimated:(BOOL)animated
 {
+    self.fullDescriptionViewShown = YES;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
         CGRect frame = self.descriptionView.frame;
@@ -269,9 +275,15 @@
 #pragma mark - Buttons 
 - (void)chatButtonTouched:(id)sender
 {
+    BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
     self.chatTabButton.selected = YES;
     self.inviteTabButton.selected = NO;
-    [self showFullDescriptionViewAnimated:YES];
+    if (self.fullDescriptionViewShown && !inviteButtonWasSelected) {
+        [self showPartialDescriptionViewAnimated:YES];
+    }
+    else {
+        [self showFullDescriptionViewAnimated:YES];
+    }
     self.inviteListViewController.view.alpha = 0.0;
     [self.beaconChatViewController dismissKeyboard];
 }
@@ -333,6 +345,7 @@
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
             self.imageView.image = image;
+            [self.beaconChatViewController createChatMessageWithImage:image];
             [[APIClient sharedClient] postImage:image forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -347,6 +360,24 @@
 {
     if (ABS(velocity.y) > 1) {
         [self showPartialDescriptionViewAnimated:YES];
+    }
+}
+
+- (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage
+{
+    if (chatMessage.isImageMessage) {
+        ImageViewController *imageViewController = [[ImageViewController alloc] init];
+        [self.navigationController pushViewController:imageViewController animated:YES];
+        if (chatMessage.cachedImage) {
+            imageViewController.image = chatMessage.cachedImage;
+        }
+        else if (chatMessage.imageURL) {
+            [[SDWebImageManager sharedManager] downloadWithURL:chatMessage.imageURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                if (image) {
+                    imageViewController.image = image;
+                }
+            }];
+        }
     }
 }
 

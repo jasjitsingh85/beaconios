@@ -90,6 +90,8 @@
 		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
 		966F270717E174CF000B4B8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F270617E174CF000B4B8C /* libPods.a */; };
+		96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CEA17EF9C8800C1C467 /* SoundPlayer.m */; };
+		96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
 		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
@@ -106,6 +108,7 @@
 		969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */; };
 		969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */; };
 		969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649517E96E1B00F5AB36 /* UIImage+Resize.m */; };
+		969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649817EF85F200F5AB36 /* ImageViewController.m */; };
 		96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */; };
 		96A9871917E4FB40007D77B8 /* beaconImageTest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */; };
 		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
@@ -268,6 +271,9 @@
 		966AC11B17CADBFA0093BB69 /* BeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconManager.h; sourceTree = "<group>"; };
 		966AC11C17CADBFA0093BB69 /* BeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManager.m; sourceTree = "<group>"; };
 		966F270617E174CF000B4B8C /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		96859CE917EF9C8800C1C467 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
+		96859CEA17EF9C8800C1C467 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
+		96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -289,6 +295,8 @@
 		969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconCellImageMask@2x.png"; sourceTree = "<group>"; };
 		969D649417E96E1B00F5AB36 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		969D649517E96E1B00F5AB36 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		969D649717EF85F200F5AB36 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		969D649817EF85F200F5AB36 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconProfileViewController.h; sourceTree = "<group>"; };
 		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
 		96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconImageTest@2x.png"; sourceTree = "<group>"; };
@@ -337,6 +345,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */,
 				966F270717E174CF000B4B8C /* libPods.a in Frameworks */,
 				1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */,
 				1FE67713175C08C4006F563C /* CoreLocation.framework in Frameworks */,
@@ -459,6 +468,7 @@
 		9633993A1758512100AF9D89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */,
 				966F270617E174CF000B4B8C /* libPods.a */,
 				1F4D658A17653C9D00D02369 /* MessageUI.framework */,
 				1FE67712175C08C4006F563C /* CoreLocation.framework */,
@@ -548,6 +558,10 @@
 				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
 				96A9872E17E68C44007D77B8 /* PhotoManager.h */,
 				96A9872F17E68C44007D77B8 /* PhotoManager.m */,
+				969D649717EF85F200F5AB36 /* ImageViewController.h */,
+				969D649817EF85F200F5AB36 /* ImageViewController.m */,
+				96859CE917EF9C8800C1C467 /* SoundPlayer.h */,
+				96859CEA17EF9C8800C1C467 /* SoundPlayer.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -901,6 +915,7 @@
 				1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
+				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,
 				1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */,
 				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
 				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
@@ -915,6 +930,7 @@
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
+				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,

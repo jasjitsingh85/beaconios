@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class ChatViewController;
+@class ChatViewController, ChatMessage;
 @protocol ChatViewControllerDelegate <NSObject>
 
 - (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity;
+- (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage;
 
 @end
 

@@ -147,8 +147,17 @@
     return cell;
 }
 
+#pragma mark - UITableView Delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ChatTableViewCell *chatCell = (ChatTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if (!chatCell || !chatCell.chatMessage) {
+        return;
+    }
+    if ([self.chatViewControllerDelegate respondsToSelector:@selector(chatViewController:didSelectChatMessage:)]) {
+        [self.chatViewControllerDelegate chatViewController:self didSelectChatMessage:chatCell.chatMessage];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

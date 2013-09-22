@@ -12,9 +12,12 @@
 @interface ChatMessage : NSObject
 
 @property (strong, nonatomic) NSString *messageString;
+@property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) UIImage *cachedImage;
 @property (strong, nonatomic) NSDate *sentDate;
 @property (strong, nonatomic) User *sender;
 @property (assign, nonatomic) BOOL isUserMessage;
+@property (readonly) BOOL isImageMessage;
 
 - (id)initWithData:(NSDictionary *)messageData;
 

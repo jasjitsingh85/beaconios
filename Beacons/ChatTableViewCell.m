@@ -13,6 +13,7 @@
 #import "Theme.h"
 
 #define kMaxTextBubbleSize CGSizeMake(200, 200)
+#define kImageMessageSize CGSizeMake(100, 130)
 
 @interface ChatTableViewCell()
 
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) UIImageView *chatBubble;
 @property (strong, nonatomic) UIImageView *avatarImageView;
 @property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) UIImageView *chatImageView;
 
 @end
 
@@ -27,8 +29,14 @@
 
 + (CGFloat)heightForChatMessage:(ChatMessage *)chatMessage
 {
-    CGFloat textHeight = [chatMessage.messageString sizeWithFont:[ThemeManager regularFontOfSize:12.0] constrainedToSize:kMaxTextBubbleSize].height + 50;
-    return textHeight;
+    CGFloat height;
+    if (chatMessage.isImageMessage) {
+        height = kImageMessageSize.height + 50;
+    }
+    else {
+        height = [chatMessage.messageString sizeWithFont:[ThemeManager regularFontOfSize:12.0] constrainedToSize:kMaxTextBubbleSize].height + 50;
+    }
+    return height;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -48,6 +56,13 @@
 //        self.chatLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         self.chatLabel.numberOfLines = 0;
         [self.chatBubble addSubview:self.chatLabel];
+        
+        self.chatImageView = [[UIImageView alloc] init];
+        self.chatImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.chatImageView.layer.cornerRadius = 2;
+        self.chatImageView.clipsToBounds = YES;
+        [self addSubview:self.chatImageView];
+        self.chatImageView.hidden = YES;
         
         self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(7, 0, 46, 46)];
         self.avatarImageView.layer.borderWidth = 2;
@@ -70,8 +85,26 @@
 - (void)setChatMessage:(ChatMessage *)chatMessage
 {
     _chatMessage = chatMessage;
-    self.chatLabel.text = chatMessage.messageString;
+    if (chatMessage.isImageMessage) {
+        [self configureForImageMessage:chatMessage];
+    }
+    else {
+        [self configureForTextMessage:chatMessage];
+    }
     self.nameLabel.text = chatMessage.sender.firstName;
+    if (chatMessage.sender.avatarURL) {
+        [self.avatarImageView setImageWithURL:chatMessage.sender.avatarURL];
+    }
+    else {
+        self.avatarImageView.image = nil;
+    }
+}
+
+- (void)configureForTextMessage:(ChatMessage *)chatMessage
+{
+    self.chatImageView.hidden = YES;
+    self.chatBubble.hidden = NO;
+    self.chatLabel.text = chatMessage.messageString;
     if (chatMessage.isUserMessage) {
         UIImage *image = [[UIImage imageNamed:@"bubbleRight"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 25, 26)];
         self.chatBubble.image = image;
@@ -80,11 +113,17 @@
         UIImage *image = [[UIImage imageNamed:@"bubbleLeft"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 26, 25, 15)];
         self.chatBubble.image = image;
     }
-    if (chatMessage.sender.avatarURL) {
-        [self.avatarImageView setImageWithURL:chatMessage.sender.avatarURL];
+}
+
+- (void)configureForImageMessage:(ChatMessage *)chatMessage
+{
+    self.chatImageView.hidden = NO;
+    self.chatBubble.hidden = YES;
+    if (chatMessage.cachedImage) {
+        self.chatImageView.image = chatMessage.cachedImage;
     }
-    else {
-        self.avatarImageView.image = nil;
+    else if (chatMessage.imageURL) {
+        [self.chatImageView setImageWithURL:chatMessage.imageURL];
     }
 }
 
@@ -101,7 +140,7 @@
     chatBubbleFrame.size.width = chatLabelFrame.size.width + 3*15;
     CGFloat bubbleBufferX = 50;
     CGFloat avatarBufferX = 7;
-    CGRect avatarFrame = self.avatarImageView.frame;
+    CGRect avatarFrame = CGRectMake(7, 0, 46, 46);
     if (self.chatMessage.isUserMessage) {
         chatBubbleFrame.origin.x = self.frame.size.width - bubbleBufferX - chatBubbleFrame.size.width;
         avatarFrame.origin.x = self.frame.size.width - avatarBufferX - self.avatarImageView.frame.size.width;
@@ -118,6 +157,23 @@
     CGRect nameLabelFrame = self.nameLabel.frame;
     nameLabelFrame.origin.y = CGRectGetMaxY(self.avatarImageView.frame);
     self.nameLabel.frame = nameLabelFrame;
+    
+    if (self.chatMessage.isImageMessage) {
+        CGRect chatImageFrame;
+        chatImageFrame.origin.y = 15;
+        chatImageFrame.size = kImageMessageSize;
+        CGFloat chatImageBufferX = 75;
+        if (self.chatMessage.isUserMessage) {
+            chatImageFrame.origin.x = self.frame.size.width - chatImageBufferX - chatImageFrame.size.width;
+        }
+        else {
+            chatImageFrame.origin.x = chatImageBufferX;
+        }
+        self.chatImageView.frame = chatImageFrame;
+        avatarFrame.origin.y = CGRectGetMidY(chatImageFrame) - 0.5*avatarFrame.size.height;
+        self.avatarImageView.frame = avatarFrame;
+    }
+    
 }
 
 @end
