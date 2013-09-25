@@ -10,7 +10,6 @@
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
-#import "LoginViewController.h"
 #import "BeaconDetailViewController.h"
 #import "CreateBeaconViewController.h"
 #import "ActivationViewController.h"
@@ -22,10 +21,11 @@
 #import "LocationTracker.h"
 #import "PushNotificationManager.h"
 #import "CrashManager.h"
+#import "RegisterViewController.h"
 
 @interface AppDelegate()
 
-@property (strong, nonatomic) LoginViewController *loginViewController;
+@property (strong, nonatomic) RegisterViewController *registerViewController;
 @property (strong, nonatomic) ActivationViewController *activationViewController;
 
 @end
@@ -114,15 +114,9 @@
 
     [self.window makeKeyAndVisible];
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
-    BOOL accountActivated = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyAccountActivated];
     if (!isLoggedIn) {
-        self.loginViewController = [LoginViewController new];
-        UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-        [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:nil];
-    }
-    else if (!accountActivated) {
-        self.activationViewController = [ActivationViewController new];
-        [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
+        self.registerViewController = [[RegisterViewController alloc] init];
+        self.window.rootViewController = self.registerViewController;
     }
     else {
         [[PushNotificationManager sharedManager] registerForRemoteNotifications];
@@ -172,42 +166,24 @@
     [[NSUserDefaults standardUserDefaults] setBool:activated forKey:kDefaultsKeyAccountActivated];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.window.rootViewController dismissViewControllerAnimated:activated completion:^{
-        if (activated) {
-            [[ContactManager sharedManager] syncContacts];
-            [[LocationTracker sharedTracker] requestLocationPermission];
-            [[PushNotificationManager sharedManager] registerForRemoteNotifications];
-            [[AnalyticsManager sharedManager] setupForUser];
-            [CrashManager setupForUser];
-        }
-        else {
-            self.activationViewController = [ActivationViewController new];
-            [self.window.rootViewController presentViewController:self.activationViewController animated:NO completion:nil];
-        }
-    }];
 }
 
 - (void)didActivateAccount
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
-    self.window.rootViewController.presentedViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-        [[ContactManager sharedManager] syncContacts];
-        [[LocationTracker sharedTracker] requestLocationPermission];
-        [[AnalyticsManager sharedManager] setupForUser];
-        [CrashManager setupForUser];
-    }];
+    self.window.rootViewController = self.sideNavigationViewController;
+    [[ContactManager sharedManager] syncContacts];
+    [[LocationTracker sharedTracker] requestLocationPermission];
+    [[AnalyticsManager sharedManager] setupForUser];
+    [CrashManager setupForUser];
 }
 
 - (void)logoutOfServer
 {
-    self.loginViewController = [LoginViewController new];
-    UINavigationController *loginNavigationContoller = [[UINavigationController alloc] initWithRootViewController:self.loginViewController];
-    [self.window.rootViewController presentViewController:loginNavigationContoller animated:NO completion:^{
-        //nil out any view controllers that have user data associated with them
-        self.mapViewController = nil;
-    }];
+    self.registerViewController = [[RegisterViewController alloc] init];
+    self.window.rootViewController = self.registerViewController;
+    //nil out any view controllers that have user data
+    self.mapViewController = nil;
     NSArray *objectsToRemove = @[kDefaultsKeyFirstName,
                                  kDefaultsKeyEmail,
                                  kDefaultsKeyFacebookID,

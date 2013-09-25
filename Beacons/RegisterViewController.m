@@ -10,6 +10,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+Alignment.h"
 #import "FormView.h"
+#import "APIClient.h"
+#import "AppDelegate.h"
+#import "AnalyticsManager.h"
+#import "Utilities.h"
 
 typedef enum {
     ViewModeRegister=0,
@@ -60,8 +64,8 @@ typedef enum {
     UITextField *signInPhoneTextField = [self.signInFormView textFieldAtIndex:0];
     signInPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
-    NSArray *activationFormTitles = @[@"activation code"];
-    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 250, 36*activationFormTitles.count) formTitles:activationFormTitles];
+    NSArray *activationFormTitles = @[@"code"];
+    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 100, 36*activationFormTitles.count) formTitles:activationFormTitles];
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.activationFormView];
@@ -73,7 +77,9 @@ typedef enum {
     self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.confirmButton setTitle:@"Register" forState:UIControlStateNormal];
     self.confirmButton.backgroundColor = [UIColor colorWithRed:162/255.0 green:211/255.0 blue:156/255.0 alpha:1.0];
-    [self.confirmButton setTitleColor:[UIColor colorWithRed:108/255.0 green:124/255.0 blue:146/255.0 alpha:1.0] forState:UIControlStateNormal];
+    UIColor *confirmButtonColor = [UIColor colorWithRed:108/255.0 green:124/255.0 blue:146/255.0 alpha:1.0];
+    [self.confirmButton setTitleColor:[confirmButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    [self.confirmButton setTitleColor:confirmButtonColor forState:UIControlStateNormal];
     self.confirmButton.layer.cornerRadius = 4;
     CGRect confirmButtonFrame;
     confirmButtonFrame.size  = CGSizeMake(200, 35);
@@ -85,6 +91,9 @@ typedef enum {
     
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.loginButton setTitle:@"I have an account" forState:UIControlStateNormal];
+    UIColor *loginButtonColor = [UIColor whiteColor];
+    [self.loginButton setTitleColor:[loginButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    [self.loginButton setTitleColor:loginButtonColor forState:UIControlStateNormal];
     self.loginButton.backgroundColor = [UIColor colorWithRed:126/255.0 green:126/255.0 blue:126/255.0 alpha:1];
     self.loginButton.layer.cornerRadius = 4;
     CGRect loginButtonFrame;
@@ -125,8 +134,15 @@ typedef enum {
 - (void)confirmButtonTouched:(id)sender
 {
     [self dismissKeyboard];
-    if (self.viewMode == ViewModeSignIn || self.viewMode == ViewModeRegister) {
+    if (self.viewMode == ViewModeRegister && [self registerInputsAreValid]) {
+        [self registerAccount];
         [self enterActivationMode];
+    }
+    else if (self.viewMode == ViewModeSignIn) {
+        [self signInAccount];
+    }
+    else if (self.viewMode == ViewModeActivation) {
+        [self activateAccount];
     }
 }
 
@@ -184,6 +200,101 @@ typedef enum {
         self.signInFormView.alpha = 0;
     } completion:^(BOOL finished) {
         
+    }];
+}
+
+- (BOOL)registerInputsAreValid
+{
+    BOOL inputsAreValid = YES;
+    NSString *alertMessage = @"";
+    
+    //name is valid
+    NSString *nameText = [self.registerFormView textFieldAtIndex:0].text;
+    BOOL nameIsValid = nameText.length;
+    if (!nameIsValid) {
+        alertMessage = @"please enter a valid name";
+    }
+    
+    
+    //validate phone number
+    NSString *phoneText = [self.registerFormView textFieldAtIndex:2].text;
+    NSLog(@"phone %@", phoneText);
+    BOOL phoneValid = [Utilities americanPhoneNumberIsValid:phoneText];
+    if (!phoneValid) {
+        alertMessage = @"please enter a valid phone number";
+    }
+    
+    inputsAreValid = phoneValid && nameIsValid; //&& others valid
+    if (!inputsAreValid) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oopsy" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+    return inputsAreValid;
+}
+
+#pragma mark - Networking
+- (void)registerAccount
+{
+    NSString *nameText = [self.registerFormView textFieldAtIndex:0].text;
+    NSArray *nameComponents = [nameText componentsSeparatedByString:@" "];
+    NSString *firstName = [nameComponents firstObject];
+    NSString *lastName = @"";
+    if (nameComponents.count > 1) {
+        lastName = [nameComponents lastObject];
+    }
+    NSString *emailText = [self.registerFormView textFieldAtIndex:1].text;
+    NSString *phoneText = [self.registerFormView textFieldAtIndex:2].text;
+    NSDictionary *parameters = @{@"first_name" : firstName,
+                                 @"last_name" : lastName,
+                                 @"email" : emailText,
+                                 @"phone_number" : phoneText};
+    [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [self enterActivationMode];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   NSString *message = @"Something went wrong";
+                                   if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
+                                       message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+                                   }
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                   [alertView show];
+                                   [self enterRegisterMode];
+                               }];
+}
+
+- (void)signInAccount
+{
+    NSString *phoneText = [self.signInFormView textFieldAtIndex:0].text;
+    NSDictionary *parameters = @{@"phone_number" : phoneText};
+    [[APIClient sharedClient] postPath:@"login/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                                   [appDelegate loggedIntoServerWithResponse:responseObject];
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [self enterActivationMode];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   NSString *message = @"incorrect email or password";
+                                   if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
+                                       message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+                                   }
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                   [alertView show];
+                                   
+                               }];
+}
+
+- (void)activateAccount
+{
+    NSString *activationText = [self.activationFormView textFieldAtIndex:0].text;
+    NSDictionary *parameters = @{@"activation_code" : activationText};
+    [[APIClient sharedClient] putPath:@"login/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate didActivateAccount];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"there was a problem with your activation code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 

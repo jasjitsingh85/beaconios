@@ -38,7 +38,9 @@
     NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
     characterSet = [characterSet invertedSet];
     normalizedNumber = [[normalizedNumber componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString: @""];
-    
+    if (!normalizedNumber || !normalizedNumber.length) {
+        return normalizedNumber;
+    }
     if ([[normalizedNumber substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"1"]) {
         normalizedNumber = [normalizedNumber substringWithRange:NSMakeRange(1, normalizedNumber.length-1)];
     }
