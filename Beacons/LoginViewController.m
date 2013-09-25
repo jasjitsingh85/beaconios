@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "RegistrationViewController.h"
+#import "RegisterViewController.h"
 #import "SignInViewController.h"
 #import "Theme.h"
 
@@ -33,7 +34,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 - (IBAction)registerButtonTouched:(id)sender {
-    [self.navigationController pushViewController:[RegistrationViewController new] animated:YES];
+    [self.navigationController pushViewController:[RegisterViewController new] animated:YES];
 }
 - (IBAction)signInButtonTouched:(id)sender {
     [self.navigationController pushViewController:[SignInViewController new] animated:YES];

@@ -92,6 +92,11 @@
 		96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */; };
 		96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859CEE17EFA7BD00C1C467 /* Default@2x.png */; };
 		96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859CEF17EFA7BD00C1C467 /* Default-568h@2x.png */; };
+		96859CF417EFC3C600C1C467 /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CF317EFC3C600C1C467 /* FormView.m */; };
+		96859CF717EFC89800C1C467 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CF617EFC89800C1C467 /* RegisterViewController.m */; };
+		96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CF917EFD2E600C1C467 /* UIView+Alignment.m */; };
+		96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CFF17EFD5D600C1C467 /* InsetTextField.m */; };
+		96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
 		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
@@ -274,6 +279,15 @@
 		96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		96859CEE17EFA7BD00C1C467 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		96859CEF17EFA7BD00C1C467 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		96859CF217EFC3C600C1C467 /* FormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormView.h; sourceTree = "<group>"; };
+		96859CF317EFC3C600C1C467 /* FormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormView.m; sourceTree = "<group>"; };
+		96859CF517EFC89800C1C467 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		96859CF617EFC89800C1C467 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		96859CF817EFD2E600C1C467 /* UIView+Alignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Alignment.h"; sourceTree = "<group>"; };
+		96859CF917EFD2E600C1C467 /* UIView+Alignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Alignment.m"; sourceTree = "<group>"; };
+		96859CFE17EFD5D600C1C467 /* InsetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetTextField.h; sourceTree = "<group>"; };
+		96859CFF17EFD5D600C1C467 /* InsetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetTextField.m; sourceTree = "<group>"; };
+		96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeBackground@2x.png"; sourceTree = "<group>"; };
 		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -374,6 +388,8 @@
 		1FB74EE617764ED000F0F385 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				96859CF817EFD2E600C1C467 /* UIView+Alignment.h */,
+				96859CF917EFD2E600C1C467 /* UIView+Alignment.m */,
 				1FB74EE717764F7C00F0F385 /* UIColor+UnnormalizedColor.h */,
 				1FB74EE817764F7C00F0F385 /* UIColor+UnnormalizedColor.m */,
 				1F5D4BAF17767E9600A1A66E /* NSDate+FormattedDate.h */,
@@ -413,6 +429,8 @@
 				1F526388175C492800DD26E1 /* BeaconCell.m */,
 				1F465C191763C96D00F35A8B /* BeaconUserCell.h */,
 				1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */,
+				96859CFE17EFD5D600C1C467 /* InsetTextField.h */,
+				96859CFF17EFD5D600C1C467 /* InsetTextField.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -562,6 +580,10 @@
 				969D649817EF85F200F5AB36 /* ImageViewController.m */,
 				96859CE917EF9C8800C1C467 /* SoundPlayer.h */,
 				96859CEA17EF9C8800C1C467 /* SoundPlayer.m */,
+				96859CF217EFC3C600C1C467 /* FormView.h */,
+				96859CF317EFC3C600C1C467 /* FormView.m */,
+				96859CF517EFC89800C1C467 /* RegisterViewController.h */,
+				96859CF617EFC89800C1C467 /* RegisterViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -604,6 +626,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
 				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
 				969D648C17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png */,
@@ -811,6 +834,7 @@
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
 				96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
+				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */,
@@ -889,11 +913,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				963399481758512100AF9D89 /* main.m in Sources */,
+				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
 				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96956447175852990081B349 /* LoginViewController.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
+				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
 				969564551758691B0081B349 /* MenuViewController.m in Sources */,
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
@@ -917,7 +943,9 @@
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,
 				1F465C1B1763C96E00F35A8B /* BeaconUserCell.m in Sources */,
+				96859CF417EFC3C600C1C467 /* FormView.m in Sources */,
 				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
+				96859CF717EFC89800C1C467 /* RegisterViewController.m in Sources */,
 				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
