@@ -48,6 +48,7 @@ typedef enum {
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 65;
+    self.tableView.contentInset = UIEdgeInsetsMake([UIApplication sharedApplication].statusBarFrame.size.height, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,6 +95,7 @@ typedef enum {
 - (UITableViewCell *)tableViewCellWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+    cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     
@@ -174,7 +176,7 @@ typedef enum {
         [appDelegate.centerNavigationController setSelectedViewController:appDelegate.myBeaconViewController];
     }
     else {
-        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.createBeaconViewController animated:YES];
+        [appDelegate.centerNavigationController setSelectedViewController:(UIViewController *)appDelegate.setBeaconViewController animated:YES];
     }
 }
 

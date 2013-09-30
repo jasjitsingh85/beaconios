@@ -13,7 +13,7 @@
 LoginViewController,
 MapViewController,
 MenuViewController,
-CreateBeaconViewController,
+SetBeaconViewController,
 BeaconDetailViewController,
 User;
 
@@ -23,7 +23,7 @@ User;
 @property (strong, nonatomic) CenterNavigationController *centerNavigationController;
 @property (strong, nonatomic) IIViewDeckController *sideNavigationViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
-@property (strong, nonatomic) CreateBeaconViewController *createBeaconViewController;
+@property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) User *loggedInUser;

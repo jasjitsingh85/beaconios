@@ -23,6 +23,7 @@
 #import "BeaconImage.h"
 #import "ChatMessage.h"
 #import "ImageViewController.h"
+#import "KenBurnsView.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate>
 
@@ -31,6 +32,7 @@
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
+@property (strong, nonatomic) KenBurnsView *kenBurnsView;
 @property (strong, nonatomic) UIButton *chatTabButton;
 @property (strong, nonatomic) UIButton *inviteTabButton;
 @property (strong, nonatomic) UILabel *timeLabel;
@@ -92,6 +94,11 @@
     self.imageView.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.imageView];
     [self updateChatDesiredInsets];
+    
+    self.kenBurnsView = [[KenBurnsView alloc] initWithFrame:self.imageView.bounds];
+    self.kenBurnsView.clipsToBounds = YES;
+    [self.imageView addSubview:self.kenBurnsView];
+    self.kenBurnsView.hidden = YES;
     
     self.chatTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect chatTabButtonFrame;
@@ -190,8 +197,7 @@
         self.imageViewGradient.hidden = YES;
     }
     else {
-        BeaconImage *beaconImage = [beacon.images lastObject];
-        [self.imageView setImageWithURL:beaconImage.imageURL];
+        [self loadImageViewForBeacon:beacon];
     }
     
     self.timeLabel.text = [beacon.time formattedDate];
@@ -202,6 +208,38 @@
     self.inviteListViewController.beaconStatuses = beacon.invited;
     
     self.joinButton.selected = beacon.userAttending;
+}
+
+- (void)updateImageViewWithImage:(UIImage *)image
+{
+    self.kenBurnsView.hidden = NO;
+    if (!self.kenBurnsView.isAnimating) {
+        [self.kenBurnsView animateWithImages:@[image] transitionDuration:3 loop:YES isLandscape:NO];
+    }
+    else {
+        [self.kenBurnsView addImage:image];
+    }
+}
+
+- (void)loadImageViewForBeacon:(Beacon *)beacon
+{
+    if (!beacon.images || !beacon.images.count) {
+        return;
+    }
+    
+    self.kenBurnsView.hidden = NO;
+    for (BeaconImage *beaconImage in beacon.images) {
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:beaconImage.imageURL options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            jadispatch_main_qeue(^{
+                if (!self.kenBurnsView.isAnimating) {
+                    [self.kenBurnsView animateWithImages:@[image] transitionDuration:3 loop:YES isLandscape:NO];
+                }
+                else {
+                    [self.kenBurnsView addImage:image];
+                }
+            });
+        }];
+    }
 }
 
 - (void)updateInvitedLabel
@@ -344,7 +382,7 @@
     
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
-            self.imageView.image = image;
+            [self updateImageViewWithImage:image];
             [self.beaconChatViewController createChatMessageWithImage:image];
             [[APIClient sharedClient] postImage:image forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 
@@ -400,6 +438,12 @@
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+#pragma mark - Ken Burns Delegate
+- (void)didFinishAllAnimations
+{
+    
 }
 
 

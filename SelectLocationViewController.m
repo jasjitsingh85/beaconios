@@ -17,6 +17,9 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *venues;
 @property (strong, nonatomic) NSString *customLocation;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (assign, nonatomic) BOOL keyboardShown;
 @end
 
 @implementation SelectLocationViewController
@@ -36,15 +39,22 @@
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
     self.venues = [NSArray new];
+    self.headerView.backgroundColor = [[ThemeManager sharedTheme] redColor];
     
-    self.searchBar.showsCancelButton = YES;
-    self.searchBar.tintColor = [[ThemeManager sharedTheme] cyanColor];
-    [self enableSearchBarCancelButton];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self searchForVenues];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)searchForVenues
@@ -217,9 +227,30 @@
     [self searchForVenues];
 }
 
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)cancelButtonTouched:(id)sender
+{
+    if (self.keyboardShown) {
+        [self.searchBar resignFirstResponder];
+    }
+    else {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    self.keyboardShown = YES;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    self.keyboardShown = NO;
+}
 @end

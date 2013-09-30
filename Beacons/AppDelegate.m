@@ -22,6 +22,7 @@
 #import "PushNotificationManager.h"
 #import "CrashManager.h"
 #import "RegisterViewController.h"
+#import "SetBeaconViewController.h"
 
 @interface AppDelegate()
 
@@ -61,12 +62,12 @@
     return _mapViewController;
 }
 
-- (CreateBeaconViewController *)createBeaconViewController
+- (SetBeaconViewController *)setBeaconViewController
 {
-    if (!_createBeaconViewController) {
-        _createBeaconViewController = [CreateBeaconViewController new];
+    if (!_setBeaconViewController) {
+        _setBeaconViewController = [[SetBeaconViewController alloc] init];
     }
-    return _createBeaconViewController;
+    return _setBeaconViewController;
 }
 
 - (BeaconDetailViewController *)myBeaconViewController

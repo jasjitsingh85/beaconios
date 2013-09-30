@@ -7,6 +7,8 @@ PODS:
   - Facebook-iOS-SDK (3.5.1)
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
+  - GCPlaceholderTextView (1.0.1)
+  - JBKenBurnsView (0.3)
   - JSONKit (1.5pre)
   - libwebp (0.3.0-rc7):
     - libwebp/dec
@@ -34,6 +36,8 @@ DEPENDENCIES:
   - CrittercismSDK
   - Facebook-iOS-SDK (~> 3.5.0)
   - Foursquare-iOS-API (~> 1.1.0)
+  - GCPlaceholderTextView
+  - JBKenBurnsView
   - MBProgressHUD (~> 0.6)
   - Mixpanel (~> 2.0.0)
   - SDWebImage (~> 3.4)
@@ -47,6 +51,8 @@ SPEC CHECKSUMS:
   CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
+  GCPlaceholderTextView: 5eeef8d07a1dece8fdcd7762dfc21b8e89800838
+  JBKenBurnsView: 70be145e229cdf56b11a0c73165a77f439ddc1a9
   JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
   libwebp: 40517fa1fd3716eded73b4696c45fc0b66e4b414
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52

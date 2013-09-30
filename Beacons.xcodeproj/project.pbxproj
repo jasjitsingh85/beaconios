@@ -97,6 +97,11 @@
 		96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CF917EFD2E600C1C467 /* UIView+Alignment.m */; };
 		96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CFF17EFD5D600C1C467 /* InsetTextField.m */; };
 		96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */; };
+		96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859D0417F3F00B00C1C467 /* KenBurnsView.m */; };
+		96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */; };
+		968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */; };
+		968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8E17F79CEB00D64441 /* JADatePicker.m */; };
+		9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
 		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
@@ -288,6 +293,16 @@
 		96859CFE17EFD5D600C1C467 /* InsetTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetTextField.h; sourceTree = "<group>"; };
 		96859CFF17EFD5D600C1C467 /* InsetTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetTextField.m; sourceTree = "<group>"; };
 		96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeBackground@2x.png"; sourceTree = "<group>"; };
+		96859D0317F3F00B00C1C467 /* KenBurnsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KenBurnsView.h; sourceTree = "<group>"; };
+		96859D0417F3F00B00C1C467 /* KenBurnsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenBurnsView.m; sourceTree = "<group>"; };
+		96859D0C17F4048300C1C467 /* JAGrandCentralDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGrandCentralDispatch.h; sourceTree = "<group>"; };
+		96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGrandCentralDispatch.m; sourceTree = "<group>"; };
+		968CDA8A17F78ED600D64441 /* SetBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetBeaconViewController.h; sourceTree = "<group>"; };
+		968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetBeaconViewController.m; sourceTree = "<group>"; };
+		968CDA8D17F79CEB00D64441 /* JADatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADatePicker.h; sourceTree = "<group>"; };
+		968CDA8E17F79CEB00D64441 /* JADatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADatePicker.m; sourceTree = "<group>"; };
+		9691D25D17F8BD0D0095BA80 /* JAPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPlaceholderTextView.h; sourceTree = "<group>"; };
+		9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPlaceholderTextView.m; sourceTree = "<group>"; };
 		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -431,6 +446,12 @@
 				1F465C1A1763C96D00F35A8B /* BeaconUserCell.m */,
 				96859CFE17EFD5D600C1C467 /* InsetTextField.h */,
 				96859CFF17EFD5D600C1C467 /* InsetTextField.m */,
+				96859D0317F3F00B00C1C467 /* KenBurnsView.h */,
+				96859D0417F3F00B00C1C467 /* KenBurnsView.m */,
+				968CDA8D17F79CEB00D64441 /* JADatePicker.h */,
+				968CDA8E17F79CEB00D64441 /* JADatePicker.m */,
+				9691D25D17F8BD0D0095BA80 /* JAPlaceholderTextView.h */,
+				9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -504,6 +525,7 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				96859D0617F402F200C1C467 /* Other */,
 				1FB74EE617764ED000F0F385 /* Categories */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
@@ -584,6 +606,8 @@
 				96859CF317EFC3C600C1C467 /* FormView.m */,
 				96859CF517EFC89800C1C467 /* RegisterViewController.h */,
 				96859CF617EFC89800C1C467 /* RegisterViewController.m */,
+				968CDA8A17F78ED600D64441 /* SetBeaconViewController.h */,
+				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -621,6 +645,15 @@
 				9633996B1758512100AF9D89 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		96859D0617F402F200C1C467 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				96859D0C17F4048300C1C467 /* JAGrandCentralDispatch.h */,
+				96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
@@ -915,9 +948,11 @@
 				963399481758512100AF9D89 /* main.m in Sources */,
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
 				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
+				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96956447175852990081B349 /* LoginViewController.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
+				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
@@ -950,6 +985,7 @@
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
+				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
@@ -959,6 +995,7 @@
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,
+				9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,
@@ -966,6 +1003,7 @@
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
+				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
 			);

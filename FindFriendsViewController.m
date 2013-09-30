@@ -74,7 +74,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Invite Friends";
-    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
+    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
     self.navigationItem.rightBarButtonItem = doneBarButtonItem;
     
     self.suggestedList = @[];
@@ -101,6 +101,7 @@ typedef enum {
         NSLog(@"error %@",error);
     }];
 }
+
 
 - (void)reloadData
 {
@@ -362,6 +363,12 @@ typedef enum {
         [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
     }
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    if (self.selectedContactDictionary.count) {
+        self.navigationItem.rightBarButtonItem.title = @"Invite";
+    }
+    else {
+        self.navigationItem.rightBarButtonItem.title = @"Skip";
+    }
 }
 
 #pragma mark - buttons

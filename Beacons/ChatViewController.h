@@ -13,6 +13,7 @@
 
 - (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity;
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage;
+- (void)chatViewController:(ChatViewController *)chatViewController didLoadChatMessages:(NSArray *)chatMessages;
 
 @end
 

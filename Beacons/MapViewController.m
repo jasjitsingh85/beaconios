@@ -15,7 +15,7 @@
 #import "Beacon.h"
 #import "BeaconAnnotation.h"
 #import "BeaconAnnotationView.h"
-#import "CreateBeaconViewController.h"
+#import "SetBeaconViewController.h"
 #import "BeaconDetailViewController.h"
 #import "TextMessageManager.h"
 #import "APIClient.h"
@@ -279,8 +279,8 @@
 
 - (void)beaconCellCreateBeaconButtonTouched:(BeaconCell *)beaconCell
 {
-    CreateBeaconViewController *createBeaconViewController = [CreateBeaconViewController new];
-    [self.navigationController pushViewController:createBeaconViewController animated:YES];
+    SetBeaconViewController *setBeaconViewController = [[SetBeaconViewController alloc] init];
+    [self.navigationController pushViewController:setBeaconViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -431,8 +431,8 @@
 #pragma mark - Button Events
 - (void)createBeaconTouched:(id)sender
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [self.navigationController pushViewController:appDelegate.createBeaconViewController animated:YES];
+    SetBeaconViewController *setBeaconViewController = [[SetBeaconViewController alloc] init];
+    [self.navigationController pushViewController:setBeaconViewController animated:YES];
 }
 
 #pragma mark - UI

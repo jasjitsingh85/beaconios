@@ -55,6 +55,7 @@
         self.beaconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, maskImage.size.width, maskImage.size.height)];
         self.beaconImageView.backgroundColor = [UIColor clearColor];
         self.beaconImageView.layer.mask = mask;
+        self.beaconImageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.backgroundImageView addSubview:self.beaconImageView];
         
         
