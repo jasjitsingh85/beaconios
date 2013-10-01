@@ -102,6 +102,10 @@
 		968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */; };
 		968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8E17F79CEB00D64441 /* JADatePicker.m */; };
 		9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */; };
+		9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */; };
+		9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */; };
+		9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */; };
+		9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */; };
 		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
 		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
@@ -124,10 +128,6 @@
 		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
 		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
 		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
-		96A9872617E64D4C007D77B8 /* invitedButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */; };
-		96A9872717E64D4C007D77B8 /* invitedButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */; };
-		96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */; };
-		96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */; };
 		96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */; };
 		96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872F17E68C44007D77B8 /* PhotoManager.m */; };
 		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
@@ -303,6 +303,10 @@
 		968CDA8E17F79CEB00D64441 /* JADatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADatePicker.m; sourceTree = "<group>"; };
 		9691D25D17F8BD0D0095BA80 /* JAPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPlaceholderTextView.h; sourceTree = "<group>"; };
 		9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAPlaceholderTextView.m; sourceTree = "<group>"; };
+		9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonNormal@2x.png"; sourceTree = "<group>"; };
+		9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonSelected@2x.png"; sourceTree = "<group>"; };
+		9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonNormal@2x.png"; sourceTree = "<group>"; };
+		9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonSelected@2x.png"; sourceTree = "<group>"; };
 		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -334,10 +338,6 @@
 		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
 		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconStatus.h; sourceTree = "<group>"; };
 		96A9872017E517FB007D77B8 /* BeaconStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconStatus.m; sourceTree = "<group>"; };
-		96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonNormal@2x.png"; sourceTree = "<group>"; };
-		96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonSelected@2x.png"; sourceTree = "<group>"; };
-		96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonNormal@2x.png"; sourceTree = "<group>"; };
-		96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonSelected@2x.png"; sourceTree = "<group>"; };
 		96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraLarge@2x.png"; sourceTree = "<group>"; };
 		96A9872E17E68C44007D77B8 /* PhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
 		96A9872F17E68C44007D77B8 /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
@@ -705,10 +705,10 @@
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */,
 				9647102D17DEEB5700878C19 /* plus@2x.png */,
-				96A9872217E64D4C007D77B8 /* invitedButtonNormal@2x.png */,
-				96A9872317E64D4C007D77B8 /* invitedButtonSelected@2x.png */,
-				96A9872417E64D4C007D77B8 /* chatButtonNormal@2x.png */,
-				96A9872517E64D4C007D77B8 /* chatButtonSelected@2x.png */,
+				9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */,
+				9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */,
+				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
+				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -828,7 +828,6 @@
 				96956448175852990081B349 /* LoginViewController.xib in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
-				96A9872717E64D4C007D77B8 /* invitedButtonSelected@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
@@ -837,14 +836,13 @@
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
 				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
+				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
 				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
-				96A9872917E64D4C007D77B8 /* chatButtonSelected@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
-				96A9872617E64D4C007D77B8 /* invitedButtonNormal@2x.png in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
@@ -853,6 +851,7 @@
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
 				1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */,
+				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
 				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 				1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */,
@@ -865,7 +864,6 @@
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
-				96A9872817E64D4C007D77B8 /* chatButtonNormal@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
@@ -879,9 +877,11 @@
 				9647103217DEFBC200878C19 /* bubbleRight@2x.png in Resources */,
 				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
+				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
 				96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */,
 				1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */,
+				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

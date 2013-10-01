@@ -78,7 +78,7 @@
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 226)];
-    self.descriptionView.backgroundColor = [UIColor whiteColor];
+    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
     self.descriptionView.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.descriptionView.layer.shadowOpacity = 1;
     self.descriptionView.layer.shadowRadius = 3.0;
