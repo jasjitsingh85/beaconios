@@ -37,6 +37,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *createBeaconButton;
 @property (strong, nonatomic) NSMutableDictionary *beaconAnnotationDictionary;
 @property (readonly, nonatomic) NSArray *beaconAnnotations;
+@property (strong, nonatomic) Beacon *highlightedBeacon;
 
 @end
 
@@ -74,7 +75,7 @@
 //        self.mapView.showsUserLocation = YES;
     }];
     
-    self.createBeaconButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.createBeaconButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     self.createBeaconButton.layer.shadowColor = [[UIColor blackColor] CGColor];
     self.createBeaconButton.layer.shadowOpacity = 0.5;
     self.createBeaconButton.layer.shadowRadius = 1.0;
@@ -198,7 +199,8 @@
     if (!self.showCreateBeaconCell) {
         cell.beacon = [self beaconForIndexPath:indexPath];
         [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
-        cell.backgroundImageView.image = [self backgroundImageForIndexPath:indexPath];
+        cell.backgroundImage = [self backgroundImageForIndexPath:indexPath];
+        cell.backgroundColor = [self colorForIndexPath:indexPath];
     }
     else {
         [cell configureEmptyBeacon];
@@ -293,6 +295,7 @@
 
 - (void)centerMapOnBeacon:(Beacon *)beacon animated:(BOOL)animated
 {
+    self.highlightedBeacon = beacon;
     //we want to center the map a little above the beacon. If we center on the beacon
     //the beacon collection view occludes the beacon annotation
     MKMapView *tmpMapView = [[MKMapView alloc] initWithFrame:self.mapView.frame];
@@ -341,6 +344,7 @@
             tapGesture.numberOfTapsRequired = 1;
             [customPinView addGestureRecognizer:tapGesture];
             customPinView.color = [self colorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
+            customPinView.active = [beaconAnnotation.beacon isEqual:self.highlightedBeacon];
             return customPinView;
         }
         pinView.annotation = beaconAnnotation;
@@ -438,16 +442,19 @@
 #pragma mark - UI
 - (UIColor *)colorForIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *colors = @[[[ThemeManager sharedTheme] blueColor], [[ThemeManager sharedTheme] pinkColor], [[ThemeManager sharedTheme] greenColor], [[ThemeManager sharedTheme] orangeColor], [[ThemeManager sharedTheme] orangeColor]];
+    id<Theme> theme = [ThemeManager sharedTheme];
+    NSArray *colors = @[[theme darkBlueColor], [theme darkPinkColor], [theme darkYellowColor], [theme darkGreenColor], [theme darkOrangeColor], [theme darkPurpleColor]];
     UIColor *color = colors[indexPath.row % colors.count];
     return color;
 }
 
 - (UIImage *)backgroundImageForIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *backgroundImageNames = @[@"beaconCellBackgroundBlue", @"beaconCellBackgroundPink", @"beaconCellBackgroundYellow", @"beaconCellBackgroundGreen", @"beaconCellBackgroundOrange", @"beaconCellBackgroundPurple"];
-    NSString *backgroundImageName = backgroundImageNames[indexPath.row % backgroundImageNames.count];
-    return [UIImage imageNamed:backgroundImageName];
+    id<Theme> theme = [ThemeManager sharedTheme];
+    static NSArray *backgroundImages = nil;
+    backgroundImages = @[[theme blueCellImage], [theme pinkCellImage], [theme yellowCellImage], [theme greenCellImage], [theme orangeCellImage], [theme purpleCellImage]];
+    UIImage *backgroundImage = backgroundImages[indexPath.row % backgroundImages.count];
+    return backgroundImage;
 }
 
 @end

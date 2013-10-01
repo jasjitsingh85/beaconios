@@ -10,17 +10,28 @@
 
 @protocol Theme <NSObject>
 
+- (UIColor *)lightGrayColor;
 - (UIColor *)cyanColor;
 - (UIColor *)orangeColor;
-- (UIColor *)lightGrayColor;
 - (UIColor *)blueColor;
-- (UIColor *)darkColor;
 - (UIColor *)greenColor;
 - (UIColor *)purpleColor;
 - (UIColor *)redColor;
 - (UIColor *)yellowColor;
 - (UIColor *)pinkColor;
+- (UIColor *)darkColor;
 - (UIColor *)darkBlueColor;
+- (UIColor *)darkGreenColor;
+- (UIColor *)darkYellowColor;
+- (UIColor *)darkPurpleColor;
+- (UIColor *)darkOrangeColor;
+- (UIColor *)darkPinkColor;
+- (UIImage *)blueCellImage;
+- (UIImage *)pinkCellImage;
+- (UIImage *)yellowCellImage;
+- (UIImage *)greenCellImage;
+- (UIImage *)orangeCellImage;
+- (UIImage *)purpleCellImage;
 - (NSString *)regularFontName;
 - (NSString *)boldFontName;
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;

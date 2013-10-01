@@ -48,8 +48,8 @@
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
-    NSInteger idx = round(proposedContentOffset.x/CELL_WIDTH);
-    return CGPointMake(idx*CELL_WIDTH, proposedContentOffset.y);
+    NSInteger idx = round(proposedContentOffset.x/(CELL_WIDTH + 2*self.minimumLineSpacing));
+    return CGPointMake(idx*(CELL_WIDTH + self.minimumLineSpacing), proposedContentOffset.y);
 }
 
 @end
