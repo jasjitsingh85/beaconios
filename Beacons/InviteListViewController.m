@@ -72,16 +72,18 @@
         UILabel *statusLabel = [[UILabel alloc] init];
         statusLabel.tag = TAG_STATUS_LABEL;
         CGRect statusLabelFrame;
-        statusLabelFrame.size = CGSizeMake(45, 20);
-        statusLabelFrame.origin.x = 255;
+        statusLabelFrame.size = CGSizeMake(55, 30);
+        statusLabelFrame.origin.x = 245;
         statusLabelFrame.origin.y = 0.5*(cell.contentView.frame.size.height - statusLabelFrame.size.height);
         statusLabel.frame = statusLabelFrame;
         statusLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-        statusLabel.font = [ThemeManager regularFontOfSize:10];
+        statusLabel.font = [ThemeManager regularFontOfSize:12];
         statusLabel.textAlignment = NSTextAlignmentCenter;
         statusLabel.textColor = [UIColor whiteColor];
         statusLabel.layer.cornerRadius = 2;
         [cell.contentView addSubview:statusLabel];
+        cell.textLabel.font = [ThemeManager regularFontOfSize:17];
+        cell.backgroundColor = [UIColor clearColor];
     }
     
     BeaconStatus *beaconStatus = self.beaconStatuses[indexPath.row];
@@ -95,14 +97,17 @@
     UILabel *statusLabel = (UILabel *)[cell viewWithTag:TAG_STATUS_LABEL];
     if (beaconStatus.beaconStatusOption == BeaconStatusOptionGoing) {
         statusLabel.text = @"Going";
+        statusLabel.font = [ThemeManager regularFontOfSize:12];
         statusLabel.backgroundColor = [UIColor colorWithRed:251/255.0 green:175/255.0 blue:92/255.0 alpha:1.0];
     }
     else if (beaconStatus.beaconStatusOption == BeaconStatusOptionHere) {
         statusLabel.text = @"Here";
+        statusLabel.font = [ThemeManager regularFontOfSize:12];
         statusLabel.backgroundColor = [UIColor colorWithRed:130/255.0 green:202/255.0 blue:157/255.0 alpha:1.0];
     }
     else if (beaconStatus.beaconStatusOption == BeaconStatusOptionInvited) {
         statusLabel.text = @"Invited";
+        statusLabel.font = [ThemeManager italicFontOfSize:12];
         statusLabel.backgroundColor = [UIColor colorWithRed:215/255.0 green:215/255.0 blue:215/255.0 alpha:1.0];
     }
     

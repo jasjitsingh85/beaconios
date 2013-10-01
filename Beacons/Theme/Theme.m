@@ -55,6 +55,12 @@
     return [UIFont fontWithName:regularFontName size:size];
 }
 
++ (UIFont *)italicFontOfSize:(CGFloat)size
+{
+    NSString *italicFontName = [[self sharedTheme] italicFontName];
+    return [UIFont fontWithName:italicFontName size:size];
+}
+
 + (UIFont *)boldFontOfSize:(CGFloat)size
 {
     NSString *boldFontName = [[self sharedTheme] boldFontName];

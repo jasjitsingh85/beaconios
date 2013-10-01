@@ -131,6 +131,11 @@
     return @"HelveticaNeue-Bold";
 }
 
+- (NSString *)italicFontName
+{
+    return @"HelveticaNeue-Italic";
+}
+
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
 {
     return [UIImage imageNamed:@"navBar"];

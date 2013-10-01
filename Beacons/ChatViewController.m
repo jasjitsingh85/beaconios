@@ -13,11 +13,12 @@
 #import "User.h"
 #import "Theme.h"
 #import "AppDelegate.h"
+#import "JAPlaceholderTextView.h"
 
 @interface ChatViewController ()
 
 @property (strong, nonatomic) UIView *textViewContainer;
-@property (strong, nonatomic) UITextView *textView;
+@property (strong, nonatomic) JAPlaceholderTextView *textView;
 
 @end
 
@@ -56,10 +57,13 @@
     [self.textViewContainer addSubview:self.cameraButton];
     
     CGRect textViewFrame;
-    textViewFrame.size = CGSizeMake(self.view.frame.size.width - cameraButtonFrame.size.width - 10, 28);
+    textViewFrame.size = CGSizeMake(self.view.frame.size.width - cameraButtonFrame.size.width - 10, 32);
     textViewFrame.origin.x = cameraButtonFrame.size.width;
     textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
-    self.textView = [[UITextView alloc] initWithFrame:textViewFrame];
+    self.textView = [[JAPlaceholderTextView alloc] initWithFrame:textViewFrame];
+    self.textView.placeholder = @"send a ground message";
+    self.textView.placeholderColor = [UIColor lightGrayColor];
+    self.textView.font = [ThemeManager regularFontOfSize:15];
     self.textView.layer.cornerRadius = 4;
     self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.textView.layer.borderWidth = 0.5;
@@ -71,7 +75,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view insertSubview:self.tableView belowSubview:self.textViewContainer];
-    self.tableView.backgroundColor = [[ThemeManager sharedTheme] darkColor];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
     self.tableView.contentInset = contentInsets;

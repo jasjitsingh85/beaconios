@@ -33,6 +33,7 @@
 - (UIImage *)orangeCellImage;
 - (UIImage *)purpleCellImage;
 - (NSString *)regularFontName;
+- (NSString *)italicFontName;
 - (NSString *)boldFontName;
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
 - (NSDictionary *)navigationBarTitleAndTextAttributes;
@@ -47,5 +48,6 @@
 + (void)customizeLabel:(UILabel *)label;
 + (UIFont *)regularFontOfSize:(CGFloat)size;
 + (UIFont *)boldFontOfSize:(CGFloat)size;
++ (UIFont *)italicFontOfSize:(CGFloat)size;
 
 @end

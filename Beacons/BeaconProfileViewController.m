@@ -70,19 +70,21 @@
     self.beaconChatViewController.view.frame = self.view.bounds;
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.beaconChatViewController.cameraButton addTarget:self action:@selector(chatCameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.beaconChatViewController.tableView.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
     self.inviteListViewController.view.alpha = 0;
     self.inviteListViewController.view.frame = self.view.bounds;
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.inviteListViewController.view.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 226)];
     self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
-    self.descriptionView.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.descriptionView.layer.shadowOpacity = 1;
-    self.descriptionView.layer.shadowRadius = 3.0;
-    self.descriptionView.layer.shadowOffset = CGSizeMake(0, 2);
+    self.descriptionView.layer.shadowColor = [[UIColor whiteColor] CGColor];
+    self.descriptionView.layer.shadowOpacity = 0.7;
+    self.descriptionView.layer.shadowRadius = 10.0;
+    self.descriptionView.layer.shadowOffset = CGSizeMake(0, 10);
     self.descriptionView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.descriptionView.bounds cornerRadius:self.descriptionView.layer.cornerRadius].CGPath;
     [self.view addSubview:self.descriptionView];
     self.fullDescriptionViewShown = YES;
@@ -125,14 +127,14 @@
 //    horizontalDivider.backgroundColor = [UIColor darkGrayColor];
 //    [self.descriptionView addSubview:horizontalDivider];
 //    
-//    UIView *verticalDivider = [[UIView alloc] init];
-//    CGRect verticalDividerFrame;
-//    verticalDividerFrame.size = CGSizeMake(1, 45);
-//    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
-//    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
-//    verticalDivider.frame = verticalDividerFrame;
-//    verticalDivider.backgroundColor = [UIColor darkGrayColor];
-//    [self.descriptionView addSubview:verticalDivider];
+    UIView *verticalDivider = [[UIView alloc] init];
+    CGRect verticalDividerFrame;
+    verticalDividerFrame.size = CGSizeMake(1, 45);
+    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
+    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
+    verticalDivider.frame = verticalDividerFrame;
+    verticalDivider.backgroundColor = [UIColor whiteColor];
+    [self.descriptionView addSubview:verticalDivider];
     
     
     self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
@@ -153,12 +155,12 @@
     
     self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 124, 180, 11)];
     self.locationLabel.font = [ThemeManager regularFontOfSize:11];
-    self.locationLabel.textColor = [UIColor blackColor];
+    self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
     
     self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 148, 180, 11)];
     self.invitedLabel.font = [ThemeManager regularFontOfSize:11];
-    self.invitedLabel.textColor = [UIColor blackColor];
+    self.invitedLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.invitedLabel];
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -260,7 +262,7 @@
 
 - (void)updateChatDesiredInsets
 {
-    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame) + self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame) + self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height + 5;
     self.beaconChatViewController.desiredEdgeInsets = UIEdgeInsetsMake(topInset, 0, 0, 0);
     UIEdgeInsets insets = self.beaconChatViewController.tableView.contentInset;
     insets.top = self.beaconChatViewController.desiredEdgeInsets.top;
@@ -273,7 +275,6 @@
     UIEdgeInsets insets = UIEdgeInsetsZero;
     insets.top = topInset;
     self.inviteListViewController.tableView.contentInset = insets;
-    self.inviteListViewController.view.backgroundColor = [UIColor brownColor];
 }
 
 - (void)showPartialDescriptionViewAnimated:(BOOL)animated
