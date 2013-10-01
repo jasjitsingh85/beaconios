@@ -83,7 +83,7 @@
     self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
     self.descriptionView.layer.shadowColor = [[UIColor whiteColor] CGColor];
     self.descriptionView.layer.shadowOpacity = 0.7;
-    self.descriptionView.layer.shadowRadius = 10.0;
+    self.descriptionView.layer.shadowRadius = 5.0;
     self.descriptionView.layer.shadowOffset = CGSizeMake(0, 10);
     self.descriptionView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.descriptionView.bounds cornerRadius:self.descriptionView.layer.cornerRadius].CGPath;
     [self.view addSubview:self.descriptionView];
