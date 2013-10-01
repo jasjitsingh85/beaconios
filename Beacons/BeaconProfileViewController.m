@@ -286,6 +286,7 @@
         frame.origin.y = -CGRectGetMinY(self.chatTabButton.frame);
         self.descriptionView.frame = frame;
         [self updateChatDesiredInsets];
+        [self updateInviteListInsets];
     }];
 }
 
@@ -298,6 +299,7 @@
         frame.origin.y = 0;
         self.descriptionView.frame = frame;
         [self updateChatDesiredInsets];
+        [self updateInviteListInsets];
     }];
 }
 
@@ -334,10 +336,16 @@
 
 - (void)invitedButtonTouched:(id)sender
 {
+    BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
     self.chatTabButton.selected = NO;
     self.inviteTabButton.selected = YES;
-    [self showFullDescriptionViewAnimated:YES];
     self.inviteListViewController.view.alpha = 1.0;
+    if (self.fullDescriptionViewShown && inviteButtonWasSelected) {
+        [self showPartialDescriptionViewAnimated:YES];
+    }
+    else {
+        [self showFullDescriptionViewAnimated:YES];
+    }
     [self.beaconChatViewController dismissKeyboard];
 }
 
