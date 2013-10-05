@@ -29,6 +29,8 @@
     id <Theme> theme = [self sharedTheme];
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    [navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
+    
     navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 
