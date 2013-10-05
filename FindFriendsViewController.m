@@ -22,7 +22,7 @@ typedef enum {
     FindFriendSectionContacts,
 } FindFriendSection;
 
-@interface FindFriendsViewController ()
+@interface FindFriendsViewController () <UISearchBarDelegate>
 
 @property (strong, nonatomic) NSArray *recentsList;
 @property (strong, nonatomic) NSArray *suggestedList;
@@ -32,6 +32,10 @@ typedef enum {
 @property (strong, nonatomic) NSMutableDictionary *inactiveContactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *tableViewHeaderPool;
 @property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
+@property (strong, nonatomic) UISearchBar *searchBar;
+@property (strong, nonatomic) UIButton *inviteButton;
+@property (assign, nonatomic) BOOL inviteButtonShown;
+@property (assign, nonatomic) BOOL inSearchMode;
 
 @end
 
@@ -53,21 +57,47 @@ typedef enum {
     return _inactiveContactDictionary;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:self.tableView];
+    self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     
+    UIView *searchBarBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    searchBarBackgroundView.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    [self.view addSubview:searchBarBackgroundView];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:searchBarBackgroundView.bounds];
+    self.searchBar.delegate = self;
+//    self.searchBar.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    self.searchBar.barTintColor = [UIColor clearColor];
+//    self.searchBar.tintColor = [UIColor whiteColor];
+    self.searchBar.translucent = NO;
+    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    [searchBarBackgroundView addSubview:self.searchBar];
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     
+    self.inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+    self.inviteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.inviteButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];
+    self.inviteButton.titleLabel.font = [ThemeManager lightFontOfSize:16];
+    [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.inviteButton setImage:[UIImage imageNamed:@"rightArrow"] forState:UIControlStateNormal];
+    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0, 270, 0, 0);
+    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.inviteButton];
+    self.inviteButtonShown = YES;
+    [self hideInviteButton:NO];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -121,13 +151,77 @@ typedef enum {
     [self.tableView reloadData];
 }
 
+- (void)reloadDataWithSearchText:(NSString *)searchText
+{
+    NSArray *allContacts = self.contactDictionary.allValues;
+    //separate users and nonusers
+    self.recentsList = @[];
+    self.suggestedList = @[];
+    NSPredicate *nonsuggestedPredicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchText];
+    self.nonSuggestedList = [allContacts filteredArrayUsingPredicate:nonsuggestedPredicate];
+    
+    //sort both lists by name
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
+    self.recentsList = [self.recentsList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    [self.tableView reloadData];
+}
+
+- (void)showInviteButton:(BOOL)animated
+{
+    if (self.inviteButtonShown) {
+        return;
+    }
+    self.inviteButtonShown = YES;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.inviteButton.transform = CGAffineTransformIdentity;
+        UIEdgeInsets insets = self.tableView.contentInset;
+        insets.bottom = self.inviteButton.frame.size.height;
+        self.tableView.contentInset = insets;
+    }];
+}
+
+- (void)hideInviteButton:(BOOL)animated
+{
+    if (!self.inviteButtonShown) {
+        return;
+    }
+    self.inviteButtonShown = NO;
+    self.inviteButton.transform = CGAffineTransformIdentity;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.inviteButton.transform = CGAffineTransformMakeTranslation(0, self.inviteButton.frame.size.height);
+        UIEdgeInsets insets = self.tableView.contentInset;
+        insets.bottom = 0;
+        self.tableView.contentInset = insets;
+    }];
+}
+
+- (void)updateInviteButtonText
+{
+    NSString *inviteButtonText = [NSString stringWithFormat:@"+%d friends", self.selectedContactDictionary.count];
+    [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
+    if (self.selectedContactDictionary.count) {
+        self.navigationItem.rightBarButtonItem.title = @"Invite";
+    }
+    else {
+        self.navigationItem.rightBarButtonItem.title = @"Skip";
+    }
+}
+
 #pragma mark - Table view data source
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    CGFloat height = self.inSearchMode ? 0 : 30;
+    return height;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if (self.inSearchMode) {
+        return nil;
+    }
     if (!self.tableViewHeaderPool) {
         self.tableViewHeaderPool = [NSMutableDictionary new];
     }
@@ -137,26 +231,30 @@ typedef enum {
     }
     CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
-    view.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:0.95];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, height)];
+    view.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 83, height)];
     title.backgroundColor = [UIColor clearColor];
     title.font = [ThemeManager boldFontOfSize:14.0];
     title.textColor = [UIColor whiteColor];
     [view addSubview:title];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
+    button.layer.borderWidth = 1;
     CGRect buttonFrame = CGRectZero;
-    buttonFrame.size = CGSizeMake(80, 3/4.0*height);
+    buttonFrame.size = CGSizeMake(95, 3/4.0*height);
     buttonFrame.origin.x = self.tableView.frame.size.width - buttonFrame.size.width - 30;
     buttonFrame.origin.y = 0.5*(height - buttonFrame.size.height);
     button.frame = buttonFrame;
     [view addSubview:button];
-    button.titleLabel.font = [ThemeManager boldFontOfSize:12.0];
+    button.titleLabel.font = [ThemeManager lightFontOfSize:12.0];
     [button setTitle:@"Select All" forState:UIControlStateNormal];
     [button setTitle:@"Unselect All" forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
     [button addTarget:self action:@selector(selectAllButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    button.layer.cornerRadius = 10;
-    [button setBackgroundColor:[UIColor darkGrayColor]];
+    button.layer.cornerRadius = 4;
+    button.backgroundColor = [UIColor clearColor];
     [self.tableViewHeaderPool setValue:view forKey:key];
     [self setSelectAllButton:button forSection:section];
     return view;
@@ -198,15 +296,38 @@ typedef enum {
     }
     for (Contact *contact in contactList) {
         if (selected) {
-            [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+            [self selectContact:contact];
         }
         else {
-            [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
+            [self unselectContact:contact];
         }
     }
     UIButton *selectAllButton = [self.selectAllButtonPool valueForKey:@(section).stringValue];
     selectAllButton.selected = selected;
+    selectAllButton.backgroundColor = selectAllButton.selected ? [UIColor whiteColor] : [UIColor clearColor];
     [self.tableView reloadData];
+}
+
+- (void)selectContact:(Contact *)contact
+{
+    BOOL contactInactive = [self.inactiveContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
+    if (contactInactive) {
+        return;
+    }
+    [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+    [self updateInviteButtonText];
+    if (self.selectedContactDictionary.count) {
+        [self showInviteButton:YES];
+    }
+}
+
+- (void)unselectContact:(Contact *)contact
+{
+    [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
+    [self updateInviteButtonText];
+    if (!self.selectedContactDictionary.count) {
+        [self hideInviteButton:YES];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -245,9 +366,6 @@ typedef enum {
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-//    if (self.isDisplayingKeyboard) {
-//        return nil;
-//    }
     return @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z"];
 }
 
@@ -287,22 +405,24 @@ typedef enum {
         UILabel *nameLabel = [[UILabel alloc] init];
         CGRect frame = CGRectZero;
         frame.size = CGSizeMake(160, 15);
-        frame.origin.x = 58;
+        frame.origin.x = 60;
         frame.origin.y = 0.5*(cell.contentView.frame.size.height - frame.size.height);
         nameLabel.frame = frame;
         nameLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.textColor = [UIColor blackColor];
-        nameLabel.font = [ThemeManager boldFontOfSize:14];
+        nameLabel.font = [ThemeManager regularFontOfSize:14];
         nameLabel.adjustsFontSizeToFitWidth = YES;
         nameLabel.tag = TAG_NAME_LABEL;
         [cell.contentView addSubview:nameLabel];
         
         UIImageView *addFriendImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addFriendNormal"]];
         frame = addFriendImageView.frame;
-        frame.origin.x = 8;
+        frame.size = CGSizeMake(30, 30);
+        frame.origin.x = 15;
         frame.origin.y = 0.5*(cell.contentView.frame.size.height - frame.size.height);
         addFriendImageView.frame = frame;
+        addFriendImageView.contentMode = UIViewContentModeCenter;
         addFriendImageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         addFriendImageView.tag = TAG_CHECK_IMAGE;
         [cell.contentView addSubview:addFriendImageView];
@@ -326,11 +446,15 @@ typedef enum {
     BOOL contactInactive = [self.inactiveContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
+    CGFloat scale = contactSelected ? 1.35 : 1.0;
+    addFriendImageView.transform = CGAffineTransformMakeScale(scale, scale);
     if (contactInactive) {
         nameLabel.textColor = [UIColor lightGrayColor];
+        addFriendImageView.image = [UIImage imageNamed:@"addFriendInactive"];
+        addFriendImageView.transform = CGAffineTransformIdentity;
     }
     else {
-        nameLabel.textColor = contact.isUser ? [[ThemeManager sharedTheme] orangeColor] : [UIColor blackColor];
+        nameLabel.textColor = [UIColor blackColor];
     }
     return cell;
 }
@@ -352,33 +476,93 @@ typedef enum {
     
     BOOL inactiveContact = [self.inactiveContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
     if (inactiveContact) {
+        NSString *message = [NSString stringWithFormat:@"%@ has already been invited", contact.fullName];
+        [[[UIAlertView alloc] initWithTitle:@"Don't spam" message:message delegate:nil cancelButtonTitle:@"I'm Sorry" otherButtonTitles:nil] show];
         return;
     }
     
     BOOL currentlySelected = [self.selectedContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
     if (currentlySelected) {
-        [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
+        [self unselectContact:contact];
     }
     else {
-        [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
+        [self selectContact:contact];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    if (self.selectedContactDictionary.count) {
-        self.navigationItem.rightBarButtonItem.title = @"Invite";
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self animateSelectingContactInCell:cell selected:!currentlySelected completion:^{
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        if (self.inSearchMode) {
+            [self exitSearchMode];
+        }
+    }];
+}
+
+- (void)animateSelectingContactInCell:(UITableViewCell *)cell selected:(BOOL)selected completion:(void(^) ())completion
+{
+    UIImage *image = selected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
+    UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
+    addFriendImageView.image = image;
+    CGFloat scale = selected ? 1.35 : 1.0;
+    CGFloat damping = selected ? 0.25 : 0.5;
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
+        addFriendImageView.transform = CGAffineTransformMakeScale(scale, scale);
+        [cell layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if (searchText.length) {
+        [self reloadDataWithSearchText:searchText];
     }
     else {
-        self.navigationItem.rightBarButtonItem.title = @"Skip";
+        [self reloadData];
     }
 }
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    
+}
+
+- (void)exitSearchMode
+{
+    self.searchBar.text = nil;
+    [self.searchBar endEditing:YES];
+    [self reloadData];
+}
+
+
 
 #pragma mark - buttons
 - (void)doneButtonTouched:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
-        NSMutableSet *contactSet = [NSMutableSet setWithArray:self.selectedContactDictionary.allValues];
-        [contactSet minusSet:[NSSet setWithArray:self.inactiveContactDictionary.allValues]];
-        [self.delegate findFriendViewController:self didPickContacts:contactSet.allObjects];
+        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues];
     }
+}
+
+- (void)inviteButtonTouched:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:)]) {
+        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues];
+    }
+}
+
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    self.inSearchMode = YES;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    self.inSearchMode = NO;
 }
 
 #pragma mark - Networking

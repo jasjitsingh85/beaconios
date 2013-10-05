@@ -123,6 +123,11 @@
 
 - (NSString *)regularFontName
 {
+    return @"HelveticaNeue";
+}
+
+- (NSString *)lightFontName
+{
     return @"HelveticaNeue-Light";
 }
 

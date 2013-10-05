@@ -57,6 +57,12 @@
     return [UIFont fontWithName:regularFontName size:size];
 }
 
++ (UIFont *)lightFontOfSize:(CGFloat)size
+{
+    NSString *lightFontName = [[self sharedTheme] lightFontName];
+    return [UIFont fontWithName:lightFontName size:size];
+}
+
 + (UIFont *)italicFontOfSize:(CGFloat)size
 {
     NSString *italicFontName = [[self sharedTheme] italicFontName];

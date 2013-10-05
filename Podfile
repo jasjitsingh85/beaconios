@@ -15,3 +15,5 @@ pod 'Facebook-iOS-SDK', '~> 3.5.0'
 pod 'CrittercismSDK'
 pod 'JBKenBurnsView'
 pod 'GCPlaceholderTextView'
+
+pod 'SparkInspector'
