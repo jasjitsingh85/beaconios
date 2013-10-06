@@ -84,7 +84,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)postBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSArray *invites = [self paramArrayForContacts:beacon.invited];
+    NSArray *invites = [self paramArrayForContacts:[beacon.invited valueForKey:@"contact"]];
     NSMutableDictionary *parameters = [NSMutableDictionary new];
     [parameters setValue:beacon.beaconDescription forKey:@"description"];
     [parameters setValue:@(beacon.time.timeIntervalSince1970) forKey:@"time"];

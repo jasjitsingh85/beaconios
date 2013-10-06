@@ -21,6 +21,9 @@
 #import "BeaconManager.h"
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
+#import "BeaconProfileViewController.h"
+#import "Contact.h"
+#import "BeaconStatus.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -276,17 +279,27 @@
     Beacon *beacon = [[Beacon alloc] init];
     beacon.coordinate = self.beaconCoordinate;
     beacon.time = [self dateForBeacon];
-    beacon.invited = contacts;
+    NSMutableArray *invited = [[NSMutableArray alloc] init];
+    for (Contact *contact in contacts) {
+        BeaconStatus *status = [[BeaconStatus alloc] init];
+        status.contact = contact;
+        status.beaconStatusOption = BeaconStatusOptionInvited;
+        [invited addObject:status];
+    }
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    beacon.creator = appDelegate.loggedInUser;
+    beacon.invited = [NSArray arrayWithArray:invited];
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? nil : self.locationLabel.text;
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
+        BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
+        beaconProfileViewController.beacon = beacon;
+        [appDelegate.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
     } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
