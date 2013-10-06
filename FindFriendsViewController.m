@@ -484,7 +484,7 @@ typedef enum {
     BOOL inactiveContact = [self.inactiveContactDictionary.allKeys containsObject:contact.normalizedPhoneNumber];
     if (inactiveContact) {
         NSString *message = [NSString stringWithFormat:@"%@ has already been invited", contact.fullName];
-        [[[UIAlertView alloc] initWithTitle:@"Don't spam" message:message delegate:nil cancelButtonTitle:@"I'm Sorry" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Friends don't spam friends" message:message delegate:nil cancelButtonTitle:@"I'm Sorry" otherButtonTitles:nil] show];
         return;
     }
     
