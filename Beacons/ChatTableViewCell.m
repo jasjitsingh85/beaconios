@@ -65,16 +65,14 @@
         self.chatImageView.hidden = YES;
         
         self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(7, 0, 46, 46)];
-        self.avatarImageView.layer.borderWidth = 2;
-        self.avatarImageView.layer.borderColor = [UIColor greenColor].CGColor;
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2.0;
         self.avatarImageView.clipsToBounds = YES;
+        self.avatarImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.avatarImageView];
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 12)];
         self.nameLabel.textAlignment = NSTextAlignmentCenter;
         self.nameLabel.adjustsFontSizeToFitWidth = YES;
-        self.nameLabel.textColor = [UIColor whiteColor];
+        self.nameLabel.textColor = [UIColor blackColor];
         self.nameLabel.font = [ThemeManager regularFontOfSize:10];
         [self addSubview:self.nameLabel];
         
