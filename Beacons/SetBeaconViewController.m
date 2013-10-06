@@ -183,7 +183,7 @@
 - (void)setBeaconButtonTouched:(id)sender
 {
     if (!self.descriptionTextView.text || !self.descriptionTextView.text.length) {
-        [[[UIAlertView alloc] initWithTitle:@"Baby, you're going to fast!" message:@"Don't forget to set a Hotspot description" delegate:nil cancelButtonTitle:@"I'll slow down" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Baby, you're going too fast!" message:@"Don't forget to set a Hotspot description" delegate:nil cancelButtonTitle:@"I'll slow down" otherButtonTitles:nil] show];
         return;
     }
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
