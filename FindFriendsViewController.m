@@ -199,16 +199,23 @@ typedef enum {
     }];
 }
 
-- (void)updateInviteButtonText
+- (void)updateInviteButtonText:(Contact *)lastSelectedContact
 {
-    NSString *inviteButtonText = [NSString stringWithFormat:@"+%d friends", self.selectedContactDictionary.count];
-    [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
+    NSString *inviteButtonText = @"";
     if (self.selectedContactDictionary.count) {
-        self.navigationItem.rightBarButtonItem.title = @"Invite";
+        self.navigationItem.rightBarButtonItem.title = @"";
+        Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
+        if (self.selectedContactDictionary.count == 1) {
+            inviteButtonText = [NSString stringWithFormat:@"invite %@", contact.firstName];
+        }
+        else {
+            inviteButtonText = [NSString stringWithFormat:@"%@+%d", contact.firstName, self.selectedContactDictionary.count - 1];
+        }
     }
     else {
         self.navigationItem.rightBarButtonItem.title = @"Skip";
     }
+    [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
 }
 
 #pragma mark - Table view data source
@@ -315,7 +322,7 @@ typedef enum {
         return;
     }
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
-    [self updateInviteButtonText];
+    [self updateInviteButtonText:contact];
     if (self.selectedContactDictionary.count) {
         [self showInviteButton:YES];
     }
@@ -324,7 +331,7 @@ typedef enum {
 - (void)unselectContact:(Contact *)contact
 {
     [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
-    [self updateInviteButtonText];
+    [self updateInviteButtonText:nil];
     if (!self.selectedContactDictionary.count) {
         [self hideInviteButton:YES];
     }
