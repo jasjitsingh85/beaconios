@@ -17,9 +17,6 @@
 
 @interface ChatViewController ()
 
-@property (strong, nonatomic) UIView *textViewContainer;
-@property (strong, nonatomic) JAPlaceholderTextView *textView;
-
 @end
 
 @implementation ChatViewController
@@ -44,8 +41,6 @@
     textViewContainerFrame.size = CGSizeMake(self.view.frame.size.width, 44);
     textViewContainerFrame.origin = CGPointMake(0, self.view.frame.size.height - textViewContainerFrame.size.height);
     self.textViewContainer = [[UIView alloc] initWithFrame:textViewContainerFrame];
-    self.textViewContainer.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1.0];
-    self.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.textViewContainer];
     
     self.cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,12 +56,11 @@
     textViewFrame.origin.x = cameraButtonFrame.size.width;
     textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
     self.textView = [[JAPlaceholderTextView alloc] initWithFrame:textViewFrame];
-    self.textView.placeholder = @"send a ground message";
-    self.textView.placeholderColor = [UIColor lightGrayColor];
-    self.textView.font = [ThemeManager regularFontOfSize:15];
+    self.textView.placeholder = @"send a group message";
+    self.textView.placeholderColor = [UIColor darkGrayColor];
+    self.textView.font = [ThemeManager lightFontOfSize:15];
     self.textView.layer.cornerRadius = 4;
-    self.textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.textView.layer.borderWidth = 0.5;
+    self.textView.backgroundColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
     self.textView.delegate = self;
     [self.textViewContainer addSubview:self.textView];
     

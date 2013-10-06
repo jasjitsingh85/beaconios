@@ -71,6 +71,12 @@
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.beaconChatViewController.cameraButton addTarget:self action:@selector(chatCameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.beaconChatViewController.tableView.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
+    self.beaconChatViewController.textViewContainer.backgroundColor = [UIColor clearColor];
+    self.beaconChatViewController.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.beaconChatViewController.textViewContainer.layer.shadowColor = [[UIColor whiteColor] CGColor];
+    self.beaconChatViewController.textViewContainer.layer.shadowOpacity = 1;
+    self.beaconChatViewController.textViewContainer.layer.shadowRadius = 5.0;
+    self.beaconChatViewController.textViewContainer.layer.shadowOffset = CGSizeMake(0, 2);
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];

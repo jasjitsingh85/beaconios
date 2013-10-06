@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class ChatViewController, ChatMessage;
+@class ChatViewController, ChatMessage, JAPlaceholderTextView;
 @protocol ChatViewControllerDelegate <NSObject>
 
 - (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity;
@@ -20,6 +20,8 @@
 
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
 
+@property (strong, nonatomic) UIView *textViewContainer;
+@property (strong, nonatomic) JAPlaceholderTextView *textView;
 @property (strong, nonatomic) UIButton *cameraButton;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSArray *messages;
