@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NSDate+FormattedDate.h"
+#import "UIImage+Resize.h"
 #import "BeaconChatViewController.h"
 #import "InviteListViewController.h"
 #import "Beacon.h"
@@ -397,9 +398,17 @@
     
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
-            [self updateImageViewWithImage:image];
-            [self.beaconChatViewController createChatMessageWithImage:image];
-            [[APIClient sharedClient] postImage:image forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            UIImage *scaledImage;
+            CGFloat maxDimension = 720;
+            if (image.size.width >= image.size.height) {
+                scaledImage = [image scaledToSize:CGSizeMake(maxDimension, maxDimension*image.size.height/image.size.width)];
+            }
+            else {
+                scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
+            }
+            [self updateImageViewWithImage:scaledImage];
+            [self.beaconChatViewController createChatMessageWithImage:scaledImage];
+            [[APIClient sharedClient] postImage:scaledImage forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 

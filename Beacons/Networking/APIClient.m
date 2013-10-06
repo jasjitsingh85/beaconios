@@ -174,15 +174,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)postImage:(UIImage *)image forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    UIImage *scaledImage;
-    CGFloat maxDimension = 720;
-    if (image.size.width >= image.size.height) {
-        scaledImage = [image scaledToSize:CGSizeMake(maxDimension, maxDimension*image.size.height/image.size.width)];
-    }
-    else {
-        scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
-    }
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.7);
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
     NSDictionary *parameters = @{@"beacon" : beaconID};
     NSString *imageName = beaconID.stringValue;
     NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:@"image/" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

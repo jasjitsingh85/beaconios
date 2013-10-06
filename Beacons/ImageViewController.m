@@ -21,8 +21,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.imageView.clipsToBounds = YES;
+    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:self.imageView];
 }
+
 
 - (void)setImage:(UIImage *)image
 {
