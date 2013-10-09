@@ -146,6 +146,20 @@
 		96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDE1805066700D62462 /* menuSettings@2x.png */; };
 		96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDF1805066700D62462 /* menuInvite@2x.png */; };
 		96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE01805066700D62462 /* menuHome@2x.png */; };
+		96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */; };
+		96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE61805107500D62462 /* chatBubbleYellowRight@2x.png */; };
+		96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE71805107500D62462 /* chatBubbleBlueRight@2x.png */; };
+		96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE81805107500D62462 /* chatBubblePinkRight@2x.png */; };
+		96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE91805107500D62462 /* chatBubblePurpleRight@2x.png */; };
+		96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCEA1805107500D62462 /* chatBubbleGreenRight@2x.png */; };
+		96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCEB1805107500D62462 /* chatBubbleRedRight@2x.png */; };
+		96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCEC1805107500D62462 /* chatBubbleRedLeft@2x.png */; };
+		96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCED1805107500D62462 /* chatBubbleGreenLeft@2x.png */; };
+		96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCEE1805107500D62462 /* chatBubblePurpleLeft@2x.png */; };
+		96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCEF1805107500D62462 /* chatBubblePinkLeft@2x.png */; };
+		96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */; };
+		96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */; };
+		96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
@@ -366,6 +380,20 @@
 		96CBCCDE1805066700D62462 /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		96CBCCDF1805066700D62462 /* menuInvite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuInvite@2x.png"; sourceTree = "<group>"; };
 		96CBCCE01805066700D62462 /* menuHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuHome@2x.png"; sourceTree = "<group>"; };
+		96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCE61805107500D62462 /* chatBubbleYellowRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleYellowRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCE71805107500D62462 /* chatBubbleBlueRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleBlueRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCE81805107500D62462 /* chatBubblePinkRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubblePinkRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCE91805107500D62462 /* chatBubblePurpleRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubblePurpleRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCEA1805107500D62462 /* chatBubbleGreenRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleGreenRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCEB1805107500D62462 /* chatBubbleRedRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleRedRight@2x.png"; sourceTree = "<group>"; };
+		96CBCCEC1805107500D62462 /* chatBubbleRedLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleRedLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCED1805107500D62462 /* chatBubbleGreenLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleGreenLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCEE1805107500D62462 /* chatBubblePurpleLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubblePurpleLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCEF1805107500D62462 /* chatBubblePinkLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubblePinkLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleBlueLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleYellowLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeLeft@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -671,6 +699,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96CBCCE41805106A00D62462 /* Chat Bubbles */,
 				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
 				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
@@ -738,6 +767,27 @@
 				96C87C89175AB97F006EA3A3 /* Theme.m */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		96CBCCE41805106A00D62462 /* Chat Bubbles */ = {
+			isa = PBXGroup;
+			children = (
+				96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */,
+				96CBCCE61805107500D62462 /* chatBubbleYellowRight@2x.png */,
+				96CBCCE71805107500D62462 /* chatBubbleBlueRight@2x.png */,
+				96CBCCE81805107500D62462 /* chatBubblePinkRight@2x.png */,
+				96CBCCE91805107500D62462 /* chatBubblePurpleRight@2x.png */,
+				96CBCCEA1805107500D62462 /* chatBubbleGreenRight@2x.png */,
+				96CBCCEB1805107500D62462 /* chatBubbleRedRight@2x.png */,
+				96CBCCEC1805107500D62462 /* chatBubbleRedLeft@2x.png */,
+				96CBCCED1805107500D62462 /* chatBubbleGreenLeft@2x.png */,
+				96CBCCEE1805107500D62462 /* chatBubblePurpleLeft@2x.png */,
+				96CBCCEF1805107500D62462 /* chatBubblePinkLeft@2x.png */,
+				96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */,
+				96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */,
+				96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */,
+			);
+			name = "Chat Bubbles";
 			sourceTree = "<group>";
 		};
 		96F14C2017D84AD40093C976 /* Chat */ = {
@@ -840,18 +890,22 @@
 				969D648817E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png in Resources */,
 				96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
+				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				969D648B17E95F9300F5AB36 /* beaconCellBackgroundPurple@2x.png in Resources */,
 				96956448175852990081B349 /* LoginViewController.xib in Resources */,
+				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */,
+				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 				96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */,
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
+				96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
 				1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
@@ -865,6 +919,7 @@
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */,
+				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
@@ -872,6 +927,9 @@
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
 				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
+				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
+				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
+				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 				1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */,
 				96A9871917E4FB40007D77B8 /* beaconImageTest@2x.png in Resources */,
@@ -882,9 +940,11 @@
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
+				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
+				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,
@@ -894,12 +954,16 @@
 				969D648D17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png in Resources */,
 				9647103217DEFBC200878C19 /* bubbleRight@2x.png in Resources */,
 				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
+				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
 				96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */,
 				1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */,
+				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
+				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
+				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
