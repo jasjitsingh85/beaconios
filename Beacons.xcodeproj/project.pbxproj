@@ -160,6 +160,7 @@
 		96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */; };
 		96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */; };
 		96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */; };
+		96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD01180528F700D62462 /* directionsArrow@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
@@ -394,6 +395,7 @@
 		96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleBlueLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleYellowLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeLeft@2x.png"; sourceTree = "<group>"; };
+		96CBCD01180528F700D62462 /* directionsArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsArrow@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -704,6 +706,7 @@
 				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
 				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
 				969D648C17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png */,
+				96CBCD01180528F700D62462 /* directionsArrow@2x.png */,
 				969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */,
 				969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */,
 				969D648417E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png */,
@@ -929,6 +932,7 @@
 				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
+				96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */,
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 				1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */,

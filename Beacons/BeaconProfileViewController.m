@@ -25,6 +25,7 @@
 #import "ChatMessage.h"
 #import "ImageViewController.h"
 #import "KenBurnsView.h"
+#import "Utilities.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate>
 
@@ -41,6 +42,7 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
+@property (strong, nonatomic) UIButton *directionsButton;
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @end
@@ -130,10 +132,6 @@
     [self.inviteTabButton addTarget:self action:@selector(invitedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteTabButton];
     
-//    UIView *horizontalDivider = [[UIView alloc] initWithFrame:CGRectMake(0, self.descriptionView.frame.size.height - 1, self.descriptionView.frame.size.width, 1)];
-//    horizontalDivider.backgroundColor = [UIColor darkGrayColor];
-//    [self.descriptionView addSubview:horizontalDivider];
-//    
     UIView *verticalDivider = [[UIView alloc] init];
     CGRect verticalDividerFrame;
     verticalDividerFrame.size = CGSizeMake(1, 45);
@@ -164,6 +162,10 @@
     self.locationLabel.font = [ThemeManager regularFontOfSize:13];
     self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
+    UITapGestureRecognizer *locationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon)];
+    locationTap.numberOfTapsRequired = 1;
+    [self.locationLabel addGestureRecognizer:locationTap];
+    self.locationLabel.userInteractionEnabled = YES;
     
     self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 144, 180, 14)];
     self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
@@ -179,6 +181,15 @@
     self.joinButton.layer.cornerRadius = 4;
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
+    
+    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
+    CGRect directionsButtonFrame = CGRectZero;
+    directionsButtonFrame.size = directionsImage.size;
+    self.directionsButton.frame = directionsButtonFrame;
+    [self.directionsButton setImage:directionsImage forState:UIControlStateNormal];
+    [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
+    [self.descriptionView addSubview:self.directionsButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -211,11 +222,26 @@
     self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     self.descriptionLabel.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
+    if (self.locationLabel.text) {
+        self.directionsButton.hidden = NO;
+        CGRect directionsButtonFrame = self.directionsButton.frame;
+        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width + 13;
+        directionsButtonFrame.origin.y = CGRectGetMinY(self.locationLabel.frame) + 0.5*(self.locationLabel.frame.size.height - directionsButtonFrame.size.height);
+        self.directionsButton.frame = directionsButtonFrame;
+    }
+    else {
+        self.directionsButton.hidden = NO;
+    }
     [self updateInvitedLabel];
     
     self.inviteListViewController.beaconStatuses = beacon.invited;
     
     self.joinButton.selected = beacon.userAttending;
+}
+
+- (void)getDirectionsToBeacon
+{
+    [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
 }
 
 - (void)updateImageViewWithImage:(UIImage *)image
