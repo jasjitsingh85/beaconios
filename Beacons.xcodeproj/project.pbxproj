@@ -56,7 +56,6 @@
 		1FE67713175C08C4006F563C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE67712175C08C4006F563C /* CoreLocation.framework */; };
 		1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE67715175C0EA0006F563C /* BeaconAnnotation.m */; };
 		1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */; };
-		1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67727175C25DC006F563C /* menuSettings@2x.png */; };
 		1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67729175C2CE2006F563C /* menuLogout@2x.png */; };
 		1FE67730175C3496006F563C /* hairlineSeparator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */; };
 		1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FE67732175C3C9F006F563C /* Lato-Bold.ttf */; };
@@ -89,6 +88,7 @@
 		96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */; };
 		96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */; };
 		96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */; };
+		96727DE71801DA1A00E75EE9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96727DE61801DA1A00E75EE9 /* CoreImage.framework */; };
 		96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CEA17EF9C8800C1C467 /* SoundPlayer.m */; };
 		96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */; };
 		96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859CEE17EFA7BD00C1C467 /* Default@2x.png */; };
@@ -143,6 +143,9 @@
 		96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C81175AA423006EA3A3 /* menuBackground@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
+		96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDE1805066700D62462 /* menuSettings@2x.png */; };
+		96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDF1805066700D62462 /* menuInvite@2x.png */; };
+		96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE01805066700D62462 /* menuHome@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
@@ -237,7 +240,6 @@
 		1FE67714175C0EA0006F563C /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconAnnotation.h; path = ../BeaconAnnotation.h; sourceTree = "<group>"; };
 		1FE67715175C0EA0006F563C /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconAnnotation.m; path = ../BeaconAnnotation.m; sourceTree = "<group>"; };
 		1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotation@2x.png"; sourceTree = "<group>"; };
-		1FE67727175C25DC006F563C /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		1FE67729175C2CE2006F563C /* menuLogout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuLogout@2x.png"; sourceTree = "<group>"; };
 		1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hairlineSeparator@2x.png"; sourceTree = "<group>"; };
 		1FE67732175C3C9F006F563C /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendNormal@2x.png"; sourceTree = "<group>"; };
 		96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendInactive@2x.png"; sourceTree = "<group>"; };
+		96727DE61801DA1A00E75EE9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		96859CE917EF9C8800C1C467 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		96859CEA17EF9C8800C1C467 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -360,6 +363,9 @@
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
+		96CBCCDE1805066700D62462 /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
+		96CBCCDF1805066700D62462 /* menuInvite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuInvite@2x.png"; sourceTree = "<group>"; };
+		96CBCCE01805066700D62462 /* menuHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuHome@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -378,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96727DE71801DA1A00E75EE9 /* CoreImage.framework in Frameworks */,
 				96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */,
 				966F270717E174CF000B4B8C /* libPods.a in Frameworks */,
 				1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */,
@@ -511,6 +518,7 @@
 		9633993A1758512100AF9D89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				96727DE61801DA1A00E75EE9 /* CoreImage.framework */,
 				96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */,
 				966F270617E174CF000B4B8C /* libPods.a */,
 				1F4D658A17653C9D00D02369 /* MessageUI.framework */,
@@ -684,6 +692,9 @@
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */,
 				1F7743D917716C1000188500 /* blueButton@2x.png */,
+				96CBCCDE1805066700D62462 /* menuSettings@2x.png */,
+				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
+				96CBCCE01805066700D62462 /* menuHome@2x.png */,
 				96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */,
 				9647102F17DEED5F00878C19 /* bubbleLeft@2x.png */,
 				9647103117DEFBC200878C19 /* bubbleRight@2x.png */,
@@ -704,7 +715,6 @@
 				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
 				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
-				1FE67727175C25DC006F563C /* menuSettings@2x.png */,
 				1F465C131763BD6800F35A8B /* messageButton@2x.png */,
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
@@ -840,7 +850,6 @@
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 				96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */,
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
-				1FE67728175C25DC006F563C /* menuSettings@2x.png in Resources */,
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
 				1FE6772A175C2CE2006F563C /* menuLogout@2x.png in Resources */,
@@ -852,6 +861,7 @@
 				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
+				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
 				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */,
@@ -872,6 +882,7 @@
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
+				96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
@@ -890,6 +901,7 @@
 				1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
+				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

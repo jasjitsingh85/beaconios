@@ -22,7 +22,7 @@
 
 typedef enum {
     MenuTableViewRowFind=0,
-    MenuTableViewRowMyBeacon,
+    MenuTableViewRowInvite,
     MenuTableViewRowSettings,
 } MenuTableViewRows;
 
@@ -45,10 +45,10 @@ typedef enum {
 {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
+    self.view.backgroundColor = [UIColor colorWithRed:90/255.0 green:84/255.0 blue:85/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 65;
-    self.tableView.contentInset = UIEdgeInsetsMake([UIApplication sharedApplication].statusBarFrame.size.height, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake([UIApplication sharedApplication].statusBarFrame.size.height + 10, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -101,8 +101,8 @@ typedef enum {
     
     //set up image view
     CGRect frame = CGRectZero;
-    frame.size.height = 32;
-    frame.size.width = 32;
+    frame.size.height = 29;
+    frame.size.width = 29;
     frame.origin.y = 0.5*(self.tableView.rowHeight - frame.size.height) - 10;
     frame.origin.x = 0.5*([self visibleTableViewWidth] - frame.size.height);
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
@@ -112,25 +112,18 @@ typedef enum {
     
     //set up name label
     UILabel *label = [[UILabel alloc] init];
-    label.font = [ThemeManager boldFontOfSize:10];
+    label.font = [ThemeManager lightFontOfSize:10];
     label.textAlignment = NSTextAlignmentCenter;
     label.tag = TEXT_LABEL_TAG;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     frame = CGRectZero;
     frame.size.width = [self visibleTableViewWidth];
-    frame.size.height = label.font.pointSize;
+    frame.size.height = [@"template" sizeWithAttributes:@{NSFontAttributeName : label.font}].height;
     frame.origin.x = 0;
     frame.origin.y = self.tableView.rowHeight - frame.size.height - 10;
     label.frame = frame;
     [cell.contentView addSubview:label];
-    
-    UIImageView *hairlineImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hairlineSeparator"]];
-    frame = hairlineImageView.frame;
-    frame.origin.y = CGRectGetHeight(cell.contentView.frame) - frame.size.height;
-    hairlineImageView.frame = frame;
-    hairlineImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [cell.contentView addSubview:hairlineImageView];
     
     return cell;
 }
@@ -139,14 +132,14 @@ typedef enum {
 {
     UIImageView *imageView = (UIImageView *)[cell viewWithTag:ICON_IMAGE_TAG];
     UILabel *label = (UILabel *)[cell viewWithTag:TEXT_LABEL_TAG];
-    if (indexPath.row == MenuTableViewRowMyBeacon) {
-        label.text = @"Set Beacon";
-        imageView.image = [UIImage imageNamed:@"menuAdd"];
+    if (indexPath.row == MenuTableViewRowInvite) {
+        label.text = @"Invite";
+        imageView.image = [UIImage imageNamed:@"menuInvite"];
 
     }
     else if (indexPath.row == MenuTableViewRowFind) {
-        label.text = @"Browse Beacons";
-        imageView.image = [UIImage imageNamed:@"menuBeacons"];
+        label.text = @"Home";
+        imageView.image = [UIImage imageNamed:@"menuHome"];
     }
     else if (indexPath.row == MenuTableViewRowSettings) {
         label.text = @"Settings";
@@ -158,7 +151,7 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == MenuTableViewRowMyBeacon) {
+    if (indexPath.row == MenuTableViewRowInvite) {
         [self myBeaconSelected];
     }
     else if (indexPath.row == MenuTableViewRowFind) {
