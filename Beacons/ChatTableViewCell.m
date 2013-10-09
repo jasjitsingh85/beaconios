@@ -130,14 +130,14 @@
         NSArray *leftImages = @[[UIImage imageNamed:@"chatBubbleOrangeLeft"], [UIImage imageNamed:@"chatBubbleYellowLeft"], [UIImage imageNamed:@"chatBubbleBlueLeft"], [UIImage imageNamed:@"chatBubblePinkLeft"], [UIImage imageNamed:@"chatBubblePurpleLeft"], [UIImage imageNamed:@"chatBubbleGreenLeft"], [UIImage imageNamed:@"chatBubbleRedLeft"]];
         NSMutableArray *leftImagesResizable = [[NSMutableArray alloc] init];
         for (UIImage *image in leftImages) {
-            [leftImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 70, 20, 25)]];
+            [leftImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 70, 25, 25)]];
         }
         leftBubbleImages = [NSArray arrayWithArray:leftImagesResizable];
         
         NSArray *rightImages = @[[UIImage imageNamed:@"chatBubbleOrangeRight"], [UIImage imageNamed:@"chatBubbleYellowRight"], [UIImage imageNamed:@"chatBubbleBlueRight"], [UIImage imageNamed:@"chatBubblePinkRight"], [UIImage imageNamed:@"chatBubblePurpleRight"], [UIImage imageNamed:@"chatBubbleGreenRight"], [UIImage imageNamed:@"chatBubbleRedRight"]];
         NSMutableArray *rightImagesResizable = [[NSMutableArray alloc] init];
         for (UIImage *image in rightImages) {
-            [rightImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 20, 70)]];
+            [rightImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 25, 70)]];
         }
         rightBubbleImages = [NSArray arrayWithArray:rightImagesResizable];
     });
@@ -162,7 +162,7 @@
     CGFloat avatarBufferX = 7;
     CGRect avatarFrame;
     avatarFrame.size = CGSizeMake(46, 46);
-    avatarFrame.origin.y = CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height;
+    avatarFrame.origin.y = MAX(CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height, 0);
     if (self.chatMessage.isUserMessage) {
         chatBubbleFrame.origin.x = self.frame.size.width - bubbleBufferX - chatBubbleFrame.size.width;
         avatarFrame.origin.x = self.frame.size.width - avatarBufferX - self.avatarImageView.frame.size.width;
