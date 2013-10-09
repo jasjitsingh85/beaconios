@@ -130,14 +130,14 @@
         NSArray *leftImages = @[[UIImage imageNamed:@"chatBubbleOrangeLeft"], [UIImage imageNamed:@"chatBubbleYellowLeft"], [UIImage imageNamed:@"chatBubbleBlueLeft"], [UIImage imageNamed:@"chatBubblePinkLeft"], [UIImage imageNamed:@"chatBubblePurpleLeft"], [UIImage imageNamed:@"chatBubbleGreenLeft"], [UIImage imageNamed:@"chatBubbleRedLeft"]];
         NSMutableArray *leftImagesResizable = [[NSMutableArray alloc] init];
         for (UIImage *image in leftImages) {
-            [leftImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 70, 25, 25)]];
+            [leftImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 30, 25, 20)]];
         }
         leftBubbleImages = [NSArray arrayWithArray:leftImagesResizable];
         
         NSArray *rightImages = @[[UIImage imageNamed:@"chatBubbleOrangeRight"], [UIImage imageNamed:@"chatBubbleYellowRight"], [UIImage imageNamed:@"chatBubbleBlueRight"], [UIImage imageNamed:@"chatBubblePinkRight"], [UIImage imageNamed:@"chatBubblePurpleRight"], [UIImage imageNamed:@"chatBubbleGreenRight"], [UIImage imageNamed:@"chatBubbleRedRight"]];
         NSMutableArray *rightImagesResizable = [[NSMutableArray alloc] init];
         for (UIImage *image in rightImages) {
-            [rightImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 25, 70)]];
+            [rightImagesResizable addObject:[image resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 25, 30)]];
         }
         rightBubbleImages = [NSArray arrayWithArray:rightImagesResizable];
     });
@@ -151,7 +151,7 @@
     CGRect chatLabelFrame;
     chatLabelFrame.size = [self.chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : self.userChatFont} context:nil].size;
     chatLabelFrame.origin.y = 15;
-    chatLabelFrame.origin.x = self.chatMessage.isUserMessage ? 20 : 25;
+    chatLabelFrame.origin.x = self.chatMessage.isUserMessage ? 18 : 27;
     self.chatLabel.frame = chatLabelFrame;
     ;
     
