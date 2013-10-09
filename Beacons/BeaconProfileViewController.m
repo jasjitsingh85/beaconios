@@ -150,23 +150,23 @@
     self.imageViewGradient.frame = backgroundGradientFrame;
     [self.imageView addSubview:self.imageViewGradient];
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 58, 100, 21)];
-    self.timeLabel.font = [ThemeManager regularFontOfSize:21];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 46, 200, 35)];
+    self.timeLabel.font = [ThemeManager lightFontOfSize:28];
     self.timeLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.timeLabel];
     
-    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 90, 200, 21)];
-    self.descriptionLabel.font = [ThemeManager regularFontOfSize:21];
+    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 81, 200, 22)];
+    self.descriptionLabel.font = [ThemeManager regularFontOfSize:20];
     self.descriptionLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.descriptionLabel];
     
-    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 124, 180, 11)];
-    self.locationLabel.font = [ThemeManager regularFontOfSize:11];
+    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 118, 180, 14)];
+    self.locationLabel.font = [ThemeManager regularFontOfSize:13];
     self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
     
-    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(37, 148, 180, 11)];
-    self.invitedLabel.font = [ThemeManager regularFontOfSize:11];
+    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 144, 180, 14)];
+    self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
     self.invitedLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.invitedLabel];
     
@@ -174,10 +174,9 @@
     self.joinButton.frame = CGRectMake(226, 125, 73, 31);
     [self.joinButton setTitle:@"join" forState:UIControlStateNormal];
     [self.joinButton setTitle:@"invite" forState:UIControlStateSelected];
-    [self.joinButton setTitleColor:[[ThemeManager sharedTheme] orangeColor] forState:UIControlStateNormal];
-    self.joinButton.layer.cornerRadius = 2;
-    self.joinButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.joinButton.layer.borderWidth = 0.5;
+    [self.joinButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.joinButton.backgroundColor = [UIColor whiteColor];
+    self.joinButton.layer.cornerRadius = 4;
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
 }
@@ -209,7 +208,7 @@
         [self loadImageViewForBeacon:beacon];
     }
     
-    self.timeLabel.text = [beacon.time formattedDate];
+    self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     self.descriptionLabel.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
     [self updateInvitedLabel];
@@ -256,7 +255,7 @@
     NSString *creatorText = [self.beacon.creator fullName];
     NSString *otherText;
     if (self.beacon.invited && self.beacon.invited.count) {
-        NSString *other = self.beacon.invited.count == 1 ? @"other" : @"others";
+        NSString *other = self.beacon.invited.count == 1 ? @"other..." : @"others...";
         otherText = [NSString stringWithFormat:@"and %d %@", self.beacon.invited.count, other];
     }
     if (otherText) {
