@@ -9,6 +9,7 @@
 #import "BeaconCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "UIView+Shadow.h"
 #import "Beacon.h"
 #import "User.h"
 #import "Theme.h"
@@ -23,17 +24,11 @@
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *addressLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
-@property (strong, nonatomic) UIButton *confirmButton;
-@property (strong, nonatomic) UIButton *textMessageButton;
-@property (strong, nonatomic) UIButton *directionsButton;
-@property (strong, nonatomic) UILabel *directionsButtonLabel;
 @property (strong, nonatomic) UIButton *infoButton;
-@property (strong, nonatomic) UILabel *infoButtonLabel;
-@property (strong, nonatomic) UILabel *textButtonLabel;
-@property (strong, nonatomic) UIButton *inviteMoreButton;
 @property (strong, nonatomic) UIButton *createBeaconButton;
 @property (strong, nonatomic) UILabel *createBeaconLabel;
 @property (strong, nonatomic) UIImageView *beaconImageView;
+@property (strong, nonatomic) UIImageView *imageViewGradient;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UILabel *invitedLabel;
 
@@ -46,11 +41,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.contentView.layer.cornerRadius = 20;
-        self.contentView.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.contentView.layer.shadowOpacity = 0.7;
-        self.contentView.layer.shadowRadius = 2.0;
-        self.contentView.layer.shadowOffset = CGSizeMake(0, 2);
-        self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.contentView.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+        [self.contentView setShadowWithColor:[UIColor blackColor] opacity:0.7 radius:2.0 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
         
         self.backgroundView = [[UIView alloc] initWithFrame:self.contentView.bounds];
         self.backgroundView.layer.cornerRadius = self.contentView.layer.cornerRadius;
@@ -58,20 +49,18 @@
         self.backgroundView.backgroundColor = [UIColor orangeColor];
         self.backgroundView.clipsToBounds = YES;
         [self.contentView addSubview:self.backgroundView];
+        
         self.beaconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.backgroundView.frame.size.width, 108)];
         self.beaconImageView.backgroundColor = [UIColor clearColor];
         self.beaconImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.beaconImageView.clipsToBounds = YES;
         [self.backgroundView addSubview:self.beaconImageView];
         
-        
-        
-//        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 92, self.contentView.frame.size.width - 36*2, 15)];
-//        self.titleLabel.backgroundColor = [UIColor clearColor];
-//        self.titleLabel.textColor = [UIColor whiteColor];
-//        self.titleLabel.font = [ThemeManager regularFontOfSize:15.0];
-//        self.titleLabel.adjustsFontSizeToFitWidth = YES;
-//        [self.contentView addSubview:self.titleLabel];
+        self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
+        CGRect backgroundGradientFrame = self.imageViewGradient.frame;
+        backgroundGradientFrame.origin.y = self.beaconImageView.frame.size.height - backgroundGradientFrame.size.height;
+        self.imageViewGradient.frame = backgroundGradientFrame;
+        [self.backgroundView addSubview:self.imageViewGradient];
         
         self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 85, self.contentView.frame.size.width - 36*2, 18)];
         self.descriptionLabel.backgroundColor = [UIColor clearColor];
@@ -101,23 +90,19 @@
         self.invitedLabel.font = [ThemeManager regularFontOfSize:14];
         [self.contentView addSubview:self.invitedLabel];
         
-        self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        CGRect confirmButtonRect;
-        confirmButtonRect.size = CGSizeMake(76, 36);
-        confirmButtonRect.origin.x = 0.5*(self.contentView.frame.size.width - confirmButtonRect.size.width);
-        confirmButtonRect.origin.y = 168;
-        self.confirmButton.frame = confirmButtonRect;
-        self.confirmButton.titleEdgeInsets = UIEdgeInsetsMake(0, 9, 0, 9);
-        self.confirmButton.titleLabel.adjustsFontSizeToFitWidth = YES;
-        self.confirmButton.titleLabel.font = [ThemeManager regularFontOfSize:15.0];
-        self.confirmButton.backgroundColor = [UIColor whiteColor];
-        [self.confirmButton setTitleColor:[UIColor colorWithRed:207/255.0 green:176/255.0 blue:171/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.confirmButton setTitle:@"Join" forState:UIControlStateNormal];
-        [self.confirmButton setTitle:@"I'm out" forState:UIControlStateSelected];
-        [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        self.confirmButton.layer.cornerRadius = 4;
-        [self.contentView addSubview:self.confirmButton];
-        
+        self.infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.infoButton setTitle:@"i" forState:UIControlStateNormal];
+        [self.infoButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+        self.infoButton.backgroundColor = [UIColor whiteColor];
+        CGRect infoButtonFrame;
+        infoButtonFrame.size = CGSizeMake(32, 32);
+        infoButtonFrame.origin.x = 0.5*(self.contentView.frame.size.width - infoButtonFrame.size.width);
+        infoButtonFrame.origin.y = 166;
+        self.infoButton.frame = infoButtonFrame;
+        self.infoButton.layer.cornerRadius = self.infoButton.frame.size.width/2.0;
+        [self.infoButton addTarget:self action:@selector(infoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.infoButton setShadowWithColor:[UIColor blackColor] opacity:0.7 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+        [self.contentView addSubview:self.infoButton];
         
         self.createBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
         CGRect createBeaconButtonFrame = CGRectZero;
@@ -169,34 +154,16 @@
 {
     if (beacon.isUserBeacon) {
         self.titleLabel.text = @"My Beacon";
-        self.inviteMoreButton.hidden = NO;
-        self.directionsButtonLabel.hidden = YES;
-        self.directionsButton.hidden = YES;
-        self.infoButton.hidden = YES;
-        self.infoButtonLabel.hidden = YES;
-        self.textButtonLabel.hidden = YES;
-        self.textMessageButton.hidden = YES;
-        self.confirmButton.hidden = YES;
     }
     else {
         self.titleLabel.text = [NSString stringWithFormat:@"%@'s Beacon", beacon.creator.firstName];
-        self.inviteMoreButton.hidden = YES;
-        self.directionsButtonLabel.hidden = NO;
-        self.directionsButton.hidden = NO;
-        self.infoButton.hidden = NO;
-        self.infoButtonLabel.hidden = NO;
-        self.textButtonLabel.hidden = NO;
-        self.textMessageButton.hidden = NO;
-        self.confirmButton.hidden = NO;
     }
     self.descriptionLabel.hidden = NO;
     self.timeLabel.hidden = NO;
     self.addressLabel.hidden = NO;
-    self.textButtonLabel.text = [NSString stringWithFormat:@"Text %@", beacon.creator.firstName];
     self.descriptionLabel.text = beacon.beaconDescription;
     self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     
-    self.confirmButton.selected = self.beacon.userAttending;
     if (beacon.creator.avatarURL) {
         self.avatarImageView.alpha = 1;
         [self.avatarImageView setImageWithURL:beacon.creator.avatarURL placeholderImage:nil];
@@ -210,9 +177,11 @@
     if (beacon.images && beacon.images.count) {
         BeaconImage *beaconImage = [beacon.images lastObject];
         [self.beaconImageView setImageWithURL:beaconImage.imageURL];
+        self.imageViewGradient.hidden = NO;
     }
     else {
         self.beaconImageView.image = nil;
+        self.imageViewGradient.hidden = YES;
     }
     [self updateInvitedLabel];
     [self updateAddressLabel];
@@ -228,7 +197,7 @@
             distanceString = [NSString stringWithFormat:@"(%0.0f feet)", METERS_TO_FEET*distance];
         }
         else {
-            distanceString = [NSString stringWithFormat:@"(%0.3f mi)", METERS_TO_MILES*distance];
+            distanceString = [NSString stringWithFormat:@"(%0.1f mi)", METERS_TO_MILES*distance];
         }
         NSString *string = [NSString stringWithFormat:@"%@ %@", self.beacon.address, distanceString];
         NSRange range = [string rangeOfString:distanceString];
@@ -266,59 +235,15 @@
     [self.avatarImageView setImageWithURL:appDelegate.loggedInUser.avatarURL];
     self.createBeaconButton.hidden = NO;
     self.createBeaconLabel.hidden = NO;
-    self.infoButton.hidden = YES;
-    self.directionsButtonLabel.hidden = YES;
-    self.directionsButton.hidden = YES;
-    self.infoButton.hidden = YES;
-    self.infoButtonLabel.hidden = YES;
-    self.textButtonLabel.hidden = YES;
-    self.textMessageButton.hidden = YES;
-    self.confirmButton.hidden = YES;
     self.descriptionLabel.hidden = YES;
     self.timeLabel.hidden = YES;
     self.addressLabel.hidden = YES;
-}
-
-- (void)confirmButtonTouched:(id)sender
-{
-    self.confirmButton.selected = !self.confirmButton.selected;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellConfirmButtonTouched:confirmed:)]) {
-        [self.delegate beaconCellConfirmButtonTouched:self confirmed:self.confirmButton.selected];
-    }
-}
-
-- (void)textMessageButtonTouched:(id)sender
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(beaconCellTextButtonTouched:)]) {
-        [self.delegate beaconCellTextButtonTouched:self];
-    }
 }
 
 - (void)infoButtonTouched:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(beaconCellInfoButtonTouched:)]) {
         [self.delegate beaconCellInfoButtonTouched:self];
-    }
-}
-
-- (void)directionsButtonTouched:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(beaconCellDirectionsButtonTouched:)]) {
-        [self.delegate beaconCellDirectionsButtonTouched:self];
-    }
-}
-
-- (void)inviteMoreButtonTouched:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(beaconCellInviteMoreButtonTouched:)]) {
-        [self.delegate beaconCellInviteMoreButtonTouched:self];
-    }
-}
-
-- (void)createBeaconButtonTouched:(id)sender
-{
-    if ([self.delegate respondsToSelector:@selector(beaconCellCreateBeaconButtonTouched:)]) {
-        [self.delegate beaconCellCreateBeaconButtonTouched:self];
     }
 }
 
