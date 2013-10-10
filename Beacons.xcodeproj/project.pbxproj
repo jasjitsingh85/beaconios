@@ -161,6 +161,7 @@
 		96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */; };
 		96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */; };
 		96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD01180528F700D62462 /* directionsArrow@2x.png */; };
+		96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD04180676E600D62462 /* UIView+Shadow.m */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
@@ -396,6 +397,8 @@
 		96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleYellowLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCD01180528F700D62462 /* directionsArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsArrow@2x.png"; sourceTree = "<group>"; };
+		96CBCD03180676E600D62462 /* UIView+Shadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Shadow.h"; sourceTree = "<group>"; };
+		96CBCD04180676E600D62462 /* UIView+Shadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Shadow.m"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -452,6 +455,8 @@
 				1F5D4BB017767E9600A1A66E /* NSDate+FormattedDate.m */,
 				969D649417E96E1B00F5AB36 /* UIImage+Resize.h */,
 				969D649517E96E1B00F5AB36 /* UIImage+Resize.m */,
+				96CBCD03180676E600D62462 /* UIView+Shadow.h */,
+				96CBCD04180676E600D62462 /* UIView+Shadow.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1077,6 +1082,7 @@
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
+				96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */,
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
