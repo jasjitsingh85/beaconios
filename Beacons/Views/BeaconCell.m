@@ -73,31 +73,32 @@
 //        self.titleLabel.adjustsFontSizeToFitWidth = YES;
 //        [self.contentView addSubview:self.titleLabel];
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 92, self.contentView.frame.size.width - 36*2, 15)];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 85, self.contentView.frame.size.width - 36*2, 18)];
         self.descriptionLabel.backgroundColor = [UIColor clearColor];
         self.descriptionLabel.textColor = [UIColor whiteColor];
-        self.descriptionLabel.font = [ThemeManager boldFontOfSize:15.0];
+        self.descriptionLabel.font = [ThemeManager regularFontOfSize:17.0];
         self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.descriptionLabel];
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 123, 130, 11)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 117, 200, 15)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
         self.addressLabel.textColor = [UIColor colorWithRed:73/255.0 green:73/255.0 blue:73/255.0 alpha:1];
-        self.addressLabel.font = [ThemeManager regularFontOfSize:11];
+        self.addressLabel.font = [ThemeManager regularFontOfSize:14];
         self.addressLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.addressLabel];
         
-        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 65, 100, 20)];
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 50, 100, 30)];
         self.timeLabel.backgroundColor = [UIColor clearColor];
         self.timeLabel.textColor = [UIColor whiteColor];
-        self.timeLabel.font = [ThemeManager regularFontOfSize:20];
+        self.timeLabel.font = [ThemeManager lightFontOfSize:28];
         self.timeLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.timeLabel];
         
-        self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(36, 144, 150, 11)];
+        self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 138, 200, 15)];
         self.invitedLabel.backgroundColor = [UIColor clearColor];
         self.invitedLabel.textColor = [UIColor colorWithRed:73/255.0 green:73/255.0 blue:73/255.0 alpha:1];
-        self.invitedLabel.font = [ThemeManager regularFontOfSize:11];
+        self.invitedLabel.adjustsFontSizeToFitWidth = YES;
+        self.invitedLabel.font = [ThemeManager regularFontOfSize:14];
         [self.contentView addSubview:self.invitedLabel];
         
         self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -193,21 +194,7 @@
     self.addressLabel.hidden = NO;
     self.textButtonLabel.text = [NSString stringWithFormat:@"Text %@", beacon.creator.firstName];
     self.descriptionLabel.text = beacon.beaconDescription;
-    self.addressLabel.text = beacon.address;
-    self.timeLabel.text = [beacon.time formattedDate];
-    
-    if (self.beacon.address) {
-        CGFloat distance = [[LocationTracker sharedTracker] distanceFromCurrentLocationToCoordinate:self.beacon.coordinate];
-        CGFloat distanceMiles = METERS_TO_MILES*distance;
-        NSString *distanceString;
-        if (distanceMiles < 0.25) {
-            distanceString = [NSString stringWithFormat:@"(%0.0f feet)", METERS_TO_FEET*distance];
-        }
-        else {
-            distanceString = [NSString stringWithFormat:@"(%0.3f mi)", METERS_TO_MILES*distance];
-        }
-        self.addressLabel.text = [NSString stringWithFormat:@"%@ %@", self.beacon.address, distanceString];
-    }
+    self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     
     self.confirmButton.selected = self.beacon.userAttending;
     if (beacon.creator.avatarURL) {
@@ -228,6 +215,27 @@
         self.beaconImageView.image = nil;
     }
     [self updateInvitedLabel];
+    [self updateAddressLabel];
+}
+
+- (void)updateAddressLabel
+{
+    if (self.beacon.address) {
+        CGFloat distance = [[LocationTracker sharedTracker] distanceFromCurrentLocationToCoordinate:self.beacon.coordinate];
+        CGFloat distanceMiles = METERS_TO_MILES*distance;
+        NSString *distanceString;
+        if (distanceMiles < 0.25) {
+            distanceString = [NSString stringWithFormat:@"(%0.0f feet)", METERS_TO_FEET*distance];
+        }
+        else {
+            distanceString = [NSString stringWithFormat:@"(%0.3f mi)", METERS_TO_MILES*distance];
+        }
+        NSString *string = [NSString stringWithFormat:@"%@ %@", self.beacon.address, distanceString];
+        NSRange range = [string rangeOfString:distanceString];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:string];
+        [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
+        self.addressLabel.attributedText = attributedText;
+    }
 }
 
 - (void)updateInvitedLabel
@@ -235,15 +243,20 @@
     NSString *creatorText = [self.beacon.creator fullName];
     NSString *otherText;
     if (self.beacon.invited && self.beacon.invited.count) {
-        NSString *other = self.beacon.invited.count == 1 ? @"other" : @"others";
+        NSString *other = self.beacon.invited.count == 1 ? @"other..." : @"others...";
         otherText = [NSString stringWithFormat:@"and %d %@", self.beacon.invited.count, other];
     }
+    NSMutableAttributedString *attributedText;
     if (otherText) {
-        self.invitedLabel.text = [NSString stringWithFormat:@"%@ %@", creatorText, otherText];
+        NSString *string = [NSString stringWithFormat:@"%@ %@", creatorText, otherText];
+        NSRange range = [string rangeOfString:otherText];
+        attributedText = [[NSMutableAttributedString alloc] initWithString:string];
+        [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:range];
     }
     else {
-        self.invitedLabel.text = creatorText;
+        attributedText = [[NSMutableAttributedString alloc] initWithString:creatorText];
     }
+    self.invitedLabel.attributedText = attributedText;
 }
 
 - (void)configureEmptyBeacon
