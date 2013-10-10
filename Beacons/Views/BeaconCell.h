@@ -24,8 +24,8 @@
 
 @property (weak, nonatomic) Beacon *beacon;
 @property (weak, nonatomic) id<BeaconCellDelegate> delegate;
-@property (strong, nonatomic) UIImage *backgroundImage;
-@property (strong, nonatomic) UIColor *backgroundColor;
+@property (strong, nonatomic) UIColor *primaryColor;
+@property (strong, nonatomic) UIColor *secondaryColor;
 
 - (void)configureEmptyBeacon;
 - (void)configureForBeacon:(Beacon *)beacon atIndexPath:(NSIndexPath *)indexPath;

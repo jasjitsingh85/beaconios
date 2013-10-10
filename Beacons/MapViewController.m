@@ -199,8 +199,8 @@
     if (!self.showCreateBeaconCell) {
         cell.beacon = [self beaconForIndexPath:indexPath];
         [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
-        cell.backgroundImage = [self backgroundImageForIndexPath:indexPath];
-        cell.backgroundColor = [self colorForIndexPath:indexPath];
+        cell.primaryColor = [self primaryColorForIndexPath:indexPath];
+        cell.secondaryColor = [self secondaryColorForIndexPath:indexPath];
     }
     else {
         [cell configureEmptyBeacon];
@@ -343,12 +343,12 @@
             UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(beaconAnnotationViewTapped:)];
             tapGesture.numberOfTapsRequired = 1;
             [customPinView addGestureRecognizer:tapGesture];
-            customPinView.color = [self colorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
+            customPinView.color = [self secondaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
             customPinView.active = [beaconAnnotation.beacon isEqual:self.highlightedBeacon];
             return customPinView;
         }
         pinView.annotation = beaconAnnotation;
-        pinView.color = [self colorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
+        pinView.color = [self secondaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
         return pinView;
     }
  
@@ -440,21 +440,20 @@
 }
 
 #pragma mark - UI
-- (UIColor *)colorForIndexPath:(NSIndexPath *)indexPath
+- (UIColor *)primaryColorForIndexPath:(NSIndexPath *)indexPath
+{
+    id<Theme> theme = [ThemeManager sharedTheme];
+    NSArray *colors = @[[theme blueColor], [theme pinkColor], [theme yellowColor], [theme greenColor], [theme orangeColor], [theme purpleColor]];
+    UIColor *color = colors[indexPath.row % colors.count];
+    return color;
+}
+
+- (UIColor *)secondaryColorForIndexPath:(NSIndexPath *)indexPath
 {
     id<Theme> theme = [ThemeManager sharedTheme];
     NSArray *colors = @[[theme darkBlueColor], [theme darkPinkColor], [theme darkYellowColor], [theme darkGreenColor], [theme darkOrangeColor], [theme darkPurpleColor]];
     UIColor *color = colors[indexPath.row % colors.count];
     return color;
-}
-
-- (UIImage *)backgroundImageForIndexPath:(NSIndexPath *)indexPath
-{
-    id<Theme> theme = [ThemeManager sharedTheme];
-    static NSArray *backgroundImages = nil;
-    backgroundImages = @[[theme blueCellImage], [theme pinkCellImage], [theme yellowCellImage], [theme greenCellImage], [theme orangeCellImage], [theme purpleCellImage]];
-    UIImage *backgroundImage = backgroundImages[indexPath.row % backgroundImages.count];
-    return backgroundImage;
 }
 
 @end

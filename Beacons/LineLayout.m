@@ -2,7 +2,7 @@
 
 
 #define CELL_WIDTH 271.5
-#define CELL_HEIGHT 225
+#define CELL_HEIGHT 211
 
 @implementation LineLayout
 

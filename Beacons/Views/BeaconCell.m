@@ -34,7 +34,7 @@
 @property (strong, nonatomic) UIButton *createBeaconButton;
 @property (strong, nonatomic) UILabel *createBeaconLabel;
 @property (strong, nonatomic) UIImageView *beaconImageView;
-@property (strong, nonatomic) UIImageView *backgroundImageView;
+@property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UILabel *invitedLabel;
 
 @end
@@ -45,19 +45,24 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beaconCellBackgroundGreen"]];
-        self.backgroundImageView.frame = self.contentView.bounds;
-        self.backgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self.contentView addSubview:self.backgroundImageView];
-        UIImage *maskImage = [UIImage imageNamed:@"beaconCellImageMask"];
-        CALayer *mask = [CALayer layer];
-        mask.contents = (id)maskImage.CGImage;
-        mask.frame = CGRectMake(0, 0, maskImage.size.width, maskImage.size.height);
-        self.beaconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, maskImage.size.width, maskImage.size.height)];
+        self.contentView.layer.cornerRadius = 20;
+        self.contentView.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.contentView.layer.shadowOpacity = 0.7;
+        self.contentView.layer.shadowRadius = 2.0;
+        self.contentView.layer.shadowOffset = CGSizeMake(0, 2);
+        self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.contentView.bounds cornerRadius:self.contentView.layer.cornerRadius].CGPath;
+        
+        self.backgroundView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+        self.backgroundView.layer.cornerRadius = self.contentView.layer.cornerRadius;
+        self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.backgroundView.backgroundColor = [UIColor orangeColor];
+        self.backgroundView.clipsToBounds = YES;
+        [self.contentView addSubview:self.backgroundView];
+        self.beaconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.backgroundView.frame.size.width, 108)];
         self.beaconImageView.backgroundColor = [UIColor clearColor];
-        self.beaconImageView.layer.mask = mask;
         self.beaconImageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.backgroundImageView addSubview:self.beaconImageView];
+        self.beaconImageView.clipsToBounds = YES;
+        [self.backgroundView addSubview:self.beaconImageView];
         
         
         
@@ -147,16 +152,16 @@
     return self;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor
+- (void)setSecondaryColor:(UIColor *)secondaryColor
 {
-    _backgroundColor = backgroundColor;
-    self.beaconImageView.backgroundColor = backgroundColor;
+    _secondaryColor = secondaryColor;
+    self.beaconImageView.backgroundColor = secondaryColor;
 }
 
-- (void)setBackgroundImage:(UIImage *)backgroundImage
+- (void)setPrimaryColor:(UIColor *)primaryColor
 {
-    _backgroundImage = backgroundImage;
-    self.backgroundImageView.image = backgroundImage;
+    _primaryColor = primaryColor;
+    self.backgroundView.backgroundColor = primaryColor;
 }
 
 - (void)configureForBeacon:(Beacon *)beacon atIndexPath:(NSIndexPath *)indexPath
