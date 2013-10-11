@@ -27,6 +27,5 @@
 @property (strong, nonatomic) UIColor *primaryColor;
 @property (strong, nonatomic) UIColor *secondaryColor;
 
-- (void)configureEmptyBeacon;
 - (void)configureForBeacon:(Beacon *)beacon atIndexPath:(NSIndexPath *)indexPath;
 @end

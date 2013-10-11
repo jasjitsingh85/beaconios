@@ -162,6 +162,8 @@
 		96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */; };
 		96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD01180528F700D62462 /* directionsArrow@2x.png */; };
 		96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD04180676E600D62462 /* UIView+Shadow.m */; };
+		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
+		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
@@ -399,6 +401,9 @@
 		96CBCD01180528F700D62462 /* directionsArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsArrow@2x.png"; sourceTree = "<group>"; };
 		96CBCD03180676E600D62462 /* UIView+Shadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Shadow.h"; sourceTree = "<group>"; };
 		96CBCD04180676E600D62462 /* UIView+Shadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Shadow.m"; sourceTree = "<group>"; };
+		96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyBeaconViewController.h; sourceTree = "<group>"; };
+		96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyBeaconViewController.m; sourceTree = "<group>"; };
+		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -655,6 +660,8 @@
 				96859CF617EFC89800C1C467 /* RegisterViewController.m */,
 				968CDA8A17F78ED600D64441 /* SetBeaconViewController.h */,
 				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
+				96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */,
+				96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -711,6 +718,7 @@
 				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
 				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
 				969D648C17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png */,
+				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96CBCD01180528F700D62462 /* directionsArrow@2x.png */,
 				969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */,
 				969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */,
@@ -905,6 +913,7 @@
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
+				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
@@ -1045,6 +1054,7 @@
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96956447175852990081B349 /* LoginViewController.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
+				96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,

@@ -228,18 +228,6 @@
     self.invitedLabel.attributedText = attributedText;
 }
 
-- (void)configureEmptyBeacon
-{
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    self.titleLabel.text = @"My Beacon";
-    [self.avatarImageView setImageWithURL:appDelegate.loggedInUser.avatarURL];
-    self.createBeaconButton.hidden = NO;
-    self.createBeaconLabel.hidden = NO;
-    self.descriptionLabel.hidden = YES;
-    self.timeLabel.hidden = YES;
-    self.addressLabel.hidden = YES;
-}
-
 - (void)infoButtonTouched:(id)sender
 {
     if ([self.delegate respondsToSelector:@selector(beaconCellInfoButtonTouched:)]) {

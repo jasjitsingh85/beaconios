@@ -28,16 +28,18 @@
 #import "Theme.h"
 #import "BeaconManager.h"
 #import "BeaconProfileViewController.h"
+#import "EmptyBeaconViewController.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSArray *beacons;
-@property (assign, nonatomic) BOOL showCreateBeaconCell;
 @property (strong, nonatomic) IBOutlet UIButton *createBeaconButton;
 @property (strong, nonatomic) NSMutableDictionary *beaconAnnotationDictionary;
 @property (readonly, nonatomic) NSArray *beaconAnnotations;
 @property (strong, nonatomic) Beacon *highlightedBeacon;
+@property (strong, nonatomic) EmptyBeaconViewController *emptyBeaconViewController;
+@property (assign, nonatomic) BOOL inEmptyBeaconMode;
 
 @end
 
@@ -87,11 +89,14 @@
     CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithFont:self.createBeaconButton.titleLabel.font].width;
     self.createBeaconButton.imageEdgeInsets = UIEdgeInsetsMake(0, -widthOfTitleAndImage/4.0, 0, 0);
     [self.createBeaconButton addTarget:self action:@selector(createBeaconTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self exitEmptyBeaconMode:YES];
     [self hideBeaconCollectionViewAnimated:NO];
     [self requestBeacons];
     
@@ -107,6 +112,47 @@
     return beaconAnnotations;
 }
 
+#pragma mark - Empty Beacon
+- (void)enterEmptyBeaconMode:(BOOL)animated
+{
+    if (self.inEmptyBeaconMode) {
+        return;
+    }
+    self.inEmptyBeaconMode = YES;
+    self.emptyBeaconViewController = [[EmptyBeaconViewController alloc] init];
+    [self addChildViewController:self.emptyBeaconViewController];
+    [self.view addSubview:self.emptyBeaconViewController.view];
+    self.emptyBeaconViewController.topView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+    self.emptyBeaconViewController.midView.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+    self.emptyBeaconViewController.bottomView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+    NSTimeInterval duration = animated ? 0.2 : 0;
+    [UIView animateWithDuration:duration animations:^{
+        self.emptyBeaconViewController.topView.transform = CGAffineTransformIdentity;
+        self.emptyBeaconViewController.bottomView.transform = CGAffineTransformIdentity;
+    }];
+    [UIView animateWithDuration:duration delay:duration options:0 animations:^{
+        self.emptyBeaconViewController.midView.transform = CGAffineTransformIdentity;
+    } completion:nil];
+}
+
+- (void)exitEmptyBeaconMode:(BOOL)animated
+{
+    if (!self.inEmptyBeaconMode) {
+        return;
+    }
+    self.inEmptyBeaconMode = NO;
+    [self.emptyBeaconViewController.view removeFromSuperview];
+    [self.emptyBeaconViewController removeFromParentViewController];
+    NSTimeInterval duration = animated ? 0.2 : 0;
+    [UIView animateWithDuration:duration animations:^{
+        self.emptyBeaconViewController.topView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+        self.emptyBeaconViewController.bottomView.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+    }];
+    [UIView animateWithDuration:duration delay:duration options:0 animations:^{
+        self.emptyBeaconViewController.midView.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+    } completion:nil];
+}
+
 #pragma mark - Notifications
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
@@ -117,6 +163,7 @@
 - (void)reloadBeacons
 {
     if (self.beacons.count) {
+        [self exitEmptyBeaconMode:YES];
         //add beacon annotations to map
         [self.mapView removeAnnotations:self.beaconAnnotations];
         self.beaconAnnotationDictionary = [NSMutableDictionary new];
@@ -126,7 +173,6 @@
             [self.mapView addAnnotation:beaconAnnotation];
             [self.beaconAnnotationDictionary setObject:beaconAnnotation forKey:beacon.beaconID];
         }
-        self.showCreateBeaconCell = NO;
         [self centerMapOnBeacon:self.beacons[0] animated:YES];
         BeaconAnnotation *beaconAnnotation = [self annotationForBeacon:self.beacons[0]];
         BeaconAnnotationView *annotationView = (BeaconAnnotationView *)[self mapView:self.mapView viewForAnnotation:beaconAnnotation];
@@ -134,7 +180,7 @@
         NSLog(@"anno view %@", annotationView);
     }
     else {
-        self.showCreateBeaconCell = YES;
+        [self enterEmptyBeaconMode:YES];
     }
     [self.beaconCollectionView reloadData];
     [self showBeaconCollectionViewAnimated:YES];
@@ -188,7 +234,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSInteger numItems = self.beacons.count + self.showCreateBeaconCell;
+    NSInteger numItems = self.beacons.count;
     return numItems;
 }
 
@@ -196,15 +242,10 @@
 {
     BeaconCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MY_CELL" forIndexPath:indexPath];
     cell.delegate = self;
-    if (!self.showCreateBeaconCell) {
-        cell.beacon = [self beaconForIndexPath:indexPath];
-        [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
-        cell.primaryColor = [self primaryColorForIndexPath:indexPath];
-        cell.secondaryColor = [self secondaryColorForIndexPath:indexPath];
-    }
-    else {
-        [cell configureEmptyBeacon];
-    }
+    cell.beacon = [self beaconForIndexPath:indexPath];
+    [cell configureForBeacon:cell.beacon atIndexPath:indexPath];
+    cell.primaryColor = [self primaryColorForIndexPath:indexPath];
+    cell.secondaryColor = [self secondaryColorForIndexPath:indexPath];
     
     return cell;
 }
@@ -277,12 +318,6 @@
     findFriendsViewController.inactiveContacts = beacon.invited;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
-}
-
-- (void)beaconCellCreateBeaconButtonTouched:(BeaconCell *)beaconCell
-{
-    SetBeaconViewController *setBeaconViewController = [[SetBeaconViewController alloc] init];
-    [self.navigationController pushViewController:setBeaconViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
