@@ -19,7 +19,10 @@
     if (!self) {
         return nil;
     }
-    self.sender = [[User alloc] initWithData:messageData[@"sender"]];
+    NSDictionary *userData = messageData[@"sender"];
+    if (userData && ![userData isEqual:[NSNull null]]) {
+        self.sender = [[User alloc] initWithData:messageData[@"sender"]];
+    }
     self.messageString = messageData[@"message"];
     if ([self.messageString isEqual:[NSNull null]]) {
         self.messageString = @"";
