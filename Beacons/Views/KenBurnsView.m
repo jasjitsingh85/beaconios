@@ -110,70 +110,72 @@ enum JBSourceMode {
     float zoomInY       = -1;
     float moveX         = -1;
     float moveY         = -1;
-    float frameWidth    = !_isLandscape ? self.bounds.size.width: self.bounds.size.height;
-    float frameHeight   = !_isLandscape ? self.bounds.size.height: self.bounds.size.width;
-    
+    float frameWidth    = self.bounds.size.width;
+    float frameHeight   = self.bounds.size.height;
+    float imageScale    = image.scale;
+    float imageWidth = image.scale/[UIScreen mainScreen].scale*image.size.width;
+    float imageHeight = image.scale/[UIScreen mainScreen].scale*image.size.height;
     // Wider than screen
-    if (image.size.width > frameWidth)
+    if (imageWidth > frameWidth)
     {
-        widthDiff  = image.size.width - frameWidth;
+        widthDiff  = imageWidth - frameWidth;
         
         // Higher than screen
-        if (image.size.height > frameHeight)
+        if (imageHeight > frameHeight)
         {
-            heightDiff = image.size.height - frameHeight;
+            heightDiff = imageHeight - frameHeight;
             
             if (widthDiff > heightDiff) {
-                resizeRatio = frameHeight / image.size.height;
+                resizeRatio = frameHeight / imageHeight;
             }
             else {
-                resizeRatio = frameWidth / image.size.width;
+                resizeRatio = frameWidth / imageWidth;
             }
             
             // No higher than screen [OK]
         }
         else
         {
-            heightDiff = frameHeight - image.size.height;
+            heightDiff = frameHeight - imageHeight;
             
             if (widthDiff > heightDiff)
-                resizeRatio = frameWidth / image.size.width;
+                resizeRatio = frameWidth / imageWidth;
             else
-                resizeRatio = self.bounds.size.height / image.size.height;
+                resizeRatio = self.bounds.size.height / imageHeight;
         }
         
         // No wider than screen
     }
     else
     {
-        widthDiff  = frameWidth - image.size.width;
+        widthDiff  = frameWidth - imageWidth;
         
         // Higher than screen [OK]
-        if (image.size.height > frameHeight)
+        if (imageHeight > frameHeight)
         {
-            heightDiff = image.size.height - frameHeight;
+            heightDiff = imageHeight - frameHeight;
             
             if (widthDiff > heightDiff)
-                resizeRatio = image.size.height / frameHeight;
+                resizeRatio = imageHeight / frameHeight;
             else
-                resizeRatio = frameWidth / image.size.width;
+                resizeRatio = frameWidth / imageWidth;
             
             // No higher than screen [OK]
         }
         else
         {
-            heightDiff = frameHeight - image.size.height;
+            heightDiff = frameHeight - imageHeight;
             
             if (widthDiff > heightDiff)
-                resizeRatio = frameWidth / image.size.width;
+                resizeRatio = frameWidth / imageWidth;
             else
-                resizeRatio = frameHeight / image.size.height;
+                resizeRatio = frameHeight / imageHeight;
         }
     }
     
     // Resize the image.
-    float optimusWidth  = (image.size.width * resizeRatio) * enlargeRatio;
-    float optimusHeight = (image.size.height * resizeRatio) * enlargeRatio;
+    float optimusWidth  = (imageWidth * resizeRatio) * enlargeRatio;
+    float optimusHeight = (imageHeight * resizeRatio) * enlargeRatio;
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, optimusWidth, optimusHeight)];
     imageView.backgroundColor = [UIColor blackColor];
     
