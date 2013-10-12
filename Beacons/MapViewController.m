@@ -78,11 +78,6 @@
     }];
     
     self.createBeaconButton.titleLabel.font = [ThemeManager regularFontOfSize:20];
-    self.createBeaconButton.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.createBeaconButton.layer.shadowOpacity = 0.5;
-    self.createBeaconButton.layer.shadowRadius = 1.0;
-    self.createBeaconButton.layer.shadowOffset = CGSizeMake(0, -1);
-    self.createBeaconButton.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.createBeaconButton.bounds].CGPath;
     self.createBeaconButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];
     UIImage *createBeaconImage = [UIImage imageNamed:@"plus"];
     [self.createBeaconButton setImage:createBeaconImage forState:UIControlStateNormal];
