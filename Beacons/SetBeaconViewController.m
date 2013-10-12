@@ -89,7 +89,7 @@
     self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(120, 0, 135, self.dateContainerView.frame.size.height)];
     [self.dateContainerView addSubview:self.self.datePicker];
     
-    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 71, 150, 17)];
+    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 70, 150, 19)];
     descriptionSectionLabel.text = @"What's going on?";
     descriptionSectionLabel.textColor = [UIColor whiteColor];
     descriptionSectionLabel.font = [ThemeManager regularFontOfSize:15];
@@ -99,6 +99,7 @@
     self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters",0, MAX_CHARACTER_COUNT];
     self.characterCountLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
     self.characterCountLabel.font = [ThemeManager regularFontOfSize:10];
+    self.characterCountLabel.hidden = YES;
     [self.descriptionContainerView addSubview:self.characterCountLabel];
     
     UILabel *dateSectionLabel = [[UILabel alloc] init];
@@ -169,6 +170,7 @@
 
 - (void)updateCharacterCountLabel
 {
+    self.characterCountLabel.hidden = self.descriptionTextView.text.length < 20;
     self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters", self.descriptionTextView.text.length, MAX_CHARACTER_COUNT];
     self.characterCountLabel.textColor = self.descriptionTextView.text.length == MAX_CHARACTER_COUNT ? [UIColor whiteColor] : [[UIColor whiteColor] colorWithAlphaComponent:0.7];
 }
