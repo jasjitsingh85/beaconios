@@ -216,6 +216,7 @@
         self.imageViewGradient.hidden = YES;
     }
     else {
+        self.imageViewGradient.hidden = NO;
         [self loadImageViewForBeacon:beacon];
     }
     
@@ -247,6 +248,7 @@
 - (void)updateImageViewWithImage:(UIImage *)image
 {
     self.kenBurnsView.hidden = NO;
+    self.imageViewGradient.hidden = NO;
     if (!self.kenBurnsView.isAnimating) {
         [self.kenBurnsView animateWithImages:@[image] transitionDuration:3 loop:YES isLandscape:NO];
     }
