@@ -174,8 +174,8 @@
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.joinButton.frame = CGRectMake(226, 125, 73, 31);
-    [self.joinButton setTitle:@"join" forState:UIControlStateNormal];
-    [self.joinButton setTitle:@"invite" forState:UIControlStateSelected];
+    [self.joinButton setTitle:@"Join" forState:UIControlStateNormal];
+    [self.joinButton setTitle:@"Invite" forState:UIControlStateSelected];
     [self.joinButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.joinButton.backgroundColor = [UIColor whiteColor];
     self.joinButton.layer.cornerRadius = 4;

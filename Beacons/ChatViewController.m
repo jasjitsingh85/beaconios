@@ -56,7 +56,7 @@
     textViewFrame.origin.x = cameraButtonFrame.size.width;
     textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
     self.textView = [[JAPlaceholderTextView alloc] initWithFrame:textViewFrame];
-    self.textView.placeholder = @"send a group message";
+    self.textView.placeholder = @"Send a group message";
     self.textView.placeholderColor = [UIColor darkGrayColor];
     self.textView.font = [ThemeManager lightFontOfSize:15];
     self.textView.layer.cornerRadius = 4;
