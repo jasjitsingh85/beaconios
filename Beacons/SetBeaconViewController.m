@@ -80,22 +80,22 @@
     [self.scrollView addSubview:self.locationContainerView];
     
     self.setBeaconButton = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.locationContainerView.frame), self.view.frame.size.width, 44)];
-    [self.setBeaconButton setTitle:@"Set Hotspot!" forState:UIControlStateNormal];
+    [self.setBeaconButton setTitle:@"Invite friends" forState:UIControlStateNormal];
     self.setBeaconButton.backgroundColor = [UIColor colorWithRed:236/255.0 green:228/255.0 blue:216/255.0 alpha:1.0];
     [self.setBeaconButton setTitleColor:[UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.setBeaconButton];
     
-    self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(120, 0, 135, self.dateContainerView.frame.size.height)];
+    self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
     [self.dateContainerView addSubview:self.self.datePicker];
     
-    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(48, 70, 150, 19)];
+    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 150, 19)];
     descriptionSectionLabel.text = @"What's going on?";
     descriptionSectionLabel.textColor = [UIColor whiteColor];
     descriptionSectionLabel.font = [ThemeManager regularFontOfSize:15];
     [self.descriptionContainerView addSubview:descriptionSectionLabel];
     
-    self.characterCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(215, 71, 100, 17)];
+    self.characterCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(212, 71, 100, 17)];
     self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters",0, MAX_CHARACTER_COUNT];
     self.characterCountLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
     self.characterCountLabel.font = [ThemeManager regularFontOfSize:10];
@@ -103,29 +103,29 @@
     [self.descriptionContainerView addSubview:self.characterCountLabel];
     
     UILabel *dateSectionLabel = [[UILabel alloc] init];
-    dateSectionLabel.text = @"When at?";
+    dateSectionLabel.text = @"When?";
     dateSectionLabel.font = [ThemeManager regularFontOfSize:15];
     dateSectionLabel.textColor = [UIColor whiteColor];
     CGRect dateSectionLabelFrame;
     dateSectionLabelFrame.size = [dateSectionLabel.text sizeWithAttributes:@{NSFontAttributeName : dateSectionLabel.font}];
-    dateSectionLabelFrame.origin.x = 48;
+    dateSectionLabelFrame.origin.x = 40;
     dateSectionLabelFrame.origin.y = 0.5*(self.dateContainerView.frame.size.height - dateSectionLabelFrame.size.height);
     dateSectionLabel.frame = dateSectionLabelFrame;
     [self.dateContainerView addSubview:dateSectionLabel];
     
     UILabel *locationDescriptionLabel = [[UILabel alloc] init];
-    locationDescriptionLabel.text = @"Where at?";
+    locationDescriptionLabel.text = @"Where?";
     locationDescriptionLabel.font = [ThemeManager regularFontOfSize:15];
     locationDescriptionLabel.textColor = [UIColor blackColor];
     CGRect locationDescriptionLabelFrame;
     locationDescriptionLabelFrame.size = [locationDescriptionLabel.text sizeWithAttributes:@{NSFontAttributeName : locationDescriptionLabel.font}];
-    locationDescriptionLabelFrame.origin.x = 48;
+    locationDescriptionLabelFrame.origin.x = 40;
     locationDescriptionLabelFrame.origin.y = 0.5*(self.locationContainerView.frame.size.height - locationDescriptionLabelFrame.size.height);
     locationDescriptionLabel.frame = locationDescriptionLabelFrame;
     [self.locationContainerView addSubview:locationDescriptionLabel];
     
     self.descriptionPlaceholderText = @"e.g. Happy hour in Cap Hill";
-    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(48, 100, 220, 60)];
+    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(40, 100, 220, 60)];
     self.descriptionTextView.returnKeyType = UIReturnKeyDone;
     self.descriptionTextView.placeholder = self.descriptionPlaceholderText;
     self.descriptionTextView.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
@@ -142,7 +142,7 @@
     CGRect locationLabelFrame;
     locationLabelFrame.size.height = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].height;
     locationLabelFrame.size.width = 150;
-    locationLabelFrame.origin.x = 128;
+    locationLabelFrame.origin.x = 147;
     locationLabelFrame.origin.y = 0.5*(self.locationContainerView.frame.size.height - locationLabelFrame.size.height);
     self.locationLabel.frame = locationLabelFrame;
     [self.locationContainerView addSubview:self.locationLabel];
@@ -157,6 +157,9 @@
 {
     [super viewWillAppear:animated];
     [self view];
+    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    
     self.datePicker.date = [NSDate date];
 }
 
