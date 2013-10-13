@@ -68,12 +68,15 @@
 {
     [super viewDidLoad];
     
+    UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
+    self.view.backgroundColor = boneWhiteColor;
+    
     [self addChildViewController:self.beaconChatViewController];
     [self.view addSubview:self.beaconChatViewController.view];
     self.beaconChatViewController.view.frame = self.view.bounds;
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.beaconChatViewController.cameraButton addTarget:self action:@selector(chatCameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.beaconChatViewController.tableView.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
+    self.beaconChatViewController.tableView.backgroundColor = boneWhiteColor;
     self.beaconChatViewController.textViewContainer.backgroundColor = [UIColor clearColor];
     self.beaconChatViewController.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.beaconChatViewController.textViewContainer.layer.shadowColor = [[UIColor whiteColor] CGColor];
@@ -85,7 +88,7 @@
     [self.view addSubview:self.inviteListViewController.view];
     self.inviteListViewController.view.frame = self.view.bounds;
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.inviteListViewController.view.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
+    self.inviteListViewController.view.backgroundColor = boneWhiteColor;
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 226)];
     self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
@@ -345,6 +348,7 @@
     [UIView animateWithDuration:duration animations:^{
         self.inviteListViewController.view.transform = CGAffineTransformIdentity;
         self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(-self.beaconChatViewController.view.frame.size.width, 0);
+        self.beaconChatViewController.view.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.beaconChatViewController.view.alpha = 0;
     }];
@@ -357,6 +361,7 @@
     [UIView animateWithDuration:duration animations:^{
         self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
         self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
+        self.inviteListViewController.view.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.inviteListViewController.view.alpha = 0;
     }];
