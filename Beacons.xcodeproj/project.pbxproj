@@ -135,7 +135,7 @@
 		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
-		96B1A78E180B375A0074EC34 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B1A78D180B375A0074EC34 /* Icon@2x.png */; };
+		96B1A790180B39500074EC34 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B1A78F180B39500074EC34 /* Icon@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
@@ -371,7 +371,7 @@
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
-		96B1A78D180B375A0074EC34 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		96B1A78F180B39500074EC34 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
@@ -675,7 +675,7 @@
 				963399491758512100AF9D89 /* Beacons-Prefix.pch */,
 				9633994D1758512100AF9D89 /* Default.png */,
 				1F49B835177BFB2200117857 /* Icon.png */,
-				96B1A78D180B375A0074EC34 /* Icon@2x.png */,
+				96B1A78F180B39500074EC34 /* Icon@2x.png */,
 				96859CEE17EFA7BD00C1C467 /* Default@2x.png */,
 				96859CEF17EFA7BD00C1C467 /* Default-568h@2x.png */,
 			);
@@ -938,7 +938,7 @@
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
-				96B1A78E180B375A0074EC34 /* Icon@2x.png in Resources */,
+				96B1A790180B39500074EC34 /* Icon@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
 				1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */,
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
@@ -1173,8 +1173,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "B191D31B-6D3C-4222-960F-B327001D2039";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B191D31B-6D3C-4222-960F-B327001D2039";
+				PROVISIONING_PROFILE = "3F84F559-6CEF-4ED8-BFF6-27923CE08561";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F84F559-6CEF-4ED8-BFF6-27923CE08561";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1193,7 +1193,7 @@
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B191D31B-6D3C-4222-960F-B327001D2039";
+				PROVISIONING_PROFILE = "3F84F559-6CEF-4ED8-BFF6-27923CE08561";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1270,8 +1270,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "85679A8B-A88F-429F-9607-62035C442B06";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "85679A8B-A88F-429F-9607-62035C442B06";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
