@@ -83,7 +83,6 @@
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
-    self.inviteListViewController.view.alpha = 0;
     self.inviteListViewController.view.frame = self.view.bounds;
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.inviteListViewController.view.backgroundColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
@@ -197,6 +196,8 @@
     [super viewWillAppear:animated];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
+    
+    [self showChatAnimated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -337,6 +338,30 @@
     }];
 }
 
+- (void)showInviteAnimated:(BOOL)animated
+{
+    self.inviteListViewController.view.alpha = 1;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.inviteListViewController.view.transform = CGAffineTransformIdentity;
+        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(-self.beaconChatViewController.view.frame.size.width, 0);
+    } completion:^(BOOL finished) {
+        self.beaconChatViewController.view.alpha = 0;
+    }];
+}
+
+- (void)showChatAnimated:(BOOL)animated
+{
+    self.beaconChatViewController.view.alpha = 1;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
+        self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+        self.inviteListViewController.view.alpha = 0;
+    }];
+}
+
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -359,7 +384,8 @@
     else {
         [self showFullDescriptionViewAnimated:YES];
     }
-    self.inviteListViewController.view.alpha = 0.0;
+//    self.inviteListViewController.view.alpha = 0.0;
+    [self showChatAnimated:YES];
     [self.beaconChatViewController dismissKeyboard];
 }
 
@@ -380,6 +406,7 @@
     else {
         [self showFullDescriptionViewAnimated:YES];
     }
+    [self showInviteAnimated:YES];
     [self.beaconChatViewController dismissKeyboard];
 }
 
