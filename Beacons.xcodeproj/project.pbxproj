@@ -116,7 +116,6 @@
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
 		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
 		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
-		969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969C44DC17E1436B0083E6A4 /* Icon@2x.png */; };
 		969D648817E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */; };
 		969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */; };
 		969D648A17E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969D648417E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png */; };
@@ -136,6 +135,7 @@
 		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
+		96B1A78E180B375A0074EC34 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96B1A78D180B375A0074EC34 /* Icon@2x.png */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
@@ -344,7 +344,6 @@
 		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		969564531758691B0081B349 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		969564541758691B0081B349 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
-		969C44DC17E1436B0083E6A4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconCellBackgroundYellow@2x.png"; sourceTree = "<group>"; };
 		969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconCellBackgroundGreen@2x.png"; sourceTree = "<group>"; };
 		969D648417E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconCellBackgroundOrange@2x.png"; sourceTree = "<group>"; };
@@ -372,6 +371,7 @@
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
+		96B1A78D180B375A0074EC34 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
@@ -675,7 +675,7 @@
 				963399491758512100AF9D89 /* Beacons-Prefix.pch */,
 				9633994D1758512100AF9D89 /* Default.png */,
 				1F49B835177BFB2200117857 /* Icon.png */,
-				969C44DC17E1436B0083E6A4 /* Icon@2x.png */,
+				96B1A78D180B375A0074EC34 /* Icon@2x.png */,
 				96859CEE17EFA7BD00C1C467 /* Default@2x.png */,
 				96859CEF17EFA7BD00C1C467 /* Default-568h@2x.png */,
 			);
@@ -915,7 +915,6 @@
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
-				969C44DD17E1436B0083E6A4 /* Icon@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 				96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */,
@@ -939,6 +938,7 @@
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
+				96B1A78E180B375A0074EC34 /* Icon@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
 				1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */,
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
