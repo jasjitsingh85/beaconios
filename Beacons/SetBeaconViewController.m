@@ -87,6 +87,7 @@
     [self.scrollView addSubview:self.setBeaconButton];
     
     self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
+    self.datePicker.date = [NSDate date];
     [self.dateContainerView addSubview:self.self.datePicker];
     
     UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 150, 19)];
@@ -159,8 +160,6 @@
     [self view];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
-    
-    self.datePicker.date = [NSDate date];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden
