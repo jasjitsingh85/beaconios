@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "BeaconStatus.h"
 #import "BeaconImage.h"
+#import "Utilities.h"
 
 @implementation Beacon
 
@@ -107,14 +108,10 @@
 
 - (void)geoCodeAddress
 {
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks.count)
-        {
-            self.address = [placemarks[0] name];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBeaconUpdated object:self userInfo:nil];
-        }
+    [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
+        self.address = addressString;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBeaconUpdated object:self userInfo:nil];
     }];
 }
 

@@ -59,4 +59,19 @@
     [MKMapItem openMapsWithItems: items launchOptions: options];
 }
 
++ (void)reverseGeoCodeLocation:(CLLocation *)location completion:(void (^)(NSString *addressString, NSError *error))completion
+{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSString *address;
+        if (placemarks.count)
+        {
+            address = [placemarks[0] name];
+        }
+        if (completion) {
+            completion(address, error);
+        }
+    }];
+}
+
 @end

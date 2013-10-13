@@ -232,7 +232,7 @@
         self.directionsButton.frame = directionsButtonFrame;
     }
     else {
-        self.directionsButton.hidden = NO;
+        self.directionsButton.hidden = YES;
     }
     [self updateInvitedLabel];
     

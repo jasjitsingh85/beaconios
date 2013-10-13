@@ -24,6 +24,7 @@
 #import "BeaconProfileViewController.h"
 #import "Contact.h"
 #import "BeaconStatus.h"
+#import "Utilities.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -39,6 +40,7 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UIButton *setBeaconButton;
 @property (strong, nonatomic) NSString *descriptionPlaceholderText;
+@property (strong, nonatomic) NSString *currentLocationAddress;
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
 @property (assign, nonatomic) BOOL useCurrentLocation;
 
@@ -202,6 +204,9 @@
     CLLocation *location = notification.userInfo[@"location"];
     if (self.useCurrentLocation) {
         self.beaconCoordinate = location.coordinate;
+        [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
+            self.currentLocationAddress = addressString;
+        }];
     }
 }
 
@@ -294,7 +299,7 @@
     beacon.creator = appDelegate.loggedInUser;
     beacon.invited = [NSArray arrayWithArray:invited];
     beacon.beaconDescription = beaconDescription;
-    beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? nil : self.locationLabel.text;
+    beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[BeaconManager sharedManager] postBeacon:beacon success:^{

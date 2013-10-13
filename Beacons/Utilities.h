@@ -1,3 +1,4 @@
+
 //
 //  Utilities.h
 //  Beacons
@@ -14,7 +15,7 @@
 + (BOOL)americanPhoneNumberIsValid:(NSString *)phoneNumber;
 + (BOOL)passwordIsValid:(NSString *)password;
 + (NSString *)normalizePhoneNumber:(NSString *)phoneNumber;
-
++ (void)reverseGeoCodeLocation:(CLLocation *)location completion:(void (^)(NSString *addressString, NSError *error))completion;
 + (void)launchMapDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName;
 
 @end
