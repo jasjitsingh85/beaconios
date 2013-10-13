@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class FormView;
+@protocol FormViewDelegate <NSObject>
+
+- (void)formView:(FormView *)formView textFieldDidChange:(UITextField *)textField;
+
+@end
+
 @interface FormView : UIView
 
+@property (weak, nonatomic) id<FormViewDelegate> delegate;
 @property (strong, nonatomic) NSArray *formTitles;
 @property (strong, nonatomic) NSArray *keyboardTypes;
 @property (strong, nonatomic) UIColor *placeholderTextColor;

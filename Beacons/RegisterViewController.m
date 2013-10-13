@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "AnalyticsManager.h"
 #import "Utilities.h"
+#import "LoadingIndictor.h"
 
 typedef enum {
     ViewModeRegister=0,
@@ -21,7 +22,7 @@ typedef enum {
     ViewModeActivation,
 } ViewMode;
 
-@interface RegisterViewController ()
+@interface RegisterViewController () <FormViewDelegate>
 
 @property (strong, nonatomic) FormView *registerFormView;
 @property (strong, nonatomic) FormView *signInFormView;
@@ -46,6 +47,7 @@ typedef enum {
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orangeBackground"]];
     NSArray *registerFormTitles = @[@"name", @"email", @"phone"];
     self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 250, 36*registerFormTitles.count) formTitles:registerFormTitles];
+    self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
     self.registerFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.registerFormView];
@@ -56,6 +58,7 @@ typedef enum {
     
     NSArray *signInFormTitles = @[@"phone"];
     self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 250, 36*signInFormTitles.count) formTitles:signInFormTitles];
+    self.signInFormView.delegate = self;
     self.signInFormView.backgroundColor = [UIColor whiteColor];
     self.signInFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.signInFormView];
@@ -66,6 +69,7 @@ typedef enum {
     
     NSArray *activationFormTitles = @[@"code"];
     self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 100, 36*activationFormTitles.count) formTitles:activationFormTitles];
+    self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.activationFormView];
@@ -243,7 +247,7 @@ typedef enum {
         lastName = [nameComponents lastObject];
     }
     NSString *emailText = [self.registerFormView textFieldAtIndex:1].text;
-    NSString *phoneText = [self.registerFormView textFieldAtIndex:2].text;
+    NSString *phoneText = [Utilities normalizePhoneNumber:[self.registerFormView textFieldAtIndex:2].text];
     NSDictionary *parameters = @{@"first_name" : firstName,
                                  @"last_name" : lastName,
                                  @"email" : emailText,
@@ -266,7 +270,7 @@ typedef enum {
 
 - (void)signInAccount
 {
-    NSString *phoneText = [self.signInFormView textFieldAtIndex:0].text;
+    NSString *phoneText = [Utilities normalizePhoneNumber:[self.signInFormView textFieldAtIndex:0].text];
     NSDictionary *parameters = @{@"phone_number" : phoneText};
     [[APIClient sharedClient] postPath:@"login/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -290,12 +294,47 @@ typedef enum {
 {
     NSString *activationText = [self.activationFormView textFieldAtIndex:0].text;
     NSDictionary *parameters = @{@"activation_code" : activationText};
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] putPath:@"login/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate didActivateAccount];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"there was a problem with your activation code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+#pragma mark - FormViewDelegate
+- (void)formView:(FormView *)formView textFieldDidChange:(UITextField *)textField
+{
+    if ([textField.placeholder isEqualToString:@"phone"]) {
+        NSString *phone = [Utilities normalizePhoneNumber:textField.text];
+        if (phone.length < 4) {
+            textField.text = phone;
+        }
+        else if (phone.length < 7) {
+            NSString *comp0 = [phone substringWithRange:NSMakeRange(0, 3)];
+            NSString *comp1 = [phone substringWithRange:NSMakeRange(3, MIN((phone.length - 3), 3))];
+            textField.text = [NSString stringWithFormat:@"(%@) %@", comp0, comp1];
+        }
+        else {
+            NSString *comp0 = [phone substringWithRange:NSMakeRange(0, 3)];
+            NSString *comp1 = [phone substringWithRange:NSMakeRange(3, 3)];
+            NSString *comp2 = [phone substringWithRange:NSMakeRange(6, phone.length - 6)];
+            textField.text = [NSString stringWithFormat:@"(%@) %@ - %@", comp0, comp1, comp2];
+        }
+    }
+    if ([textField.placeholder isEqualToString:@"code"]) {
+        NSInteger activitionCodeLength = 4;
+        if (textField.text.length == activitionCodeLength) {
+            [textField resignFirstResponder];
+            [self activateAccount];
+        }
+        else if (textField.text.length > activitionCodeLength) {
+            textField.text = nil;
+        }
+    }
 }
 
 @end

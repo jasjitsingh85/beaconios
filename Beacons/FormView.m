@@ -52,6 +52,7 @@
         textFieldFrame.origin.y = i*textFieldFrame.size.height;
         NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
         InsetTextField *textField = [[InsetTextField alloc] initWithFrame:textFieldFrame];
+        [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.delegate = self;
         textField.horizontalInset = 10;
         textField.placeholder = title;
@@ -142,6 +143,13 @@
     UITextField *nextTextField = self.textFields[index + 1];
     [nextTextField becomeFirstResponder];
     return NO;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(formView:textFieldDidChange:)]) {
+        [self.delegate formView:self textFieldDidChange:textField];
+    }
 }
 
 
