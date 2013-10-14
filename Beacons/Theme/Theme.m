@@ -30,7 +30,8 @@
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     [navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 
