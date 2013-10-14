@@ -109,7 +109,7 @@
     [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
         self.address = addressString;
         [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationBeaconUpdated object:self userInfo:nil];
-    }];
+        }];
 }
 
 @end

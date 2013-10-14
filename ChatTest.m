@@ -32,7 +32,6 @@
         User *user = [users objectAtIndex:i%users.count];
         ChatMessage *chatMessage = [[ChatMessage alloc] init];
         chatMessage.sender = user;
-        chatMessage.isUserMessage = [user.firstName isEqualToString:userNames[0]];
         chatMessage.sentDate = [NSDate dateWithTimeInterval:i sinceDate:[NSDate date]];
         chatMessage.messageString = messageText;
         [chatMessages addObject:chatMessage];
@@ -48,7 +47,6 @@
     NSString *messageString = @"blah";
     ChatMessage *chatMessage = [[ChatMessage alloc] init];
     chatMessage.sender = user;
-    chatMessage.isUserMessage = [chatMessage.sender.firstName isEqualToString:@"jeff"];
     chatMessage.messageString = messageString;
     [messagesMutable addObject:chatMessage];
     return [[NSArray alloc] initWithArray:messagesMutable];

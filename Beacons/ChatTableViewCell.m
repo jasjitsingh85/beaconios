@@ -22,8 +22,6 @@
 @property (strong, nonatomic) UIImageView *avatarImageView;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UIImageView *chatImageView;
-@property (strong, nonatomic) UIFont *userChatFont;
-@property (strong, nonatomic) UIFont *systemChatFont;
 
 @end
 
@@ -36,9 +34,20 @@
         height = kImageMessageSize.height + 50;
     }
     else {
-        height = [chatMessage.messageString sizeWithFont:[ThemeManager lightFontOfSize:14.0] constrainedToSize:kMaxTextBubbleSize].height + 50;
+        UIFont *font = chatMessage.isSystemMessage ? [self fontForSystemMessage] : [self fontForUserMessage];
+        height = [chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : font} context:nil].size.height + 50;
     }
     return height;
+}
+
++ (UIFont *)fontForUserMessage
+{
+    return [ThemeManager lightFontOfSize:14];
+}
+
++ (UIFont *)fontForSystemMessage
+{
+    return [ThemeManager italicFontOfSize:14];
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,10 +61,10 @@
 //        self.chatBubble.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self addSubview:self.chatBubble];
         
-        self.userChatFont = [ThemeManager lightFontOfSize:14];
+        
         self.chatLabel = [[UILabel alloc] init];
         self.chatLabel.textColor = [UIColor blackColor];
-        self.chatLabel.font = self.userChatFont;
+        self.chatLabel.font = [ChatTableViewCell fontForUserMessage];
 //        self.chatLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         self.chatLabel.numberOfLines = 0;
         [self.chatBubble addSubview:self.chatLabel];
@@ -92,9 +101,16 @@
     else {
         [self configureForTextMessage:chatMessage];
     }
-    self.nameLabel.text = chatMessage.isUserMessage ? @"You" : chatMessage.sender.firstName;
-    if (chatMessage.sender.avatarURL) {
-        [self.avatarImageView setImageWithURL:chatMessage.sender.avatarURL];
+    
+    if (chatMessage.isSystemMessage) {
+        self.nameLabel.text = @"Hotbot";
+    }
+    else {
+        self.nameLabel.text = chatMessage.sender.firstName;
+    }
+    
+    if (chatMessage.avatarURL) {
+        [self.avatarImageView setImageWithURL:chatMessage.avatarURL];
     }
     else {
         self.avatarImageView.image = nil;
@@ -106,6 +122,7 @@
     self.chatImageView.hidden = YES;
     self.chatBubble.hidden = NO;
     self.chatLabel.text = chatMessage.messageString;
+    self.chatLabel.font = chatMessage.isSystemMessage ? [ChatTableViewCell fontForSystemMessage] : [ChatTableViewCell fontForUserMessage];
     self.chatBubble.image = [self chatBubbleForMessage:chatMessage];
 }
 
@@ -142,16 +159,26 @@
         rightBubbleImages = [NSArray arrayWithArray:rightImagesResizable];
     });
     NSInteger idx = chatMessage.sender.userID.integerValue;
-    UIImage *bubbleImage = self.chatMessage.isUserMessage ? rightBubbleImages[idx % rightBubbleImages.count] : leftBubbleImages[idx % leftBubbleImages.count];
+    UIImage *bubbleImage;
+    if (self.chatMessage.isSystemMessage) {
+        bubbleImage = nil;
+    }
+    else if (self.chatMessage.isLoggedInUserMessage) {
+        bubbleImage = rightBubbleImages[idx % rightBubbleImages.count];
+    }
+    else {
+        bubbleImage = leftBubbleImages[idx % leftBubbleImages.count];
+    }
     return bubbleImage;
 }
 
 - (void)layoutSubviews
 {
     CGRect chatLabelFrame;
-    chatLabelFrame.size = [self.chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : self.userChatFont} context:nil].size;
+    UIFont *chatLabelFont = self.chatMessage.isSystemMessage ? [ChatTableViewCell fontForSystemMessage] : [ChatTableViewCell fontForUserMessage];
+    chatLabelFrame.size = [self.chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : chatLabelFont} context:nil].size;
     chatLabelFrame.origin.y = 15;
-    chatLabelFrame.origin.x = self.chatMessage.isUserMessage ? 18 : 27;
+    chatLabelFrame.origin.x = self.chatMessage.isLoggedInUserMessage ? 18 : 27;
     self.chatLabel.frame = chatLabelFrame;
     ;
     
@@ -163,7 +190,7 @@
     CGRect avatarFrame;
     avatarFrame.size = CGSizeMake(46, 46);
     avatarFrame.origin.y = MAX(CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height, 0);
-    if (self.chatMessage.isUserMessage) {
+    if (self.chatMessage.isLoggedInUserMessage) {
         chatBubbleFrame.origin.x = self.frame.size.width - bubbleBufferX - chatBubbleFrame.size.width;
         avatarFrame.origin.x = self.frame.size.width - avatarBufferX - self.avatarImageView.frame.size.width;
     }
@@ -180,7 +207,7 @@
         chatImageFrame.origin.y = 15;
         chatImageFrame.size = kImageMessageSize;
         CGFloat chatImageBufferX = 75;
-        if (self.chatMessage.isUserMessage) {
+        if (self.chatMessage.isLoggedInUserMessage) {
             chatImageFrame.origin.x = self.frame.size.width - chatImageBufferX - chatImageFrame.size.width;
         }
         else {

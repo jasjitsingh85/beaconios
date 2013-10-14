@@ -85,10 +85,9 @@
 - (void)createChatMessageWithString:(NSString *)messageString
 {
     ChatMessage *chatMessage = [[ChatMessage alloc] init];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     chatMessage.sender = [User loggedInUser];
+    chatMessage.avatarURL = [User loggedInUser].avatarURL;
     chatMessage.messageString = messageString;
-    chatMessage.isUserMessage = YES;
     [self addChatMessage:chatMessage];
     [[APIClient sharedClient] postMessageWithText:chatMessage.messageString forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -100,9 +99,8 @@
 - (void)createChatMessageWithImage:(UIImage *)image
 {
     ChatMessage *chatMessage = [[ChatMessage alloc] init];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     chatMessage.sender = [User loggedInUser];
-    chatMessage.isUserMessage = YES;
+    chatMessage.avatarURL = [User loggedInUser].avatarURL;
     chatMessage.cachedImage = image;
     //right now we don't send image messages to server in the same way we send text messages
     [self addChatMessage:chatMessage];

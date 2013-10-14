@@ -33,6 +33,9 @@
         self.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
     }
     
+    self.messageType = messageData[@"chat_type"];
+    self.avatarURL = messageData[@"profile_pic"];
+    
     return self;
 }
 
@@ -41,9 +44,14 @@
     return self.imageURL || self.cachedImage;
 }
 
-- (BOOL)isUserMessage
+- (BOOL)isLoggedInUserMessage
 {
     return [self.sender.userID isEqualToNumber:[User loggedInUser].userID];
+}
+
+- (BOOL)isSystemMessage
+{
+    return self.messageType && [self.messageType isEqualToString:kMessageTypeSystemMessage];
 }
 
 @end
