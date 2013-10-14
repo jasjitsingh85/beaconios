@@ -26,7 +26,6 @@ User;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
-@property (strong, nonatomic) User *loggedInUser;
 
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;

@@ -9,7 +9,36 @@
 #import "User.h"
 #import "Utilities.h"
 
+static User *_loggedInUser = nil;
+static dispatch_once_t onceToken;
+
 @implementation User
+
++ (User *)loggedInUser
+{
+    if (!_loggedInUser && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn]) {
+        dispatch_once(&onceToken, ^{
+            _loggedInUser = [[User alloc] init];
+            if (!_loggedInUser.userID) {
+                _loggedInUser.phoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyPhone];
+                _loggedInUser.firstName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyFirstName];
+                _loggedInUser.lastName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyLastName];
+                _loggedInUser.userID = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyUserID];
+                NSString *avatarURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsAvatarURLKey];
+                if (avatarURLString) {
+                    _loggedInUser.avatarURL = [NSURL URLWithString:avatarURLString];
+                }
+            }
+        });
+    }
+    return _loggedInUser;
+}
+
++ (void)logoutUser
+{
+    _loggedInUser = nil;
+    onceToken = 0;
+}
 
 - (id)initWithData:(NSDictionary *)userData
 {

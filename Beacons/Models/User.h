@@ -23,6 +23,8 @@
  It is computed when the phone number property is set*/
 @property (strong, nonatomic, readonly) NSString *normalizedPhoneNumber;
 
++ (User *)loggedInUser;
++ (void)logoutUser;
 - (id)initWithData:(NSDictionary *)userData;
 - (NSString *)fullName;
 - (NSString *)abbreviatedName;

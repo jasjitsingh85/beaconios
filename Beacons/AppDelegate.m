@@ -86,22 +86,6 @@
     return _menuViewController;
 }
 
-- (User *)loggedInUser
-{
-    if (!_loggedInUser && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn]) {
-        _loggedInUser = [User new];
-        _loggedInUser.phoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyPhone];
-        _loggedInUser.firstName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyFirstName];
-        _loggedInUser.lastName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyLastName];
-        _loggedInUser.userID = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyUserID];
-        NSString *avatarURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsAvatarURLKey];
-        if (avatarURLString) {
-            _loggedInUser.avatarURL = [NSURL URLWithString:avatarURLString];
-        }
-    }
-    return _loggedInUser;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -139,7 +123,6 @@
     NSString *authorizationToken = response[@"token"];
     [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
     BOOL activated = [response[@"activated"] boolValue];
-    self.loggedInUser = user;
     NSString *firstName = user.firstName;
     if (firstName) {
         [[NSUserDefaults standardUserDefaults] setObject:firstName forKey:kDefaultsKeyFirstName];
@@ -197,7 +180,7 @@
     }
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    self.loggedInUser = nil;
+    [User logoutUser];
     [[APIClient sharedClient] clearAuthorizationHeader];
 }
 

@@ -10,6 +10,7 @@
 #import "User.h"
 #import "AppDelegate.h"
 #import "BeaconImage.h"
+#import "User.h"
 
 @implementation ChatMessage
 
@@ -32,14 +33,17 @@
         self.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
     }
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    self.isUserMessage = [self.sender.userID isEqualToNumber:appDelegate.loggedInUser.userID];
     return self;
 }
 
 - (BOOL)isImageMessage
 {
     return self.imageURL || self.cachedImage;
+}
+
+- (BOOL)isUserMessage
+{
+    return [self.sender.userID isEqualToNumber:[User loggedInUser].userID];
 }
 
 @end

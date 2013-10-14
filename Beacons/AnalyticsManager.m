@@ -7,7 +7,6 @@
 //
 
 #import "AnalyticsManager.h"
-#import "AppDelegate.h"
 #import "User.h"
 #import "Beacon.h"
 
@@ -59,8 +58,7 @@ static NSString * const kEventDidRegister = @"did_register";
 
 - (void)setupForUser
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    User *loggedInUser = appDelegate.loggedInUser;
+    User *loggedInUser = [User loggedInUser];
     if (!loggedInUser || !loggedInUser.userID) {
         return;
     }

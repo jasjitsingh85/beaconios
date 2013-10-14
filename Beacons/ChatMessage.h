@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSDate *sentDate;
 @property (strong, nonatomic) User *sender;
 @property (assign, nonatomic) BOOL isUserMessage;
+@property (strong, nonatomic) NSString *messageType;
 @property (readonly) BOOL isImageMessage;
 
 - (id)initWithData:(NSDictionary *)messageData;

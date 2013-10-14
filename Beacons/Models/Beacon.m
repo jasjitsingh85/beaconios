@@ -10,7 +10,6 @@
 #import "User.h"
 #import "Contact.h"
 #import "Constants.h"
-#import "AppDelegate.h"
 #import "BeaconStatus.h"
 #import "BeaconImage.h"
 #import "Utilities.h"
@@ -71,12 +70,11 @@
         //by default user is attending
         self.userAttending = self.isUserBeacon;
         if (!self.userAttending) {
-            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
             NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"beaconStatusOption = %d", BeaconStatusOptionGoing]];
             NSArray *beaconStatusGoing = [self.invited filteredArrayUsingPredicate:predicate];
             NSLog(@"going %@", beaconStatusGoing);
             for (BeaconStatus *beaconStatus in beaconStatusGoing) {
-                self.userAttending = self.userAttending || [appDelegate.loggedInUser.normalizedPhoneNumber isEqualToString:beaconStatus.contact.normalizedPhoneNumber];
+                self.userAttending = self.userAttending || [[User loggedInUser].normalizedPhoneNumber isEqualToString:beaconStatus.contact.normalizedPhoneNumber];
             }
         }
         
@@ -99,8 +97,7 @@
         return NO;
     }
     //get logged in user id
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if (appDelegate.loggedInUser && [appDelegate.loggedInUser.userID isEqualToNumber:self.creator.userID]) {
+    if ([User loggedInUser] && [[User loggedInUser].userID isEqualToNumber:self.creator.userID]) {
         return YES;
     }
     return NO;

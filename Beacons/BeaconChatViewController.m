@@ -15,6 +15,7 @@
 #import "ChatTableViewCell.h"
 #import "ImageViewController.h"
 #import "SoundPlayer.h"
+#import "User.h"
 
 @interface BeaconChatViewController ()
 
@@ -85,7 +86,7 @@
 {
     ChatMessage *chatMessage = [[ChatMessage alloc] init];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    chatMessage.sender = appDelegate.loggedInUser;
+    chatMessage.sender = [User loggedInUser];
     chatMessage.messageString = messageString;
     chatMessage.isUserMessage = YES;
     [self addChatMessage:chatMessage];
@@ -100,7 +101,7 @@
 {
     ChatMessage *chatMessage = [[ChatMessage alloc] init];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    chatMessage.sender = appDelegate.loggedInUser;
+    chatMessage.sender = [User loggedInUser];
     chatMessage.isUserMessage = YES;
     chatMessage.cachedImage = image;
     //right now we don't send image messages to server in the same way we send text messages

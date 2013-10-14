@@ -92,7 +92,7 @@
     else {
         [self configureForTextMessage:chatMessage];
     }
-    self.nameLabel.text = chatMessage.isUserMessage ? @"you" : chatMessage.sender.firstName;
+    self.nameLabel.text = chatMessage.isUserMessage ? @"You" : chatMessage.sender.firstName;
     if (chatMessage.sender.avatarURL) {
         [self.avatarImageView setImageWithURL:chatMessage.sender.avatarURL];
     }

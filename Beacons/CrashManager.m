@@ -8,7 +8,6 @@
 
 #import "CrashManager.h"
 #import <CrittercismSDK/Crittercism.h>
-#import "AppDelegate.h"
 #import "User.h"
 
 @interface CrashManager()
@@ -41,8 +40,7 @@
     if (![CrashManager sharedManager].crittercismEnabled) {
         [CrashManager enableCrittercism];
     }
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    User *loggedInUser = appDelegate.loggedInUser;
+    User *loggedInUser = [User loggedInUser];
     if (!loggedInUser || !loggedInUser.userID) {
         return;
     }

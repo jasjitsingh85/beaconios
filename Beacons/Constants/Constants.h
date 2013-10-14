@@ -22,3 +22,7 @@
 //conversions
 #define METERS_TO_MILES 0.000621371
 #define METERS_TO_FEET 3.28084
+
+//messages
+#define kMessageTypeUserMessage @"UM"
+#define kMessageTypeSystemMessage @"HM"
