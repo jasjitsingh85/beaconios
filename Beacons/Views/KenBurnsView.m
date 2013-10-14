@@ -180,12 +180,12 @@ enum JBSourceMode {
     imageView.backgroundColor = [UIColor blackColor];
     
     // Calcule the maximum move allowed.
-    float maxMoveX = 0;
-    float maxMoveY = 0;
+    float maxMoveX = (optimusWidth - frameWidth)/2.0;
+    float maxMoveY = (optimusHeight - frameHeight)/2.0;
     
     float rotation = (arc4random() % 9) / 100;
     
-    switch (arc4random() % 4) {
+    switch (arc4random() % 7) {
         case 0:
             originX = 0;
             originY = 0;
@@ -203,8 +203,17 @@ enum JBSourceMode {
             moveX   = -maxMoveX;
             moveY   = maxMoveY;
             break;
-            
+        
         case 2:
+            originX = 0;
+            originY = (frameHeight - optimusHeight)/2.0;
+            zoomInX = 1.10;
+            zoomInY = 1.10;
+            moveX   = -maxMoveX;
+            moveY   = maxMoveY/2.0;
+            break;
+            
+        case 3:
             originX = frameWidth - optimusWidth;
             originY = 0;
             zoomInX = 1.30;
@@ -212,14 +221,32 @@ enum JBSourceMode {
             moveX   = maxMoveX;
             moveY   = -maxMoveY;
             break;
+        
+        case 4:
+            originX = (frameWidth - optimusWidth)/2.0;
+            originY = 0;
+            zoomInX = 1.30;
+            zoomInY = 1.30;
+            moveX   = maxMoveX/2.0;
+            moveY   = -maxMoveY;
+            break;
             
-        case 3:
+        case 5:
             originX = frameWidth - optimusWidth;
             originY = frameHeight - optimusHeight;
             zoomInX = 1.20;
             zoomInY = 1.20;
             moveX   = maxMoveX;
             moveY   = maxMoveY;
+            break;
+            
+        case 6:
+            originX = (frameWidth - optimusWidth)/2.0;
+            originY = frameHeight - optimusHeight/2.0;
+            zoomInX = 1.20;
+            zoomInY = 1.20;
+            moveX   = maxMoveX/2.0;
+            moveY   = maxMoveY/2.0;
             break;
             
         default:

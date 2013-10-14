@@ -254,7 +254,7 @@
     self.kenBurnsView.hidden = NO;
     self.imageViewGradient.hidden = NO;
     if (!self.kenBurnsView.isAnimating) {
-        [self.kenBurnsView animateWithImages:@[image] transitionDuration:3 loop:YES isLandscape:NO];
+        [self.kenBurnsView animateWithImages:@[image] transitionDuration:6 loop:YES isLandscape:NO];
     }
     else {
         [self.kenBurnsView addImage:image];
@@ -272,7 +272,7 @@
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:beaconImage.imageURL options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
             jadispatch_main_qeue(^{
                 if (!self.kenBurnsView.isAnimating) {
-                    [self.kenBurnsView animateWithImages:@[image] transitionDuration:3 loop:YES isLandscape:NO];
+                    [self.kenBurnsView animateWithImages:@[image] transitionDuration:6 loop:YES isLandscape:NO];
                 }
                 else {
                     [self.kenBurnsView addImage:image];
