@@ -82,7 +82,7 @@
     [self.scrollView addSubview:self.locationContainerView];
     
     self.setBeaconButton = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.locationContainerView.frame), self.view.frame.size.width, 44)];
-    [self.setBeaconButton setTitle:@"Invite friends" forState:UIControlStateNormal];
+    [self.setBeaconButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
     self.setBeaconButton.backgroundColor = [UIColor colorWithRed:236/255.0 green:228/255.0 blue:216/255.0 alpha:1.0];
     [self.setBeaconButton setTitleColor:[UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
