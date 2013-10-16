@@ -214,10 +214,10 @@ typedef enum {
         self.navigationItem.rightBarButtonItem.title = @"";
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
-            inviteButtonText = [NSString stringWithFormat:@"invite %@", contact.firstName];
+            inviteButtonText = [NSString stringWithFormat:@"Invite %@", contact.firstName];
         }
         else {
-            inviteButtonText = [NSString stringWithFormat:@"%@+%d", contact.firstName, self.selectedContactDictionary.count - 1];
+            inviteButtonText = [NSString stringWithFormat:@"%@ +%d", contact.firstName, self.selectedContactDictionary.count - 1];
         }
     }
     else {
