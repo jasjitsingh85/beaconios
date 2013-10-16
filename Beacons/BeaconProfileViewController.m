@@ -42,6 +42,7 @@
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
+@property (strong, nonatomic) UIButton *inviteButton;
 @property (strong, nonatomic) UIButton *directionsButton;
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
@@ -120,7 +121,7 @@
     self.chatTabButton.frame = chatTabButtonFrame;
     [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonNormal"] forState:UIControlStateNormal];
     [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonSelected"] forState:UIControlStateSelected];
-    [self.chatTabButton addTarget:self action:@selector(chatButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.chatTabButton addTarget:self action:@selector(chatTabTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.chatTabButton];
     self.chatTabButton.selected = YES;
     
@@ -131,7 +132,7 @@
     self.inviteTabButton.frame = inviteTabButtonFrame;
     [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonNormal"] forState:UIControlStateNormal];
     [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonSelected"] forState:UIControlStateSelected];
-    [self.inviteTabButton addTarget:self action:@selector(invitedButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteTabButton addTarget:self action:@selector(inviteTabTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteTabButton];
     
     UIView *verticalDivider = [[UIView alloc] init];
@@ -177,12 +178,20 @@
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.joinButton.frame = CGRectMake(226, 125, 73, 31);
     [self.joinButton setTitle:@"Join" forState:UIControlStateNormal];
-    [self.joinButton setTitle:@"Invite" forState:UIControlStateSelected];
     [self.joinButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.joinButton.backgroundColor = [UIColor whiteColor];
     self.joinButton.layer.cornerRadius = 4;
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
+    
+    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.inviteButton.frame = self.joinButton.frame;
+    [self.inviteButton setTitle:@"Invite" forState:UIControlStateNormal];
+    [self.inviteButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.inviteButton.backgroundColor = [UIColor whiteColor];
+    self.inviteButton.layer.cornerRadius = 4;
+    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.descriptionView addSubview:self.inviteButton];
     
     self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
@@ -241,7 +250,8 @@
     
     self.inviteListViewController.beaconStatuses = beacon.invited;
     
-    self.joinButton.selected = beacon.userAttending;
+    self.joinButton.hidden = beacon.userAttending;
+    self.inviteButton.hidden = !beacon.userAttending;
 }
 
 - (void)getDirectionsToBeacon
@@ -378,7 +388,7 @@
 }
 
 #pragma mark - Buttons 
-- (void)chatButtonTouched:(id)sender
+- (void)chatTabTouched:(id)sender
 {
     BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
     self.chatTabButton.selected = YES;
@@ -399,7 +409,7 @@
     [self showCameraActionSheet];
 }
 
-- (void)invitedButtonTouched:(id)sender
+- (void)inviteTabTouched:(id)sender
 {
     BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
     self.chatTabButton.selected = NO;
@@ -417,16 +427,18 @@
 
 - (void)joinButtonTouched:(id)sender
 {
-    if (!self.joinButton.selected) {
-        [[BeaconManager sharedManager] confirmBeacon:self.beacon];
-    }
-    else {
-        FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-        findFriendsViewController.delegate = self;
-//        findFriendsViewController.selectedContacts = [self.beacon.invited valueForKey:@"contact"];
-        findFriendsViewController.inactiveContacts = [self.beacon.invited valueForKey:@"contact"];
-        [self.navigationController pushViewController:findFriendsViewController animated:YES];
-    }
+    [[BeaconManager sharedManager] confirmBeacon:self.beacon];
+    self.joinButton.hidden = YES;
+    self.inviteButton.hidden = NO;
+}
+
+- (void)inviteButtonTouched:(id)sender
+{
+    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+    findFriendsViewController.delegate = self;
+    //        findFriendsViewController.selectedContacts = [self.beacon.invited valueForKey:@"contact"];
+    findFriendsViewController.inactiveContacts = [self.beacon.invited valueForKey:@"contact"];
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
 - (void)imageViewTapped:(id)sender
@@ -512,11 +524,8 @@
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        NSString *message = [NSString stringWithFormat:@"invited %@", [contacts[0] firstName]];
-        if (contacts.count > 1) {
-            message = [message stringByAppendingString:[NSString stringWithFormat:@" and %d others", contacts.count - 1]];
-        }
-        [[[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

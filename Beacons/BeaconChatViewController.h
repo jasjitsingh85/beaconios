@@ -15,5 +15,6 @@
 
 - (void)createChatMessageWithString:(NSString *)messageString;
 - (void)createChatMessageWithImage:(UIImage *)image;
+- (void)reloadMessagesFromServerCompletion:(void (^)())completion;
 
 @end

@@ -297,6 +297,7 @@
     }
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     beacon.creator = [User loggedInUser];
+    beacon.userAttending = YES;
     beacon.invited = [NSArray arrayWithArray:invited];
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
