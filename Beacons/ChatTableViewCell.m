@@ -109,8 +109,13 @@
         self.nameLabel.text = chatMessage.sender.firstName;
     }
     
+    NSURL *avatarURL = chatMessage.avatarURL;
+    //screwed up API where server doesn't return correct avatar url for users
+    if ([chatMessage.messageType isEqualToString:kMessageTypeUserMessage]) {
+        avatarURL = chatMessage.sender.avatarURL;
+    }
     if (chatMessage.avatarURL) {
-        [self.avatarImageView setImageWithURL:chatMessage.avatarURL];
+        [self.avatarImageView setImageWithURL:avatarURL];
     }
     else {
         self.avatarImageView.image = nil;
