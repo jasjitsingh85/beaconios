@@ -298,14 +298,16 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     beacon.creator = [User loggedInUser];
     beacon.userAttending = YES;
-    beacon.invited = [NSArray arrayWithArray:invited];
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Nice!" message:@"You successfully posted a Beacon" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Best. Hotspot. Ever." message:@"What would your friends do without you to lead them?" delegate:nil cancelButtonTitle:@"Nothing, they need me." otherButtonTitles: nil] show];
+//        [[[UIAlertView alloc] initWithTitle:@"Your Hotspot looks fun!" message:@"Can I come?" delegate:nil cancelButtonTitle:@"No...God, you're so creepy" otherButtonTitles: nil] show];
+//        [[[UIAlertView alloc] initWithTitle:@"Your Hotspot...it's beautiful" message:@"No Hotspot has ever made me feel this way before" delegate:nil cancelButtonTitle:@"You probably say that to all the Hotspots" otherButtonTitles:nil] show];
+//        [[[UIAlertView alloc] initWithTitle:@"Quite the Hotspot you got there" message:@"You must be very popular" delegate:nil cancelButtonTitle:@"Thank you" otherButtonTitles:nil] show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
         beaconProfileViewController.beacon = beacon;
