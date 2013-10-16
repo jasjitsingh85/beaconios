@@ -104,8 +104,16 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Invite Friends";
-    UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTouched:)];
-    self.navigationItem.rightBarButtonItem = doneBarButtonItem;
+    UIButton *skipButton = [[UIButton alloc] init];
+    skipButton.frame = CGRectMake(0, 0, 50, 30);
+    skipButton.backgroundColor = [UIColor whiteColor];
+    skipButton.layer.cornerRadius = 4;
+    [skipButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [skipButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    skipButton.titleLabel.font = [ThemeManager regularFontOfSize:12];
+    [skipButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+    self.navigationItem.rightBarButtonItem = skipButtonItem;
     
     self.suggestedList = @[];
     self.nonSuggestedList = @[];
