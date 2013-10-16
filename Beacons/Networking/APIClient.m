@@ -143,9 +143,10 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
         NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
         [invites addObject:contactString];
     }
-    NSDictionary *paramaters = @{@"invite" : invites};
+    NSDictionary *paramaters = @{@"beacon" : beacon.beaconID,
+                                 @"invite_list" : invites};
     
-    [[APIClient sharedClient] putPath:@"beacon/me/" parameters:paramaters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"invite/" parameters:paramaters success:success failure:failure];
 }
 
 - (void)postLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
