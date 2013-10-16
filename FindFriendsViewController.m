@@ -34,6 +34,7 @@ typedef enum {
 @property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIButton *inviteButton;
+@property (strong, nonatomic) UIButton *skipButton;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
 
@@ -104,15 +105,15 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.title = @"Invite Friends";
-    UIButton *skipButton = [[UIButton alloc] init];
-    skipButton.frame = CGRectMake(0, 0, 50, 30);
-    skipButton.backgroundColor = [UIColor whiteColor];
-    skipButton.layer.cornerRadius = 4;
-    [skipButton setTitle:@"Skip" forState:UIControlStateNormal];
-    [skipButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    skipButton.titleLabel.font = [ThemeManager regularFontOfSize:12];
-    [skipButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+    self.skipButton = [[UIButton alloc] init];
+    self.skipButton.frame = CGRectMake(0, 0, 50, 30);
+    self.skipButton.backgroundColor = [UIColor whiteColor];
+    self.skipButton.layer.cornerRadius = 4;
+    [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.skipButton.titleLabel.font = [ThemeManager regularFontOfSize:12];
+    [self.skipButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.skipButton];
     self.navigationItem.rightBarButtonItem = skipButtonItem;
     
     self.suggestedList = @[];
@@ -207,11 +208,35 @@ typedef enum {
     }];
 }
 
+- (void)hideSkipButton:(BOOL)animated
+{
+    if (!self.skipButton.alpha) {
+        return;
+    }
+    
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.skipButton.alpha = 0.0;
+    }];
+}
+
+- (void)showSkipButton:(BOOL)animated
+{
+    if (self.skipButton.alpha) {
+        return;
+    }
+    
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.skipButton.alpha = 1.0;
+    }];
+}
+
 - (void)updateInviteButtonText:(Contact *)lastSelectedContact
 {
     NSString *inviteButtonText = @"";
     if (self.selectedContactDictionary.count) {
-        self.navigationItem.rightBarButtonItem.title = @"";
+        [self hideSkipButton:YES];
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
             inviteButtonText = [NSString stringWithFormat:@"Invite %@", contact.firstName];
@@ -221,7 +246,7 @@ typedef enum {
         }
     }
     else {
-        self.navigationItem.rightBarButtonItem.title = @"Skip";
+        [self showSkipButton:YES];
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
 }
