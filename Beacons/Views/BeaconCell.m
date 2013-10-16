@@ -211,9 +211,10 @@
 {
     NSString *creatorText = [self.beacon.creator fullName];
     NSString *otherText;
-    if (self.beacon.invited && self.beacon.invited.count) {
-        NSString *other = self.beacon.invited.count == 1 ? @"other..." : @"others...";
-        otherText = [NSString stringWithFormat:@"and %d %@", self.beacon.invited.count, other];
+    if (self.beacon.guestStatuses && self.beacon.guestStatuses.count > 1) {
+        NSInteger otherCount = self.beacon.guestStatuses.count - 1;
+        NSString *other = otherCount == 1 ? @"other..." : @"others...";
+        otherText = [NSString stringWithFormat:@"and %d %@", otherCount, other];
     }
     NSMutableAttributedString *attributedText;
     if (otherText) {

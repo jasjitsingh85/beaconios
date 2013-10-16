@@ -248,7 +248,7 @@
     }
     [self updateInvitedLabel];
     
-    self.inviteListViewController.beaconStatuses = beacon.invited;
+    self.inviteListViewController.beaconStatuses = beacon.guestStatuses.allValues;
     
     self.joinButton.hidden = beacon.userAttending;
     self.inviteButton.hidden = !beacon.userAttending;
@@ -296,9 +296,10 @@
 {
     NSString *creatorText = [self.beacon.creator fullName];
     NSString *otherText;
-    if (self.beacon.invited && self.beacon.invited.count) {
-        NSString *other = self.beacon.invited.count == 1 ? @"other..." : @"others...";
-        otherText = [NSString stringWithFormat:@"and %d %@", self.beacon.invited.count, other];
+    if (self.beacon.guestStatuses && self.beacon.guestStatuses.count > 1) {
+        NSInteger otherCount = self.beacon.guestStatuses.count - 1;
+        NSString *other = otherCount == 1 ? @"other..." : @"others...";
+        otherText = [NSString stringWithFormat:@"and %d %@", otherCount, other];
     }
     if (otherText) {
         self.invitedLabel.text = [NSString stringWithFormat:@"%@ %@", creatorText, otherText];
@@ -437,7 +438,7 @@
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
     findFriendsViewController.delegate = self;
     //        findFriendsViewController.selectedContacts = [self.beacon.invited valueForKey:@"contact"];
-    findFriendsViewController.inactiveContacts = [self.beacon.invited valueForKey:@"contact"];
+    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses valueForKey:@"contact"];
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 

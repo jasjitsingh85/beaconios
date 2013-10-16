@@ -27,13 +27,13 @@
         NSNumber *longitude = data[@"longitude"];
         self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
         
-        NSMutableArray *invited = [NSMutableArray new];
+        NSMutableDictionary *guestStatuses = [[NSMutableDictionary alloc] init];
         Contact *creatorContact = [[Contact alloc] initWithUser:self.creator];
         BeaconStatus *creatorBeaconStatus = [[BeaconStatus alloc] init];
         creatorBeaconStatus.user = self.creator;
         creatorBeaconStatus.contact = creatorContact;
         creatorBeaconStatus.beaconStatusOption = BeaconStatusOptionGoing;
-        [invited addObject:creatorBeaconStatus];
+        [guestStatuses setObject:creatorBeaconStatus forKey:creatorBeaconStatus.user.normalizedPhoneNumber];
         for (NSDictionary *userData in data[@"followers"]) {
             User *user = [[User alloc] initWithData:userData];
             Contact *contact = [[Contact alloc] initWithUser:user];
@@ -41,7 +41,7 @@
             beaconStatus.user = user;
             beaconStatus.contact = contact;
             beaconStatus.beaconStatusOption = BeaconStatusOptionGoing;
-            [invited addObject:beaconStatus];
+            [guestStatuses setObject:beaconStatus forKey:beaconStatus.user.normalizedPhoneNumber];
         }
         
         for (NSDictionary *userData in data[@"profiles_invited"]) {
@@ -51,16 +51,20 @@
             beaconStatus.user = user;
             beaconStatus.contact = contact;
             beaconStatus.beaconStatusOption = BeaconStatusOptionInvited;
-            [invited addObject:beaconStatus];
+            if (!guestStatuses[beaconStatus.user.normalizedPhoneNumber]) {
+                guestStatuses[beaconStatus.user.normalizedPhoneNumber] = beaconStatus;
+            }
         }
         for (NSDictionary *contactData in data[@"contacts_invited"]) {
             Contact *contact = [[Contact alloc] initWithData:contactData];
             BeaconStatus *beaconStatus = [[BeaconStatus alloc] init];
             beaconStatus.contact = contact;
             beaconStatus.beaconStatusOption = BeaconStatusOptionInvited;
-            [invited addObject:beaconStatus];
+            if (!guestStatuses[beaconStatus.user.normalizedPhoneNumber]) {
+                guestStatuses[beaconStatus.contact.normalizedPhoneNumber] = beaconStatus;
+            }
         }
-        self.invited = [NSArray arrayWithArray:invited];
+        self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
         self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
         self.address = data[@"address"];
         if (!self.address || [self.address isEqualToString:@""]) {
@@ -69,14 +73,7 @@
         
         //by default user is attending
         self.userAttending = self.isUserBeacon;
-        if (!self.userAttending) {
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"beaconStatusOption = %d", BeaconStatusOptionGoing]];
-            NSArray *beaconStatusGoing = [self.invited filteredArrayUsingPredicate:predicate];
-            NSLog(@"going %@", beaconStatusGoing);
-            for (BeaconStatus *beaconStatus in beaconStatusGoing) {
-                self.userAttending = self.userAttending || [[User loggedInUser].normalizedPhoneNumber isEqualToString:beaconStatus.contact.normalizedPhoneNumber];
-            }
-        }
+        self.userAttending = [self.guestStatuses.allKeys containsObject:[User loggedInUser].normalizedPhoneNumber];
         
         NSMutableArray *images = [[NSMutableArray alloc] init];
         for (NSDictionary *imageData in data[@"images"]) {

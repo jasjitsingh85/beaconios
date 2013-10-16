@@ -146,7 +146,7 @@ static NSString * const kEventDidRegister = @"did_register";
 - (void)createBeacon:(Beacon *)beacon
 {
     NSDictionary *properties = @{kPropertyBeaconDescription : beacon.beaconDescription,
-                               kPropertyBeaconInvites : @(beacon.invited.count),
+                               kPropertyBeaconInvites : @(beacon.guestStatuses.count),
                                kPropertyBeaconTime : [beacon.time formattedDate]};
     [self sendEvent:kEventCreatedBeacon withProperties:properties];
                                

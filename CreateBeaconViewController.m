@@ -25,6 +25,7 @@
 #import "Theme.h"
 #import "LoadingIndictor.h"
 #import "BeaconManager.h"
+#import "BeaconStatus.h"
 
 static NSString * const kBeaconDescriptionPlaceholder = @"e.g. Come BBQ tonight at our place";
 static NSString * const kCurrentLocationString = @"Current Location";
@@ -324,7 +325,14 @@ static NSString * const kCurrentLocationString = @"Current Location";
     Beacon *beacon = [Beacon new];
     beacon.coordinate = self.beaconCoordinate;
     beacon.time = self.beaconDate;
-    beacon.invited = self.contacts;
+    NSMutableDictionary *guestStatuses;
+    for (Contact *contact in self.contacts) {
+        BeaconStatus *status = [[BeaconStatus alloc] init];
+        status.contact = contact;
+        status.beaconStatusOption = BeaconStatusOptionInvited;
+        [guestStatuses setValue:status forKey:status.contact.normalizedPhoneNumber];
+    }
+    beacon.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationValueLabel.text isEqualToString:kCurrentLocationString] ? nil : self.locationValueLabel.text;
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;

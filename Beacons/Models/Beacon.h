@@ -16,7 +16,7 @@
 @property (readonly) BOOL isUserBeacon;
 @property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) User *creator;
-@property (nonatomic, strong) NSArray *invited;
+@property (nonatomic, strong) NSDictionary *guestStatuses;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSString *beaconDescription;
