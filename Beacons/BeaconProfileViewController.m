@@ -201,6 +201,15 @@
     [self.directionsButton setImage:directionsImage forState:UIControlStateNormal];
     [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.directionsButton];
+    
+    UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
+    swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
+    [self.descriptionView addGestureRecognizer:swipeDownGestureRecognizer];
+    
+    UISwipeGestureRecognizer *swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedUp:)];
+    swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.descriptionView addGestureRecognizer:swipeUpGestureRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -458,6 +467,16 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"want to add a photo?" delegate:self cancelButtonTitle:@"not now" destructiveButtonTitle:nil otherButtonTitles:@"take a photo", @"add from library", nil];
     [actionSheet showInView:self.view];
+}
+
+- (void)descriptionViewSwipedDown:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+{
+    [self showFullDescriptionViewAnimated:YES];
+}
+
+- (void)descriptionViewSwipedUp:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+{
+    [self showPartialDescriptionViewAnimated:YES];
 }
 
 #pragma mark - UIAlertViewDelegate
