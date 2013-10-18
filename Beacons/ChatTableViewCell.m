@@ -168,7 +168,7 @@
     if (self.chatMessage.isSystemMessage) {
         bubbleImage = nil;
     }
-    else if (self.chatMessage.isLoggedInUserMessage) {
+    else if (chatMessage.isLoggedInUserMessage && !chatMessage.isSystemMessage) {
         bubbleImage = rightBubbleImages[idx % rightBubbleImages.count];
     }
     else {
@@ -183,7 +183,7 @@
     UIFont *chatLabelFont = self.chatMessage.isSystemMessage ? [ChatTableViewCell fontForSystemMessage] : [ChatTableViewCell fontForUserMessage];
     chatLabelFrame.size = [self.chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : chatLabelFont} context:nil].size;
     chatLabelFrame.origin.y = 15;
-    chatLabelFrame.origin.x = self.chatMessage.isLoggedInUserMessage ? 18 : 27;
+    chatLabelFrame.origin.x = (self.chatMessage.isLoggedInUserMessage && !self.chatMessage.isSystemMessage) ? 18 : 27;
     self.chatLabel.frame = chatLabelFrame;
     ;
     
@@ -195,7 +195,7 @@
     CGRect avatarFrame;
     avatarFrame.size = CGSizeMake(46, 46);
     avatarFrame.origin.y = MAX(CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height, 0);
-    if (self.chatMessage.isLoggedInUserMessage) {
+    if (self.chatMessage.isLoggedInUserMessage && !self.chatMessage.isSystemMessage) {
         chatBubbleFrame.origin.x = self.frame.size.width - bubbleBufferX - chatBubbleFrame.size.width;
         avatarFrame.origin.x = self.frame.size.width - avatarBufferX - self.avatarImageView.frame.size.width;
     }
