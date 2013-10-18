@@ -27,7 +27,7 @@
 #import "KenBurnsView.h"
 #import "Utilities.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -378,6 +378,14 @@
     }];
 }
 
+- (void)inviteMoreFriends
+{
+    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+    findFriendsViewController.delegate = self;
+    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses.allValues valueForKeyPath:@"contact"];
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+}
+
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -431,14 +439,14 @@
     [[BeaconManager sharedManager] confirmBeacon:self.beacon];
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cool" message:@"Want to invite more friends?" delegate:nil cancelButtonTitle:@"Not right now" otherButtonTitles:@"OK", nil];
+    alertView.delegate = self;
+    [alertView show];
 }
 
 - (void)inviteButtonTouched:(id)sender
 {
-    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-    findFriendsViewController.delegate = self;
-    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses.allValues valueForKeyPath:@"contact"];
-    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    [self inviteMoreFriends];
 }
 
 - (void)imageViewTapped:(id)sender
@@ -450,6 +458,14 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"want to add a photo?" delegate:self cancelButtonTitle:@"not now" destructiveButtonTitle:nil otherButtonTitles:@"take a photo", @"add from library", nil];
     [actionSheet showInView:self.view];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self inviteMoreFriends];
+    }
 }
 
 #pragma mark - UIActionSheetDelegate
