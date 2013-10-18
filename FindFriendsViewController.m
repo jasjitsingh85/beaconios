@@ -82,6 +82,7 @@ typedef enum {
     [searchBarBackgroundView addSubview:self.searchBar];
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
     self.inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
     self.inviteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
