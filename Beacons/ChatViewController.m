@@ -56,6 +56,8 @@
     textViewFrame.origin.x = cameraButtonFrame.size.width;
     textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
     self.textView = [[JAPlaceholderTextView alloc] initWithFrame:textViewFrame];
+    self.textView.minimumSize = textViewFrame.size;
+    self.textView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
     self.textView.placeholder = @"Send a group message";
     self.textView.placeholderColor = [UIColor darkGrayColor];
     self.textView.font = [ThemeManager lightFontOfSize:15];
@@ -230,7 +232,21 @@
     return YES;
 }
 
+- (void)placeholderTextView:(JAPlaceholderTextView *)placeholderTextView desiresHeightChange:(CGFloat)desiredHeight
+{
+    CGRect frame = placeholderTextView.frame;
+    CGFloat oldHeight = frame.size.height;
+    frame.size.height = desiredHeight;
+    frame.origin.y -= desiredHeight - oldHeight;
+    placeholderTextView.frame = frame;
+}
+
 - (void)didEnterText:(NSString *)text
+{
+    
+}
+
+- (void)cameraButtonTouched:(id)sender
 {
     
 }

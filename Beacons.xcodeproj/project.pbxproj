@@ -78,6 +78,7 @@
 		963399651758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		9633996D1758512100AF9D89 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9633996B1758512100AF9D89 /* InfoPlist.strings */; };
 		963399701758512100AF9D89 /* BeaconsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9633996F1758512100AF9D89 /* BeaconsTests.m */; };
+		963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 963FD68F1810FF33003509C2 /* JAInsetLabel.m */; };
 		9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */; };
 		9647102E17DEEB5700878C19 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102D17DEEB5700878C19 /* plus@2x.png */; };
 		9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102F17DEED5F00878C19 /* bubbleLeft@2x.png */; };
@@ -290,6 +291,8 @@
 		9633996C1758512100AF9D89 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9633996E1758512100AF9D89 /* BeaconsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BeaconsTests.h; sourceTree = "<group>"; };
 		9633996F1758512100AF9D89 /* BeaconsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsTests.m; sourceTree = "<group>"; };
+		963FD68E1810FF33003509C2 /* JAInsetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAInsetLabel.h; sourceTree = "<group>"; };
+		963FD68F1810FF33003509C2 /* JAInsetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAInsetLabel.m; sourceTree = "<group>"; };
 		9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNav@2x.png"; sourceTree = "<group>"; };
 		9647102D17DEEB5700878C19 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		9647102F17DEED5F00878C19 /* bubbleLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleLeft@2x.png"; sourceTree = "<group>"; };
@@ -503,6 +506,8 @@
 				968CDA8E17F79CEB00D64441 /* JADatePicker.m */,
 				9691D25D17F8BD0D0095BA80 /* JAPlaceholderTextView.h */,
 				9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */,
+				963FD68E1810FF33003509C2 /* JAInsetLabel.h */,
+				963FD68F1810FF33003509C2 /* JAInsetLabel.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1070,6 +1075,7 @@
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
+				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,

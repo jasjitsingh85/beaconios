@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class JAPlaceholderTextView;
+@protocol JAPlaceholderTextViewDelegate<NSObject, UITextViewDelegate>
+
+- (void)placeholderTextView:(JAPlaceholderTextView *)placeholderTextView desiresHeightChange:(CGFloat)desiredHeight;
+
+@end
+
 @interface JAPlaceholderTextView : UITextView
 
+@property (nonatomic, weak) id<JAPlaceholderTextViewDelegate> delegate;
 @property (nonatomic, retain) NSString *placeholder;
 @property (nonatomic, retain) UIColor *placeholderColor;
+@property (nonatomic, assign) CGSize minimumSize;
 
 -(void)textChanged:(NSNotification*)notification;
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JAPlaceholderTextView.h"
 
 @class ChatViewController, ChatMessage, JAPlaceholderTextView;
 @protocol ChatViewControllerDelegate <NSObject>
@@ -18,7 +19,7 @@
 @end
 
 
-@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, JAPlaceholderTextViewDelegate>
 
 @property (strong, nonatomic) UIView *textViewContainer;
 @property (strong, nonatomic) JAPlaceholderTextView *textView;
