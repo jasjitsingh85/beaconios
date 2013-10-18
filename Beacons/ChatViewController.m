@@ -62,6 +62,7 @@
     self.textView.layer.cornerRadius = 4;
     self.textView.backgroundColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
     self.textView.delegate = self;
+    self.textView.returnKeyType = UIReturnKeySend;
     [self.textViewContainer addSubview:self.textView];
     
     
