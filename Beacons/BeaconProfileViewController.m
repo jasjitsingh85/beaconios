@@ -465,7 +465,7 @@
 
 - (void)showCameraActionSheet
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"want to add a photo?" delegate:self cancelButtonTitle:@"not now" destructiveButtonTitle:nil otherButtonTitles:@"take a photo", @"add from library", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Want to add a photo?" delegate:self cancelButtonTitle:@"Not now" destructiveButtonTitle:nil otherButtonTitles:@"Take a photo", @"Add from library", nil];
     [actionSheet showInView:self.view];
 }
 
