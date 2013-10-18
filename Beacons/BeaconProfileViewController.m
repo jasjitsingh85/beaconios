@@ -437,8 +437,7 @@
 {
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
     findFriendsViewController.delegate = self;
-    //        findFriendsViewController.selectedContacts = [self.beacon.invited valueForKey:@"contact"];
-    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses valueForKey:@"contact"];
+    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses.allValues valueForKeyPath:@"contact"];
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 

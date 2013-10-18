@@ -295,6 +295,7 @@
         status.beaconStatusOption = BeaconStatusOptionInvited;
         [invited addObject:status];
     }
+    beacon.guestStatuses = [NSDictionary dictionaryWithObjects:invited forKeys:[invited valueForKeyPath:@"contact.normalizedPhoneNumber"]];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     beacon.creator = [User loggedInUser];
     beacon.userAttending = YES;
