@@ -47,6 +47,12 @@
     return self;
 }
 
+- (void)setPlaceholderColor:(UIColor *)placeholderColor
+{
+    _placeholderColor = placeholderColor;
+    self.placeHolderLabel.textColor = placeholderColor;
+}
+
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset
 {
     [super setTextContainerInset:textContainerInset];
