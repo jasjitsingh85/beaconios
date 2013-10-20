@@ -71,10 +71,6 @@
             [self geoCodeAddress];
         }
         
-        //by default user is attending
-        self.userAttending = self.isUserBeacon;
-        self.userAttending = [self.guestStatuses.allKeys containsObject:[User loggedInUser].normalizedPhoneNumber];
-        
         NSMutableArray *images = [[NSMutableArray alloc] init];
         for (NSDictionary *imageData in data[@"images"]) {
             BeaconImage *beaconImage = [[BeaconImage alloc] init];
@@ -98,6 +94,15 @@
         return YES;
     }
     return NO;
+}
+
+- (BOOL)userAttending
+{
+    if (self.isUserBeacon) {
+        return YES;
+    }
+    BeaconStatus *userStatus = self.guestStatuses[[User loggedInUser].normalizedPhoneNumber];
+    return userStatus && userStatus.beaconStatusOption == BeaconStatusOptionGoing;
 }
 
 - (void)geoCodeAddress

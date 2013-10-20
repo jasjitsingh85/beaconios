@@ -298,7 +298,6 @@
     beacon.guestStatuses = [NSDictionary dictionaryWithObjects:invited forKeys:[invited valueForKeyPath:@"contact.normalizedPhoneNumber"]];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     beacon.creator = [User loggedInUser];
-    beacon.userAttending = YES;
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
     UIView *view = appDelegate.window.rootViewController.view;
