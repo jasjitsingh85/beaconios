@@ -83,7 +83,7 @@
         self.timeLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:self.timeLabel];
         
-        self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 138, 200, 15)];
+        self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 137, 200, 17)];
         self.invitedLabel.backgroundColor = [UIColor clearColor];
         self.invitedLabel.textColor = [UIColor colorWithRed:73/255.0 green:73/255.0 blue:73/255.0 alpha:1];
         self.invitedLabel.adjustsFontSizeToFitWidth = YES;
