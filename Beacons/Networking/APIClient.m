@@ -91,7 +91,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     [parameters setValue:@(beacon.coordinate.latitude) forKey:@"latitude"];
     [parameters setValue:@(beacon.coordinate.longitude) forKey:@"longitude"];
     if (invites.count) {
-        [parameters setValue:invites forKey:@"invite"];
+        [parameters setValue:invites forKey:@"invite_list"];
     }
     if (beacon.address) {
         [parameters setValue:beacon.address forKey:@"address"];
