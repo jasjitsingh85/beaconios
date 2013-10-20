@@ -120,7 +120,7 @@ typedef enum {
     self.suggestedList = @[];
     self.nonSuggestedList = @[];
     self.contactDictionary = [NSMutableDictionary new];
-    [[ContactManager sharedManager] fetchContacts:^(NSArray *contacts) {
+    [[ContactManager sharedManager] fetchAddressBookContacts:^(NSArray *contacts) {
         self.contactDictionary = [NSMutableDictionary new];
         for (Contact *contact in contacts) {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];

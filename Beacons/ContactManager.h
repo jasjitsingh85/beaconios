@@ -12,7 +12,7 @@
 @interface ContactManager : NSObject
 
 + (ContactManager *)sharedManager;
-- (void)fetchContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure;
+- (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure;
 - (void)syncContacts;
 
 @end

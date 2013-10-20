@@ -166,6 +166,7 @@
 		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
+		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
@@ -408,6 +409,8 @@
 		96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyBeaconViewController.m; sourceTree = "<group>"; };
 		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
+		96E623EB1814996E0048125B /* NSObject+Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Empty.h"; sourceTree = "<group>"; };
+		96E623EC1814996E0048125B /* NSObject+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Empty.m"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		96F14C1D17D84A890093C976 /* ChatTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTest.h; path = ../ChatTest.h; sourceTree = "<group>"; };
@@ -465,6 +468,8 @@
 				969D649517E96E1B00F5AB36 /* UIImage+Resize.m */,
 				96CBCD03180676E600D62462 /* UIView+Shadow.h */,
 				96CBCD04180676E600D62462 /* UIView+Shadow.m */,
+				96E623EB1814996E0048125B /* NSObject+Empty.h */,
+				96E623EC1814996E0048125B /* NSObject+Empty.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1075,6 +1080,7 @@
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
+				96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */,
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,

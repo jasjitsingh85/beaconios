@@ -30,7 +30,7 @@
     return _sharedManager;
 }
 
-- (void)fetchContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
+- (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
 {
     if (self.contactDictionary.allValues) {
         success(self.contactDictionary.allValues);
@@ -110,7 +110,7 @@
 
 - (void)syncContacts
 {
-    [self fetchContacts:^(NSArray *contacts) {
+    [self fetchAddressBookContacts:^(NSArray *contacts) {
         NSMutableArray *contactParameter = [NSMutableArray new];
         for (Contact *contact in contacts) {
             NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];

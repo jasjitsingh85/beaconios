@@ -38,6 +38,6 @@
 {
     _phoneNumber = phoneNumber;
     _normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-}
+}   
 
 @end

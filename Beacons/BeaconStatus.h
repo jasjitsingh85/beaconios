@@ -22,4 +22,6 @@ typedef enum {
 @property (strong, nonatomic) Contact *contact;
 @property (assign, nonatomic) BeaconStatusOption beaconStatusOption;
 
+- (id)initWithData:(NSDictionary *)data;
+
 @end
