@@ -26,20 +26,7 @@ typedef enum {
     MenuTableViewRowSettings,
 } MenuTableViewRows;
 
-@interface MenuViewController () 
-
-@end
-
 @implementation MenuViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -152,7 +139,7 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == MenuTableViewRowInvite) {
-        [self myBeaconSelected];
+        [self inviteSelected];
     }
     else if (indexPath.row == MenuTableViewRowFind) {
         [self findSelected];
@@ -160,42 +147,35 @@ typedef enum {
     else if (indexPath.row == MenuTableViewRowSettings) {
         [self settingsSelected];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)myBeaconSelected
+- (void)inviteSelected
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    if (appDelegate.myBeaconViewController.beacon) {
-        [appDelegate.centerNavigationController setSelectedViewController:appDelegate.myBeaconViewController];
-    }
-    else {
-        [appDelegate.centerNavigationController setSelectedViewController:(UIViewController *)appDelegate.setBeaconViewController animated:YES];
-    }
+    NSMutableArray *activityItems = [[NSMutableArray alloc] init];
+    NSString *text = @"the creators of this app are desparate for users and girls. Anything helps.";
+    [activityItems addObject:text];
+
+    [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
+    UIActivityViewController* activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                      applicationActivities:nil];
+    activityViewController.excludedActivityTypes =  @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeSaveToCameraRoll];
+    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+
+    };
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:activityViewController animated:YES completion:^{}];
 }
 
 - (void)settingsSelected
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     SettingsViewController *settingsViewController = [[SettingsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [appDelegate.centerNavigationController setSelectedViewController:settingsViewController animated:YES];
+    [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:settingsViewController animated:YES];
 }
 
 - (void)findSelected
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.centerNavigationController setSelectedViewController:appDelegate.mapViewController animated:YES];
+    [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:[AppDelegate sharedAppDelegate].mapViewController animated:YES];
 }
-
-- (void)addFriendsSelected
-{
-    FindFriendsViewController *findFriendsViewController = [FindFriendsViewController new];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:findFriendsViewController];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.window.rootViewController presentViewController:navigationController animated:YES completion:nil];
-}
-
-
-
-
 
 @end
