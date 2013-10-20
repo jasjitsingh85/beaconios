@@ -194,7 +194,6 @@
     CGFloat avatarBufferX = 7;
     CGRect avatarFrame;
     avatarFrame.size = CGSizeMake(46, 46);
-    avatarFrame.origin.y = MAX(CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height, 0);
     if (self.chatMessage.isLoggedInUserMessage && !self.chatMessage.isSystemMessage) {
         chatBubbleFrame.origin.x = self.frame.size.width - bubbleBufferX - chatBubbleFrame.size.width;
         avatarFrame.origin.x = self.frame.size.width - avatarBufferX - self.avatarImageView.frame.size.width;
@@ -204,6 +203,7 @@
         avatarFrame.origin.x = avatarBufferX;
     }
     chatBubbleFrame.origin.y = 0.5*(self.frame.size.height - chatBubbleFrame.size.height);
+    avatarFrame.origin.y = MAX(CGRectGetMaxY(chatBubbleFrame) - avatarFrame.size.height, 0);
     self.chatBubble.frame = chatBubbleFrame;
     self.avatarImageView.frame = avatarFrame;
     
