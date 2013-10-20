@@ -445,7 +445,7 @@ typedef enum {
         
         UILabel *nameLabel = [[UILabel alloc] init];
         CGRect frame = CGRectZero;
-        frame.size = CGSizeMake(160, 15);
+        frame.size = CGSizeMake(160, tableView.rowHeight);
         frame.origin.x = 60;
         frame.origin.y = 0.5*(cell.contentView.frame.size.height - frame.size.height);
         nameLabel.frame = frame;
