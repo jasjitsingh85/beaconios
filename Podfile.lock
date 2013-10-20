@@ -32,7 +32,13 @@ DEPENDENCIES:
   - Mixpanel (~> 2.0.0)
   - SDWebImage (~> 3.4)
   - SparkInspector
+  - ViewDeck (from `https://github.com/a2/ViewDeck.git`, commit `9893fdbe8a2732748680c55551c35486cb1fdf02`)
   - ViewDeck (~> 2.2.9)
+
+EXTERNAL SOURCES:
+  ViewDeck:
+    :commit: 9893fdbe8a2732748680c55551c35486cb1fdf02
+    :git: https://github.com/a2/ViewDeck.git
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41

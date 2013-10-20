@@ -33,6 +33,11 @@
     [self.menuButton addTarget:self.sideNavigationViewController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchDown];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 #pragma mark - setters
 - (void)setSelectedViewController:(UIViewController *)selectedViewController animated:(BOOL)animated
 {
