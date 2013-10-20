@@ -112,70 +112,18 @@ enum JBSourceMode {
     float moveY         = -1;
     float frameWidth    = self.bounds.size.width;
     float frameHeight   = self.bounds.size.height;
-    float imageScale    = image.scale;
+    
     float imageWidth = image.scale/[UIScreen mainScreen].scale*image.size.width;
     float imageHeight = image.scale/[UIScreen mainScreen].scale*image.size.height;
-    // Wider than screen
-    if (imageWidth > frameWidth)
-    {
-        widthDiff  = imageWidth - frameWidth;
-        
-        // Higher than screen
-        if (imageHeight > frameHeight)
-        {
-            heightDiff = imageHeight - frameHeight;
-            
-            if (widthDiff > heightDiff) {
-                resizeRatio = frameHeight / imageHeight;
-            }
-            else {
-                resizeRatio = frameWidth / imageWidth;
-            }
-            
-            // No higher than screen [OK]
-        }
-        else
-        {
-            heightDiff = frameHeight - imageHeight;
-            
-            if (widthDiff > heightDiff)
-                resizeRatio = frameWidth / imageWidth;
-            else
-                resizeRatio = self.bounds.size.height / imageHeight;
-        }
-        
-        // No wider than screen
+
+    CGFloat fillWidth = frameWidth;
+    CGFloat fillHeight = imageHeight*(frameWidth/imageWidth);
+    if (fillHeight < frameHeight) {
+        fillHeight = frameHeight;
+        fillWidth = imageWidth*(frameHeight/imageHeight);
     }
-    else
-    {
-        widthDiff  = frameWidth - imageWidth;
-        
-        // Higher than screen [OK]
-        if (imageHeight > frameHeight)
-        {
-            heightDiff = imageHeight - frameHeight;
-            
-            if (widthDiff > heightDiff)
-                resizeRatio = imageHeight / frameHeight;
-            else
-                resizeRatio = frameWidth / imageWidth;
-            
-            // No higher than screen [OK]
-        }
-        else
-        {
-            heightDiff = frameHeight - imageHeight;
-            
-            if (widthDiff > heightDiff)
-                resizeRatio = frameWidth / imageWidth;
-            else
-                resizeRatio = frameHeight / imageHeight;
-        }
-    }
-    
-    // Resize the image.
-    float optimusWidth  = (imageWidth * resizeRatio) * enlargeRatio;
-    float optimusHeight = (imageHeight * resizeRatio) * enlargeRatio;
+    float optimusWidth = fillWidth*enlargeRatio;
+    float optimusHeight = fillHeight*enlargeRatio;
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, optimusWidth, optimusHeight)];
     imageView.backgroundColor = [UIColor blackColor];
     
