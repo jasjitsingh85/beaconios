@@ -156,7 +156,8 @@
     self.timeLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.timeLabel];
     
-    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 81, 200, 22)];
+    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 81, 250, 22)];
+    self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.font = [ThemeManager regularFontOfSize:20];
     self.descriptionLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.descriptionLabel];
