@@ -33,6 +33,11 @@
 
 @implementation AppDelegate
 
++ (AppDelegate *)sharedAppDelegate
+{
+    return [UIApplication sharedApplication].delegate;
+}
+
 - (CenterNavigationController *)centerNavigationController
 {
     if (!_centerNavigationController) {

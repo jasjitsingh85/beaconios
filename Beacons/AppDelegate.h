@@ -27,6 +27,7 @@ User;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
++ (AppDelegate *)sharedAppDelegate;
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;
 - (void)didActivateAccount;
