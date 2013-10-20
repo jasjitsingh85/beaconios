@@ -193,7 +193,7 @@
         return;
     }
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-    findFriendsViewController.autoCheckSuggested = YES;
+    findFriendsViewController.autoCheckSuggested = NO;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     findFriendsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectCurrentLocation)];
