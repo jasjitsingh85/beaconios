@@ -8,6 +8,7 @@
 
 #import "Theme.h"
 #import "DefaultTheme.h"
+#import "CenterNavigationController.h"
 
 @implementation ThemeManager
 
@@ -27,7 +28,7 @@
 + (void)customizeAppAppearance
 {
     id <Theme> theme = [self sharedTheme];
-    UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
+    UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[CenterNavigationController class], nil];
     [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     [navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
