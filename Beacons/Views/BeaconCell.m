@@ -41,7 +41,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.contentView.layer.cornerRadius = 20;
-        [self.contentView setShadowWithColor:[UIColor blackColor] opacity:0.7 radius:2.0 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
+        [self.contentView setShadowWithColor:[UIColor blackColor] opacity:0.5 radius:2.0 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
         
         self.backgroundView = [[UIView alloc] initWithFrame:self.contentView.bounds];
         self.backgroundView.layer.cornerRadius = self.contentView.layer.cornerRadius;
@@ -62,7 +62,7 @@
         self.imageViewGradient.frame = backgroundGradientFrame;
         [self.backgroundView addSubview:self.imageViewGradient];
         
-        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 85, self.contentView.frame.size.width - 36*2, 18)];
+        self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(19, 84, self.contentView.frame.size.width - 36*2, 20)];
         self.descriptionLabel.backgroundColor = [UIColor clearColor];
         self.descriptionLabel.textColor = [UIColor whiteColor];
         self.descriptionLabel.font = [ThemeManager regularFontOfSize:17.0];
