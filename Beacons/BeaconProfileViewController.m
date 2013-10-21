@@ -9,6 +9,8 @@
 #import "BeaconProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "NSDate+FormattedDate.h"
 #import "UIImage+Resize.h"
 #import "BeaconChatViewController.h"
@@ -26,8 +28,11 @@
 #import "ImageViewController.h"
 #import "KenBurnsView.h"
 #import "Utilities.h"
+#import "BeaconStatus.h"
+#import "TextMessageManager.h"
+#import "AppDelegate.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -57,6 +62,7 @@
         self.beaconChatViewController = [[BeaconChatViewController alloc] init];
         self.beaconChatViewController.chatViewControllerDelegate = self;
         self.inviteListViewController = [[InviteListViewController alloc] init];
+        self.inviteListViewController.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -219,6 +225,8 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
     
+    self.chatTabButton.selected = YES;
+    self.inviteTabButton.selected = NO;
     [self showChatAnimated:NO];
 }
 
@@ -449,8 +457,11 @@
     [[BeaconManager sharedManager] confirmBeacon:self.beacon];
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cool" message:@"Want to invite more friends?" delegate:nil cancelButtonTitle:@"Not right now" otherButtonTitles:@"OK", nil];
-    alertView.delegate = self;
+    UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
+    [alertView addButtonWithTitle:@"OK" handler:^{
+        [self inviteMoreFriends];
+    }];
+    [alertView setCancelButtonWithTitle:@"Not right now" handler:nil];
     [alertView show];
 }
 
@@ -466,7 +477,14 @@
 
 - (void)showCameraActionSheet
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Want to add a photo?" delegate:self cancelButtonTitle:@"Not now" destructiveButtonTitle:nil otherButtonTitles:@"Take a photo", @"Add from library", nil];
+    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Want to add a photo?"];
+    [actionSheet addButtonWithTitle:@"Take a photo" handler:^{
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    }];
+    [actionSheet addButtonWithTitle:@"Add from library" handler:^{
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [actionSheet setCancelButtonWithTitle:@"Not now" handler:nil];
     [actionSheet showInView:self.view];
 }
 
@@ -480,29 +498,8 @@
     [self showPartialDescriptionViewAnimated:YES];
 }
 
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)source
 {
-    if (buttonIndex == 1) {
-        [self inviteMoreFriends];
-    }
-}
-
-#pragma mark - UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"index %d", buttonIndex);
-    if (buttonIndex == 2) {
-        return;
-    }
-    UIImagePickerControllerSourceType source;
-    if (buttonIndex == 0) {
-        source = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        source = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-    
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
             UIImage *scaledImage;
@@ -568,10 +565,29 @@
     }];
 }
 
-#pragma mark - Ken Burns Delegate
-- (void)didFinishAllAnimations
+#pragma mark - InviteListViewControllerDelegate
+- (void)inviteListViewController:(InviteListViewController *)inviteListViewController didSelectBeaconStatus:(BeaconStatus *)beaconStatus
 {
-    
+    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@""];
+    NSString *name = @"";
+    NSString *number = @"";
+    if (beaconStatus.user) {
+        name = beaconStatus.user.firstName;
+        number = beaconStatus.user.normalizedPhoneNumber;
+    }
+    else if (beaconStatus.contact) {
+        name = beaconStatus.contact.firstName;
+        number = beaconStatus.contact.normalizedPhoneNumber;
+    }
+    [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
+        [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
+                                                                                messageRecipients:@[number]];
+    }];
+    [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
+        
+    }];
+    [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet showInView:self.view];
 }
 
 

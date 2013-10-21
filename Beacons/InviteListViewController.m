@@ -133,4 +133,12 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BeaconStatus *beaconStatus = self.beaconStatuses[indexPath.row];
+    if ([self.delegate respondsToSelector:@selector(inviteListViewController:didSelectBeaconStatus:)]) {
+        [self.delegate inviteListViewController:self didSelectBeaconStatus:beaconStatus];
+    }
+}
+
 @end

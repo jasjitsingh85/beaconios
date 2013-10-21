@@ -7,7 +7,6 @@
 //
 
 #import "SetBeaconViewController.h"
-#import <GCPlaceholderTextView/GCPlaceholderTextView.h>
 #import "JADatePicker.h"
 #import "JAPlaceholderTextView.h"
 #import "Theme.h"

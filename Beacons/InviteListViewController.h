@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class BeaconStatus;
+@class BeaconStatus, InviteListViewController;
+@protocol InviteListViewControllerDelegate <NSObject>
+
+- (void)inviteListViewController:(InviteListViewController *)inviteListViewController didSelectBeaconStatus:(BeaconStatus *)beaconStatus;
+
+@end
 @interface InviteListViewController : UITableViewController
 
+@property (weak, nonatomic) id<InviteListViewControllerDelegate> delegate;
 @property (strong, nonatomic) NSArray *beaconStatuses;
 
 @end
