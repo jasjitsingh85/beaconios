@@ -85,6 +85,8 @@ typedef enum {
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
     self.inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+    self.inviteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.inviteButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     self.inviteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.inviteButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];
     self.inviteButton.titleLabel.font = [ThemeManager lightFontOfSize:16];
@@ -243,7 +245,9 @@ typedef enum {
             inviteButtonText = [NSString stringWithFormat:@"Invite %@", contact.firstName];
         }
         else {
-            inviteButtonText = [NSString stringWithFormat:@"%@ +%d", contact.firstName, self.selectedContactDictionary.count - 1];
+            NSInteger otherCount = self.selectedContactDictionary.count - 1;
+            NSString *plural = otherCount == 1 ? @"other" : @"others";
+            inviteButtonText = [NSString stringWithFormat:@"Invite %@ and %d %@", contact.firstName, otherCount, plural];
         }
     }
     else {
