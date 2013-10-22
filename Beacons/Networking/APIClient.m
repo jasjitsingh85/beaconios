@@ -127,6 +127,16 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     [self beaconFollow:@"Here" beaconID:beaconID success:success failure:failure];
 }
 
+- (void)checkInFriendWithID:(NSNumber *)userID isUser:(BOOL)isUser atbeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSString *key = isUser ? @"user_id" : @"contact_id";
+    NSDictionary *parameters = @{@"beacon_id" : beaconID,
+                                 key : userID,
+                                 @"follow" : @"Here"};
+    [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
+}
+
 - (void)beaconFollow:(NSString *)followStatus beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {

@@ -581,20 +581,32 @@
     UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@""];
     NSString *name = @"";
     NSString *number = @"";
+    NSNumber *friendID;
+    BOOL isUser = NO;
     if (beaconStatus.user) {
         name = beaconStatus.user.firstName;
         number = beaconStatus.user.normalizedPhoneNumber;
+        isUser = YES;
+        friendID = beaconStatus.user.userID;
     }
     else if (beaconStatus.contact) {
         name = beaconStatus.contact.firstName;
         number = beaconStatus.contact.normalizedPhoneNumber;
+        friendID = beaconStatus.contact.contactID;
     }
     [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
         [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
                                                                                 messageRecipients:@[number]];
     }];
     [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
-        
+        BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
+        beaconStatus.beaconStatusOption = BeaconStatusOptionHere;
+        [inviteListViewController.tableView reloadData];
+        [[APIClient sharedClient] checkInFriendWithID:friendID isUser:isUser atbeacon:self.beacon.beaconID success:nil failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            beaconStatus.beaconStatusOption = oldStatus;
+            [inviteListViewController.tableView reloadData];
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't check in your friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
     }];
     [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];

@@ -18,6 +18,7 @@
 @property (assign, nonatomic) BOOL isUser;
 @property (assign, nonatomic) BOOL isSuggested;
 @property (assign, nonatomic) BOOL isRecent;
+@property (strong, nonatomic) NSNumber *contactID;
 
 /*you can not set the normalized number directly.
  It is computed when the phone number property is set*/
