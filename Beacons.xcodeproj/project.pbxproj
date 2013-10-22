@@ -167,6 +167,7 @@
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
+		96E623F01816485C0048125B /* BounceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EF1816485C0048125B /* BounceButton.m */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
@@ -411,6 +412,8 @@
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96E623EB1814996E0048125B /* NSObject+Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Empty.h"; sourceTree = "<group>"; };
 		96E623EC1814996E0048125B /* NSObject+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Empty.m"; sourceTree = "<group>"; };
+		96E623EE1816485C0048125B /* BounceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BounceButton.h; sourceTree = "<group>"; };
+		96E623EF1816485C0048125B /* BounceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BounceButton.m; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		96F14C1D17D84A890093C976 /* ChatTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTest.h; path = ../ChatTest.h; sourceTree = "<group>"; };
@@ -513,6 +516,8 @@
 				9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */,
 				963FD68E1810FF33003509C2 /* JAInsetLabel.h */,
 				963FD68F1810FF33003509C2 /* JAInsetLabel.m */,
+				96E623EE1816485C0048125B /* BounceButton.h */,
+				96E623EF1816485C0048125B /* BounceButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1096,6 +1101,7 @@
 				96859CF417EFC3C600C1C467 /* FormView.m in Sources */,
 				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
 				96859CF717EFC89800C1C467 /* RegisterViewController.m in Sources */,
+				96E623F01816485C0048125B /* BounceButton.m in Sources */,
 				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
