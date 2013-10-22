@@ -31,6 +31,7 @@
 #import "BeaconStatus.h"
 #import "TextMessageManager.h"
 #import "AppDelegate.h"
+#import "BounceButton.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate>
 
@@ -40,8 +41,8 @@
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
 @property (strong, nonatomic) KenBurnsView *kenBurnsView;
-@property (strong, nonatomic) UIButton *chatTabButton;
-@property (strong, nonatomic) UIButton *inviteTabButton;
+@property (strong, nonatomic) BounceButton *chatTabButton;
+@property (strong, nonatomic) BounceButton *inviteTabButton;
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *locationLabel;
@@ -120,7 +121,7 @@
     [self.imageView addSubview:self.kenBurnsView];
     self.kenBurnsView.hidden = YES;
     
-    self.chatTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.chatTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
     CGRect chatTabButtonFrame;
     chatTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
     chatTabButtonFrame.origin = CGPointMake(0, self.descriptionView.frame.size.height - chatTabButtonFrame.size.height);
@@ -131,7 +132,7 @@
     [self.descriptionView addSubview:self.chatTabButton];
     self.chatTabButton.selected = YES;
     
-    self.inviteTabButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.inviteTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
     CGRect inviteTabButtonFrame;
     inviteTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
     inviteTabButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.chatTabButton.frame), self.descriptionView.frame.size.height - inviteTabButtonFrame.size.height);
@@ -400,7 +401,16 @@
 {
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
     findFriendsViewController.delegate = self;
-    findFriendsViewController.inactiveContacts = [self.beacon.guestStatuses.allValues valueForKeyPath:@"contact"];
+    NSMutableArray *inactives = [[NSMutableArray alloc] init];
+    for (BeaconStatus *status in self.beacon.guestStatuses.allValues) {
+        if (status.user) {
+            [inactives addObject:status.user];
+        }
+        else if (status.contact) {
+            [inactives addObject:status.contact];
+        }
+    }
+    findFriendsViewController.inactiveContacts = inactives;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
