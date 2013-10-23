@@ -598,16 +598,20 @@
         [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
                                                                                 messageRecipients:@[number]];
     }];
-    [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
-        BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
-        beaconStatus.beaconStatusOption = BeaconStatusOptionHere;
-        [inviteListViewController.tableView reloadData];
-        [[APIClient sharedClient] checkInFriendWithID:friendID isUser:isUser atbeacon:self.beacon.beaconID success:nil failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            beaconStatus.beaconStatusOption = oldStatus;
+    if (beaconStatus.beaconStatusOption != BeaconStatusOptionHere) {
+        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
+            BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
+            beaconStatus.beaconStatusOption = BeaconStatusOptionHere;
             [inviteListViewController.tableView reloadData];
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't check in your friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[APIClient sharedClient] checkInFriendWithID:friendID isUser:isUser atbeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
+            }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                beaconStatus.beaconStatusOption = oldStatus;
+                [inviteListViewController.tableView reloadData];
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't check in your friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }];
         }];
-    }];
+    }
     [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];
 }
