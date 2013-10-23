@@ -138,7 +138,7 @@
 
 - (NSString *)italicFontName
 {
-    return @"HelveticaNeue-Italic";
+    return @"HelveticaNeue-LightItalic";
 }
 
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
