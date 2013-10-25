@@ -492,7 +492,15 @@
 {
     id<Theme> theme = [ThemeManager sharedTheme];
     NSArray *colors = @[[theme blueColor], [theme pinkColor], [theme yellowColor], [theme greenColor], [theme orangeColor], [theme purpleColor]];
-    UIColor *color = colors[indexPath.row % colors.count];
+    NSInteger idx;
+    Beacon *beacon = [self beaconForIndexPath:indexPath];
+    if (beacon.beaconID) {
+        idx = beacon.beaconID.integerValue % colors.count;
+    }
+    else {
+        idx = indexPath.row % colors.count;
+    }
+    UIColor *color = colors[idx];
     return color;
 }
 
@@ -500,7 +508,15 @@
 {
     id<Theme> theme = [ThemeManager sharedTheme];
     NSArray *colors = @[[theme darkBlueColor], [theme darkPinkColor], [theme darkYellowColor], [theme darkGreenColor], [theme darkOrangeColor], [theme darkPurpleColor]];
-    UIColor *color = colors[indexPath.row % colors.count];
+    NSInteger idx;
+    Beacon *beacon = [self beaconForIndexPath:indexPath];
+    if (beacon.beaconID) {
+        idx = beacon.beaconID.integerValue % colors.count;
+    }
+    else {
+        idx = indexPath.row % colors.count;
+    }
+    UIColor *color = colors[idx];
     return color;
 }
 
