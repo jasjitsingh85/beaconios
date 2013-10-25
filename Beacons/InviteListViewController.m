@@ -58,7 +58,7 @@
     [statuses addObjectsFromArray:here];
     [statuses addObjectsFromArray:going];
     [statuses addObjectsFromArray:invited];
-    _beaconStatuses = [NSArray arrayWithArray:beaconStatuses];
+    _beaconStatuses = statuses;
     [self.tableView reloadData];
 }
 
