@@ -112,13 +112,13 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self beaconFollow:@"Attending" beaconID:beaconID success:success failure:failure];
+    [self beaconFollow:@"Going" beaconID:beaconID success:success failure:failure];
 }
 
-- (void)cancelBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+- (void)checkoutFriendWithID:(NSNumber *)userID isUser:(BOOL)isUser atBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self beaconFollow:@"Not Attending" beaconID:beaconID success:success failure:failure];
+    [self setStatusOfFriendWithID:userID isUser:isUser atBeacon:beaconID status:@"Invited" success:success failure:failure];
 }
 
 - (void)arriveBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -130,10 +130,16 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)checkInFriendWithID:(NSNumber *)userID isUser:(BOOL)isUser atbeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
+    [self setStatusOfFriendWithID:userID isUser:isUser atBeacon:beaconID status:@"Here" success:success failure:failure];
+}
+
+- (void)setStatusOfFriendWithID:(NSNumber *)userID isUser:(BOOL)isUser atBeacon:(NSNumber *)beaconID status:(NSString *)status success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
     NSString *key = isUser ? @"user_id" : @"contact_id";
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
                                  key : userID,
-                                 @"follow" : @"Here"};
+                                 @"follow" : status};
     [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
 }
 

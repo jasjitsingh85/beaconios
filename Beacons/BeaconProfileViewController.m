@@ -594,10 +594,12 @@
         number = beaconStatus.contact.normalizedPhoneNumber;
         friendID = beaconStatus.contact.contactID;
     }
-    [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
-        [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
-                                                                                messageRecipients:@[number]];
-    }];
+    if (!(beaconStatus.user && [beaconStatus.user.userID isEqual:[User loggedInUser].userID])) {
+        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
+            [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
+                                                                                    messageRecipients:@[number]];
+        }];
+    }
     if (beaconStatus.beaconStatusOption != BeaconStatusOptionHere) {
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
             BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
@@ -612,9 +614,24 @@
             }];
         }];
     }
+    else {
+        [actionSheet addButtonWithTitle:@"Leave" handler:^{
+            BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
+            beaconStatus.beaconStatusOption = BeaconStatusOptionInvited;
+            [inviteListViewController.tableView reloadData];
+            [[APIClient sharedClient] checkoutFriendWithID:friendID isUser:isUser atBeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                beaconStatus.beaconStatusOption = oldStatus;
+                [inviteListViewController.tableView reloadData];
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }];
+        }];
+    }
     [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];
 }
+
 
 
 @end
