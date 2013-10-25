@@ -153,7 +153,7 @@ typedef enum {
 - (void)inviteSelected
 {
     NSMutableArray *activityItems = [[NSMutableArray alloc] init];
-    NSString *text = @"the creators of this app are desparate for users and girls. Anything helps.";
+    NSString *text = @"the creators of this app are desparate for users and friends. Anything helps.";
     [activityItems addObject:text];
 
     [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
