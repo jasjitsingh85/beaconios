@@ -86,8 +86,12 @@
                          @"Playing the roofie game!!",
                          @"Handing out candy to kids",
                          @"Binging and purging",
-                         @"Remember to fill out this template. This isn't amateur hour, you outsourced idiots"
-                         @"Russing roulette. Hurry this guest list is starting to dwindle!"
+                         @"Remember to fill out this template. This isn't amateur hour, you outsourced idiots",
+                         @"Russian roulette. Hurry this guest list is starting to dwindle!",
+                         @"Meeting people by kicking open random bathroom stalls",
+                         @"Catcalling construction workers",
+                         @"Modern art museum. But like how is a cross in a jar of doo-doo considered art?",
+                         @"Grammy's funeral and I have literally nothing to wear",
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;
