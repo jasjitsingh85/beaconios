@@ -92,8 +92,13 @@
     [super viewWillAppear:animated];
     
     [self exitEmptyBeaconMode:YES];
-    [self hideBeaconCollectionViewAnimated:NO];
-    [self requestBeacons];
+    if (![self hasActiveBeacons]) {
+        [self hideBeaconCollectionViewAnimated:NO];
+        [self requestBeaconsShowLoadingIndicator:YES];
+    }
+    else {
+        [self requestBeaconsShowLoadingIndicator:NO];
+    }
     
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
@@ -105,6 +110,17 @@
         return [evaluatedObject isKindOfClass:[BeaconAnnotation class]];
     }]];
     return beaconAnnotations;
+}
+
+- (BOOL)hasActiveBeacons
+{
+    BOOL hasActiveBeacons = NO;
+    if (self.beacons) {
+        NSPredicate *expirePredicate = [NSPredicate predicateWithFormat:@"expirationDate > %@", [NSDate date]];
+        NSArray *unexpiredBeacons = [self.beacons filteredArrayUsingPredicate:expirePredicate];
+        hasActiveBeacons = unexpiredBeacons.count;
+    }
+    return hasActiveBeacons;
 }
 
 #pragma mark - Empty Beacon
@@ -152,7 +168,7 @@
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
     [self hideBeaconCollectionViewAnimated:NO];
-    [self requestBeacons];
+    [self requestBeaconsShowLoadingIndicator:YES];
 }
 
 - (void)reloadBeacons
@@ -449,9 +465,11 @@
 }
 
 #pragma mark - Networking
-- (void)requestBeacons
+- (void)requestBeaconsShowLoadingIndicator:(BOOL)showLoadingIndicator
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    if (showLoadingIndicator) {
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    }
     [[BeaconManager sharedManager] updateBeacons:^(NSArray *beacons) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         self.beacons = [NSArray arrayWithArray:beacons];
