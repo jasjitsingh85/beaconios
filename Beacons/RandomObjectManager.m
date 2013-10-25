@@ -81,7 +81,6 @@
                          @"Making seriously poor life decisions",
                          @"Monkeying around with papa",
                          @"Slipping into something more comfortable",
-                         @"Where are my friends tonight?",
                          @"I want to experiment with my body. Anyone interested?",
                          @"Playing the roofie game!!",
                          @"Handing out candy to kids",
@@ -92,6 +91,13 @@
                          @"Catcalling construction workers",
                          @"Modern art museum. But like how is a cross in a jar of doo-doo considered art?",
                          @"Grammy's funeral and I have literally nothing to wear",
+                         @"Hugging trees. Trying to steal third with this tree I've been hugging a lot lately",
+                         @"Strip poker. I've already lost everything and now Pacey wants to remove skin",
+                         @"Snorting cat nip with Mittens",
+                         @"Double fisting. And I don't mean holding a container of alcohol in each hand",
+                         @"Disrespecting authority. Shamefully apologizing",
+                         @"Winning the big game. Getting the girl. Discovering we are incompatible",
+                         @"Feeding the children bread at the park",
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;
