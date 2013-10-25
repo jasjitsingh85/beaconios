@@ -163,6 +163,9 @@
     [self view];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    
+    NSString *placeholder = [[RandomObjectManager sharedManager] randomSetBeaconPlaceholder];
+    self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden
