@@ -27,24 +27,23 @@
     return YES;
 }
 
--(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
-{
-    NSArray* array = [super layoutAttributesForElementsInRect:rect];
-    CGRect visibleRect;
-    visibleRect.origin = self.collectionView.contentOffset;
-    visibleRect.size = self.collectionView.bounds.size;
-    
-    for (UICollectionViewLayoutAttributes* attributes in array) {
-        if (CGRectIntersectsRect(attributes.frame, rect)) {
-            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
-            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
-            CGFloat alpha = 0.8 + 0.2*(1-ABS(normalizedDistance));
-            attributes.alpha = alpha;
-            attributes.transform3D = CATransform3DMakeScale(1, alpha, 1);
-        }
-    }
-    return array;
-}
+//-(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
+//{
+//    NSArray* array = [super layoutAttributesForElementsInRect:rect];
+//    CGRect visibleRect;
+//    visibleRect.origin = self.collectionView.contentOffset;
+//    visibleRect.size = self.collectionView.bounds.size;
+//    
+//    for (UICollectionViewLayoutAttributes* attributes in array) {
+//        if (CGRectIntersectsRect(attributes.frame, rect)) {
+//            CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
+//            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
+//            CGFloat scale = 0.8 + 0.2*(1-ABS(normalizedDistance));
+//            attributes.transform3D = CATransform3DMakeScale(1, scale, 1);
+//        }
+//    }
+//    return array;
+//}
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
