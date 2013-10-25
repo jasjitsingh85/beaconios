@@ -12,6 +12,7 @@
 @interface RandomObjectManager()
 
 @property (strong, nonatomic) RandomObjectPicker *inviteFriendsToAppPicker;
+@property (strong, nonatomic) RandomObjectPicker *setBeaconPlaceholderPicker;
 @property (strong, nonatomic) RandomObjectPicker *beaconSetAlertPicker;
 
 @end
@@ -43,6 +44,27 @@
 - (NSString *)randomInviteFriendsToAppString
 {
     return [self.inviteFriendsToAppPicker getRandomObject];
+}
+
+- (RandomObjectPicker *)setBeaconPlaceholderPicker
+{
+    if (_setBeaconPlaceholderPicker) {
+        return _setBeaconPlaceholderPicker;
+    }
+    NSArray *options = @[@"Microwaving burritos at mi casa",
+                         @"Twerking my bum at Roxy",
+                         @"Feeling animals at the zoo!",
+                         @"Searching for love in all the wrong places",
+                         @"Finding distractions from things that make us sad :)",
+                         @"Shopping for some new penny loafers at Macy's",
+                         ];
+    _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
+    return _setBeaconPlaceholderPicker;
+}
+
+- (NSString *)randomSetBeaconPlaceholder
+{
+    return [self.setBeaconPlaceholderPicker getRandomObject];
 }
 
 - (RandomObjectPicker *)beaconSetAlertPicker

@@ -56,6 +56,7 @@
     textViewFrame.origin.x = cameraButtonFrame.size.width;
     textViewFrame.origin.y = 0.5*(self.textViewContainer.frame.size.height - textViewFrame.size.height);
     self.textView = [[JAPlaceholderTextView alloc] initWithFrame:textViewFrame];
+    self.textView.centerVertically = YES;
     self.textView.minimumSize = textViewFrame.size;
     self.textView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
     self.textView.placeholder = @"Send a group message";

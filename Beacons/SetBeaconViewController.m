@@ -28,7 +28,7 @@
 
 #define MAX_CHARACTER_COUNT 40
 
-@interface SetBeaconViewController () <UITextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
+@interface SetBeaconViewController () <UITextViewDelegate, JAPlaceholderTextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *descriptionContainerView;
@@ -127,8 +127,9 @@
     locationDescriptionLabel.frame = locationDescriptionLabelFrame;
     [self.locationContainerView addSubview:locationDescriptionLabel];
     
-    self.descriptionPlaceholderText = @"e.g. Happy hour in Cap Hill";
-    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(40, 100, 220, 60)];
+    NSString *placeholder = [[RandomObjectManager sharedManager] randomSetBeaconPlaceholder];
+    self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
+    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(40, 100, 240, 80)];
     self.descriptionTextView.returnKeyType = UIReturnKeyDone;
     self.descriptionTextView.placeholder = self.descriptionPlaceholderText;
     self.descriptionTextView.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];

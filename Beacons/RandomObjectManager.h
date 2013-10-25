@@ -13,6 +13,7 @@
 + (RandomObjectManager *)sharedManager;
 
 - (NSString *)randomInviteFriendsToAppString;
+- (NSString *)randomSetBeaconPlaceholder;
 - (UIAlertView *)randomBeaconSetAlertView;
 
 @end

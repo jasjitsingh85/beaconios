@@ -11,7 +11,7 @@
 
 @interface JAPlaceholderTextView()
 
-@property (nonatomic, retain) JAInsetLabel *placeHolderLabel;
+@property (nonatomic, retain) UITextView *placeHolderLabel;
 
 @end
 
@@ -43,6 +43,7 @@
         [self setPlaceholderColor:[UIColor lightGrayColor]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
         self.textContainerInset = UIEdgeInsetsMake(2, 0, 2, 0);
+        self.backgroundColor = [UIColor orangeColor];
     }
     return self;
 }
@@ -56,17 +57,19 @@
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset
 {
     [super setTextContainerInset:textContainerInset];
-    self.placeHolderLabel.edgeInsets = textContainerInset;
+    self.placeHolderLabel.textContainerInset = textContainerInset;
+//    self.placeHolderLabel.edgeInsets = textContainerInset;
 }
 
-- (UILabel *)placeHolderLabel
+- (UITextView *)placeHolderLabel
 {
     if (_placeHolderLabel == nil )
     {
-        _placeHolderLabel = [[JAInsetLabel alloc] initWithFrame:CGRectMake(4, 0, self.frame.size.width, self.frame.size.height)];
+        _placeHolderLabel = [[UITextView alloc] initWithFrame:self.bounds];
+        _placeHolderLabel.userInteractionEnabled = NO;
         _placeHolderLabel.textAlignment = NSTextAlignmentLeft;
-        _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        _placeHolderLabel.numberOfLines = 0;
+//        _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//        _placeHolderLabel.numberOfLines = 0;
         _placeHolderLabel.font = self.font;
         _placeHolderLabel.backgroundColor = [UIColor clearColor];
         _placeHolderLabel.textColor = self.placeholderColor;
@@ -87,7 +90,7 @@
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
-    self.placeHolderLabel.frame = CGRectMake(4, 0, frame.size.width, frame.size.height);
+    self.placeHolderLabel.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     [self updateInsets];
 }
 
@@ -100,6 +103,7 @@
 
 - (void)textChanged:(NSNotification *)notification
 {
+    
     if([[self placeholder] length] == 0)
     {
         return;
@@ -135,6 +139,10 @@
 
 - (void)updateInsets
 {
+    if (!self.centerVertically) {
+        return;
+    }
+    
     if (!self.font) {
         return;
     }

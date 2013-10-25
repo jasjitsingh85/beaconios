@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSString *placeholder;
 @property (nonatomic, retain) UIColor *placeholderColor;
 @property (nonatomic, assign) CGSize minimumSize;
+@property (nonatomic, assign) BOOL centerVertically;
 
 -(void)textChanged:(NSNotification*)notification;
 
