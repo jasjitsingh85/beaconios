@@ -27,21 +27,21 @@
     {
         self.colorView = [[UIView alloc] init];
         self.colorView.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-        self.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.colorView.layer.shadowOpacity = 0.5;
-        self.colorView.layer.shadowRadius = 2.0;
-        self.colorView.layer.shadowOffset = CGSizeMake(0, 2);
+//        self.colorView.layer.shadowColor = [[UIColor blackColor] CGColor];
+//        self.colorView.layer.shadowOpacity = 0.5;
+//        self.colorView.layer.shadowRadius = 2.0;
+//        self.colorView.layer.shadowOffset = CGSizeMake(0, 2);
         
         self.colorView.layer.cornerRadius = 6;
         [self addSubview:self.colorView];
         
-        self.popsicleStick = [[UIView alloc] init];
-        self.popsicleStick.backgroundColor = [UIColor colorWithRed:234/255.0 green:196/255.0 blue:149/255.0 alpha:1.0];
-        self.popsicleStick.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.popsicleStick.layer.shadowOpacity = 0.5;
-        self.popsicleStick.layer.shadowRadius = 2.0;
-        self.popsicleStick.layer.shadowOffset = CGSizeMake(0, 2);
-        self.popsicleStick.layer.cornerRadius = 5;
+//        self.popsicleStick = [[UIView alloc] init];
+//        self.popsicleStick.backgroundColor = [UIColor colorWithRed:234/255.0 green:196/255.0 blue:149/255.0 alpha:1.0];
+//        self.popsicleStick.layer.shadowColor = [[UIColor blackColor] CGColor];
+//        self.popsicleStick.layer.shadowOpacity = 0.5;
+//        self.popsicleStick.layer.shadowRadius = 2.0;
+//        self.popsicleStick.layer.shadowOffset = CGSizeMake(0, 2);
+//        self.popsicleStick.layer.cornerRadius = 5;
         [self insertSubview:self.popsicleStick belowSubview:self.colorView];
         self.frame = CGRectMake(0, 0, 50, 50);
         self.active = NO;
