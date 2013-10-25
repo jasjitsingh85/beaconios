@@ -24,6 +24,7 @@
 #import "Contact.h"
 #import "BeaconStatus.h"
 #import "Utilities.h"
+#import "RandomObjectManager.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -303,10 +304,8 @@
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Best. Hotspot. Ever." message:@"What would your friends do without you to lead them?" delegate:nil cancelButtonTitle:@"Nothing, they need me." otherButtonTitles: nil] show];
-//        [[[UIAlertView alloc] initWithTitle:@"Your Hotspot looks fun!" message:@"Can I come?" delegate:nil cancelButtonTitle:@"No...God, you're so creepy" otherButtonTitles: nil] show];
-//        [[[UIAlertView alloc] initWithTitle:@"Your Hotspot...it's beautiful" message:@"No Hotspot has ever made me feel this way before" delegate:nil cancelButtonTitle:@"You probably say that to all the Hotspots" otherButtonTitles:nil] show];
-//        [[[UIAlertView alloc] initWithTitle:@"Quite the Hotspot you got there" message:@"You must be very popular" delegate:nil cancelButtonTitle:@"Thank you" otherButtonTitles:nil] show];
+        UIAlertView *alertView = [[RandomObjectManager sharedManager] randomBeaconSetAlertView];
+        [alertView show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
         beaconProfileViewController.beacon = beacon;

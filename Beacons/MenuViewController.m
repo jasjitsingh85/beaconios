@@ -19,6 +19,7 @@
 #import "CreateBeaconViewController.h"
 #import "SettingsViewController.h"
 #import "User.h"
+#import "RandomObjectManager.h"
 
 typedef enum {
     MenuTableViewRowFind=0,
@@ -153,7 +154,7 @@ typedef enum {
 - (void)inviteSelected
 {
     NSMutableArray *activityItems = [[NSMutableArray alloc] init];
-    NSString *text = @"the creators of this app are desparate for users and friends. Anything helps.";
+    NSString *text = [[RandomObjectManager sharedManager] randomInviteFriendsToAppString];
     [activityItems addObject:text];
 
     [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
