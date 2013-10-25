@@ -84,6 +84,10 @@
                          @"Where are my friends tonight?",
                          @"I want to experiment with my body. Anyone interested?",
                          @"Playing the roofie game!!",
+                         @"Handing out candy to kids",
+                         @"Binging and purging",
+                         @"Remember to fill out this template. This isn't amateur hour, you outsourced idiots"
+                         @"Russing roulette. Hurry this guest list is starting to dwindle!"
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;
