@@ -98,6 +98,8 @@
                          @"Disrespecting authority. Shamefully apologizing",
                          @"Winning the big game. Getting the girl. Discovering we are incompatible",
                          @"Feeding the children bread at the park",
+                         @"Doing things that make terrorists want to destroy our culture",
+                         @"Saving puppies from a burning building. Leaving the kittens behind",
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;

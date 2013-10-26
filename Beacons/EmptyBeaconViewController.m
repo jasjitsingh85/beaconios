@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) UIButton *addFriendsButton;
 @property (strong, nonatomic) UIButton *setBeaconButton;
+@property (strong, nonatomic) UILabel *mainTitleLabel;
+@property (strong, nonatomic) UILabel *subTitleLabel;
 
 @end
 
@@ -73,6 +75,21 @@
     setBeaconImageViewFrame.origin.y = 0.5*(self.bottomView.frame.size.height - setBeaconImageViewFrame.size.height);
     setBeaconImageView.frame = setBeaconImageViewFrame;
     [self.bottomView addSubview:setBeaconImageView];
+    
+    self.mainTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.topView.frame.size.height/2.0)];
+    self.mainTitleLabel.font = [ThemeManager lightFontOfSize:32];
+    self.mainTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.mainTitleLabel.textColor = [UIColor whiteColor];
+    self.mainTitleLabel.text = @"Let's get going!";
+    [self.topView addSubview:self.mainTitleLabel];
+    
+    self.subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mainTitleLabel.frame), self.view.frame.size.width, self.topView.frame.size.height/2.0)];
+    self.subTitleLabel.font = [ThemeManager lightFontOfSize:18];
+    self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.subTitleLabel.textColor = [UIColor whiteColor];
+    self.subTitleLabel.numberOfLines  = 0;
+    self.subTitleLabel.text = @"blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah";
+    [self.topView addSubview:self.subTitleLabel];
 }
 
 - (void)setBeaconButtonTouched:(id)sender
