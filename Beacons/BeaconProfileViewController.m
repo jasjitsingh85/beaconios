@@ -93,6 +93,9 @@
     self.beaconChatViewController.textViewContainer.layer.shadowOpacity = 1;
     self.beaconChatViewController.textViewContainer.layer.shadowRadius = 5.0;
     self.beaconChatViewController.textViewContainer.layer.shadowOffset = CGSizeMake(0, 2);
+    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatViewTapped:)];
+    chatTap.numberOfTapsRequired = 1;
+    [self.beaconChatViewController.tableView addGestureRecognizer:chatTap];
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
@@ -500,6 +503,14 @@
 - (void)imageViewTapped:(id)sender
 {
     [self showCameraActionSheet];
+}
+
+- (void)chatViewTapped:(id)sender
+{
+    BOOL textViewEmpty = !(self.beaconChatViewController.textView.text && self.beaconChatViewController.textView.text.length);
+    if (self.keyboardShown && textViewEmpty) {
+        [self.beaconChatViewController.textView resignFirstResponder];
+    }
 }
 
 - (void)showCameraActionSheet
