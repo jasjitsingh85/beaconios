@@ -140,7 +140,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
                                  key : userID,
                                  @"follow" : status};
-    [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"follow/" parameters:parameters success:success failure:failure];
 }
 
 - (void)beaconFollow:(NSString *)followStatus beaconID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
