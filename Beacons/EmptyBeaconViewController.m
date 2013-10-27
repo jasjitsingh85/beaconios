@@ -90,7 +90,7 @@
     self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subTitleLabel.textColor = [UIColor whiteColor];
     self.subTitleLabel.numberOfLines  = 0;
-    self.subTitleLabel.text = @"blah blah blah blah blah blah blah blah blah blah blah blah blah";
+    self.subTitleLabel.text = @"Want to see more Hotspots? Add more friends or make a Hotspot of your own.";
     [self.topView addSubview:self.subTitleLabel];
 }
 
