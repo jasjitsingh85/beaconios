@@ -98,16 +98,28 @@
     [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         beacon.beaconID = [responseObject valueForKeyPath:@"beacon.id"];
         self.currentBeacon = beacon;
-        success();
+        if (success) {
+            success();
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        if (failure) {
+            failure(error);
+        }
     }];
 }
 
-- (void)confirmBeacon:(Beacon *)beacon
+- (void)confirmBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
     self.currentBeacon = beacon;
-    [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:nil failure:nil];
+    [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
 
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification

@@ -307,20 +307,6 @@
     [self.navigationController pushViewController:beaconProfileViewController animated:YES];
 }
 
-- (void)beaconCellConfirmButtonTouched:(BeaconCell *)beaconCell confirmed:(BOOL)confirmed
-{
-    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
-    if (confirmed) {
-        AHAlertView *alert = [[AHAlertView alloc] initWithTitle:@"Joined Beacon" message:@"Would you like to notify friends?"];
-        [alert setCancelButtonTitle:@"Not Now" block:^{
-        }];
-        [alert addButtonWithTitle:@"OK" block:^{
-        }];
-        [alert show];
-        [[BeaconManager sharedManager] confirmBeacon:beacon];
-    }
-}
-
 - (void)beaconCellInviteMoreButtonTouched:(BeaconCell *)beaconCell
 {
 //    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];

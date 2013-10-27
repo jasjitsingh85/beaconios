@@ -79,7 +79,7 @@
         return YES;
     }
     BeaconStatus *userStatus = self.guestStatuses[[User loggedInUser].normalizedPhoneNumber];
-    return userStatus && userStatus.beaconStatusOption == BeaconStatusOptionGoing;
+    return userStatus && (userStatus.beaconStatusOption == BeaconStatusOptionGoing || userStatus.beaconStatusOption == BeaconStatusOptionHere);
 }
 
 - (void)geoCodeAddress

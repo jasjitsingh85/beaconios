@@ -20,6 +20,6 @@
 - (void)getBeaconWithID:(NSNumber *)beaconID success:(void (^)(Beacon *beacon))success
                 failure:(void (^)(NSError *error))failure;
 - (void)getBeacons:(void (^)(NSArray *beacons, BOOL cached))success failure:(void (^)(NSError *error))failure;
-- (void)confirmBeacon:(Beacon *)beacon;
+- (void)confirmBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)postBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure;
 @end

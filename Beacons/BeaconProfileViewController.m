@@ -479,7 +479,9 @@
 
 - (void)joinButtonTouched:(id)sender
 {
-    [[BeaconManager sharedManager] confirmBeacon:self.beacon];
+    [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
+        [self refreshBeaconData];
+    } failure:nil];
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
     UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
@@ -589,6 +591,7 @@
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [self refreshBeaconData];
         [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
