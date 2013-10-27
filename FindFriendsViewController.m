@@ -73,10 +73,10 @@ typedef enum {
     searchBarBackgroundView.backgroundColor = [[ThemeManager sharedTheme] redColor];
     [self.view addSubview:searchBarBackgroundView];
     self.searchBar = [[UISearchBar alloc] initWithFrame:searchBarBackgroundView.bounds];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    
     self.searchBar.delegate = self;
-//    self.searchBar.backgroundColor = [[ThemeManager sharedTheme] redColor];
     self.searchBar.barTintColor = [UIColor clearColor];
-//    self.searchBar.tintColor = [UIColor whiteColor];
     self.searchBar.translucent = NO;
     self.searchBar.searchBarStyle = UISearchBarStyleProminent;
     [searchBarBackgroundView addSubview:self.searchBar];
@@ -575,6 +575,11 @@ typedef enum {
     
 }
 
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
 - (void)exitSearchMode
 {
     self.searchBar.text = nil;
@@ -602,11 +607,13 @@ typedef enum {
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    [self.searchBar setShowsCancelButton:YES animated:YES];
     self.inSearchMode = YES;
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+    [self.searchBar setShowsCancelButton:NO animated:YES];
     self.inSearchMode = NO;
 }
 
