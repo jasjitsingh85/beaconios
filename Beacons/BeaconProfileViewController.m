@@ -32,6 +32,7 @@
 #import "TextMessageManager.h"
 #import "AppDelegate.h"
 #import "BounceButton.h"
+#import "NavigationBarTitleLabel.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate>
 
@@ -581,6 +582,8 @@
     if (chatMessage.isImageMessage) {
         ImageViewController *imageViewController = [[ImageViewController alloc] init];
         [self.navigationController pushViewController:imageViewController animated:YES];
+        NSString *title = [NSString stringWithFormat:@"%@'s Pic", chatMessage.sender.firstName];
+        imageViewController.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:title];
         if (chatMessage.cachedImage) {
             imageViewController.image = chatMessage.cachedImage;
         }
