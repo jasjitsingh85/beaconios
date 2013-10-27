@@ -238,6 +238,17 @@
     [self updateChatDesiredInsets];
 }
 
+- (void)refreshBeaconData
+{
+    if (!self.beacon) {
+        return;
+    }
+    [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
+        self.beacon = beacon;
+    } failure:nil];
+
+}
+
 - (void)setBeacon:(Beacon *)beacon
 {
     [self view];
@@ -537,6 +548,14 @@
     if (ABS(velocity.y) > 1) {
         [self showPartialDescriptionViewAnimated:YES];
     }
+}
+
+- (void)chatViewController:(ChatViewController *)chatViewController didScrollScrollView:(UIScrollView *)scrollView
+{
+//    NSLog(@"offset = %@", NSStringFromCGPoint(scrollView.contentOffset));
+//    if (scrollView.contentOffset.y < scrollView.contentInset.top) {
+//        [self showFullDescriptionViewAnimated:YES];
+//    }
 }
 
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage

@@ -59,11 +59,28 @@
     } failure:failure];
 }
 
+- (void)getBeaconWithID:(NSNumber *)beaconID success:(void (^)(Beacon *beacon))success
+                failure:(void (^)(NSError *error))failure
+{
+    NSDictionary *parameters = @{@"beacon_id" : beaconID};
+    [[APIClient sharedClient] getPath:@"beacon/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
+        if (success) {
+            success(beacon);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 - (void)updateBeacons:(void (^)(NSArray *beacons))success
               failure:(void (^)(NSError *error))failure
 {
     __weak BeaconManager *weakSelf = self;
-    [[APIClient sharedClient] getPath:@"beacon/follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getPath:@"follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *beacons = [[NSMutableArray alloc] init];
         for (NSDictionary *beaconData in responseObject) {
             Beacon *beacon = [[Beacon alloc] initWithData:beaconData];

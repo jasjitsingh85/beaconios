@@ -15,7 +15,8 @@ MapViewController,
 MenuViewController,
 SetBeaconViewController,
 BeaconDetailViewController,
-User;
+User,
+Beacon;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -31,5 +32,7 @@ User;
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;
 - (void)didActivateAccount;
+- (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
+- (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID;
 
 @end

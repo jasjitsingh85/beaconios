@@ -23,6 +23,8 @@
 #import "CrashManager.h"
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
+#import "BeaconProfileViewController.h"
+#import "Beacon.h"
 
 @interface AppDelegate()
 
@@ -187,6 +189,24 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     [User logoutUser];
     [[APIClient sharedClient] clearAuthorizationHeader];
+}
+
+#pragma mark - Beacon Profile
+- (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID
+{
+    Beacon *beacon = [[Beacon alloc] init];
+    beacon.beaconID = beaconID;
+    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
+    beaconProfileViewController.beacon = beacon;
+    [beaconProfileViewController refreshBeaconData];
+    [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+}
+
+- (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon
+{
+    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
+    beaconProfileViewController.beacon = beacon;
+    [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
 }
 
 #pragma mark - Push Notifications

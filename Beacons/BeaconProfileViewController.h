@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) Beacon *beacon;
 
+- (void)refreshBeaconData;
+
 @end

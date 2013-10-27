@@ -170,6 +170,13 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if ([self.chatViewControllerDelegate respondsToSelector:@selector(chatViewController:didScrollScrollView:)]) {
+        [self.chatViewControllerDelegate chatViewController:self didScrollScrollView:scrollView];
+    }
+}
+
 
 #pragma mark - Keyboard
 - (void)dismissKeyboard

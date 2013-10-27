@@ -45,7 +45,9 @@
 
 - (void)receivedWillEnterForegroundNotification:(NSNotification *)notification
 {
-    [self reloadMessagesFromServerCompletion:nil];
+    if (self.beacon && self.beacon.beaconID) {
+        [self reloadMessagesFromServerCompletion:nil];
+    }
 }
 
 - (void)reloadMessagesFromServerCompletion:(void (^)())completion

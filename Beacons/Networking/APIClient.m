@@ -99,14 +99,14 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     else {
         [parameters setValue:@"" forKey:@"address"];
     }
-    [[APIClient sharedClient] postPath:@"beacon/me/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"beacon/" parameters:parameters success:success failure:failure];
 }
 
 - (void)deleteBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{@"isActivated" : @"False"};
-    [[APIClient sharedClient] putPath:@"beacon/me/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] putPath:@"beacon/" parameters:parameters success:success failure:failure];
 }
 
 - (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -148,7 +148,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 {
     NSDictionary *parameters = @{@"beacon_id" : beaconID,
                                  @"follow" : followStatus};
-    [[APIClient sharedClient] postPath:@"beacon/follow/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"follow/" parameters:parameters success:success failure:failure];
 }
 
 - (void)inviteMoreContacts:(NSArray *)contacts toBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success

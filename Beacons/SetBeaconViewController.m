@@ -311,9 +311,7 @@
         UIAlertView *alertView = [[RandomObjectManager sharedManager] randomBeaconSetAlertView];
         [alertView show];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
-        beaconProfileViewController.beacon = beacon;
-        [appDelegate.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
     } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

@@ -8,6 +8,8 @@
 
 #import "PushNotificationManager.h"
 #import "APIClient.h"
+#import "Beacon.h"
+#import "AppDelegate.h"
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
@@ -64,14 +66,26 @@ NSInteger const kAPNSServerProduction = 3;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
-    NSString *notificationType = [userInfo valueForKeyPath:@"type"];
-    if ([notificationType isEqualToString:@"Message"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
-        
+    
+    BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
+    if (transitioningToForeground) {
+        NSNumber *beaconID = userInfo[@"beacon"];
+        if (beaconID) {
+            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID];
+        }
     }
-    else {
-        [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
+    BOOL inForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+    if (inForeground) {
+        NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
+        NSString *notificationType = [userInfo valueForKeyPath:@"type"];
+        if ([notificationType isEqualToString:@"Message"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
+            
+        }
+        else {
+            [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 }
 
