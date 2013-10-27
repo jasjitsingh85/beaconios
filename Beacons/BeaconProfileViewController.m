@@ -93,9 +93,6 @@
     self.beaconChatViewController.textViewContainer.layer.shadowOpacity = 1;
     self.beaconChatViewController.textViewContainer.layer.shadowRadius = 5.0;
     self.beaconChatViewController.textViewContainer.layer.shadowOffset = CGSizeMake(0, 2);
-    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatViewTapped:)];
-    chatTap.numberOfTapsRequired = 1;
-    [self.beaconChatViewController.tableView addGestureRecognizer:chatTap];
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
@@ -576,6 +573,11 @@
 
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage
 {
+    if (self.keyboardShown && (!chatViewController.textView.text || !chatViewController.textView.text.length)) {
+        [chatViewController.textView resignFirstResponder];
+        return;
+    }
+    
     if (chatMessage.isImageMessage) {
         ImageViewController *imageViewController = [[ImageViewController alloc] init];
         [self.navigationController pushViewController:imageViewController animated:YES];
