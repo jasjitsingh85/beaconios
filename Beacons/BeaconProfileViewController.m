@@ -52,6 +52,8 @@
 @property (strong, nonatomic) UIButton *directionsButton;
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
+@property (assign, nonatomic) BOOL keyboardShown;
+
 @end
 
 @implementation BeaconProfileViewController
@@ -428,11 +430,13 @@
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    self.keyboardShown = YES;
     [self showPartialDescriptionViewAnimated:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+    self.keyboardShown = NO;
 }
 
 #pragma mark - Buttons 
@@ -545,17 +549,16 @@
 #pragma mark - ChatViewControllerDelegate
 - (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
 {
-    if (ABS(velocity.y) > 1) {
+    if (velocity.y > 1) {
         [self showPartialDescriptionViewAnimated:YES];
     }
 }
 
 - (void)chatViewController:(ChatViewController *)chatViewController didScrollScrollView:(UIScrollView *)scrollView
 {
-//    NSLog(@"offset = %@", NSStringFromCGPoint(scrollView.contentOffset));
-//    if (scrollView.contentOffset.y < scrollView.contentInset.top) {
-//        [self showFullDescriptionViewAnimated:YES];
-//    }
+    if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
+        [self showFullDescriptionViewAnimated:YES];
+    }
 }
 
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage
