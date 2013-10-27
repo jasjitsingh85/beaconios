@@ -299,6 +299,7 @@
         status.beaconStatusOption = BeaconStatusOptionInvited;
         [invited addObject:status];
     }
+    
     beacon.guestStatuses = [NSDictionary dictionaryWithObjects:invited forKeys:[invited valueForKeyPath:@"contact.normalizedPhoneNumber"]];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     beacon.creator = [User loggedInUser];
@@ -310,6 +311,14 @@
         [loadingIndicator hide:YES];
         UIAlertView *alertView = [[RandomObjectManager sharedManager] randomBeaconSetAlertView];
         [alertView show];
+        
+        //add user as going. this isn't done earlier to avoid inviting user to own beacon
+        BeaconStatus *status = [[BeaconStatus alloc] init];
+        status.user = [User loggedInUser];
+        status.beaconStatusOption = BeaconStatusOptionGoing;
+        NSMutableDictionary *guestStatuses = [[NSMutableDictionary alloc] initWithDictionary:beacon.guestStatuses];
+        [guestStatuses setObject:status forKey:status.user.normalizedPhoneNumber];
+        beacon.guestStatuses = guestStatuses;
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
     } failure:^(NSError *error) {
