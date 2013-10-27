@@ -141,6 +141,11 @@
     return @"HelveticaNeue-LightItalic";
 }
 
+- (NSString *)titleFontName
+{
+    return @"SugarPie";
+}
+
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
 {
     return [UIImage imageNamed:@"navBar"];

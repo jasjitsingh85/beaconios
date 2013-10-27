@@ -15,6 +15,7 @@
 #import "Utilities.h"
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
+#import "NavigationBarTitleLabel.h"
 
 typedef enum {
     FindFriendSectionRecents=0,
@@ -107,7 +108,7 @@ typedef enum {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Invite Friends";
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite Friends"];
     self.skipButton = [[UIButton alloc] init];
     self.skipButton.frame = CGRectMake(0, 0, 50, 30);
     self.skipButton.backgroundColor = [UIColor whiteColor];

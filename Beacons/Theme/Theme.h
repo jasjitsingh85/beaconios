@@ -36,6 +36,7 @@
 - (NSString *)lightFontName;
 - (NSString *)italicFontName;
 - (NSString *)boldFontName;
+- (NSString *)titleFontName;
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
 - (NSDictionary *)navigationBarTitleAndTextAttributes;
 @end
@@ -51,5 +52,6 @@
 + (UIFont *)lightFontOfSize:(CGFloat)size;
 + (UIFont *)boldFontOfSize:(CGFloat)size;
 + (UIFont *)italicFontOfSize:(CGFloat)size;
++ (UIFont *)titleFontOfSize:(CGFloat)size;
 
 @end

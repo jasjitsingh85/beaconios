@@ -77,4 +77,10 @@
     return [UIFont fontWithName:boldFontName size:size];
 }
 
++ (UIFont *)titleFontOfSize:(CGFloat)size
+{
+    NSString *titleFontName = [[self sharedTheme] titleFontName];
+    return [UIFont fontWithName:titleFontName size:size];
+}
+
 @end

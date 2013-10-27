@@ -48,6 +48,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SugarPie.ttf</string>
 		<string>Lato-Regular.ttf</string>
 		<string>Lato-Bold.ttf</string>
 	</array>

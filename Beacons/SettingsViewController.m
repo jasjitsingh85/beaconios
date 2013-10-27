@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Theme.h"
 #import "WebViewController.h"
+#import "NavigationBarTitleLabel.h"
 
 @interface SettingsViewController ()
 
@@ -30,7 +31,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"Settings";
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Settings"];
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
 }

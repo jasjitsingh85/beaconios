@@ -29,6 +29,7 @@
 #import "BeaconManager.h"
 #import "BeaconProfileViewController.h"
 #import "EmptyBeaconViewController.h"
+#import "NavigationBarTitleLabel.h"
 
 @interface MapViewController () <BeaconCellDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *beaconCollectionView;
