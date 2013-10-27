@@ -7,6 +7,8 @@
 //
 
 #import "Utilities.h"
+#import "RandomObjectManager.h"
+#import "AppDelegate.h"
 
 @implementation Utilities
 
@@ -45,6 +47,23 @@
         normalizedNumber = [normalizedNumber substringWithRange:NSMakeRange(1, normalizedNumber.length-1)];
     }
     return normalizedNumber;
+}
+
++ (void)presentFriendInviter
+{
+    NSMutableArray *activityItems = [[NSMutableArray alloc] init];
+    NSString *text = [[RandomObjectManager sharedManager] randomInviteFriendsToAppString];
+    [activityItems addObject:text];
+    
+    [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
+    UIActivityViewController* activityViewController =
+    [[UIActivityViewController alloc] initWithActivityItems:activityItems
+                                      applicationActivities:nil];
+    activityViewController.excludedActivityTypes =  @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeSaveToCameraRoll];
+    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
+        
+    };
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:activityViewController animated:YES completion:^{}];
 }
 
 + (void)launchMapDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName

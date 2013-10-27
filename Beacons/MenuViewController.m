@@ -20,6 +20,7 @@
 #import "SettingsViewController.h"
 #import "User.h"
 #import "RandomObjectManager.h"
+#import "Utilities.h"
 
 typedef enum {
     MenuTableViewRowFind=0,
@@ -153,19 +154,7 @@ typedef enum {
 
 - (void)inviteSelected
 {
-    NSMutableArray *activityItems = [[NSMutableArray alloc] init];
-    NSString *text = [[RandomObjectManager sharedManager] randomInviteFriendsToAppString];
-    [activityItems addObject:text];
-
-    [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
-    UIActivityViewController* activityViewController =
-    [[UIActivityViewController alloc] initWithActivityItems:activityItems
-                                      applicationActivities:nil];
-    activityViewController.excludedActivityTypes =  @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeSaveToCameraRoll];
-    activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
-
-    };
-    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:activityViewController animated:YES completion:^{}];
+    [Utilities presentFriendInviter];
 }
 
 - (void)settingsSelected

@@ -9,6 +9,7 @@
 #import "EmptyBeaconViewController.h"
 #import "SetBeaconViewController.h"
 #import "Theme.h"
+#import "Utilities.h"
 
 @interface EmptyBeaconViewController ()
 
@@ -52,6 +53,7 @@
     [self.addFriendsButton setTitle:@"Add more friends" forState:UIControlStateNormal];
     [self.addFriendsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.addFriendsButton.titleLabel.font = [ThemeManager lightFontOfSize:18];
+    [self.addFriendsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.midView addSubview:self.addFriendsButton];
     
     self.setBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -83,12 +85,12 @@
     self.mainTitleLabel.text = @"Let's get going!";
     [self.topView addSubview:self.mainTitleLabel];
     
-    self.subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mainTitleLabel.frame), self.view.frame.size.width, self.topView.frame.size.height/2.0)];
+    self.subTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.mainTitleLabel.frame) - 20, self.view.frame.size.width - 30, self.topView.frame.size.height/2.0)];
     self.subTitleLabel.font = [ThemeManager lightFontOfSize:18];
     self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subTitleLabel.textColor = [UIColor whiteColor];
     self.subTitleLabel.numberOfLines  = 0;
-    self.subTitleLabel.text = @"blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah";
+    self.subTitleLabel.text = @"blah blah blah blah blah blah blah blah blah blah blah blah blah";
     [self.topView addSubview:self.subTitleLabel];
 }
 
@@ -96,6 +98,11 @@
 {
     SetBeaconViewController *setBeaconViewController = [[SetBeaconViewController alloc] init];
     [self.navigationController pushViewController:setBeaconViewController animated:YES];
+}
+
+- (void)addFriendsButtonTouched:(id)sender
+{
+    [Utilities presentFriendInviter];
 }
 
 @end
