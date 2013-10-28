@@ -168,14 +168,6 @@
     self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
 }
 
-- (UIViewController *)childViewControllerForStatusBarHidden
-{
-    if (self.childViewControllers && self.childViewControllers.count) {
-        return self.childViewControllers[0];
-    }
-    return nil;
-}
-
 - (void)updateCharacterCountLabel
 {
     self.characterCountLabel.hidden = self.descriptionTextView.text.length < 20;
@@ -187,7 +179,7 @@
 {
     SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
     selectLocationViewController.delegate = self;
-    [self.navigationController presentViewController:selectLocationViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:selectLocationViewController animated:YES];
 }
 
 - (void)setBeaconButtonTouched:(id)sender

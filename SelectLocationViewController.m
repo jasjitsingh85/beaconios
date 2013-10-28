@@ -11,13 +11,13 @@
 #import "FourSquareAPIClient.h"
 #import "Venue.h"
 #import "Theme.h"
+#import "NavigationBarTitleLabel.h"
 
 @interface SelectLocationViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *venues;
 @property (strong, nonatomic) NSString *customLocation;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (assign, nonatomic) BOOL keyboardShown;
 @end
@@ -38,6 +38,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     self.venues = [NSArray new];
     self.headerView.backgroundColor = [[ThemeManager sharedTheme] redColor];
     
@@ -50,11 +51,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self searchForVenues];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Pick a Place"];
 }
 
 - (void)searchForVenues
@@ -67,21 +64,6 @@
             [self.tableView reloadData];
         }
     }];
-}
-
-//search we use the cancel button to dismiss the viewcontroller we always want it enabled.
-//by default the cancel button of a search bar is only enabled when the search bar contains text
-- (void)enableSearchBarCancelButton
-{
-    for (UIView *possibleButton in self.searchBar.subviews)
-    {
-        if ([possibleButton isKindOfClass:[UIButton class]])
-        {
-            UIButton *cancelButton = (UIButton*)possibleButton;
-            cancelButton.enabled = YES;
-            break;
-        }
-    }
 }
 
 - (void)parseVenuesFromFourSquareResponse:(NSDictionary *)response
@@ -108,7 +90,7 @@
         Venue *venue = self.venues[indexPath.row - [self indexPathForFirstVenue].row];
         [self venueSelected:venue];
     }
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)currentLocationSelected
@@ -227,30 +209,27 @@
     [self searchForVenues];
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchForVenues];
+    [searchBar resignFirstResponder];
+}
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)cancelButtonTouched:(id)sender
-{
-    if (self.keyboardShown) {
-        [self.searchBar resignFirstResponder];
-    }
-    else {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     self.keyboardShown = YES;
+    [self.searchBar setShowsCancelButton:YES animated:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     self.keyboardShown = NO;
+    [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 @end
