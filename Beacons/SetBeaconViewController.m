@@ -301,8 +301,6 @@
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
-        UIAlertView *alertView = [[RandomObjectManager sharedManager] randomBeaconSetAlertView];
-        [alertView show];
         
         //add user as going. this isn't done earlier to avoid inviting user to own beacon
         BeaconStatus *status = [[BeaconStatus alloc] init];
