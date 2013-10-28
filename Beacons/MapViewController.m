@@ -41,6 +41,7 @@
 @property (strong, nonatomic) Beacon *highlightedBeacon;
 @property (strong, nonatomic) EmptyBeaconViewController *emptyBeaconViewController;
 @property (assign, nonatomic) BOOL inEmptyBeaconMode;
+@property (strong, nonatomic) NSNumber *colorOffset;
 
 @end
 
@@ -103,6 +104,15 @@
     
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
+}
+
+- (NSNumber *)colorOffset
+{
+    if (!_colorOffset) {
+        NSInteger offset = arc4random_uniform(6);
+        _colorOffset = [NSNumber numberWithInteger:offset];
+    }
+    return _colorOffset;
 }
 
 - (NSArray *)beaconAnnotations
@@ -461,14 +471,7 @@
 {
     id<Theme> theme = [ThemeManager sharedTheme];
     NSArray *colors = @[[theme blueColor], [theme pinkColor], [theme yellowColor], [theme greenColor], [theme orangeColor], [theme purpleColor]];
-    NSInteger idx;
-    Beacon *beacon = [self beaconForIndexPath:indexPath];
-    if (beacon.beaconID) {
-        idx = beacon.beaconID.integerValue % colors.count;
-    }
-    else {
-        idx = indexPath.row % colors.count;
-    }
+    NSInteger idx = (self.colorOffset.integerValue + indexPath.row) % colors.count;
     UIColor *color = colors[idx];
     return color;
 }
@@ -477,14 +480,7 @@
 {
     id<Theme> theme = [ThemeManager sharedTheme];
     NSArray *colors = @[[theme darkBlueColor], [theme darkPinkColor], [theme darkYellowColor], [theme darkGreenColor], [theme darkOrangeColor], [theme darkPurpleColor]];
-    NSInteger idx;
-    Beacon *beacon = [self beaconForIndexPath:indexPath];
-    if (beacon.beaconID) {
-        idx = beacon.beaconID.integerValue % colors.count;
-    }
-    else {
-        idx = indexPath.row % colors.count;
-    }
+    NSInteger idx = (self.colorOffset.integerValue + indexPath.row) % colors.count;
     UIColor *color = colors[idx];
     return color;
 }
