@@ -157,7 +157,6 @@
 		96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */; };
 		96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */; };
 		96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */; };
-		96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD01180528F700D62462 /* directionsArrow@2x.png */; };
 		96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD04180676E600D62462 /* UIView+Shadow.m */; };
 		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
@@ -170,6 +169,7 @@
 		96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636D181DEBF5001B7933 /* Icon-72.png */; };
 		96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636E181DEBF5001B7933 /* Icon-72@2x.png */; };
 		96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636F181DEBF5001B7933 /* Icon@2x.png */; };
+		96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED6374181E3545001B7933 /* directionsArrow@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
@@ -401,7 +401,6 @@
 		96CBCCF01805107500D62462 /* chatBubbleBlueLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleBlueLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCCF11805107500D62462 /* chatBubbleYellowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleYellowLeft@2x.png"; sourceTree = "<group>"; };
 		96CBCCF21805107500D62462 /* chatBubbleOrangeLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeLeft@2x.png"; sourceTree = "<group>"; };
-		96CBCD01180528F700D62462 /* directionsArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsArrow@2x.png"; sourceTree = "<group>"; };
 		96CBCD03180676E600D62462 /* UIView+Shadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Shadow.h"; sourceTree = "<group>"; };
 		96CBCD04180676E600D62462 /* UIView+Shadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Shadow.m"; sourceTree = "<group>"; };
 		96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyBeaconViewController.h; sourceTree = "<group>"; };
@@ -420,6 +419,7 @@
 		96ED636D181DEBF5001B7933 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		96ED636E181DEBF5001B7933 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		96ED636F181DEBF5001B7933 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		96ED6374181E3545001B7933 /* directionsArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsArrow@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		96F14C1D17D84A890093C976 /* ChatTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTest.h; path = ../ChatTest.h; sourceTree = "<group>"; };
@@ -740,60 +740,60 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				96CBCCE41805106A00D62462 /* Chat Bubbles */,
-				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
-				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
-				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
-				969D648C17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png */,
-				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
-				96CBCD01180528F700D62462 /* directionsArrow@2x.png */,
-				969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */,
-				969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */,
-				969D648417E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png */,
-				969D648517E95F9300F5AB36 /* beaconCellBackgroundPurple@2x.png */,
-				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
-				96D1D0D617E818A90033396F /* cameraSmall@2x.png */,
-				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
 				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
-				1F1E7808176E91F400F0E853 /* attendingButton@2x.png */,
-				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
-				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
+				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
+				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
+				1F1E7808176E91F400F0E853 /* attendingButton@2x.png */,
+				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
+				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
+				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
 				96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */,
-				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
+				969D649017E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png */,
+				969D648317E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png */,
+				969D648417E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png */,
+				969D648C17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png */,
+				969D648517E95F9300F5AB36 /* beaconCellBackgroundPurple@2x.png */,
+				969D648217E95F9300F5AB36 /* beaconCellBackgroundYellow@2x.png */,
+				969D649217E96ABE00F5AB36 /* beaconCellImageMask@2x.png */,
+				96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */,
 				1FE649F217659E2F0073D321 /* beaconLogoLarge@2x.png */,
 				1F7743D917716C1000188500 /* blueButton@2x.png */,
-				96CBCCDE1805066700D62462 /* menuSettings@2x.png */,
-				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
-				96CBCCE01805066700D62462 /* menuHome@2x.png */,
-				96A9871817E4FB40007D77B8 /* beaconImageTest@2x.png */,
 				9647102F17DEED5F00878C19 /* bubbleLeft@2x.png */,
 				9647103117DEFBC200878C19 /* bubbleRight@2x.png */,
+				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
+				96D1D0D617E818A90033396F /* cameraSmall@2x.png */,
+				96CBCCE41805106A00D62462 /* Chat Bubbles */,
+				9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */,
+				9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */,
 				1FE67731175C3C88006F563C /* Fonts */,
 				1F465C141763BD6900F35A8B /* getDirectionButton@2x.png */,
 				1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */,
+				96ED6374181E3545001B7933 /* directionsArrow@2x.png */,
 				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
 				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
 				1F9CEB40176D7AF300529037 /* infoButton@2x.png */,
 				1F1E780A176E91F800F0E853 /* invitedButton@2x.png */,
+				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
+				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
 				96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */,
 				1F49B83B1782A1FC00117857 /* menuAdd@2x.png */,
 				1F465C241764252200F35A8B /* menuAddFriend@2x.png */,
 				96C87C81175AA423006EA3A3 /* menuBackground@2x.png */,
 				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
-				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
+				96CBCCE01805066700D62462 /* menuHome@2x.png */,
+				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
+				1FE67729175C2CE2006F563C /* menuLogout@2x.png */,
+				96CBCCDE1805066700D62462 /* menuSettings@2x.png */,
 				1F465C131763BD6800F35A8B /* messageButton@2x.png */,
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
+				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				96C87C7F175A9C12006EA3A3 /* orangeButton@2x.png */,
 				1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */,
 				9647102D17DEEB5700878C19 /* plus@2x.png */,
-				9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */,
-				9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */,
-				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
-				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
 				9690F2C918009A2B0010EFA3 /* rightArrow@2x.png */,
 			);
 			path = Resources;
@@ -960,6 +960,7 @@
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
+				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
@@ -971,7 +972,6 @@
 				1F465C181763BD6900F35A8B /* groupMessageButton@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
-				96CBCD02180528F700D62462 /* directionsArrow@2x.png in Resources */,
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				1F465C1D1763CF0900F35A8B /* addFriendButton@2x.png in Resources */,
 				1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */,
