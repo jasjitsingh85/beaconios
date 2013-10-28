@@ -99,7 +99,6 @@
         statusLabel.font = [ThemeManager regularFontOfSize:12];
         statusLabel.textAlignment = NSTextAlignmentCenter;
         statusLabel.textColor = [UIColor whiteColor];
-        statusLabel.layer.cornerRadius = 2;
         [cell.contentView addSubview:statusLabel];
         cell.textLabel.font = [ThemeManager regularFontOfSize:17];
         cell.backgroundColor = [UIColor clearColor];
