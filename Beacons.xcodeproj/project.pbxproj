@@ -28,8 +28,6 @@
 		1F465C251764252200F35A8B /* menuAddFriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C241764252200F35A8B /* menuAddFriend@2x.png */; };
 		1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C271764FB7600F35A8B /* FindFriendsViewController.m */; };
 		1F465C2B176510EB00F35A8B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C2A176510EB00F35A8B /* Contact.m */; };
-		1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B837177BFD7C00117857 /* Icon-72@2x.png */; };
-		1F49B83A177BFD8000117857 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B839177BFD8000117857 /* Icon-72.png */; };
 		1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F49B83B1782A1FC00117857 /* menuAdd@2x.png */; };
 		1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D658A17653C9D00D02369 /* MessageUI.framework */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
@@ -63,7 +61,6 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
-		9615D780180E462900219B74 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9615D77F180E462900219B74 /* Icon@2x.png */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -92,7 +89,6 @@
 		96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */; };
 		96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */; };
 		96727DE71801DA1A00E75EE9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96727DE61801DA1A00E75EE9 /* CoreImage.framework */; };
-		9682DD28180E4844009E4228 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9682DD27180E4844009E4228 /* Icon.png */; };
 		96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CEA17EF9C8800C1C467 /* SoundPlayer.m */; };
 		96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */; };
 		96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96859CEE17EFA7BD00C1C467 /* Default@2x.png */; };
@@ -172,6 +168,10 @@
 		96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA50A181A2E93001E5812 /* RandomObjectManager.m */; };
 		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
 		96E623F01816485C0048125B /* BounceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EF1816485C0048125B /* BounceButton.m */; };
+		96ED6370181DEBF5001B7933 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636C181DEBF5001B7933 /* Icon.png */; };
+		96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636D181DEBF5001B7933 /* Icon-72.png */; };
+		96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636E181DEBF5001B7933 /* Icon-72@2x.png */; };
+		96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96ED636F181DEBF5001B7933 /* Icon@2x.png */; };
 		96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1B17D8499B0093C976 /* ChatViewController.m */; };
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
@@ -221,8 +221,6 @@
 		1F465C271764FB7600F35A8B /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindFriendsViewController.m; path = ../FindFriendsViewController.m; sourceTree = "<group>"; };
 		1F465C29176510EB00F35A8B /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		1F465C2A176510EB00F35A8B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
-		1F49B837177BFD7C00117857 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "../../Icon-72@2x.png"; sourceTree = "<group>"; };
-		1F49B839177BFD8000117857 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "../../Icon-72.png"; sourceTree = "<group>"; };
 		1F49B83B1782A1FC00117857 /* menuAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuAdd@2x.png"; sourceTree = "<group>"; };
 		1F4D658A17653C9D00D02369 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1F526385175C492800DD26E1 /* BeaconAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotationView.h; sourceTree = "<group>"; };
@@ -275,7 +273,6 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
-		9615D77F180E462900219B74 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -315,7 +312,6 @@
 		96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendInactive@2x.png"; sourceTree = "<group>"; };
 		96727DE61801DA1A00E75EE9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		9682DD27180E4844009E4228 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		96859CE917EF9C8800C1C467 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		96859CEA17EF9C8800C1C467 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -425,6 +421,10 @@
 		96E623EC1814996E0048125B /* NSObject+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Empty.m"; sourceTree = "<group>"; };
 		96E623EE1816485C0048125B /* BounceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BounceButton.h; sourceTree = "<group>"; };
 		96E623EF1816485C0048125B /* BounceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BounceButton.m; sourceTree = "<group>"; };
+		96ED636C181DEBF5001B7933 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		96ED636D181DEBF5001B7933 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		96ED636E181DEBF5001B7933 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		96ED636F181DEBF5001B7933 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		96F14C1A17D8499B0093C976 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		96F14C1B17D8499B0093C976 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		96F14C1D17D84A890093C976 /* ChatTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTest.h; path = ../ChatTest.h; sourceTree = "<group>"; };
@@ -703,10 +703,12 @@
 				963399471758512100AF9D89 /* main.m */,
 				963399491758512100AF9D89 /* Beacons-Prefix.pch */,
 				9633994D1758512100AF9D89 /* Default.png */,
-				9615D77F180E462900219B74 /* Icon@2x.png */,
-				9682DD27180E4844009E4228 /* Icon.png */,
 				96859CEE17EFA7BD00C1C467 /* Default@2x.png */,
 				96859CEF17EFA7BD00C1C467 /* Default-568h@2x.png */,
+				96ED636C181DEBF5001B7933 /* Icon.png */,
+				96ED636D181DEBF5001B7933 /* Icon-72.png */,
+				96ED636E181DEBF5001B7933 /* Icon-72@2x.png */,
+				96ED636F181DEBF5001B7933 /* Icon@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -781,8 +783,6 @@
 				1F465C151763BD6900F35A8B /* groupMessageButton@2x.png */,
 				1FE6772F175C3496006F563C /* hairlineSeparator@2x.png */,
 				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
-				1F49B839177BFD8000117857 /* Icon-72.png */,
-				1F49B837177BFD7C00117857 /* Icon-72@2x.png */,
 				1F9CEB40176D7AF300529037 /* infoButton@2x.png */,
 				1F1E780A176E91F800F0E853 /* invitedButton@2x.png */,
 				96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */,
@@ -947,8 +947,8 @@
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
-				9682DD28180E4844009E4228 /* Icon.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
+				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
@@ -973,7 +973,6 @@
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
-				9615D780180E462900219B74 /* Icon@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
 				1F465C171763BD6900F35A8B /* getDirectionButton@2x.png in Resources */,
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
@@ -994,20 +993,21 @@
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
+				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
+				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				1F1E7809176E91F400F0E853 /* attendingButton@2x.png in Resources */,
 				9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,
 				1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */,
-				1F49B838177BFD7C00117857 /* Icon-72@2x.png in Resources */,
 				969D648D17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png in Resources */,
 				9647103217DEFBC200878C19 /* bubbleRight@2x.png in Resources */,
-				1F49B83A177BFD8000117857 /* Icon-72.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
+				96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				1F49B83C1782A1FC00117857 /* menuAdd@2x.png in Resources */,
 				96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */,
