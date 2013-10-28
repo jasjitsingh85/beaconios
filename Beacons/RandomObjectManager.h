@@ -14,6 +14,7 @@
 
 - (NSString *)randomInviteFriendsToAppString;
 - (NSString *)randomSetBeaconPlaceholder;
+- (NSString *)randomEmptyBeaconSubtitle;
 - (UIAlertView *)randomBeaconSetAlertView;
 
 @end

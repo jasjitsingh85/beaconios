@@ -14,6 +14,7 @@
 @property (strong, nonatomic) RandomObjectPicker *inviteFriendsToAppPicker;
 @property (strong, nonatomic) RandomObjectPicker *setBeaconPlaceholderPicker;
 @property (strong, nonatomic) RandomObjectPicker *beaconSetAlertPicker;
+@property (strong, nonatomic) RandomObjectPicker *emptyBeaconSubtitlePicker;
 
 @end
 
@@ -34,8 +35,8 @@
     if (_inviteFriendsToAppPicker) {
         return _inviteFriendsToAppPicker;
     }
-    NSArray *options = @[@"the creators of this app are desparate for users and friends. Anything helps.",
-                         @"blah1",
+    NSArray *options = @[@"The creators of this app are desparate for users and friends. Anything helps.",
+                         @"This app sucks I wouldn't recommend it to anyone",
                          @"blah2"];
     _inviteFriendsToAppPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _inviteFriendsToAppPicker;
@@ -60,7 +61,7 @@
                          @"Shabbat dinner at Hillel. Manischewitz to the face",
                          @"Body painting with the boys",
                          @"Helping Dawson discover himself",
-                         @"Heated yoga. So sweaty but so good lol",
+                         @"Heated vinyasa yoga. So sweaty but purifying",
                          @"Stop telling me what to do with my body.",
                          @"Drinking. Joey just broke up with me. Honestly it's her loss",
                          @"I just want to have a quiet night. Maybe read a little",
@@ -100,6 +101,8 @@
                          @"Feeding the children bread at the park",
                          @"Doing things that make terrorists want to destroy our culture",
                          @"Saving puppies from a burning building. Leaving the kittens behind",
+                         @"Working out at the playground. Shirt optional."
+                         @"Snake charming"
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;
@@ -127,6 +130,26 @@
 - (UIAlertView *)randomBeaconSetAlertView
 {
     return [self.beaconSetAlertPicker getRandomObject];
+}
+
+- (RandomObjectPicker *)emptyBeaconSubtitlePicker
+{
+    if (_emptyBeaconSubtitlePicker) {
+        return _emptyBeaconSubtitlePicker;
+    }
+    NSArray *options = @[@"Ghandi used Hotspot to lead India to independence. What will you do with it?",
+                         @"1 in 3 Hotspots result in orgasm. I prefer a cigarette after setting one.",
+                         @"Your friends are lonely and they need your help!",
+                         @"Your Hotspot is a precious thing. Be gentle with it.",
+                         @"Setting a Hotspot raises dopamine levels, an effect many find arousing.",
+                         ];
+    _emptyBeaconSubtitlePicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
+    return _emptyBeaconSubtitlePicker;
+}
+
+- (NSString *)randomEmptyBeaconSubtitle
+{
+    return [self.emptyBeaconSubtitlePicker getRandomObject];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "SetBeaconViewController.h"
 #import "Theme.h"
 #import "Utilities.h"
+#import "RandomObjectManager.h"
 
 @interface EmptyBeaconViewController ()
 
@@ -90,7 +91,7 @@
     self.subTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subTitleLabel.textColor = [UIColor whiteColor];
     self.subTitleLabel.numberOfLines  = 0;
-    self.subTitleLabel.text = @"Want to see more Hotspots? Add more friends or make a Hotspot of your own.";
+    self.subTitleLabel.text = [[RandomObjectManager sharedManager] randomEmptyBeaconSubtitle];
     [self.topView addSubview:self.subTitleLabel];
 }
 
