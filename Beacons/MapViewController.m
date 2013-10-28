@@ -434,23 +434,6 @@
     }];
 }
 
-- (void)filterBeaconsByLocation
-{
-    CGFloat filterRadius = 20000;
-    CLLocation *currentLocation = [[LocationTracker sharedTracker] currentLocation];
-    NSMutableArray *filteredBeacons = [NSMutableArray arrayWithArray:self.beacons];
-    if (currentLocation) {
-        for (Beacon *beacon in self.self.beacons) {
-            CLLocation *beaconLocation = [[CLLocation alloc] initWithLatitude:beacon.coordinate.latitude longitude:beacon.coordinate.longitude];
-            CLLocationDistance distance = [currentLocation distanceFromLocation:beaconLocation];
-            if (distance > filterRadius) {
-                [filteredBeacons removeObject:beacon];
-            }
-        }
-    }
-    self.beacons = [NSArray arrayWithArray:filteredBeacons];
-}
-
 #pragma mark - Networking
 - (void)requestBeaconsShowLoadingIndicator:(BOOL)showLoadingIndicator
 {
@@ -460,7 +443,6 @@
     [[BeaconManager sharedManager] updateBeacons:^(NSArray *beacons) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         self.beacons = [NSArray arrayWithArray:beacons];
-        [self filterBeaconsByLocation];
         [self performSelectorOnMainThread:@selector(reloadBeacons) withObject:nil waitUntilDone:NO];
     } failure:^(NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
