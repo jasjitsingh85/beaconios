@@ -35,9 +35,18 @@
     if (_inviteFriendsToAppPicker) {
         return _inviteFriendsToAppPicker;
     }
-    NSArray *options = @[@"The creators of this app are desparate for users and friends. Anything helps.",
-                         @"This app sucks I wouldn't recommend it to anyone",
-                         @"blah2"];
+    NSArray *options = @[@"The creators of Hotspot app are desparate for users and friends. Anything helps.",
+                         @"This Hotspot app sucks I wouldn't recommend it to anyone",
+                         @"Rahul fill this template out. We aren't paying you 20 rupees an hour for nothing.",
+                         @"I hear this Hotspot app can increase your stamina in bed by 30%!",
+                         @"This Hotspot app has changed my life. Honestly it's the only thing that saved my marriage",
+                         @"You know that feeling when a really cute guy holds the door for you? This Hotspot app gives me that feeling every day.",
+                         @"If I had to decide between world peace and this Hotspot app I'd probably pick the app. Then I'd immediately regret the decision.",
+                         @"I love and miss you very much. If you love and miss me, you would download this Hotspot app.",
+                         @"This Hotspot app is crack. Like you shouldn't use it if your pregnant",
+                         @"Meet hot single moms in your area. Download the Hotspot app today!",
+                         @"You gotta check out Hotspot. It's an app that prefills embarrassing, and frankly stupid invitation texts to your closest friends."
+                         ];
     _inviteFriendsToAppPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _inviteFriendsToAppPicker;
 }
@@ -86,7 +95,7 @@
                          @"Playing the roofie game!!",
                          @"Handing out candy to kids",
                          @"Binging and purging",
-                         @"Remember to fill out this template. This isn't amateur hour, you outsourced idiots",
+                         @"Remember to fill out this template. This isn't amateur night, you outsourced morons",
                          @"Russian roulette. Hurry this guest list is starting to dwindle!",
                          @"Meeting people by kicking open random bathroom stalls",
                          @"Catcalling construction workers",
@@ -101,7 +110,7 @@
                          @"Feeding the children bread at the park",
                          @"Doing things that make terrorists want to destroy our culture",
                          @"Saving puppies from a burning building. Leaving the kittens behind",
-                         @"Working out at the playground. Shirt optional."
+                         @"Working out at the playground. Shirt optional.",
                          @"Snake charming"
                          ];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
