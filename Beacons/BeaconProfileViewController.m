@@ -563,10 +563,6 @@
     if (velocity.y > 1) {
         [self showPartialDescriptionViewAnimated:YES];
     }
-}
-
-- (void)chatViewController:(ChatViewController *)chatViewController didScrollScrollView:(UIScrollView *)scrollView
-{
     if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
         [self showFullDescriptionViewAnimated:YES];
     }
