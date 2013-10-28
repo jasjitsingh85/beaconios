@@ -14,8 +14,6 @@
 		1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */; };
 		1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */; };
 		1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* PushNotificationManager.m */; };
-		1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */; };
-		1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */; };
 		1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0817618B9200F35A8B /* SelectLocationViewController.m */; };
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
 		1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C131763BD6800F35A8B /* messageButton@2x.png */; };
@@ -200,9 +198,6 @@
 		1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegistrationViewController.xib; path = ../RegistrationViewController.xib; sourceTree = "<group>"; };
 		1F3EF24617979FD9005240E3 /* PushNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationManager.h; sourceTree = "<group>"; };
 		1F3EF24717979FD9005240E3 /* PushNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationManager.m; sourceTree = "<group>"; };
-		1F465C0017617E3F00F35A8B /* CreateBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateBeaconViewController.h; path = ../CreateBeaconViewController.h; sourceTree = "<group>"; };
-		1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateBeaconViewController.m; path = ../CreateBeaconViewController.m; sourceTree = "<group>"; };
-		1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CreateBeaconViewController.xib; path = ../CreateBeaconViewController.xib; sourceTree = "<group>"; };
 		1F465C0717618B9200F35A8B /* SelectLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectLocationViewController.h; path = ../SelectLocationViewController.h; sourceTree = "<group>"; };
 		1F465C0817618B9200F35A8B /* SelectLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectLocationViewController.m; path = ../SelectLocationViewController.m; sourceTree = "<group>"; };
 		1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectLocationViewController.xib; path = ../SelectLocationViewController.xib; sourceTree = "<group>"; };
@@ -613,9 +608,6 @@
 				96956449175862790081B349 /* CenterNavigationController.h */,
 				9695644A175862790081B349 /* CenterNavigationController.m */,
 				1FD6582D175878D20007455B /* Constants */,
-				1F465C0017617E3F00F35A8B /* CreateBeaconViewController.h */,
-				1F465C0117617E3F00F35A8B /* CreateBeaconViewController.m */,
-				1F465C0217617E3F00F35A8B /* CreateBeaconViewController.xib */,
 				1F465C261764FB7600F35A8B /* FindFriendsViewController.h */,
 				1F465C271764FB7600F35A8B /* FindFriendsViewController.m */,
 				966070E0175AC989007379A0 /* LineLayout.h */,
@@ -967,7 +959,6 @@
 				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
-				1F465C0417617E3F00F35A8B /* CreateBeaconViewController.xib in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
@@ -1113,7 +1104,6 @@
 				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
 				1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
-				1F465C0317617E3F00F35A8B /* CreateBeaconViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,

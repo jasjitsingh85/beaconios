@@ -16,7 +16,6 @@
 #import "MapViewController.h"
 #import "FindFriendsViewController.h"
 #import "BeaconDetailViewController.h"
-#import "CreateBeaconViewController.h"
 #import "SettingsViewController.h"
 #import "User.h"
 #import "RandomObjectManager.h"

@@ -11,7 +11,6 @@
 #import "MapViewController.h"
 #import "MenuViewController.h"
 #import "BeaconDetailViewController.h"
-#import "CreateBeaconViewController.h"
 #import "ActivationViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
