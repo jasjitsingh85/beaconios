@@ -380,18 +380,17 @@
         if (pinView == nil)
         {
             // if an existing pin view was not available, create one
-            BeaconAnnotationView *customPinView = [[BeaconAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BeaconAnnotationIdentifier];
-            customPinView.animatesDrop = YES;
-            customPinView.canShowCallout = NO;
+            pinView = [[BeaconAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BeaconAnnotationIdentifier];
+            pinView.animatesDrop = YES;
+            pinView.canShowCallout = NO;
             UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(beaconAnnotationViewTapped:)];
             tapGesture.numberOfTapsRequired = 1;
-            [customPinView addGestureRecognizer:tapGesture];
-            customPinView.color = [self secondaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
-            customPinView.active = [beaconAnnotation.beacon isEqual:self.highlightedBeacon];
-            return customPinView;
+            [pinView addGestureRecognizer:tapGesture];
+            pinView.active = [beaconAnnotation.beacon isEqual:self.highlightedBeacon];
         }
         pinView.annotation = beaconAnnotation;
-        pinView.color = [self secondaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
+        pinView.primaryColor = [self primaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
+        pinView.secondaryColor = [self secondaryColorForIndexPath:[self indexPathForBeacon:beaconAnnotation.beacon]];
         return pinView;
     }
  

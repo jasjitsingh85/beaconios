@@ -12,6 +12,7 @@
 
 @property (assign, nonatomic) BOOL animatesDrop;
 @property (assign, nonatomic) BOOL active;
-@property (strong, nonatomic) UIColor *color;
+@property (strong, nonatomic) UIColor *primaryColor;
+@property (strong, nonatomic) UIColor *secondaryColor;
 
 @end
