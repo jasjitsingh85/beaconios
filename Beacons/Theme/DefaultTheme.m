@@ -143,7 +143,7 @@
 
 - (NSString *)titleFontName
 {
-    return @"SugarPie";
+    return @"HelveticaNeue";
 }
 
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
