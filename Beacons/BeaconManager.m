@@ -35,17 +35,42 @@
     if (!self) {
         return self;
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
+    [self unarchiveBeacons];
     return self;
+}
+
+- (void)archiveBeacons
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.beacons];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kDefaultsKeyArchivedBeacons];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)unarchiveBeacons
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyArchivedBeacons];
+    self.beacons = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
 - (void)setCurrentBeacon:(Beacon *)currentBeacon
 {
     _currentBeacon = currentBeacon;
     [[LocationTracker sharedTracker] stopMonitoringAllRegions];
-    CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:currentBeacon.coordinate radius:100 identifier:currentBeacon.beaconID.stringValue];
+    CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:currentBeacon.coordinate radius:100 identifier:currentBeacon.beaconID.stringValue];
     [[LocationTracker sharedTracker] monitorRegion:region];
+}
+
+- (void)setBeacons:(NSArray *)beacons
+{
+    _beacons = beacons;
+    [[LocationTracker sharedTracker] stopMonitoringAllRegions];
+    for (Beacon *beacon in beacons) {
+        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
+        [[LocationTracker sharedTracker] monitorRegion:region];
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self archiveBeacons];
+    });
 }
 
 - (void)getBeacons:(void (^)(NSArray *, BOOL))success failure:(void (^)(NSError *))failure
@@ -124,18 +149,41 @@
 
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
 {
-    [[APIClient sharedClient] arriveBeacon:self.currentBeacon.beaconID success:nil failure:nil];
+#if DEBUG
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"you arrived at the beacon!";
+    localNotification.alertBody = @"Debugging. Entered region";
+#endif
+    
+    CLRegion *region = notification.userInfo[@"region"];
+    NSNumber *beaconID = @(region.identifier.integerValue);
+    [self didArriveAtBeaconWithID:beaconID];
+}
+
+- (void)didArriveAtBeaconWithID:(NSNumber *)beaconID
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beaconID = %@", beaconID];
+    NSArray *filtered = [self.beacons filteredArrayUsingPredicate:predicate];
+    Beacon *beacon = [filtered firstObject];
+    if (!beacon) {
+        return;
+    }
+//    make sure not expired
+    if (!beacon.expirationDate || [[NSDate date] timeIntervalSinceDate:beacon.expirationDate] > 0) {
+        return;
+    }
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = @"You arrived at a Hotspot. Want to yourself and your friends in?";
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:self.currentBeacon.beaconID.stringValue];
+    [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:beacon.beaconID.stringValue];
 }
 
 - (void)receivedDidExitRegionNotification:(NSNotification *)notification
 {
+#if DEBUG
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"you left the beacon!";
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    localNotification.alertBody = @"Debugging. Exited region";
+#endif
 }
 
 @end

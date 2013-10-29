@@ -9,6 +9,7 @@
 #define kDefaultsKeyIsLoggedIn @"defaultsKeyIsLoggedIn"
 #define kDefaultsKeyAccountActivated @"defaultsKeyAccountActivated"
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"
+#define kDefaultsKeyArchivedBeacons @"archivedBeacons"
 
 //notifications
 

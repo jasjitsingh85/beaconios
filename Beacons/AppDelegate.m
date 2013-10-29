@@ -24,6 +24,7 @@
 #import "SetBeaconViewController.h"
 #import "BeaconProfileViewController.h"
 #import "Beacon.h"
+#import "BeaconManager.h"
 
 @interface AppDelegate()
 
@@ -114,6 +115,8 @@
         [[ContactManager sharedManager] syncContacts];
         [CrashManager setupForUser];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
     return YES;
 }
 
@@ -121,6 +124,11 @@
 {
     [[AnalyticsManager sharedManager] appForeground];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    [[BeaconManager sharedManager] archiveBeacons];
 }
 
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response
@@ -206,6 +214,17 @@
     BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
     beaconProfileViewController.beacon = beacon;
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+}
+
+#pragma mark - Location
+- (void)receivedDidEnterRegionNotification:(NSNotification *)notification
+{
+    [[BeaconManager sharedManager] receivedDidEnterRegionNotification:notification];
+}
+
+- (void)receivedDidExitRegionNotification:(NSNotification *)notification
+{
+    [[BeaconManager sharedManager] receivedDidExitRegionNotification:notification];
 }
 
 #pragma mark - Push Notifications
