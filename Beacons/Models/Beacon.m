@@ -61,6 +61,25 @@
     return self;
 }
 
+#pragma mark - NSCoding
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.beaconID = [aDecoder decodeObjectForKey:@"beaconID"];
+    self.expirationDate = [aDecoder decodeObjectForKey:@"expirationDate"];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.beaconID forKey:@"beaconID"];
+    [aCoder encodeObject:self.expirationDate forKey:@"expirationDate"];
+}
+
 - (BOOL)isUserBeacon
 {    
     if (!self.creator) {

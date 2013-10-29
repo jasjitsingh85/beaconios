@@ -11,7 +11,7 @@
 
 
 @class User;
-@interface Beacon : NSObject
+@interface Beacon : NSObject <NSCoding>
 
 @property (readonly) BOOL isUserBeacon;
 @property (nonatomic, strong) NSNumber *beaconID;
