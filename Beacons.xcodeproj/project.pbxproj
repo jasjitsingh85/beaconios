@@ -61,6 +61,8 @@
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
+		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
+		962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
 		9633993E1758512100AF9D89 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993D1758512100AF9D89 /* Foundation.framework */; };
 		963399401758512100AF9D89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993F1758512100AF9D89 /* CoreGraphics.framework */; };
@@ -272,6 +274,8 @@
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		9615F4E6175BEBE6005CF62D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowSmall@2x.png"; sourceTree = "<group>"; };
+		962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowLarge@2x.png"; sourceTree = "<group>"; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9633993B1758512100AF9D89 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9633993D1758512100AF9D89 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -746,6 +750,7 @@
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				1F1E7808176E91F400F0E853 /* attendingButton@2x.png */,
+				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
 				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
 				1FE6771C175C16E9006F563C /* beaconAnnotation@2x.png */,
@@ -782,6 +787,7 @@
 				1F49B83B1782A1FC00117857 /* menuAdd@2x.png */,
 				1F465C241764252200F35A8B /* menuAddFriend@2x.png */,
 				96C87C81175AA423006EA3A3 /* menuBackground@2x.png */,
+				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				1FE67736175C3F0D006F563C /* menuBeacons@2x.png */,
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
 				96CBCCE01805066700D62462 /* menuHome@2x.png */,
@@ -940,6 +946,7 @@
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
 				96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
+				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
@@ -994,6 +1001,7 @@
 				9647103017DEED5F00878C19 /* bubbleLeft@2x.png in Resources */,
 				1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */,
 				1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */,
+				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				969D648D17E9681500F5AB36 /* beaconCellBackgroundPink@2x.png in Resources */,
 				9647103217DEFBC200878C19 /* bubbleRight@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,

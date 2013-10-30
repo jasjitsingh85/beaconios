@@ -19,6 +19,9 @@
 @property (strong, nonatomic) UIView *colorViewBottom;
 @property (strong, nonatomic) UIView *popsicleStickTop;
 @property (strong, nonatomic) UIView *popsicleStickBottom;
+@property (strong, nonatomic) UIImageView *shadowView;
+@property (strong, nonatomic) UIImage *shadowImageSmall;
+@property (strong, nonatomic) UIImage *shadowImageLarge;
 
 @end
 
@@ -29,6 +32,11 @@
     self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
     if (self != nil)
     {
+        self.shadowImageSmall = [UIImage imageNamed:@"annotationShadowSmall"];
+        self.shadowImageLarge = [UIImage imageNamed:@"annotationShadowLarge"];
+        self.shadowView = [[UIImageView alloc] initWithImage:self.shadowImageSmall];
+        [self addSubview:self.shadowView];
+        
         self.colorView = [[UIView alloc] init];
         self.colorView.backgroundColor = [[ThemeManager sharedTheme] blueColor];
         self.colorView.clipsToBounds = YES;
@@ -51,6 +59,7 @@
         self.popsicleStickBottom.backgroundColor = [UIColor colorWithRed:234/255.0 green:196/255.0 blue:149/255.0 alpha:1.0];
         self.popsicleStickBottom.layer.cornerRadius = 5;
         [self addSubview:self.popsicleStickBottom];
+        
         self.frame = CGRectMake(0, 0, 50, 50);
         self.active = NO;
     }
@@ -93,7 +102,7 @@
     CGRect popsicleStickBottomFrame;
     
     if (active) {
-        popsicleStickBottomFrame.size = CGSizeMake(10, 9);
+        popsicleStickBottomFrame.size = CGSizeMake(11, 9);
         popsicleStickBottomFrame.origin.x = 0.5*(self.frame.size.width - popsicleStickBottomFrame.size.width);
         popsicleStickBottomFrame.origin.y = self.frame.size.height - popsicleStickBottomFrame.size.height;
         popsicleStickTopFrame.size = CGSizeMake(10, 8);
@@ -111,7 +120,7 @@
         
     }
     else {
-        popsicleStickBottomFrame.size = CGSizeMake(10, 0);
+        popsicleStickBottomFrame.size = CGSizeMake(11, 0);
         popsicleStickBottomFrame.origin.x = 0.5*(self.frame.size.width - popsicleStickBottomFrame.size.width);
         popsicleStickBottomFrame.origin.y = self.frame.size.height - popsicleStickBottomFrame.size.height;
         popsicleStickTopFrame.size = CGSizeMake(10, 0);
@@ -126,7 +135,15 @@
         colorRightFrame.origin = CGPointMake(colorFrame.size.width/2.0, 0);
         colorBottomFrame.size = CGSizeMake(0, 0);
         colorBottomFrame.origin = CGPointMake(0, colorFrame.size.height - colorBottomFrame.size.height);
+        
     }
+    
+    self.shadowView.image = active ? self.shadowImageLarge : self.shadowImageSmall;
+    CGRect shadowFrame;
+    shadowFrame.size = self.shadowView.image.size;
+    shadowFrame.origin.x = -1;
+    shadowFrame.origin.y = self.frame.size.height - shadowFrame.size.height;
+    
     if (active) {
         self.popsicleStickTop.alpha = 1;
         self.popsicleStickBottom.alpha = 1;
@@ -138,6 +155,7 @@
         self.colorViewLeft.frame = colorLeftFrame;
         self.colorViewRight.frame = colorRightFrame;
         self.colorViewBottom.frame = colorBottomFrame;
+        self.shadowView.frame = shadowFrame;
 
         if (!active) {
             self.popsicleStickBottom.alpha = 0;
