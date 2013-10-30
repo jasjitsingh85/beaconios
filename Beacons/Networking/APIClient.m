@@ -112,7 +112,7 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 - (void)confirmBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    [self beaconFollow:@"Going" beaconID:beaconID success:success failure:failure];
+    [self beaconFollow:@"Attending" beaconID:beaconID success:success failure:failure];
 }
 
 - (void)checkoutFriendWithID:(NSNumber *)userID isUser:(BOOL)isUser atBeacon:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
