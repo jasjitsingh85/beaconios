@@ -289,7 +289,12 @@
 
 - (void)getDirectionsToBeacon
 {
-    [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Get Directions" message:@"Want to see the turn by turn?"];
+    [alertView addButtonWithTitle:@"Take me there" handler:^{
+        [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
+    }];
+    [alertView setCancelButtonWithTitle:@"No thank you" handler:nil];
+    [alertView show];
 }
 
 - (void)updateImageViewWithImage:(UIImage *)image
