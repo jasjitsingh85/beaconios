@@ -290,10 +290,10 @@
 - (void)getDirectionsToBeacon
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Get Directions" message:@"Want to see the turn by turn?"];
-    [alertView addButtonWithTitle:@"Take me there" handler:^{
+    [alertView addButtonWithTitle:@"No, thank you" handler:nil];
+    [alertView setCancelButtonWithTitle:@"Yes, please" handler:^{
         [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
     }];
-    [alertView setCancelButtonWithTitle:@"No thank you" handler:nil];
     [alertView show];
 }
 
@@ -491,10 +491,10 @@
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
     UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
-    [alertView addButtonWithTitle:@"OK" handler:^{
+    [alertView addButtonWithTitle:@"No thanks" handler:nil];
+    [alertView setCancelButtonWithTitle:@"Yeah!" handler:^{
         [self inviteMoreFriends];
     }];
-    [alertView setCancelButtonWithTitle:@"Not right now" handler:nil];
     [alertView show];
 }
 
