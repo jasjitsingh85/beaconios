@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import <BlocksKit/MFMailComposeViewController+BlocksKit.h>
 #import "AppDelegate.h"
 #import "Theme.h"
 #import "WebViewController.h"
@@ -46,7 +47,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;
+        return 3;
     }
     return 1;
 }
@@ -66,6 +67,9 @@
         else if (indexPath.row == 1) {
             cell.textLabel.text = @"Terms";
         }
+        else if (indexPath.row == 2) {
+            cell.textLabel.text = @"Feedback";
+        }
     }
     else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -84,8 +88,11 @@
         if (indexPath.row == 0) {
             [self privacySelected];
         }
-        if (indexPath.row == 1) {
+        else if (indexPath.row == 1) {
             [self termsSelected];
+        }
+        else if (indexPath.row == 2) {
+            [self feedbackSelected];
         }
     }
     else if (indexPath.section == 1) {
@@ -107,6 +114,18 @@
     NSURL *privacyURL = [NSURL URLWithString:@"http://mighty-reef-7102.herokuapp.com/privacy"];
     WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
     [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+- (void)feedbackSelected
+{
+    MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+    mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+        [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    };
+    [mailViewController setSubject:@"I have an opinion or a problem"];
+    [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
+    [mailViewController setMessageBody:@"I [like, hate] you and your app for the following reason:\n" isHTML:NO];
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:mailViewController animated:YES completion:nil];
 }
 
 - (void)logoutSelected

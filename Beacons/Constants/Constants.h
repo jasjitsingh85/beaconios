@@ -27,3 +27,6 @@
 //messages
 #define kMessageTypeUserMessage @"UM"
 #define kMessageTypeSystemMessage @"HM"
+
+//email
+#define kFeedbackEmailAddress @"info@gethotspotapp.com"
