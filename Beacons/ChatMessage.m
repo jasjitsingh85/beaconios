@@ -8,6 +8,7 @@
 
 #import "ChatMessage.h"
 #import "User.h"
+#import "Contact.h"
 #import "AppDelegate.h"
 #import "BeaconImage.h"
 #import "User.h"
@@ -21,15 +22,19 @@
         return nil;
     }
     NSDictionary *userData = messageData[@"sender"];
-    if (userData && ![userData isEqual:[NSNull null]]) {
-        self.sender = [[User alloc] initWithData:messageData[@"sender"]];
+    if (![userData isEmpty]) {
+        self.sender = [[User alloc] initWithData:userData];
+    }
+    NSDictionary *contactData = messageData[@"contact"];
+    if (![contactData isEmpty]) {
+        self.contactSender = [[Contact alloc] initWithData:contactData];
     }
     self.messageString = messageData[@"message"];
     if ([self.messageString isEqual:[NSNull null]]) {
         self.messageString = @"";
     }
     NSDictionary *imageData = messageData[@"image"];
-    if (imageData && ![imageData isEqual:[NSNull null]]) {
+    if (![imageData isEmpty]) {
         self.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
     }
     

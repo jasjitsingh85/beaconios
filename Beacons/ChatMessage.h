@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class User;
+@class User, Contact;
 @interface ChatMessage : NSObject
 
 @property (strong, nonatomic) NSString *messageString;
@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIImage *cachedImage;
 @property (strong, nonatomic) NSDate *sentDate;
 @property (strong, nonatomic) User *sender;
+@property (strong, nonatomic) Contact *contactSender;
 @property (strong, nonatomic) NSString *messageType;
 @property (readonly) BOOL isImageMessage;
 //@property (readonly) BOOL isUserMessage;

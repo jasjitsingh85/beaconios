@@ -33,6 +33,35 @@
     return self;
 }
 
+- (void)separateNameComponents
+{
+    if (!self.fullName) {
+        return;
+    }
+    
+    NSArray *components = [self.fullName componentsSeparatedByString:@" "];
+    _firstName = [components firstObject];
+    if (components.count > 1) {
+        _lastName = [components lastObject];
+    }
+}
+
+- (NSString *)firstName
+{
+    if (!_firstName) {
+        [self separateNameComponents];
+    }
+    return _firstName;
+}
+
+- (NSString *)lastName
+{
+    if (!_lastName) {
+        [self separateNameComponents];
+    }
+    return _lastName;
+}
+
 
 - (void)setPhoneNumber:(NSString *)phoneNumber
 {

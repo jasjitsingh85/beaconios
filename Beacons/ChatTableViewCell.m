@@ -10,6 +10,7 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "ChatMessage.h"
 #import "User.h"
+#import "Contact.h"
 #import "Theme.h"
 
 #define kMaxTextBubbleSize CGSizeMake(200, 200)
@@ -31,12 +32,13 @@
 {
     CGFloat height;
     if (chatMessage.isImageMessage) {
-        height = kImageMessageSize.height + 50;
+        height = kImageMessageSize.height;
     }
     else {
         UIFont *font = chatMessage.isSystemMessage ? [self fontForSystemMessage] : [self fontForUserMessage];
-        height = [chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : font} context:nil].size.height + 50;
+        height = [chatMessage.messageString boundingRectWithSize:kMaxTextBubbleSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : font} context:nil].size.height;
     }
+    height += 55;
     return height;
 }
 
@@ -105,21 +107,15 @@
     if (chatMessage.isSystemMessage) {
         self.nameLabel.text = @"Hotbot";
     }
-    else {
+    else if (chatMessage.sender) {
         self.nameLabel.text = chatMessage.sender.firstName;
     }
+    else if (chatMessage.contactSender) {
+        self.nameLabel.text = chatMessage.contactSender.firstName;
+    }
     
-    NSURL *avatarURL = chatMessage.avatarURL;
-    //screwed up API where server doesn't return correct avatar url for users
-    if ([chatMessage.messageType isEqualToString:kMessageTypeUserMessage]) {
-        avatarURL = chatMessage.sender.avatarURL;
-    }
-    if (chatMessage.avatarURL) {
-        [self.avatarImageView setImageWithURL:avatarURL];
-    }
-    else {
-        self.avatarImageView.image = nil;
-    }
+
+    [self.avatarImageView setImageWithURL:chatMessage.avatarURL];
 }
 
 - (void)configureForTextMessage:(ChatMessage *)chatMessage
