@@ -8,6 +8,8 @@
 
 #import "RegisterViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import <BlocksKit/MFMailComposeViewController+BlocksKit.h>
 #import "UIView+Alignment.h"
 #import "FormView.h"
 #import "APIClient.h"
@@ -15,6 +17,8 @@
 #import "AnalyticsManager.h"
 #import "Utilities.h"
 #import "LoadingIndictor.h"
+#import "WebViewController.h"
+#import "Theme.h"
 
 typedef enum {
     ViewModeRegister=0,
@@ -30,6 +34,7 @@ typedef enum {
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *backButton;
+@property (strong, nonatomic) UIButton *helpButton;
 @property (assign, nonatomic) ViewMode viewMode;
 @property (assign, nonatomic) BOOL makingNetworkRequest;
 @end
@@ -47,18 +52,21 @@ typedef enum {
     self.viewMode = ViewModeRegister;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orangeBackground"]];
     NSArray *registerFormTitles = @[@"name", @"email", @"phone"];
-    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 250, 36*registerFormTitles.count) formTitles:registerFormTitles];
+    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 250, 36*registerFormTitles.count) formTitles:registerFormTitles];
     self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
     self.registerFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.registerFormView];
     [self.registerFormView centerHorizontallyInSuperView];
+    UITextField *registerEmailTextField = [self.registerFormView textFieldAtIndex:1];
+    registerEmailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    registerEmailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     UITextField *registerPhoneTextField = [self.registerFormView textFieldAtIndex:2];
     registerPhoneTextField.keyboardType = UIKeyboardTypePhonePad;
     
     
     NSArray *signInFormTitles = @[@"phone"];
-    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 250, 36*signInFormTitles.count) formTitles:signInFormTitles];
+    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 250, 36*signInFormTitles.count) formTitles:signInFormTitles];
     self.signInFormView.delegate = self;
     self.signInFormView.backgroundColor = [UIColor whiteColor];
     self.signInFormView.layer.cornerRadius = 4;
@@ -69,7 +77,7 @@ typedef enum {
     signInPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     NSArray *activationFormTitles = @[@"code"];
-    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 105, 100, 36*activationFormTitles.count) formTitles:activationFormTitles];
+    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 65, 36*activationFormTitles.count) formTitles:activationFormTitles];
     self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
@@ -89,7 +97,7 @@ typedef enum {
     CGRect confirmButtonFrame;
     confirmButtonFrame.size  = CGSizeMake(200, 35);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 250;
+    confirmButtonFrame.origin.y = 229;
     self.confirmButton.frame = confirmButtonFrame;
     [self.view addSubview:self.confirmButton];
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -104,10 +112,27 @@ typedef enum {
     CGRect loginButtonFrame;
     loginButtonFrame.size = CGSizeMake(200, 35);
     loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - loginButtonFrame.size.width);
-    loginButtonFrame.origin.y = 300;
+    loginButtonFrame.origin.y = 279;
     self.loginButton.frame = loginButtonFrame;
     [self.view addSubview:self.loginButton];
     [self.loginButton addTarget:self action:@selector(loginButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.helpButton setImage:[UIImage imageNamed:@"helpButton"] forState:UIControlStateNormal];
+    [self.helpButton setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+    self.helpButton.backgroundColor = [UIColor clearColor];
+    CGRect helpButtonFrame;
+    helpButtonFrame.size = CGSizeMake(30, 30);
+    helpButtonFrame.origin.x = self.view.frame.size.width - helpButtonFrame.size.width;
+    helpButtonFrame.origin.y = 0;
+    self.helpButton.frame = helpButtonFrame;
+    [self.helpButton addTarget:self action:@selector(helpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.helpButton];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)backgroundTapped:(id)sender
@@ -151,11 +176,72 @@ typedef enum {
     }
 }
 
+- (void)helpButtonTouched:(id)sender
+{
+    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:nil];
+    [actionSheet addButtonWithTitle:@"Terms" handler:^{
+        [self presentTerms];
+    }];
+    [actionSheet addButtonWithTitle:@"Privacy" handler:^{
+        [self PresentPrivacy];
+    }];
+    [actionSheet addButtonWithTitle:@"Having Trouble?" handler:^{
+        [self presentFeedbackForm];
+    }];
+    [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void)presentFeedbackForm
+{
+    MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+    mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+        [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    };
+    [mailViewController setSubject:@"I'm Having Trouble"];
+    [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
+    [mailViewController setMessageBody:@"Please help me with my problems:\n" isHTML:NO];
+    [self presentViewController:mailViewController animated:YES completion:nil];
+}
+
+- (void)presentTerms
+{
+    NSURL *termsURL = [NSURL URLWithString:kTermsURL];
+    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Terms" andURL:termsURL];
+    [self presentModalWithContentViewController:webViewController];
+}
+
+- (void)PresentPrivacy
+{
+    NSURL *privacyURL = [NSURL URLWithString:kPrivacyURL];
+    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
+    [self presentModalWithContentViewController:webViewController];
+}
+
+- (void)presentModalWithContentViewController:(UIViewController *)viewController
+{
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+    UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(modalDoneButtonTouched:)];
+    viewController.navigationItem.leftBarButtonItem = cancelButtonItem;;
+    [nav.navigationBar setBackgroundImage:    [[ThemeManager sharedTheme] navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    [self presentViewController:nav animated:YES completion:nil];
+
+}
+
+- (void)modalDoneButtonTouched:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)enterSignInMode
 {
     if (self.viewMode == ViewModeSignIn) {
         return;
     }
+    
+    UITextField *textField = [self.signInFormView textFieldAtIndex:0];
+    [textField becomeFirstResponder];
+    
     self.viewMode = ViewModeSignIn;
     [self.confirmButton setTitle:@"Sign In" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Back" forState:UIControlStateNormal];
@@ -195,6 +281,8 @@ typedef enum {
         return;
     }
     self.viewMode = ViewModeActivation;
+    UITextField *textField = [self.activationFormView textFieldAtIndex:0];
+    [textField becomeFirstResponder];
     [self.confirmButton setTitle:@"Activate" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Back" forState:UIControlStateNormal];
     self.activationFormView.alpha = 1;

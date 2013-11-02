@@ -643,7 +643,7 @@
         }];
     }
     if (beaconStatus.beaconStatusOption != BeaconStatusOptionHere) {
-        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check in %@", name] handler:^{
+        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check In %@", name] handler:^{
             BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
             beaconStatus.beaconStatusOption = BeaconStatusOptionHere;
             [inviteListViewController.tableView reloadData];
@@ -652,12 +652,13 @@
             }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 beaconStatus.beaconStatusOption = oldStatus;
                 [inviteListViewController.tableView reloadData];
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't check in your friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't Check In Your Friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }];
         }];
     }
     else {
-        [actionSheet addButtonWithTitle:@"Leave" handler:^{
+        NSString *title = [NSString stringWithFormat:@"Check Out %@", name];
+        [actionSheet addButtonWithTitle:title handler:^{
             BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
             beaconStatus.beaconStatusOption = BeaconStatusOptionInvited;
             [inviteListViewController.tableView reloadData];

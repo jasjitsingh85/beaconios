@@ -104,14 +104,14 @@
 
 - (void)termsSelected
 {
-    NSURL *termsURL = [NSURL URLWithString:@"http://mighty-reef-7102.herokuapp.com/terms"];
+    NSURL *termsURL = [NSURL URLWithString:kTermsURL];
     WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Terms" andURL:termsURL];
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)privacySelected
 {
-    NSURL *privacyURL = [NSURL URLWithString:@"http://mighty-reef-7102.herokuapp.com/privacy"];
+    NSURL *privacyURL = [NSURL URLWithString:kPrivacyURL];
     WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
     [self.navigationController pushViewController:webViewController animated:YES];
 }
