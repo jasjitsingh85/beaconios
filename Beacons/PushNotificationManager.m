@@ -43,17 +43,10 @@ NSInteger const kAPNSServerProduction = 3;
 {    
     NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    AFHTTPClient *client = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kPushNotificationURLStringProduction]];
-    NSDictionary *parameters = @{@"token" : deviceToken,
-                                 @"service" : @(kAPNSServerProduction)};
-    [client postPath:@"device/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //update user with device token
-        NSDictionary *params = @{@"device_token" : deviceToken};
-        [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-        }];
+    //update user with device token
+    NSDictionary *params = @{@"device_token" : deviceToken};
+    [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"push fail" message:@"" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     }];
