@@ -29,6 +29,7 @@ Beacon;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
 + (AppDelegate *)sharedAppDelegate;
+- (void)registeredWithResponse:(NSDictionary *)response;
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;
 - (void)didActivateAccount;

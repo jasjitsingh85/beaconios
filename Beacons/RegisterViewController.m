@@ -254,6 +254,7 @@ typedef enum {
                                  @"phone_number" : phoneText};
     [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [[AppDelegate sharedAppDelegate] registeredWithResponse:responseObject];
                                    [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }

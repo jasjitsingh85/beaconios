@@ -131,6 +131,12 @@
     [[BeaconManager sharedManager] archiveBeacons];
 }
 
+- (void)registeredWithResponse:(NSDictionary *)response
+{
+    NSString *authorizationToken = response[@"token"];
+    [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
+}
+
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response
 {
     User *user = [[User alloc] initWithData:response];
