@@ -31,6 +31,7 @@ typedef enum {
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *backButton;
 @property (assign, nonatomic) ViewMode viewMode;
+@property (assign, nonatomic) BOOL makingNetworkRequest;
 @end
 
 @implementation RegisterViewController
@@ -239,6 +240,11 @@ typedef enum {
 #pragma mark - Networking
 - (void)registerAccount
 {
+    if (self.makingNetworkRequest) {
+        return;
+    }
+    self.makingNetworkRequest = YES;
+    
     NSString *nameText = [self.registerFormView textFieldAtIndex:0].text;
     NSArray *nameComponents = [nameText componentsSeparatedByString:@" "];
     NSString *firstName = [nameComponents firstObject];
@@ -254,11 +260,13 @@ typedef enum {
                                  @"phone_number" : phoneText};
     [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   self.makingNetworkRequest = NO;
                                    [[AppDelegate sharedAppDelegate] registeredWithResponse:responseObject];
                                    [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   self.makingNetworkRequest = NO;
                                    NSString *message = @"Something went wrong";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
                                        message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
@@ -271,16 +279,23 @@ typedef enum {
 
 - (void)signInAccount
 {
+    if (self.makingNetworkRequest) {
+        return;
+    }
+    
+    self.makingNetworkRequest = YES;
     NSString *phoneText = [Utilities normalizePhoneNumber:[self.signInFormView textFieldAtIndex:0].text];
     NSDictionary *parameters = @{@"phone_number" : phoneText};
     [[APIClient sharedClient] postPath:@"login/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   self.makingNetworkRequest = NO;
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate loggedIntoServerWithResponse:responseObject];
                                    [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   self.makingNetworkRequest = NO;
                                    NSString *message = @"incorrect email or password";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
                                        message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
@@ -293,14 +308,21 @@ typedef enum {
 
 - (void)activateAccount
 {
+    if (self.makingNetworkRequest) {
+        return;
+    }
+    self.makingNetworkRequest = YES;
+    
     NSString *activationText = [self.activationFormView textFieldAtIndex:0].text;
     NSDictionary *parameters = @{@"activation_code" : activationText};
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] putPath:@"login/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.makingNetworkRequest = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate didActivateAccount];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.makingNetworkRequest = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"there was a problem with your activation code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
