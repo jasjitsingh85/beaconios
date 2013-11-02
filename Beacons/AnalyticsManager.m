@@ -66,12 +66,15 @@ static NSString * const kEventDidRegister = @"did_register";
     [mixpanel identify:loggedInUser.userID.stringValue];
     NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username", @"phone_number"];
     NSArray *userProperties = @[@"email", @"firstName", @"lastName", @"username", @"phoneNumber"];
+    NSMutableDictionary *superProperties = [[NSMutableDictionary alloc] init];
     for (NSInteger i=0; i<mixpanelProperties.count; i++) {
         id value = [loggedInUser valueForKeyPath:userProperties[i]];
         if (value) {
             [mixpanel.people set:mixpanelProperties[i] to:value];
+            [superProperties setObject:value forKey:userProperties[i]];
         }
     }
+    [mixpanel registerSuperProperties:superProperties];
 }
 
 - (void)sendEvent:(NSString *)event withProperties:(NSDictionary *)properties

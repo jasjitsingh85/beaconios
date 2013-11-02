@@ -25,6 +25,7 @@
 #import "BeaconStatus.h"
 #import "Utilities.h"
 #import "RandomObjectManager.h"
+#import "AnalyticsManager.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -311,6 +312,7 @@
         beacon.guestStatuses = guestStatuses;
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+        [[AnalyticsManager sharedManager] createBeacon:beacon];
     } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
