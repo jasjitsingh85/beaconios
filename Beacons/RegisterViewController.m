@@ -325,7 +325,14 @@ typedef enum {
             NSString *comp2 = [phone substringWithRange:NSMakeRange(6, phone.length - 6)];
             textField.text = [NSString stringWithFormat:@"(%@) %@ - %@", comp0, comp1, comp2];
         }
+        //make sure register and sign in views are synced
+        UITextField *registerPhoneField = [self.registerFormView textFieldAtIndex:2];
+        if (textField == registerPhoneField) {
+            UITextField *signInPhoneField = [self.signInFormView textFieldAtIndex:0];
+            signInPhoneField.text = registerPhoneField.text;
+        }
     }
+    
     if ([textField.placeholder isEqualToString:@"code"]) {
         NSInteger activitionCodeLength = 4;
         if (textField.text.length == activitionCodeLength) {
