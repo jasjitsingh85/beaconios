@@ -55,6 +55,7 @@ typedef enum {
     [self.registerFormView centerHorizontallyInSuperView];
     UITextField *registerEmailTextField = [self.registerFormView textFieldAtIndex:1];
     registerEmailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    registerEmailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     UITextField *registerPhoneTextField = [self.registerFormView textFieldAtIndex:2];
     registerPhoneTextField.keyboardType = UIKeyboardTypePhonePad;
     
