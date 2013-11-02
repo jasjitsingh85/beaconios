@@ -185,7 +185,7 @@ typedef enum {
     [actionSheet addButtonWithTitle:@"Privacy" handler:^{
         [self PresentPrivacy];
     }];
-    [actionSheet addButtonWithTitle:@"Get Help" handler:^{
+    [actionSheet addButtonWithTitle:@"Having Trouble?" handler:^{
         [self presentFeedbackForm];
     }];
     [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
