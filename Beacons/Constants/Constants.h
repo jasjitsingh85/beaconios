@@ -30,3 +30,7 @@
 
 //email
 #define kFeedbackEmailAddress @"info@gethotspotapp.com"
+
+//urls
+#define kTermsURL @"http://www.getbeacons.com/terms"
+#define kPrivacyURL @"http://www.getbeacons.com/privacy"
