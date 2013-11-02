@@ -118,7 +118,9 @@ typedef enum {
     [self.loginButton addTarget:self action:@selector(loginButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.helpButton.backgroundColor = [UIColor whiteColor];
+    [self.helpButton setImage:[UIImage imageNamed:@"helpButton"] forState:UIControlStateNormal];
+    [self.helpButton setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+    self.helpButton.backgroundColor = [UIColor clearColor];
     CGRect helpButtonFrame;
     helpButtonFrame.size = CGSizeMake(30, 30);
     helpButtonFrame.origin.x = self.view.frame.size.width - helpButtonFrame.size.width;
