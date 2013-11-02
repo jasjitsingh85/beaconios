@@ -11,6 +11,8 @@
 
 @interface JADatePicker() <UIPickerViewDelegate, UIPickerViewDataSource>
 
+@property (assign, nonatomic) NSInteger lastSelectedHourRow;
+
 @end
 
 @implementation JADatePicker
@@ -57,7 +59,9 @@
     timeperiod = timeperiod % 2;
     NSInteger hourOffset = INT16_MAX/(2*12)*12;
     NSInteger minuteOffset = INT16_MAX/(2*(60/self.minuteInterval))*(60/self.minuteInterval);
-    [self selectRow:(hourOffset + hour) inComponent:0 animated:animated];
+    NSInteger hourRow = hourOffset + hour;
+    self.lastSelectedHourRow = hourRow;
+    [self selectRow:(hourRow) inComponent:0 animated:animated];
     [self selectRow:(minuteOffset + minuteRow) inComponent:1 animated:animated];
     [self selectRow:timeperiod inComponent:2 animated:animated];
 }
@@ -108,6 +112,12 @@
             hour = 12;
         }
         title = @(hour).stringValue;
+        CGFloat width = [self viewForRow:row forComponent:component].frame.size.width;
+        if (width && hour == 12 && row > self.lastSelectedHourRow) {
+            NSInteger timeperiod = [pickerView selectedRowInComponent:2];
+            [pickerView selectRow:(timeperiod == TimePeriodAM ? TimePeriodPM : TimePeriodAM) inComponent:2 animated:YES];
+            self.lastSelectedHourRow = row;
+        }
     }
     else if (component == 1) {
         NSInteger minute = (row % (60/self.minuteInterval))*self.minuteInterval;
@@ -169,11 +179,6 @@
         width = 45;
     }
     return width;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    
 }
 
 @end
