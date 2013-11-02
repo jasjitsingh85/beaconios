@@ -53,6 +53,8 @@ typedef enum {
     self.registerFormView.layer.cornerRadius = 4;
     [self.view addSubview:self.registerFormView];
     [self.registerFormView centerHorizontallyInSuperView];
+    UITextField *registerEmailTextField = [self.registerFormView textFieldAtIndex:1];
+    registerEmailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     UITextField *registerPhoneTextField = [self.registerFormView textFieldAtIndex:2];
     registerPhoneTextField.keyboardType = UIKeyboardTypePhonePad;
     
