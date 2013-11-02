@@ -43,7 +43,7 @@ SPEC CHECKSUMS:
   AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
   BlocksKit: 27257f9cbbec0ea98c80ba83cc2ea7111ae62eb2
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
-  CocoaLumberjack: d73e1e317ced14ab930797dda6c17156ff17aaa1
+  CocoaLumberjack: 2619775f386bbec1e870eddb5040f870c68726b1
   CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
@@ -54,4 +54,4 @@ SPEC CHECKSUMS:
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
   ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
-COCOAPODS: 0.25.0
+COCOAPODS: 0.27.1
