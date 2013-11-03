@@ -45,6 +45,13 @@ typedef enum {
 {
     [super viewDidLoad];
 	
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
+    CGRect logoFrame = logoImageView.frame;
+    logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
+    logoFrame.origin.y = 30;
+    logoImageView.frame = logoFrame;
+    [self.view addSubview:logoImageView];
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapped:)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
