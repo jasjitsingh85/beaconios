@@ -129,7 +129,7 @@ typedef enum {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
         }
         [self reloadData];
-        [self requestSuggested];
+//        [self requestSuggested];
         if (self.selectedContacts) {
             for (Contact *contact in self.selectedContacts) {
                 [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
@@ -617,67 +617,5 @@ typedef enum {
     [self.searchBar setShowsCancelButton:NO animated:YES];
     self.inSearchMode = NO;
 }
-
-#pragma mark - Networking
-- (void)requestSuggested
-{
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    [[APIClient sharedClient] getPath:@"friends/" parameters:nil
-                              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                                  if (self.autoCheckSuggested) {
-                                      self.selectedContactDictionary = [NSMutableDictionary new];
-                                  }
-                                  NSArray *contacts = responseObject[@"contacts"];
-                                  NSArray *users = responseObject[@"users"];
-                                  NSArray *recentUsers = responseObject[@"profile_recents"];
-                                  NSArray *recentContacts = responseObject[@"contacts_recents"];
-                                  for (NSDictionary *contactData in contacts) {
-                                      NSString *phoneNumber = contactData[@"phone_number"];
-                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      if (contact) {
-                                          contact.isSuggested = YES;
-                                      }
-                                  }
-                                  for (NSDictionary *contactData in recentContacts) {
-                                      NSString *phoneNumber = contactData[@"phone_number"];
-                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      if (contact) {
-                                          contact.isSuggested = YES;
-                                          contact.isRecent = YES;
-                                      }
-                                  }
-                                  for (NSDictionary *userData in users) {
-                                      NSString *phoneNumber = userData[@"phone_number"];
-                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      if (contact) {
-                                          contact.isSuggested = YES;
-                                          contact.isUser = YES;
-                                      }
-                                  }
-                                  for (NSDictionary *userData in recentUsers) {
-                                      NSString *phoneNumber = userData[@"phone_number"];
-                                      NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-                                      Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-                                      if (contact) {
-                                          contact.isSuggested = YES;
-                                          contact.isUser = YES;
-                                          contact.isRecent = YES;
-                                      }
-                                  }
-                                  if (self.autoCheckSuggested) {
-                                      [self setSelected:YES forAllContactsInSection:FindFriendSectionRecents];
-                                  }
-                                  [self performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-        
-    }
-                              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-    }];
-}
-
 
 @end

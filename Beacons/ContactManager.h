@@ -11,6 +11,9 @@
 
 @interface ContactManager : NSObject
 
+@property (strong, nonatomic) NSArray *recommendedContacts;
+@property (strong, nonatomic) NSArray *recentContacts;
+
 + (ContactManager *)sharedManager;
 - (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure;
 - (void)syncContacts;

@@ -119,10 +119,67 @@
         NSDictionary *parameters = @{@"contact" : contactParameter};
         [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [self updateFriendsFromServer:nil failure:nil];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    }];
     } failure:^(NSError *error) {
+    }];
+}
+
+- (void)updateFriendsFromServer:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
+{
+    [[APIClient sharedClient] getPath:@"friends/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *recommendedContacts = [[NSMutableArray alloc] init];
+        NSMutableArray *recentContacts = [[NSMutableArray alloc] init];
+        NSArray *contactsData = responseObject[@"contacts"];
+        NSArray *usersData = responseObject[@"users"];
+        NSArray *recentUsersData = responseObject[@"profile_recents"];
+        NSArray *recentContactsData = responseObject[@"contacts_recents"];
+        for (NSDictionary *contactData in contactsData) {
+            NSString *phoneNumber = contactData[@"phone_number"];
+            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+            if (contact) {
+                contact.isSuggested = YES;
+                [recommendedContacts addObject:contact];
+            }
+        }
+        for (NSDictionary *contactData in recentContactsData) {
+            NSString *phoneNumber = contactData[@"phone_number"];
+            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+            if (contact) {
+                contact.isSuggested = YES;
+                contact.isRecent = YES;
+                [recentContacts addObject:contact];
+            }
+        }
+        for (NSDictionary *userData in usersData) {
+            NSString *phoneNumber = userData[@"phone_number"];
+            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+            if (contact) {
+                contact.isSuggested = YES;
+                contact.isUser = YES;
+                [recommendedContacts addObject:contact];
+            }
+        }
+        for (NSDictionary *userData in recentUsersData) {
+            NSString *phoneNumber = userData[@"phone_number"];
+            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
+            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
+            if (contact) {
+                contact.isSuggested = YES;
+                contact.isUser = YES;
+                contact.isRecent = YES;
+                [recentContacts addObject:contact];
+            }
+        }
+        self.recentContacts = recentContacts;
+        self.recommendedContacts = recommendedContacts;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
     }];
 }
 
