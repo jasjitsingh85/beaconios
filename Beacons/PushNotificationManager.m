@@ -10,6 +10,8 @@
 #import "APIClient.h"
 #import "Beacon.h"
 #import "AppDelegate.h"
+#import "CenterNavigationController.h"
+#import "BeaconProfileViewController.h"
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
@@ -18,8 +20,6 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 
 static NSString * const kPushNotificationURLStringStaging = @"http://beaconspushtest.herokuapp.com/ios-notifications/";
 static NSString * const kPushNotificationURLStringProduction = @"http://www.getbeacons.com/ios-notifications/";
-NSInteger const kAPNSServerDevelopment = 2;
-NSInteger const kAPNSServerProduction = 3;
 
 @implementation PushNotificationManager
 
@@ -43,6 +43,8 @@ NSInteger const kAPNSServerProduction = 3;
 {    
     NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    [[[UIAlertView alloc] initWithTitle:@"" message:deviceToken delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+
     //update user with device token
     NSDictionary *params = @{@"device_token" : deviceToken};
     [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -59,26 +61,41 @@ NSInteger const kAPNSServerProduction = 3;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
+    NSString *notificationType = userInfo[@"type"];
+    NSString *alert = userInfo[@"aps.alert"];
     BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
     if (transitioningToForeground) {
+        [self openFromBackgroundNotificationWithType:notificationType alert:alert userInfo:userInfo];
+    }
+    
+    BOOL inForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+    if (inForeground) {
+        [self didReceiveInForegroundRemoteNotificationWithType:notificationType alert:alert userInfo:userInfo];
+    }
+}
+
+- (void)openFromBackgroundNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
+{
+    if ([notificationType isEqualToString:kPushNotificationTypeBeaconUpdate] || [notificationType isEqualToString:kPushNotificationTypeMessage]) {
         NSNumber *beaconID = userInfo[@"beacon"];
         if (beaconID) {
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID];
         }
     }
-    
-    BOOL inForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
-    if (inForeground) {
-        NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
-        NSString *notificationType = [userInfo valueForKeyPath:@"type"];
-        if ([notificationType isEqualToString:@"Message"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
-            
+}
+
+- (void)didReceiveInForegroundRemoteNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    if ([notificationType isEqualToString:kPushNotificationTypeMessage]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
+        BOOL showingChat = [[AppDelegate sharedAppDelegate].centerNavigationController.selectedViewController isKindOfClass:[BeaconProfileViewController class]];
+        if (!showingChat) {
+            [alertView show];
         }
-        else {
-            [[[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
+    }
+    else {
+        [alertView show];
     }
 }
 

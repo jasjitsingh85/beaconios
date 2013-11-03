@@ -12,6 +12,9 @@
 #define kDefaultsKeyArchivedBeacons @"archivedBeacons"
 
 //notifications
+#define kPushNotificationTypeMessage @"Message"
+#define kPushNotificationTypeBeaconUpdate @"Hotspot Update"
+#define kPushNotificationTypeGeneral @"General"
 
 //location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
