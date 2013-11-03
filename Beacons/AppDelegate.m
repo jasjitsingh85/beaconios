@@ -111,7 +111,7 @@
         self.window.rootViewController = self.registerViewController;
     }
     else {
-        [[PushNotificationManager sharedManager] registerForRemoteNotifications];
+        [[PushNotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
         [[ContactManager sharedManager] syncContacts];
         [CrashManager setupForUser];
     }

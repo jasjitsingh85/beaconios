@@ -21,6 +21,16 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
 static NSString * const kPushNotificationURLStringStaging = @"http://beaconspushtest.herokuapp.com/ios-notifications/";
 static NSString * const kPushNotificationURLStringProduction = @"http://www.getbeacons.com/ios-notifications/";
 
+typedef void (^RemoteNotificationRegistrationSuccessBlock)(NSData *devToken);
+typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
+
+@interface PushNotificationManager()
+
+@property (strong, nonatomic) RemoteNotificationRegistrationSuccessBlock remoteNotificationRegistrationSuccessBlock;
+@property (strong, nonatomic) RemoteNotificationRegistrationFailureBlock remoteNotificationRegistrationFailureBlock;
+
+@end
+
 @implementation PushNotificationManager
 
 + (PushNotificationManager *)sharedManager
@@ -33,10 +43,18 @@ static NSString * const kPushNotificationURLStringProduction = @"http://www.getb
     return _sharedManager;
 }
 
-- (void)registerForRemoteNotifications
+- (void)registerForRemoteNotificationsSuccess:(void (^)(NSData *devToken))success failure:(void (^)(NSError *error))failure
 {
-    //register for push notifications
+    self.remoteNotificationRegistrationSuccessBlock = success;
+    self.remoteNotificationRegistrationFailureBlock = failure;
+#if !DEBUG
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+#else
+    if (failure) {
+        NSError *error = [[NSError alloc] initWithDomain:@"qsCustomErrorDomain" code:-1 userInfo:nil];
+        failure(error);
+    }
+#endif
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
@@ -52,11 +70,17 @@ static NSString * const kPushNotificationURLStringProduction = @"http://www.getb
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"push fail" message:@"" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     }];
+    if (self.remoteNotificationRegistrationSuccessBlock) {
+        self.remoteNotificationRegistrationSuccessBlock(devToken);
+    }
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     NSLog(@"Error in registration. Error: %@", err);
+    if (self.remoteNotificationRegistrationFailureBlock) {
+        self.remoteNotificationRegistrationFailureBlock(err);
+    }
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
