@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
+#import "APIClient.h"
 
 @interface ContactManager : NSObject
 
+@property (strong, nonatomic) AFHTTPRequestOperation *updateFriendsOperation;
 @property (strong, nonatomic) NSArray *recommendedContacts;
 @property (strong, nonatomic) NSArray *recentContacts;
 

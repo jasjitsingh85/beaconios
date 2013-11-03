@@ -9,7 +9,6 @@
 #import "ContactManager.h"
 #import "Contact.h"
 #import "Utilities.h"
-#import "APIClient.h"
 
 @interface ContactManager()
 
@@ -129,7 +128,8 @@
 
 - (void)updateFriendsFromServer:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
 {
-    [[APIClient sharedClient] getPath:@"friends/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSURLRequest *request = [[APIClient sharedClient] requestWithMethod:@"GET" path:@"friends/" parameters:nil];
+    self.updateFriendsOperation = [[APIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *recommendedContacts = [[NSMutableArray alloc] init];
         NSMutableArray *recentContacts = [[NSMutableArray alloc] init];
         NSArray *contactsData = responseObject[@"contacts"];
@@ -178,9 +178,9 @@
         }
         self.recentContacts = recentContacts;
         self.recommendedContacts = recommendedContacts;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
+    } failure:nil];
+    [[APIClient sharedClient] enqueueHTTPRequestOperation:self.updateFriendsOperation];
+
 }
 
 @end

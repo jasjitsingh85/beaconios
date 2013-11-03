@@ -120,6 +120,26 @@ typedef enum {
     UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.skipButton];
     self.navigationItem.rightBarButtonItem = skipButtonItem;
     
+    NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
+    if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+        NSBlockOperation *populateOperation = [NSBlockOperation blockOperationWithBlock:^{
+            //total hack. wait for url operation completion block to finish before populating contacts
+            jadispatch_after_delay(1, dispatch_get_main_queue(), ^{
+                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                [self populateContacts];
+            });
+        }];
+        [populateOperation addDependency:updateFriendsOperation];
+        [[NSOperationQueue mainQueue] addOperation:populateOperation];
+    }
+    else {
+        [self populateContacts];
+    }
+}
+
+- (void)populateContacts
+{
     self.suggestedList = @[];
     self.nonSuggestedList = @[];
     self.contactDictionary = [NSMutableDictionary new];
@@ -129,7 +149,6 @@ typedef enum {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
         }
         [self reloadData];
-//        [self requestSuggested];
         if (self.selectedContacts) {
             for (Contact *contact in self.selectedContacts) {
                 [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
