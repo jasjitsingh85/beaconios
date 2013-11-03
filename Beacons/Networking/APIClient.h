@@ -9,6 +9,7 @@
 #import "AFHTTPClient.h"
 #import <AFNetworking/AFNetworking.h>
 #import <CoreLocation/CoreLocation.h>
+#import "NSError+ServerErrorMessage.h"
 #import "HTTPStatusCodes.h"
 
 @class Beacon, Contact;

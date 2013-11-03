@@ -379,14 +379,14 @@ typedef enum {
                                    self.makingNetworkRequest = NO;
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate loggedIntoServerWithResponse:responseObject];
-                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"An Activation Code Will Be Sent To You Via Text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    self.makingNetworkRequest = NO;
-                                   NSString *message = @"incorrect email or password";
+                                   NSString *message = @"We Couldn't Find A User With This Number";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
-                                       message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+                                       message = [error serverErrorMessage];
                                    }
                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                    [alertView show];

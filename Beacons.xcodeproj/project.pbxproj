@@ -136,6 +136,7 @@
 		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
+		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
@@ -381,6 +382,8 @@
 		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
 		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
+		96AFCA1B1825EB92003A47F2 /* NSError+ServerErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+ServerErrorMessage.h"; sourceTree = "<group>"; };
+		96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+ServerErrorMessage.m"; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
@@ -485,6 +488,8 @@
 				96CBCD04180676E600D62462 /* UIView+Shadow.m */,
 				96E623EB1814996E0048125B /* NSObject+Empty.h */,
 				96E623EC1814996E0048125B /* NSObject+Empty.m */,
+				96AFCA1B1825EB92003A47F2 /* NSError+ServerErrorMessage.h */,
+				96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1090,6 +1095,7 @@
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96956447175852990081B349 /* LoginViewController.m in Sources */,
+				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
