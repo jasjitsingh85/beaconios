@@ -357,7 +357,7 @@ typedef enum {
                                    self.makingNetworkRequest = NO;
                                    NSString *message = @"Something went wrong";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
-                                       message = error.userInfo[@"NSLocalizedRecoverySuggestion"];
+                                       message = [error serverErrorMessage];
                                    }
                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                    [alertView show];
