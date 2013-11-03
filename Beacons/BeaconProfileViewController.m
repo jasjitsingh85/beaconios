@@ -334,7 +334,7 @@
 
 - (void)updateInvitedLabel
 {
-    NSString *creatorText = [self.beacon.creator fullName];
+    NSString *creatorText = [self.beacon.creator firstName];
     NSString *otherText;
     if (self.beacon.guestStatuses && self.beacon.guestStatuses.count > 1) {
         NSInteger otherCount = self.beacon.guestStatuses.count - 1;
