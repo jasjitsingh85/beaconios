@@ -172,7 +172,7 @@
     self.descriptionLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.descriptionLabel];
     
-    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 118, 180, 14)];
+    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 118, 160, 14)];
     self.locationLabel.font = [ThemeManager regularFontOfSize:13];
     self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
@@ -272,7 +272,9 @@
     if (self.locationLabel.text) {
         self.directionsButton.hidden = NO;
         CGRect directionsButtonFrame = self.directionsButton.frame;
-        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width + 13;
+        CGFloat textWidth = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width;
+        textWidth = MIN(textWidth, self.locationLabel.frame.size.width);
+        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + textWidth + 8;
         directionsButtonFrame.origin.y = CGRectGetMinY(self.locationLabel.frame) + 0.5*(self.locationLabel.frame.size.height - directionsButtonFrame.size.height);
         self.directionsButton.frame = directionsButtonFrame;
     }
