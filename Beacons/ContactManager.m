@@ -29,6 +29,39 @@
     return _sharedManager;
 }
 
+- (ABAuthorizationStatus)authorizationStatus
+{
+    return ABAddressBookGetAuthorizationStatus();
+}
+
+- (void)requestContactPermissions:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            if (granted) {
+                if (success) {
+                    success();
+                }
+            } else {
+                if (failure) {
+                    failure(nil);
+                }
+            }
+        });
+    }
+    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        if (success) {
+            success();
+        }
+    }
+    else {
+        if (failure) {
+            failure(nil);
+        }
+    }
+}
+
 - (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
 {
     if (self.contactDictionary.allValues) {

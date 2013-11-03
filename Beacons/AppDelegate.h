@@ -33,6 +33,8 @@ Beacon;
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response;
 - (void)logoutOfServer;
 - (void)didActivateAccount;
+- (void)didFinishPermissions;
+- (void)contactAuthorizationStatusDenied;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID;
 

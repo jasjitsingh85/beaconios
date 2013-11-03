@@ -131,6 +131,8 @@
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
+		96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1F18261902003A47F2 /* PermissionsViewController.m */; };
+		96AFCA231826FF3D003A47F2 /* LockedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA221826FF3D003A47F2 /* LockedViewController.m */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
@@ -369,6 +371,10 @@
 		96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconAnnotationActive@2x.png"; sourceTree = "<group>"; };
 		96AFCA1B1825EB92003A47F2 /* NSError+ServerErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+ServerErrorMessage.h"; sourceTree = "<group>"; };
 		96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+ServerErrorMessage.m"; sourceTree = "<group>"; };
+		96AFCA1E18261902003A47F2 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionsViewController.h; path = ../PermissionsViewController.h; sourceTree = "<group>"; };
+		96AFCA1F18261902003A47F2 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionsViewController.m; path = ../PermissionsViewController.m; sourceTree = "<group>"; };
+		96AFCA211826FF3D003A47F2 /* LockedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockedViewController.h; sourceTree = "<group>"; };
+		96AFCA221826FF3D003A47F2 /* LockedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockedViewController.m; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
@@ -597,6 +603,8 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				96AFCA1E18261902003A47F2 /* PermissionsViewController.h */,
+				96AFCA1F18261902003A47F2 /* PermissionsViewController.m */,
 				96859D0617F402F200C1C467 /* Other */,
 				1FB74EE617764ED000F0F385 /* Categories */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
@@ -670,6 +678,8 @@
 				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
 				96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */,
 				96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */,
+				96AFCA211826FF3D003A47F2 /* LockedViewController.h */,
+				96AFCA221826FF3D003A47F2 /* LockedViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -1064,6 +1074,7 @@
 			files = (
 				963399481758512100AF9D89 /* main.m in Sources */,
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
+				96AFCA231826FF3D003A47F2 /* LockedViewController.m in Sources */,
 				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
@@ -1092,6 +1103,7 @@
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
+				96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,

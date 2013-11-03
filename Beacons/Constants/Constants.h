@@ -10,6 +10,7 @@
 #define kDefaultsKeyAccountActivated @"defaultsKeyAccountActivated"
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"
 #define kDefaultsKeyArchivedBeacons @"archivedBeacons"
+#define kDefaultsKeyHasFinishedPermissions @"hasFinishedPermissions"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"

@@ -23,8 +23,10 @@
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
 #import "BeaconProfileViewController.h"
+#import "PermissionsViewController.h"
 #import "Beacon.h"
 #import "BeaconManager.h"
+#import "LockedViewController.h"
 
 @interface AppDelegate()
 
@@ -102,21 +104,22 @@
     self.centerNavigationController.selectedViewController = self.mapViewController;
     self.sideNavigationViewController.centerController = self.centerNavigationController;
     self.sideNavigationViewController.leftController = self.menuViewController;
-    self.window.rootViewController = self.sideNavigationViewController;
 
-    [self.window makeKeyAndVisible];
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
         self.registerViewController = [[RegisterViewController alloc] init];
         self.window.rootViewController = self.registerViewController;
     }
     else {
+        self.window.rootViewController = self.sideNavigationViewController;
         [[PushNotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
         [[ContactManager sharedManager] syncContacts];
         [CrashManager setupForUser];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -124,6 +127,28 @@
 {
     [[AnalyticsManager sharedManager] appForeground];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    BOOL hasActivated = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyAccountActivated];
+    BOOL hasFinishedPermissions = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasFinishedPermissions];
+    if (hasActivated) {
+        ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+        if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+            self.window.rootViewController = [[PermissionsViewController alloc] init];
+        }
+        else if (contactAuthStatus == kABAuthorizationStatusDenied) {
+            [self contactAuthorizationStatusDenied];
+        }
+        else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+            if (![self.window.rootViewController isKindOfClass:[PermissionsViewController class]]) {
+                self.window.rootViewController = hasFinishedPermissions ? self.sideNavigationViewController : [[PermissionsViewController alloc] init];
+            }
+        }
+    }
+}
+
+- (void)contactAuthorizationStatusDenied
+{
+    self.window.rootViewController = [[LockedViewController alloc] init];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -175,11 +200,16 @@
 - (void)didActivateAccount
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
+    self.window.rootViewController = [[PermissionsViewController alloc] init];
+    [[AnalyticsManager sharedManager] setupForUser];
+    [CrashManager setupForUser];
+}
+
+- (void)didFinishPermissions
+{
     self.window.rootViewController = self.sideNavigationViewController;
     [[ContactManager sharedManager] syncContacts];
     [[LocationTracker sharedTracker] requestLocationPermission];
-    [[AnalyticsManager sharedManager] setupForUser];
-    [CrashManager setupForUser];
 }
 
 - (void)logoutOfServer

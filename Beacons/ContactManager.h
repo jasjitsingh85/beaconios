@@ -15,8 +15,10 @@
 @property (strong, nonatomic) AFHTTPRequestOperation *updateFriendsOperation;
 @property (strong, nonatomic) NSArray *recommendedContacts;
 @property (strong, nonatomic) NSArray *recentContacts;
+@property (readonly) ABAuthorizationStatus authorizationStatus;
 
 + (ContactManager *)sharedManager;
+- (void)requestContactPermissions:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure;
 - (void)syncContacts;
 
