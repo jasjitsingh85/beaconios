@@ -216,10 +216,12 @@
     NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
     NSInteger timeNow = components.hour*60*60 + components.minute*60;
     NSTimeInterval intervalUntilBeacon = timeForBeacon - timeNow;
+
     if (intervalUntilBeacon < 0) {
         intervalUntilBeacon += 24*60*60;
     }
-    return [NSDate dateWithTimeIntervalSinceNow:intervalUntilBeacon];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:intervalUntilBeacon];
+    return date;
 }
 
 #pragma mark - SelectLocationViewControllerDelegate

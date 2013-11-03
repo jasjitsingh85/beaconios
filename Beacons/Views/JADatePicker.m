@@ -70,6 +70,9 @@
 {
     NSString *hourString = [self pickerView:self titleForRow:[self selectedRowInComponent:0] forComponent:0];
     NSInteger hour = hourString.integerValue;
+    if (hour == 12) {
+        hour = 0;
+    }
     NSString *periodString = [self pickerView:self titleForRow:[self selectedRowInComponent:2] forComponent:2];
     hour += [periodString isEqualToString:@"PM"]*12;
     return hour;
