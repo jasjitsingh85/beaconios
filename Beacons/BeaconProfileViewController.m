@@ -184,6 +184,10 @@
     self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 144, 180, 14)];
     self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
     self.invitedLabel.textColor = [UIColor whiteColor];
+    UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteTabTouched:)];
+    invitedTap.numberOfTapsRequired = YES;
+    [self.invitedLabel addGestureRecognizer:invitedTap];
+    self.invitedLabel.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.invitedLabel];
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -504,6 +508,7 @@
 {
     [self inviteMoreFriends];
 }
+
 
 - (void)imageViewTapped:(id)sender
 {
