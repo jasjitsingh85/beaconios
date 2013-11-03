@@ -11,8 +11,6 @@
 		1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1E780A176E91F800F0E853 /* invitedButton@2x.png */; };
 		1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */; };
 		1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85517A6170F00D12CB8 /* backArrow@2x.png */; };
-		1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */; };
-		1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */; };
 		1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* PushNotificationManager.m */; };
 		1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0817618B9200F35A8B /* SelectLocationViewController.m */; };
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
@@ -39,8 +37,6 @@
 		1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3A176D081500529037 /* ActivationViewController.xib */; };
 		1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3E176D1F2C00529037 /* ContactManager.m */; };
 		1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB40176D7AF300529037 /* infoButton@2x.png */; };
-		1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */; };
-		1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */; };
 		1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2D5091765398C00AB657F /* TextMessageManager.m */; };
 		1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FB74EE817764F7C00F0F385 /* UIColor+UnnormalizedColor.m */; };
 		1FD65827175871670007455B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FD65825175871670007455B /* AddressBook.framework */; };
@@ -110,8 +106,6 @@
 		9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */; };
 		9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */; };
 		9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */; };
-		96956447175852990081B349 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96956445175852990081B349 /* LoginViewController.m */; };
-		96956448175852990081B349 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96956446175852990081B349 /* LoginViewController.xib */; };
 		9695644B175862790081B349 /* CenterNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644A175862790081B349 /* CenterNavigationController.m */; };
 		9695644F1758642B0081B349 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644D1758642B0081B349 /* MapViewController.m */; };
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
@@ -197,9 +191,6 @@
 		1F1E780A176E91F800F0E853 /* invitedButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButton@2x.png"; sourceTree = "<group>"; };
 		1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeNav@2x.png"; sourceTree = "<group>"; };
 		1F36E85517A6170F00D12CB8 /* backArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backArrow@2x.png"; sourceTree = "<group>"; };
-		1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegistrationViewController.h; path = ../RegistrationViewController.h; sourceTree = "<group>"; };
-		1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegistrationViewController.m; path = ../RegistrationViewController.m; sourceTree = "<group>"; };
-		1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegistrationViewController.xib; path = ../RegistrationViewController.xib; sourceTree = "<group>"; };
 		1F3EF24617979FD9005240E3 /* PushNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationManager.h; sourceTree = "<group>"; };
 		1F3EF24717979FD9005240E3 /* PushNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationManager.m; sourceTree = "<group>"; };
 		1F465C0717618B9200F35A8B /* SelectLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectLocationViewController.h; path = ../SelectLocationViewController.h; sourceTree = "<group>"; };
@@ -241,9 +232,6 @@
 		1F9CEB3D176D1F2C00529037 /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
 		1F9CEB3E176D1F2C00529037 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		1F9CEB40176D7AF300529037 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@2x.png"; sourceTree = "<group>"; };
-		1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
-		1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
-		1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignInViewController.xib; sourceTree = "<group>"; };
 		1FA2D5081765398C00AB657F /* TextMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextMessageManager.h; sourceTree = "<group>"; };
 		1FA2D5091765398C00AB657F /* TextMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextMessageManager.m; sourceTree = "<group>"; };
 		1FB74EE717764F7C00F0F385 /* UIColor+UnnormalizedColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UnnormalizedColor.h"; sourceTree = "<group>"; };
@@ -344,9 +332,6 @@
 		9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatButtonSelected@2x.png"; sourceTree = "<group>"; };
 		9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonNormal@2x.png"; sourceTree = "<group>"; };
 		9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButtonSelected@2x.png"; sourceTree = "<group>"; };
-		96956444175852990081B349 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		96956445175852990081B349 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		96956446175852990081B349 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		96956449175862790081B349 /* CenterNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterNavigationController.h; sourceTree = "<group>"; };
 		9695644A175862790081B349 /* CenterNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterNavigationController.m; sourceTree = "<group>"; };
 		9695644C1758642B0081B349 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -625,9 +610,6 @@
 				966070E1175AC989007379A0 /* LineLayout.m */,
 				1F52638B175C496900DD26E1 /* LocationTracker.h */,
 				1F52638C175C496900DD26E1 /* LocationTracker.m */,
-				96956444175852990081B349 /* LoginViewController.h */,
-				96956445175852990081B349 /* LoginViewController.m */,
-				96956446175852990081B349 /* LoginViewController.xib */,
 				9695644C1758642B0081B349 /* MapViewController.h */,
 				9695644D1758642B0081B349 /* MapViewController.m */,
 				9695644E1758642B0081B349 /* MapViewController.xib */,
@@ -635,16 +617,10 @@
 				969564541758691B0081B349 /* MenuViewController.m */,
 				9615F4E0175BEBA9005CF62D /* Models */,
 				1FD65829175878480007455B /* Networking */,
-				1F3DD743175D9AC5007A7AD6 /* RegistrationViewController.h */,
-				1F3DD744175D9AC5007A7AD6 /* RegistrationViewController.m */,
-				1F3DD745175D9AC5007A7AD6 /* RegistrationViewController.xib */,
 				96C87C7A175A9A2C006EA3A3 /* Resources */,
 				1F465C0717618B9200F35A8B /* SelectLocationViewController.h */,
 				1F465C0817618B9200F35A8B /* SelectLocationViewController.m */,
 				1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */,
-				1FA0AD6E175EE7EC004F2168 /* SignInViewController.h */,
-				1FA0AD6F175EE7EC004F2168 /* SignInViewController.m */,
-				1FA0AD70175EE7EC004F2168 /* SignInViewController.xib */,
 				963399421758512100AF9D89 /* Supporting Files */,
 				1FA2D5081765398C00AB657F /* TextMessageManager.h */,
 				1FA2D5091765398C00AB657F /* TextMessageManager.m */,
@@ -948,7 +924,6 @@
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				969D648B17E95F9300F5AB36 /* beaconCellBackgroundPurple@2x.png in Resources */,
-				96956448175852990081B349 /* LoginViewController.xib in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				969564501758642B0081B349 /* MapViewController.xib in Resources */,
@@ -970,8 +945,6 @@
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				1FE67737175C3F0D006F563C /* menuBeacons@2x.png in Resources */,
 				96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */,
-				1F3DD747175D9AC5007A7AD6 /* RegistrationViewController.xib in Resources */,
-				1FA0AD72175EE7EC004F2168 /* SignInViewController.xib in Resources */,
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
@@ -1094,7 +1067,6 @@
 				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
-				96956447175852990081B349 /* LoginViewController.m in Sources */,
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */,
@@ -1119,8 +1091,6 @@
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
-				1F3DD746175D9AC5007A7AD6 /* RegistrationViewController.m in Sources */,
-				1FA0AD71175EE7EC004F2168 /* SignInViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,

@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "Theme.h"
 #import "CenterNavigationController.h"
-#import "LoginViewController.h"
 #import "MapViewController.h"
 #import "FindFriendsViewController.h"
 #import "BeaconDetailViewController.h"
