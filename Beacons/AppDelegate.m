@@ -27,6 +27,7 @@
 #import "Beacon.h"
 #import "BeaconManager.h"
 #import "LockedViewController.h"
+#import "RandomObjectManager.h"
 
 @interface AppDelegate()
 
@@ -99,6 +100,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [CrashManager enableCrittercism];
+    
+    //update content from server
+    [[RandomObjectManager sharedManager] updateStringsFromServer];
     
     [ThemeManager customizeAppAppearance];
     self.centerNavigationController.selectedViewController = self.mapViewController;

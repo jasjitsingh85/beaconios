@@ -12,6 +12,7 @@
 
 + (RandomObjectManager *)sharedManager;
 
+- (void)updateStringsFromServer;
 - (NSString *)randomInviteFriendsToAppString;
 - (NSString *)randomSetBeaconPlaceholder;
 - (NSString *)randomEmptyBeaconSubtitle;

@@ -23,6 +23,10 @@
 
 - (id)getRandomObject
 {
+    if (!self.objectOptions || !self.objectOptions.count) {
+        return nil;
+    }
+    
     NSInteger idx = arc4random_uniform(self.objectOptions.count);
     return self.objectOptions[idx];
 }

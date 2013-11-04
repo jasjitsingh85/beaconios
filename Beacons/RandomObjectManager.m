@@ -8,6 +8,11 @@
 
 #import "RandomObjectManager.h"
 #import "RandomObjectPicker.h"
+#import "APIClient.h"
+
+#define kRandomObjectOptionInviteFriends @"IU"
+#define kRandomObjectOptionEmptyHotSpot @"SN"
+#define kRandomObjectOptionHotSpotPlaceholder @"SP"
 
 @interface RandomObjectManager()
 
@@ -35,18 +40,7 @@
     if (_inviteFriendsToAppPicker) {
         return _inviteFriendsToAppPicker;
     }
-    NSArray *options = @[@"The creators of Hotspot app are desparate for users and friends. Anything helps.",
-                         @"This Hotspot app sucks I wouldn't recommend it to anyone",
-                         @"Rahul fill this template out. We aren't paying you 20 rupees an hour for nothing.",
-                         @"I hear this Hotspot app can increase your stamina in bed by 30%!",
-                         @"This Hotspot app has changed my life. Honestly it's the only thing that saved my marriage",
-                         @"You know that feeling when a really cute guy holds the door for you? This Hotspot app gives me that feeling every day.",
-                         @"If I had to decide between world peace and this Hotspot app I'd probably pick the app. Then I'd immediately regret the decision.",
-                         @"I love and miss you very much. If you love and miss me, you would download this Hotspot app.",
-                         @"This Hotspot app is crack. Like you shouldn't use it if your pregnant",
-                         @"Meet hot single moms in your area. Download the Hotspot app today!",
-                         @"You gotta check out Hotspot. It's an app that prefills embarrassing, and frankly stupid invitation texts to your closest friends."
-                         ];
+    NSArray *options = @[@"Checkout this app Hotspot. It's the best"];
     _inviteFriendsToAppPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _inviteFriendsToAppPicker;
 }
@@ -61,58 +55,7 @@
     if (_setBeaconPlaceholderPicker) {
         return _setBeaconPlaceholderPicker;
     }
-    NSArray *options = @[@"Microwaving burritos at mi casa. ¡me gusta!",
-                         @"Twerking my bum at Roxy",
-                         @"Feeling an animal at the zoo!",
-                         @"Searching for love in all the wrong places",
-                         @"Finding distractions from things that make us sad :)",
-                         @"Shopping for penny loafers at Macy's",
-                         @"Shabbat dinner at Hillel. Manischewitz to the face",
-                         @"Body painting with the boys",
-                         @"Helping Dawson discover himself",
-                         @"Heated vinyasa yoga. So sweaty but purifying",
-                         @"Stop telling me what to do with my body.",
-                         @"Drinking. Joey just broke up with me. Honestly it's her loss",
-                         @"I just want to have a quiet night. Maybe read a little",
-                         @"Had a rough day. Can someone please give me a backrub?",
-                         @"Help! I'm lonely",
-                         @"Eating out Chinese food. Actually Japanese. Whatever it all tastes the same",
-                         @"Taking Pacey to the hospital. I'm really scared",
-                         @"Feeling one with the universe. Come join!",
-                         @"Bonfire under the bridge!!!",
-                         @"Party at Delta Chi. Bring friends. No dudes plz",
-                         @"Gettin punk in drublic",
-                         @"Shaking our money makers",
-                         @"Crying at a good film",
-                         @"Going to the same old shitty bar we always go to",
-                         @"Girls night out. Yeaaaah betches",
-                         @"Searching for meaning in a big pile of meaninglessness",
-                         @"Getting intoxicated enough to dance!",
-                         @"Making seriously poor life decisions",
-                         @"Monkeying around with papa",
-                         @"Slipping into something more comfortable",
-                         @"I want to experiment with my body. Anyone interested?",
-                         @"Playing the roofie game!!",
-                         @"Handing out candy to kids",
-                         @"Binging and purging",
-                         @"Remember to fill out this template. This isn't amateur night, you outsourced morons",
-                         @"Russian roulette. Hurry this guest list is starting to dwindle!",
-                         @"Meeting people by kicking open random bathroom stalls",
-                         @"Catcalling construction workers",
-                         @"Modern art museum. But like how is a cross in a jar of doo-doo considered art?",
-                         @"Grammy's funeral and I have literally nothing to wear",
-                         @"Hugging trees. Trying to steal third with this tree I've been hugging a lot lately",
-                         @"Strip poker. I've already lost everything and now Pacey wants to remove skin",
-                         @"Snorting cat nip with Mittens",
-                         @"Double fisting. And I don't mean holding a container of alcohol in each hand",
-                         @"Disrespecting authority. Shamefully apologizing",
-                         @"Winning the big game. Getting the girl. Discovering we are incompatible",
-                         @"Feeding the children bread at the park",
-                         @"Doing things that make terrorists want to destroy our culture",
-                         @"Saving puppies from a burning building. Leaving the kittens behind",
-                         @"Working out at the playground. Shirt optional.",
-                         @"Snake charming"
-                         ];
+    NSArray *options = @[@"Getting this party started at Von Trapps!"];
     _setBeaconPlaceholderPicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _setBeaconPlaceholderPicker;
 }
@@ -146,12 +89,7 @@
     if (_emptyBeaconSubtitlePicker) {
         return _emptyBeaconSubtitlePicker;
     }
-    NSArray *options = @[@"Ghandi used Hotspot to lead India to independence. What will you do with it?",
-                         @"1 in 3 Hotspots result in orgasm. I prefer a cigarette after setting one.",
-                         @"Your friends are lonely and they need your help!",
-                         @"Your Hotspot is a precious thing. Be gentle with it.",
-                         @"Setting a Hotspot raises dopamine levels, an effect many find arousing.",
-                         ];
+    NSArray *options = @[@"Set a Hotspot and get the party started!"];
     _emptyBeaconSubtitlePicker = [[RandomObjectPicker alloc] initWithObjectOptions:options];
     return _emptyBeaconSubtitlePicker;
 }
@@ -159,6 +97,24 @@
 - (NSString *)randomEmptyBeaconSubtitle
 {
     return [self.emptyBeaconSubtitlePicker getRandomObject];
+}
+
+- (void)updateStringsFromServer
+{
+    [[APIClient sharedClient] getPath:@"content/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *options = responseObject[@"content"];
+        if (options && options.count) {
+            self.emptyBeaconSubtitlePicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionEmptyHotSpot givenResponseOptions:options];
+            self.inviteFriendsToAppPicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionInviteFriends givenResponseOptions:options];
+            self.setBeaconPlaceholderPicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionHotSpotPlaceholder givenResponseOptions:options];
+        }
+    } failure:nil];
+}
+
+- (NSArray *)optionsForDisplayLocation:(NSString *)displayLocation givenResponseOptions:(NSArray *)options
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"display_location = %@", displayLocation];
+    return [[options filteredArrayUsingPredicate:predicate] valueForKey:@"content_option"];
 }
 
 @end
