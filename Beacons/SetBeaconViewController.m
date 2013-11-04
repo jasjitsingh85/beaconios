@@ -62,6 +62,7 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0];
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 504);
@@ -256,6 +257,9 @@
     
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
+        //scroll to show invite button for iPhone 4
+        CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+        [self.scrollView setContentOffset:bottomOffset animated:YES];
         return NO;
     }
     
