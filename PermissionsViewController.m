@@ -43,11 +43,11 @@ typedef enum {
     
     self.titleLabel = [[UILabel alloc] init];
     CGRect titleLabelFrame;
-    titleLabelFrame.size = CGSizeMake(300, 30);
+    titleLabelFrame.size = CGSizeMake(300, 34);
     titleLabelFrame.origin.x = 0.5*(self.view.frame.size.width - titleLabelFrame.size.width);
-    titleLabelFrame.origin.y = 100;
+    titleLabelFrame.origin.y = 98;
     self.titleLabel.frame = titleLabelFrame;
-    self.titleLabel.font = [ThemeManager regularFontOfSize:27];
+    self.titleLabel.font = [ThemeManager regularFontOfSize:32];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleLabel.textColor = [UIColor whiteColor];
@@ -82,14 +82,14 @@ typedef enum {
         UILabel *label = [[UILabel alloc] init];
         label.text = strings[i];
         CGRect labelFrame;
-        labelFrame.size = CGSizeMake(300, 30);
+        labelFrame.size = CGSizeMake(290, 50);
         labelFrame.origin.x = 0.5*(self.view.frame.size.width - labelFrame.size.width);
-        labelFrame.origin.y = 160 + 40*i;
+        labelFrame.origin.y = 165 + 50*i;
         label.frame = labelFrame;
         label.numberOfLines = 0;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor whiteColor];
-        label.font = [ThemeManager lightFontOfSize:16];
+        label.font = [ThemeManager lightFontOfSize:20];
         [subtitleLabels addObject:label];
     }
     return subtitleLabels;
@@ -98,12 +98,11 @@ typedef enum {
 - (void)enterContactsMode
 {
     self.viewMode = ViewModeContact;
-    self.titleLabel.text = @"Add Friends From Your Contacts";
+    self.titleLabel.text = @"Sync Contacts";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Instantly builds your friend list",
-                                                      @"Find friends already on the app",
-                                                      @"Invite friends to your events",
-                                                      @"Required to use the app"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can invite friends to events",
+                                                      @"(Required to use the app)"]];
+    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
 
@@ -112,8 +111,9 @@ typedef enum {
     self.viewMode = ViewModePush;
     self.titleLabel.text = @"Push It Good";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Instantly get invites to friends events",
-                                                      @"Chat with friends in real-time"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Get invitations immediately",
+                                                      @"Chat in real-time"]];
+    [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
 
