@@ -82,6 +82,9 @@
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
 		966F270717E174CF000B4B8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F270617E174CF000B4B8C /* libPods.a */; };
 		9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9671D02C1825739100D03D66 /* helpButton@2x.png */; };
+		9671D03118273BE700D03D66 /* LockedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9671D02F18273BE700D03D66 /* LockedViewController.m */; };
+		9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9671D03018273BE700D03D66 /* LockedViewController.xib */; };
+		9671D03418273C0F00D03D66 /* lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9671D03318273C0F00D03D66 /* lock@2x.png */; };
 		96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */; };
 		96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */; };
 		96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */; };
@@ -132,7 +135,6 @@
 		96AE3B071788EEDD00FDDBFE /* beaconAnnotationActive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96AE3B061788EEDD00FDDBFE /* beaconAnnotationActive@2x.png */; };
 		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
 		96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1F18261902003A47F2 /* PermissionsViewController.m */; };
-		96AFCA231826FF3D003A47F2 /* LockedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA221826FF3D003A47F2 /* LockedViewController.m */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
 		96C87C7D175A9A44006EA3A3 /* loginBackground-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */; };
 		96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */; };
@@ -300,6 +302,10 @@
 		966AC11C17CADBFA0093BB69 /* BeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManager.m; sourceTree = "<group>"; };
 		966F270617E174CF000B4B8C /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		9671D02C1825739100D03D66 /* helpButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpButton@2x.png"; sourceTree = "<group>"; };
+		9671D02E18273BE700D03D66 /* LockedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockedViewController.h; sourceTree = "<group>"; };
+		9671D02F18273BE700D03D66 /* LockedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockedViewController.m; sourceTree = "<group>"; };
+		9671D03018273BE700D03D66 /* LockedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LockedViewController.xib; sourceTree = "<group>"; };
+		9671D03318273C0F00D03D66 /* lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock@2x.png"; sourceTree = "<group>"; };
 		96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendNormal@2x.png"; sourceTree = "<group>"; };
 		96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendInactive@2x.png"; sourceTree = "<group>"; };
@@ -373,8 +379,6 @@
 		96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+ServerErrorMessage.m"; sourceTree = "<group>"; };
 		96AFCA1E18261902003A47F2 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionsViewController.h; path = ../PermissionsViewController.h; sourceTree = "<group>"; };
 		96AFCA1F18261902003A47F2 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionsViewController.m; path = ../PermissionsViewController.m; sourceTree = "<group>"; };
-		96AFCA211826FF3D003A47F2 /* LockedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockedViewController.h; sourceTree = "<group>"; };
-		96AFCA221826FF3D003A47F2 /* LockedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockedViewController.m; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
 		96C87C7B175A9A44006EA3A3 /* loginBackground-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground-568h@2x.png"; sourceTree = "<group>"; };
 		96C87C7C175A9A44006EA3A3 /* loginBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loginBackground@2x.png"; sourceTree = "<group>"; };
@@ -678,8 +682,9 @@
 				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
 				96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */,
 				96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */,
-				96AFCA211826FF3D003A47F2 /* LockedViewController.h */,
-				96AFCA221826FF3D003A47F2 /* LockedViewController.m */,
+				9671D02E18273BE700D03D66 /* LockedViewController.h */,
+				9671D02F18273BE700D03D66 /* LockedViewController.m */,
+				9671D03018273BE700D03D66 /* LockedViewController.xib */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -740,6 +745,7 @@
 				9671D02C1825739100D03D66 /* helpButton@2x.png */,
 				1F465C1C1763CF0900F35A8B /* addFriendButton@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
+				9671D03318273C0F00D03D66 /* lock@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
@@ -943,6 +949,7 @@
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				96C87C7E175A9A44006EA3A3 /* loginBackground@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
+				9671D03418273C0F00D03D66 /* lock@2x.png in Resources */,
 				96C87C80175A9C12006EA3A3 /* orangeButton@2x.png in Resources */,
 				96C87C82175AA423006EA3A3 /* menuBackground@2x.png in Resources */,
 				1FE6771D175C16E9006F563C /* beaconAnnotation@2x.png in Resources */,
@@ -977,6 +984,7 @@
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
 				969D648A17E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png in Resources */,
 				1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */,
+				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
 				969D648917E95F9300F5AB36 /* beaconCellBackgroundGreen@2x.png in Resources */,
@@ -1074,7 +1082,7 @@
 			files = (
 				963399481758512100AF9D89 /* main.m in Sources */,
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
-				96AFCA231826FF3D003A47F2 /* LockedViewController.m in Sources */,
+				9671D03118273BE700D03D66 /* LockedViewController.m in Sources */,
 				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,

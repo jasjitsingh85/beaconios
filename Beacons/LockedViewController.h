@@ -2,7 +2,7 @@
 //  LockedViewController.h
 //  Beacons
 //
-//  Created by Jeffrey Ames on 11/3/13.
+//  Created by Jeff Ames on 11/3/13.
 //  Copyright (c) 2013 Jeff Ames. All rights reserved.
 //
 
