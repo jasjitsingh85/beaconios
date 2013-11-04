@@ -17,7 +17,6 @@
 #import "AnalyticsManager.h"
 #import "Utilities.h"
 #import "LoadingIndictor.h"
-#import "WebViewController.h"
 #import "Theme.h"
 
 typedef enum {
@@ -186,12 +185,6 @@ typedef enum {
 - (void)helpButtonTouched:(id)sender
 {
     UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:nil];
-    [actionSheet addButtonWithTitle:@"Terms" handler:^{
-        [self presentTerms];
-    }];
-    [actionSheet addButtonWithTitle:@"Privacy" handler:^{
-        [self PresentPrivacy];
-    }];
     [actionSheet addButtonWithTitle:@"Having Trouble?" handler:^{
         [self presentFeedbackForm];
     }];
@@ -209,20 +202,6 @@ typedef enum {
     [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
     [mailViewController setMessageBody:@"Please help me with my problems:\n" isHTML:NO];
     [self presentViewController:mailViewController animated:YES completion:nil];
-}
-
-- (void)presentTerms
-{
-    NSURL *termsURL = [NSURL URLWithString:kTermsURL];
-    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Terms" andURL:termsURL];
-    [self presentModalWithContentViewController:webViewController];
-}
-
-- (void)PresentPrivacy
-{
-    NSURL *privacyURL = [NSURL URLWithString:kPrivacyURL];
-    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
-    [self presentModalWithContentViewController:webViewController];
 }
 
 - (void)presentModalWithContentViewController:(UIViewController *)viewController
