@@ -61,7 +61,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 {    
     NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    [[[UIAlertView alloc] initWithTitle:@"" message:deviceToken delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    [[[UIAlertView alloc] initWithTitle:@"" message:deviceToken delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 
     //update user with device token
     NSDictionary *params = @{@"device_token" : deviceToken};
