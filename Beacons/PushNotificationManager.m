@@ -113,7 +113,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     if ([notificationType isEqualToString:kPushNotificationTypeMessage]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
-        BOOL showingChat = [[AppDelegate sharedAppDelegate].centerNavigationController.selectedViewController isKindOfClass:[BeaconProfileViewController class]];
+        BOOL showingChat = [[AppDelegate sharedAppDelegate].centerNavigationController.selectedViewController isKindOfClass:[BeaconProfileViewController class]] || ([AppDelegate sharedAppDelegate].centerNavigationController.viewControllers.count && [[AppDelegate sharedAppDelegate].centerNavigationController.visibleViewController  isKindOfClass:[BeaconProfileViewController class]]);
         if (!showingChat) {
             [alertView show];
         }
