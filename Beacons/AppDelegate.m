@@ -11,7 +11,6 @@
 #import "MapViewController.h"
 #import "MenuViewController.h"
 #import "BeaconDetailViewController.h"
-#import "ActivationViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
@@ -32,7 +31,6 @@
 @interface AppDelegate()
 
 @property (strong, nonatomic) RegisterViewController *registerViewController;
-@property (strong, nonatomic) ActivationViewController *activationViewController;
 @property (strong, nonatomic) NSDictionary *tentativeAccountData;
 
 @end

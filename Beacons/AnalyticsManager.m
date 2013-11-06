@@ -10,29 +10,6 @@
 #import "User.h"
 #import "Beacon.h"
 
-static NSString * const kLocationMapView = @"map_view";
-static NSString * const kLocationBeaconDetail = @"beacon_detail";
-static NSString * const kLocationRegistration = @"registration";
-static NSString * const kLocationSignIn = @"sign_in";
-static NSString * const kLocationActivation = @"activation";
-static NSString * const kRecipientSingle = @"single";
-static NSString * const kRecipientGroup = @"group";
-
-static NSString * const kPropertyAppLocation = @"app_location";
-static NSString * const kPropertyRecipient = @"recipient";
-static NSString * const kPropertyBeaconDescription = @"beacon_description";
-static NSString * const kPropertyBeaconInvites = @"beacon_invites";
-static NSString * const kPropertyBeaconTime = @"beacon_time";
-static NSString * const kPropertyBeaconLocation = @"beacon_location";
-
-static NSString * const kEventAppForeground = @"app_foreground";
-static NSString * const kEventRequestedDirections = @"requested_directions";
-static NSString * const kEventSentText = @"sent_text";
-static NSString * const kEventAcceptInvite = @"accept_invite";
-static NSString * const kEventCreatedBeacon = @"created_beacon";
-static NSString * const kEventViewPage = @"view_page";
-static NSString * const kEventDidRegister = @"did_register";
-
 @implementation AnalyticsManager
 
 + (id)sharedManager
@@ -74,7 +51,7 @@ static NSString * const kEventDidRegister = @"did_register";
             [superProperties setObject:value forKey:userProperties[i]];
         }
     }
-    [mixpanel registerSuperProperties:superProperties];
+    [mixpanel registerSuperProperties:superProperties]	;
 }
 
 - (void)sendEvent:(NSString *)event withProperties:(NSDictionary *)properties
@@ -87,72 +64,25 @@ static NSString * const kEventDidRegister = @"did_register";
     }
 }
 
-- (NSString *)stringForAnalyticsLocation:(AnalyticsLocation)analyticsLocation
-{
-    NSString *analyticsLocationString = @"";
-    if (analyticsLocation == AnalyticsLocationMapView) {
-        analyticsLocationString = kLocationMapView;
-    }
-    else if (analyticsLocation == AnalyticsLocationBeaconDetail) {
-        analyticsLocationString = kLocationBeaconDetail;
-    }
-    else if (analyticsLocation == AnalyticsLocationActivation) {
-        analyticsLocationString = kLocationActivation;
-    }
-    else if (analyticsLocation == AnalyticsLocationRegistration) {
-        analyticsLocationString = kLocationRegistration;
-    }
-    else if (analyticsLocation == AnalyticsLocationSignIn) {
-        analyticsLocationString = kLocationSignIn;
-    }
-    return analyticsLocationString;
-}
 
 - (void)appForeground
 {
-    [self sendEvent:kEventAppForeground withProperties:nil];
+    [self sendEvent:@"app_foreground" withProperties:nil];
 }
 
-- (void)viewPage:(AnalyticsLocation)analyticsLocation
+- (void)getDirections
 {
-    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation]};
-    [self sendEvent:kEventViewPage withProperties:properties];
+    [self sendEvent:@"get_directions" withProperties:nil];
 }
 
-- (void)getDirections:(AnalyticsLocation)analyticsLocation
+- (void)createBeaconWithDescription:(NSString *)description location:(NSString *)location date:(NSDate *)date numInvites:(NSInteger)numInvites
 {
-    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation]};
-    [self sendEvent:kEventRequestedDirections withProperties:properties];
-}
-
-- (void)sentText:(AnalyticsLocation)analyticsLocation recipients:(NSArray *)recipients
-{
-    NSString *recipient = recipients.count > 1 ? kRecipientGroup : kRecipientSingle;
-    NSString *appLocation = [self stringForAnalyticsLocation:analyticsLocation];
-    NSDictionary *properties = @{kPropertyAppLocation : appLocation, kPropertyRecipient : recipient};
-    [self sendEvent:kEventSentText withProperties:properties];
-}
-
-- (void)didRegister
-{
-    [self setupForUser];
-    [self sendEvent:kEventDidRegister withProperties:nil];
-}
-
-- (void)acceptInvite:(AnalyticsLocation)analyticsLocation beacon:(Beacon *)beacon
-{
-    NSDictionary *properties = @{kPropertyAppLocation : [self stringForAnalyticsLocation:analyticsLocation],
-                                 kPropertyBeaconDescription : beacon.beaconDescription};
-    [self sendEvent:kEventAcceptInvite withProperties:properties];
-}
-
-- (void)createBeacon:(Beacon *)beacon
-{
-    NSDictionary *properties = @{kPropertyBeaconDescription : beacon.beaconDescription,
-                               kPropertyBeaconInvites : @(beacon.guestStatuses.count),
-                               kPropertyBeaconTime : [beacon.time formattedDate]};
-    [self sendEvent:kEventCreatedBeacon withProperties:properties];
-                               
+    NSDictionary *properties = @{@"description" : description,
+                                 @"num_invites" : @(numInvites),
+                                 @"location" : location,
+                                 @"time" : [date formattedDate]};
+    [self sendEvent:@"set_hotspot" withProperties:properties];
+    
 }
 
 @end

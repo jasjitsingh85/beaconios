@@ -303,13 +303,6 @@
     [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:@[beacon.creator.phoneNumber]];
 }
 
-- (void)beaconCellDirectionsButtonTouched:(BeaconCell *)beaconCell
-{
-    Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];
-    [Utilities launchMapDirectionsToCoordinate:beacon.coordinate addressDictionary:nil destinationName:beacon.beaconDescription];
-    [[AnalyticsManager sharedManager] getDirections:AnalyticsLocationMapView];
-}
-
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell
 {
     Beacon *beacon = [self beaconForIndexPath:[self.beaconCollectionView indexPathForCell:beaconCell]];

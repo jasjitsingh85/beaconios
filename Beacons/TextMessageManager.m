@@ -48,12 +48,6 @@
 #pragma mark - MFMessageViewControllerDelegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-    if ([self.presentingViewController isKindOfClass:[MapViewController class]]) {
-        [[AnalyticsManager sharedManager] sentText:AnalyticsLocationMapView recipients:self.recipients];
-    }
-    else if ([self.presentingViewController isKindOfClass:[BeaconDetailViewController class]]) {
-        [[AnalyticsManager sharedManager] sentText:AnalyticsLocationBeaconDetail recipients:self.recipients];
-    }
     [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

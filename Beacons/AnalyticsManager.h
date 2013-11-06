@@ -9,28 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <Mixpanel/Mixpanel.h>
 
-typedef enum {
-    AnalyticsLocationMapView=0,
-    AnalyticsLocationBeaconDetail,
-    AnalyticsLocationRegistration,
-    AnalyticsLocationSignIn,
-    AnalyticsLocationActivation,
-} AnalyticsLocation;
 
-
-@class Beacon;
 @interface AnalyticsManager : NSObject
 
 + (AnalyticsManager *)sharedManager;
 
 - (void)setupForUser;
 - (void)appForeground;
-- (void)viewPage:(AnalyticsLocation)location;
-- (void)getDirections:(AnalyticsLocation)analyticsLocation;
-- (void)sentText:(AnalyticsLocation)analyticsLocation recipients:(NSArray *)recipients;
-- (void)didRegister;
-
-- (void)acceptInvite:(AnalyticsLocation)analyticsLocation beacon:(Beacon *)beacon;
-- (void)createBeacon:(Beacon *)beacon;
+- (void)getDirections;
+- (void)createBeaconWithDescription:(NSString *)description location:(NSString *)location date:(NSDate *)date numInvites:(NSInteger)numInvites;
 
 @end

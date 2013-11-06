@@ -33,8 +33,6 @@
 		1F7743DA17716C1100188500 /* blueButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F7743D917716C1000188500 /* blueButton@2x.png */; };
 		1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F7E19F8177BF313005E9BA1 /* WebViewController.m */; };
 		1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E3AFC179F8849001B8BE0 /* CrashManager.m */; };
-		1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB39176D081500529037 /* ActivationViewController.m */; };
-		1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3A176D081500529037 /* ActivationViewController.xib */; };
 		1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F9CEB3E176D1F2C00529037 /* ContactManager.m */; };
 		1F9CEB41176D7AF300529037 /* infoButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F9CEB40176D7AF300529037 /* infoButton@2x.png */; };
 		1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA2D5091765398C00AB657F /* TextMessageManager.m */; };
@@ -230,9 +228,6 @@
 		1F7E19F8177BF313005E9BA1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		1F8E3AFB179F8849001B8BE0 /* CrashManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashManager.h; sourceTree = "<group>"; };
 		1F8E3AFC179F8849001B8BE0 /* CrashManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashManager.m; sourceTree = "<group>"; };
-		1F9CEB38176D081500529037 /* ActivationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivationViewController.h; sourceTree = "<group>"; };
-		1F9CEB39176D081500529037 /* ActivationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivationViewController.m; sourceTree = "<group>"; };
-		1F9CEB3A176D081500529037 /* ActivationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivationViewController.xib; sourceTree = "<group>"; };
 		1F9CEB3D176D1F2C00529037 /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
 		1F9CEB3E176D1F2C00529037 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		1F9CEB40176D7AF300529037 /* infoButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoButton@2x.png"; sourceTree = "<group>"; };
@@ -640,9 +635,6 @@
 				1FEEFF10175EFF070091AD01 /* Utilities.h */,
 				1FEEFF11175EFF070091AD01 /* Utilities.m */,
 				1FE6771E175C1DAA006F563C /* Views */,
-				1F9CEB38176D081500529037 /* ActivationViewController.h */,
-				1F9CEB39176D081500529037 /* ActivationViewController.m */,
-				1F9CEB3A176D081500529037 /* ActivationViewController.xib */,
 				1F9CEB3D176D1F2C00529037 /* ContactManager.h */,
 				1F9CEB3E176D1F2C00529037 /* ContactManager.m */,
 				1FEAEDFF17701C9B0090A7C2 /* LoadingIndictor.h */,
@@ -983,7 +975,6 @@
 				96A9871917E4FB40007D77B8 /* beaconImageTest@2x.png in Resources */,
 				1FE649F317659E2F0073D321 /* beaconLogoLarge@2x.png in Resources */,
 				969D648A17E95F9300F5AB36 /* beaconCellBackgroundOrange@2x.png in Resources */,
-				1F9CEB3C176D081500529037 /* ActivationViewController.xib in Resources */,
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
@@ -1126,7 +1117,6 @@
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
-				1F9CEB3B176D081500529037 /* ActivationViewController.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
 				96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */,
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,

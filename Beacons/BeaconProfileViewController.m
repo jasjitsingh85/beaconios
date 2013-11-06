@@ -33,6 +33,7 @@
 #import "AppDelegate.h"
 #import "BounceButton.h"
 #import "NavigationBarTitleLabel.h"
+#import "AnalyticsManager.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate>
 
@@ -299,6 +300,7 @@
     [alertView addButtonWithTitle:@"No, thank you" handler:nil];
     [alertView setCancelButtonWithTitle:@"Yes, please" handler:^{
         [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
+        [[AnalyticsManager sharedManager] getDirections];
     }];
     [alertView show];
 }
