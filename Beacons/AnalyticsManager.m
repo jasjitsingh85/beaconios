@@ -119,7 +119,7 @@
     if (activityType) {
         [properties setObject:activityType forKey:@"activity_type"];
     }
-    [properties setObject:@(completed) forKey:activityType];
+    [properties setObject:@(completed) forKey:@"completed"];
     [self sendEvent:@"invite_friends" withProperties:properties];
 }
 
