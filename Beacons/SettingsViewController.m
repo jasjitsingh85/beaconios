@@ -122,9 +122,8 @@
     mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
         [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     };
-    [mailViewController setSubject:@"I have an opinion or a problem"];
+    [mailViewController setSubject:@"Feedback"];
     [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
-    [mailViewController setMessageBody:@"I [like, hate] you and your app for the following reason:\n" isHTML:NO];
     [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:mailViewController animated:YES completion:nil];
 }
 
