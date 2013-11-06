@@ -108,4 +108,11 @@
     [self sendEvent:@"attending_status" withProperties:properties];
 }
 
+- (void)inviteToApp:(NSString *)activityType completed:(BOOL)completed
+{
+    NSDictionary *properties = @{@"activity_type" : activityType,
+                                 @"completed" : @(completed)};
+    [self sendEvent:@"invite_friends" withProperties:properties];
+}
+
 @end

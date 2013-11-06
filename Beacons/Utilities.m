@@ -9,6 +9,7 @@
 #import "Utilities.h"
 #import "RandomObjectManager.h"
 #import "AppDelegate.h"
+#import "AnalyticsManager.h"
 
 @implementation Utilities
 
@@ -61,7 +62,7 @@
                                       applicationActivities:nil];
     activityViewController.excludedActivityTypes =  @[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypePostToWeibo, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypeSaveToCameraRoll];
     activityViewController.completionHandler = ^(NSString *activityType, BOOL completed) {
-        
+        [[AnalyticsManager sharedManager] inviteToApp:activityType completed:completed];
     };
     [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:activityViewController animated:YES completion:^{}];
 }
