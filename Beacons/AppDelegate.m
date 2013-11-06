@@ -131,6 +131,8 @@
     [[AnalyticsManager sharedManager] appForeground];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
+    [[LocationTracker sharedTracker] startTrackingIfAuthorized];
+    
     BOOL hasActivated = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyAccountActivated];
     BOOL hasFinishedPermissions = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasFinishedPermissions];
     if (hasActivated) {
@@ -152,6 +154,11 @@
 - (void)contactAuthorizationStatusDenied
 {
     self.window.rootViewController = [[LockedViewController alloc] init];
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    [[LocationTracker sharedTracker] stopTracking];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

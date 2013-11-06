@@ -41,11 +41,20 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
         self.locationManager.delegate = self;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-            [self.locationManager startUpdatingLocation];
-        }
     }
     return self;
+}
+
+- (void)startTrackingIfAuthorized
+{
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
+- (void)stopTracking
+{
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)requestLocationPermission
