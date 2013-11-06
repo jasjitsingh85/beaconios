@@ -18,6 +18,7 @@
     if (self) {
         self.fullName = data[@"name"];
         self.phoneNumber = data[@"phone_number"];
+        self.contactID = data[@"id"];
     }
     return self;
 }

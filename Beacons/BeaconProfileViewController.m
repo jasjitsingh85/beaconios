@@ -504,6 +504,7 @@
         [self inviteMoreFriends];
     }];
     [alertView show];
+    [[AnalyticsManager sharedManager] setBeaconStatus:@"going" forSelf:YES];
 }
 
 - (void)inviteButtonTouched:(id)sender
@@ -659,6 +660,8 @@
             [inviteListViewController.tableView reloadData];
             [[APIClient sharedClient] checkInFriendWithID:friendID isUser:isUser atbeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
+                BOOL checkingInSelf = [friendID isEqualToNumber:[User loggedInUser].userID];
+                [[AnalyticsManager sharedManager] setBeaconStatus:@"here" forSelf:checkingInSelf];
             }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 beaconStatus.beaconStatusOption = oldStatus;
                 [inviteListViewController.tableView reloadData];

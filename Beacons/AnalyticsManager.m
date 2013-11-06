@@ -101,4 +101,11 @@
     [self sendEvent:@"invite_to_hotspot" withProperties:properties];
 }
 
+- (void)setBeaconStatus:(NSString *)status forSelf:(BOOL)forSelf
+{
+    NSDictionary *properties = @{@"status" : status,
+                                 @"for_self" : @(forSelf)};
+    [self sendEvent:@"attending_status" withProperties:properties];
+}
+
 @end

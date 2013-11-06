@@ -21,5 +21,6 @@
 - (void)getDirections;
 - (void)createBeaconWithDescription:(NSString *)description location:(NSString *)location date:(NSDate *)date numInvites:(NSInteger)numInvites;
 - (void)inviteToBeacon:(NSInteger)numInvites;
+- (void)setBeaconStatus:(NSString *)status forSelf:(BOOL)forSelf;
 
 @end
