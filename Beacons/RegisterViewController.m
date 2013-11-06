@@ -136,6 +136,12 @@ typedef enum {
     [self.view addSubview:self.helpButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[AnalyticsManager sharedManager] registrationBegan];
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
@@ -395,6 +401,7 @@ typedef enum {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate didActivateAccount];
+        [[AnalyticsManager sharedManager] registrationFinished];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.makingNetworkRequest = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];

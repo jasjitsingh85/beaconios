@@ -16,6 +16,8 @@
 
 - (void)setupForUser;
 - (void)appForeground;
+- (void)registrationBegan;
+- (void)registrationFinished;
 - (void)getDirections;
 - (void)createBeaconWithDescription:(NSString *)description location:(NSString *)location date:(NSDate *)date numInvites:(NSInteger)numInvites;
 

@@ -70,6 +70,16 @@
     [self sendEvent:@"app_foreground" withProperties:nil];
 }
 
+- (void)registrationBegan
+{
+    [self sendEvent:@"registration_begin" withProperties:nil];
+}
+
+- (void)registrationFinished
+{
+    [self sendEvent:@"registration_finish" withProperties:nil];
+}
+
 - (void)getDirections
 {
     [self sendEvent:@"get_directions" withProperties:nil];
