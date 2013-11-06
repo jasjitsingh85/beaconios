@@ -222,20 +222,18 @@
     self.window.rootViewController = self.registerViewController;
     //nil out any view controllers that have user data
     self.mapViewController = nil;
-    NSArray *objectsToRemove = @[kDefaultsKeyFirstName,
-                                 kDefaultsKeyEmail,
-                                 kDefaultsKeyFacebookID,
-                                 kDefaultsKeyLastAuthorizationToken,
-                                 kDefaultsKeyPhone,
-                                 kDefaultsKeyLastName,
-                                 kDefaultsAvatarURLKey];
-    for (NSString *key in objectsToRemove) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-    }
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kDefaultsKeyIsLoggedIn];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self clearUserDefaults];
     [User logoutUser];
     [[APIClient sharedClient] clearAuthorizationHeader];
+}
+
+- (void)clearUserDefaults
+{
+    NSDictionary *defaultsDict = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+    for (NSString *key in [defaultsDict allKeys]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Beacon Profile
