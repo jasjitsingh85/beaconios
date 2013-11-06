@@ -70,6 +70,11 @@
     [self sendEvent:@"app_foreground" withProperties:nil];
 }
 
+- (void)foregroundFromPush
+{
+    [self sendEvent:@"foreground_push" withProperties:nil];
+}
+
 - (void)registrationBegan
 {
     [self sendEvent:@"registration_begin" withProperties:nil];

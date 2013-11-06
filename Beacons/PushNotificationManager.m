@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "CenterNavigationController.h"
 #import "BeaconProfileViewController.h"
+#import "AnalyticsManager.h"
 
 static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
@@ -106,6 +107,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID];
         }
     }
+    [[AnalyticsManager sharedManager] foregroundFromPush];
 }
 
 - (void)didReceiveInForegroundRemoteNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo

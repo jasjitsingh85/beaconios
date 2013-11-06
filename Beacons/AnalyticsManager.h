@@ -16,6 +16,7 @@
 
 - (void)setupForUser;
 - (void)appForeground;
+- (void)foregroundFromPush;
 - (void)registrationBegan;
 - (void)registrationFinished;
 - (void)getDirections;
