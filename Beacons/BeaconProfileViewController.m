@@ -529,13 +529,13 @@
 - (void)showCameraActionSheet
 {
     UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Want to add a photo?"];
-    [actionSheet addButtonWithTitle:@"Take a photo" handler:^{
+    [actionSheet addButtonWithTitle:@"Take a Photo" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     }];
-    [actionSheet addButtonWithTitle:@"Add from library" handler:^{
+    [actionSheet addButtonWithTitle:@"Add From Library" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [actionSheet setCancelButtonWithTitle:@"Not now" handler:nil];
+    [actionSheet setCancelButtonWithTitle:@"Not Now" handler:nil];
     [actionSheet showInView:self.view];
 }
 
