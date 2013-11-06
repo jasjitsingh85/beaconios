@@ -95,4 +95,10 @@
     
 }
 
+- (void)inviteToBeacon:(NSInteger)numInvites
+{
+    NSDictionary *properties = @{@"num_invites" : @(numInvites)};
+    [self sendEvent:@"invite_to_hotspot" withProperties:properties];
+}
+
 @end

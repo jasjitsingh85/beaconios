@@ -624,6 +624,7 @@
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+    [[AnalyticsManager sharedManager] inviteToBeacon:contacts.count];
 }
 
 #pragma mark - InviteListViewControllerDelegate
