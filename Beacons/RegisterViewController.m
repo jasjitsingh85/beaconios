@@ -371,7 +371,7 @@ typedef enum {
                                    self.makingNetworkRequest = NO;
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate loggedIntoServerWithResponse:responseObject];
-                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"An Activation Code Will Be Sent To You Via Text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"Activation code sent via SMS" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
