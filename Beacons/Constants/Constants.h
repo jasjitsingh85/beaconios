@@ -22,7 +22,7 @@
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 
 //analytics
-#define MIXPANEL_TOKEN @"ea199a5c35552a95a448a43497dd3ac6"
+#define MIXPANEL_TOKEN @"5ef90c03d9e72b7e1f460600d47de6ab"
 
 //conversions
 #define METERS_TO_MILES 0.000621371
