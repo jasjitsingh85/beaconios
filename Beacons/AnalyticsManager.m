@@ -115,8 +115,11 @@
 
 - (void)inviteToApp:(NSString *)activityType completed:(BOOL)completed
 {
-    NSDictionary *properties = @{@"activity_type" : activityType,
-                                 @"completed" : @(completed)};
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    if (activityType) {
+        [properties setObject:activityType forKey:@"activity_type"];
+    }
+    [properties setObject:@(completed) forKey:activityType];
     [self sendEvent:@"invite_friends" withProperties:properties];
 }
 
