@@ -232,7 +232,7 @@
         textView.text = @"";
         return NO;
     }
-    NSInteger maxLength = 200;
+    NSInteger maxLength = 300;
     if (text.length && textView.text.length > maxLength) {
         [[[UIAlertView alloc] initWithTitle:@"Max character limit reached" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return NO;
