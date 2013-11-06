@@ -33,6 +33,7 @@
 
 @property (strong, nonatomic) RegisterViewController *registerViewController;
 @property (strong, nonatomic) ActivationViewController *activationViewController;
+@property (strong, nonatomic) NSDictionary *tentativeAccountData;
 
 @end
 
@@ -164,14 +165,19 @@
 {
     NSString *authorizationToken = response[@"token"];
     [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
+    self.tentativeAccountData = response;
 }
 
 - (void)loggedIntoServerWithResponse:(NSDictionary *)response
 {
-    User *user = [[User alloc] initWithData:response];
     NSString *authorizationToken = response[@"token"];
     [[APIClient sharedClient] setAuthorizationHeaderWithToken:authorizationToken];
-    BOOL activated = [response[@"activated"] boolValue];
+    self.tentativeAccountData = response;
+}
+
+- (void)didActivateAccount
+{
+    User *user = [[User alloc] initWithData:self.tentativeAccountData];
     NSString *firstName = user.firstName;
     if (firstName) {
         [[NSUserDefaults standardUserDefaults] setObject:firstName forKey:kDefaultsKeyFirstName];
@@ -196,14 +202,10 @@
     if (avatarURL) {
         [[NSUserDefaults standardUserDefaults] setObject:avatarURL.absoluteString forKey:kDefaultsAvatarURLKey];
     }
-    [[NSUserDefaults standardUserDefaults] setBool:activated forKey:kDefaultsKeyAccountActivated];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyIsLoggedIn];
     [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (void)didActivateAccount
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyAccountActivated];
+    
     self.window.rootViewController = [[PermissionsViewController alloc] init];
     [[AnalyticsManager sharedManager] setupForUser];
     [CrashManager setupForUser];
