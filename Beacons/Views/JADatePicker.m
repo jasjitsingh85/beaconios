@@ -12,6 +12,7 @@
 @interface JADatePicker() <UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (assign, nonatomic) NSInteger lastSelectedHourRow;
+@property (assign, nonatomic) BOOL canAutoScrollTimePeriod;
 
 @end
 
@@ -27,6 +28,11 @@
     self.dataSource = self;
     self.minuteInterval = 15;
     [self setHour:12 minute:0 timePeriod:TimePeriodAM animated:NO];
+    
+    __weak typeof (self) weakSelf = self;
+    jadispatch_after_delay(2, dispatch_get_main_queue(), ^{
+        weakSelf.canAutoScrollTimePeriod = YES;
+    });
     return self;
 }
 
@@ -116,7 +122,7 @@
         }
         title = @(hour).stringValue;
         CGFloat width = [self viewForRow:row forComponent:component].frame.size.width;
-        if (width && hour == 12 && row > self.lastSelectedHourRow) {
+        if (self.canAutoScrollTimePeriod && width && hour == 12 && row > self.lastSelectedHourRow) {
             NSInteger timeperiod = [pickerView selectedRowInComponent:2];
             [pickerView selectRow:(timeperiod == TimePeriodAM ? TimePeriodPM : TimePeriodAM) inComponent:2 animated:YES];
             self.lastSelectedHourRow = row;
