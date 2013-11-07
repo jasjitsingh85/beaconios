@@ -119,6 +119,13 @@
         [[ContactManager sharedManager] syncContacts];
         [CrashManager setupForUser];
     }
+    //see if launched from local notification
+    if (launchOptions) {
+        UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+        if (notification) {
+            [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
+        }
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
     
