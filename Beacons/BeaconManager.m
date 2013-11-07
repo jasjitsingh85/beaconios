@@ -175,6 +175,7 @@
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = @"You arrived at a Hotspot. Want to check yourself in?";
     localNotification.userInfo = @{@"beaconID" : beaconID};
+    localNotification.applicationIconBadgeNumber = 1;
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:beacon.beaconID.stringValue];
 }
