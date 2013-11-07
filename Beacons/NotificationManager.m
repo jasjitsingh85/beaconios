@@ -7,6 +7,7 @@
 //
 
 #import "NotificationManager.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "APIClient.h"
 #import "Beacon.h"
 #import "AppDelegate.h"
@@ -91,7 +92,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 - (void)didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSString *notificationType = userInfo[@"type"];
-    NSString *alert = userInfo[@"aps.alert"];
+    NSString *alert = [userInfo valueForKeyPath:@"aps.alert"];
     BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
     if (transitioningToForeground) {
         [self openFromBackgroundNotificationWithType:notificationType alert:alert userInfo:userInfo];
@@ -116,7 +117,14 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 
 - (void)didReceiveInForegroundRemoteNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    NSNumber *beaconID = userInfo[@"beacon"];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert];
+    [alertView addButtonWithTitle:@"See More" handler:nil];
+    [alertView setCancelButtonWithTitle:@"See More" handler:^{
+        if (beaconID) {
+            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
+        }
+    }];
     if ([notificationType isEqualToString:kPushNotificationTypeMessage]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
         BOOL showingChat = [[AppDelegate sharedAppDelegate].centerNavigationController.selectedViewController isKindOfClass:[BeaconProfileViewController class]] || ([AppDelegate sharedAppDelegate].centerNavigationController.viewControllers.count && [[AppDelegate sharedAppDelegate].centerNavigationController.visibleViewController  isKindOfClass:[BeaconProfileViewController class]]);
