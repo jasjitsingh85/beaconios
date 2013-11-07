@@ -432,7 +432,7 @@
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [[[UIAlertView alloc] initWithTitle:@"Invited more contacts" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Fail" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Something went wrong when inviting your friends" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 

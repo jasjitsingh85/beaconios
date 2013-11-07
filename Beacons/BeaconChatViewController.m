@@ -94,7 +94,7 @@
     [[APIClient sharedClient] postMessageWithText:chatMessage.messageString forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"fail" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Failed to post message" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 

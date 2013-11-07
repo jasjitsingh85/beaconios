@@ -8,6 +8,7 @@
 
 #import "NotificationManager.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "NSError+ServerErrorMessage.h"
 #import "APIClient.h"
 #import "Beacon.h"
 #import "AppDelegate.h"
@@ -72,7 +73,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     [[APIClient sharedClient] putPath:@"user/me/" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"push fail" message:@"" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Failed to register for push notifications" message:[error serverErrorMessage] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     }];
     if (self.remoteNotificationRegistrationSuccessBlock) {
         self.remoteNotificationRegistrationSuccessBlock(devToken);
