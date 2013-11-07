@@ -12,7 +12,9 @@
 @interface BeaconProfileViewController : UIViewController
 
 @property (strong, nonatomic) Beacon *beacon;
+@property (assign, nonatomic) BOOL openToInviteView;
 
 - (void)refreshBeaconData;
+- (void)promptForCheckIn;
 
 @end

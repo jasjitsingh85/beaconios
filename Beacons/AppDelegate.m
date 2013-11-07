@@ -17,7 +17,7 @@
 #import "ContactManager.h"
 #import "AnalyticsManager.h"
 #import "LocationTracker.h"
-#import "PushNotificationManager.h"
+#import "NotificationManager.h"
 #import "CrashManager.h"
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
@@ -115,7 +115,7 @@
     }
     else {
         self.window.rootViewController = self.sideNavigationViewController;
-        [[PushNotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
+        [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
         [[ContactManager sharedManager] syncContacts];
         [CrashManager setupForUser];
     }
@@ -244,7 +244,7 @@
 }
 
 #pragma mark - Beacon Profile
-- (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID
+- (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn
 {
     Beacon *beacon = [[Beacon alloc] init];
     beacon.beaconID = beaconID;
@@ -252,6 +252,9 @@
     beaconProfileViewController.beacon = beacon;
     [beaconProfileViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+    if (promptForCheckIn) {
+        [beaconProfileViewController promptForCheckIn];
+    }
 }
 
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon
@@ -272,20 +275,25 @@
     [[BeaconManager sharedManager] receivedDidExitRegionNotification:notification];
 }
 
-#pragma mark - Push Notifications
+#pragma mark - Notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    [[PushNotificationManager sharedManager] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    [[NotificationManager sharedManager] didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
-    [[PushNotificationManager sharedManager] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+    [[NotificationManager sharedManager] didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [[PushNotificationManager sharedManager] application:application didReceiveRemoteNotification:userInfo];
+    [[NotificationManager sharedManager] didReceiveRemoteNotification:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
 }
 
 @end

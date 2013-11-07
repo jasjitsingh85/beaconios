@@ -11,7 +11,7 @@
 		1F1E780B176E91F900F0E853 /* invitedButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F1E780A176E91F800F0E853 /* invitedButton@2x.png */; };
 		1F36E85417A60F1000D12CB8 /* orangeNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */; };
 		1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F36E85517A6170F00D12CB8 /* backArrow@2x.png */; };
-		1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* PushNotificationManager.m */; };
+		1F3EF24817979FD9005240E3 /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3EF24717979FD9005240E3 /* NotificationManager.m */; };
 		1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C0817618B9200F35A8B /* SelectLocationViewController.m */; };
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
 		1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C131763BD6800F35A8B /* messageButton@2x.png */; };
@@ -193,8 +193,8 @@
 		1F1E780A176E91F800F0E853 /* invitedButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invitedButton@2x.png"; sourceTree = "<group>"; };
 		1F36E85317A60F1000D12CB8 /* orangeNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeNav@2x.png"; sourceTree = "<group>"; };
 		1F36E85517A6170F00D12CB8 /* backArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backArrow@2x.png"; sourceTree = "<group>"; };
-		1F3EF24617979FD9005240E3 /* PushNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushNotificationManager.h; sourceTree = "<group>"; };
-		1F3EF24717979FD9005240E3 /* PushNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushNotificationManager.m; sourceTree = "<group>"; };
+		1F3EF24617979FD9005240E3 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
+		1F3EF24717979FD9005240E3 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationManager.m; sourceTree = "<group>"; };
 		1F465C0717618B9200F35A8B /* SelectLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectLocationViewController.h; path = ../SelectLocationViewController.h; sourceTree = "<group>"; };
 		1F465C0817618B9200F35A8B /* SelectLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectLocationViewController.m; path = ../SelectLocationViewController.m; sourceTree = "<group>"; };
 		1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectLocationViewController.xib; path = ../SelectLocationViewController.xib; sourceTree = "<group>"; };
@@ -645,8 +645,8 @@
 				1FE443EC177ABCAE00469634 /* SettingsViewController.m */,
 				1F7E19F7177BF313005E9BA1 /* WebViewController.h */,
 				1F7E19F8177BF313005E9BA1 /* WebViewController.m */,
-				1F3EF24617979FD9005240E3 /* PushNotificationManager.h */,
-				1F3EF24717979FD9005240E3 /* PushNotificationManager.m */,
+				1F3EF24617979FD9005240E3 /* NotificationManager.h */,
+				1F3EF24717979FD9005240E3 /* NotificationManager.m */,
 				1F8E3AFB179F8849001B8BE0 /* CrashManager.h */,
 				1F8E3AFC179F8849001B8BE0 /* CrashManager.m */,
 				966AC11B17CADBFA0093BB69 /* BeaconManager.h */,
@@ -1131,7 +1131,7 @@
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,
-				1F3EF24817979FD9005240E3 /* PushNotificationManager.m in Sources */,
+				1F3EF24817979FD9005240E3 /* NotificationManager.m in Sources */,
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,

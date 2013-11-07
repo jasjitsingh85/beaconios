@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Jeff Ames. All rights reserved.
 //
 
-#import "PushNotificationManager.h"
+#import "NotificationManager.h"
 #import "APIClient.h"
 #import "Beacon.h"
 #import "AppDelegate.h"
@@ -25,24 +25,26 @@ static NSString * const kPushNotificationURLStringProduction = @"http://www.getb
 typedef void (^RemoteNotificationRegistrationSuccessBlock)(NSData *devToken);
 typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 
-@interface PushNotificationManager()
+@interface NotificationManager()
 
 @property (strong, nonatomic) RemoteNotificationRegistrationSuccessBlock remoteNotificationRegistrationSuccessBlock;
 @property (strong, nonatomic) RemoteNotificationRegistrationFailureBlock remoteNotificationRegistrationFailureBlock;
 
 @end
 
-@implementation PushNotificationManager
+@implementation NotificationManager
 
-+ (PushNotificationManager *)sharedManager
++ (NotificationManager *)sharedManager
 {
-    static PushNotificationManager *_sharedManager = nil;
+    static NotificationManager *_sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedManager = [PushNotificationManager new];
+        _sharedManager = [NotificationManager new];
     });
     return _sharedManager;
 }
+
+#pragma mark - Remote Notification Registering
 
 - (void)registerForRemoteNotificationsSuccess:(void (^)(NSData *devToken))success failure:(void (^)(NSError *error))failure
 {
@@ -58,7 +60,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 #endif
 }
 
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
+- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken
 {    
     NSString *deviceToken = [[devToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceToken = [deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -76,7 +78,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     }
 }
 
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
+- (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)err
 {
     NSLog(@"Error in registration. Error: %@", err);
     if (self.remoteNotificationRegistrationFailureBlock) {
@@ -84,7 +86,9 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     }
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+#pragma mark - Remote Notification Receiving
+
+- (void)didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     NSString *notificationType = userInfo[@"type"];
     NSString *alert = userInfo[@"aps.alert"];
@@ -104,7 +108,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     if ([notificationType isEqualToString:kPushNotificationTypeBeaconUpdate] || [notificationType isEqualToString:kPushNotificationTypeMessage]) {
         NSNumber *beaconID = userInfo[@"beacon"];
         if (beaconID) {
-            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID];
+            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
         }
     }
     [[AnalyticsManager sharedManager] foregroundFromPush];
@@ -124,5 +128,21 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
         [alertView show];
     }
 }
+
+#pragma mark - Local Notification Receiving
+
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
+    if (transitioningToForeground) {
+        NSNumber *beaconID = notification.userInfo[@"beaconID"];
+        if (beaconID) {
+            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
+        }
+    }
+    
+}
+
+
 
 @end

@@ -234,9 +234,16 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
     
-    self.chatTabButton.selected = YES;
-    self.inviteTabButton.selected = NO;
-    [self showChatAnimated:NO];
+    if (self.openToInviteView) {
+        self.chatTabButton.selected = NO;
+        self.inviteTabButton.selected = YES;
+        [self showInviteAnimated:NO];
+    }
+    else {
+        self.chatTabButton.selected = YES;
+        self.inviteTabButton.selected = NO;
+        [self showChatAnimated:NO];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -254,7 +261,7 @@
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
         self.beacon = beacon;
     } failure:nil];
-
+    [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
 }
 
 - (void)setBeacon:(Beacon *)beacon
@@ -292,6 +299,20 @@
     
     self.joinButton.hidden = beacon.userAttending;
     self.inviteButton.hidden = !beacon.userAttending;
+}
+
+- (void)promptForCheckIn
+{
+    self.openToInviteView = YES;
+    [self inviteTabTouched:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You're Here!" message:@"Want to check in?"];
+    [alertView addButtonWithTitle:@"Nah" handler:nil];
+    [alertView setCancelButtonWithTitle:@"Yes, Ma'am" handler:^{
+        [[APIClient sharedClient] checkInFriendWithID:[User loggedInUser].userID isUser:YES atbeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self refreshBeaconData];
+        } failure:nil];
+    }];
+    [alertView show];
 }
 
 - (void)getDirectionsToBeacon
@@ -400,6 +421,8 @@
 
 - (void)showInviteAnimated:(BOOL)animated
 {
+    self.inviteTabButton.selected = YES;
+    self.chatTabButton.selected = NO;
     self.inviteListViewController.view.alpha = 1;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
@@ -413,6 +436,8 @@
 
 - (void)showChatAnimated:(BOOL)animated
 {
+    self.inviteTabButton.selected = NO;
+    self.chatTabButton.selected = YES;
     self.beaconChatViewController.view.alpha = 1;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
@@ -456,10 +481,7 @@
 #pragma mark - Buttons 
 - (void)chatTabTouched:(id)sender
 {
-    BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
-    self.chatTabButton.selected = YES;
-    self.inviteTabButton.selected = NO;
-    if (self.fullDescriptionViewShown && !inviteButtonWasSelected) {
+    if (self.fullDescriptionViewShown && !self.inviteTabButton.selected) {
         [self showPartialDescriptionViewAnimated:YES];
     }
     else {
@@ -477,11 +499,7 @@
 
 - (void)inviteTabTouched:(id)sender
 {
-    BOOL inviteButtonWasSelected = self.inviteTabButton.selected;
-    self.chatTabButton.selected = NO;
-    self.inviteTabButton.selected = YES;
-    self.inviteListViewController.view.alpha = 1.0;
-    if (self.fullDescriptionViewShown && inviteButtonWasSelected) {
+    if (self.fullDescriptionViewShown && self.inviteTabButton.selected) {
         [self showPartialDescriptionViewAnimated:YES];
     }
     else {

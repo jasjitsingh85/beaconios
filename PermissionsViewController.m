@@ -9,7 +9,7 @@
 #import "PermissionsViewController.h"
 #import "Theme.h"
 #import "ContactManager.h"
-#import "PushNotificationManager.h"
+#import "NotificationManager.h"
 #import "AppDelegate.h"
 
 typedef enum {
@@ -175,7 +175,7 @@ typedef enum {
         }];
     }
     else if (self.viewMode == ViewModePush) {
-        [[PushNotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
+        [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
             [self finishPermissions];
         } failure:^(NSError *error) {
             [self finishPermissions];
