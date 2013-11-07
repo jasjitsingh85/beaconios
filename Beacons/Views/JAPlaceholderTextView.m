@@ -108,6 +108,10 @@
 
 - (void)textChanged:(NSNotification *)notification
 {
+    UITextView *textView = notification.object;
+    if (textView != self) {
+        return;
+    }
     
     if([[self placeholder] length] == 0)
     {

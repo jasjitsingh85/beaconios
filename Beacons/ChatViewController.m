@@ -81,12 +81,22 @@
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     self.desiredEdgeInsets = UIEdgeInsetsZero;
-    
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+                                             selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
+                                             selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.textView resignFirstResponder];
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+    [self.textView resignFirstResponder];
 }
 
 
