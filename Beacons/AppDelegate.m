@@ -264,6 +264,7 @@
 {
     BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
     beaconProfileViewController.beacon = beacon;
+    [beaconProfileViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
 }
 
