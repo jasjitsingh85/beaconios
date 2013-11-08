@@ -129,6 +129,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
     
+    //initialize location tracker
+    [LocationTracker sharedTracker];
+    
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -137,8 +140,6 @@
 {
     [[AnalyticsManager sharedManager] appForeground];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    [[LocationTracker sharedTracker] startTrackingIfAuthorized];
     
     BOOL hasActivated = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyAccountActivated];
     BOOL hasFinishedPermissions = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasFinishedPermissions];
@@ -161,11 +162,6 @@
 - (void)contactAuthorizationStatusDenied
 {
     self.window.rootViewController = [[LockedViewController alloc] init];
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    [[LocationTracker sharedTracker] stopTracking];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

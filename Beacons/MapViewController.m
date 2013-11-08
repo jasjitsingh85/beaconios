@@ -75,9 +75,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
-    [[NSNotificationCenter defaultCenter] addObserverForName:kDidUpdateLocationNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-//        self.mapView.showsUserLocation = YES;
-    }];
     
     self.createBeaconButton.titleLabel.font = [ThemeManager regularFontOfSize:20];
     self.createBeaconButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];

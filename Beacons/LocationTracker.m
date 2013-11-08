@@ -108,6 +108,9 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
 {
     CLLocation *location = [locations lastObject];
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidUpdateLocationNotification object:nil userInfo:@{@"location" : location}];
+    if ([[NSDate date] timeIntervalSinceDate:location.timestamp] < 60) {
+        [self stopTracking];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -119,7 +122,7 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
      
     }
     else if (status == kCLAuthorizationStatusAuthorized) {
-        [self.locationManager startUpdatingLocation];
+        [self startTrackingIfAuthorized];
     }
 }
 
@@ -133,15 +136,15 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
 #pragma mark - UIApplication Notifications
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        [self.locationManager startUpdatingLocation];
-        [self performSelector:@selector(sendLocationToServer) withObject:self afterDelay:10];
+    CLLocation *currentLocation = [self currentLocation];
+    if (!currentLocation || (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] > 60*10)) {
+        [self startTrackingIfAuthorized];
     }
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
-    [self.locationManager stopUpdatingLocation];
+    [self stopTracking];
 }
 
 #pragma mark - other
