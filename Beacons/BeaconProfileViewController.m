@@ -637,7 +637,6 @@
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self refreshBeaconData];
-        [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
