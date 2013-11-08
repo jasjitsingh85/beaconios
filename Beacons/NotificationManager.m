@@ -120,7 +120,7 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 {
     NSNumber *beaconID = userInfo[@"beacon"];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert];
-    [alertView addButtonWithTitle:@"See More" handler:nil];
+    [alertView addButtonWithTitle:@"Cancel" handler:nil];
     [alertView setCancelButtonWithTitle:@"See More" handler:^{
         if (beaconID) {
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
