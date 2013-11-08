@@ -143,7 +143,8 @@
 
 - (void)setText:(NSString *)text {
     [super setText:text];
-    [self textChanged:nil];
+    NSNotification *notification = [[NSNotification alloc] initWithName:UITextViewTextDidChangeNotification object:self userInfo:nil];
+    [self textChanged:notification];
 }
 
 - (void)updateInsets
