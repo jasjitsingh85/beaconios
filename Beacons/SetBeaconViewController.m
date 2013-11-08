@@ -156,6 +156,7 @@
     //by default set selected location as current location
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
+    [self updateCurrentLocationAddressFromLocation];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 }
 
@@ -197,14 +198,20 @@
     findFriendsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectCurrentLocation)];
 }
 
+- (void)updateCurrentLocationAddressFromLocation
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:self.beaconCoordinate.latitude longitude:self.beaconCoordinate.longitude];
+    [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
+        self.currentLocationAddress = addressString;
+    }];
+}
+
 - (void)didUpdateLocation:(NSNotification *)notification
 {
     CLLocation *location = notification.userInfo[@"location"];
     if (self.useCurrentLocation) {
         self.beaconCoordinate = location.coordinate;
-        [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
-            self.currentLocationAddress = addressString;
-        }];
+        [self updateCurrentLocationAddressFromLocation];
     }
 }
 
