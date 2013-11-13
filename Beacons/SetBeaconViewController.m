@@ -26,6 +26,8 @@
 #import "Utilities.h"
 #import "RandomObjectManager.h"
 #import "AnalyticsManager.h"
+#import "ContactManager.h"
+#import "LockedViewController.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -189,6 +191,13 @@
 {
     if (!self.descriptionTextView.text || !self.descriptionTextView.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Baby, you're going too fast!" message:@"Don't forget to set a Hotspot description" delegate:nil cancelButtonTitle:@"I'll slow down" otherButtonTitles:nil] show];
+        return;
+    }
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        LockedViewController *lockedViewController = [[LockedViewController alloc] init];
+        [self.navigationController presentViewController:lockedViewController animated:YES completion:nil];
         return;
     }
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];

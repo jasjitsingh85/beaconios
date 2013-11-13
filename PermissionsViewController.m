@@ -169,7 +169,7 @@ typedef enum {
             });
         } failure:^(NSError *error) {
             jadispatch_main_qeue(^{
-                [[AppDelegate sharedAppDelegate] contactAuthorizationStatusDenied];
+                [self enterPushNotificationMode];
             });
         }];
     }

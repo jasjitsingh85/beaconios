@@ -161,7 +161,7 @@
 
 - (void)contactAuthorizationStatusDenied
 {
-    self.window.rootViewController = [[LockedViewController alloc] init];
+//    self.window.rootViewController = [[LockedViewController alloc] init];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
