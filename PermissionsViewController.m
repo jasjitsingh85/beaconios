@@ -100,8 +100,7 @@ typedef enum {
     self.viewMode = ViewModeContact;
     self.titleLabel.text = @"Sync Contacts";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can invite friends to events",
-                                                      @"(Required to use the app)"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can invite friends to events"]];
     [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
