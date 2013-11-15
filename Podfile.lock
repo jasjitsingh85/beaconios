@@ -9,14 +9,14 @@ PODS:
   - Facebook-iOS-SDK (3.5.1)
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
-  - JSONKit (1.5pre)
+  - JSONKit (1.6)
   - libffi (3.0.13)
   - MBProgressHUD (0.6)
   - Mixpanel (2.0.0)
+  - MSDynamicsDrawerViewController (1.0.0)
   - SDWebImage (3.4):
     - SDWebImage/Core
   - SDWebImage/Core (3.4)
-  - ViewDeck (2.2.11)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.2)
@@ -27,16 +27,15 @@ DEPENDENCIES:
   - CrittercismSDK
   - Facebook-iOS-SDK (~> 3.5.0)
   - Foursquare-iOS-API (~> 1.1.0)
+  - JSONKit (from `https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec`)
   - MBProgressHUD (~> 0.6)
   - Mixpanel (~> 2.0.0)
+  - MSDynamicsDrawerViewController
   - SDWebImage (~> 3.4)
-  - ViewDeck (from `https://github.com/a2/ViewDeck.git`, commit `9893fdbe8a2732748680c55551c35486cb1fdf02`)
-  - ViewDeck (~> 2.2.9)
 
 EXTERNAL SOURCES:
-  ViewDeck:
-    :commit: 9893fdbe8a2732748680c55551c35486cb1fdf02
-    :git: https://github.com/a2/ViewDeck.git
+  JSONKit:
+    :podspec: https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
@@ -47,11 +46,11 @@ SPEC CHECKSUMS:
   CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
   Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
-  JSONKit: 409734ab3407fce90ef7eaa95d7168f38d9a6601
+  JSONKit: 98c50800be324836e4443f6d22ff1324caffa608
   libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
   MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
   Mixpanel: e4af97adb60a10541b7869929a83d734025058a6
+  MSDynamicsDrawerViewController: ae0dec8b54cf08efdfb3c6e8dfa95fb223218223
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
-  ViewDeck: b5eddc8559b0e47259ab7addbf2de6768061f139
 
 COCOAPODS: 0.27.1

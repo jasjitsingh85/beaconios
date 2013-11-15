@@ -46,9 +46,7 @@ typedef enum {
 
 - (CGFloat)visibleTableViewWidth
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    CGFloat visibleWidth = self.view.frame.size.width - appDelegate.sideNavigationViewController.leftSize;
-    return visibleWidth;
+    return [[AppDelegate sharedAppDelegate].sideNavigationViewController revealWidthForDirection:MSDynamicsDrawerDirectionLeft];
 }
 
 #pragma mark - Table view data source

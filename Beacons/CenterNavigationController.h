@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <IIViewDeckController.h>
-
+#import <MSDynamicsDrawerViewController.h>
 @interface CenterNavigationController : UINavigationController <UINavigationControllerDelegate>
 
-@property (weak, nonatomic) IIViewDeckController *sideNavigationViewController;
+@property (weak, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
 @property (strong, nonatomic) UIViewController *selectedViewController;
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController animated:(BOOL)animated;

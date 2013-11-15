@@ -50,15 +50,14 @@
     return _centerNavigationController;
 }
 
-- (IIViewDeckController *)sideNavigationViewController
+- (MSDynamicsDrawerViewController *)sideNavigationViewController
 {
     if (!_sideNavigationViewController) {
-        _sideNavigationViewController = [[IIViewDeckController alloc] init];
-        _sideNavigationViewController.openSlideAnimationDuration = 0.2;
-        _sideNavigationViewController.closeSlideAnimationDuration = 0.2;
-        _sideNavigationViewController.panningMode = IIViewDeckNavigationBarPanning;
-        _sideNavigationViewController.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose;
-        _sideNavigationViewController.leftSize = 235;
+        _sideNavigationViewController = [[MSDynamicsDrawerViewController alloc] init];
+        [_sideNavigationViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
+        [_sideNavigationViewController setDrawerViewController:self.menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
+        [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
+        [_sideNavigationViewController setRevealWidth:85 forDirection:MSDynamicsDrawerDirectionLeft];
     }
     return _sideNavigationViewController;
 }
@@ -105,8 +104,6 @@
     
     [ThemeManager customizeAppAppearance];
     self.centerNavigationController.selectedViewController = self.mapViewController;
-    self.sideNavigationViewController.centerController = self.centerNavigationController;
-    self.sideNavigationViewController.leftController = self.menuViewController;
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
@@ -133,6 +130,10 @@
     [LocationTracker sharedTracker];
     
     [self.window makeKeyAndVisible];
+    UIView *backgroundWindowView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    backgroundWindowView.backgroundColor = [UIColor colorWithRed:90/255.0 green:84/255.0 blue:85/255.0 alpha:1.0];
+    [self.window addSubview:backgroundWindowView];
+    [self.window sendSubviewToBack:backgroundWindowView];
     return YES;
 }
 

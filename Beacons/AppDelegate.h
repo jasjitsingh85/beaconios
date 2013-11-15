@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <ViewDeck/IIViewDeckController.h>
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 
 @class CenterNavigationController,
 LoginViewController,
@@ -22,7 +22,7 @@ Beacon;
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CenterNavigationController *centerNavigationController;
-@property (strong, nonatomic) IIViewDeckController *sideNavigationViewController;
+@property (strong, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;

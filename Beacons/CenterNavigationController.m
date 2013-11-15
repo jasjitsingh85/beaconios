@@ -30,12 +30,18 @@
     frame.size = menuButtonImage.size;
     self.menuButton.frame = frame;
     [self.menuButton setBackgroundImage:menuButtonImage forState:UIControlStateNormal];
-    [self.menuButton addTarget:self.sideNavigationViewController action:@selector(toggleLeftView) forControlEvents:UIControlEventTouchDown];
+    [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)toggleSideNav
+{
+    MSDynamicsDrawerPaneState paneState = [AppDelegate sharedAppDelegate].sideNavigationViewController.paneState == MSDynamicsDrawerPaneStateClosed ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed;
+    [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:paneState inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:YES completion:nil];
 }
 
 #pragma mark - setters
@@ -58,8 +64,7 @@
     } completion:^(BOOL finished) {
         [imageView removeFromSuperview];
     }];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate.sideNavigationViewController closeLeftViewAnimated:YES];
+    [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:NO completion:nil];
 
 }
 
