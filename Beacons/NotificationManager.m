@@ -16,14 +16,6 @@
 #import "BeaconProfileViewController.h"
 #import "AnalyticsManager.h"
 
-static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
-static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
-static NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/api/";
-static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokuapp.com/api/";
-
-static NSString * const kPushNotificationURLStringStaging = @"http://beaconspushtest.herokuapp.com/ios-notifications/";
-static NSString * const kPushNotificationURLStringProduction = @"http://www.getbeacons.com/ios-notifications/";
-
 typedef void (^RemoteNotificationRegistrationSuccessBlock)(NSData *devToken);
 typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 

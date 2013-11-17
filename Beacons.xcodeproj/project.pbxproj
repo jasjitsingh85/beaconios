@@ -161,6 +161,8 @@
 		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
+		96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D52D231838415300496923 /* SecretSettingsViewController.m */; };
+		96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D52D241838415300496923 /* SecretSettingsViewController.xib */; };
 		96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA504181A2D71001E5812 /* RandomObjectPicker.m */; };
 		96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA50A181A2E93001E5812 /* RandomObjectManager.m */; };
 		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
@@ -406,6 +408,9 @@
 		96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyBeaconViewController.m; sourceTree = "<group>"; };
 		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
+		96D52D221838415300496923 /* SecretSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecretSettingsViewController.h; sourceTree = "<group>"; };
+		96D52D231838415300496923 /* SecretSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecretSettingsViewController.m; sourceTree = "<group>"; };
+		96D52D241838415300496923 /* SecretSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecretSettingsViewController.xib; sourceTree = "<group>"; };
 		96DEA503181A2D71001E5812 /* RandomObjectPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjectPicker.h; sourceTree = "<group>"; };
 		96DEA504181A2D71001E5812 /* RandomObjectPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjectPicker.m; sourceTree = "<group>"; };
 		96DEA509181A2E93001E5812 /* RandomObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjectManager.h; sourceTree = "<group>"; };
@@ -677,6 +682,9 @@
 				9671D02E18273BE700D03D66 /* LockedViewController.h */,
 				9671D02F18273BE700D03D66 /* LockedViewController.m */,
 				9671D03018273BE700D03D66 /* LockedViewController.xib */,
+				96D52D221838415300496923 /* SecretSettingsViewController.h */,
+				96D52D231838415300496923 /* SecretSettingsViewController.m */,
+				96D52D241838415300496923 /* SecretSettingsViewController.xib */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -960,6 +968,7 @@
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				969D649117E96A3600F5AB36 /* beaconCellBackgroundBlue@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
+				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				1F465C161763BD6900F35A8B /* messageButton@2x.png in Resources */,
 				969D649317E96ABE00F5AB36 /* beaconCellImageMask@2x.png in Resources */,
@@ -1118,6 +1127,7 @@
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
+				96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */,
 				96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */,
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,

@@ -17,6 +17,8 @@
 
 + (APIClient *)sharedClient;
 
++ (void)changeServerPath:(NSString *)serverPath;
+
 - (void)setAuthorizationHeaderWithToken:(NSString *)token;
 - (void)postBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;

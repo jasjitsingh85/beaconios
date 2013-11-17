@@ -13,27 +13,27 @@
 
 @implementation APIClient
 
-static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
-static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
-#ifdef DEBUG
-static NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/api/";
-#else
-static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
-#endif
-static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokuapp.com/api/";
 
+static NSString *_serverPath = nil;
+static APIClient *_sharedClient = nil;
+static dispatch_once_t onceToken;
 
 + (APIClient *)sharedClient
 {
-    static APIClient *_sharedClient = nil;
-    static dispatch_once_t onceToken;
+    if (!_serverPath) {
+        _serverPath = kBaseURLStringProduction;
+    }
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:kBaseURLStringProduction]];
-        [_sharedClient setupAuthorization];
-        [[NSNotificationCenter defaultCenter] addObserver:_sharedClient selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
-        
+        _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
     });
     return _sharedClient;
+}
+
++ (void)changeServerPath:(NSString *)serverPath
+{
+    _serverPath = serverPath;
+    _sharedClient = nil;
+    onceToken = 0;
 }
 
 - (id)initWithBaseURL:(NSURL *)url {
@@ -46,6 +46,9 @@ static NSString * const kBaseURLStringStaging = @"http://beaconspushtest.herokua
     
     [self setDefaultHeader:@"Accept" value:@"application/json"];
     [self setDefaultHeader:@"Accept-Charset" value:@"utf-8"];
+    
+    [self setupAuthorization];
+    [[NSNotificationCenter defaultCenter] addObserver:_sharedClient selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
     
     return self;
 }

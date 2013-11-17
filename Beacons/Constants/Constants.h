@@ -38,3 +38,13 @@
 //urls
 #define kTermsURL @"http://www.getbeacons.com/terms"
 #define kPrivacyURL @"http://www.getbeacons.com/privacy"
+
+//server paths
+static NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
+static NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
+#ifdef DEBUG
+static NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/api/";
+#else
+static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
+#endif
+static NSString * const kBaseURLStringStaging = @"http://hotspotapp-staging.herokuapp.com/";

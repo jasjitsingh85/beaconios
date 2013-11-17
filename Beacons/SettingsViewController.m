@@ -12,6 +12,8 @@
 #import "Theme.h"
 #import "WebViewController.h"
 #import "NavigationBarTitleLabel.h"
+#import "SecretSettingsViewController.h"
+#import "User.h"
 
 @interface SettingsViewController ()
 
@@ -35,6 +37,18 @@
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Settings"];
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
+    
+    UIButton *secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect buttonFrame;
+    buttonFrame.size = CGSizeMake(self.view.frame.size.width, 50);
+    buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height);
+    secretButton.frame = buttonFrame;
+    secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [secretButton setTitle:@"Made with \U0000E022 by Indians" forState:UIControlStateNormal];
+    secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
+    [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
+    [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [self.view addSubview:secretButton];
 }
 
 #pragma mark - Table view data source
@@ -131,6 +145,14 @@
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate logoutOfServer];
+}
+
+- (void)secretButtonTouched:(id)sender
+{
+    NSArray *permissions = @[@"6176337532", @"5413359388"];
+    if ([permissions containsObject:[User loggedInUser].normalizedPhoneNumber]) {
+        [self.navigationController pushViewController:[[SecretSettingsViewController alloc] init] animated:YES];
+    }
 }
 
 @end
