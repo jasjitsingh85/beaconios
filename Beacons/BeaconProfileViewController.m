@@ -35,7 +35,7 @@
 #import "NavigationBarTitleLabel.h"
 #import "AnalyticsManager.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -222,10 +222,12 @@
     swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
     swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
     [self.descriptionView addGestureRecognizer:swipeDownGestureRecognizer];
+    swipeDownGestureRecognizer.delegate = self;
     
     UISwipeGestureRecognizer *swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedUp:)];
     swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.descriptionView addGestureRecognizer:swipeUpGestureRecognizer];
+    swipeUpGestureRecognizer.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -464,6 +466,12 @@
     }
     findFriendsViewController.inactiveContacts = inactives;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
+}
+
+#pragma mark - UIGestureRecognzierDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 #pragma mark - Keyboard
