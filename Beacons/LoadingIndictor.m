@@ -7,20 +7,22 @@
 //
 
 #import "LoadingIndictor.h"
+#import "Theme.h"
 
 @implementation LoadingIndictor
 
-+ (MBProgressHUD *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
++ (MRProgressOverlayView *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
 {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:animated];
-    hud.labelText = @"Loading...";
-    return hud;
+    MRProgressOverlayView *progressOverlay = [MRProgressOverlayView showOverlayAddedTo:view animated:animated];
+    progressOverlay.tintColor = [[ThemeManager sharedTheme] darkBlueColor];
+    progressOverlay.titleLabelText = @"Loading...";
+    return progressOverlay;
 }
 
 + (void)hideLoadingIndicatorForView:(UIView *)view animated:(BOOL)animated
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [MBProgressHUD hideHUDForView:view animated:animated];
+        [MRProgressOverlayView dismissOverlayForView:view animated:animated];
     });
 }
 

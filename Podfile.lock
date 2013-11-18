@@ -6,13 +6,12 @@ PODS:
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
   - CrittercismSDK (4.0.2)
-  - Facebook-iOS-SDK (3.5.1)
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
   - JSONKit (1.6)
   - libffi (3.0.13)
-  - MBProgressHUD (0.6)
   - Mixpanel (2.0.0)
+  - MRProgress (0.2.2)
   - MSDynamicsDrawerViewController (1.0.0)
   - SDWebImage (3.4):
     - SDWebImage/Core
@@ -25,11 +24,10 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
-  - Facebook-iOS-SDK (~> 3.5.0)
   - Foursquare-iOS-API (~> 1.1.0)
   - JSONKit (from `https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec`)
-  - MBProgressHUD (~> 0.6)
   - Mixpanel (~> 2.0.0)
+  - MRProgress
   - MSDynamicsDrawerViewController
   - SDWebImage (~> 3.4)
 
@@ -44,12 +42,11 @@ SPEC CHECKSUMS:
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: 2619775f386bbec1e870eddb5040f870c68726b1
   CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
-  Facebook-iOS-SDK: 0dbd897e842cefeb012ec2eb8eba659ba6b96b12
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
   JSONKit: 98c50800be324836e4443f6d22ff1324caffa608
   libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
-  MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
   Mixpanel: e4af97adb60a10541b7869929a83d734025058a6
+  MRProgress: 51af562344c3fe38ce3c0617fd064f6f1ce55cd5
   MSDynamicsDrawerViewController: ae0dec8b54cf08efdfb3c6e8dfa95fb223218223
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
 

@@ -321,10 +321,10 @@
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
     UIView *view = appDelegate.window.rootViewController.view;
-    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+    MRProgressOverlayView *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     __weak typeof(self) weakSelf = self;
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
-        [loadingIndicator hide:YES];
+        [loadingIndicator dismiss:YES];
         
         //add user as going. this isn't done earlier to avoid inviting user to own beacon
         BeaconStatus *status = [[BeaconStatus alloc] init];
@@ -337,7 +337,7 @@
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
         [[AnalyticsManager sharedManager] createBeaconWithDescription:beacon.beaconDescription location:weakSelf.locationLabel.text date:beacon.time numInvites:beacon.guestStatuses.count];
     } failure:^(NSError *error) {
-        [loadingIndicator hide:YES];
+        [loadingIndicator dismiss:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
