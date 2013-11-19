@@ -47,4 +47,4 @@ static NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/a
 #else
 static NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
 #endif
-static NSString * const kBaseURLStringStaging = @"http://hotspotapp-staging.herokuapp.com/";
+static NSString * const kBaseURLStringStaging = @"http://hotspotapp-staging.herokuapp.com/api/";
