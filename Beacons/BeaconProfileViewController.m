@@ -301,6 +301,9 @@
     
     self.joinButton.hidden = beacon.userAttending;
     self.inviteButton.hidden = !beacon.userAttending;
+    
+    //let server know that user has seen this hotspot
+    [[APIClient sharedClient] markBeaconAsSeen:beacon success:nil failure:nil];
 }
 
 - (void)promptForCheckIn

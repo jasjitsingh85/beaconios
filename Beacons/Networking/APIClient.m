@@ -109,6 +109,13 @@ static dispatch_once_t onceToken;
     [[APIClient sharedClient] postPath:@"beacon/" parameters:parameters success:success failure:failure];
 }
 
+- (void)markBeaconAsSeen:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"beacon_id" : beacon.beaconID};
+    [[APIClient sharedClient] postPath:@"saw_invite/" parameters:parameters success:success failure:failure];
+}
+
 - (void)deleteBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
