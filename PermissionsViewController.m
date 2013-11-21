@@ -7,6 +7,7 @@
 //
 
 #import "PermissionsViewController.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "Theme.h"
 #import "ContactManager.h"
 #import "NotificationManager.h"
@@ -22,6 +23,7 @@ typedef enum {
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) NSArray *subtitles;
 @property (strong, nonatomic) UIButton *confirmButton;
+@property (strong, nonatomic) UIButton *skipButton;
 @property (assign, nonatomic) ViewMode viewMode;
 
 @end
@@ -63,10 +65,22 @@ typedef enum {
     CGRect confirmButtonFrame;
     confirmButtonFrame.size  = CGSizeMake(200, 35);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 400;
+    confirmButtonFrame.origin.y = 360;
     self.confirmButton.frame = confirmButtonFrame;
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.confirmButton];
+    
+    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.skipButton.backgroundColor = [UIColor colorWithRed:126/255.0 green:126/255.0 blue:126/255.0 alpha:1];
+    self.skipButton.layer.cornerRadius = 4;
+    CGRect skipButtonFrame = self.confirmButton.frame;
+    skipButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame) + 30;
+    self.skipButton.frame = skipButtonFrame;
+    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.skipButton];
+    
     [self enterContactsMode];
 }
 
@@ -179,6 +193,42 @@ typedef enum {
         } failure:^(NSError *error) {
             [self finishPermissions];
         }];
+    }
+}
+
+- (void)skipButtonTouched:(id)sender
+{
+    if (self.viewMode == ViewModeContact) {
+        UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
+        [alertView addButtonWithTitle:@"Sync Sontacts" handler:^{
+            [[ContactManager sharedManager] requestContactPermissions:^{
+                jadispatch_main_qeue(^{
+                    [self enterPushNotificationMode];
+                });
+            } failure:^(NSError *error) {
+                jadispatch_main_qeue(^{
+                    [self enterPushNotificationMode];
+                });
+            }];
+        }];
+        [alertView setCancelButtonWithTitle:@"Skip" handler:^{
+            [self enterPushNotificationMode];
+        }];
+        [alertView show];
+    }
+    else if (self.viewMode == ViewModePush) {
+        UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
+        [alertView addButtonWithTitle:@"Enable Push" handler:^{
+            [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
+                [self finishPermissions];
+            } failure:^(NSError *error) {
+                [self finishPermissions];
+            }];
+        }];
+        [alertView setCancelButtonWithTitle:@"Skip" handler:^{
+            [self finishPermissions];
+        }];
+        [alertView show];
     }
 }
 
