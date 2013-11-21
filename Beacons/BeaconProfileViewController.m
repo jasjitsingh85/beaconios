@@ -693,7 +693,7 @@
             }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 beaconStatus.beaconStatusOption = oldStatus;
                 [inviteListViewController.tableView reloadData];
-                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't Check In Your Friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't check in your friend" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }];
         }];
     }

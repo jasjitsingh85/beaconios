@@ -297,7 +297,7 @@ typedef enum {
     NSString *nameText = [self.registerFormView textFieldAtIndex:0].text;
     BOOL nameIsValid = nameText.length;
     if (!nameIsValid) {
-        alertMessage = @"please enter a valid name";
+        alertMessage = @"Please enter a valid name";
     }
     
     
@@ -306,12 +306,12 @@ typedef enum {
     NSLog(@"phone %@", phoneText);
     BOOL phoneValid = [Utilities americanPhoneNumberIsValid:phoneText];
     if (!phoneValid) {
-        alertMessage = @"please enter a valid phone number";
+        alertMessage = @"Please enter a valid phone number";
     }
     
     inputsAreValid = phoneValid && nameIsValid; //&& others valid
     if (!inputsAreValid) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Oopsy" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Couldn't Register Account" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
     }
     return inputsAreValid;
@@ -342,7 +342,7 @@ typedef enum {
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                    self.makingNetworkRequest = NO;
                                    [[AppDelegate sharedAppDelegate] registeredWithResponse:responseObject];
-                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"an activation code is being sent to you via text" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"Activation code sent via SMS" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -376,7 +376,7 @@ typedef enum {
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    self.makingNetworkRequest = NO;
-                                   NSString *message = @"We Couldn't Find A User With This Number";
+                                   NSString *message = @"We couldn't find a user with this number";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
                                        message = [error serverErrorMessage];
                                    }
@@ -405,7 +405,7 @@ typedef enum {
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.makingNetworkRequest = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"there was a problem with your activation code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"There was a problem with your activation code" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
 }
 

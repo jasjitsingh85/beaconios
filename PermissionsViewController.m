@@ -200,7 +200,7 @@ typedef enum {
 {
     if (self.viewMode == ViewModeContact) {
         UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
-        [alertView addButtonWithTitle:@"Sync Sontacts" handler:^{
+        [alertView addButtonWithTitle:@"Sync Contacts" handler:^{
             [[ContactManager sharedManager] requestContactPermissions:^{
                 jadispatch_main_qeue(^{
                     [self enterPushNotificationMode];
