@@ -10,7 +10,7 @@
 
 @class JAPlaceholderTextView;
 @protocol JAPlaceholderTextViewDelegate<NSObject, UITextViewDelegate>
-
+@optional
 - (void)placeholderTextView:(JAPlaceholderTextView *)placeholderTextView desiresHeightChange:(CGFloat)desiredHeight;
 
 @end

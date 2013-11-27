@@ -80,7 +80,7 @@
     self.createBeaconButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];
     UIImage *createBeaconImage = [UIImage imageNamed:@"plus"];
     [self.createBeaconButton setImage:createBeaconImage forState:UIControlStateNormal];
-    CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithFont:self.createBeaconButton.titleLabel.font].width;
+    CGFloat widthOfTitleAndImage = createBeaconImage.size.width + [self.createBeaconButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName : self.createBeaconButton.titleLabel.font}].width;
     self.createBeaconButton.imageEdgeInsets = UIEdgeInsetsMake(0, -widthOfTitleAndImage/4.0, 0, 0);
     [self.createBeaconButton addTarget:self action:@selector(createBeaconTouched:) forControlEvents:UIControlEventTouchUpInside];
     

@@ -11,7 +11,7 @@
 @class Beacon, BeaconCell;
 
 @protocol BeaconCellDelegate <NSObject>
-
+@optional
 - (void)beaconCellTextButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellDirectionsButtonTouched:(BeaconCell *)beaconCell;
 - (void)beaconCellInfoButtonTouched:(BeaconCell *)beaconCell;

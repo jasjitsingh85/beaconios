@@ -154,9 +154,9 @@
 - (NSDictionary *)navigationBarTitleAndTextAttributes
 {
     return @{
-             UITextAttributeTextColor: [UIColor whiteColor],
-             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 0.0f)],
-             UITextAttributeFont: [UIFont fontWithName:[self boldFontName] size:18.0f]
+             NSForegroundColorAttributeName: [UIColor whiteColor],
+             NSShadowAttributeName:[[NSShadow alloc] init],
+             NSFontAttributeName: [UIFont fontWithName:[self boldFontName] size:18.0f]
              };
 }
 

@@ -101,9 +101,6 @@ enum JBSourceMode {
     
     UIImageView *imageView = nil;
     
-    float resizeRatio   = -1;
-    float widthDiff     = -1;
-    float heightDiff    = -1;
     float originX       = -1;
     float originY       = -1;
     float zoomInX       = -1;

@@ -11,7 +11,7 @@
 
 @class ChatViewController, ChatMessage, JAPlaceholderTextView;
 @protocol ChatViewControllerDelegate <NSObject>
-
+@optional
 - (void)chatViewController:(ChatViewController *)chatViewController didScrollScrollView:(UIScrollView *)scrollView;
 - (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity;
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage;

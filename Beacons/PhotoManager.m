@@ -43,7 +43,6 @@ typedef void (^PhotoPickerCompletionBlock)(UIImage *image, BOOL cancelled);
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     UIImage *scaledImage;
-    CGFloat maxDimension = 720;
     if (image.size.width >= image.size.height) {
         scaledImage = [image scaledToSize:CGSizeMake(720.0, 720.0*image.size.height/image.size.width)];
     }
