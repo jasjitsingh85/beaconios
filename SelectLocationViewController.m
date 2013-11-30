@@ -103,7 +103,7 @@
 - (void)customLocationSelected
 {
     if ([self.delegate respondsToSelector:@selector(didSelectCustomLocation:withName:)]) {
-        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:[LocationTracker sharedTracker].currentLocation.coordinate radius:100 identifier:@"Region"];
+        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:[LocationTracker sharedTracker].currentLocation.coordinate radius:50000 identifier:@"Region"];
         CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
         [geoCoder geocodeAddressString:self.customLocation inRegion:region completionHandler:^(NSArray *placemarks, NSError *error) {
             if (error || !placemarks.count) {
