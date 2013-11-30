@@ -282,7 +282,8 @@
     
     self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     self.descriptionLabel.text = beacon.beaconDescription;
-    self.locationLabel.text = beacon.address;
+    self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:beacon.address
+                                                             attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
     if (self.locationLabel.text) {
         self.directionsButton.hidden = NO;
         CGRect directionsButtonFrame = self.directionsButton.frame;
