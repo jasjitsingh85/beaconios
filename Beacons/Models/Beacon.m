@@ -20,45 +20,49 @@
 {
     self = [super init];
     if (self) {
-        self.beaconID = data[@"id"];
-        self.creator = [[User alloc] initWithData:data[@"profile"]];
-        self.beaconDescription = data[@"description"];
-        NSNumber *latitude = data[@"latitude"];
-        NSNumber *longitude = data[@"longitude"];
-        self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
-        
-        NSMutableDictionary *guestStatuses = [[NSMutableDictionary alloc] init];
-        for (NSDictionary *guestData in data[@"guests"]) {
-            BeaconStatus *status = [[BeaconStatus alloc] initWithData:guestData];
-            NSString *key;
-            if (status.contact) {
-                key = status.contact.normalizedPhoneNumber;
-            }
-            else if (status.user) {
-                key = status.user.normalizedPhoneNumber;
-            }
-            [guestStatuses setObject:status forKey:key];
-        }
-        self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
-        
-        self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
-        self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:[data[@"expiration"] doubleValue]];
-        self.address = data[@"address"];
-        if (!self.address || [self.address isEqualToString:@""]) {
-            [self geoCodeAddress];
-        }
-        
-        NSMutableArray *images = [[NSMutableArray alloc] init];
-        for (NSDictionary *imageData in data[@"images"]) {
-            BeaconImage *beaconImage = [[BeaconImage alloc] init];
-            beaconImage.uploader = [[User alloc] initWithData:imageData[@"user"]];
-            beaconImage.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
-            [images addObject:beaconImage];
-        }
-        self.images = [NSArray arrayWithArray:images];
-        
+        [self updateWithData:data];
     }
     return self;
+}
+
+- (void)updateWithData:(NSDictionary *)data
+{
+    self.beaconID = data[@"id"];
+    self.creator = [[User alloc] initWithData:data[@"profile"]];
+    self.beaconDescription = data[@"description"];
+    NSNumber *latitude = data[@"latitude"];
+    NSNumber *longitude = data[@"longitude"];
+    self.coordinate = CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue);
+    
+    NSMutableDictionary *guestStatuses = [[NSMutableDictionary alloc] init];
+    for (NSDictionary *guestData in data[@"guests"]) {
+        BeaconStatus *status = [[BeaconStatus alloc] initWithData:guestData];
+        NSString *key;
+        if (status.contact) {
+            key = status.contact.normalizedPhoneNumber;
+        }
+        else if (status.user) {
+            key = status.user.normalizedPhoneNumber;
+        }
+        [guestStatuses setObject:status forKey:key];
+    }
+    self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
+    
+    self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
+    self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:[data[@"expiration"] doubleValue]];
+    self.address = data[@"address"];
+    if (!self.address || [self.address isEqualToString:@""]) {
+        [self geoCodeAddress];
+    }
+    
+    NSMutableArray *images = [[NSMutableArray alloc] init];
+    for (NSDictionary *imageData in data[@"images"]) {
+        BeaconImage *beaconImage = [[BeaconImage alloc] init];
+        beaconImage.uploader = [[User alloc] initWithData:imageData[@"user"]];
+        beaconImage.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
+        [images addObject:beaconImage];
+    }
+    self.images = [NSArray arrayWithArray:images];
 }
 
 #pragma mark - NSCoding

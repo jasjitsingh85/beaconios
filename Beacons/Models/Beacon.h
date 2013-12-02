@@ -26,5 +26,6 @@
 @property (readonly) BOOL userAttending;
 
 - (id)initWithData:(NSDictionary *)data;
+- (void)updateWithData:(NSDictionary *)data;
 
 @end

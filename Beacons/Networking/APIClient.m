@@ -106,7 +106,7 @@ static dispatch_once_t onceToken;
     else {
         [parameters setValue:@"" forKey:@"address"];
     }
-    [[APIClient sharedClient] postPath:@"beacon/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"hotspot/" parameters:parameters success:success failure:failure];
 }
 
 - (void)markBeaconAsSeen:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
