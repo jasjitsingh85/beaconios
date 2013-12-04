@@ -595,13 +595,20 @@ typedef enum {
     
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self.searchBar endEditing:YES];
+    [self reloadDataWithSearchText:searchBar.text];
+}
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
+    [self exitSearchMode];
 }
 
 - (void)exitSearchMode
 {
+    self.inSearchMode = NO;
     self.searchBar.text = nil;
     [self.searchBar endEditing:YES];
     [self reloadData];
@@ -634,7 +641,6 @@ typedef enum {
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     [self.searchBar setShowsCancelButton:NO animated:YES];
-    self.inSearchMode = NO;
 }
 
 @end
