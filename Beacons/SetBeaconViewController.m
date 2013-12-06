@@ -321,7 +321,7 @@
     beacon.beaconDescription = beaconDescription;
     beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
     UIView *view = appDelegate.window.rootViewController.view;
-    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+    MRProgressOverlayView *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
     __weak typeof(self) weakSelf = self;
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
