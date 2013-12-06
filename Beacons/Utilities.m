@@ -56,7 +56,7 @@
     NSString *text = [[RandomObjectManager sharedManager] randomInviteFriendsToAppString];
     [activityItems addObject:text];
     
-    [activityItems addObject:[NSURL URLWithString:@"http://gethotspotapp.com"]];
+    [activityItems addObject:[NSURL URLWithString:@"http://GetHotspotApp.com"]];
     UIActivityViewController* activityViewController =
     [[UIActivityViewController alloc] initWithActivityItems:activityItems
                                       applicationActivities:nil];
