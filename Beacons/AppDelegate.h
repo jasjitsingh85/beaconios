@@ -14,7 +14,6 @@ LoginViewController,
 MapViewController,
 MenuViewController,
 SetBeaconViewController,
-BeaconDetailViewController,
 User,
 Beacon;
 
@@ -25,7 +24,6 @@ Beacon;
 @property (strong, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
 @property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
-@property (strong, nonatomic) BeaconDetailViewController *myBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
 + (AppDelegate *)sharedAppDelegate;
