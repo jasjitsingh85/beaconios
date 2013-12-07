@@ -34,6 +34,7 @@
 #import "BounceButton.h"
 #import "NavigationBarTitleLabel.h"
 #import "AnalyticsManager.h"
+#import "ContactManager.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -676,11 +677,23 @@
         number = beaconStatus.contact.normalizedPhoneNumber;
         friendID = beaconStatus.contact.contactID;
     }
+    
     if (!(beaconStatus.user && [beaconStatus.user.userID isEqual:[User loggedInUser].userID])) {
-        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
-            [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
-                                                                                    messageRecipients:@[number]];
-        }];
+        [[ContactManager sharedManager] fetchAddressBookContacts:^(NSArray *contacts) {
+            [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
+                [[ContactManager sharedManager] fetchAddressBookContacts:^(NSArray *contacts) {
+                    NSArray *numbersInContactBook = [contacts valueForKey:@"normalizedPhoneNumber"];
+                    if ([numbersInContactBook containsObject:number]) {
+                        [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self
+                                                                                                messageRecipients:@[number]];
+                    }
+                    else {
+                        NSString *message = [NSString stringWithFormat:@"You ain't gots %@'s number", name];
+                        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                } failure:nil];
+            }];
+        } failure:nil];
     }
     if (beaconStatus.beaconStatusOption != BeaconStatusOptionHere) {
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check In %@", name] handler:^{
