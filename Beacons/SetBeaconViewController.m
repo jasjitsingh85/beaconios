@@ -234,7 +234,8 @@
     NSInteger timeNow = components.hour*60*60 + components.minute*60;
     NSTimeInterval intervalUntilBeacon = timeForBeacon - timeNow;
 
-    if (intervalUntilBeacon < 0) {
+    //if time is less than x min in the past, set for next day
+    if (intervalUntilBeacon < -15*60) {
         intervalUntilBeacon += 24*60*60;
     }
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:intervalUntilBeacon];
