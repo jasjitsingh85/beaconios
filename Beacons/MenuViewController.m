@@ -14,7 +14,6 @@
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "FindFriendsViewController.h"
-#import "BeaconDetailViewController.h"
 #import "SettingsViewController.h"
 #import "User.h"
 #import "RandomObjectManager.h"

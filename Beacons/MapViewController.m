@@ -16,7 +16,6 @@
 #import "BeaconAnnotation.h"
 #import "BeaconAnnotationView.h"
 #import "SetBeaconViewController.h"
-#import "BeaconDetailViewController.h"
 #import "TextMessageManager.h"
 #import "APIClient.h"
 #import "Utilities.h"

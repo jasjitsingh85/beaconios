@@ -144,7 +144,6 @@
 		96F14C1F17D84A890093C976 /* ChatTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C1E17D84A890093C976 /* ChatTest.m */; };
 		96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2217D84AF40093C976 /* ChatMessage.m */; };
 		96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */; };
-		96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FA824617E2C2B30095AF22 /* BeaconDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -367,8 +366,6 @@
 		96F14C2217D84AF40093C976 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		96F14C2417D84F0D0093C976 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
-		96FA824517E2C2B30095AF22 /* BeaconDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconDetailViewController.h; sourceTree = "<group>"; };
-		96FA824617E2C2B30095AF22 /* BeaconDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -590,8 +587,6 @@
 				966AC11B17CADBFA0093BB69 /* BeaconManager.h */,
 				966AC11C17CADBFA0093BB69 /* BeaconManager.m */,
 				96F14C2017D84AD40093C976 /* Chat */,
-				96FA824517E2C2B30095AF22 /* BeaconDetailViewController.h */,
-				96FA824617E2C2B30095AF22 /* BeaconDetailViewController.m */,
 				96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */,
 				96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */,
 				96A9871C17E51753007D77B8 /* InviteListViewController.h */,
@@ -954,7 +949,6 @@
 				963399481758512100AF9D89 /* main.m in Sources */,
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
 				9671D03118273BE700D03D66 /* LockedViewController.m in Sources */,
-				96FA824717E2C2B30095AF22 /* BeaconDetailViewController.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,

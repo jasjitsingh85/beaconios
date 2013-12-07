@@ -8,7 +8,6 @@
 
 #import "TextMessageManager.h"
 #import "MapViewController.h"
-#import "BeaconDetailViewController.h"
 #import "AnalyticsManager.h"
 
 @interface TextMessageManager()

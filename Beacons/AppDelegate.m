@@ -10,7 +10,6 @@
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
-#import "BeaconDetailViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
@@ -76,14 +75,6 @@
         _setBeaconViewController = [[SetBeaconViewController alloc] init];
     }
     return _setBeaconViewController;
-}
-
-- (BeaconDetailViewController *)myBeaconViewController
-{
-    if (!_myBeaconViewController) {
-        _myBeaconViewController = [BeaconDetailViewController new];
-    }
-    return _myBeaconViewController;
 }
 
 - (MenuViewController *)menuViewController
