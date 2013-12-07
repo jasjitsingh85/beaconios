@@ -15,7 +15,7 @@
 {
     MRProgressOverlayView *progressOverlay = [MRProgressOverlayView showOverlayAddedTo:view animated:animated];
     progressOverlay.tintColor = [[ThemeManager sharedTheme] darkBlueColor];
-    progressOverlay.titleLabelText = @"Loading...";
+    progressOverlay.titleLabelText = @"";
     return progressOverlay;
 }
 
