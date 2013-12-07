@@ -7,11 +7,13 @@
 //
 
 #import "SelectLocationViewController.h"
+#import <FormatterKit/TTTLocationFormatter.h>
 #import "LocationTracker.h"
 #import "FourSquareAPIClient.h"
 #import "Venue.h"
 #import "Theme.h"
 #import "NavigationBarTitleLabel.h"
+#import "Utilities.h"
 
 @interface SelectLocationViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -20,6 +22,8 @@
 @property (strong, nonatomic) NSString *customLocation;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (assign, nonatomic) BOOL keyboardShown;
+@property (strong, nonatomic) TTTLocationFormatter *locationFormatter;
+@property (strong, nonatomic) NSString *currentLocationAddress;
 @end
 
 @implementation SelectLocationViewController
@@ -41,11 +45,24 @@
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     self.venues = [NSArray new];
     self.headerView.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    
+    self.tableView.rowHeight = 71;
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
+    
+    self.locationFormatter = [[TTTLocationFormatter alloc] init];
+    self.locationFormatter.unitSystem = TTTImperialSystem;
+    
+    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[LocationTracker sharedTracker].currentLocation.coordinate.latitude longitude:[LocationTracker sharedTracker].currentLocation.coordinate.longitude];
+    [Utilities reverseGeoCodeLocation:location completion:^(NSString *addressString, NSError *error) {
+        self.currentLocationAddress = addressString;
+        jadispatch_main_qeue(^{
+            [self.tableView reloadData];
+        });
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -176,28 +193,55 @@
     return self.venues.count + [self shouldShowCurrentLocation] + [self shouldShowCustomLocation];
 }
 
+#define TAG_NAME 1
+#define TAG_ADDRESS 2
+#define TAG_DISTANCE 3
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.font = [ThemeManager regularFontOfSize:14.0];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 13, self.tableView.frame.size.width - 20, 13)];
+        nameLabel.font = [ThemeManager boldFontOfSize:12.0];
+        nameLabel.tag = TAG_NAME;
+        [cell addSubview:nameLabel];
+        
+        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0.5*(self.tableView.rowHeight - 13), self.tableView.frame.size.width - 20, 13)];
+        addressLabel.font = [ThemeManager lightFontOfSize:12];
+        addressLabel.tag = TAG_ADDRESS;
+        [cell addSubview:addressLabel];
+        
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, self.tableView.rowHeight - 13 - 13, self.tableView.frame.size.width - 20, 13)];
+        distanceLabel.font = [ThemeManager lightFontOfSize:12];
+        distanceLabel.tag = TAG_DISTANCE;
+        [cell addSubview:distanceLabel];
     }
     
+    UILabel *nameLabel = (UILabel *)[cell viewWithTag:TAG_NAME];
+    UILabel *addressLabel = (UILabel *)[cell viewWithTag:TAG_ADDRESS];
+    UILabel *distanceLabel = (UILabel *)[cell viewWithTag:TAG_DISTANCE];
     if ([indexPath isEqual:[self indexPathForCurrentLocation]]) {
-        cell.textLabel.text = @"Current Location";
-        cell.textLabel.textColor = [UIColor blueColor];
+        nameLabel.text = @"Current Location";
+        nameLabel.textColor = [UIColor blueColor];
+        if (self.currentLocationAddress) {
+            addressLabel.text = self.currentLocationAddress;
+        }
+        distanceLabel.text = @"0 ft";
     }
     else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
-        cell.textLabel.text = self.customLocation;
-        cell.textLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
+        nameLabel.text = self.customLocation;
+        nameLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
+        distanceLabel.text = @"";
+        addressLabel.text = @"";
     }
     else {
         NSIndexPath *firstVenueIndexPath = [self indexPathForFirstVenue];
         Venue *venue = self.venues[indexPath.row - firstVenueIndexPath.row];
-        cell.textLabel.text = venue.name;
-        cell.textLabel.textColor = [UIColor blackColor];
+        nameLabel.text = venue.name;
+        nameLabel.textColor = [UIColor blackColor];
+        addressLabel.text = venue.address;
+        distanceLabel.text = [self.locationFormatter stringFromDistance:venue.distance];
     }
     return cell;
 }

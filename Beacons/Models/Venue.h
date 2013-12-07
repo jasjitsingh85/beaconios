@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *address;
+@property (assign, nonatomic) CLLocationDistance distance;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 
 - (id)initWithData:(NSDictionary *)data;

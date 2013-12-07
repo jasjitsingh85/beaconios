@@ -6,6 +6,23 @@ PODS:
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
   - CrittercismSDK (4.0.2)
+  - FormatterKit (1.3.1):
+    - FormatterKit/AddressFormatter
+    - FormatterKit/ArrayFormatter
+    - FormatterKit/ColorFormatter
+    - FormatterKit/LocationFormatter
+    - FormatterKit/OrdinalNumberFormatter
+    - FormatterKit/TimeIntervalFormatter
+    - FormatterKit/UnitOfInformationFormatter
+    - FormatterKit/URLRequestFormatter
+  - FormatterKit/AddressFormatter (1.3.1)
+  - FormatterKit/ArrayFormatter (1.3.1)
+  - FormatterKit/ColorFormatter (1.3.1)
+  - FormatterKit/LocationFormatter (1.3.1)
+  - FormatterKit/OrdinalNumberFormatter (1.3.1)
+  - FormatterKit/TimeIntervalFormatter (1.3.1)
+  - FormatterKit/UnitOfInformationFormatter (1.3.1)
+  - FormatterKit/URLRequestFormatter (1.3.1)
   - Foursquare-iOS-API (1.1.0):
     - JSONKit (~> 1.4)
   - JSONKit (1.6)
@@ -24,6 +41,7 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
+  - FormatterKit
   - Foursquare-iOS-API (~> 1.1.0)
   - JSONKit (from `https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec`)
   - Mixpanel (~> 2.0.0)
@@ -42,6 +60,7 @@ SPEC CHECKSUMS:
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: 19dceba2d0360ed383cba983bc3ef0dd089c42a1
   CrittercismSDK: 309daf47347729372d8a059f6a161c55e6ab2e23
+  FormatterKit: 1238e7a6800c750a5f50f5fec1cc430d8e3b71e7
   Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
   JSONKit: 98c50800be324836e4443f6d22ff1324caffa608
   libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c

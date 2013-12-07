@@ -19,6 +19,10 @@
         NSNumber *longitude = [data valueForKeyPath:@"location.lng"];
         self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
         self.address = [data valueForKeyPath:@"location.address"];
+        NSNumber *distance = [data valueForKeyPath:@"location.distance"];
+        if (distance) {
+            self.distance = distance.floatValue;
+        }
     }
     return self;
 }
