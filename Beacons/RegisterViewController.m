@@ -204,9 +204,9 @@ typedef enum {
     mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
         [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     };
-    [mailViewController setSubject:@"I'm Having Trouble"];
+    [mailViewController setSubject:@"I'm Having Trouble Registering or Logging In"];
     [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
-    [mailViewController setMessageBody:@"Please help me with my problems:\n" isHTML:NO];
+    [mailViewController setMessageBody:@"These are my problems:\n" isHTML:NO];
     [self presentViewController:mailViewController animated:YES completion:nil];
 }
 
