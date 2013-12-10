@@ -338,14 +338,17 @@ typedef enum {
                                  @"last_name" : lastName,
                                  @"email" : emailText,
                                  @"phone_number" : phoneText};
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
                                    self.makingNetworkRequest = NO;
                                    [[AppDelegate sharedAppDelegate] registeredWithResponse:responseObject];
                                    [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"Activation code sent via SMS" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
                                    self.makingNetworkRequest = NO;
                                    NSString *message = @"Something went wrong";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
@@ -366,8 +369,10 @@ typedef enum {
     self.makingNetworkRequest = YES;
     NSString *phoneText = [Utilities normalizePhoneNumber:[self.signInFormView textFieldAtIndex:0].text];
     NSDictionary *parameters = @{@"phone_number" : phoneText};
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] postPath:@"login/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
                                    self.makingNetworkRequest = NO;
                                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                                    [appDelegate loggedIntoServerWithResponse:responseObject];
@@ -375,6 +380,7 @@ typedef enum {
                                    [self enterActivationMode];
                                }
                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
                                    self.makingNetworkRequest = NO;
                                    NSString *message = @"We couldn't find a user with this number";
                                    if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
