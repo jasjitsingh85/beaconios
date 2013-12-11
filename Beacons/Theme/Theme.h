@@ -48,6 +48,7 @@
 + (void)customizeAppAppearance;
 + (void)customizeViewAndSubviews:(UIView *)view;
 + (void)customizeLabel:(UILabel *)label;
++ (void)customizeNavigationBar:(UINavigationBar *)navigationBar;
 + (UIFont *)regularFontOfSize:(CGFloat)size;
 + (UIFont *)lightFontOfSize:(CGFloat)size;
 + (UIFont *)boldFontOfSize:(CGFloat)size;

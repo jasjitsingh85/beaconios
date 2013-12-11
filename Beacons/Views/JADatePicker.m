@@ -190,4 +190,11 @@
     return width;
 }
 
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if ([self.datePickerDelegate respondsToSelector:@selector(userDidUpdateDatePicker:)]) {
+        [self.datePickerDelegate userDidUpdateDatePicker:self];
+    }
+}
+
 @end

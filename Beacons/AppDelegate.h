@@ -33,6 +33,7 @@ Beacon;
 - (void)didActivateAccount;
 - (void)didFinishPermissions;
 - (void)contactAuthorizationStatusDenied;
+- (void)setSelectedViewControllerToHome;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 

@@ -118,6 +118,47 @@
     }];
 }
 
+- (void)cancelBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    NSDictionary *parameters = @{@"beacon_id" : beacon.beaconID,
+                                 @"cancelled" : @(YES)};
+    [[APIClient sharedClient] putPath:@"hotspot/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)updateBeacon:(Beacon *)beacon success:(void (^)(Beacon *updatedBeacon))success failure:(void (^)(NSError *error))failure
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary new];
+    [parameters setValue:beacon.beaconID forKey:@"beacon_id"];
+    [parameters setValue:beacon.beaconDescription forKey:@"description"];
+    [parameters setValue:@(beacon.time.timeIntervalSince1970) forKey:@"time"];
+    [parameters setValue:@(beacon.coordinate.latitude) forKey:@"latitude"];
+    [parameters setValue:@(beacon.coordinate.longitude) forKey:@"longitude"];
+    if (beacon.address) {
+        [parameters setValue:beacon.address forKey:@"address"];
+    }
+    else {
+        [parameters setValue:@"" forKey:@"address"];
+    }
+    [[APIClient sharedClient] putPath:@"hotspot/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [beacon updateWithData:responseObject[@"beacon"]];
+        if (success) {
+            success(beacon);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 - (void)postBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
     [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {

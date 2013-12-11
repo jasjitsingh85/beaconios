@@ -36,6 +36,14 @@
     navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 
++ (void)customizeNavigationBar:(UINavigationBar *)navigationBar
+{
+    id <Theme> theme = [self sharedTheme];
+    [navigationBar setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    [navigationBar setShadowImage:[[UIImage alloc] init]];
+    navigationBar.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
+}
+
 + (void)customizeViewAndSubviews:(UIView *)view
 {
     if ([view isKindOfClass:[UILabel class]]) {

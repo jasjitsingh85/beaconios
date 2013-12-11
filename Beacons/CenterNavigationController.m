@@ -13,7 +13,6 @@
 @interface CenterNavigationController ()
 
 @property (strong, nonatomic) UIButton *menuButton;
-@property (strong, nonatomic) UIButton *backButton;
 
 @end
 
@@ -31,11 +30,6 @@
     self.menuButton.frame = frame;
     [self.menuButton setBackgroundImage:menuButtonImage forState:UIControlStateNormal];
     [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)toggleSideNav
@@ -65,31 +59,12 @@
         [imageView removeFromSuperview];
     }];
     [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:NO completion:nil];
-
 }
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
 {
     _selectedViewController = self.selectedViewController;
     self.viewControllers = @[selectedViewController];
-}
-
-- (UIButton *)backButton
-{
-    if (!_backButton) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *buttonImage = [UIImage imageNamed:@"backArrow"];
-        [button setImage:buttonImage forState:UIControlStateNormal];
-        button.frame = CGRectMake(0, 0, buttonImage.size.width, buttonImage.size.height);
-        [button addTarget:self action:@selector(backButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        _backButton = button;
-    }
-    return _backButton;
-}
-
-- (void)backButtonTouched:(id)sender
-{
-    [self popViewControllerAnimated:YES];
 }
 
 #pragma mark - UINavigationBarDelegate methods

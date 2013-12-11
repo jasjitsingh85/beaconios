@@ -8,6 +8,7 @@
 
 #import "FindFriendsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIButton+HSNavButton.h"
 #import "Contact.h"
 #import "Theme.h"
 #import "APIClient.h"
@@ -109,13 +110,7 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite Friends"];
-    self.skipButton = [[UIButton alloc] init];
-    self.skipButton.frame = CGRectMake(0, 0, 50, 30);
-    self.skipButton.backgroundColor = [UIColor whiteColor];
-    self.skipButton.layer.cornerRadius = 4;
-    [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
-    [self.skipButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    self.skipButton.titleLabel.font = [ThemeManager regularFontOfSize:12];
+    self.skipButton = [UIButton navButtonWithTitle:@"Skip"];
     [self.skipButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.skipButton];
     self.navigationItem.rightBarButtonItem = skipButtonItem;

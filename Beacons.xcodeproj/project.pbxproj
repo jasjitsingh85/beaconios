@@ -95,6 +95,8 @@
 		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
 		969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649517E96E1B00F5AB36 /* UIImage+Resize.m */; };
 		969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649817EF85F200F5AB36 /* ImageViewController.m */; };
+		96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2618564AA800CA1F99 /* HSNavigationController.m */; };
+		96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */; };
 		96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */; };
 		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
 		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
@@ -296,6 +298,10 @@
 		969D649517E96E1B00F5AB36 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		969D649717EF85F200F5AB36 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		969D649817EF85F200F5AB36 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		96A3BC2518564AA800CA1F99 /* HSNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSNavigationController.h; sourceTree = "<group>"; };
+		96A3BC2618564AA800CA1F99 /* HSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSNavigationController.m; sourceTree = "<group>"; };
+		96A3BC2818564CCF00CA1F99 /* UIButton+HSNavButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+HSNavButton.h"; sourceTree = "<group>"; };
+		96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+HSNavButton.m"; sourceTree = "<group>"; };
 		96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconProfileViewController.h; sourceTree = "<group>"; };
 		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
 		96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundGradient@2x.png"; sourceTree = "<group>"; };
@@ -417,6 +423,8 @@
 				96E623EC1814996E0048125B /* NSObject+Empty.m */,
 				96AFCA1B1825EB92003A47F2 /* NSError+ServerErrorMessage.h */,
 				96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */,
+				96A3BC2818564CCF00CA1F99 /* UIButton+HSNavButton.h */,
+				96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -613,6 +621,8 @@
 				96D52D221838415300496923 /* SecretSettingsViewController.h */,
 				96D52D231838415300496923 /* SecretSettingsViewController.m */,
 				96D52D241838415300496923 /* SecretSettingsViewController.xib */,
+				96A3BC2518564AA800CA1F99 /* HSNavigationController.h */,
+				96A3BC2618564AA800CA1F99 /* HSNavigationController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -963,6 +973,7 @@
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
+				96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */,
 				96F14C1F17D84A890093C976 /* ChatTest.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
 				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
@@ -999,6 +1010,7 @@
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,
+				96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */,
 				9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,

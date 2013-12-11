@@ -238,6 +238,11 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)setSelectedViewControllerToHome
+{
+    [self.centerNavigationController setSelectedViewController:self.mapViewController animated:YES];
+}
+
 #pragma mark - Beacon Profile
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn
 {

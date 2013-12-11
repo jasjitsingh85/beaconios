@@ -7,6 +7,8 @@
 //
 
 #import "SetBeaconViewController.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "UIButton+HSNavButton.h"
 #import "JADatePicker.h"
 #import "JAPlaceholderTextView.h"
 #import "Theme.h"
@@ -31,7 +33,7 @@
 
 #define MAX_CHARACTER_COUNT 40
 
-@interface SetBeaconViewController () <UITextViewDelegate, JAPlaceholderTextViewDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
+@interface SetBeaconViewController () <UITextViewDelegate, JAPlaceholderTextViewDelegate, JADatePickerDelegate, SelectLocationViewControllerDelegate, FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIView *descriptionContainerView;
@@ -42,23 +44,19 @@
 @property (strong, nonatomic) JADatePicker *datePicker;
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UIButton *setBeaconButton;
+@property (strong, nonatomic) UIButton *cancelBeaconButton;
 @property (strong, nonatomic) NSString *descriptionPlaceholderText;
 @property (strong, nonatomic) NSString *currentLocationAddress;
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
 @property (assign, nonatomic) BOOL useCurrentLocation;
+@property (assign, nonatomic) BOOL didUpdateTime;
+@property (assign, nonatomic) BOOL didUpdateLocation;
+@property (assign, nonatomic) BOOL didUpdateDescription;
+@property (strong, nonatomic) UIButton *doneButton;
 
 @end
 
 @implementation SetBeaconViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -92,7 +90,16 @@
     [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.setBeaconButton];
     
+    self.cancelBeaconButton = [[UIButton alloc] initWithFrame:self.setBeaconButton.frame];
+    [self.cancelBeaconButton setTitle:@"Cancel Hotspot" forState:UIControlStateNormal];
+    self.cancelBeaconButton.backgroundColor = self.setBeaconButton.backgroundColor;
+    [self.cancelBeaconButton setTitleColor:[UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [self.cancelBeaconButton addTarget:self action:@selector(cancelBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:self.cancelBeaconButton];
+    self.cancelBeaconButton.hidden = YES;
+    
     self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
+    self.datePicker.datePickerDelegate = self;
     self.datePicker.date = [NSDate date];
     [self.dateContainerView addSubview:self.self.datePicker];
     
@@ -173,6 +180,60 @@
     self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
 }
 
+- (void)setBeaconCoordinate:(CLLocationCoordinate2D)beaconCoordinate
+{
+    _beaconCoordinate = beaconCoordinate;
+    if (self.beacon) {
+        CLLocation *originalLocation = [[CLLocation alloc] initWithLatitude:self.beacon.coordinate.latitude longitude:self.beacon.coordinate.longitude];
+        CLLocation *updatedLocation = [[CLLocation alloc] initWithLatitude:self.beaconCoordinate.latitude longitude:self.beaconCoordinate.longitude];
+        CLLocationDistance distance = [originalLocation distanceFromLocation:updatedLocation];
+        if (distance > 10) {
+            self.didUpdateLocation = YES;
+        }
+    }
+}
+
+- (void)setEditMode:(BOOL)editMode
+{
+    [self view];
+    _editMode = editMode;
+    if (editMode) {
+        UIButton *cancelButton = [UIButton navButtonWithTitle:@"Cancel"];
+        [cancelButton addTarget:self action:@selector(cancelButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+        
+        self.doneButton = [UIButton navButtonWithTitle:@"Done"];
+        [self.doneButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.doneButton];
+    }
+    self.cancelBeaconButton.hidden = !editMode;
+}
+
+- (void)setBeacon:(Beacon *)beacon
+{
+    [self view];
+    _beacon = beacon;
+    
+    self.descriptionTextView.text = beacon.beaconDescription;
+    self.locationLabel.text = beacon.address;
+    self.datePicker.date = beacon.time;
+}
+
+- (void)cancelBeacon
+{
+    __weak typeof(self) weakSelf = self;
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[BeaconManager sharedManager] cancelBeacon:self.beacon success:^{
+        [LoadingIndictor hideLoadingIndicatorForView:weakSelf.view animated:NO];
+        if ([weakSelf.delegate respondsToSelector:@selector(setBeaconViewController:didCancelBeacon:)]) {
+            [weakSelf.delegate setBeaconViewController:weakSelf didCancelBeacon:weakSelf.beacon];
+        }
+    } failure:^(NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
+}
+
+
 - (void)updateCharacterCountLabel
 {
     self.characterCountLabel.hidden = self.descriptionTextView.text.length < 20;
@@ -185,6 +246,16 @@
     SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
     selectLocationViewController.delegate = self;
     [self.navigationController pushViewController:selectLocationViewController animated:YES];
+}
+
+- (void)cancelBeaconButtonTouched:(id)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cancel this Hotspot?" message:@"Are you sure you want to cancel this Hotspot? This cannot be undone."];
+    [alertView addButtonWithTitle:@"Yes" handler:^{
+        [self cancelBeacon];
+    }];
+    [alertView setCancelButtonWithTitle:@"No" handler:nil];
+    [alertView show];
 }
 
 - (void)setBeaconButtonTouched:(id)sender
@@ -204,7 +275,44 @@
     findFriendsViewController.autoCheckSuggested = NO;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
-    findFriendsViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(didSelectCurrentLocation)];
+}
+
+- (void)doneButtonTouched:(id)sender
+{
+    [self.descriptionTextView resignFirstResponder];
+    
+    NSString *beaconDescription = self.descriptionTextView.text;
+    
+    BOOL timeUpdated = self.didUpdateTime;
+    NSDate *beaconTime = timeUpdated ? [self dateForBeacon] : self.beacon.time;
+    
+    self.beacon.beaconDescription = beaconDescription;
+    self.beacon.time = beaconTime;
+    self.beacon.address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
+    self.beacon.coordinate = self.beaconCoordinate;
+    if (self.didUpdateLocation || self.didUpdateTime || self.didUpdateDescription) {
+        __weak typeof(self) weakSelf = self;
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+        [[BeaconManager sharedManager] updateBeacon:self.beacon success:^(Beacon *updatedBeacon) {
+            [LoadingIndictor hideLoadingIndicatorForView:weakSelf.view animated:NO];
+            if ([weakSelf.delegate respondsToSelector:@selector(setBeaconViewController:didUpdateBeacon:)]) {
+                [weakSelf.delegate setBeaconViewController:weakSelf didUpdateBeacon:updatedBeacon];
+            }
+        } failure:^(NSError *error) {
+            [LoadingIndictor hideLoadingIndicatorForView:weakSelf.view animated:NO];
+            [[[UIAlertView alloc] initWithTitle:@"Sorry" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
+    }
+    else {
+        if ([self.delegate respondsToSelector:@selector(setBeaconViewController:didUpdateBeacon:)]) {
+            [self.delegate setBeaconViewController:self didUpdateBeacon:self.beacon];
+        }
+    }
+}
+
+- (void)cancelButtonTouched:(id)sender
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)updateCurrentLocationAddressFromLocation
@@ -289,6 +397,10 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
+    if (self.beacon) {
+        self.didUpdateDescription = ![textView.text isEqualToString:self.beacon.beaconDescription];
+    }
+    
     [self updateCharacterCountLabel];
 }
 
@@ -297,6 +409,12 @@
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {
     [self setBeaconOnServerWithInvitedContacts:contacts];
+}
+
+#pragma mark - JADatePickerDelegate
+- (void)userDidUpdateDatePicker:(JADatePicker *)datePicker
+{
+    self.didUpdateTime = YES;
 }
 
 #pragma mark - Networking

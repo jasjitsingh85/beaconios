@@ -13,8 +13,15 @@ typedef enum {
     TimePeriodPM,
 } TimePeriod;
 
+@class JADatePicker;
+@protocol JADatePickerDelegate <NSObject>
+@optional
+- (void)userDidUpdateDatePicker:(JADatePicker *)datePicker;
+@end
+
 @interface JADatePicker : UIPickerView
 
+@property (weak, nonatomic) id<JADatePickerDelegate> datePickerDelegate;
 @property (strong, nonatomic) NSDate *date;
 @property (assign, nonatomic) NSInteger minuteInterval;
 @property (readonly) NSInteger hour;

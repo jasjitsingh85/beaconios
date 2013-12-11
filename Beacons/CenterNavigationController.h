@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MSDynamicsDrawerViewController.h>
-@interface CenterNavigationController : UINavigationController <UINavigationControllerDelegate>
+#import "HSNavigationController.h"
+
+@interface CenterNavigationController : HSNavigationController <UINavigationControllerDelegate>
 
 @property (weak, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
 @property (strong, nonatomic) UIViewController *selectedViewController;

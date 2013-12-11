@@ -12,9 +12,12 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "NSDate+FormattedDate.h"
+#import "UIButton+HSNavButton.h"
 #import "UIImage+Resize.h"
 #import "BeaconChatViewController.h"
 #import "InviteListViewController.h"
+#import "SetBeaconViewController.h"
+#import "HSNavigationController.h"
 #import "Beacon.h"
 #import "Theme.h"
 #import "User.h"
@@ -36,7 +39,7 @@
 #import "AnalyticsManager.h"
 #import "ContactManager.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -53,6 +56,7 @@
 @property (strong, nonatomic) UIButton *joinButton;
 @property (strong, nonatomic) UIButton *inviteButton;
 @property (strong, nonatomic) UIButton *directionsButton;
+@property (strong, nonatomic) UIButton *editButton;
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @property (assign, nonatomic) BOOL keyboardShown;
@@ -219,6 +223,7 @@
     [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.directionsButton];
     
+    
     UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
     swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
     swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
@@ -229,6 +234,8 @@
     swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
     [self.descriptionView addGestureRecognizer:swipeUpGestureRecognizer];
     swipeUpGestureRecognizer.delegate = self;
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -236,6 +243,11 @@
     [super viewWillAppear:animated];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
+    
+    self.editButton = [UIButton navButtonWithTitle:@"Edit"];
+    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+    self.navigationItem.rightBarButtonItem = editButtonItem;
     
     if (self.openToInviteView) {
         self.chatTabButton.selected = NO;
@@ -305,6 +317,7 @@
     
     self.joinButton.hidden = beacon.userAttending;
     self.inviteButton.hidden = !beacon.userAttending;
+    self.editButton.hidden = !beacon.isUserBeacon;
     
     //let server know that user has seen this hotspot
     [[APIClient sharedClient] markBeaconAsSeen:beacon success:nil failure:nil];
@@ -545,6 +558,16 @@
     [self inviteMoreFriends];
 }
 
+- (void)editButtonTouched:(id)sender
+{
+    SetBeaconViewController *setBeaconViewController = [[SetBeaconViewController alloc] init];
+    setBeaconViewController.delegate = self;
+    setBeaconViewController.editMode = YES;
+    setBeaconViewController.beacon = self.beacon;
+    HSNavigationController *navController = [[HSNavigationController alloc] initWithRootViewController:setBeaconViewController];
+    [ThemeManager customizeNavigationBar:navController.navigationBar];
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
+}
 
 - (void)imageViewTapped:(id)sender
 {
@@ -639,6 +662,23 @@
             }];
         }
     }
+}
+
+#pragma mark - SetBeaconViewControllerDelegate
+- (void)setBeaconViewController:(SetBeaconViewController *)setBeaconViewController didUpdateBeacon:(Beacon *)beacon
+{
+    self.beacon = beacon;
+    [setBeaconViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setBeaconViewController:(SetBeaconViewController *)setBeaconViewController didCancelBeacon:(Beacon *)beacon
+{
+    [setBeaconViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"You cancelled this Hotspot" message:@""];
+    [alertView setCancelButtonWithTitle:@"OK" handler:^{
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToHome];
+    }];
+    [alertView show];
 }
 
 #pragma mark - FindFriendsViewControllerDelegate
