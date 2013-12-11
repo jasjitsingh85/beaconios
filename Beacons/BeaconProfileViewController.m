@@ -248,6 +248,9 @@
     [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
     self.navigationItem.rightBarButtonItem = editButtonItem;
+    if (self.beacon) {
+        self.editButton.hidden = !self.beacon.isUserBeacon;
+    }
     
     if (self.openToInviteView) {
         self.chatTabButton.selected = NO;
@@ -564,9 +567,7 @@
     setBeaconViewController.delegate = self;
     setBeaconViewController.editMode = YES;
     setBeaconViewController.beacon = self.beacon;
-    HSNavigationController *navController = [[HSNavigationController alloc] initWithRootViewController:setBeaconViewController];
-    [ThemeManager customizeNavigationBar:navController.navigationBar];
-    [self.navigationController presentViewController:navController animated:YES completion:nil];
+    [self.navigationController pushViewController:setBeaconViewController animated:YES];
 }
 
 - (void)imageViewTapped:(id)sender
@@ -668,7 +669,7 @@
 - (void)setBeaconViewController:(SetBeaconViewController *)setBeaconViewController didUpdateBeacon:(Beacon *)beacon
 {
     self.beacon = beacon;
-    [setBeaconViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)setBeaconViewController:(SetBeaconViewController *)setBeaconViewController didCancelBeacon:(Beacon *)beacon

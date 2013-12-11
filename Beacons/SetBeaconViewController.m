@@ -44,7 +44,6 @@
 @property (strong, nonatomic) JADatePicker *datePicker;
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UIButton *setBeaconButton;
-@property (strong, nonatomic) UIButton *cancelBeaconButton;
 @property (strong, nonatomic) NSString *descriptionPlaceholderText;
 @property (strong, nonatomic) NSString *currentLocationAddress;
 @property (assign, nonatomic) CLLocationCoordinate2D beaconCoordinate;
@@ -52,7 +51,6 @@
 @property (assign, nonatomic) BOOL didUpdateTime;
 @property (assign, nonatomic) BOOL didUpdateLocation;
 @property (assign, nonatomic) BOOL didUpdateDescription;
-@property (strong, nonatomic) UIButton *doneButton;
 
 @end
 
@@ -89,14 +87,6 @@
     [self.setBeaconButton setTitleColor:[UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.setBeaconButton];
-    
-    self.cancelBeaconButton = [[UIButton alloc] initWithFrame:self.setBeaconButton.frame];
-    [self.cancelBeaconButton setTitle:@"Cancel Hotspot" forState:UIControlStateNormal];
-    self.cancelBeaconButton.backgroundColor = self.setBeaconButton.backgroundColor;
-    [self.cancelBeaconButton setTitleColor:[UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [self.cancelBeaconButton addTarget:self action:@selector(cancelBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.scrollView addSubview:self.cancelBeaconButton];
-    self.cancelBeaconButton.hidden = YES;
     
     self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
     self.datePicker.datePickerDelegate = self;
@@ -198,15 +188,11 @@
     [self view];
     _editMode = editMode;
     if (editMode) {
-        UIButton *cancelButton = [UIButton navButtonWithTitle:@"Cancel"];
-        [cancelButton addTarget:self action:@selector(cancelButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-        
-        self.doneButton = [UIButton navButtonWithTitle:@"Done"];
-        [self.doneButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.doneButton];
+        UIButton *deleteButton = [UIButton navButtonWithTitle:@"Delete"];
+        [deleteButton addTarget:self action:@selector(deleteBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:deleteButton];
     }
-    self.cancelBeaconButton.hidden = !editMode;
+    [self.setBeaconButton setTitle:@"Update Hotspot" forState:UIControlStateNormal];
 }
 
 - (void)setBeacon:(Beacon *)beacon
@@ -217,6 +203,13 @@
     self.descriptionTextView.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
     self.datePicker.date = beacon.time;
+}
+
+- (void)scrollToShowSetBeaconButton
+{
+    //scroll to show invite button for iPhone 4
+    CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
+    [self.scrollView setContentOffset:bottomOffset animated:YES];
 }
 
 - (void)cancelBeacon
@@ -248,9 +241,9 @@
     [self.navigationController pushViewController:selectLocationViewController animated:YES];
 }
 
-- (void)cancelBeaconButtonTouched:(id)sender
+- (void)deleteBeaconButtonTouched:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cancel this Hotspot?" message:@"Are you sure you want to cancel this Hotspot? This cannot be undone."];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete this Hotspot?" message:@"Are you sure you want to delete this Hotspot? This cannot be undone."];
     [alertView addButtonWithTitle:@"Yes" handler:^{
         [self cancelBeacon];
     }];
@@ -260,6 +253,11 @@
 
 - (void)setBeaconButtonTouched:(id)sender
 {
+    if (self.editMode) {
+        [self updateBeacon];
+        return;
+    }
+    
     if (!self.descriptionTextView.text || !self.descriptionTextView.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Baby, you're going too fast!" message:@"Don't forget to set a Hotspot description" delegate:nil cancelButtonTitle:@"I'll slow down" otherButtonTitles:nil] show];
         return;
@@ -277,7 +275,7 @@
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
-- (void)doneButtonTouched:(id)sender
+- (void)updateBeacon
 {
     [self.descriptionTextView resignFirstResponder];
     
@@ -308,11 +306,6 @@
             [self.delegate setBeaconViewController:self didUpdateBeacon:self.beacon];
         }
     }
-}
-
-- (void)cancelButtonTouched:(id)sender
-{
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)updateCurrentLocationAddressFromLocation
@@ -356,6 +349,7 @@
     self.useCurrentLocation = NO;
     self.locationLabel.text = venue.name;
     self.beaconCoordinate = venue.coordinate;
+    [self scrollToShowSetBeaconButton];
 }
 
 - (void)didSelectCurrentLocation
@@ -363,6 +357,7 @@
     self.useCurrentLocation = YES;
     self.locationLabel.text = @"Current Location";
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+    [self scrollToShowSetBeaconButton];
 }
 
 - (void)didSelectCustomLocation:(CLLocation *)location withName:(NSString *)locationName
@@ -375,6 +370,7 @@
     else {
         self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     }
+    [self scrollToShowSetBeaconButton];
 }
 
 #pragma mark - UITextViewDelegate
@@ -382,9 +378,7 @@
     
     if([text isEqualToString:@"\n"]){
         [textView resignFirstResponder];
-        //scroll to show invite button for iPhone 4
-        CGPoint bottomOffset = CGPointMake(0, self.scrollView.contentSize.height - self.scrollView.bounds.size.height);
-        [self.scrollView setContentOffset:bottomOffset animated:YES];
+        [self scrollToShowSetBeaconButton];
         return NO;
     }
     
@@ -415,6 +409,7 @@
 - (void)userDidUpdateDatePicker:(JADatePicker *)datePicker
 {
     self.didUpdateTime = YES;
+    [self scrollToShowSetBeaconButton];
 }
 
 #pragma mark - Networking
