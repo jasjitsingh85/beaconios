@@ -161,7 +161,8 @@
 
 - (void)postBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    [[APIClient sharedClient] postBeacon:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    CLLocation *location = [LocationTracker sharedTracker].currentLocation;
+    [[APIClient sharedClient] postBeacon:beacon userLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [beacon updateWithData:responseObject[@"beacon"]];
         self.currentBeacon = beacon;
         if (success) {

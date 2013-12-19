@@ -88,7 +88,7 @@ static dispatch_once_t onceToken;
 }
 
 #pragma mark - server calls
-- (void)postBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+- (void)postBeacon:(Beacon *)beacon userLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
            failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSArray *invites = [self paramArrayForContacts:[beacon.guestStatuses.allValues valueForKey:@"contact"]];
@@ -97,6 +97,10 @@ static dispatch_once_t onceToken;
     [parameters setValue:@(beacon.time.timeIntervalSince1970) forKey:@"time"];
     [parameters setValue:@(beacon.coordinate.latitude) forKey:@"latitude"];
     [parameters setValue:@(beacon.coordinate.longitude) forKey:@"longitude"];
+    if (location) {
+        [parameters setValue:@(location.coordinate.latitude) forKey:@"user_latitude"];
+        [parameters setValue:@(location.coordinate.longitude) forKey:@"user_longitude"];
+    }
     if (invites.count) {
         [parameters setValue:invites forKey:@"invite_list"];
     }
