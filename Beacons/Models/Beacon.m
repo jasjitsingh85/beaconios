@@ -105,6 +105,12 @@
     return userStatus && (userStatus.beaconStatusOption == BeaconStatusOptionGoing || userStatus.beaconStatusOption == BeaconStatusOptionHere);
 }
 
+- (BOOL)userHere
+{
+    BeaconStatus *userStatus = self.guestStatuses[[User loggedInUser].normalizedPhoneNumber];
+    return userStatus && userStatus.beaconStatusOption == BeaconStatusOptionHere;
+}
+
 - (void)geoCodeAddress
 {
     CLLocation *location = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];

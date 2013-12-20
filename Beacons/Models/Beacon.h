@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSDate *time;
 @property (nonatomic, strong) NSDate *expirationDate;
 @property (readonly) BOOL userAttending;
+@property (readonly) BOOL userHere;
 
 - (id)initWithData:(NSDictionary *)data;
 - (void)updateWithData:(NSDictionary *)data;

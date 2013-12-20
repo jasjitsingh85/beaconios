@@ -7,13 +7,16 @@
 //
 
 #import "BeaconManager.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "APIClient.h"
 #import "Beacon.h"
 #import "LocationTracker.h"
+#import "User.h"
 
 @interface BeaconManager()
 
 @property (strong, nonatomic) NSDate *dateLastUpdatedBeacons;
+@property (strong, nonatomic) NSDate *dateLastSentLocation;
 
 @end
 
@@ -35,6 +38,7 @@
     if (!self) {
         return self;
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [self unarchiveBeacons];
     return self;
 }
@@ -228,6 +232,41 @@
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = @"Debugging. Exited region";
 #endif
+}
+
+- (void)didUpdateLocation:(NSNotification *)notification
+{
+    if (self.dateLastSentLocation && [[NSDate date] timeIntervalSinceDate:self.dateLastSentLocation] < 60*5) {
+        return;
+    }
+    CLLocation *location = notification.userInfo[@"location"];
+    self.dateLastSentLocation = [NSDate date];
+    [[APIClient sharedClient] postLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([[responseObject allKeys] containsObject:@"isHere"] && [responseObject[@"isHere"] count]) {
+            [responseObject[@"isHere"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                Beacon *beacon = [[Beacon alloc] initWithData:obj];
+                if (!beacon.userHere) {
+                    [self promptUserToCheckInToBeacon:beacon];
+                    *stop = YES;
+                }
+            }];
+        }
+    } failure:nil];
+    
+}
+
+- (void)promptUserToCheckInToBeacon:(Beacon *)beacon
+{
+    NSString *title = [NSString stringWithFormat:@"Looks like you've arrived at %@", beacon.beaconDescription];
+    NSString *message = @"Want to check in?";
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message];
+    [alertView addButtonWithTitle:@"No, thanks" handler:nil];
+    [alertView setCancelButtonWithTitle:@"Yes" handler:^{
+        [[APIClient sharedClient] checkInFriendWithID:[User loggedInUser].userID isUser:YES atbeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+        } failure:nil];
+    }];
+    [alertView show];
 }
 
 @end

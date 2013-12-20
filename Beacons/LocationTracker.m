@@ -126,13 +126,6 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
     }
 }
 
-- (void)sendLocationToServer
-{
-    [[APIClient sharedClient] postLocation:self.locationManager.location success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    }];
-}
-
 #pragma mark - UIApplication Notifications
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
