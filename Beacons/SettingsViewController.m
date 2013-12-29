@@ -132,6 +132,11 @@
 
 - (void)feedbackSelected
 {
+    if (![MFMailComposeViewController canSendMail]) {
+        NSString *message = [NSString stringWithFormat:@"This device is not configured to send email. Please send feedback to %@", kFeedbackEmailAddress];
+        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
     MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
     mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
         [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
