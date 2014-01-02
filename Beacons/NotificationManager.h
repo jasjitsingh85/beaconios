@@ -15,7 +15,7 @@
 - (void)registerForRemoteNotificationsSuccess:(void (^)(NSData *devToken))success failure:(void (^)(NSError *error))failure;
 - (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)devToken;
 - (void)didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
-- (void)didReceiveRemoteNotification:(NSDictionary *)userInfo;
+- (void)didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification;
 
 @end

@@ -81,6 +81,20 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 }
 
 #pragma mark - Remote Notification Receiving
+- (void)didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    BOOL contentAvailable = [[userInfo[@"aps"] allKeys] containsObject:@"content-available"];
+    if (contentAvailable) {
+        [self didReceiveBackgroundFetchRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+    }
+    else {
+        [self didReceiveRemoteNotification:userInfo];
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+    UILocalNotification *locationNotification = [[UILocalNotification alloc] init];
+    locationNotification.alertBody = @"Received push";
+    [[UIApplication sharedApplication] presentLocalNotificationNow:locationNotification];
+}
 
 - (void)didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
@@ -95,6 +109,11 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     if (inForeground) {
         [self didReceiveInForegroundRemoteNotificationWithType:notificationType alert:alert userInfo:userInfo];
     }
+}
+
+- (void)didReceiveBackgroundFetchRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    
 }
 
 - (void)openFromBackgroundNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
