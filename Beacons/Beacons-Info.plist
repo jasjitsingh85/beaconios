@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>location</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -49,10 +54,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>33</string>
-	<key>FacebookAppID</key>
-	<string>475217095841801</string>
-	<key>FacebookDisplayName</key>
-	<string>Mutuality-Beta</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
