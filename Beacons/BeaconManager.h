@@ -28,6 +28,8 @@
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification;
 - (void)receivedDidExitRegionNotification:(NSNotification *)notification;
 
+- (void)shouldUpdateLocationSuccess:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)archiveBeacons;
+- (void)promptUserToCheckInToBeacon:(Beacon *)beacon success:(void (^)(BOOL checkedIn))success failure:(void (^)(NSError *error))failure;
 
 @end

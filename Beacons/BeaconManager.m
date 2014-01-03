@@ -234,6 +234,41 @@
 #endif
 }
 
+- (void)shouldUpdateLocationSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    [[LocationTracker sharedTracker] fetchCurrentLocation:^(CLLocation *location) {
+        self.dateLastSentLocation = [NSDate date];
+        [[APIClient sharedClient] postLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if ([[responseObject allKeys] containsObject:@"isHere"] && [responseObject[@"isHere"] count]) {
+                [responseObject[@"isHere"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    Beacon *beacon = [[Beacon alloc] initWithData:obj];
+                    NSArray *checkInPrompts = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyCheckinPromptHotspots];
+                    BOOL hasAlreadyPrompted = checkInPrompts && [checkInPrompts containsObject:beacon.beaconID];
+                    if (!beacon.userHere && !hasAlreadyPrompted) {
+                        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                        localNotification.alertBody = @"Looks like you are at a hotspot. Want to check in?";
+                        localNotification.userInfo = @{kLocalNotificationTypeKey : kLocalNotificationTypeCheckinPrompt,
+                                                       @"beaconID" : beacon.beaconID};
+                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+                        *stop = YES;
+                    }
+                }];
+            }
+            if (success) {
+                success();
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error);
+            }
+        }];
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 - (void)didUpdateLocation:(NSNotification *)notification
 {
     if (self.dateLastSentLocation && [[NSDate date] timeIntervalSinceDate:self.dateLastSentLocation] < 60*5) {
@@ -246,7 +281,7 @@
             [responseObject[@"isHere"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 Beacon *beacon = [[Beacon alloc] initWithData:obj];
                 if (!beacon.userHere) {
-                    [self promptUserToCheckInToBeacon:beacon];
+                    [self promptUserToCheckInToBeacon:beacon success:nil failure:nil];
                     *stop = YES;
                 }
             }];
@@ -255,16 +290,44 @@
     
 }
 
-- (void)promptUserToCheckInToBeacon:(Beacon *)beacon
+- (void)promptUserToCheckInToBeacon:(Beacon *)beacon success:(void (^)(BOOL checkedIn))success failure:(void (^)(NSError *error))failure
 {
-    NSString *title = [NSString stringWithFormat:@"Looks like you've arrived at %@", beacon.beaconDescription];
+    NSMutableArray *checkInPrompts = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyCheckinPromptHotspots];
+    if (!checkInPrompts) {
+        checkInPrompts = [[NSMutableArray alloc] init];
+    }
+    else {
+        checkInPrompts = [NSMutableArray arrayWithArray:checkInPrompts];
+    }
+    
+    if ([checkInPrompts containsObject:beacon.beaconID]) {
+        return;
+    }
+    [checkInPrompts addObject:beacon.beaconID];
+    [[NSUserDefaults standardUserDefaults] setObject:checkInPrompts forKey:kDefaultsKeyCheckinPromptHotspots];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSString *title = @"You're here!";
+    if (beacon.beaconDescription) {
+        title = [NSString stringWithFormat:@"Looks like you've arrived at %@", beacon.beaconDescription];
+    }
     NSString *message = @"Want to check in?";
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message];
-    [alertView addButtonWithTitle:@"No, thanks" handler:nil];
+    [alertView addButtonWithTitle:@"No, thanks" handler:^{
+        if (success) {
+            success(NO);
+        }
+    }];
     [alertView setCancelButtonWithTitle:@"Yes" handler:^{
         [[APIClient sharedClient] checkInFriendWithID:[User loggedInUser].userID isUser:YES atbeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-        } failure:nil];
+            if (success) {
+                success(YES);
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (failure) {
+                failure(error);
+            }
+        }];
     }];
     [alertView show];
 }

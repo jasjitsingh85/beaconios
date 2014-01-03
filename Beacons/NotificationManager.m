@@ -15,6 +15,8 @@
 #import "CenterNavigationController.h"
 #import "BeaconProfileViewController.h"
 #import "AnalyticsManager.h"
+#import "LocationTracker.h"
+#import "BeaconManager.h"
 
 typedef void (^RemoteNotificationRegistrationSuccessBlock)(NSData *devToken);
 typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
@@ -91,9 +93,6 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
         [self didReceiveRemoteNotification:userInfo];
         completionHandler(UIBackgroundFetchResultNoData);
     }
-    UILocalNotification *locationNotification = [[UILocalNotification alloc] init];
-    locationNotification.alertBody = @"Received push";
-    [[UIApplication sharedApplication] presentLocalNotificationNow:locationNotification];
 }
 
 - (void)didReceiveRemoteNotification:(NSDictionary *)userInfo
@@ -113,7 +112,11 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 
 - (void)didReceiveBackgroundFetchRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    
+    [[BeaconManager sharedManager] shouldUpdateLocationSuccess:^{
+        completionHandler(UIBackgroundFetchResultNewData);
+    } failure:^(NSError *error) {
+        completionHandler(UIBackgroundFetchResultFailed);
+    }];
 }
 
 - (void)openFromBackgroundNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
@@ -155,10 +158,10 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 {
     BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
     if (transitioningToForeground) {
-        NSNumber *beaconID = notification.userInfo[@"beaconID"];
-        if (beaconID) {
-            [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
-        }
+            NSNumber *beaconID = notification.userInfo[@"beaconID"];
+            if (beaconID) {
+                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
+            }
     }
     
 }

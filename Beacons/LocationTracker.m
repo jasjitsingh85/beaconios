@@ -13,10 +13,16 @@ NSString * const kDidEnterRegionNotification = @"didEnterRegionNotification";
 NSString * const kDidExitRegionNotification = @"didExitRegionNotification";
 NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotification";
 
+typedef void (^FetchLocationSuccessBlock)(CLLocation *location);
+typedef void (^FetchLocationFailureBlock)(NSError *error);
+
 
 @interface LocationTracker()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) FetchLocationSuccessBlock fetchLocationSuccessBlock;
+@property (strong, nonatomic) FetchLocationFailureBlock fetchLocationFailureBlock;
+@property (assign, nonatomic) BOOL fetchingLocation;
 
 @end
 
@@ -60,6 +66,50 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
 - (void)requestLocationPermission
 {
     [self.locationManager startUpdatingLocation];
+}
+
+- (void)fetchCurrentLocation:(void (^)(CLLocation *location))success failure:(void (^)(NSError *error))failure
+{
+    self.fetchLocationSuccessBlock = success;
+    self.fetchLocationFailureBlock = failure;
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+        [self failedToFetchLocation];
+    }
+    else {
+        CLLocation *currentLocation = self.currentLocation;
+        if (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] < 60) {
+            [self fetchedLocation:currentLocation];
+        }
+        else {
+            [self.locationManager startUpdatingLocation];
+            self.fetchingLocation = YES;
+            jadispatch_after_delay(10, dispatch_get_main_queue(), ^{
+                if (self.fetchingLocation) {
+                    [self failedToFetchLocation];
+                }
+            });
+        }
+    }
+}
+
+- (void)failedToFetchLocation
+{
+    self.fetchingLocation = NO;
+    if (self.fetchLocationFailureBlock) {
+        self.fetchLocationFailureBlock(nil);
+    }
+    self.fetchLocationSuccessBlock = nil;
+    self.fetchLocationFailureBlock = nil;
+}
+
+- (void)fetchedLocation:(CLLocation *)location
+{
+    self.fetchingLocation = NO;
+    if (self.fetchLocationSuccessBlock) {
+        self.fetchLocationSuccessBlock(location);
+    }
+    self.fetchLocationSuccessBlock = nil;
+    self.fetchLocationFailureBlock = nil;
 }
 
 - (CLLocation *)currentLocation
@@ -108,7 +158,8 @@ NSString * const kDidUpdateLocationNotification = @"didUpdateLocationNotificatio
 {
     CLLocation *location = [locations lastObject];
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidUpdateLocationNotification object:nil userInfo:@{@"location" : location}];
-    if ([[NSDate date] timeIntervalSinceDate:location.timestamp] < 60) {
+    BOOL locationIsValid = [[NSDate date] timeIntervalSinceDate:location.timestamp] < 60;
+    if (locationIsValid) {
         [self stopTracking];
     }
 }

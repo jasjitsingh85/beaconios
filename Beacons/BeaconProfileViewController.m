@@ -330,14 +330,9 @@
 {
     self.openToInviteView = YES;
     [self inviteTabTouched:nil];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"You're Here!" message:@"Want to check in?"];
-    [alertView addButtonWithTitle:@"Nah" handler:nil];
-    [alertView setCancelButtonWithTitle:@"Yes, Ma'am" handler:^{
-        [[APIClient sharedClient] checkInFriendWithID:[User loggedInUser].userID isUser:YES atbeacon:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [self refreshBeaconData];
-        } failure:nil];
-    }];
-    [alertView show];
+    [[BeaconManager sharedManager] promptUserToCheckInToBeacon:self.beacon success:^(BOOL checkedIn) {
+        [self refreshBeaconData];
+    } failure:nil];
 }
 
 - (void)getDirectionsToBeacon

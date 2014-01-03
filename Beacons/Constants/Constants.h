@@ -11,11 +11,17 @@
 #define kDefaultsKeyLastAuthorizationToken @"lastAuthorizationToken"
 #define kDefaultsKeyArchivedBeacons @"archivedBeacons"
 #define kDefaultsKeyHasFinishedPermissions @"hasFinishedPermissions"
+#define kDefaultsKeyCheckinPromptHotspots @"checkinPromptHotspots"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"
 #define kPushNotificationTypeBeaconUpdate @"Hotspot Update"
 #define kPushNotificationTypeGeneral @"General"
+
+//local notifications
+#define kLocalNotificationTypeKey @"localNotificationTypeKey"
+#define kLocalNotificationTypeCheckinPrompt @"localNotificationTypeCheckinPrompt"
+#define kLocalNotificationTypeEnteredRegion @"localNotificationTypeEnteredRegion"
 
 //location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"

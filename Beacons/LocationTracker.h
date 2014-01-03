@@ -17,8 +17,8 @@ extern NSString * const kDidUpdateLocationNotification;
 
 + (LocationTracker *)sharedTracker;
 - (CLLocation *)currentLocation;
+- (void)fetchCurrentLocation:(void (^)(CLLocation *location))success failure:(void (^)(NSError *error))failure;
 - (void)requestLocationPermission;
-
 - (void)startTrackingIfAuthorized;
 - (void)stopTracking;
 - (void)monitorRegion:(CLRegion *)region;
