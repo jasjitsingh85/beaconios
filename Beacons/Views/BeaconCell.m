@@ -134,6 +134,8 @@
         [self.contentView addSubview:self.createBeaconLabel];
         self.createBeaconLabel.hidden = YES;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAddressLabel) name:kDidUpdateLocationNotification object:nil];
+        
     }
     return self;
 }
