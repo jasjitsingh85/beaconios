@@ -68,6 +68,9 @@
     
     self.descriptionContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
     self.descriptionContainerView.backgroundColor = [UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0];
+    UITapGestureRecognizer *descriptionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionTouched:)];
+    descriptionTap.numberOfTapsRequired = 1;
+    [self.descriptionContainerView addGestureRecognizer:descriptionTap];
     [self.scrollView addSubview:self.descriptionContainerView];
     
     self.dateContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.descriptionContainerView.frame), self.view.frame.size.width, 162)];
@@ -232,6 +235,11 @@
     self.characterCountLabel.hidden = self.descriptionTextView.text.length < 20;
     self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters", self.descriptionTextView.text.length, MAX_CHARACTER_COUNT];
     self.characterCountLabel.textColor = self.descriptionTextView.text.length == MAX_CHARACTER_COUNT ? [UIColor whiteColor] : [[UIColor whiteColor] colorWithAlphaComponent:0.7];
+}
+
+- (void)descriptionTouched:(id)sender
+{
+    [self.descriptionTextView becomeFirstResponder];
 }
 
 - (void)locationTouched:(id)sender
