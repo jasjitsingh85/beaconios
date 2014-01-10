@@ -10,6 +10,7 @@
 #import "UIImage+Resize.h"
 #import "Beacon.h"
 #import "Contact.h"
+#import "AppDelegate.h"
 
 @implementation APIClient
 
@@ -48,7 +49,7 @@ static dispatch_once_t onceToken;
     [self setDefaultHeader:@"Accept-Charset" value:@"utf-8"];
     
     [self setupAuthorization];
-    [[NSNotificationCenter defaultCenter] addObserver:_sharedClient selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(HTTPOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
     
     return self;
 }
@@ -76,8 +77,13 @@ static dispatch_once_t onceToken;
     if (![operation isKindOfClass:[AFHTTPRequestOperation class]]) {
         return;
     }
+    
     if ([operation.response statusCode] == kHTTPStatusCodeUnauthorized) {
-        // enqueue a new request operation here
+        BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
+        if (isLoggedIn) {
+            [[AppDelegate sharedAppDelegate] logoutOfServer];
+            [[[UIAlertView alloc] initWithTitle:@"Session Expired" message:@"Please log in" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 #if DEBUG
     if (operation.error) {
