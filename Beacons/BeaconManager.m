@@ -271,7 +271,7 @@
 
 - (void)didUpdateLocation:(NSNotification *)notification
 {
-    if (self.dateLastSentLocation && [[NSDate date] timeIntervalSinceDate:self.dateLastSentLocation] < 60*5) {
+    if (self.dateLastSentLocation && [[NSDate date] timeIntervalSinceDate:self.dateLastSentLocation] < 60*2) {
         return;
     }
     CLLocation *location = notification.userInfo[@"location"];

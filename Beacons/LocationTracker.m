@@ -77,7 +77,10 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     }
     else {
         CLLocation *currentLocation = self.currentLocation;
-        if (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] < 60) {
+        NSTimeInterval maxAge = 60;
+        CLLocationAccuracy requiredAccuracy = 100;
+        BOOL locationIsValid = currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] < maxAge && currentLocation.horizontalAccuracy <= requiredAccuracy;
+        if (locationIsValid) {
             [self fetchedLocation:currentLocation];
         }
         else {
@@ -157,9 +160,12 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidUpdateLocationNotification object:nil userInfo:@{@"location" : location}];
-    BOOL locationIsValid = [[NSDate date] timeIntervalSinceDate:location.timestamp] < 60;
+    NSTimeInterval maxAge = 60;
+    CLLocationAccuracy requiredAccuracy = 100;
+    BOOL locationIsValid = [[NSDate date] timeIntervalSinceDate:location.timestamp] < maxAge && location.horizontalAccuracy <= requiredAccuracy;
     if (locationIsValid) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidUpdateLocationNotification object:nil userInfo:@{@"location" : location}];
+        [self fetchedLocation:location];
         [self stopTracking];
     }
 }
@@ -181,7 +187,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
     CLLocation *currentLocation = [self currentLocation];
-    if (!currentLocation || (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] > 60*10)) {
+    if (!currentLocation || (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] > 60)) {
         [self startTrackingIfAuthorized];
     }
 }
