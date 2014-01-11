@@ -206,6 +206,8 @@
     self.descriptionTextView.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
     self.datePicker.date = beacon.time;
+    self.useCurrentLocation = NO;
+    self.beaconCoordinate = self.beacon.coordinate;
 }
 
 - (void)scrollToShowSetBeaconButton
