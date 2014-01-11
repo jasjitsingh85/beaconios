@@ -56,14 +56,6 @@
     self.beacons = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
-- (void)setCurrentBeacon:(Beacon *)currentBeacon
-{
-    _currentBeacon = currentBeacon;
-    [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:currentBeacon.beaconID.stringValue];
-    CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:currentBeacon.coordinate radius:100 identifier:currentBeacon.beaconID.stringValue];
-    [[LocationTracker sharedTracker] monitorRegion:region];
-}
-
 - (void)setBeacons:(NSArray *)beacons
 {
     _beacons = beacons;
@@ -168,7 +160,8 @@
     CLLocation *location = [LocationTracker sharedTracker].currentLocation;
     [[APIClient sharedClient] postBeacon:beacon userLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [beacon updateWithData:responseObject[@"beacon"]];
-        self.currentBeacon = beacon;
+        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
+        [[LocationTracker sharedTracker] monitorRegion:region];
         if (success) {
             success();
         }
@@ -181,7 +174,6 @@
 
 - (void)confirmBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
-    self.currentBeacon = beacon;
     [[APIClient sharedClient] confirmBeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success();
