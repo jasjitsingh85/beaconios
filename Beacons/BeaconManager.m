@@ -56,6 +56,20 @@
     self.beacons = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
+- (void)updateArchivedBeaconsWithBeacon:(Beacon *)beacon
+{
+    NSMutableArray *beacons = self.beacons ? [NSMutableArray arrayWithArray:self.beacons] : [[NSMutableArray alloc] init];
+    //remove existing beacon if necessary
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beaconID = %@", beacon.beaconID];
+    NSArray *existing = [beacons filteredArrayUsingPredicate:predicate];
+    if (existing && existing.count) {
+        [beacons removeObject:[existing firstObject]];
+    }
+    [beacons addObject:beacon];
+    self.beacons = [NSArray arrayWithArray:beacons];
+    [self archiveBeacons];
+}
+
 - (void)setBeacons:(NSArray *)beacons
 {
     _beacons = beacons;
@@ -148,6 +162,9 @@
         if (success) {
             success(beacon);
         }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self updateArchivedBeaconsWithBeacon:beacon];
+        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
@@ -165,6 +182,9 @@
         if (success) {
             success();
         }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self updateArchivedBeaconsWithBeacon:beacon];
+        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
