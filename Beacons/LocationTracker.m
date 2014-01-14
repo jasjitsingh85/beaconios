@@ -186,10 +186,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 #pragma mark - UIApplication Notifications
 - (void)applicationWillEnterForeground:(NSNotification *)notification
 {
-    CLLocation *currentLocation = [self currentLocation];
-    if (!currentLocation || (currentLocation && [[NSDate date] timeIntervalSinceDate:currentLocation.timestamp] > 60)) {
-        [self startTrackingIfAuthorized];
-    }
+    [self startTrackingIfAuthorized];
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
