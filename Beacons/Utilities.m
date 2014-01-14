@@ -69,6 +69,17 @@
 
 + (void)launchMapDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName
 {
+    BOOL canUseGoogleMaps = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"comgooglemaps://"]];
+    if (canUseGoogleMaps) {
+        [self launchGoogleMapsDirectionsToCoordinate:coordinate addressDictionary:addressDictionary destinationName:destinationName];
+    }
+    else {
+        [self launchAppleMapsDirectionsToCoordinate:coordinate addressDictionary:addressDictionary destinationName:destinationName];
+    }
+}
+
++ (void)launchAppleMapsDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName
+{
     MKPlacemark* place = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:addressDictionary];
     MKMapItem* destination = [[MKMapItem alloc] initWithPlacemark: place];
     destination.name = destinationName;
@@ -77,6 +88,12 @@
                              MKLaunchOptionsDirectionsModeDriving,
                              MKLaunchOptionsDirectionsModeKey, nil];
     [MKMapItem openMapsWithItems: items launchOptions: options];
+}
+
++ (void)launchGoogleMapsDirectionsToCoordinate:(CLLocationCoordinate2D)coordinate addressDictionary:(NSDictionary *)addressDictionary destinationName:(NSString *)destinationName
+{
+    NSString *urlString = [NSString stringWithFormat:@"comgooglemaps://?daddr=%@,%@", @(coordinate.latitude), @(coordinate.longitude)];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
 }
 
 + (void)reverseGeoCodeLocation:(CLLocation *)location completion:(void (^)(NSString *addressString, NSError *error))completion
