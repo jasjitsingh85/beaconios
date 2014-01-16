@@ -49,7 +49,7 @@
     self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
     
     self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
-    self.expirationDate = [NSDate dateWithTimeIntervalSinceNow:[data[@"expiration"] doubleValue]];
+    self.expirationDate = [NSDate dateWithTimeIntervalSince1970:[data[@"expiration"] doubleValue]];
     self.address = data[@"address"];
     if (!self.address || [self.address isEqualToString:@""]) {
         [self geoCodeAddress];
