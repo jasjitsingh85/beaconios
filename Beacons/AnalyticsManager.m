@@ -27,6 +27,7 @@
     self = [super init];
     if (self) {
         // Mixpanel initialization
+        [Appsee start:@"a7b17f911dfd4d57a2b53abc502baaef"];
         [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
         [self setupForUser];
     }

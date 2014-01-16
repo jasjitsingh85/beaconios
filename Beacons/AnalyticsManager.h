@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Mixpanel/Mixpanel.h>
-
+#import <Appsee/Appsee.h>
 
 @interface AnalyticsManager : NSObject
 
