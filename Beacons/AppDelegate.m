@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <CocoaLumberjack/DDFileLogger.h>
 #import "CenterNavigationController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
@@ -88,6 +89,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //start logger
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    [DDLog addLogger:fileLogger];
     [CrashManager enableCrittercism];
     
     //update content from server

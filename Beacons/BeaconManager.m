@@ -7,6 +7,7 @@
 //
 
 #import "BeaconManager.h"
+#import <CocoaLumberjack/DDLog.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "APIClient.h"
 #import "Beacon.h"
@@ -207,6 +208,7 @@
 
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
 {
+    DDLogInfo(@"received did enter region notification");
 #if DEBUG
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = @"Debugging. Entered region";
@@ -219,6 +221,7 @@
 
 - (void)didArriveAtBeaconWithID:(NSNumber *)beaconID
 {
+    DDLogInfo(@"did arrive at beacon with id %@", beaconID);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beaconID = %@", beaconID];
     NSArray *filtered = [self.beacons filteredArrayUsingPredicate:predicate];
     Beacon *beacon = [filtered firstObject];
@@ -230,6 +233,7 @@
         return;
     }
     
+    DDLogInfo(@"will show push notification for beacon with id %@ expiration date %@", beacon.beaconID, beacon.expirationDate);
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = @"You arrived at a Hotspot. Want to check yourself in?";
     localNotification.userInfo = @{@"beaconID" : beaconID};
