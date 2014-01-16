@@ -1,3 +1,12 @@
+#import <CocoaLumberjack/DDLog.h>
+
+//logging
+#ifdef DEBUG
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_INFO;
+#endif
+
 //user defaults keys
 #define kDefaultsKeyFirstName @"defaultsKeyFirstName"
 #define kDefaultsKeyLastName @"defaultsKeyLastName"
@@ -29,6 +38,7 @@
 
 //analytics
 #define MIXPANEL_TOKEN @"5ef90c03d9e72b7e1f460600d47de6ab"
+#define APPSEE_TOKEN @"a7b17f911dfd4d57a2b53abc502baaef"
 
 //conversions
 #define METERS_TO_MILES 0.000621371

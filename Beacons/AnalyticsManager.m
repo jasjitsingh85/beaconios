@@ -26,20 +26,34 @@
 {
     self = [super init];
     if (self) {
-        // Mixpanel initialization
-        [Appsee start:@"a7b17f911dfd4d57a2b53abc502baaef"];
-        [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
         [self setupForUser];
     }
     return self;
 }
 
+- (void)startMixpanel
+{
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+}
+
+- (void)startAppSee
+{
+    [Appsee start:APPSEE_TOKEN];
+}
+
 - (void)setupForUser
 {
     User *loggedInUser = [User loggedInUser];
+    if (loggedInUser && [self userIsBlacklisted:loggedInUser]) {
+        return;
+    }
+    [self startMixpanel];
+    [self startAppSee];
     if (!loggedInUser || !loggedInUser.userID) {
         return;
     }
+    
+    [Appsee setUserID:loggedInUser.userID.stringValue];
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:loggedInUser.userID.stringValue];
     NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username", @"phone_number"];
@@ -52,7 +66,14 @@
             [superProperties setObject:value forKey:userProperties[i]];
         }
     }
-    [mixpanel registerSuperProperties:superProperties]	;
+    [mixpanel registerSuperProperties:superProperties];
+}
+
+- (BOOL)userIsBlacklisted:(User *)user
+{
+    NSArray *blackListPhones = @[@"6176337532", @"5413359388"];
+    BOOL blackListed = user.normalizedPhoneNumber && [blackListPhones containsObject:user.normalizedPhoneNumber];
+    return blackListed;
 }
 
 - (void)sendEvent:(NSString *)event withProperties:(NSDictionary *)properties
