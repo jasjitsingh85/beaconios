@@ -108,6 +108,16 @@
 		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
 		96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1F18261902003A47F2 /* PermissionsViewController.m */; };
 		96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C5F20A17DEE39000B48EE2 /* navBar@2x.png */; };
+		96C7FE951897270200A79CC3 /* RegistrationFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C7FE941897270200A79CC3 /* RegistrationFlowViewController.m */; };
+		96C7FE9A1897294100A79CC3 /* orangeGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */; };
+		96C7FE9B1897294100A79CC3 /* greenGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE971897294100A79CC3 /* greenGradientBackground@2x.png */; };
+		96C7FE9C1897294100A79CC3 /* blueGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */; };
+		96C7FE9D1897294100A79CC3 /* redGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE991897294100A79CC3 /* redGradientBackground@2x.png */; };
+		96C7FEA2189737DA00A79CC3 /* martini@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE9E189737DA00A79CC3 /* martini@2x.png */; };
+		96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FE9F189737DA00A79CC3 /* fruityDrink@2x.png */; };
+		96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEA0189737DA00A79CC3 /* whisky@2x.png */; };
+		96C7FEA5189737DA00A79CC3 /* beer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEA1189737DA00A79CC3 /* beer@2x.png */; };
+		96C7FEA71898158200A79CC3 /* iphoneVector@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
 		96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDE1805066700D62462 /* menuSettings@2x.png */; };
@@ -321,6 +331,17 @@
 		96AFCA1E18261902003A47F2 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionsViewController.h; path = ../PermissionsViewController.h; sourceTree = "<group>"; };
 		96AFCA1F18261902003A47F2 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionsViewController.m; path = ../PermissionsViewController.m; sourceTree = "<group>"; };
 		96C5F20A17DEE39000B48EE2 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
+		96C7FE931897270200A79CC3 /* RegistrationFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFlowViewController.h; sourceTree = "<group>"; };
+		96C7FE941897270200A79CC3 /* RegistrationFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFlowViewController.m; sourceTree = "<group>"; };
+		96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "orangeGradientBackground@2x.png"; sourceTree = "<group>"; };
+		96C7FE971897294100A79CC3 /* greenGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenGradientBackground@2x.png"; sourceTree = "<group>"; };
+		96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueGradientBackground@2x.png"; sourceTree = "<group>"; };
+		96C7FE991897294100A79CC3 /* redGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redGradientBackground@2x.png"; sourceTree = "<group>"; };
+		96C7FE9E189737DA00A79CC3 /* martini@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "martini@2x.png"; sourceTree = "<group>"; };
+		96C7FE9F189737DA00A79CC3 /* fruityDrink@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fruityDrink@2x.png"; sourceTree = "<group>"; };
+		96C7FEA0189737DA00A79CC3 /* whisky@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whisky@2x.png"; sourceTree = "<group>"; };
+		96C7FEA1189737DA00A79CC3 /* beer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beer@2x.png"; sourceTree = "<group>"; };
+		96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphoneVector@2x.png"; sourceTree = "<group>"; };
 		96C87C86175AB97F006EA3A3 /* DefaultTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultTheme.h; sourceTree = "<group>"; };
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
@@ -623,6 +644,8 @@
 				96D52D241838415300496923 /* SecretSettingsViewController.xib */,
 				96A3BC2518564AA800CA1F99 /* HSNavigationController.h */,
 				96A3BC2618564AA800CA1F99 /* HSNavigationController.m */,
+				96C7FE931897270200A79CC3 /* RegistrationFlowViewController.h */,
+				96C7FE941897270200A79CC3 /* RegistrationFlowViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -680,8 +703,17 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */,
+				96C7FE9E189737DA00A79CC3 /* martini@2x.png */,
+				96C7FE9F189737DA00A79CC3 /* fruityDrink@2x.png */,
+				96C7FEA0189737DA00A79CC3 /* whisky@2x.png */,
+				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
+				96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */,
+				96C7FE971897294100A79CC3 /* greenGradientBackground@2x.png */,
+				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
+				96C7FE991897294100A79CC3 /* redGradientBackground@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
@@ -869,27 +901,36 @@
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
 				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
+				96C7FE9A1897294100A79CC3 /* orangeGradientBackground@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
+				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				96859CF017EFA7BD00C1C467 /* Default@2x.png in Resources */,
 				9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */,
+				96C7FEA71898158200A79CC3 /* iphoneVector@2x.png in Resources */,
 				96859CF117EFA7BD00C1C467 /* Default-568h@2x.png in Resources */,
+				96C7FE9C1897294100A79CC3 /* blueGradientBackground@2x.png in Resources */,
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */,
+				96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
+				96C7FEA2189737DA00A79CC3 /* martini@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
+				96C7FEA5189737DA00A79CC3 /* beer@2x.png in Resources */,
 				96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */,
+				96C7FE9D1897294100A79CC3 /* redGradientBackground@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
+				96C7FE9B1897294100A79CC3 /* greenGradientBackground@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
@@ -966,6 +1007,7 @@
 				96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
+				96C7FE951897270200A79CC3 /* RegistrationFlowViewController.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
