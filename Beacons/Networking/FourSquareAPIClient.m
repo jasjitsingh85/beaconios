@@ -48,7 +48,8 @@ static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
     NSDictionary *parameters = @{@"ll": [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude],
                                  @"query" : query,
                                  @"radius" : radius,
-                                 @"limit" : limit};
+                                 @"limit" : limit,
+                                 @"v" : @"20140129"};
     BZFoursquareRequest *request = [self.foursquare userlessRequestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters delegate:self];
     [self.requests addObject:request];
     [self.completionBlocks addObject:completion];
