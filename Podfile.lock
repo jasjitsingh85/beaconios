@@ -1,7 +1,6 @@
 PODS:
   - AFNetworking (1.2.1)
   - AHAlertView (0.0.2)
-  - Appsee (2.0.6)
   - BlocksKit (1.8.3):
     - libffi
   - BSKeyboardControls (2.0)
@@ -38,7 +37,6 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 1.2)
   - AHAlertView (~> 0.0.2)
-  - Appsee
   - BlocksKit (~> 1.8.3)
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
@@ -58,7 +56,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
   AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
-  Appsee: 267f9614a10707ae89214e31bcbff64d54a26b98
   BlocksKit: 27257f9cbbec0ea98c80ba83cc2ea7111ae62eb2
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: 19dceba2d0360ed383cba983bc3ef0dd089c42a1
@@ -72,4 +69,4 @@ SPEC CHECKSUMS:
   MSDynamicsDrawerViewController: ae0dec8b54cf08efdfb3c6e8dfa95fb223218223
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
 
-COCOAPODS: 0.28.0
+COCOAPODS: 0.29.0

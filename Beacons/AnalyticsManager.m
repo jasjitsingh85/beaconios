@@ -36,11 +36,6 @@
     [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
 }
 
-- (void)startAppSee
-{
-    [Appsee start:APPSEE_TOKEN];
-}
-
 - (void)setupForUser
 {
     User *loggedInUser = [User loggedInUser];
@@ -48,12 +43,10 @@
         return;
     }
     [self startMixpanel];
-    [self startAppSee];
     if (!loggedInUser || !loggedInUser.userID) {
         return;
     }
     
-    [Appsee setUserID:loggedInUser.userID.stringValue];
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:loggedInUser.userID.stringValue];
     NSArray *mixpanelProperties = @[@"$email", @"$first_name", @"$last_name", @"$username", @"phone_number"];
