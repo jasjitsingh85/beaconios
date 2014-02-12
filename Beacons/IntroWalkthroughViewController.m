@@ -246,6 +246,12 @@ typedef enum ScrollDirection {
             [self.currentPageView animateInFromRight];
         }
     }
+    //make sure other page views are hidden of screen
+    for (id<RegistrationPageView>pageView in pageViews) {
+        if (pageView != self.currentPageView) {
+            [pageView hideOffScreen];
+        }
+    }
 }
 
 @end
@@ -601,6 +607,11 @@ typedef enum ScrollDirection {
         self.handPhoneView.image = [self.handPhoneView.animationImages lastObject];
         [self.handPhoneView startAnimating];
     });
+    
+    self.captionLabel.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
+        self.captionLabel.alpha = 1;
+    } completion:nil];
 
 }
 
