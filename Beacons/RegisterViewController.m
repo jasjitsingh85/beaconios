@@ -273,7 +273,7 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, again. Can I get ur #?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, again. What's your number?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, again."]];
     self.hotbotCommentLabel.attributedText = attributedText;
     self.hotbotCommentLabel.alpha = 0;
@@ -323,7 +323,9 @@ typedef enum {
     [textField becomeFirstResponder];
     
     [self.confirmButton setTitle:@"Activate" forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Back" forState:UIControlStateNormal];
+    
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Back" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     self.activationFormView.alpha = 1;
     self.activationFormView.transform = CGAffineTransformMakeTranslation(-CGRectGetMaxX(self.activationFormView.frame) - 20, 0);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
@@ -334,7 +336,7 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started!" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started! Enter your code." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Let's get started!"]];
     self.hotbotCommentLabel.attributedText = attributedText;
     self.hotbotCommentLabel.alpha = 0;
