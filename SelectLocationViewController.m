@@ -85,7 +85,7 @@
 
 - (void)parseVenuesFromFourSquareResponse:(NSDictionary *)response
 {
-    NSArray *venueData = response[@"groups"][0][@"items"];
+    NSArray *venueData = response[@"venues"];
     NSMutableArray *venues = [NSMutableArray new];
     for (NSDictionary *item in venueData) {
         Venue *venue = [[Venue alloc] initWithData:item];
