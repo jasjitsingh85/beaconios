@@ -44,6 +44,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)archiveBeacons
 {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.beacons];

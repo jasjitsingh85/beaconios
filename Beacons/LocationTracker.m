@@ -51,6 +51,11 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)startTrackingIfAuthorized
 {
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
