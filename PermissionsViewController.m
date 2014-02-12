@@ -24,6 +24,7 @@ typedef enum {
 @property (strong, nonatomic) NSArray *subtitles;
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIButton *skipButton;
+@property (strong, nonatomic) UIImageView *hotbotImageView;
 @property (assign, nonatomic) ViewMode viewMode;
 
 @end
@@ -34,7 +35,7 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orangeBackground"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"waveBackground"]];
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
     CGRect logoFrame = logoImageView.frame;
@@ -45,14 +46,13 @@ typedef enum {
     
     self.titleLabel = [[UILabel alloc] init];
     CGRect titleLabelFrame;
-    titleLabelFrame.size = CGSizeMake(300, 34);
-    titleLabelFrame.origin.x = 0.5*(self.view.frame.size.width - titleLabelFrame.size.width);
-    titleLabelFrame.origin.y = 98;
+    titleLabelFrame.size = CGSizeMake(300, 23);
+    titleLabelFrame.origin.x = 134;
+    titleLabelFrame.origin.y = 82;
     self.titleLabel.frame = titleLabelFrame;
-    self.titleLabel.font = [ThemeManager regularFontOfSize:32];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.font = [ThemeManager regularFontOfSize:20];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.textColor = [UIColor unnormalizedColorWithRed:234 green:118 blue:90 alpha:255];
     [self.view addSubview:self.titleLabel];
     
     self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,7 +63,7 @@ typedef enum {
     [self.confirmButton setTitleColor:confirmButtonColor forState:UIControlStateNormal];
     self.confirmButton.layer.cornerRadius = 4;
     CGRect confirmButtonFrame;
-    confirmButtonFrame.size  = CGSizeMake(200, 35);
+    confirmButtonFrame.size  = CGSizeMake(242, 35);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
     confirmButtonFrame.origin.y = 360;
     self.confirmButton.frame = confirmButtonFrame;
@@ -72,14 +72,23 @@ typedef enum {
     
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
-    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.skipButton.backgroundColor = [UIColor colorWithRed:126/255.0 green:126/255.0 blue:126/255.0 alpha:1];
+    [self.skipButton setTitleColor:[UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0] forState:UIControlStateNormal];
+    self.skipButton.backgroundColor = [UIColor clearColor];
+    self.skipButton.layer.cornerRadius = self.confirmButton.layer.cornerRadius;
+    self.skipButton.layer.borderColor = [UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0].CGColor;
+    self.skipButton.layer.borderWidth = 2;
     self.skipButton.layer.cornerRadius = 4;
     CGRect skipButtonFrame = self.confirmButton.frame;
     skipButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame) + 30;
     self.skipButton.frame = skipButtonFrame;
     [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.skipButton];
+    
+    self.hotbotImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotbotSmile"]];
+        self.hotbotImageView.transform = CGAffineTransformRotate(self.hotbotImageView.transform, M_PI/15.0);
+    self.hotbotImageView.transform = CGAffineTransformScale(self.hotbotImageView.transform, 1.2, 1.2);
+    self.hotbotImageView.transform = CGAffineTransformTranslate(self.hotbotImageView.transform, 0, 20);
+    [self.view addSubview:self.hotbotImageView];
     
     [self enterContactsMode];
 }
@@ -96,14 +105,14 @@ typedef enum {
         UILabel *label = [[UILabel alloc] init];
         label.text = strings[i];
         CGRect labelFrame;
-        labelFrame.size = CGSizeMake(290, 50);
-        labelFrame.origin.x = 0.5*(self.view.frame.size.width - labelFrame.size.width);
-        labelFrame.origin.y = 165 + 50*i;
+        labelFrame.size = CGSizeMake(150, 50);
+        labelFrame.origin.x = self.titleLabel.frame.origin.x;
+        labelFrame.origin.y = 120 + 50*i;
         label.frame = labelFrame;
         label.numberOfLines = 0;
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor whiteColor];
-        label.font = [ThemeManager lightFontOfSize:20];
+        label.textAlignment = NSTextAlignmentLeft;
+        label.textColor = [UIColor blackColor];
+        label.font = [ThemeManager lightFontOfSize:14];
         [subtitleLabels addObject:label];
     }
     return subtitleLabels;
@@ -112,7 +121,7 @@ typedef enum {
 - (void)enterContactsMode
 {
     self.viewMode = ViewModeContact;
-    self.titleLabel.text = @"Sync Contacts";
+    self.titleLabel.text = @"Sync Contacts!";
     [self removeSubtitleLabels];
     self.subtitles = [self subtitleLabelsForStrings:@[@"So you can invite friends to events"]];
     [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
@@ -122,10 +131,9 @@ typedef enum {
 - (void)enterPushNotificationMode
 {
     self.viewMode = ViewModePush;
-    self.titleLabel.text = @"Push It Good";
+    self.titleLabel.text = @"Push It.";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Get invitations immediately",
-                                                      @"Chat in real-time"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Get invitations to events and chat in real-time"]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
