@@ -19,7 +19,7 @@
 #import "LocationTracker.h"
 #import "NotificationManager.h"
 #import "CrashManager.h"
-#import "RegisterViewController.h"
+#import "RegistrationFlowViewController.h"
 #import "SetBeaconViewController.h"
 #import "BeaconProfileViewController.h"
 #import "PermissionsViewController.h"
@@ -30,7 +30,7 @@
 
 @interface AppDelegate()
 
-@property (strong, nonatomic) RegisterViewController *registerViewController;
+@property (strong, nonatomic) RegistrationFlowViewController *registerViewController;
 @property (strong, nonatomic) NSDictionary *tentativeAccountData;
 
 @end
@@ -102,7 +102,7 @@
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
-        self.registerViewController = [[RegisterViewController alloc] init];
+        self.registerViewController = [[RegistrationFlowViewController alloc] init];
         self.window.rootViewController = self.registerViewController;
     }
     else {
@@ -224,7 +224,7 @@
 
 - (void)logoutOfServer
 {
-    self.registerViewController = [[RegisterViewController alloc] init];
+    self.registerViewController = [[RegistrationFlowViewController alloc] init];
     self.window.rootViewController = self.registerViewController;
     //nil out any view controllers that have user data
     self.mapViewController = nil;
