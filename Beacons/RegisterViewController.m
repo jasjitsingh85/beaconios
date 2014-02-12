@@ -273,8 +273,8 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, gurl. Can I get ur #?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, gurl."]];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, again. Can I get ur #?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, again."]];
     self.hotbotCommentLabel.attributedText = attributedText;
     self.hotbotCommentLabel.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
@@ -304,8 +304,8 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, cutie! Looks like you're new." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, cutie!"]];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Welcome! Looks like you're new." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Welcome!"]];
     self.hotbotCommentLabel.attributedText = attributedText;
     self.hotbotCommentLabel.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
