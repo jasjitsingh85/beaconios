@@ -10,4 +10,7 @@
 
 @interface RegisterViewController : UIViewController
 
+- (void)enterRegisterMode;
+- (void)enterSignInMode;
+
 @end

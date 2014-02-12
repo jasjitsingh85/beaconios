@@ -36,6 +36,8 @@ typedef enum {
 @property (strong, nonatomic) UIButton *helpButton;
 @property (assign, nonatomic) ViewMode viewMode;
 @property (assign, nonatomic) BOOL makingNetworkRequest;
+@property (strong, nonatomic) UIImageView *hotbotImageView;
+@property (strong, nonatomic) UILabel *hotbotCommentLabel;
 @end
 
 @implementation RegisterViewController
@@ -55,15 +57,15 @@ typedef enum {
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
     self.view.userInteractionEnabled = YES;
-    self.viewMode = ViewModeRegister;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"orangeBackground"]];
-    NSArray *registerFormTitles = @[@"name", @"email", @"phone"];
-    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 250, 36*registerFormTitles.count) formTitles:registerFormTitles];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"waveBackground"]];
+    NSArray *registerFormTitles = @[@"full name", @"email", @"phone"];
+    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(81, 105, 220, 30*registerFormTitles.count) formTitles:registerFormTitles];
     self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
     self.registerFormView.layer.cornerRadius = 4;
+    self.registerFormView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.registerFormView.layer.borderWidth = 1;
     [self.view addSubview:self.registerFormView];
-    [self.registerFormView centerHorizontallyInSuperView];
     UITextField *registerEmailTextField = [self.registerFormView textFieldAtIndex:1];
     registerEmailTextField.keyboardType = UIKeyboardTypeEmailAddress;
     registerEmailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -72,21 +74,24 @@ typedef enum {
     
     
     NSArray *signInFormTitles = @[@"phone"];
-    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 250, 36*signInFormTitles.count) formTitles:signInFormTitles];
+    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(81, 159, 220, 30*signInFormTitles.count) formTitles:signInFormTitles];
     self.signInFormView.delegate = self;
     self.signInFormView.backgroundColor = [UIColor whiteColor];
     self.signInFormView.layer.cornerRadius = 4;
+    self.signInFormView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.signInFormView.layer.borderWidth = 1;
     [self.view addSubview:self.signInFormView];
-    [self.signInFormView centerHorizontallyInSuperView];
     self.signInFormView.alpha = 0;
     UITextField *signInPhoneTextField = [self.signInFormView textFieldAtIndex:0];
     signInPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     NSArray *activationFormTitles = @[@"code"];
-    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 84, 65, 36*activationFormTitles.count) formTitles:activationFormTitles];
+    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(81, 159, 65, 36*activationFormTitles.count) formTitles:activationFormTitles];
     self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
+    self.activationFormView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.activationFormView.layer.borderWidth = 1;
     [self.view addSubview:self.activationFormView];
     [self.activationFormView centerHorizontallyInSuperView];
     self.activationFormView.alpha = 0;
@@ -101,24 +106,22 @@ typedef enum {
     [self.confirmButton setTitleColor:confirmButtonColor forState:UIControlStateNormal];
     self.confirmButton.layer.cornerRadius = 4;
     CGRect confirmButtonFrame;
-    confirmButtonFrame.size  = CGSizeMake(200, 35);
+    confirmButtonFrame.size  = CGSizeMake(243, 35);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 229;
+    confirmButtonFrame.origin.y = 265;
     self.confirmButton.frame = confirmButtonFrame;
     [self.view addSubview:self.confirmButton];
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.loginButton setTitle:@"I have an account" forState:UIControlStateNormal];
     UIColor *loginButtonColor = [UIColor whiteColor];
     [self.loginButton setTitleColor:[loginButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.loginButton setTitleColor:loginButtonColor forState:UIControlStateNormal];
-    self.loginButton.backgroundColor = [UIColor colorWithRed:126/255.0 green:126/255.0 blue:126/255.0 alpha:1];
-    self.loginButton.layer.cornerRadius = 4;
     CGRect loginButtonFrame;
-    loginButtonFrame.size = CGSizeMake(200, 35);
+    loginButtonFrame.size = self.confirmButton.frame.size;
     loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - loginButtonFrame.size.width);
-    loginButtonFrame.origin.y = 279;
+    loginButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame);
     self.loginButton.frame = loginButtonFrame;
     [self.view addSubview:self.loginButton];
     [self.loginButton addTarget:self action:@selector(loginButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,12 +137,31 @@ typedef enum {
     self.helpButton.frame = helpButtonFrame;
     [self.helpButton addTarget:self action:@selector(helpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.helpButton];
+    
+    self.hotbotImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotbotSmile"]];
+    CGRect hotbotFrame = self.hotbotImageView.frame;
+    hotbotFrame.origin = CGPointMake(-33, 58);
+    self.hotbotImageView.frame = hotbotFrame;
+    [self.view addSubview:self.hotbotImageView];
+    
+    self.hotbotCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(81, 80, 220, 15)];
+    self.hotbotCommentLabel.textColor = [UIColor colorWithRed:234/255.0 green:118/255.0 blue:90/255.0 alpha:1.0];
+    [self.view addSubview:self.hotbotCommentLabel];
+    
+    self.viewMode = -1;
+    [self enterRegisterMode];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [[AnalyticsManager sharedManager] registrationBegan];
+    
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -236,7 +258,11 @@ typedef enum {
     
     self.viewMode = ViewModeSignIn;
     [self.confirmButton setTitle:@"Sign In" forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"Back" forState:UIControlStateNormal];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Not a user? Register here!" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    NSRange range = [attributedTitle.string rangeOfString:@"Register here!"];
+    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:108/255.0 green:124/255.0 blue:146/255.0 alpha:1.0]} range:range];
     self.signInFormView.alpha = 1;
     self.signInFormView.transform = CGAffineTransformMakeTranslation(-CGRectGetMaxX(self.signInFormView.frame) - 20, 0);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
@@ -246,6 +272,14 @@ typedef enum {
     } completion:^(BOOL finished) {
         
     }];
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, gurl. Can I get ur #?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, gurl."]];
+    self.hotbotCommentLabel.attributedText = attributedText;
+    self.hotbotCommentLabel.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
+        self.hotbotCommentLabel.alpha = 1;
+    } completion:nil];
 }
 
 - (void)enterRegisterMode
@@ -255,7 +289,11 @@ typedef enum {
     }
     self.viewMode = ViewModeRegister;
     [self.confirmButton setTitle:@"Register" forState:UIControlStateNormal];
-    [self.loginButton setTitle:@"I have an account" forState:UIControlStateNormal];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Already registed? Login here!" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    NSRange range = [attributedTitle.string rangeOfString:@"Login here!"];
+    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:108/255.0 green:124/255.0 blue:146/255.0 alpha:1.0]} range:range];
+    [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    
     self.registerFormView.alpha = 1;
     self.registerFormView.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width - CGRectGetMinX(self.registerFormView.frame), 0);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
@@ -265,6 +303,14 @@ typedef enum {
     } completion:^(BOOL finished) {
         
     }];
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, cutie! Looks like you're new." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, cutie!"]];
+    self.hotbotCommentLabel.attributedText = attributedText;
+    self.hotbotCommentLabel.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
+        self.hotbotCommentLabel.alpha = 1;
+    } completion:nil];
 }
 
 - (void)enterActivationMode
@@ -275,6 +321,7 @@ typedef enum {
     self.viewMode = ViewModeActivation;
     UITextField *textField = [self.activationFormView textFieldAtIndex:0];
     [textField becomeFirstResponder];
+    
     [self.confirmButton setTitle:@"Activate" forState:UIControlStateNormal];
     [self.loginButton setTitle:@"Back" forState:UIControlStateNormal];
     self.activationFormView.alpha = 1;
@@ -286,6 +333,14 @@ typedef enum {
     } completion:^(BOOL finished) {
         
     }];
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started!" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Let's get started!"]];
+    self.hotbotCommentLabel.attributedText = attributedText;
+    self.hotbotCommentLabel.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
+        self.hotbotCommentLabel.alpha = 1;
+    } completion:nil];
 }
 
 - (BOOL)registerInputsAreValid
@@ -452,6 +507,31 @@ typedef enum {
             textField.text = nil;
         }
     }
+}
+
+#pragma mark - Keyboard
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    if (self.view.frame.size.height == 568) {
+        return;
+    }
+    NSDictionary* info = [notification userInfo];
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(0, -48);
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    if (self.view.frame.size.height == 568) {
+        return;
+    }
+    NSDictionary* info = [notification userInfo];
+    CGFloat animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    [UIView animateWithDuration:animationDuration animations:^{
+        self.view.transform = CGAffineTransformIdentity;
+    }];
 }
 
 @end
