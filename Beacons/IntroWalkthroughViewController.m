@@ -388,7 +388,7 @@ typedef enum ScrollDirection {
     captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
     captionFrame.origin.y = 290;
     self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Tell your friends what you're up to, where you are, and who you're with - all at once";
+    self.captionLabel.text = @"Tell your friends what you're up to, where you are, and who you're with - all at once.";
     self.captionLabel.numberOfLines = 3;
     self.captionLabel.font = [ThemeManager regularFontOfSize:18];
     self.captionLabel.textColor = [UIColor whiteColor];
@@ -489,7 +489,7 @@ typedef enum ScrollDirection {
     captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
     captionFrame.origin.y = 290;
     self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Send them all the info, even if they don't have the app or an iPhone";
+    self.captionLabel.text = @"Send them all the info, even if they don't have the app or an iPhone.";
     self.captionLabel.numberOfLines = 2;
     self.captionLabel.font = [ThemeManager regularFontOfSize:18];
     self.captionLabel.textColor = [UIColor whiteColor];
