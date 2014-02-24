@@ -269,6 +269,12 @@
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
 }
 
+- (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID
+{
+    [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
+    [self.setBeaconViewController preloadWithRecommendation:recommendationID];
+}
+
 #pragma mark - Location
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
 {

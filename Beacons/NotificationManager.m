@@ -127,6 +127,10 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
         }
     }
+    else if ([notificationType isEqualToString:kPushNotificationTypeRecommendation]) {
+        NSNumber *recommendationID = userInfo[@"rec"];
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSetBeaconWithRecommendationID:recommendationID];
+    }
     [[AnalyticsManager sharedManager] foregroundFromPush];
 }
 

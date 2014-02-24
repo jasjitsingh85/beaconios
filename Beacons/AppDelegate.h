@@ -36,5 +36,6 @@ Beacon;
 - (void)setSelectedViewControllerToHome;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
+- (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
 
 @end

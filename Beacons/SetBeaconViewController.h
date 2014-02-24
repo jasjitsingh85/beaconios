@@ -24,4 +24,6 @@
 @property (assign, nonatomic) BOOL editMode;
 @property (strong, nonatomic) Beacon *beacon;
 
+- (void)preloadWithRecommendation:(NSNumber *)recommendationID;
+
 @end

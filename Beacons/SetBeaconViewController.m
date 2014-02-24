@@ -223,6 +223,28 @@
     self.beaconCoordinate = self.beacon.coordinate;
 }
 
+- (void)preloadWithRecommendation:(NSNumber *)recommendationID
+{
+    [self view];
+    
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] getPath:@"recommendation/" parameters:@{@"recommendation_id" : recommendationID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        Venue *venue = [[Venue alloc] initWithData:responseObject];
+        if (venue.name) {
+            self.locationLabel.text = venue.name;
+        }
+        else if (venue.address) {
+            self.locationLabel.text = venue.address;
+        }
+        self.useCurrentLocation = NO;
+        self.beaconCoordinate = venue.coordinate;
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
+
 - (void)scrollToShowSetBeaconButton
 {
     //scroll to show invite button for iPhone 4
