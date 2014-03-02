@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import <CocoaLumberjack/DDFileLogger.h>
 #import "CenterNavigationController.h"
-#import "MapViewController.h"
 #import "MenuViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
@@ -61,14 +60,6 @@
         [_sideNavigationViewController setRevealWidth:278 forDirection:MSDynamicsDrawerDirectionLeft];
     }
     return _sideNavigationViewController;
-}
-
-- (MapViewController *)mapViewController
-{
-    if (!_mapViewController) {
-        _mapViewController = [MapViewController new];
-    }
-    return _mapViewController;
 }
 
 - (SetBeaconViewController *)setBeaconViewController
@@ -228,7 +219,7 @@
     self.registerViewController = [[RegistrationFlowViewController alloc] init];
     self.window.rootViewController = self.registerViewController;
     //nil out any view controllers that have user data
-    self.mapViewController = nil;
+    [BeaconManager sharedManager].beacons = nil;
     [self clearUserDefaults];
     [User logoutUser];
     [[APIClient sharedClient] clearAuthorizationHeader];

@@ -11,7 +11,6 @@
 
 @class CenterNavigationController,
 LoginViewController,
-MapViewController,
 MenuViewController,
 SetBeaconViewController,
 User,
@@ -22,7 +21,6 @@ Beacon;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CenterNavigationController *centerNavigationController;
 @property (strong, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
-@property (strong, nonatomic) MapViewController *mapViewController;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 
