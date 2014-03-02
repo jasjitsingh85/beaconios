@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MRProgress/MRProgress.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface LoadingIndictor : NSObject
 
-+ (MRProgressOverlayView *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated;
++ (MBProgressHUD *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated;
 
 + (void)hideLoadingIndicatorForView:(UIView *)view animated:(BOOL)animated;
 

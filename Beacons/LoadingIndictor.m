@@ -11,18 +11,17 @@
 
 @implementation LoadingIndictor
 
-+ (MRProgressOverlayView *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
++ (MBProgressHUD *)showLoadingIndicatorInView:(UIView *)view animated:(BOOL)animated
 {
-    MRProgressOverlayView *progressOverlay = [MRProgressOverlayView showOverlayAddedTo:view animated:animated];
+    MBProgressHUD *progressOverlay = [MBProgressHUD showHUDAddedTo:view animated:animated];
     progressOverlay.tintColor = [[ThemeManager sharedTheme] darkBlueColor];
-    progressOverlay.titleLabelText = @"";
     return progressOverlay;
 }
 
 + (void)hideLoadingIndicatorForView:(UIView *)view animated:(BOOL)animated
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [MRProgressOverlayView dismissOverlayForView:view animated:animated];
+        [MBProgressHUD hideHUDForView:view animated:animated];
     });
 }
 
