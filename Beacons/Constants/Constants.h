@@ -37,6 +37,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 
+//random string notifications
+#define kRandomStringsUpdated @"randomStringsUpdated"
+
 //analytics
 #define MIXPANEL_TOKEN @"5ef90c03d9e72b7e1f460600d47de6ab"
 #define APPSEE_TOKEN @"a7b17f911dfd4d57a2b53abc502baaef"

@@ -54,10 +54,11 @@
 {
     if (!_sideNavigationViewController) {
         _sideNavigationViewController = [[MSDynamicsDrawerViewController alloc] init];
-        [_sideNavigationViewController addStylersFromArray:@[[MSDynamicsDrawerScaleStyler styler], [MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
+        _sideNavigationViewController.gravityMagnitude = 5;
+        [_sideNavigationViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setDrawerViewController:self.menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
-        [_sideNavigationViewController setRevealWidth:85 forDirection:MSDynamicsDrawerDirectionLeft];
+        [_sideNavigationViewController setRevealWidth:278 forDirection:MSDynamicsDrawerDirectionLeft];
     }
     return _sideNavigationViewController;
 }
@@ -98,7 +99,7 @@
     [[RandomObjectManager sharedManager] updateStringsFromServer];
     
     [ThemeManager customizeAppAppearance];
-    self.centerNavigationController.selectedViewController = self.mapViewController;
+    self.centerNavigationController.selectedViewController = self.setBeaconViewController;
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
@@ -126,7 +127,7 @@
     
     [self.window makeKeyAndVisible];
     UIView *backgroundWindowView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundWindowView.backgroundColor = [UIColor colorWithRed:90/255.0 green:84/255.0 blue:85/255.0 alpha:1.0];
+    backgroundWindowView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     [self.window addSubview:backgroundWindowView];
     [self.window sendSubviewToBack:backgroundWindowView];
     return YES;
@@ -244,7 +245,8 @@
 
 - (void)setSelectedViewControllerToHome
 {
-    [self.centerNavigationController setSelectedViewController:self.mapViewController animated:YES];
+    [self.setBeaconViewController updateDescriptionPlaceholder];
+    [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:YES];
 }
 
 #pragma mark - Beacon Profile

@@ -36,6 +36,8 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
+		960D79F218BC2D6400E9462D /* menuBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960D79F118BC2D6400E9462D /* menuBackground@2x.png */; };
+		960D79F518BC580100E9462D /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 960D79F418BC580100E9462D /* MenuViewController.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
@@ -70,6 +72,8 @@
 		9671D03118273BE700D03D66 /* LockedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9671D02F18273BE700D03D66 /* LockedViewController.m */; };
 		9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9671D03018273BE700D03D66 /* LockedViewController.xib */; };
 		9671D03418273C0F00D03D66 /* lock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9671D03318273C0F00D03D66 /* lock@2x.png */; };
+		9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9671F66718BD5603007DF715 /* BeaconTableViewCell.m */; };
+		9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */; };
 		96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */; };
 		96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */; };
 		96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */; };
@@ -85,6 +89,8 @@
 		96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */; };
 		968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */; };
 		968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8E17F79CEB00D64441 /* JADatePicker.m */; };
+		968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */; };
+		968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 968E287118C3DF5500CB447D /* menuSettings@2x.png */; };
 		9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9690F2C717FFE5980010EFA3 /* menuButton@2x.png */; };
 		9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9690F2C918009A2B0010EFA3 /* rightArrow@2x.png */; };
 		9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9691D25E17F8BD0D0095BA80 /* JAPlaceholderTextView.m */; };
@@ -96,7 +102,6 @@
 		9695644F1758642B0081B349 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644D1758642B0081B349 /* MapViewController.m */; };
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
 		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
-		969564551758691B0081B349 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969564541758691B0081B349 /* MenuViewController.m */; };
 		969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649517E96E1B00F5AB36 /* UIImage+Resize.m */; };
 		969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649817EF85F200F5AB36 /* ImageViewController.m */; };
 		96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2618564AA800CA1F99 /* HSNavigationController.m */; };
@@ -128,7 +133,6 @@
 		96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
-		96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDE1805066700D62462 /* menuSettings@2x.png */; };
 		96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDF1805066700D62462 /* menuInvite@2x.png */; };
 		96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE01805066700D62462 /* menuHome@2x.png */; };
 		96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */; };
@@ -288,6 +292,9 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		960D79F118BC2D6400E9462D /* menuBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBackground@2x.png"; sourceTree = "<group>"; };
+		960D79F318BC580100E9462D /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		960D79F418BC580100E9462D /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -336,6 +343,9 @@
 		9671D02F18273BE700D03D66 /* LockedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockedViewController.m; sourceTree = "<group>"; };
 		9671D03018273BE700D03D66 /* LockedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LockedViewController.xib; sourceTree = "<group>"; };
 		9671D03318273C0F00D03D66 /* lock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock@2x.png"; sourceTree = "<group>"; };
+		9671F66618BD5603007DF715 /* BeaconTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconTableViewCell.h; sourceTree = "<group>"; };
+		9671F66718BD5603007DF715 /* BeaconTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconTableViewCell.m; sourceTree = "<group>"; };
+		9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotbotSmileCircle@2x.png"; sourceTree = "<group>"; };
 		96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendNormal@2x.png"; sourceTree = "<group>"; };
 		96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendInactive@2x.png"; sourceTree = "<group>"; };
@@ -360,6 +370,8 @@
 		968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetBeaconViewController.m; sourceTree = "<group>"; };
 		968CDA8D17F79CEB00D64441 /* JADatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADatePicker.h; sourceTree = "<group>"; };
 		968CDA8E17F79CEB00D64441 /* JADatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADatePicker.m; sourceTree = "<group>"; };
+		968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSetHotspot@2x.png"; sourceTree = "<group>"; };
+		968E287118C3DF5500CB447D /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		9690F2C717FFE5980010EFA3 /* menuButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButton@2x.png"; sourceTree = "<group>"; };
 		9690F2C918009A2B0010EFA3 /* rightArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightArrow@2x.png"; sourceTree = "<group>"; };
 		9691D25D17F8BD0D0095BA80 /* JAPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAPlaceholderTextView.h; sourceTree = "<group>"; };
@@ -374,8 +386,6 @@
 		9695644D1758642B0081B349 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		9695644E1758642B0081B349 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		969564531758691B0081B349 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
-		969564541758691B0081B349 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		969D649417E96E1B00F5AB36 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		969D649517E96E1B00F5AB36 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		969D649717EF85F200F5AB36 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
@@ -422,7 +432,6 @@
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
-		96CBCCDE1805066700D62462 /* menuSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSettings@2x.png"; sourceTree = "<group>"; };
 		96CBCCDF1805066700D62462 /* menuInvite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuInvite@2x.png"; sourceTree = "<group>"; };
 		96CBCCE01805066700D62462 /* menuHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuHome@2x.png"; sourceTree = "<group>"; };
 		96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeRight@2x.png"; sourceTree = "<group>"; };
@@ -627,6 +636,8 @@
 				96E623EF1816485C0048125B /* BounceButton.m */,
 				964263AD181CE75D0015375C /* NavigationBarTitleLabel.h */,
 				964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */,
+				9671F66618BD5603007DF715 /* BeaconTableViewCell.h */,
+				9671F66718BD5603007DF715 /* BeaconTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -719,9 +730,9 @@
 				1F52638C175C496900DD26E1 /* LocationTracker.m */,
 				9695644C1758642B0081B349 /* MapViewController.h */,
 				9695644D1758642B0081B349 /* MapViewController.m */,
+				960D79F318BC580100E9462D /* MenuViewController.h */,
+				960D79F418BC580100E9462D /* MenuViewController.m */,
 				9695644E1758642B0081B349 /* MapViewController.xib */,
-				969564531758691B0081B349 /* MenuViewController.h */,
-				969564541758691B0081B349 /* MenuViewController.m */,
 				9615F4E0175BEBA9005CF62D /* Models */,
 				1FD65829175878480007455B /* Networking */,
 				96C87C7A175A9A2C006EA3A3 /* Resources */,
@@ -841,6 +852,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
@@ -873,9 +885,11 @@
 				9671D03318273C0F00D03D66 /* lock@2x.png */,
 				96C7FE9E189737DA00A79CC3 /* martini@2x.png */,
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
+				960D79F118BC2D6400E9462D /* menuBackground@2x.png */,
 				96CBCCE01805066700D62462 /* menuHome@2x.png */,
+				968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */,
+				968E287118C3DF5500CB447D /* menuSettings@2x.png */,
 				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
-				96CBCCDE1805066700D62462 /* menuSettings@2x.png */,
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
 				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */,
@@ -1170,6 +1184,7 @@
 				96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */,
 				96EB3E0118A19E3C0073CEDF /* inviteMoreAnimation0013.png in Resources */,
 				96EB3E0A18A19E3C0073CEDF /* inviteMoreAnimation0022.png in Resources */,
+				960D79F218BC2D6400E9462D /* menuBackground@2x.png in Resources */,
 				96EB3DB918A19E310073CEDF /* inviteAnyoneAnimation0000.png in Resources */,
 				96EB3E0218A19E3C0073CEDF /* inviteMoreAnimation0014.png in Resources */,
 				96EB3DCC18A19E310073CEDF /* inviteAnyoneAnimation0019.png in Resources */,
@@ -1183,9 +1198,10 @@
 				96C7FE9C1897294100A79CC3 /* blueGradientBackground@2x.png in Resources */,
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
-				96CBCCE11805066700D62462 /* menuSettings@2x.png in Resources */,
 				96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */,
+				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
+				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,
 				96C7FEA2189737DA00A79CC3 /* martini@2x.png in Resources */,
 				96EB3E0818A19E3C0073CEDF /* inviteMoreAnimation0020.png in Resources */,
 				96EB3E0B18A19E3C0073CEDF /* inviteMoreAnimation0023.png in Resources */,
@@ -1205,6 +1221,7 @@
 				96EB3DCF18A19E310073CEDF /* inviteAnyoneAnimation0022.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
+				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
 				96EB3E0618A19E3C0073CEDF /* inviteMoreAnimation0018.png in Resources */,
 				96EB3DC818A19E310073CEDF /* inviteAnyoneAnimation0015.png in Resources */,
@@ -1293,7 +1310,6 @@
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
-				969564551758691B0081B349 /* MenuViewController.m in Sources */,
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
@@ -1307,6 +1323,7 @@
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
 				96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */,
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
+				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
@@ -1344,6 +1361,7 @@
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,
 				1F3EF24817979FD9005240E3 /* NotificationManager.m in Sources */,
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
+				960D79F518BC580100E9462D /* MenuViewController.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
 				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,

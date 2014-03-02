@@ -101,7 +101,6 @@
     
     self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
     self.datePicker.datePickerDelegate = self;
-    self.datePicker.date = [NSDate date];
     [self.dateContainerView addSubview:self.self.datePicker];
     
     UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 150, 19)];
@@ -139,11 +138,11 @@
     locationDescriptionLabel.frame = locationDescriptionLabelFrame;
     [self.locationContainerView addSubview:locationDescriptionLabel];
     
-    NSString *placeholder = [[RandomObjectManager sharedManager] randomSetBeaconPlaceholder];
-    self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
     self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(40, 100, 240, 80)];
+    //hide descriptiontextview while we wait to get placeholder strings from server
+    self.descriptionTextView.placeholder = @"  ";
+    self.descriptionTextView.alpha = 0;
     self.descriptionTextView.returnKeyType = UIReturnKeyDone;
-    self.descriptionTextView.placeholder = self.descriptionPlaceholderText;
     self.descriptionTextView.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
     self.descriptionTextView.font = [ThemeManager regularFontOfSize:15];
     self.descriptionTextView.textColor = [UIColor whiteColor];
@@ -153,8 +152,8 @@
     
     self.locationLabel = [[UILabel alloc] init];
     self.locationLabel.font = [ThemeManager regularFontOfSize:15];
-    self.locationLabel.text = @"Current Location";
     self.locationLabel.textColor = [UIColor colorWithRed:241/255.0 green:183/255.0 blue:172/255.0 alpha:1.0];
+    self.locationLabel.text = @"Current Location";
     CGRect locationLabelFrame;
     locationLabelFrame.size.height = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].height;
     locationLabelFrame.size.width = 150;
@@ -163,11 +162,10 @@
     self.locationLabel.frame = locationLabelFrame;
     [self.locationContainerView addSubview:self.locationLabel];
     
-    //by default set selected location as current location
-    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
-    self.useCurrentLocation = YES;
-    [self updateCurrentLocationAddressFromLocation];
+    [self resetToEmpty];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(randomStringsUpdated:) name:kRandomStringsUpdated object:nil];
 }
 
 - (void)dealloc
@@ -182,8 +180,43 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    NSString *placeholder = [[RandomObjectManager sharedManager] randomSetBeaconPlaceholder];
-    self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
+    [self updateDescriptionPlaceholder];
+}
+
+- (void)resetToEmpty
+{
+    self.didUpdateDescription = NO;
+    self.didUpdateLocation = NO;
+    self.didUpdateTime = NO;
+    self.descriptionTextView.text = nil;
+    self.datePicker.date = [NSDate date];
+    //by default set selected location as current location
+    self.locationLabel.text = @"Current Location";
+    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+    self.useCurrentLocation = YES;
+    [self updateCurrentLocationAddressFromLocation];
+}
+
+- (void)updateDescriptionPlaceholder
+{
+    if (![RandomObjectManager sharedManager].hasUpdatedFromServer) {
+        return;
+    }
+    else {
+        NSString *placeholder = [[RandomObjectManager sharedManager] randomSetBeaconPlaceholder];
+        self.descriptionPlaceholderText = [@"e.g. " stringByAppendingString:placeholder];
+        self.descriptionTextView.placeholder = self.descriptionPlaceholderText;
+    }
+    if (!self.descriptionTextView.alpha) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.descriptionTextView.alpha = 1;
+        }];
+    }
+}
+
+- (void)randomStringsUpdated:(NSNotification *)notification
+{
+    [self updateDescriptionPlaceholder];
 }
 
 - (void)setBeaconCoordinate:(CLLocationCoordinate2D)beaconCoordinate
@@ -495,6 +528,8 @@
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
         [[AnalyticsManager sharedManager] createBeaconWithDescription:beacon.beaconDescription location:weakSelf.locationLabel.text date:beacon.time numInvites:beacon.guestStatuses.count];
+        
+        [self resetToEmpty];
     } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

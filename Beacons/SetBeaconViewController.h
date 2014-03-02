@@ -25,5 +25,6 @@
 @property (strong, nonatomic) Beacon *beacon;
 
 - (void)preloadWithRecommendation:(NSNumber *)recommendationID;
+- (void)updateDescriptionPlaceholder;
 
 @end

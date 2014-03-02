@@ -12,6 +12,8 @@
 
 + (RandomObjectManager *)sharedManager;
 
+@property (assign, nonatomic) BOOL hasUpdatedFromServer;
+
 - (void)updateStringsFromServer;
 - (NSString *)randomInviteFriendsToAppString;
 - (NSString *)randomSetBeaconPlaceholder;
