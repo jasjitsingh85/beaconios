@@ -199,14 +199,14 @@
 - (void)requestBeaconsShowLoadingIndicator:(BOOL)showLoadingIndicator
 {
     if (showLoadingIndicator) {
-        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+        [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
     }
     [[BeaconManager sharedManager] updateBeacons:^(NSArray *beacons) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
         self.beacons = [NSArray arrayWithArray:beacons];
         [self.tableView reloadData];
     } failure:^(NSError *error) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }];
 }
 
