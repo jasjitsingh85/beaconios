@@ -87,7 +87,7 @@
     setHotSpotLabel.textColor = [UIColor whiteColor];
     [self.buttonContainerView addSubview:setHotSpotLabel];
     
-    UIImage *inviteFriendsImage = [UIImage imageNamed:@"menuInvite@2x"];
+    UIImage *inviteFriendsImage = [UIImage imageNamed:@"menuInvite"];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect inviteFrame = CGRectZero;
     inviteFrame.size = buttonSize;
