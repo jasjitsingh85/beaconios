@@ -53,7 +53,7 @@
 {
     if (!_sideNavigationViewController) {
         _sideNavigationViewController = [[MSDynamicsDrawerViewController alloc] init];
-        _sideNavigationViewController.gravityMagnitude = 5;
+        _sideNavigationViewController.gravityMagnitude = 7;
         [_sideNavigationViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setDrawerViewController:self.menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
