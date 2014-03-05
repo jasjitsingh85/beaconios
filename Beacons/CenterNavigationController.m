@@ -8,6 +8,8 @@
 
 #import "CenterNavigationController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Theme.h"
+#import "BeaconManager.h"
 #import "AppDelegate.h"
 
 @interface CenterNavigationController ()
@@ -24,18 +26,57 @@
     [super viewDidLoad];
     self.delegate = self;
     self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *menuButtonImage = [UIImage imageNamed:@"menuButton"];
-    CGRect frame;
-    frame.size = menuButtonImage.size;
-    self.menuButton.frame = frame;
-    [self.menuButton setBackgroundImage:menuButtonImage forState:UIControlStateNormal];
+    self.menuButton.size = CGSizeMake(25, 25);
+    [self updateMenuButton:0];
     [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
+    
+    [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
 }
 
 - (void)toggleSideNav
 {
     MSDynamicsDrawerPaneState paneState = [AppDelegate sharedAppDelegate].sideNavigationViewController.paneState == MSDynamicsDrawerPaneStateClosed ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed;
     [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:paneState inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:YES completion:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == [BeaconManager sharedManager]) {
+        NSInteger beaconCount = 0;
+        if ([BeaconManager sharedManager].beacons) {
+            beaconCount = [BeaconManager sharedManager].beacons.count;
+            jadispatch_main_qeue(^{
+                [self updateMenuButton:beaconCount];
+            });
+
+        }
+    }
+}
+
+- (void)updateMenuButton:(NSInteger)beaconCount
+{
+    if (!beaconCount) {
+        [self.menuButton setImage:[UIImage imageNamed:@"menuButton"] forState:UIControlStateNormal];
+        [self.menuButton setTitle:nil forState:UIControlStateNormal];
+        self.menuButton.backgroundColor = [UIColor clearColor];
+        self.menuButton.layer.cornerRadius = 0;
+    }
+    else {
+        [self.menuButton setImage:nil forState:UIControlStateNormal];
+        [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateNormal];
+        [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+        self.menuButton.backgroundColor = [UIColor whiteColor];
+        self.menuButton.layer.cornerRadius = 4;
+    }
 }
 
 #pragma mark - setters

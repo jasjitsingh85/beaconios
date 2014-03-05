@@ -25,11 +25,11 @@
 
 @property (strong, nonatomic) UIView *tableViewContainer;
 @property (strong, nonatomic) UIView *buttonContainerView;
-@property (strong, nonatomic) NSArray *beacons;
 @property (strong, nonatomic) UIView *customHeaderView;
 @property (strong, nonatomic) UIButton *setBeaconButton;
 @property (strong, nonatomic) UIButton *settingsButton;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
+@property (strong, nonatomic) UIView *emptyBeaconView;
 
 @end
 
@@ -123,21 +123,86 @@
     settingsLabel.textColor = [UIColor whiteColor];
     [self.buttonContainerView addSubview:settingsLabel];
     
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
+    [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingBeacons)) options:0 context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
 {
-    [super viewWillAppear:animated];
-    if (![self hasActiveBeacons]) {
-        [self requestBeaconsShowLoadingIndicator:YES];
+    if (object == [BeaconManager sharedManager]) {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(beacons))]) {
+            [self beaconsChanged];
+        }
+        else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isUpdatingBeacons))]) {
+            [self isUpdatingBeaconsChanged];
+        }
+    }
+}
+
+- (void)isUpdatingBeaconsChanged
+{
+    if ([BeaconManager sharedManager].isUpdatingBeacons) {
+        [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
     }
     else {
-        [self requestBeaconsShowLoadingIndicator:NO];
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }
+}
+
+- (void)beaconsChanged
+{
+    NSInteger beaconCount = 0;
+    NSArray *beacons = [BeaconManager sharedManager].beacons;
+    if (beacons) {
+        beaconCount = beacons.count;
+        jadispatch_main_qeue(^{
+            [self.tableView reloadData];
+            if (!beacons || !beacons.count) {
+                [self showEmptyBeaconView:YES];
+            }
+            else {
+                [self hideEmptyBeaconView:NO];
+            }
+        });
+    }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
+}
+
+- (UIView *)emptyBeaconView
+{
+    if (!_emptyBeaconView) {
+        _emptyBeaconView = [[UIView alloc] init];
+        _emptyBeaconView.size = CGSizeMake(self.tableView.width, 100);
+        _emptyBeaconView.center = CGPointMake(self.tableView.width/2.0, self.tableView.height/2.0);
+        UILabel *titleLabel = [[UILabel alloc] init];
+        titleLabel.size = CGSizeMake(self.tableView.width, 20);
+        titleLabel.text = @"No active hotspots";
+        titleLabel.font = [ThemeManager boldFontOfSize:15];
+        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        UILabel *subtitleLabel = [[UILabel alloc] init];
+        subtitleLabel.size = CGSizeMake(self.tableView.width, 20);
+        subtitleLabel.y = titleLabel.bottom;
+        subtitleLabel.text = @"Why don't you try setting one?";
+        subtitleLabel.font = [ThemeManager regularFontOfSize:15];
+        subtitleLabel.textColor = [UIColor lightGrayColor];
+        subtitleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        [_emptyBeaconView addSubview:titleLabel];
+        [_emptyBeaconView addSubview:subtitleLabel];
+        _emptyBeaconView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    }
+    return _emptyBeaconView;
 }
 
 - (UIView *)customHeaderView
@@ -170,9 +235,27 @@
         return _customHeaderView;
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)notification
+- (void)showEmptyBeaconView:(BOOL)animated
 {
-    
+    if (self.emptyBeaconView.alpha && [self.tableView.subviews containsObject:self.emptyBeaconView]) {
+        return;
+    }
+    self.emptyBeaconView.alpha = 0;
+    [self.tableView addSubview:self.emptyBeaconView];
+    NSTimeInterval duration = animated ? 0.5 : 0;
+    [UIView animateWithDuration:duration animations:^{
+        self.emptyBeaconView.alpha = 1;
+    }];
+}
+
+- (void)hideEmptyBeaconView:(BOOL)animated
+{
+    NSTimeInterval duration = animated ? 0.5 : 0;
+    [UIView animateWithDuration:duration delay:0 options:0 animations:^{
+        self.emptyBeaconView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.emptyBeaconView removeFromSuperview];
+    }];
 }
 
 - (void)setBeaconButtonTouched:(id)sender
@@ -196,35 +279,10 @@
     
 }
 
-- (void)requestBeaconsShowLoadingIndicator:(BOOL)showLoadingIndicator
-{
-    if (showLoadingIndicator) {
-        [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-    }
-    [[BeaconManager sharedManager] updateBeacons:^(NSArray *beacons) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-        self.beacons = [NSArray arrayWithArray:beacons];
-        [self.tableView reloadData];
-    } failure:^(NSError *error) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    }];
-}
-
-- (BOOL)hasActiveBeacons
-{
-    BOOL hasActiveBeacons = NO;
-    if (self.beacons) {
-        NSPredicate *expirePredicate = [NSPredicate predicateWithFormat:@"expirationDate > %@", [NSDate date]];
-        NSArray *unexpiredBeacons = [self.beacons filteredArrayUsingPredicate:expirePredicate];
-        hasActiveBeacons = unexpiredBeacons.count;
-    }
-    return hasActiveBeacons;
-}
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.beacons.count;
+    return [BeaconManager sharedManager].beacons.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -244,13 +302,13 @@
     if (!cell) {
         cell = [[BeaconTableViewCell alloc] init];
     }
-    cell.beacon = self.beacons[indexPath.row];
+    cell.beacon = [BeaconManager sharedManager].beacons[indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Beacon *beacon = self.beacons[indexPath.row];
+    Beacon *beacon = [BeaconManager sharedManager].beacons[indexPath.row];
     BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
     beaconProfileViewController.beacon = beacon;
     [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];

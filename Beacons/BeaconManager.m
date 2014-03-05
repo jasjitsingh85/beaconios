@@ -120,6 +120,7 @@
 - (void)updateBeacons:(void (^)(NSArray *beacons))success
               failure:(void (^)(NSError *error))failure
 {
+    self.isUpdatingBeacons = YES;
     __weak BeaconManager *weakSelf = self;
     [[APIClient sharedClient] getPath:@"follow/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *beacons = [[NSMutableArray alloc] init];
@@ -128,9 +129,15 @@
             [beacons addObject:beacon];
         }
         weakSelf.beacons = [NSArray arrayWithArray:beacons];
-        success(weakSelf.beacons);
+        if (success) {
+            success(weakSelf.beacons);
+        }
+        weakSelf.isUpdatingBeacons = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        if (failure) {
+            failure(error);
+        }
+        weakSelf.isUpdatingBeacons = NO;
     }];
 }
 
@@ -139,6 +146,13 @@
     NSDictionary *parameters = @{@"beacon_id" : beacon.beaconID,
                                  @"cancelled" : @(YES)};
     [[APIClient sharedClient] putPath:@"hotspot/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beaconID = %@", beacon.beaconID];
+        NSArray *filtered = [self.beacons filteredArrayUsingPredicate:predicate];
+        if (filtered && filtered.count) {
+            NSMutableArray *beacons = [NSMutableArray arrayWithArray:self.beacons];
+            [beacons removeObject:[filtered firstObject]];
+            self.beacons = [NSArray arrayWithArray:beacons];
+        }
         if (success) {
             success();
         }

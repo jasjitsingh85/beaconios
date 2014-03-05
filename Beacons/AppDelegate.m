@@ -58,6 +58,7 @@
         [_sideNavigationViewController setDrawerViewController:self.menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
         [_sideNavigationViewController setRevealWidth:278 forDirection:MSDynamicsDrawerDirectionLeft];
+        [_menuViewController view];
     }
     return _sideNavigationViewController;
 }
@@ -145,6 +146,7 @@
             }
         }
     }
+    [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
 }
 
 - (void)contactAuthorizationStatusDenied

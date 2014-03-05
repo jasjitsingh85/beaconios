@@ -33,6 +33,7 @@ PODS:
   - SDWebImage (3.4):
     - SDWebImage/Core
   - SDWebImage/Core (3.4)
+  - UIView+Positioning (1.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 1.2)
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - Mixpanel (~> 2.0.0)
   - MSDynamicsDrawerViewController
   - SDWebImage (~> 3.4)
+  - UIView+Positioning
 
 EXTERNAL SOURCES:
   JSONKit:
@@ -68,5 +70,6 @@ SPEC CHECKSUMS:
   Mixpanel: e4af97adb60a10541b7869929a83d734025058a6
   MSDynamicsDrawerViewController: ae0dec8b54cf08efdfb3c6e8dfa95fb223218223
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
+  UIView+Positioning: aa9fcb103b81d45cbbe5c2eceb76f397c2f9324c
 
 COCOAPODS: 0.29.0
