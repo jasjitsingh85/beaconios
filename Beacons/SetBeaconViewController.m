@@ -489,7 +489,7 @@
         [self setBeaconOnServerWithInvitedContacts:contacts];
     }
     else {
-        [[[UIAlertView alloc] initWithTitle:@"Anti-social much?" message:@"Invite at least 1 friend to set a hotspot!" delegate:nil cancelButtonTitle:@"My b" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Anti-social much?" message:@"Select friends to invite them to this Hotspot!" delegate:nil cancelButtonTitle:@"My bad" otherButtonTitles:nil] show];
     }
 }
 
