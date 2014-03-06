@@ -94,12 +94,14 @@
     [selectedViewController.view addSubview:imageView];
     _selectedViewController = selectedViewController;
     self.viewControllers = @[selectedViewController];
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         imageView.alpha = 0;
     } completion:^(BOOL finished) {
         [imageView removeFromSuperview];
     }];
-    [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:NO completion:nil];
+    jadispatch_after_delay(0.1, dispatch_get_main_queue(), ^{
+        [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:NO completion:nil];
+    });
 }
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController
