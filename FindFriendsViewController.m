@@ -36,7 +36,6 @@ typedef enum {
 @property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIButton *inviteButton;
-@property (strong, nonatomic) UIButton *skipButton;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
 
@@ -97,8 +96,8 @@ typedef enum {
     self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0, 270, 0, 0);
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.inviteButton];
+    [self updateInviteButtonText:nil];
     self.inviteButtonShown = YES;
-    [self hideInviteButton:NO];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
@@ -115,10 +114,6 @@ typedef enum {
 {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite Friends"];
-    self.skipButton = [UIButton navButtonWithTitle:@"Skip"];
-    [self.skipButton addTarget:self action:@selector(doneButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *skipButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.skipButton];
-    self.navigationItem.rightBarButtonItem = skipButtonItem;
     
     NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
     if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
@@ -231,35 +226,10 @@ typedef enum {
     }];
 }
 
-- (void)hideSkipButton:(BOOL)animated
-{
-    if (!self.skipButton.alpha) {
-        return;
-    }
-    
-    NSTimeInterval duration = animated ? 0.3 : 0.0;
-    [UIView animateWithDuration:duration animations:^{
-        self.skipButton.alpha = 0.0;
-    }];
-}
-
-- (void)showSkipButton:(BOOL)animated
-{
-    if (self.skipButton.alpha) {
-        return;
-    }
-    
-    NSTimeInterval duration = animated ? 0.3 : 0.0;
-    [UIView animateWithDuration:duration animations:^{
-        self.skipButton.alpha = 1.0;
-    }];
-}
-
 - (void)updateInviteButtonText:(Contact *)lastSelectedContact
 {
-    NSString *inviteButtonText = @"";
+    NSString *inviteButtonText = @"Set hotspot";
     if (self.selectedContactDictionary.count) {
-        [self hideSkipButton:YES];
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
             inviteButtonText = [NSString stringWithFormat:@"Invite %@", contact.firstName];
@@ -269,9 +239,6 @@ typedef enum {
             NSString *plural = otherCount == 1 ? @"other" : @"others";
             inviteButtonText = [NSString stringWithFormat:@"Invite %@ and %d %@", contact.firstName, otherCount, plural];
         }
-    }
-    else {
-        [self showSkipButton:YES];
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
 }
@@ -381,18 +348,12 @@ typedef enum {
     }
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
     [self updateInviteButtonText:contact];
-    if (self.selectedContactDictionary.count) {
-        [self showInviteButton:YES];
-    }
 }
 
 - (void)unselectContact:(Contact *)contact
 {
     [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
     [self updateInviteButtonText:nil];
-    if (!self.selectedContactDictionary.count) {
-        [self hideInviteButton:YES];
-    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

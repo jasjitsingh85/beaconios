@@ -480,7 +480,17 @@
 #pragma mark - FindFriendsViewControllerDelegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {
-    [self setBeaconOnServerWithInvitedContacts:contacts];
+    //don't allow user to set hotspot if they didn't pick any contacts. (ignore in debug)
+    BOOL shouldSetHotspot = ![contacts isEmpty];
+#ifdef DEBUG
+    shouldSetHotspot = YES;
+#endif
+    if (shouldSetHotspot) {
+        [self setBeaconOnServerWithInvitedContacts:contacts];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Anti-social much?" message:@"Invite at least 1 friend to set a hotspot!" delegate:nil cancelButtonTitle:@"My b" otherButtonTitles:nil] show];
+    }
 }
 
 #pragma mark - JADatePickerDelegate
