@@ -228,7 +228,7 @@ typedef enum {
 
 - (void)updateInviteButtonText:(Contact *)lastSelectedContact
 {
-    NSString *inviteButtonText = @"Set hotspot";
+    NSString *inviteButtonText = @"Set Hotspot";
     if (self.selectedContactDictionary.count) {
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
