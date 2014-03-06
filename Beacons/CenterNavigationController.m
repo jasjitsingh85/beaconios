@@ -27,7 +27,7 @@
     self.delegate = self;
     self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.menuButton.size = CGSizeMake(25, 25);
-    [self updateMenuButton:0];
+    [self menuButtonDefaultMode];
     [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
     
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
@@ -54,29 +54,56 @@
         NSInteger beaconCount = 0;
         if ([BeaconManager sharedManager].beacons) {
             beaconCount = [BeaconManager sharedManager].beacons.count;
-            jadispatch_main_qeue(^{
-                [self updateMenuButton:beaconCount];
-            });
-
         }
+        jadispatch_main_qeue(^{
+            [self updateMenuButton:beaconCount];
+        });
     }
 }
 
 - (void)updateMenuButton:(NSInteger)beaconCount
 {
-    if (!beaconCount) {
-        [self.menuButton setImage:[UIImage imageNamed:@"menuButton"] forState:UIControlStateNormal];
-        [self.menuButton setTitle:nil forState:UIControlStateNormal];
-        self.menuButton.backgroundColor = [UIColor clearColor];
-        self.menuButton.layer.cornerRadius = 0;
+    BOOL wasSelected = self.menuButton.selected;
+    BOOL isSelected = beaconCount > 0;
+    BOOL modeChange = wasSelected != isSelected;
+    BOOL numberChange = wasSelected && [self.menuButton titleForState:UIControlStateNormal].integerValue != beaconCount;
+    if (modeChange) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.menuButton.alpha = 0;
+        } completion:^(BOOL finished) {
+            if (isSelected) {
+                [self menuButtonCountMode:beaconCount];
+            }
+            else {
+                [self menuButtonDefaultMode];
+            }
+            [UIView animateWithDuration:0.2 animations:^{
+                self.menuButton.alpha = 1;
+            }];
+        }];
     }
-    else {
-        [self.menuButton setImage:nil forState:UIControlStateNormal];
-        [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateNormal];
-        [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-        self.menuButton.backgroundColor = [UIColor whiteColor];
-        self.menuButton.layer.cornerRadius = 4;
+    else if (numberChange) {
+        [self menuButtonCountMode:beaconCount];
     }
+}
+
+- (void)menuButtonDefaultMode
+{
+    [self.menuButton setImage:[UIImage imageNamed:@"menuButton"] forState:UIControlStateNormal];
+    [self.menuButton setTitle:nil forState:UIControlStateNormal];
+    self.menuButton.backgroundColor = [UIColor clearColor];
+    self.menuButton.layer.cornerRadius = 0;
+    self.menuButton.selected = NO;
+}
+
+- (void)menuButtonCountMode:(NSInteger)beaconCount
+{
+    [self.menuButton setImage:nil forState:UIControlStateNormal];
+    [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateNormal];
+    [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.menuButton.backgroundColor = [UIColor whiteColor];
+    self.menuButton.layer.cornerRadius = 4;
+    self.menuButton.selected = YES;
 }
 
 #pragma mark - setters
