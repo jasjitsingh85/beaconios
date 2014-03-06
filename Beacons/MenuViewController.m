@@ -185,7 +185,7 @@
         _emptyBeaconView.center = CGPointMake(self.tableView.width/2.0, self.tableView.height/2.0);
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.size = CGSizeMake(self.tableView.width, 20);
-        titleLabel.text = @"No active hotspots";
+        titleLabel.text = @"No active Hotspots";
         titleLabel.font = [ThemeManager boldFontOfSize:15];
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -193,7 +193,7 @@
         UILabel *subtitleLabel = [[UILabel alloc] init];
         subtitleLabel.size = CGSizeMake(self.tableView.width, 20);
         subtitleLabel.y = titleLabel.bottom;
-        subtitleLabel.text = @"Why don't you try setting one?";
+        subtitleLabel.text = @"Set one and get your friends to come!";
         subtitleLabel.font = [ThemeManager regularFontOfSize:15];
         subtitleLabel.textColor = [UIColor lightGrayColor];
         subtitleLabel.textAlignment = NSTextAlignmentCenter;
