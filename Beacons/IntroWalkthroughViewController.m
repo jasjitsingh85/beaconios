@@ -299,7 +299,7 @@ typedef enum ScrollDirection {
     captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
     captionFrame.origin.y = 290;
     self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Hotspot is the easiest way to get groups of friends together.";
+    self.captionLabel.text = @"Hotspot is the fastest way to get groups of friends together.";
     self.captionLabel.numberOfLines = 2;
     self.captionLabel.font = [ThemeManager regularFontOfSize:18];
     self.captionLabel.textColor = [UIColor whiteColor];
