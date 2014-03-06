@@ -26,7 +26,7 @@
     [super viewDidLoad];
     self.delegate = self;
     self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.menuButton.size = CGSizeMake(25, 25);
+    self.menuButton.size = CGSizeMake(30, 30);
     [self menuButtonDefaultMode];
     [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
     
@@ -102,7 +102,7 @@
     [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateNormal];
     [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.menuButton.backgroundColor = [UIColor whiteColor];
-    self.menuButton.layer.cornerRadius = 4;
+    self.menuButton.layer.cornerRadius = 9;
     self.menuButton.selected = YES;
 }
 
