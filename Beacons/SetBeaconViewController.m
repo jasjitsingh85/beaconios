@@ -527,14 +527,6 @@
     __weak typeof(self) weakSelf = self;
     [[BeaconManager sharedManager] postBeacon:beacon success:^{
         [loadingIndicator hide:YES];
-        
-        //add user as going. this isn't done earlier to avoid inviting user to own beacon
-        BeaconStatus *status = [[BeaconStatus alloc] init];
-        status.user = [User loggedInUser];
-        status.beaconStatusOption = BeaconStatusOptionGoing;
-        NSMutableDictionary *guestStatuses = [[NSMutableDictionary alloc] initWithDictionary:beacon.guestStatuses];
-        [guestStatuses setObject:status forKey:status.user.normalizedPhoneNumber];
-        beacon.guestStatuses = guestStatuses;
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
         [[AnalyticsManager sharedManager] createBeaconWithDescription:beacon.beaconDescription location:weakSelf.locationLabel.text date:beacon.time numInvites:beacon.guestStatuses.count];
