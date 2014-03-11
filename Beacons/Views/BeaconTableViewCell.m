@@ -137,7 +137,7 @@
     NSInteger invited = 0;
     NSInteger here = 0;
     for (BeaconStatus *beaconStatus in self.beacon.guestStatuses.allValues) {
-        invited += (beaconStatus.beaconStatusOption == BeaconStatusOptionInvited) || (beaconStatus.beaconStatusOption == BeaconStatusOptionHere);
+        invited += (beaconStatus.beaconStatusOption == BeaconStatusOptionInvited) || (beaconStatus.beaconStatusOption == BeaconStatusOptionHere) || (beaconStatus.beaconStatusOption == BeaconStatusOptionGoing);
         here += beaconStatus.beaconStatusOption == BeaconStatusOptionHere;
     }
     self.inviteLabel.text = [NSString stringWithFormat:@"%d here, %d invited",here, invited];
