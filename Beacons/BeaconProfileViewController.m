@@ -38,13 +38,14 @@
 #import "NavigationBarTitleLabel.h"
 #import "AnalyticsManager.h"
 #import "ContactManager.h"
+#import "BeaconMapSnapshotImageView.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
 @property (strong, nonatomic) UIView *descriptionView;
-@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
 @property (strong, nonatomic) KenBurnsView *kenBurnsView;
 @property (strong, nonatomic) BounceButton *chatTabButton;
@@ -122,7 +123,7 @@
     [self.view addSubview:self.descriptionView];
     self.fullDescriptionViewShown = YES;
     
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 110)];
+    self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 110)];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
     imageTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imageTap];
@@ -292,15 +293,16 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-    if (!beacon.images || !beacon.images.count) {
-        self.imageView.image = [UIImage imageNamed:@"cameraLarge"];
-        self.imageViewGradient.hidden = YES;
-    }
-    else {
-        self.imageViewGradient.hidden = NO;
-        [self loadImageViewForBeacon:beacon];
-    }
-    
+//    if (!beacon.images || !beacon.images.count) {
+//        self.imageView.image = [UIImage imageNamed:@"cameraLarge"];
+//        self.imageViewGradient.hidden = YES;
+//    }
+//    else {
+//        self.imageViewGradient.hidden = NO;
+//        [self loadImageViewForBeacon:beacon];
+//    }
+    self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 500, 500);
+    self.imageView.beacon = beacon;
     self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     self.descriptionLabel.text = beacon.beaconDescription;
     if (beacon.address) {

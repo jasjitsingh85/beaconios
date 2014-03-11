@@ -133,6 +133,9 @@
 		96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
+		96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */; };
+		96C904C118CF5AC10020820A /* UIView+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904C018CF5AC10020820A /* UIView+UIImage.m */; };
+		96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */; };
 		96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCDF1805066700D62462 /* menuInvite@2x.png */; };
 		96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE01805066700D62462 /* menuHome@2x.png */; };
 		96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */; };
@@ -432,6 +435,12 @@
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
+		96C904BC18CF54AD0020820A /* MapSnapshotImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapSnapshotImageView.h; sourceTree = "<group>"; };
+		96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapSnapshotImageView.m; sourceTree = "<group>"; };
+		96C904BF18CF5AC10020820A /* UIView+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIImage.h"; sourceTree = "<group>"; };
+		96C904C018CF5AC10020820A /* UIView+UIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIImage.m"; sourceTree = "<group>"; };
+		96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconMapSnapshotImageView.h; sourceTree = "<group>"; };
+		96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconMapSnapshotImageView.m; sourceTree = "<group>"; };
 		96CBCCDF1805066700D62462 /* menuInvite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuInvite@2x.png"; sourceTree = "<group>"; };
 		96CBCCE01805066700D62462 /* menuHome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuHome@2x.png"; sourceTree = "<group>"; };
 		96CBCCE51805107500D62462 /* chatBubbleOrangeRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatBubbleOrangeRight@2x.png"; sourceTree = "<group>"; };
@@ -591,6 +600,8 @@
 				96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */,
 				96A3BC2818564CCF00CA1F99 /* UIButton+HSNavButton.h */,
 				96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */,
+				96C904BF18CF5AC10020820A /* UIView+UIImage.h */,
+				96C904C018CF5AC10020820A /* UIView+UIImage.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -638,6 +649,10 @@
 				964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */,
 				9671F66618BD5603007DF715 /* BeaconTableViewCell.h */,
 				9671F66718BD5603007DF715 /* BeaconTableViewCell.m */,
+				96C904BC18CF54AD0020820A /* MapSnapshotImageView.h */,
+				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
+				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
+				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1314,6 +1329,7 @@
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */,
+				96C904C118CF5AC10020820A /* UIView+UIImage.m in Sources */,
 				96F14C1F17D84A890093C976 /* ChatTest.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
 				966070E2175AC989007379A0 /* LineLayout.m in Sources */,
@@ -1325,6 +1341,7 @@
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
+				96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
@@ -1368,6 +1385,7 @@
 				963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
+				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
