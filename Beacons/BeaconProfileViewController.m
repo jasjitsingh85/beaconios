@@ -342,13 +342,15 @@
 
 - (void)getDirectionsToBeacon
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Get Directions" message:@"Want to see the turn by turn?"];
-    [alertView addButtonWithTitle:@"No, thank you" handler:nil];
-    [alertView setCancelButtonWithTitle:@"Yes, please" handler:^{
-        [Utilities launchMapDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
-        [[AnalyticsManager sharedManager] getDirections];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Get Directions"];
+    [actionSheet addButtonWithTitle:@"Google Maps" handler:^{
+        [Utilities launchGoogleMapsDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
     }];
-    [alertView show];
+    [actionSheet addButtonWithTitle:@"Apple Maps" handler:^{
+        [Utilities launchAppleMapsDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
+    }];
+    [actionSheet setCancelButtonWithTitle:@"Nevermind" handler:nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)updateImageViewWithImage:(UIImage *)image
