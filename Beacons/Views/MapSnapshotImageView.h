@@ -13,6 +13,7 @@
 
 @property (assign, nonatomic) MKCoordinateRegion region;
 @property (strong, nonatomic) NSArray *annotationViews;
+@property (strong, nonatomic) UIImage *placeholder;
 
 - (void)update;
 

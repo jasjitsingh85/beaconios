@@ -106,8 +106,9 @@
 		969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649817EF85F200F5AB36 /* ImageViewController.m */; };
 		96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2618564AA800CA1F99 /* HSNavigationController.m */; };
 		96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */; };
+		96A90B7118D0D07B008026CC /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */; };
+		96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */; };
 		96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */; };
-		96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */; };
 		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
 		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
 		96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */; };
@@ -397,9 +398,10 @@
 		96A3BC2618564AA800CA1F99 /* HSNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HSNavigationController.m; sourceTree = "<group>"; };
 		96A3BC2818564CCF00CA1F99 /* UIButton+HSNavButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+HSNavButton.h"; sourceTree = "<group>"; };
 		96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+HSNavButton.m"; sourceTree = "<group>"; };
+		96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundGradient@2x.png"; sourceTree = "<group>"; };
+		96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapPlaceholder@2x.png"; sourceTree = "<group>"; };
 		96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconProfileViewController.h; sourceTree = "<group>"; };
 		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
-		96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundGradient@2x.png"; sourceTree = "<group>"; };
 		96A9871C17E51753007D77B8 /* InviteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteListViewController.h; sourceTree = "<group>"; };
 		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
 		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconStatus.h; sourceTree = "<group>"; };
@@ -867,15 +869,15 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */,
+				96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
+				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
-				96A9871A17E50C9D007D77B8 /* backgroundGradient@2x.png */,
 				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
 				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
 				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
@@ -890,8 +892,9 @@
 				963B7621189C305A006C6845 /* handPhone@2x.png */,
 				9671D02C1825739100D03D66 /* helpButton@2x.png */,
 				964638B118A45D5A007D6962 /* hotbotSmile@2x.png */,
-				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
+				9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */,
 				96C28D3418AAF404001BE498 /* hotspotLogoLarge@2x.png */,
+				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
 				96EB3D9E18A19E310073CEDF /* InviteAnyoneAnimation */,
 				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
 				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
@@ -899,22 +902,22 @@
 				96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */,
 				9671D03318273C0F00D03D66 /* lock@2x.png */,
 				96C7FE9E189737DA00A79CC3 /* martini@2x.png */,
-				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
 				960D79F118BC2D6400E9462D /* menuBackground@2x.png */,
+				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
 				96CBCCE01805066700D62462 /* menuHome@2x.png */,
+				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
 				968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */,
 				968E287118C3DF5500CB447D /* menuSettings@2x.png */,
-				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
 				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */,
 				9647102D17DEEB5700878C19 /* plus@2x.png */,
 				96C7FE991897294100A79CC3 /* redGradientBackground@2x.png */,
 				9690F2C918009A2B0010EFA3 /* rightArrow@2x.png */,
+				96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */,
 				963B76D3189C5296006C6845 /* setupSecondAnimation@2x.png */,
 				964638AF18A4460A007D6962 /* waveBackground@2x.png */,
 				96C7FEA0189737DA00A79CC3 /* whisky@2x.png */,
-				96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1125,7 +1128,6 @@
 				96EB3DBA18A19E310073CEDF /* inviteAnyoneAnimation0001.png in Resources */,
 				96EB3DF918A19E3C0073CEDF /* inviteMoreAnimation0005.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
-				96A9871B17E50C9D007D77B8 /* backgroundGradient@2x.png in Resources */,
 				96EB3DF818A19E3C0073CEDF /* inviteMoreAnimation0004.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				96EB3DC718A19E310073CEDF /* inviteAnyoneAnimation0014.png in Resources */,
@@ -1201,6 +1203,7 @@
 				96EB3E0A18A19E3C0073CEDF /* inviteMoreAnimation0022.png in Resources */,
 				960D79F218BC2D6400E9462D /* menuBackground@2x.png in Resources */,
 				96EB3DB918A19E310073CEDF /* inviteAnyoneAnimation0000.png in Resources */,
+				96A90B7118D0D07B008026CC /* backgroundGradient@2x.png in Resources */,
 				96EB3E0218A19E3C0073CEDF /* inviteMoreAnimation0014.png in Resources */,
 				96EB3DCC18A19E310073CEDF /* inviteAnyoneAnimation0019.png in Resources */,
 				96EB3E0D18A19E3C0073CEDF /* inviteMoreAnimation0025.png in Resources */,
@@ -1245,6 +1248,7 @@
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				96EB3E0018A19E3C0073CEDF /* inviteMoreAnimation0012.png in Resources */,
 				96EB3DC618A19E310073CEDF /* inviteAnyoneAnimation0013.png in Resources */,
+				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				96EB3DD118A19E310073CEDF /* inviteAnyoneAnimation0024.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
 				96EB3E0318A19E3C0073CEDF /* inviteMoreAnimation0015.png in Resources */,

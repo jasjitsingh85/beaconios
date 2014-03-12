@@ -14,6 +14,7 @@
 #import "NSDate+FormattedDate.h"
 #import "UIButton+HSNavButton.h"
 #import "UIImage+Resize.h"
+#import "UIView+Shadow.h"
 #import "BeaconChatViewController.h"
 #import "InviteListViewController.h"
 #import "SetBeaconViewController.h"
@@ -29,7 +30,6 @@
 #import "BeaconImage.h"
 #import "ChatMessage.h"
 #import "ImageViewController.h"
-#import "KenBurnsView.h"
 #import "Utilities.h"
 #import "BeaconStatus.h"
 #import "TextMessageManager.h"
@@ -47,7 +47,6 @@
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
-@property (strong, nonatomic) KenBurnsView *kenBurnsView;
 @property (strong, nonatomic) BounceButton *chatTabButton;
 @property (strong, nonatomic) BounceButton *inviteTabButton;
 @property (strong, nonatomic) UILabel *timeLabel;
@@ -102,10 +101,7 @@
     self.beaconChatViewController.tableView.backgroundColor = boneWhiteColor;
     self.beaconChatViewController.textViewContainer.backgroundColor = [UIColor clearColor];
     self.beaconChatViewController.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.beaconChatViewController.textViewContainer.layer.shadowColor = [[UIColor whiteColor] CGColor];
-    self.beaconChatViewController.textViewContainer.layer.shadowOpacity = 1;
-    self.beaconChatViewController.textViewContainer.layer.shadowRadius = 5.0;
-    self.beaconChatViewController.textViewContainer.layer.shadowOffset = CGSizeMake(0, 2);
+    [self.beaconChatViewController.textViewContainer setShadowWithColor:[UIColor whiteColor] opacity:1 radius:5.0 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
     
     [self addChildViewController:self.inviteListViewController];
     [self.view addSubview:self.inviteListViewController.view];
@@ -113,28 +109,20 @@
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.inviteListViewController.view.backgroundColor = boneWhiteColor;
     
-    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 226)];
+    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
     self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
-    self.descriptionView.layer.shadowColor = [[UIColor whiteColor] CGColor];
-    self.descriptionView.layer.shadowOpacity = 0.7;
-    self.descriptionView.layer.shadowRadius = 5.0;
-    self.descriptionView.layer.shadowOffset = CGSizeMake(0, 10);
-    self.descriptionView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:self.descriptionView.bounds cornerRadius:self.descriptionView.layer.cornerRadius].CGPath;
+    [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
     [self.view addSubview:self.descriptionView];
     self.fullDescriptionViewShown = YES;
     
-    self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 110)];
+    self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 124)];
+    self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
     imageTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imageTap];
     self.imageView.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.imageView];
     [self updateChatDesiredInsets];
-    
-    self.kenBurnsView = [[KenBurnsView alloc] initWithFrame:self.imageView.bounds];
-    self.kenBurnsView.clipsToBounds = YES;
-    [self.imageView addSubview:self.kenBurnsView];
-    self.kenBurnsView.hidden = YES;
     
     self.chatTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
     CGRect chatTabButtonFrame;
@@ -173,18 +161,20 @@
     self.imageViewGradient.frame = backgroundGradientFrame;
     [self.imageView addSubview:self.imageViewGradient];
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 46, 200, 35)];
-    self.timeLabel.font = [ThemeManager lightFontOfSize:28];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 72, 214, 23)];
+    self.timeLabel.font = [ThemeManager lightFontOfSize:1.3*17];
+    [self.timeLabel setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1.0 offset:CGSizeMake(0, 1.0) shouldDrawPath:NO];
     self.timeLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.timeLabel];
     
-    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 81, 250, 22)];
+    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 94, 264, 25)];
     self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabel.font = [ThemeManager regularFontOfSize:20];
+    self.descriptionLabel.font = [ThemeManager lightFontOfSize:1.3*17];
+    [self.descriptionLabel setShadowWithColor:[UIColor blackColor] opacity:0.7 radius:1.0 offset:CGSizeMake(0, 1.0) shouldDrawPath:NO];
     self.descriptionLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.descriptionLabel];
     
-    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 118, 160, 14)];
+    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 132, 160, 14)];
     self.locationLabel.font = [ThemeManager regularFontOfSize:13];
     self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
@@ -193,7 +183,7 @@
     [self.locationLabel addGestureRecognizer:locationTap];
     self.locationLabel.userInteractionEnabled = YES;
     
-    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 144, 180, 14)];
+    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 158, 194, 14)];
     self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
     self.invitedLabel.textColor = [UIColor whiteColor];
     UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteTabTouched:)];
@@ -203,7 +193,7 @@
     [self.descriptionView addSubview:self.invitedLabel];
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.joinButton.frame = CGRectMake(226, 125, 73, 31);
+    self.joinButton.frame = CGRectMake(226, 139, 73, 31);
     [self.joinButton setTitle:@"Join" forState:UIControlStateNormal];
     [self.joinButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.joinButton.backgroundColor = [UIColor whiteColor];
@@ -293,16 +283,9 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-//    if (!beacon.images || !beacon.images.count) {
-//        self.imageView.image = [UIImage imageNamed:@"cameraLarge"];
-//        self.imageViewGradient.hidden = YES;
-//    }
-//    else {
-//        self.imageViewGradient.hidden = NO;
-//        [self loadImageViewForBeacon:beacon];
-//    }
-    self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 500, 500);
+    self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
     self.imageView.beacon = beacon;
+    self.imageViewGradient.hidden = NO;
     self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
     self.descriptionLabel.text = beacon.beaconDescription;
     if (beacon.address) {
@@ -353,39 +336,6 @@
     }];
     [actionSheet setCancelButtonWithTitle:@"Nevermind" handler:nil];
     [actionSheet showInView:self.view];
-}
-
-- (void)updateImageViewWithImage:(UIImage *)image
-{
-    self.kenBurnsView.hidden = NO;
-    self.imageViewGradient.hidden = NO;
-    if (!self.kenBurnsView.isAnimating) {
-        [self.kenBurnsView animateWithImages:@[image] transitionDuration:6 loop:YES isLandscape:NO];
-    }
-    else {
-        [self.kenBurnsView addImage:image];
-    }
-}
-
-- (void)loadImageViewForBeacon:(Beacon *)beacon
-{
-    if (!beacon.images || !beacon.images.count) {
-        return;
-    }
-    
-    self.kenBurnsView.hidden = NO;
-    for (BeaconImage *beaconImage in beacon.images) {
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:beaconImage.imageURL options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            jadispatch_main_qeue(^{
-                if (!self.kenBurnsView.isAnimating) {
-                    [self.kenBurnsView animateWithImages:@[image] transitionDuration:6 loop:YES isLandscape:NO];
-                }
-                else {
-                    [self.kenBurnsView addImage:image];
-                }
-            });
-        }];
-    }
 }
 
 - (void)updateInvitedLabel
@@ -576,7 +526,7 @@
 
 - (void)imageViewTapped:(id)sender
 {
-    [self showCameraActionSheet];
+    [self getDirectionsToBeacon];
 }
 
 - (void)chatViewTapped:(id)sender
@@ -622,7 +572,6 @@
             else {
                 scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
             }
-            [self updateImageViewWithImage:scaledImage];
             [self.beaconChatViewController createChatMessageWithImage:scaledImage];
             [[APIClient sharedClient] postImage:scaledImage forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 

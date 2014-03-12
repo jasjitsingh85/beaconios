@@ -11,8 +11,9 @@
 
 @interface MapSnapshotImageView()
 
-@property (strong, nonatomic) MKMapView *mapView;
+@property (strong, nonatomic) UIImageView *placeholderImageView;
 @property (strong, nonatomic) MKMapSnapshotOptions *snapshotOptions;
+@property (strong, nonatomic) UIImage *mapImage;
 
 @end
 
@@ -24,9 +25,9 @@
     if (!self) {
         return nil;
     }
-    self.mapView = [[MKMapView alloc] initWithFrame:self.frame];
+    self.clipsToBounds = YES;
     self.snapshotOptions = [[MKMapSnapshotOptions alloc] init];
-    self.snapshotOptions.size = self.mapView.frame.size;
+    self.snapshotOptions.size = self.frame.size;
     self.snapshotOptions.scale = [[UIScreen mainScreen] scale];
     return self;
 }
@@ -35,6 +36,17 @@
 {
     _region = region;
     self.snapshotOptions.region = region;
+}
+
+- (void)setPlaceholder:(UIImage *)placeholder
+{
+    _placeholder = placeholder;
+    if (!self.placeholderImageView) {
+        self.placeholderImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        self.placeholderImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self addSubview:self.placeholderImageView];
+    }
+    self.placeholderImageView.image = placeholder;
 }
 
 - (void)update
@@ -67,7 +79,14 @@
                       }
                       
                       UIImage *compositeImage = UIGraphicsGetImageFromCurrentImageContext();
-                      [self performSelectorOnMainThread:@selector(setImage:) withObject:compositeImage waitUntilDone:NO];
+                      jadispatch_main_qeue(^{
+                          self.mapImage = compositeImage;
+                          self.image = self.mapImage;
+                          [UIView animateWithDuration:0.5 animations:^{
+                              self.placeholderImageView.alpha = 0;
+                              self.placeholderImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+                          } completion:nil];
+                      });
                   }
                   UIGraphicsEndImageContext();
               }];
