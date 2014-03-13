@@ -21,6 +21,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDefaultsKeyArchivedBeacons @"archivedBeacons"
 #define kDefaultsKeyHasFinishedPermissions @"hasFinishedPermissions"
 #define kDefaultsKeyCheckinPromptHotspots @"checkinPromptHotspots"
+#define kDefaultsKeyHasShownHotspotExplanation @"hasShownHotspotExplanation"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"

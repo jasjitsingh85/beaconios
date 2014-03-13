@@ -31,6 +31,7 @@
 #import "AnalyticsManager.h"
 #import "ContactManager.h"
 #import "LockedViewController.h"
+#import "ExplanationPopupView.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -351,6 +352,30 @@
     findFriendsViewController.autoCheckSuggested = NO;
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    
+    [self showExplanationPopup];
+}
+
+- (void)showExplanationPopup
+{
+    NSDate *beaconTime = [self dateForBeacon];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:beaconTime]
+    ;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = components.minute > 0 ? @"h:mma" : @"ha";
+    NSString *timeString = [dateFormatter stringFromDate:beaconTime];
+    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
+    NSString *address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
+    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \nToday, %@ @ %@", [User loggedInUser].firstName, self.descriptionTextView.text, timeString, address];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
+    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
+    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
+    explanationPopupView.attributedInviteText = attributedText;
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotExplanation]) {
+        [explanationPopupView show];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotExplanation];
+    }
 }
 
 - (void)updateBeacon

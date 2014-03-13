@@ -40,6 +40,7 @@
 		960D79F518BC580100E9462D /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 960D79F418BC580100E9462D /* MenuViewController.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
+		961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FE29418D10F7100CF891A /* ExplanationPopupView.m */; };
 		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
 		962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */; };
 		9633993C1758512100AF9D89 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633993B1758512100AF9D89 /* UIKit.framework */; };
@@ -102,6 +103,8 @@
 		9695644F1758642B0081B349 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695644D1758642B0081B349 /* MapViewController.m */; };
 		969564501758642B0081B349 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9695644E1758642B0081B349 /* MapViewController.xib */; };
 		96956452175866920081B349 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96956451175866920081B349 /* MapKit.framework */; };
+		969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */; };
+		969BE31C18D1FF3600E2714A /* iMessageChatBubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */; };
 		969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649517E96E1B00F5AB36 /* UIImage+Resize.m */; };
 		969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D649817EF85F200F5AB36 /* ImageViewController.m */; };
 		96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2618564AA800CA1F99 /* HSNavigationController.m */; };
@@ -303,6 +306,8 @@
 		9615F4E2175BEBC6005CF62D /* Beacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beacon.m; sourceTree = "<group>"; };
 		9615F4E5175BEBE6005CF62D /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		9615F4E6175BEBE6005CF62D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		961FE29318D10F7100CF891A /* ExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplanationPopupView.h; sourceTree = "<group>"; };
+		961FE29418D10F7100CF891A /* ExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplanationPopupView.m; sourceTree = "<group>"; };
 		962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowSmall@2x.png"; sourceTree = "<group>"; };
 		962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowLarge@2x.png"; sourceTree = "<group>"; };
 		963399381758512100AF9D89 /* Beacons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beacons.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,6 +395,8 @@
 		9695644D1758642B0081B349 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		9695644E1758642B0081B349 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		96956451175866920081B349 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotExplanation@2x.png"; sourceTree = "<group>"; };
+		969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iMessageChatBubble@2x.png"; sourceTree = "<group>"; };
 		969D649417E96E1B00F5AB36 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		969D649517E96E1B00F5AB36 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		969D649717EF85F200F5AB36 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
@@ -655,6 +662,8 @@
 				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
 				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
 				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
+				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
+				961FE29418D10F7100CF891A /* ExplanationPopupView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -869,6 +878,8 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
+				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
 				96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
@@ -1207,6 +1218,7 @@
 				96EB3E0218A19E3C0073CEDF /* inviteMoreAnimation0014.png in Resources */,
 				96EB3DCC18A19E310073CEDF /* inviteAnyoneAnimation0019.png in Resources */,
 				96EB3E0D18A19E3C0073CEDF /* inviteMoreAnimation0025.png in Resources */,
+				969BE31C18D1FF3600E2714A /* iMessageChatBubble@2x.png in Resources */,
 				9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */,
 				96EB3DFA18A19E3C0073CEDF /* inviteMoreAnimation0006.png in Resources */,
 				96EB3DF618A19E3C0073CEDF /* inviteMoreAnimation0002.png in Resources */,
@@ -1230,6 +1242,7 @@
 				96EB3DC018A19E310073CEDF /* inviteAnyoneAnimation0007.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
+				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				96C7FEA5189737DA00A79CC3 /* beer@2x.png in Resources */,
 				96EB3DC318A19E310073CEDF /* inviteAnyoneAnimation0010.png in Resources */,
@@ -1326,6 +1339,7 @@
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
 				96C7FE951897270200A79CC3 /* IntroWalkthroughViewController.m in Sources */,
+				961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
