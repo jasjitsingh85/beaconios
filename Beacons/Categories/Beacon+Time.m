@@ -17,7 +17,7 @@
 
 - (BOOL)inDistantFuture
 {
-    return !self.time || [[NSDate date] timeIntervalSinceDate:self.time] < 60*60*2;
+    return !self.time || [[NSDate date] timeIntervalSinceDate:self.time] < -60*60*2;
 }
 
 @end
