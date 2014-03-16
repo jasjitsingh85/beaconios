@@ -14,7 +14,6 @@
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UILabel *datePreviewLabel;
 @property (strong, nonatomic) UIView *dateContainerView;
-@property (strong, nonatomic) NSDateFormatter *dateFormatter;
 
 @end
 
@@ -29,10 +28,11 @@
     self.frame = [UIScreen mainScreen].bounds;
     self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
     self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    backgroundTap.numberOfTapsRequired = 1;
+    [self.backgroundView addGestureRecognizer:backgroundTap];
     [self addSubview:self.backgroundView];
     
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    self.dateFormatter.dateFormat = @"EdMMM";
     
     self.datePicker = [[UIDatePicker alloc] init];
     self.datePicker.backgroundColor = [UIColor whiteColor];
@@ -41,11 +41,11 @@
     self.datePreviewLabel.textColor = [UIColor blueColor];
     self.datePreviewLabel.size = CGSizeMake(300, 20);
     self.datePreviewLabel.x = 20;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
-    tap.numberOfTapsRequired = 1;
-    [self.datePreviewLabel addGestureRecognizer:tap];
+    UITapGestureRecognizer *previewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];
+    previewTap.numberOfTapsRequired = 1;
+    [self.datePreviewLabel addGestureRecognizer:previewTap];
     self.datePreviewLabel.userInteractionEnabled = YES;
-    self.datePreviewLabel.text = [self.dateFormatter stringFromDate:self.datePicker.date];
+    self.datePreviewLabel.text = self.datePicker.date.fullFormattedDate;
     
     self.dateContainerView = [[UIView alloc] init];
     self.dateContainerView.height = self.datePreviewLabel.height + self.datePicker.height;
