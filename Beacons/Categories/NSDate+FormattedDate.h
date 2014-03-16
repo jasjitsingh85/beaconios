@@ -12,5 +12,6 @@
 
 - (NSString *)formattedDate;
 - (NSString *)fullFormattedDate;
+- (NSString *)formattedDay;
 
 @end

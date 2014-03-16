@@ -42,4 +42,26 @@
     return stringFromDate;
 }
 
+- (NSString *)formattedDay
+{
+    NSDateFormatter *timeFormatter = [NSDateFormatter new];
+    NSString *stringFromDate;
+    if ([[self day] isEqualToDate:[NSDate today]]) {
+        stringFromDate = @"Today";
+    }
+    else if ([[self day] isEqualToDate:[NSDate tomorrow]]) {
+        stringFromDate = @"Tomorrow";
+        
+    }
+    else if ([[self week] isEqualToDate:[[NSDate date] week]]) {
+        timeFormatter.dateFormat = @"E";
+        stringFromDate = [timeFormatter stringFromDate:self];
+    }
+    else {
+        timeFormatter.dateFormat = @"EEEE, MMMM d";
+        stringFromDate = [timeFormatter stringFromDate:self];
+    }
+    return stringFromDate;
+}
+
 @end

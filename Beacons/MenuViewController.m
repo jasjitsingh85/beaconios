@@ -9,6 +9,8 @@
 #import "MenuViewController.h"
 #import <MSDynamicsDrawerViewController.h>
 #import "UIView+Shadow.h"
+#import "NSDate+Day.h"
+#import "NSDate+FormattedDate.h"
 #import "Utilities.h"
 #import "BeaconTableViewCell.h"
 #import "AppDelegate.h"
@@ -30,6 +32,7 @@
 @property (strong, nonatomic) UIButton *settingsButton;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
 @property (strong, nonatomic) UIView *emptyBeaconView;
+@property (strong, nonatomic) NSDictionary *daySeparatedBeacons;
 
 @end
 
@@ -159,6 +162,16 @@
     NSArray *beacons = [BeaconManager sharedManager].beacons;
     if (beacons) {
         beaconCount = beacons.count;
+        NSMutableDictionary *daySeparatedBeacons = [[NSMutableDictionary alloc] init];
+        for (Beacon *beacon in beacons) {
+            NSDate *day = beacon.time.day;
+            if (![daySeparatedBeacons.allKeys containsObject:day]) {
+                daySeparatedBeacons[day] = [[NSMutableArray alloc] init];
+            }
+            NSMutableArray *dates = daySeparatedBeacons[day];
+            [dates addObject:beacon];
+        }
+        self.daySeparatedBeacons = [NSDictionary dictionaryWithDictionary:daySeparatedBeacons];
         jadispatch_main_qeue(^{
             [self.tableView reloadData];
             if (!beacons || !beacons.count) {
@@ -279,15 +292,50 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
+    view.backgroundColor = [UIColor whiteColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.tableView.width, height)];
+    title.backgroundColor = [UIColor clearColor];
+    title.font = [ThemeManager boldFontOfSize:14.0];
+    title.textColor = [[ThemeManager sharedTheme] redColor];
+    [view addSubview:title];
+    NSDate *date = [self dateForSection:section];
+    title.text = date.formattedDay;
+    return view;
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [BeaconManager sharedManager].beacons.count;
+    NSDate *date = [self dateForSection:section];
+    NSInteger count = [self.daySeparatedBeacons[date] count];
+    return count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return self.daySeparatedBeacons.allKeys.count;
+}
+
+- (NSDate *)dateForSection:(NSInteger)section
+{
+    NSArray *sorted = [self.daySeparatedBeacons.allKeys sortedArrayUsingSelector:@selector(compare:)];
+    return sorted[section];
+}
+
+- (Beacon *)beaconForIndexPath:(NSIndexPath *)indexPath
+{
+    NSDate *date = [self dateForSection:indexPath.section];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
+    NSArray *sortedBeacons = [self.daySeparatedBeacons[date] sortedArrayUsingDescriptors:@[sortDescriptor]];
+    return sortedBeacons[0];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -302,7 +350,8 @@
     if (!cell) {
         cell = [[BeaconTableViewCell alloc] init];
     }
-    cell.beacon = [BeaconManager sharedManager].beacons[indexPath.row];
+    
+    cell.beacon = [self beaconForIndexPath:indexPath];
     return cell;
 }
 
