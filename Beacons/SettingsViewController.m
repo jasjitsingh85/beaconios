@@ -138,7 +138,7 @@
         return;
     }
     MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
-    mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+    mailViewController.bk_completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
         [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     };
     [mailViewController setSubject:@"Feedback"];

@@ -346,11 +346,11 @@
 
 - (void)deleteBeaconButtonTouched:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete this Hotspot?" message:@"Are you sure you want to delete this Hotspot? This cannot be undone."];
-    [alertView addButtonWithTitle:@"Yes" handler:^{
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Delete this Hotspot?" message:@"Are you sure you want to delete this Hotspot? This cannot be undone."];
+    [alertView bk_addButtonWithTitle:@"Yes" handler:^{
         [self cancelBeacon];
     }];
-    [alertView setCancelButtonWithTitle:@"No" handler:nil];
+    [alertView bk_setCancelButtonWithTitle:@"No" handler:nil];
     [alertView show];
 }
 

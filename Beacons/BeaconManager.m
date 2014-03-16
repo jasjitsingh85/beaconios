@@ -347,13 +347,13 @@
         title = [NSString stringWithFormat:@"Looks like you've arrived at %@", beacon.beaconDescription];
     }
     NSString *message = @"Want to check in?";
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:message];
-    [alertView addButtonWithTitle:@"No, thanks" handler:^{
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:title message:message];
+    [alertView bk_addButtonWithTitle:@"No, thanks" handler:^{
         if (success) {
             success(NO);
         }
     }];
-    [alertView setCancelButtonWithTitle:@"Yes" handler:^{
+    [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
         [[APIClient sharedClient] checkInFriendWithID:[User loggedInUser].userID isUser:YES atbeacon:beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             if (success) {
                 success(YES);

@@ -327,14 +327,14 @@
 
 - (void)getDirectionsToBeacon
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Get Directions"];
-    [actionSheet addButtonWithTitle:@"Google Maps" handler:^{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
+    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
         [Utilities launchGoogleMapsDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
     }];
-    [actionSheet addButtonWithTitle:@"Apple Maps" handler:^{
+    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
         [Utilities launchAppleMapsDirectionsToCoordinate:self.beacon.coordinate addressDictionary:nil destinationName:self.beacon.beaconDescription];
     }];
-    [actionSheet setCancelButtonWithTitle:@"Nevermind" handler:nil];
+    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
     [actionSheet showInView:self.view];
 }
 
@@ -501,9 +501,9 @@
     } failure:nil];
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
-    UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
-    [alertView addButtonWithTitle:@"No thanks" handler:nil];
-    [alertView setCancelButtonWithTitle:@"Yeah!" handler:^{
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
+    [alertView bk_addButtonWithTitle:@"No thanks" handler:nil];
+    [alertView bk_setCancelButtonWithTitle:@"Yeah!" handler:^{
         [self inviteMoreFriends];
     }];
     [alertView show];
@@ -539,14 +539,14 @@
 
 - (void)showCameraActionSheet
 {
-    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@"Want to add a photo?"];
-    [actionSheet addButtonWithTitle:@"Take a Photo" handler:^{
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Want to add a photo?"];
+    [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     }];
-    [actionSheet addButtonWithTitle:@"Add From Library" handler:^{
+    [actionSheet bk_addButtonWithTitle:@"Add From Library" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [actionSheet setCancelButtonWithTitle:@"Not Now" handler:nil];
+    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:nil];
     [actionSheet showInView:self.view];
 }
 
@@ -628,8 +628,8 @@
 - (void)setBeaconViewController:(SetBeaconViewController *)setBeaconViewController didCancelBeacon:(Beacon *)beacon
 {
     [setBeaconViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"You cancelled this Hotspot" message:@""];
-    [alertView setCancelButtonWithTitle:@"OK" handler:^{
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"You cancelled this Hotspot" message:@""];
+    [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
         [[AppDelegate sharedAppDelegate] setSelectedViewControllerToHome];
     }];
     [alertView show];
@@ -657,7 +657,7 @@
 #pragma mark - InviteListViewControllerDelegate
 - (void)inviteListViewController:(InviteListViewController *)inviteListViewController didSelectBeaconStatus:(BeaconStatus *)beaconStatus
 {
-    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:@""];
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@""];
     NSString *name = @"";
     NSString *number = @"";
     NSNumber *friendID;
@@ -676,7 +676,7 @@
     
     if (!(beaconStatus.user && [beaconStatus.user.userID isEqual:[User loggedInUser].userID])) {
         [[ContactManager sharedManager] fetchAddressBookContacts:^(NSArray *contacts) {
-            [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
+            [actionSheet bk_addButtonWithTitle:[NSString stringWithFormat:@"Text %@", name] handler:^{
                 [[ContactManager sharedManager] fetchAddressBookContacts:^(NSArray *contacts) {
                     NSArray *numbersInContactBook = [contacts valueForKey:@"normalizedPhoneNumber"];
                     if ([numbersInContactBook containsObject:number]) {
@@ -692,7 +692,7 @@
         } failure:nil];
     }
     if (beaconStatus.beaconStatusOption != BeaconStatusOptionHere) {
-        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Check In %@", name] handler:^{
+        [actionSheet bk_addButtonWithTitle:[NSString stringWithFormat:@"Check In %@", name] handler:^{
             BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
             beaconStatus.beaconStatusOption = BeaconStatusOptionHere;
             [inviteListViewController.tableView reloadData];
@@ -709,7 +709,7 @@
     }
     else {
         NSString *title = [NSString stringWithFormat:@"Check Out %@", name];
-        [actionSheet addButtonWithTitle:title handler:^{
+        [actionSheet bk_addButtonWithTitle:title handler:^{
             BeaconStatusOption oldStatus = beaconStatus.beaconStatusOption;
             beaconStatus.beaconStatusOption = BeaconStatusOptionInvited;
             [inviteListViewController.tableView reloadData];
@@ -722,7 +722,7 @@
             }];
         }];
     }
-    [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];
 }
 

@@ -1,8 +1,23 @@
 PODS:
   - AFNetworking (1.2.1)
   - AHAlertView (0.0.2)
-  - BlocksKit (1.8.3):
-    - libffi
+  - BlocksKit (2.2.0):
+    - BlocksKit/All
+  - BlocksKit/All (2.2.0):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.0)
+  - BlocksKit/DynamicDelegate (2.2.0):
+    - BlocksKit/MiniFFI
+  - BlocksKit/MessageUI (2.2.0):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/MiniFFI (2.2.0)
+  - BlocksKit/UIKit (2.2.0):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
   - BSKeyboardControls (2.0)
   - CocoaLumberjack (1.6.2)
   - CrittercismSDK (4.0.2)
@@ -23,10 +38,7 @@ PODS:
   - FormatterKit/TimeIntervalFormatter (1.3.1)
   - FormatterKit/UnitOfInformationFormatter (1.3.1)
   - FormatterKit/URLRequestFormatter (1.3.1)
-  - Foursquare-iOS-API (1.1.0):
-    - JSONKit (~> 1.4)
-  - JSONKit (1.6)
-  - libffi (3.0.13)
+  - Foursquare-iOS-API (2.0)
   - MBProgressHUD (0.8)
   - Mixpanel (2.0.0)
   - MSDynamicsDrawerViewController (1.0.0)
@@ -37,35 +49,28 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 1.2)
-  - AHAlertView (~> 0.0.2)
-  - BlocksKit (~> 1.8.3)
+  - AHAlertView
+  - BlocksKit (~> 2.2.0)
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
   - FormatterKit
-  - Foursquare-iOS-API (~> 1.1.0)
-  - JSONKit (from `https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec`)
+  - Foursquare-iOS-API (~> 2.0)
   - MBProgressHUD
   - Mixpanel (~> 2.0.0)
   - MSDynamicsDrawerViewController
-  - SDWebImage (~> 3.4)
+  - SDWebImage
   - UIView+Positioning
-
-EXTERNAL SOURCES:
-  JSONKit:
-    :podspec: https://gist.github.com/marcdown/5282955/raw/2a52cfd92f112f2a52669420c82c1bb1efd15d2a/JSONKit.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
   AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
-  BlocksKit: 27257f9cbbec0ea98c80ba83cc2ea7111ae62eb2
+  BlocksKit: 1b106f407a11997fd79e1da31453758e51277613
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: 19dceba2d0360ed383cba983bc3ef0dd089c42a1
   CrittercismSDK: f22f016bd22d2b3e5a3427fa0db83b37e0ee2d42
   FormatterKit: 1238e7a6800c750a5f50f5fec1cc430d8e3b71e7
-  Foursquare-iOS-API: fd545c468ea39d46e3dc78a81abd87456f9f4996
-  JSONKit: 98c50800be324836e4443f6d22ff1324caffa608
-  libffi: 64ef39353e747bb2b25e1026afd96a157bf9231c
+  Foursquare-iOS-API: 5c306411e8b24fa69adc7d8a357e48dc0ba6e60b
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   Mixpanel: e4af97adb60a10541b7869929a83d734025058a6
   MSDynamicsDrawerViewController: ae0dec8b54cf08efdfb3c6e8dfa95fb223218223
