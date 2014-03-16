@@ -137,9 +137,9 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 - (void)didReceiveInForegroundRemoteNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo
 {
     NSNumber *beaconID = userInfo[@"beacon"];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New Message" message:alert];
-    [alertView addButtonWithTitle:@"Cancel" handler:nil];
-    [alertView setCancelButtonWithTitle:@"See More" handler:^{
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"New Message" message:alert];
+    [alertView bk_addButtonWithTitle:@"Cancel" handler:nil];
+    [alertView bk_setCancelButtonWithTitle:@"See More" handler:^{
         if (beaconID) {
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
         }

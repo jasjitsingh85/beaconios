@@ -207,8 +207,8 @@ typedef enum {
 - (void)skipButtonTouched:(id)sender
 {
     if (self.viewMode == ViewModeContact) {
-        UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
-        [alertView addButtonWithTitle:@"Sync Contacts" handler:^{
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
+        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
             [[ContactManager sharedManager] requestContactPermissions:^{
                 jadispatch_main_qeue(^{
                     [self enterPushNotificationMode];
@@ -219,21 +219,21 @@ typedef enum {
                 });
             }];
         }];
-        [alertView setCancelButtonWithTitle:@"Skip" handler:^{
+        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
             [self enterPushNotificationMode];
         }];
         [alertView show];
     }
     else if (self.viewMode == ViewModePush) {
-        UIAlertView *alertView = [UIAlertView alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
-        [alertView addButtonWithTitle:@"Enable Push" handler:^{
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
+        [alertView bk_addButtonWithTitle:@"Enable Push" handler:^{
             [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
                 [self finishPermissions];
             } failure:^(NSError *error) {
                 [self finishPermissions];
             }];
         }];
-        [alertView setCancelButtonWithTitle:@"Skip" handler:^{
+        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
             [self finishPermissions];
         }];
         [alertView show];

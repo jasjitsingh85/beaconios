@@ -217,18 +217,18 @@ typedef enum {
 
 - (void)helpButtonTouched:(id)sender
 {
-    UIActionSheet *actionSheet = [UIActionSheet actionSheetWithTitle:nil];
-    [actionSheet addButtonWithTitle:@"Having Trouble?" handler:^{
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [actionSheet bk_addButtonWithTitle:@"Having Trouble?" handler:^{
         [self presentFeedbackForm];
     }];
-    [actionSheet setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];
 }
 
 - (void)presentFeedbackForm
 {
     MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
-    mailViewController.completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+    mailViewController.bk_completionBlock = ^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
         [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     };
     [mailViewController setSubject:@"I'm Having Trouble Registering or Logging In"];
