@@ -357,7 +357,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Beacon *beacon = [BeaconManager sharedManager].beacons[indexPath.row];
+    Beacon *beacon = [self beaconForIndexPath:indexPath];
     BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
     beaconProfileViewController.beacon = beacon;
     [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
