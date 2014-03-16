@@ -54,7 +54,7 @@
         
     }
     else if ([[self week] isEqualToDate:[[NSDate date] week]]) {
-        timeFormatter.dateFormat = @"E";
+        timeFormatter.dateFormat = @"EEEE";
         stringFromDate = [timeFormatter stringFromDate:self];
     }
     else {
