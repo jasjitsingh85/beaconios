@@ -32,6 +32,7 @@
 #import "ContactManager.h"
 #import "LockedViewController.h"
 #import "ExplanationPopupView.h"
+#import "DatePickerModalView.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -43,7 +44,8 @@
 @property (strong, nonatomic) UIView *locationContainerView;
 @property (strong, nonatomic) UILabel *characterCountLabel;
 @property (strong, nonatomic) JAPlaceholderTextView *descriptionTextView;
-@property (strong, nonatomic) JADatePicker *datePicker;
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) UILabel *dateLabel;
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UIButton *setBeaconButton;
 @property (strong, nonatomic) NSString *descriptionPlaceholderText;
@@ -77,6 +79,9 @@
     
     self.dateContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.descriptionContainerView.frame), self.view.frame.size.width, 162)];
     self.dateContainerView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
+    UITapGestureRecognizer *dateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dateTouched:)];
+    dateTap.numberOfTapsRequired = 1;
+    [self.dateContainerView addGestureRecognizer:dateTap];
     [self.scrollView addSubview:self.dateContainerView];
     
     self.locationContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.dateContainerView.frame), self.view.frame.size.width, 108)];
@@ -99,10 +104,6 @@
     [self.setBeaconButton setImage:arrowImage forState:UIControlStateNormal];
     self.setBeaconButton.imageEdgeInsets = UIEdgeInsetsMake(0, 270, 0, 0);
     self.setBeaconButton.titleEdgeInsets = UIEdgeInsetsMake(0, -arrowImage.size.width + 40, 0, 0);
-    
-    self.datePicker = [[JADatePicker alloc] initWithFrame:CGRectMake(130, 0, 135, self.dateContainerView.frame.size.height)];
-    self.datePicker.datePickerDelegate = self;
-    [self.dateContainerView addSubview:self.self.datePicker];
     
     UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 150, 19)];
     descriptionSectionLabel.text = @"What's going on?";
@@ -151,6 +152,14 @@
     self.descriptionTextView.delegate = self;
     [self.descriptionContainerView addSubview:self.descriptionTextView];
     
+    self.dateLabel = [[UILabel alloc] init];
+    self.dateLabel.font = [ThemeManager regularFontOfSize:15];
+    self.dateLabel.textColor = [UIColor blackColor];
+    self.dateLabel.height = self.dateContainerView.height;
+    self.dateLabel.x = 147;
+    self.dateLabel.width = self.view.width - self.dateLabel.x - 10;
+    [self.dateContainerView addSubview:self.dateLabel];
+    
     self.locationLabel = [[UILabel alloc] init];
     self.locationLabel.font = [ThemeManager regularFontOfSize:15];
     self.locationLabel.textColor = [UIColor colorWithRed:241/255.0 green:183/255.0 blue:172/255.0 alpha:1.0];
@@ -190,12 +199,18 @@
     self.didUpdateLocation = NO;
     self.didUpdateTime = NO;
     self.descriptionTextView.text = nil;
-    self.datePicker.date = [NSDate date];
+    self.date = [NSDate date];
     //by default set selected location as current location
     self.locationLabel.text = @"Current Location";
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
     [self updateCurrentLocationAddressFromLocation];
+}
+
+- (void)setDate:(NSDate *)date
+{
+    _date = date;
+    self.dateLabel.text = date.fullFormattedDate;
 }
 
 - (void)updateDescriptionPlaceholder
@@ -252,7 +267,7 @@
     
     self.descriptionTextView.text = beacon.beaconDescription;
     self.locationLabel.text = beacon.address;
-    self.datePicker.date = beacon.time;
+    self.date = beacon.time;
     self.useCurrentLocation = NO;
     self.beaconCoordinate = self.beacon.coordinate;
 }
@@ -313,6 +328,15 @@
     [self.descriptionTextView becomeFirstResponder];
 }
 
+- (void)dateTouched:(id)sender
+{
+    DatePickerModalView *datePicker = [[DatePickerModalView alloc] init];
+    datePicker.datePicker.date = self.date;
+    datePicker.datePicker.minuteInterval = 15;
+    [datePicker.datePicker addTarget:self action:@selector(datePickerUpdated:) forControlEvents:UIControlEventValueChanged];
+    [datePicker show];
+}
+
 - (void)locationTouched:(id)sender
 {
     SelectLocationViewController *selectLocationViewController = [SelectLocationViewController new];
@@ -328,6 +352,12 @@
     }];
     [alertView setCancelButtonWithTitle:@"No" handler:nil];
     [alertView show];
+}
+
+- (void)datePickerUpdated:(UIDatePicker *)datePicker
+{
+    self.date = datePicker.date;
+    self.didUpdateTime = YES;
 }
 
 - (void)setBeaconButtonTouched:(id)sender
@@ -358,7 +388,7 @@
 
 - (void)showExplanationPopup
 {
-    NSDate *beaconTime = [self dateForBeacon];
+    NSDate *beaconTime = self.date;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMinuteCalendarUnit fromDate:beaconTime]
     ;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -385,7 +415,7 @@
     NSString *beaconDescription = self.descriptionTextView.text;
     
     BOOL timeUpdated = self.didUpdateTime;
-    NSDate *beaconTime = timeUpdated ? [self dateForBeacon] : self.beacon.time;
+    NSDate *beaconTime = timeUpdated ? self.date : self.beacon.time;
     
     self.beacon.beaconDescription = beaconDescription;
     self.beacon.time = beaconTime;
@@ -426,24 +456,6 @@
         self.beaconCoordinate = location.coordinate;
         [self updateCurrentLocationAddressFromLocation];
     }
-}
-
-- (NSDate *)dateForBeacon
-{
-    NSInteger hour = self.datePicker.hour;
-    NSInteger minute = self.datePicker.minute;
-    NSInteger timeForBeacon = hour*60*60 + minute*60;
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
-    NSInteger timeNow = components.hour*60*60 + components.minute*60;
-    NSTimeInterval intervalUntilBeacon = timeForBeacon - timeNow;
-
-    //if time is less than x min in the past, set for next day
-    if (intervalUntilBeacon < -15*60) {
-        intervalUntilBeacon += 24*60*60;
-    }
-    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:intervalUntilBeacon];
-    return date;
 }
 
 #pragma mark - SelectLocationViewControllerDelegate
@@ -533,7 +545,7 @@
     
     Beacon *beacon = [[Beacon alloc] init];
     beacon.coordinate = self.beaconCoordinate;
-    beacon.time = [self dateForBeacon];
+    beacon.time = self.date;
     NSMutableArray *invited = [[NSMutableArray alloc] init];
     for (Contact *contact in contacts) {
         BeaconStatus *status = [[BeaconStatus alloc] init];
