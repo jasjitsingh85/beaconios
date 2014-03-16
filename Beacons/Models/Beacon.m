@@ -74,6 +74,7 @@
     }
     
     self.beaconID = [aDecoder decodeObjectForKey:@"beaconID"];
+    self.time = [aDecoder decodeObjectForKey:@"time"];
     self.expirationDate = [aDecoder decodeObjectForKey:@"expirationDate"];
     return self;
 }
@@ -81,6 +82,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.beaconID forKey:@"beaconID"];
+    [aCoder encodeObject:self.time forKey:@"time"];
     [aCoder encodeObject:self.expirationDate forKey:@"expirationDate"];
 }
 

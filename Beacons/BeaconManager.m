@@ -9,6 +9,7 @@
 #import "BeaconManager.h"
 #import <CocoaLumberjack/DDLog.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "Beacon+Time.h"
 #import "APIClient.h"
 #import "Beacon.h"
 #import "LocationTracker.h"
@@ -248,7 +249,7 @@
         return;
     }
 //    make sure not expired
-    if (!beacon.expirationDate || [[NSDate date] timeIntervalSinceDate:beacon.expirationDate] > 0) {
+    if (beacon.expired || beacon.inDistantFuture) {
         return;
     }
     
