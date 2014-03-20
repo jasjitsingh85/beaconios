@@ -70,17 +70,16 @@ typedef enum {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    UIView *searchBarBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
-    searchBarBackgroundView.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    [self.view addSubview:searchBarBackgroundView];
-    self.searchBar = [[UISearchBar alloc] initWithFrame:searchBarBackgroundView.bounds];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    //weird hack for black search bar issue
+    self.searchBar.backgroundImage = [UIImage new];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = [UIColor clearColor];
+    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
     self.searchBar.translucent = NO;
     self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    [searchBarBackgroundView addSubview:self.searchBar];
+    [self.view addSubview:self.searchBar];
+    
     self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
