@@ -22,16 +22,16 @@
 {
     NSDateFormatter *timeFormatter = [NSDateFormatter new];
     NSString *stringFromDate;
-    if ([[self day] isEqualToDate:[NSDate today]]) {
+    if ([self.day sameDay:[NSDate today]]) {
         timeFormatter.dateFormat = @"h:mm a";
         stringFromDate = [NSString stringWithFormat:@"Today, %@", [timeFormatter stringFromDate:self]];
     }
-    else if ([[self day] isEqualToDate:[NSDate tomorrow]]) {
+    else if ([self.day sameDay:[NSDate tomorrow]]) {
         timeFormatter.dateFormat = @"h:mm a";
         stringFromDate = [NSString stringWithFormat:@"Tomorrow, %@", [timeFormatter stringFromDate:self]];
         
     }
-    else if ([[self week] isEqualToDate:[[NSDate date] week]]) {
+    else if ([self.week sameWeek:[NSDate date]]) {
         timeFormatter.dateFormat = @"E h:mm a";
         stringFromDate = [timeFormatter stringFromDate:self];
     }
@@ -50,12 +50,9 @@
         stringFromDate = @"Today";
     }
     else if ([[self day] isEqualToDate:[NSDate tomorrow]]) {
-        stringFromDate = @"Tomorrow";
+        timeFormatter.dateFormat = @"MMMM d";
+        stringFromDate = [NSString stringWithFormat:@"Tomorrow, %@", [timeFormatter stringFromDate:self]];
         
-    }
-    else if ([[self week] isEqualToDate:[[NSDate date] week]]) {
-        timeFormatter.dateFormat = @"EEEE";
-        stringFromDate = [timeFormatter stringFromDate:self];
     }
     else {
         timeFormatter.dateFormat = @"EEEE, MMMM d";

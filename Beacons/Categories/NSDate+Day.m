@@ -27,11 +27,7 @@
 
 - (BOOL)sameWeek:(NSDate *)date
 {
-//    NSCalendar *cal = [NSCalendar currentCalendar];
-//    NSUInteger flag = (NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit);
-//    NSDateComponents *selfComponents = [cal components:flag fromDate:self];
-//    NSDateComponents *dateComponents = [cal components:flag fromDate:date];
-//    return selfComponents.era == dateComponents.era && selfComponents.year == dateComponents.year && selfComponents.month ==
+    return [self.week isEqualToDate:date.week];
 }
 
 + (NSDate *)today

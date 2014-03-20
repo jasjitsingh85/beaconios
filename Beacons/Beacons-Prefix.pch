@@ -17,4 +17,5 @@
     #import "NSObject+Empty.h"
     #import "NSDate+FormattedDate.h"
     #import "JAGrandCentralDispatch.h"
+    #import "UIView+Edge.h"
 #endif

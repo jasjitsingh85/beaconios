@@ -237,13 +237,6 @@
         label.textColor = [UIColor whiteColor];
         label.font = [ThemeManager boldFontOfSize:1.3*13];
         [_customHeaderView addSubview:label];
-        
-        CGRect separatorFrame = CGRectZero;
-        separatorFrame.size = CGSizeMake(_customHeaderView.frame.size.width, 1);
-        separatorFrame.origin.y = _customHeaderView.frame.size.height - separatorFrame.size.height;
-        UIView *separatorView = [[UIView alloc] initWithFrame:separatorFrame];
-        separatorView.backgroundColor = [UIColor colorWithWhite:122/255.0 alpha:1.0];
-        [_customHeaderView addSubview:separatorView];
     }
         return _customHeaderView;
 }
@@ -300,14 +293,15 @@
 {
     CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
-    view.backgroundColor = [UIColor whiteColor];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, self.tableView.width, height)];
+    view.backgroundColor = [UIColor colorWithRed:91/255.0 green:81/255.0 blue:79/255.0 alpha:1.0];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.tableView.width - 15, height)];
+    [view addEdge:UIRectEdgeTop | UIRectEdgeBottom width:1 color:[UIColor colorWithRed:63/255.0 green:59/255.0 blue:57/255.0 alpha:1.0]];
     title.backgroundColor = [UIColor clearColor];
-    title.font = [ThemeManager boldFontOfSize:14.0];
-    title.textColor = [[ThemeManager sharedTheme] redColor];
+    title.font = [ThemeManager regularFontOfSize:1.3*11.0];
+    title.textColor = [[self dateForSection:section] sameDay:[NSDate today]] ? [UIColor whiteColor] : [UIColor colorWithWhite:205/255.0 alpha:1.0];
     [view addSubview:title];
     NSDate *date = [self dateForSection:section];
-    title.text = date.formattedDay;
+    title.text = date.formattedDay.uppercaseString;
     return view;
 }
 

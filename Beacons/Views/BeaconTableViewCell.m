@@ -73,15 +73,6 @@
     self.inviteLabel.text = @"1 here, 0 invited";
     [self.contentView addSubview:self.inviteLabel];
     
-    
-    CGRect separatorFrame = CGRectZero;
-    separatorFrame.size.width = self.contentView.frame.size.width;
-    separatorFrame.size.height = 1;
-    separatorFrame.origin.y = self.contentView.frame.size.height - separatorFrame.size.height;
-    UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
-    separator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    separator.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:1.0];
-    [self.contentView addSubview:separator];
     return self;
 }
 
