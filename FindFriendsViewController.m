@@ -436,7 +436,7 @@ typedef enum {
         nameLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
         nameLabel.backgroundColor = [UIColor clearColor];
         nameLabel.textColor = [UIColor blackColor];
-        nameLabel.font = [ThemeManager regularFontOfSize:14];
+        nameLabel.font = [ThemeManager lightFontOfSize:14];
         nameLabel.adjustsFontSizeToFitWidth = YES;
         nameLabel.tag = TAG_NAME_LABEL;
         [cell.contentView addSubview:nameLabel];
