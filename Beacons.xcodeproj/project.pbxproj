@@ -52,6 +52,7 @@
 		9633994C1758512100AF9D89 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9633994B1758512100AF9D89 /* AppDelegate.m */; };
 		9633994E1758512100AF9D89 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9633994D1758512100AF9D89 /* Default.png */; };
 		963763A218DB890F005DC57D /* UIView+Edge.m in Sources */ = {isa = PBXBuildFile; fileRef = 963763A118DB890F005DC57D /* UIView+Edge.m */; };
+		963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963763A318DBD73C005DC57D /* downArrowRed@2x.png */; };
 		963B7622189C305A006C6845 /* handPhone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963B7621189C305A006C6845 /* handPhone@2x.png */; };
 		963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */ = {isa = PBXBuildFile; fileRef = 963B7655189C3D87006C6845 /* UIImageView+AnimationCompletion.m */; };
 		963B76D4189C5296006C6845 /* setupSecondAnimation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 963B76D3189C5296006C6845 /* setupSecondAnimation@2x.png */; };
@@ -319,6 +320,7 @@
 		9633996F1758512100AF9D89 /* BeaconsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconsTests.m; sourceTree = "<group>"; };
 		963763A018DB890F005DC57D /* UIView+Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Edge.h"; sourceTree = "<group>"; };
 		963763A118DB890F005DC57D /* UIView+Edge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Edge.m"; sourceTree = "<group>"; };
+		963763A318DBD73C005DC57D /* downArrowRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downArrowRed@2x.png"; sourceTree = "<group>"; };
 		963B7621189C305A006C6845 /* handPhone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handPhone@2x.png"; sourceTree = "<group>"; };
 		963B7654189C3D87006C6845 /* UIImageView+AnimationCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AnimationCompletion.h"; sourceTree = "<group>"; };
 		963B7655189C3D87006C6845 /* UIImageView+AnimationCompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AnimationCompletion.m"; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				963763A318DBD73C005DC57D /* downArrowRed@2x.png */,
 				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
 				96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */,
@@ -1118,6 +1121,7 @@
 				96EB3DC718A19E310073CEDF /* inviteAnyoneAnimation0014.png in Resources */,
 				96EB3DC918A19E310073CEDF /* inviteAnyoneAnimation0016.png in Resources */,
 				96C28D3818AB0B3A001BE498 /* Default@2x.png in Resources */,
+				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
 				96EB3E0418A19E3C0073CEDF /* inviteMoreAnimation0016.png in Resources */,

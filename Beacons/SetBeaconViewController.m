@@ -70,21 +70,21 @@
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, 504);
     [self.view addSubview:self.scrollView];
     
-    self.descriptionContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
+    self.descriptionContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 208)];
     self.descriptionContainerView.backgroundColor = [UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0];
     UITapGestureRecognizer *descriptionTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionTouched:)];
     descriptionTap.numberOfTapsRequired = 1;
     [self.descriptionContainerView addGestureRecognizer:descriptionTap];
     [self.scrollView addSubview:self.descriptionContainerView];
     
-    self.dateContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.descriptionContainerView.frame), self.view.frame.size.width, 162)];
+    self.dateContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.descriptionContainerView.frame), self.view.frame.size.width, 126)];
     self.dateContainerView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
     UITapGestureRecognizer *dateTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dateTouched:)];
     dateTap.numberOfTapsRequired = 1;
     [self.dateContainerView addGestureRecognizer:dateTap];
     [self.scrollView addSubview:self.dateContainerView];
     
-    self.locationContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.dateContainerView.frame), self.view.frame.size.width, 108)];
+    self.locationContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.dateContainerView.frame), self.view.frame.size.width, 126)];
     self.locationContainerView.backgroundColor = [UIColor whiteColor];
     UITapGestureRecognizer *locationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(locationTouched:)];
     locationTap.numberOfTapsRequired =1;
@@ -95,7 +95,7 @@
     [self.setBeaconButton setTitle:@"Select Friends" forState:UIControlStateNormal];
     [self.setBeaconButton setTitleColor:[UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0] forState:UIControlStateNormal];
     self.setBeaconButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        self.setBeaconButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+    self.setBeaconButton.titleLabel.font = [ThemeManager lightFontOfSize:1.3*12];
     self.setBeaconButton.backgroundColor = [UIColor colorWithRed:236/255.0 green:228/255.0 blue:216/255.0 alpha:1.0];
     [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.setBeaconButton];
@@ -103,12 +103,12 @@
     UIImage *arrowImage = [UIImage imageNamed:@"rightArrowBlue"];
     [self.setBeaconButton setImage:arrowImage forState:UIControlStateNormal];
     self.setBeaconButton.imageEdgeInsets = UIEdgeInsetsMake(0, 270, 0, 0);
-    self.setBeaconButton.titleEdgeInsets = UIEdgeInsetsMake(0, -arrowImage.size.width + 40, 0, 0);
+    self.setBeaconButton.titleEdgeInsets = UIEdgeInsetsMake(0, -arrowImage.size.width + 51, 0, 0);
     
-    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, 150, 19)];
+    UILabel *descriptionSectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(51, 70, 150, 19)];
     descriptionSectionLabel.text = @"What's going on?";
     descriptionSectionLabel.textColor = [UIColor whiteColor];
-    descriptionSectionLabel.font = [ThemeManager regularFontOfSize:15];
+    descriptionSectionLabel.font = [ThemeManager lightFontOfSize:1.3*12];
     [self.descriptionContainerView addSubview:descriptionSectionLabel];
     
     self.characterCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(212, 71, 100, 17)];
@@ -120,33 +120,33 @@
     
     UILabel *dateSectionLabel = [[UILabel alloc] init];
     dateSectionLabel.text = @"When?";
-    dateSectionLabel.font = [ThemeManager regularFontOfSize:15];
+    dateSectionLabel.font = [ThemeManager lightFontOfSize:1.3*12];
     dateSectionLabel.textColor = [UIColor whiteColor];
     CGRect dateSectionLabelFrame;
     dateSectionLabelFrame.size = [dateSectionLabel.text sizeWithAttributes:@{NSFontAttributeName : dateSectionLabel.font}];
-    dateSectionLabelFrame.origin.x = 40;
-    dateSectionLabelFrame.origin.y = 0.5*(self.dateContainerView.frame.size.height - dateSectionLabelFrame.size.height);
+    dateSectionLabelFrame.origin.x = 51;
+    dateSectionLabelFrame.origin.y = 40;
     dateSectionLabel.frame = dateSectionLabelFrame;
     [self.dateContainerView addSubview:dateSectionLabel];
     
     UILabel *locationDescriptionLabel = [[UILabel alloc] init];
     locationDescriptionLabel.text = @"Where?";
-    locationDescriptionLabel.font = [ThemeManager regularFontOfSize:15];
-    locationDescriptionLabel.textColor = [UIColor blackColor];
+    locationDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*12];
+    locationDescriptionLabel.textColor = [UIColor colorWithWhite:94/255.0 alpha:1.0];
     CGRect locationDescriptionLabelFrame;
     locationDescriptionLabelFrame.size = [locationDescriptionLabel.text sizeWithAttributes:@{NSFontAttributeName : locationDescriptionLabel.font}];
-    locationDescriptionLabelFrame.origin.x = 40;
-    locationDescriptionLabelFrame.origin.y = 0.5*(self.locationContainerView.frame.size.height - locationDescriptionLabelFrame.size.height);
+    locationDescriptionLabelFrame.origin.x = 51;
+    locationDescriptionLabelFrame.origin.y = 40;
     locationDescriptionLabel.frame = locationDescriptionLabelFrame;
     [self.locationContainerView addSubview:locationDescriptionLabel];
     
-    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(40, 100, 240, 80)];
+    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(51, 100, 240, 80)];
     //hide descriptiontextview while we wait to get placeholder strings from server
     self.descriptionTextView.placeholder = @"  ";
     self.descriptionTextView.alpha = 0;
     self.descriptionTextView.returnKeyType = UIReturnKeyDone;
     self.descriptionTextView.placeholderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.7];
-    self.descriptionTextView.font = [ThemeManager regularFontOfSize:15];
+    self.descriptionTextView.font = [ThemeManager lightFontOfSize:1.3*12];
     self.descriptionTextView.textColor = [UIColor whiteColor];
     self.descriptionTextView.backgroundColor = [UIColor clearColor];
     self.descriptionTextView.delegate = self;
@@ -154,21 +154,22 @@
     
     self.dateLabel = [[UILabel alloc] init];
     self.dateLabel.font = [ThemeManager regularFontOfSize:15];
-    self.dateLabel.textColor = [UIColor blackColor];
-    self.dateLabel.height = self.dateContainerView.height;
-    self.dateLabel.x = 147;
+    self.dateLabel.textColor = [UIColor colorWithRed:195/255.0 green:221/255.0 blue:228/255.0 alpha:1.0];
+    self.dateLabel.height = 18;
+    self.dateLabel.x = 51;
+    self.dateLabel.y = 64;
     self.dateLabel.width = self.view.width - self.dateLabel.x - 10;
     [self.dateContainerView addSubview:self.dateLabel];
     
     self.locationLabel = [[UILabel alloc] init];
-    self.locationLabel.font = [ThemeManager regularFontOfSize:15];
-    self.locationLabel.textColor = [UIColor colorWithRed:241/255.0 green:183/255.0 blue:172/255.0 alpha:1.0];
+    self.locationLabel.font = [ThemeManager lightFontOfSize:15];
+    self.locationLabel.textColor = [UIColor colorWithWhite:180/255.0 alpha:1.0];
     self.locationLabel.text = @"Current Location";
     CGRect locationLabelFrame;
+    locationLabelFrame.origin.x = 51;
+    locationLabelFrame.origin.y = 64;
     locationLabelFrame.size.height = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].height;
-    locationLabelFrame.size.width = 150;
-    locationLabelFrame.origin.x = 147;
-    locationLabelFrame.origin.y = 0.5*(self.locationContainerView.frame.size.height - locationLabelFrame.size.height);
+    locationLabelFrame.size.width = self.view.width - locationLabelFrame.origin.x - 10;
     self.locationLabel.frame = locationLabelFrame;
     [self.locationContainerView addSubview:self.locationLabel];
     
@@ -199,13 +200,24 @@
     self.didUpdateLocation = NO;
     self.didUpdateTime = NO;
     self.descriptionTextView.text = nil;
-    self.date = [NSDate date];
+    //round date to nearest 15 min
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [calendar components: NSEraCalendarUnit|NSYearCalendarUnit| NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate: now];
+    NSInteger minutesToAdd = 15 - (comps.minute % 15);
+    if (minutesToAdd) {
+        self.date = [now dateByAddingTimeInterval:60*minutesToAdd];
+    }
+    else {
+        self.date = now;
+    }
     //by default set selected location as current location
     self.locationLabel.text = @"Current Location";
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     self.useCurrentLocation = YES;
     [self updateCurrentLocationAddressFromLocation];
 }
+
 
 - (void)setDate:(NSDate *)date
 {

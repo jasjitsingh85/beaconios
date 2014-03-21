@@ -32,7 +32,7 @@
         
     }
     else if ([self.week sameWeek:[NSDate date]]) {
-        timeFormatter.dateFormat = @"E h:mm a";
+        timeFormatter.dateFormat = @"EEEE h:mm a";
         stringFromDate = [timeFormatter stringFromDate:self];
     }
     else {
