@@ -63,32 +63,29 @@
                   
                   UIImage *image = snapshot.image;
                   UIGraphicsBeginImageContextWithOptions(image.size, YES, image.scale);
-                  {
-                      [image drawAtPoint:CGPointMake(0.0f, 0.0f)];
-                      
-                      CGRect rect = CGRectMake(0.0f, 0.0f, image.size.width, image.size.height);
-                      for (MKAnnotationView *annotationView in self.annotationViews) {
-                          CGPoint point = [snapshot pointForCoordinate:annotationView.annotation.coordinate];
-                          if (CGRectContainsPoint(rect, point)) {
-                              point.x = point.x + annotationView.centerOffset.x -
-                              (pin.bounds.size.width / 2.0f);
-                              point.y = point.y + annotationView.centerOffset.y -
-                              (annotationView.bounds.size.height / 2.0f);
-                              [[annotationView UIImage] drawAtPoint:point];
-                          }
+                  [image drawAtPoint:CGPointMake(0.0f, 0.0f)];
+                  
+                  CGRect rect = CGRectMake(0.0f, 0.0f, image.size.width, image.size.height);
+                  for (MKAnnotationView *annotationView in self.annotationViews) {
+                      CGPoint point = [snapshot pointForCoordinate:annotationView.annotation.coordinate];
+                      if (CGRectContainsPoint(rect, point)) {
+                          point.x = point.x + annotationView.centerOffset.x -
+                          (pin.bounds.size.width / 2.0f);
+                          point.y = point.y + annotationView.centerOffset.y -
+                          (annotationView.bounds.size.height / 2.0f);
+                          [[annotationView UIImage] drawAtPoint:point];
                       }
-                      
-                      UIImage *compositeImage = UIGraphicsGetImageFromCurrentImageContext();
-                      jadispatch_main_qeue(^{
-                          self.mapImage = compositeImage;
-                          self.image = self.mapImage;
-                          [UIView animateWithDuration:0.5 animations:^{
-                              self.placeholderImageView.alpha = 0;
-                              self.placeholderImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
-                          } completion:nil];
-                      });
                   }
+                  UIImage *compositeImage = UIGraphicsGetImageFromCurrentImageContext();
                   UIGraphicsEndImageContext();
+                  jadispatch_main_qeue(^{
+                      self.mapImage = compositeImage;
+                      self.image = self.mapImage;
+                      [UIView animateWithDuration:0.5 animations:^{
+                          self.placeholderImageView.alpha = 0;
+                          self.placeholderImageView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+                      } completion:nil];
+                  });
               }];
 }
 
