@@ -175,6 +175,7 @@
     
     [self resetToEmpty];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(randomStringsUpdated:) name:kRandomStringsUpdated object:nil];
 }
@@ -190,8 +191,15 @@
     [self view];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
-    
     [self updateDescriptionPlaceholder];
+}
+
+- (void)willEnterForeground:(NSNotification *)notification
+{
+    [self view];
+    if (self.date && self.date.timeIntervalSinceNow < -60*15) {
+        [self resetToEmpty];
+    }
 }
 
 - (void)resetToEmpty
