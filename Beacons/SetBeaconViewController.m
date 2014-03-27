@@ -384,6 +384,12 @@
         return;
     }
     
+//    can't set a hotspot far in the past
+    if (self.date.timeIntervalSinceNow < -60*60*2) {
+        [[[UIAlertView alloc] initWithTitle:@"Hello? Anybody home, McFly?" message:@"You can't set a Hotspot so far in the past" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
+    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusDenied) {
         LockedViewController *lockedViewController = [[LockedViewController alloc] init];
