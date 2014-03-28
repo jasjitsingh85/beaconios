@@ -79,6 +79,9 @@
                   UIImage *compositeImage = UIGraphicsGetImageFromCurrentImageContext();
                   UIGraphicsEndImageContext();
                   jadispatch_main_qeue(^{
+                      //seems like some ios 7 issue is causing animations to stop randomly
+                      //this is said to be a fix
+                      [UIView setAnimationsEnabled:YES];
                       self.mapImage = compositeImage;
                       self.image = self.mapImage;
                       [UIView animateWithDuration:0.5 animations:^{
