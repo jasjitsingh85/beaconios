@@ -329,7 +329,7 @@
     NSDate *date = [self dateForSection:indexPath.section];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
     NSArray *sortedBeacons = [self.daySeparatedBeacons[date] sortedArrayUsingDescriptors:@[sortDescriptor]];
-    return sortedBeacons[0];
+    return sortedBeacons[indexPath.row];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
