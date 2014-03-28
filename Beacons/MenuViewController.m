@@ -57,7 +57,6 @@
     tableViewFrame.size.height = self.view.frame.size.height - self.buttonContainerView.frame.size.height;
     self.tableViewContainer = [[UIView alloc] initWithFrame:tableViewFrame];
     self.tableViewContainer.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    self.tableViewContainer.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     [self.tableViewContainer setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.view addSubview:self.tableViewContainer];
     self.tableView = [[UITableView alloc] initWithFrame:self.tableViewContainer.bounds style:UITableViewStylePlain];
@@ -67,7 +66,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
     [self.tableViewContainer addSubview:self.tableView];
     
     CGFloat numButtons = 3;
