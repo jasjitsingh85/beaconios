@@ -164,6 +164,7 @@
 		96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D52D241838415300496923 /* SecretSettingsViewController.xib */; };
 		96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA504181A2D71001E5812 /* RandomObjectPicker.m */; };
 		96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA50A181A2E93001E5812 /* RandomObjectManager.m */; };
+		96E565D018E871720007545D /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E565CF18E871720007545D /* GroupsViewController.m */; };
 		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
 		96E623F01816485C0048125B /* BounceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EF1816485C0048125B /* BounceButton.m */; };
 		96EB3DB918A19E310073CEDF /* inviteAnyoneAnimation0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB3D9F18A19E310073CEDF /* inviteAnyoneAnimation0000.png */; };
@@ -477,6 +478,8 @@
 		96DEA504181A2D71001E5812 /* RandomObjectPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjectPicker.m; sourceTree = "<group>"; };
 		96DEA509181A2E93001E5812 /* RandomObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjectManager.h; sourceTree = "<group>"; };
 		96DEA50A181A2E93001E5812 /* RandomObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjectManager.m; sourceTree = "<group>"; };
+		96E565CE18E871720007545D /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
+		96E565CF18E871720007545D /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
 		96E623EB1814996E0048125B /* NSObject+Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Empty.h"; sourceTree = "<group>"; };
 		96E623EC1814996E0048125B /* NSObject+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Empty.m"; sourceTree = "<group>"; };
 		96E623EE1816485C0048125B /* BounceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BounceButton.h; sourceTree = "<group>"; };
@@ -816,6 +819,8 @@
 				964638AD18A19F4B007D6962 /* RegistrationFlowViewController.m */,
 				96A8E03018D61A8800493C65 /* DatePickerModalView.h */,
 				96A8E03118D61A8800493C65 /* DatePickerModalView.m */,
+				96E565CE18E871720007545D /* GroupsViewController.h */,
+				96E565CF18E871720007545D /* GroupsViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -1325,6 +1330,7 @@
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
 				96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
+				96E565D018E871720007545D /* GroupsViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,
 				96859CF417EFC3C600C1C467 /* FormView.m in Sources */,

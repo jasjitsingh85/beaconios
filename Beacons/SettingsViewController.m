@@ -14,21 +14,13 @@
 #import "NavigationBarTitleLabel.h"
 #import "SecretSettingsViewController.h"
 #import "User.h"
+#import "GroupsViewController.h"
 
 @interface SettingsViewController ()
 
 @end
 
 @implementation SettingsViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -60,10 +52,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 3;
+    if (!section) {
+        return 1;
     }
-    return 1;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -75,6 +67,9 @@
     }
     
     if (indexPath.section == 0) {
+        cell.textLabel.text = @"Groups";
+    }
+    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Privacy";
         }
@@ -84,9 +79,7 @@
         else if (indexPath.row == 2) {
             cell.textLabel.text = @"Feedback";
         }
-    }
-    else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 3) {
             cell.textLabel.text = @"Logout";
         }
     }
@@ -99,6 +92,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        [self groupsSelected];
+    }
+    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [self privacySelected];
         }
@@ -108,12 +104,16 @@
         else if (indexPath.row == 2) {
             [self feedbackSelected];
         }
-    }
-    else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        else if (indexPath.row == 3) {
             [self logoutSelected];
         }
     }
+}
+
+- (void)groupsSelected
+{
+    GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
+    [self.navigationController pushViewController:groupsViewController animated:YES];
 }
 
 - (void)termsSelected
