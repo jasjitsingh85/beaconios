@@ -185,8 +185,7 @@ static dispatch_once_t onceToken;
 {
     NSMutableArray *invites = [NSMutableArray new];
     for (Contact *contact in contacts) {
-        NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
-        [invites addObject:contactString];
+        [invites addObject:contact.serializedString];
     }
     NSDictionary *paramaters = @{@"beacon" : beacon.beaconID,
                                  @"invite_list" : invites};

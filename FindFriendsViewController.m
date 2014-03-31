@@ -13,16 +13,11 @@
 #import "Theme.h"
 #import "APIClient.h"
 #import "User.h"
+#import "Group.h"
 #import "Utilities.h"
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
 #import "NavigationBarTitleLabel.h"
-
-typedef enum {
-    FindFriendSectionRecents=0,
-    FindFriendSectionSuggested,
-    FindFriendSectionContacts,
-} FindFriendSection;
 
 @interface FindFriendsViewController () <UISearchBarDelegate>
 
@@ -38,6 +33,10 @@ typedef enum {
 @property (strong, nonatomic) UIButton *inviteButton;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
+@property (strong, nonatomic) NSArray *groups;
+@property (readonly) NSInteger findFriendSectionRecents;
+@property (readonly) NSInteger findFriendSectionSuggested;
+@property (readonly) NSInteger findFriendSectionContacts;
 
 @end
 
@@ -57,6 +56,21 @@ typedef enum {
         _inactiveContactDictionary = [NSMutableDictionary new];
     }
     return _inactiveContactDictionary;
+}
+
+- (NSInteger)findFriendSectionRecents
+{
+    return self.groups.count;
+}
+
+- (NSInteger)findFriendSectionSuggested
+{
+    return self.groups.count + 1;
+}
+
+- (NSInteger)findFriendSectionContacts
+{
+    return self.groups.count + 2;
 }
 
 - (void)viewDidLoad
@@ -142,7 +156,11 @@ typedef enum {
         for (Contact *contact in contacts) {
             [self.contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
         }
-        [self reloadData];
+        [[ContactManager sharedManager] getGroups:^(NSArray *groups) {
+            self.tableViewHeaderPool = nil;
+            self.groups = groups;
+            [self reloadData];
+        } failure:nil];
         if (self.selectedContacts) {
             for (Contact *contact in self.selectedContacts) {
                 [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
@@ -243,6 +261,15 @@ typedef enum {
 }
 
 #pragma mark - Table view data source
+- (Group *)groupForSection:(NSInteger)section
+{
+    Group *group;
+    if (section < self.groups.count) {
+        group = self.groups[section];
+    }
+    return group;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     CGFloat height = self.inSearchMode ? 0 : 30;
@@ -312,17 +339,20 @@ typedef enum {
     [self setSelected:button.selected forAllContactsInSection:section];
 }
 
-- (void)setSelected:(BOOL)selected forAllContactsInSection:(FindFriendSection)section
+- (void)setSelected:(BOOL)selected forAllContactsInSection:(NSInteger)section
 {
-    [self reloadData];
     NSArray *contactList;
-    if (section == FindFriendSectionRecents) {
+    Group *group = [self groupForSection:section];
+    if (group) {
+        contactList = group.contacts;
+    }
+    else if (section == self.findFriendSectionRecents) {
         contactList = self.recentsList;
     }
-    else if (section == FindFriendSectionSuggested) {
+    else if (section == self.findFriendSectionSuggested) {
         contactList = self.suggestedList;
     }
-    else if (section == FindFriendSectionContacts) {
+    else if (section == self.findFriendSectionContacts) {
         contactList = self.nonSuggestedList;
     }
     for (Contact *contact in contactList) {
@@ -358,13 +388,17 @@ typedef enum {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *title = @"";
-    if (section == FindFriendSectionRecents) {
+    Group *group = [self groupForSection:section];
+    if (group) {
+        title = group.name;
+    }
+    else  if (section == self.findFriendSectionRecents) {
         title = @"Recents";
     }
-    else if (section == FindFriendSectionSuggested) {
+    else if (section == self.findFriendSectionSuggested) {
         title = @"Suggested";
     }
-    else if (section == FindFriendSectionContacts) {
+    else if (section == self.findFriendSectionContacts) {
         title = @"Contacts";
     }
     return title;
@@ -372,19 +406,24 @@ typedef enum {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 3 + self.groups.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numRows = 0;
-    if (section == FindFriendSectionRecents) {
+    Group *group = [self groupForSection:section];
+    if (group) {
+        Group *group = self.groups[section];
+        numRows = group.contacts.count;
+    }
+    else if (section == self.findFriendSectionRecents) {
         numRows = self.recentsList.count;
     }
-    else if (section == FindFriendSectionSuggested) {
+    else if (section == self.findFriendSectionSuggested) {
         numRows = self.suggestedList.count;
     }
-    else if (section == FindFriendSectionContacts) {
+    else if (section == self.findFriendSectionContacts) {
         numRows = self.nonSuggestedList.count;
     }
     return numRows;
@@ -411,7 +450,7 @@ typedef enum {
     }
     
     if (found) {
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:FindFriendSectionContacts];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:self.findFriendSectionContacts];
         [tableView scrollToRowAtIndexPath:newIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
     return index;
@@ -457,14 +496,20 @@ typedef enum {
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     NSString *normalizedPhoneNumber;
     Contact *contact;
-    if (indexPath.section == FindFriendSectionRecents) {
+    if (indexPath.section < self.groups.count) {
+        Group *group = self.groups[indexPath.section];
+        contact = group.contacts[indexPath.row];
+    }
+    if (!contact) {
+    if (indexPath.section == self.findFriendSectionRecents) {
         contact = self.recentsList[indexPath.row];
     }
-    else if (indexPath.section == FindFriendSectionSuggested) {
+    else if (indexPath.section == self.findFriendSectionSuggested) {
         contact = self.suggestedList[indexPath.row];
     }
-    else if (indexPath.section == FindFriendSectionContacts) {
+    else if (indexPath.section == self.findFriendSectionContacts) {
         contact = self.nonSuggestedList[indexPath.row];
+    }
     }
     nameLabel.text = contact.fullName;
     normalizedPhoneNumber = contact.normalizedPhoneNumber;
@@ -489,13 +534,17 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Contact *contact;
-    if (indexPath.section == FindFriendSectionRecents) {
+    if (indexPath.section < self.groups.count) {
+        Group *group = self.groups[indexPath.section];
+        contact = group.contacts[indexPath.row];
+    }
+    else if (indexPath.section == self.findFriendSectionRecents) {
         contact = self.recentsList[indexPath.row];
     }
-    if (indexPath.section == FindFriendSectionSuggested) {
+    else if (indexPath.section == self.findFriendSectionSuggested) {
         contact = self.suggestedList[indexPath.row];
     }
-    else if (indexPath.section == FindFriendSectionContacts) {
+    else if (indexPath.section == self.findFriendSectionContacts) {
         contact = self.nonSuggestedList[indexPath.row];
     }
     
@@ -515,7 +564,7 @@ typedef enum {
     }
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     [self animateSelectingContactInCell:cell selected:!currentlySelected completion:^{
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadData];
         if (self.inSearchMode) {
             [self exitSearchMode];
         }
