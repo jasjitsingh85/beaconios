@@ -41,6 +41,8 @@
 
 @end
 
+#define selectedTransform CGAffineTransformMakeScale(1.35, 1.35)
+
 @implementation FindFriendsViewController
 
 - (NSMutableDictionary *)selectedContactDictionary
@@ -168,6 +170,7 @@
         [[ContactManager sharedManager] getGroups:^(NSArray *groups) {
             self.tableViewHeaderPool = nil;
             self.groups = groups;
+            [self collapseGroupSections];
             [self reloadData];
         } failure:nil];
         if (self.selectedContacts) {
@@ -185,6 +188,12 @@
     }];
 }
 
+- (void)collapseGroupSections
+{
+    for (NSInteger i=0;i<self.groups.count;i++) {
+        [self.collapsedSections addObject:@(i)];
+    }
+}
 
 - (void)reloadData
 {
@@ -288,14 +297,14 @@
 {
     [self.collapsedSections addObject:@(section)];
     NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
-    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)uncollapseSection:(NSInteger)section
 {
     [self.collapsedSections removeObject:@(section)];
     NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
-    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -319,29 +328,32 @@
     CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
     view.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 83, height)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(59, 0, 83, height)];
     title.backgroundColor = [UIColor clearColor];
     title.font = [ThemeManager boldFontOfSize:14.0];
     title.textColor = [UIColor whiteColor];
     [view addSubview:title];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.layer.borderColor = [UIColor whiteColor].CGColor;
-    button.layer.borderWidth = 1;
     CGRect buttonFrame = CGRectZero;
-    buttonFrame.size = CGSizeMake(95, 3/4.0*height);
-    buttonFrame.origin.x = self.tableView.frame.size.width - buttonFrame.size.width - 30;
+    buttonFrame.size = CGSizeMake(height, height);
+    buttonFrame.origin.x = 15 + (30 - buttonFrame.size.width)/2.0;
     buttonFrame.origin.y = 0.5*(height - buttonFrame.size.height);
     button.frame = buttonFrame;
     [view addSubview:button];
-    button.titleLabel.font = [ThemeManager lightFontOfSize:12.0];
-    [button setTitle:@"Select All" forState:UIControlStateNormal];
-    [button setTitle:@"Unselect All" forState:UIControlStateSelected];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+    [button setImage:[UIImage imageNamed:@"addFriendWhite"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"addFriendSelected"] forState:UIControlStateSelected];
     [button addTarget:self action:@selector(selectAllButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    button.layer.cornerRadius = 4;
-    button.backgroundColor = [UIColor clearColor];
+    
+    UILabel *contactCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.width - 32, height)];
+    contactCountLabel.textAlignment = NSTextAlignmentRight;
+    contactCountLabel.font = [ThemeManager lightFontOfSize:1.3*8];
+    contactCountLabel.textColor = [UIColor whiteColor];
+    NSInteger contactCount = [self tableView:tableView  numberOfRowsInExpandedSection:section];
+    NSString *contactPlural = contactCount == 1 ? @"Contact" : @"Contacts";
+    contactCountLabel.text = [NSString stringWithFormat:@"%d %@", contactCount, contactPlural];
+    [view addSubview:contactCountLabel];
+    
     [self.tableViewHeaderPool setValue:view forKey:key];
     [self setSelectAllButton:button forSection:section];
     view.tag = section;
@@ -408,7 +420,10 @@
     }
     UIButton *selectAllButton = [self.selectAllButtonPool valueForKey:@(section).stringValue];
     selectAllButton.selected = selected;
-    selectAllButton.backgroundColor = selectAllButton.selected ? [UIColor whiteColor] : [UIColor clearColor];
+    CGFloat damping = selected ? 0.25 : 0.5;
+    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
+        selectAllButton.transform = selected ? selectedTransform : CGAffineTransformIdentity;
+    } completion:nil];
     [self.tableView reloadData];
 }
 
@@ -455,6 +470,18 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger numRows = 0;
+    if ([self sectionIsCollapsed:section]) {
+        numRows = 0;
+    }
+    else {
+        numRows = [self tableView:tableView numberOfRowsInExpandedSection:section];
+    }
+    return numRows;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInExpandedSection:(NSInteger)section
+{
+    NSInteger numRows = 0;
     Group *group = [self groupForSection:section];
     if (group) {
         Group *group = self.groups[section];
@@ -468,9 +495,6 @@
     }
     else if (section == self.findFriendSectionContacts) {
         numRows = self.nonSuggestedList.count;
-    }
-    if ([self sectionIsCollapsed:section]) {
-        numRows = 0;
     }
     return numRows;
 }
@@ -562,8 +586,7 @@
     BOOL contactInactive = [self.inactiveContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
-    CGFloat scale = contactSelected ? 1.35 : 1.0;
-    addFriendImageView.transform = CGAffineTransformMakeScale(scale, scale);
+    addFriendImageView.transform = contactSelected ? selectedTransform : CGAffineTransformIdentity;
     if (contactInactive) {
         nameLabel.textColor = [UIColor lightGrayColor];
         addFriendImageView.image = [UIImage imageNamed:@"addFriendInactive"];
@@ -622,10 +645,9 @@
     UIImage *image = selected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     addFriendImageView.image = image;
-    CGFloat scale = selected ? 1.35 : 1.0;
     CGFloat damping = selected ? 0.25 : 0.5;
     [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
-        addFriendImageView.transform = CGAffineTransformMakeScale(scale, scale);
+        addFriendImageView.transform = selected ? selectedTransform : CGAffineTransformIdentity;
         [cell layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (completion) {

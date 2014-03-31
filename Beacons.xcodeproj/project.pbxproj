@@ -42,6 +42,7 @@
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FE29418D10F7100CF891A /* ExplanationPopupView.m */; };
 		9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9625822318E9E05300677D92 /* plusCircleGray@2x.png */; };
+		9625822618E9FEA500677D92 /* addFriendWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9625822518E9FEA500677D92 /* addFriendWhite@2x.png */; };
 		9626BC3918D623FA00E90E22 /* NSDate+Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 9626BC3818D623FA00E90E22 /* NSDate+Day.m */; };
 		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
 		962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */; };
@@ -306,6 +307,7 @@
 		961FE29318D10F7100CF891A /* ExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplanationPopupView.h; sourceTree = "<group>"; };
 		961FE29418D10F7100CF891A /* ExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplanationPopupView.m; sourceTree = "<group>"; };
 		9625822318E9E05300677D92 /* plusCircleGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleGray@2x.png"; sourceTree = "<group>"; };
+		9625822518E9FEA500677D92 /* addFriendWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendWhite@2x.png"; sourceTree = "<group>"; };
 		9626BC3718D623FA00E90E22 /* NSDate+Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Day.h"; sourceTree = "<group>"; };
 		9626BC3818D623FA00E90E22 /* NSDate+Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Day.m"; sourceTree = "<group>"; };
 		962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowSmall@2x.png"; sourceTree = "<group>"; };
@@ -896,6 +898,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
 				968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */,
 				96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */,
 				96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */,
@@ -1268,6 +1271,7 @@
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				96EB3E0018A19E3C0073CEDF /* inviteMoreAnimation0012.png in Resources */,
+				9625822618E9FEA500677D92 /* addFriendWhite@2x.png in Resources */,
 				96EB3DC618A19E310073CEDF /* inviteAnyoneAnimation0013.png in Resources */,
 				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				96EB3DD118A19E310073CEDF /* inviteAnyoneAnimation0024.png in Resources */,

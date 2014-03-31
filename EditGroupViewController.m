@@ -207,7 +207,8 @@
     contactCountLabel.font = [ThemeManager lightFontOfSize:1.3*8];
     contactCountLabel.textColor = [UIColor whiteColor];
     NSInteger contactCount = !section ? self.group.contacts.count : self.contacts.count;
-    contactCountLabel.text = [NSString stringWithFormat:@"%d contacts", contactCount];
+    NSString *contactPlural = contactCount == 1 ? @"Contact" : @"Contacts";
+    contactCountLabel.text = [NSString stringWithFormat:@"%d %@", contactCount, contactPlural];
     [headerView addSubview:contactCountLabel];
     
     return headerView;
