@@ -238,6 +238,7 @@
         cell.contactNameLabel.text = contact.fullName;
         cell.contactNameLabel.textColor = [UIColor blackColor];
         cell.contactImageView.image = [UIImage imageNamed:@"minusCircleUnselected"];
+        cell.contactImageView.transform = CGAffineTransformIdentity;
     }
     else {
         Contact *contact = self.filteredContacts[indexPath.row];
