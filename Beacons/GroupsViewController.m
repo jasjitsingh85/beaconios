@@ -39,6 +39,7 @@
     [self.createGroupButton setTitleColor:[UIColor colorWithWhite:68/255.0 alpha:1.0] forState:UIControlStateNormal];
     self.createGroupButton.backgroundColor = [UIColor whiteColor];
     [self.createGroupButton addTarget:self action:@selector(createGroupButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -69,6 +70,7 @@
     UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Create Group" message:@"What would you like to name this group?"];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView textFieldAtIndex:0].delegate = self;
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [alertView bk_addButtonWithTitle:@"Cancel" handler:nil];
     [alertView bk_setCancelButtonWithTitle:@"Create" handler:^{
         UITextField *textField = [alertView textFieldAtIndex:0];
@@ -82,13 +84,17 @@
 {
     Group *group = [[Group alloc] init];
     group.name = groupName;
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[ContactManager sharedManager] postGroup:group success:^{
         jadispatch_main_qeue(^{
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
             EditGroupViewController *editGroupViewController = [[EditGroupViewController alloc] init];
             editGroupViewController.group = group;
             [self.navigationController pushViewController:editGroupViewController animated:YES];
         });
-    } failure:nil];
+    } failure:^(NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -113,6 +119,7 @@
 {
     if (!indexPath.row) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        [cell addEdge:UIRectEdgeBottom width:1 color:[UIColor colorWithWhite:220/255.0 alpha:1]];
         [cell.contentView addSubview:self.createGroupButton];
         return cell;
     }
@@ -120,6 +127,7 @@
     GroupTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        [cell addEdge:UIRectEdgeBottom width:1 color:[UIColor colorWithWhite:220/255.0 alpha:1]];
     }
     Group *group = self.groups[indexPath.row - 1];
     cell.groupNameLabel.text = group.name;
