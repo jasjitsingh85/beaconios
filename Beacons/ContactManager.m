@@ -85,7 +85,7 @@
                         [contactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
                     }
                     self.contactDictionary = [[NSDictionary alloc] initWithDictionary:contactDictionary];
-                    success(contacts);
+                    success(self.contactDictionary.allValues);
                 }
             });
         });
