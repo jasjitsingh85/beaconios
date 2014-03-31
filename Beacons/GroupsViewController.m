@@ -159,8 +159,10 @@
     
     CGRect groupNameFrame = self.contentView.bounds;
     groupNameFrame.origin.x = 30;
+    groupNameFrame.size.width = 160;
     self.groupNameLabel = [[UILabel alloc] initWithFrame:groupNameFrame];
     self.groupNameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
+    self.groupNameLabel.adjustsFontSizeToFitWidth = YES;
     self.groupNameLabel.font = [ThemeManager boldFontOfSize:1.3*12];
     self.groupNameLabel.textColor = [UIColor colorWithWhite:68/255.0 alpha:1.0];
     [self.contentView addSubview:self.groupNameLabel];

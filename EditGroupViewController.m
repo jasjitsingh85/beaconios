@@ -196,7 +196,8 @@
     headerView.backgroundColor = [[ThemeManager sharedTheme] redColor];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:headerView.bounds];
     titleLabel.x = 32;
-    titleLabel.width -= titleLabel.x;
+    titleLabel.width = 160;
+    titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.font = [ThemeManager regularFontOfSize:1.3*13];
     [headerView addSubview:titleLabel];

@@ -343,7 +343,8 @@
     CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
     view.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(59, 0, 83, height)];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(59, 0, 150, height)];
+    title.adjustsFontSizeToFitWidth = YES;
     title.backgroundColor = [UIColor clearColor];
     title.font = [ThemeManager boldFontOfSize:14.0];
     title.textColor = [UIColor whiteColor];
