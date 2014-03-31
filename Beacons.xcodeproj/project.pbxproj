@@ -43,6 +43,7 @@
 		961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FE29418D10F7100CF891A /* ExplanationPopupView.m */; };
 		9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9625822318E9E05300677D92 /* plusCircleGray@2x.png */; };
 		9625822618E9FEA500677D92 /* addFriendWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9625822518E9FEA500677D92 /* addFriendWhite@2x.png */; };
+		9625822918EA0D3000677D92 /* UIViewController+isVisible.m in Sources */ = {isa = PBXBuildFile; fileRef = 9625822818EA0D3000677D92 /* UIViewController+isVisible.m */; };
 		9626BC3918D623FA00E90E22 /* NSDate+Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 9626BC3818D623FA00E90E22 /* NSDate+Day.m */; };
 		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
 		962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */; };
@@ -308,6 +309,8 @@
 		961FE29418D10F7100CF891A /* ExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplanationPopupView.m; sourceTree = "<group>"; };
 		9625822318E9E05300677D92 /* plusCircleGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleGray@2x.png"; sourceTree = "<group>"; };
 		9625822518E9FEA500677D92 /* addFriendWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendWhite@2x.png"; sourceTree = "<group>"; };
+		9625822718EA0D3000677D92 /* UIViewController+isVisible.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+isVisible.h"; sourceTree = "<group>"; };
+		9625822818EA0D3000677D92 /* UIViewController+isVisible.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+isVisible.m"; sourceTree = "<group>"; };
 		9626BC3718D623FA00E90E22 /* NSDate+Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Day.h"; sourceTree = "<group>"; };
 		9626BC3818D623FA00E90E22 /* NSDate+Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Day.m"; sourceTree = "<group>"; };
 		962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowSmall@2x.png"; sourceTree = "<group>"; };
@@ -624,6 +627,8 @@
 				966DF3D518D66B3F00109002 /* Beacon+Time.m */,
 				963763A018DB890F005DC57D /* UIView+Edge.h */,
 				963763A118DB890F005DC57D /* UIView+Edge.m */,
+				9625822718EA0D3000677D92 /* UIViewController+isVisible.h */,
+				9625822818EA0D3000677D92 /* UIViewController+isVisible.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1341,6 +1346,7 @@
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */,
+				9625822918EA0D3000677D92 /* UIViewController+isVisible.m in Sources */,
 				96C904C118CF5AC10020820A /* UIView+UIImage.m in Sources */,
 				96F14C1F17D84A890093C976 /* ChatTest.m in Sources */,
 				9626BC3918D623FA00E90E22 /* NSDate+Day.m in Sources */,

@@ -18,4 +18,5 @@
     #import "NSDate+FormattedDate.h"
     #import "JAGrandCentralDispatch.h"
     #import "UIView+Edge.h"
+    #import "UIViewController+isVisible.h"
 #endif

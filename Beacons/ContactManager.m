@@ -223,7 +223,7 @@
     [[APIClient sharedClient] postPath:@"contact_group/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [group updateWithData:responseObject[@"group"]];
         NSMutableArray *groups = [NSMutableArray arrayWithArray:self.groups];
-        [groups addObject:group];
+        [groups insertObject:group atIndex:0];
         self.groups = [NSArray arrayWithArray:groups];
         if (success) {
             success();

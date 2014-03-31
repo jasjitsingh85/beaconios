@@ -8,6 +8,7 @@
 
 #import "FindFriendsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GroupsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import "Contact.h"
 #import "Theme.h"
@@ -137,7 +138,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite Friends"];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite"];
+    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
+    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
     
     NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
     if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
@@ -155,6 +159,12 @@
     else {
         [self populateContacts];
     }
+}
+
+- (void)groupsButtonTouched:(id)sender
+{
+    GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
+    [self.navigationController pushViewController:groupsViewController animated:YES];
 }
 
 - (void)populateContacts
@@ -190,6 +200,7 @@
 
 - (void)collapseGroupSections
 {
+    [self.collapsedSections removeAllObjects];
     for (NSInteger i=0;i<self.groups.count;i++) {
         [self.collapsedSections addObject:@(i)];
     }
@@ -706,12 +717,18 @@
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    if (!self.isVisible) {
+        return;
+    }
     [self.searchBar setShowsCancelButton:YES animated:YES];
     self.inSearchMode = YES;
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+    if (!self.isVisible) {
+        return;
+    }
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 
