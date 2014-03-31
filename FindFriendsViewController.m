@@ -599,11 +599,6 @@
     }
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self.searchBar endEditing:YES];

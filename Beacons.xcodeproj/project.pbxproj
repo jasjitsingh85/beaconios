@@ -41,6 +41,7 @@
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
 		961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 961FE29418D10F7100CF891A /* ExplanationPopupView.m */; };
+		9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9625822318E9E05300677D92 /* plusCircleGray@2x.png */; };
 		9626BC3918D623FA00E90E22 /* NSDate+Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 9626BC3818D623FA00E90E22 /* NSDate+Day.m */; };
 		962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */; };
 		962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */; };
@@ -304,6 +305,7 @@
 		9615F4E6175BEBE6005CF62D /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		961FE29318D10F7100CF891A /* ExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExplanationPopupView.h; sourceTree = "<group>"; };
 		961FE29418D10F7100CF891A /* ExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExplanationPopupView.m; sourceTree = "<group>"; };
+		9625822318E9E05300677D92 /* plusCircleGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleGray@2x.png"; sourceTree = "<group>"; };
 		9626BC3718D623FA00E90E22 /* NSDate+Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Day.h"; sourceTree = "<group>"; };
 		9626BC3818D623FA00E90E22 /* NSDate+Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Day.m"; sourceTree = "<group>"; };
 		962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "annotationShadowSmall@2x.png"; sourceTree = "<group>"; };
@@ -897,6 +899,7 @@
 				968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */,
 				96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */,
 				96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */,
+				9625822318E9E05300677D92 /* plusCircleGray@2x.png */,
 				963763A318DBD73C005DC57D /* downArrowRed@2x.png */,
 				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
@@ -1138,6 +1141,7 @@
 				96EB3DFE18A19E3C0073CEDF /* inviteMoreAnimation0010.png in Resources */,
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
 				96EB3DBA18A19E310073CEDF /* inviteAnyoneAnimation0001.png in Resources */,
+				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
 				96EB3DF918A19E3C0073CEDF /* inviteMoreAnimation0005.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96EB3DF818A19E3C0073CEDF /* inviteMoreAnimation0004.png in Resources */,

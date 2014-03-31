@@ -70,6 +70,16 @@
     _normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    BOOL isEqual = NO;
+    if ([object isKindOfClass:[Contact class]]) {
+        Contact *otherContact = (Contact *)object;
+        isEqual = [otherContact.normalizedPhoneNumber isEqualToString:self.normalizedPhoneNumber];
+    }
+    return isEqual;
+}
+
 - (NSString *)serializedString
 {
     return [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", self.fullName, self.phoneNumber];
