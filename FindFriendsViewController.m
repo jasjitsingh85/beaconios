@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSMutableDictionary *inactiveContactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *tableViewHeaderPool;
 @property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
+@property (strong, nonatomic) NSMutableSet *collapsedSections;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIButton *inviteButton;
 @property (assign, nonatomic) BOOL inviteButtonShown;
@@ -56,6 +57,14 @@
         _inactiveContactDictionary = [NSMutableDictionary new];
     }
     return _inactiveContactDictionary;
+}
+
+- (NSMutableSet *)collapsedSections
+{
+    if (!_collapsedSections) {
+        _collapsedSections = [[NSMutableSet alloc] init];
+    }
+    return _collapsedSections;
 }
 
 - (NSInteger)findFriendSectionRecents
@@ -270,11 +279,31 @@
     return group;
 }
 
+- (BOOL)sectionIsCollapsed:(NSInteger)section
+{
+    return [self.collapsedSections containsObject:@(section)];
+}
+
+- (void)collapseSection:(NSInteger)section
+{
+    [self.collapsedSections addObject:@(section)];
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)uncollapseSection:(NSInteger)section
+{
+    [self.collapsedSections removeObject:@(section)];
+    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat height = self.inSearchMode ? 0 : 30;
+    CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
     return height;
 }
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (self.inSearchMode) {
@@ -315,6 +344,9 @@
     button.backgroundColor = [UIColor clearColor];
     [self.tableViewHeaderPool setValue:view forKey:key];
     [self setSelectAllButton:button forSection:section];
+    view.tag = section;
+    UITapGestureRecognizer *headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTapped:)];
+    [view addGestureRecognizer:headerTap];
     return view;
 }
 
@@ -330,6 +362,17 @@
 - (UIButton *)selectAllButtonForSection:(NSInteger)section
 {
     return [self.selectAllButtonPool valueForKey:@(section).stringValue];
+}
+
+- (void)headerTapped:(UITapGestureRecognizer *)tap
+{
+    NSInteger section = tap.view.tag;
+    if ([self sectionIsCollapsed:section]) {
+        [self uncollapseSection:section];
+    }
+    else {
+        [self collapseSection:section];
+    }
 }
 
 - (void)selectAllButtonTouched:(UIButton *)button
@@ -425,6 +468,9 @@
     }
     else if (section == self.findFriendSectionContacts) {
         numRows = self.nonSuggestedList.count;
+    }
+    if ([self sectionIsCollapsed:section]) {
+        numRows = 0;
     }
     return numRows;
 }
