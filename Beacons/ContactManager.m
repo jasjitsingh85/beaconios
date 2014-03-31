@@ -8,11 +8,13 @@
 
 #import "ContactManager.h"
 #import "Contact.h"
+#import "Group.h"
 #import "Utilities.h"
 
 @interface ContactManager()
 
 @property (strong, nonatomic) NSDictionary *contactDictionary;
+@property (strong, nonatomic) NSArray *groups;
 
 @end
 
@@ -145,8 +147,7 @@
     [self fetchAddressBookContacts:^(NSArray *contacts) {
         NSMutableArray *contactParameter = [NSMutableArray new];
         for (Contact *contact in contacts) {
-            NSString *contactString = [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", contact.fullName, contact.phoneNumber];
-            [contactParameter addObject:contactString];
+            [contactParameter addObject:contact.serializedString];
         }
         NSDictionary *parameters = @{@"contact" : contactParameter};
         [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
@@ -156,6 +157,106 @@
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    }];
     } failure:^(NSError *error) {
+    }];
+}
+
+- (void)deleteGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    NSDictionary *parameters = @{@"group_id": group.groupID};
+    [[APIClient sharedClient] deletePath:@"contact_group/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *groups = [NSMutableArray arrayWithArray:self.groups];
+        NSArray *filtered = [self.groups filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"groupID = %@", group.groupID]];
+        for (Group *removedGroup in filtered) {
+            [groups removeObject:removedGroup];
+        }
+        self.groups = [NSArray arrayWithArray:groups];
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)addContacts:(NSArray *)contacts toGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    [self addContacts:contacts removeContacts:@[] group:group success:success failure:failure];
+}
+
+- (void)removeContacts:(NSArray *)contacts fromGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    [self addContacts:@[] removeContacts:contacts group:group success:success failure:failure];
+}
+
+- (void)addContacts:(NSArray *)contactsToAdd removeContacts:(NSArray *)contactsToRemove group:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    NSArray *add = [contactsToAdd valueForKey:@"serializedString"];
+    NSArray *remove = [contactsToRemove valueForKey:@"serializedString"];
+    NSDictionary *parameters = @{@"group_id": group.groupID,
+                                 @"add": add,
+                                 @"remove": remove};
+    [[APIClient sharedClient] putPath:@"contact_group/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [group updateWithData:responseObject[@"group"]];
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)postGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if (group.contacts) {
+        NSMutableArray *contactParameter = [[NSMutableArray alloc] init];
+        for (Contact *contact in group.contacts) {
+            [contactParameter addObject:contact.serializedString];
+        }
+        parameters[@"contact"] = contactParameter;
+    }
+    parameters[@"name"] = group.name;
+    [[APIClient sharedClient] postPath:@"contact_group/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [group updateWithData:responseObject[@"group"]];
+        NSMutableArray *groups = [NSMutableArray arrayWithArray:self.groups];
+        [groups addObject:group];
+        self.groups = [NSArray arrayWithArray:groups];
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)getGroups:(void (^)(NSArray *groups))success failure:(void (^)(NSError *error))failure
+{
+    if (self.groups) {
+        if (success) {
+            success(self.groups);
+        }
+        return;
+    }
+    [[APIClient sharedClient] getPath:@"contact_group/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *groupsData = responseObject[@"groups"];
+        NSMutableArray *groups = [[NSMutableArray alloc] init];
+        for (NSDictionary *groupData in groupsData) {
+            Group *group = [[Group alloc] initWithData:groupData];
+            [groups addObject:group];
+        }
+        self.groups = [NSArray arrayWithArray:groups];
+        if (success) {
+            success(self.groups);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
     }];
 }
 

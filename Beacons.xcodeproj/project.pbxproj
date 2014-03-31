@@ -78,6 +78,7 @@
 		96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */; };
 		96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */; };
 		96727DE71801DA1A00E75EE9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96727DE61801DA1A00E75EE9 /* CoreImage.framework */; };
+		968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */; };
 		96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CEA17EF9C8800C1C467 /* SoundPlayer.m */; };
 		96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */; };
 		96859CF417EFC3C600C1C467 /* FormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CF317EFC3C600C1C467 /* FormView.m */; };
@@ -159,12 +160,16 @@
 		96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD04180676E600D62462 /* UIView+Shadow.m */; };
 		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
+		96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */; };
+		96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D52D231838415300496923 /* SecretSettingsViewController.m */; };
 		96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D52D241838415300496923 /* SecretSettingsViewController.xib */; };
 		96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA504181A2D71001E5812 /* RandomObjectPicker.m */; };
 		96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA50A181A2E93001E5812 /* RandomObjectManager.m */; };
 		96E565D018E871720007545D /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E565CF18E871720007545D /* GroupsViewController.m */; };
+		96E565D318E87ACD0007545D /* EditGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E565D218E87ACD0007545D /* EditGroupViewController.m */; };
+		96E565D618E87CB80007545D /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E565D518E87CB80007545D /* Group.m */; };
 		96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EC1814996E0048125B /* NSObject+Empty.m */; };
 		96E623F01816485C0048125B /* BounceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E623EF1816485C0048125B /* BounceButton.m */; };
 		96EB3DB918A19E310073CEDF /* inviteAnyoneAnimation0000.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EB3D9F18A19E310073CEDF /* inviteAnyoneAnimation0000.png */; };
@@ -356,6 +361,7 @@
 		96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendSelected@2x.png"; sourceTree = "<group>"; };
 		96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendInactive@2x.png"; sourceTree = "<group>"; };
 		96727DE61801DA1A00E75EE9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minusCircleUnselected@2x.png"; sourceTree = "<group>"; };
 		96859CE917EF9C8800C1C467 /* SoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundPlayer.h; sourceTree = "<group>"; };
 		96859CEA17EF9C8800C1C467 /* SoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundPlayer.m; sourceTree = "<group>"; };
 		96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -470,6 +476,8 @@
 		96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyBeaconViewController.h; sourceTree = "<group>"; };
 		96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyBeaconViewController.m; sourceTree = "<group>"; };
 		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
+		96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleUnselected@2x.png"; sourceTree = "<group>"; };
+		96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleSelected@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96D52D221838415300496923 /* SecretSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecretSettingsViewController.h; sourceTree = "<group>"; };
 		96D52D231838415300496923 /* SecretSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecretSettingsViewController.m; sourceTree = "<group>"; };
@@ -480,6 +488,10 @@
 		96DEA50A181A2E93001E5812 /* RandomObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjectManager.m; sourceTree = "<group>"; };
 		96E565CE18E871720007545D /* GroupsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsViewController.h; sourceTree = "<group>"; };
 		96E565CF18E871720007545D /* GroupsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsViewController.m; sourceTree = "<group>"; };
+		96E565D118E87ACD0007545D /* EditGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditGroupViewController.h; path = ../EditGroupViewController.h; sourceTree = "<group>"; };
+		96E565D218E87ACD0007545D /* EditGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditGroupViewController.m; path = ../EditGroupViewController.m; sourceTree = "<group>"; };
+		96E565D418E87CB80007545D /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
+		96E565D518E87CB80007545D /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
 		96E623EB1814996E0048125B /* NSObject+Empty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Empty.h"; sourceTree = "<group>"; };
 		96E623EC1814996E0048125B /* NSObject+Empty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Empty.m"; sourceTree = "<group>"; };
 		96E623EE1816485C0048125B /* BounceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BounceButton.h; sourceTree = "<group>"; };
@@ -690,6 +702,8 @@
 				1F465C2A176510EB00F35A8B /* Contact.m */,
 				96A9873317E6A6C6007D77B8 /* BeaconImage.h */,
 				96A9873417E6A6C6007D77B8 /* BeaconImage.m */,
+				96E565D418E87CB80007545D /* Group.h */,
+				96E565D518E87CB80007545D /* Group.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -735,6 +749,8 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				96E565D118E87ACD0007545D /* EditGroupViewController.h */,
+				96E565D218E87ACD0007545D /* EditGroupViewController.m */,
 				96AFCA1E18261902003A47F2 /* PermissionsViewController.h */,
 				96AFCA1F18261902003A47F2 /* PermissionsViewController.m */,
 				96859D0617F402F200C1C467 /* Other */,
@@ -878,6 +894,9 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */,
+				96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */,
+				96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */,
 				963763A318DBD73C005DC57D /* downArrowRed@2x.png */,
 				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
@@ -1206,6 +1225,7 @@
 				96EB3DFA18A19E3C0073CEDF /* inviteMoreAnimation0006.png in Resources */,
 				96EB3DF618A19E3C0073CEDF /* inviteMoreAnimation0002.png in Resources */,
 				96C7FEA71898158200A79CC3 /* iphoneVector@2x.png in Resources */,
+				96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */,
 				96EB3DBE18A19E310073CEDF /* inviteAnyoneAnimation0005.png in Resources */,
 				96EB3DD218A19E310073CEDF /* inviteAnyoneAnimation0025.png in Resources */,
 				96C7FE9C1897294100A79CC3 /* blueGradientBackground@2x.png in Resources */,
@@ -1236,6 +1256,7 @@
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
+				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
 				96EB3E0618A19E3C0073CEDF /* inviteMoreAnimation0018.png in Resources */,
 				96EB3DC818A19E310073CEDF /* inviteAnyoneAnimation0015.png in Resources */,
@@ -1247,6 +1268,7 @@
 				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				96EB3DD118A19E310073CEDF /* inviteAnyoneAnimation0024.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
+				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96EB3E0318A19E3C0073CEDF /* inviteMoreAnimation0015.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
@@ -1306,6 +1328,7 @@
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				9695644F1758642B0081B349 /* MapViewController.m in Sources */,
 				96A8E03218D61A8800493C65 /* DatePickerModalView.m in Sources */,
+				96E565D618E87CB80007545D /* Group.m in Sources */,
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
@@ -1362,6 +1385,7 @@
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,
 				1F3EF24817979FD9005240E3 /* NotificationManager.m in Sources */,
+				96E565D318E87ACD0007545D /* EditGroupViewController.m in Sources */,
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
 				960D79F518BC580100E9462D /* MenuViewController.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,

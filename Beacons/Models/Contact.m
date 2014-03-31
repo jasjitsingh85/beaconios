@@ -68,6 +68,11 @@
 {
     _phoneNumber = phoneNumber;
     _normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-}   
+}
+
+- (NSString *)serializedString
+{
+    return [NSString stringWithFormat:@"{\"name\":\"%@\", \"phone\":\"%@\"}", self.fullName, self.phoneNumber];
+}
 
 @end

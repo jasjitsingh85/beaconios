@@ -8,7 +8,11 @@
 
 #import "GroupsViewController.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "Group.h"
+#import "EditGroupViewController.h"
+#import "ContactManager.h"
 #import "Theme.h"
+#import "LoadingIndictor.h"
 
 @interface GroupTableViewCell : UITableViewCell
 
@@ -35,9 +39,29 @@
     [self.createGroupButton setTitleColor:[UIColor colorWithWhite:68/255.0 alpha:1.0] forState:UIControlStateNormal];
     self.createGroupButton.backgroundColor = [UIColor whiteColor];
     [self.createGroupButton addTarget:self action:@selector(createGroupButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
+}
 
-    [self.tableView reloadData];
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationItem.title = @"Groups";
+    
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:NO];
+    [[ContactManager sharedManager] getGroups:^(NSArray *groups) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
+        self.groups = groups;
+        [self.tableView reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)reloadData
+{
+    [[ContactManager sharedManager] getGroups:^(NSArray *groups) {
+        self.groups = groups;
+        [self.tableView reloadData];
+    } failure:nil];
 }
 
 - (void)createGroupButtonTouched:(id)sender
@@ -49,8 +73,22 @@
     [alertView bk_setCancelButtonWithTitle:@"Create" handler:^{
         UITextField *textField = [alertView textFieldAtIndex:0];
         NSString *groupName = textField.text;
+        [self createGroupWithName:groupName];
     }];
     [alertView show];
+}
+
+- (void)createGroupWithName:(NSString *)groupName
+{
+    Group *group = [[Group alloc] init];
+    group.name = groupName;
+    [[ContactManager sharedManager] postGroup:group success:^{
+        jadispatch_main_qeue(^{
+            EditGroupViewController *editGroupViewController = [[EditGroupViewController alloc] init];
+            editGroupViewController.group = group;
+            [self.navigationController pushViewController:editGroupViewController animated:YES];
+        });
+    } failure:nil];
 }
 
 #pragma mark - Table view data source
@@ -67,7 +105,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.groups.count + 1;
 }
 
 
@@ -83,16 +121,21 @@
     if (!cell) {
         cell = [[GroupTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    NSString *title;
-    if (indexPath.row == 1) {
-        title = @"Test";
-    }
-    else if (indexPath.row == 2) {
-        title = @"Another test";
-    }
-    cell.groupNameLabel.text = title;
-    cell.memberCountLabel.text = [NSString stringWithFormat:@"%@ Contacts", @(100).stringValue];
+    Group *group = self.groups[indexPath.row - 1];
+    cell.groupNameLabel.text = group.name;
+    cell.memberCountLabel.text = [NSString stringWithFormat:@"%@ Contacts", @(group.contacts.count).stringValue];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row) {
+        Group *group = self.groups[indexPath.row - 1];
+        EditGroupViewController *editGroupViewController = [[EditGroupViewController alloc] init];
+        editGroupViewController.group = group;
+        [self.navigationController pushViewController:editGroupViewController animated:YES];
+    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

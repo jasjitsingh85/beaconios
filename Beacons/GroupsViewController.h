@@ -10,4 +10,6 @@
 
 @interface GroupsViewController : UITableViewController
 
+@property (strong, nonatomic) NSArray *groups;
+
 @end
