@@ -122,6 +122,9 @@
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.inviteButton];
     [self updateInviteButtonText:nil];
+    UIEdgeInsets insets = self.tableView.contentInset;
+    insets.bottom = self.inviteButton.frame.size.height;
+    self.tableView.contentInset = insets;
     self.inviteButtonShown = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -270,6 +273,7 @@
         insets.bottom = 0;
         self.tableView.contentInset = insets;
     }];
+    self.tableView.contentInset = UIEdgeInsetsZero;
 }
 
 - (void)updateInviteButtonText:(Contact *)lastSelectedContact
