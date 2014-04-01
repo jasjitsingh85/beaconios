@@ -317,8 +317,8 @@
     BOOL hasData = beacon.beaconDescription != nil;
     if (hasData) {
         [[APIClient sharedClient] markBeaconAsSeen:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            BOOL firstView = [responseObject[@"first_view"] boolValue];
-            if (firstView && !beacon.isUserBeacon && !self.promptShowing) {
+            BOOL showPrompt = [responseObject[@"show_prompt"] boolValue];
+            if (showPrompt && !beacon.isUserBeacon && !self.promptShowing) {
                 jadispatch_main_qeue(^{
                     [self promptForGoing];
                 });
@@ -338,7 +338,7 @@
     }];
     [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
         self.promptShowing = NO;
-        [self join];
+        [self join:nil];
     }];
     [alertView show];
 }
@@ -354,6 +354,21 @@
     } failure:^(NSError *error) {
         self.promptShowing = NO;
     }];
+}
+
+- (void)promptToInviteFriends
+{
+    self.promptShowing = YES;
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
+    [alertView bk_addButtonWithTitle:@"No thanks" handler:^{
+        self.promptShowing = NO;
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Yeah!" handler:^{
+        self.promptShowing = NO;
+        [self inviteMoreFriends];
+    }];
+    [alertView show];
+    [[AnalyticsManager sharedManager] setBeaconStatus:@"going" forSelf:YES];
 }
 
 - (void)getDirectionsToBeacon
@@ -527,23 +542,21 @@
 
 - (void)joinButtonTouched:(id)sender
 {
-    [self join];
+    [self join:^{
+        [self promptToInviteFriends];
+    }];
 }
 
-- (void)join
+- (void)join:(void (^)())didJoin
 {
     [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
         [self refreshBeaconData];
     } failure:nil];
     self.joinButton.hidden = YES;
     self.inviteButton.hidden = NO;
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Cool" message:@"Want to invite more friends?"];
-    [alertView bk_addButtonWithTitle:@"No thanks" handler:nil];
-    [alertView bk_setCancelButtonWithTitle:@"Yeah!" handler:^{
-        [self inviteMoreFriends];
-    }];
-    [alertView show];
-    [[AnalyticsManager sharedManager] setBeaconStatus:@"going" forSelf:YES];
+    if (didJoin) {
+        didJoin();
+    }
 }
 
 - (void)inviteButtonTouched:(id)sender
