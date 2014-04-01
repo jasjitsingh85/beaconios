@@ -60,6 +60,7 @@
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @property (assign, nonatomic) BOOL keyboardShown;
+@property (assign, nonatomic) BOOL promptShowing;
 
 @end
 
@@ -313,16 +314,46 @@
     self.editButton.hidden = !beacon.isUserBeacon;
     
     //let server know that user has seen this hotspot
-    [[APIClient sharedClient] markBeaconAsSeen:beacon success:nil failure:nil];
+    BOOL hasData = beacon.beaconDescription != nil;
+    if (hasData) {
+        [[APIClient sharedClient] markBeaconAsSeen:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            BOOL firstView = [responseObject[@"first_view"] boolValue];
+            if (firstView && !beacon.isUserBeacon && !self.promptShowing) {
+                jadispatch_main_qeue(^{
+                    [self promptForGoing];
+                });
+            }
+        } failure:nil];
+    }
+}
+
+
+- (void)promptForGoing
+{
+    self.promptShowing = YES;
+    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@ \n\nAre you coming?", self.beacon.creator.firstName, self.beacon.beaconDescription, self.beacon.time.fullFormattedDate, self.beacon.address];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:inviteText];
+    [alertView bk_addButtonWithTitle:@"More info" handler:^{
+        self.promptShowing = NO;
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
+        self.promptShowing = NO;
+        [self join];
+    }];
+    [alertView show];
 }
 
 - (void)promptForCheckIn
 {
+    self.promptShowing = YES;
     self.openToInviteView = YES;
     [self inviteTabTouched:nil];
     [[BeaconManager sharedManager] promptUserToCheckInToBeacon:self.beacon success:^(BOOL checkedIn) {
+        self.promptShowing = NO;
         [self refreshBeaconData];
-    } failure:nil];
+    } failure:^(NSError *error) {
+        self.promptShowing = NO;
+    }];
 }
 
 - (void)getDirectionsToBeacon
@@ -495,6 +526,11 @@
 }
 
 - (void)joinButtonTouched:(id)sender
+{
+    [self join];
+}
+
+- (void)join
 {
     [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
         [self refreshBeaconData];
