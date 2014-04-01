@@ -160,6 +160,21 @@
     }];
 }
 
+- (void)updateName:(NSString *)name ofGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
+{
+    NSDictionary *parameters = @{@"group_id" : group.groupID, @"name" : name};
+    [[APIClient sharedClient] putPath:@"contact_group/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [group updateWithData:responseObject[@"group"]];
+        if (success) {
+            success();
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 - (void)deleteGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure
 {
     NSDictionary *parameters = @{@"group_id": group.groupID};

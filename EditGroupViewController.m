@@ -9,12 +9,13 @@
 #import "EditGroupViewController.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "UIButton+HSNavButton.h"
+#import "NavigationBarTitleLabel.h"
 #import "ContactManager.h"
 #import "Theme.h"
 #import "Contact.h"
 #import "LoadingIndictor.h"
 
-@interface GroupContactTableViewCell : UITableViewCell
+@interface GroupContactTableViewCell : UITableViewCell <UITextFieldDelegate>
 
 @property (strong, nonatomic) UILabel *contactNameLabel;
 @property (strong, nonatomic) UIImageView *contactImageView;
@@ -89,19 +90,48 @@
 {
     [super viewWillAppear:animated];
     if (self.group) {
-        self.navigationItem.title = self.group.name;
+        [self updateTitleView];
     }
+    
     UIButton *deleteButton = [UIButton navButtonWithTitle:@"Delete"];
     [deleteButton addTarget:self action:@selector(deleteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:deleteButton];
+}
+
+- (void)updateTitleView
+{
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.group.name];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navTapped:)];
+    [self.navigationItem.titleView addGestureRecognizer:tap];
+    self.navigationItem.titleView.userInteractionEnabled = YES;
 }
 
 - (void)setGroup:(Group *)group
 {
     [self view];
     _group = group;
-    self.navigationItem.title = group.name;
+    [self updateTitleView];
     [self reloadData];
+}
+
+- (void)navTapped:(id)sender
+{
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Change group name" message:nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
+    [alertView textFieldAtIndex:0].text = self.group.name;
+    [alertView bk_addButtonWithTitle:@"Cancel" handler:nil];
+    [alertView bk_setCancelButtonWithTitle:@"Update" handler:^{
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NSString *groupName = textField.text;
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+        [[ContactManager sharedManager] updateName:groupName ofGroup:self.group success:^{
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+            [self updateTitleView];
+            [self reloadData];
+        } failure:nil];
+    }];
+    [alertView show];
 }
 
 - (void)deleteButtonTouched:(id)sender
@@ -360,6 +390,12 @@
     [self exitSearchMode];
 }
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+    self.inSearchMode = YES;
+}
+
 - (void)exitSearchMode
 {
     self.inSearchMode = NO;
@@ -371,11 +407,9 @@
 #pragma mark - Keyboard
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    [self.searchBar setShowsCancelButton:YES animated:YES];
     NSDictionary* info = [notification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, kbSize.height, 0);
-    self.inSearchMode = YES;
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification

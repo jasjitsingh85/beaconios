@@ -21,6 +21,7 @@
 + (ContactManager *)sharedManager;
 - (void)requestContactPermissions:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)fetchAddressBookContacts:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure;
+- (void)updateName:(NSString *)name ofGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)getGroups:(void (^)(NSArray *groups))success failure:(void (^)(NSError *error))failure;
 - (void)postGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)deleteGroup:(Group *)group success:(void (^)())success failure:(void (^)(NSError *error))failure;

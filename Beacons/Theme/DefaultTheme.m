@@ -156,7 +156,7 @@
     return @{
              NSForegroundColorAttributeName: [UIColor whiteColor],
              NSShadowAttributeName:[[NSShadow alloc] init],
-             NSFontAttributeName: [UIFont fontWithName:[self boldFontName] size:18.0f]
+             NSFontAttributeName: [ThemeManager titleFontOfSize:20]
              };
 }
 
