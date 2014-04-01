@@ -99,8 +99,8 @@
 - (void)menuButtonCountMode:(NSInteger)beaconCount
 {
     [self.menuButton setImage:nil forState:UIControlStateNormal];
-    [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateNormal];
-    [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateSelected];
+    [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateSelected];
     self.menuButton.backgroundColor = [UIColor whiteColor];
     self.menuButton.layer.cornerRadius = 9;
     self.menuButton.selected = YES;
