@@ -101,7 +101,7 @@
 - (void)updateTitleView
 {
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.group.name];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navTapped:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editName)];
     [self.navigationItem.titleView addGestureRecognizer:tap];
     self.navigationItem.titleView.userInteractionEnabled = YES;
 }
@@ -114,9 +114,9 @@
     [self reloadData];
 }
 
-- (void)navTapped:(id)sender
+- (void)editName
 {
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Change group name" message:nil];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Update Name" message:nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [alertView textFieldAtIndex:0].autocapitalizationType = UITextAutocapitalizationTypeSentences;
     [alertView textFieldAtIndex:0].text = self.group.name;
@@ -231,7 +231,11 @@
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.font = [ThemeManager regularFontOfSize:1.3*13];
     [headerView addSubview:titleLabel];
-    titleLabel.text = !section ? self.group.name : @"Contacts";
+    titleLabel.text = !section ? @"Group Members" : @"Contacts";
+    if (!section) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editName)];
+        [headerView addGestureRecognizer:tap];
+    }
     
     UILabel *contactCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.width - 32, headerView.height)];
     contactCountLabel.textAlignment = NSTextAlignmentRight;
@@ -239,7 +243,7 @@
     contactCountLabel.textColor = [UIColor whiteColor];
     NSInteger contactCount = !section ? self.group.contacts.count : self.contacts.count;
     NSString *contactPlural = contactCount == 1 ? @"Contact" : @"Contacts";
-    contactCountLabel.text = [NSString stringWithFormat:@"%d %@", contactCount, contactPlural];
+    contactCountLabel.text = [NSString stringWithFormat:@"%d %@", (int)contactCount, contactPlural];
     [headerView addSubview:contactCountLabel];
     
     return headerView;
