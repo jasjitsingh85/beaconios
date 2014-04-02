@@ -339,7 +339,7 @@
 - (void)updateCharacterCountLabel
 {
     self.characterCountLabel.hidden = self.descriptionTextView.text.length < 20;
-    self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters", self.descriptionTextView.text.length, MAX_CHARACTER_COUNT];
+    self.characterCountLabel.text = [NSString stringWithFormat:@"%d/%d characters", (int)self.descriptionTextView.text.length, MAX_CHARACTER_COUNT];
     self.characterCountLabel.textColor = self.descriptionTextView.text.length == MAX_CHARACTER_COUNT ? [UIColor whiteColor] : [[UIColor whiteColor] colorWithAlphaComponent:0.7];
 }
 
@@ -350,6 +350,10 @@
 
 - (void)dateTouched:(id)sender
 {
+    //don't do anything if other text field active
+    if (self.descriptionTextView.isFirstResponder) {
+        return;
+    }
     DatePickerModalView *datePicker = [[DatePickerModalView alloc] init];
     datePicker.datePicker.date = self.date;
     datePicker.datePicker.minuteInterval = 15;
