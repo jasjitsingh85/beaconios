@@ -18,6 +18,24 @@
     return [timeFormatter stringFromDate:self];
 }
 
+- (NSString *)shortFormattedDate
+{
+    NSDateFormatter *timeFormatter = [NSDateFormatter new];
+    NSString *stringFromDate;
+    if ([self.day sameDay:[NSDate today]]) {
+        timeFormatter.dateFormat = @"h:mm a";
+        stringFromDate = [timeFormatter stringFromDate:self].lowercaseString;
+    }
+    else {
+        timeFormatter.dateFormat = @"MMM d";
+        NSString *monthDayString = [timeFormatter stringFromDate:self];
+        timeFormatter.dateFormat = @"h:mm a";
+        NSString *timeString = [timeFormatter stringFromDate:self].lowercaseString;
+        stringFromDate = [NSString stringWithFormat:@"%@, %@", monthDayString, timeString];
+    }
+    return stringFromDate;
+}
+
 - (NSString *)fullFormattedDate
 {
     NSDateFormatter *timeFormatter = [NSDateFormatter new];

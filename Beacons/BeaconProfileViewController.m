@@ -287,7 +287,7 @@
     self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
     self.imageView.beacon = beacon;
     self.imageViewGradient.hidden = NO;
-    self.timeLabel.text = [beacon.time formattedTime].lowercaseString;
+    self.timeLabel.text = beacon.time.shortFormattedDate;
     self.descriptionLabel.text = beacon.beaconDescription;
     if (beacon.address) {
         self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:beacon.address

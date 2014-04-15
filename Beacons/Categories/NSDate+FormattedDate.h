@@ -11,6 +11,7 @@
 @interface NSDate (FormattedDate)
 
 - (NSString *)formattedTime;
+- (NSString *)shortFormattedDate;
 - (NSString *)fullFormattedDate;
 - (NSString *)formattedDay;
 
