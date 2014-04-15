@@ -519,6 +519,14 @@
     [self scrollToShowSetBeaconButton];
 }
 
+- (void)didSelectToBeDetermined
+{
+    self.useCurrentLocation = YES;
+    self.locationLabel.text = @"To be decided...";
+    self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
+    [self scrollToShowSetBeaconButton];
+}
+
 #pragma mark - UITextViewDelegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     

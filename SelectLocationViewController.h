@@ -15,6 +15,7 @@
 - (void)didSelectCurrentLocation;
 - (void)didSelectVenue:(Venue *)venue;
 - (void)didSelectCustomLocation:(CLLocation *)location withName:(NSString *)locationName;
+- (void)didSelectToBeDetermined;
 
 @end
 

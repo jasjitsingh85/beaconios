@@ -108,6 +108,9 @@
     else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
         [self customLocationSelected];
     }
+    else if ([indexPath isEqual:[self indexPathForToBeDetermined]]) {
+        [self toBeDeterminedSelected];
+    }
     else {
         Venue *venue = self.venues[indexPath.row - [self indexPathForFirstVenue].row];
         [self venueSelected:venue];
@@ -139,6 +142,13 @@
     }
 }
 
+- (void)toBeDeterminedSelected
+{
+    if ([self.delegate respondsToSelector:@selector(didSelectToBeDetermined)]) {
+        [self.delegate didSelectToBeDetermined];
+    }
+}
+
 - (void)venueSelected:(Venue *)venue
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectVenue:)]) {
@@ -156,7 +166,12 @@
 
 - (BOOL)shouldShowCurrentLocation
 {
-    return YES;
+    return !self.searchBar.text || !self.searchBar.text.length;
+}
+
+- (BOOL)shouldShowToBeDetermined
+{
+    return !self.searchBar.text || !self.searchBar.text.length;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -167,35 +182,40 @@
 - (NSIndexPath *)indexPathForCurrentLocation
 {
     NSInteger currentLocationIndex = -1;
-    if ([self shouldShowCurrentLocation]) {
-        currentLocationIndex = 0;
-    }
+    currentLocationIndex += [self shouldShowCurrentLocation];
     return [NSIndexPath indexPathForRow:currentLocationIndex inSection:0];
 }
 
 - (NSIndexPath *)indexPathForCustomLocation
 {
     NSInteger customLocationIndex = -1;
-    if ([self shouldShowCurrentLocation] && [self shouldShowCustomLocation]) {
-        customLocationIndex = 1;
-    }
-    else if ([self shouldShowCustomLocation]) {
-        customLocationIndex = 0;
+    if ([self shouldShowCustomLocation]) {
+        customLocationIndex = [self shouldShowCurrentLocation] + [self shouldShowToBeDetermined];
     }
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:customLocationIndex inSection:0];
     return indexPath;
 }
 
+- (NSIndexPath *)indexPathForToBeDetermined
+{
+    NSInteger toBeDeterminedIndex = -1;
+    if ([self shouldShowToBeDetermined]) {
+        toBeDeterminedIndex = [self shouldShowCurrentLocation];
+    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:toBeDeterminedIndex inSection:0];
+    return indexPath;
+}
+
 - (NSIndexPath *)indexPathForFirstVenue
 {
-    NSInteger venueIndexOffset = [self shouldShowCustomLocation] + [self shouldShowCurrentLocation];
+    NSInteger venueIndexOffset = [self shouldShowCustomLocation] + [self shouldShowCurrentLocation] + [self shouldShowToBeDetermined];
     return [NSIndexPath indexPathForRow:venueIndexOffset inSection:0];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return self.venues.count + [self shouldShowCurrentLocation] + [self shouldShowCustomLocation];
+    return self.venues.count + [self shouldShowCurrentLocation] + [self shouldShowCustomLocation] + [self shouldShowToBeDetermined];
 }
 
 #define TAG_NAME 1
@@ -234,9 +254,15 @@
         }
         distanceLabel.text = @"0 ft";
     }
+    else if ([indexPath isEqual:[self indexPathForToBeDetermined]]) {
+        nameLabel.text = @"To be decided...";
+        nameLabel.textColor = [[ThemeManager sharedTheme] redColor];
+        distanceLabel.text = nil;
+        addressLabel.text = nil;
+    }
     else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
         nameLabel.text = self.customLocation;
-        nameLabel.textColor = [[ThemeManager sharedTheme] orangeColor];
+        nameLabel.textColor = [[ThemeManager sharedTheme] redColor];
         distanceLabel.text = @"";
         addressLabel.text = @"";
     }
@@ -274,11 +300,15 @@
 {
     self.keyboardShown = YES;
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    NSDictionary* info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, kbSize.height, 0);
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     self.keyboardShown = NO;
     [self.searchBar setShowsCancelButton:NO animated:YES];
+    self.tableView.contentInset = UIEdgeInsetsZero;
 }
 @end
