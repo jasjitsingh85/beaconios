@@ -140,7 +140,7 @@
     locationDescriptionLabel.frame = locationDescriptionLabelFrame;
     [self.locationContainerView addSubview:locationDescriptionLabel];
     
-    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(51, 100, 240, 80)];
+    self.descriptionTextView = [[JAPlaceholderTextView alloc] initWithFrame:CGRectMake(51, 100, 240, 60)];
     //hide descriptiontextview while we wait to get placeholder strings from server
     self.descriptionTextView.placeholder = @"  ";
     self.descriptionTextView.alpha = 0;
@@ -345,13 +345,19 @@
 
 - (void)descriptionTouched:(id)sender
 {
-    [self.descriptionTextView becomeFirstResponder];
+    if (self.descriptionTextView.isFirstResponder) {
+        [self.descriptionTextView resignFirstResponder];
+    }
+    else {
+        [self.descriptionTextView becomeFirstResponder];
+    }
 }
 
 - (void)dateTouched:(id)sender
 {
     //don't do anything if other text field active
     if (self.descriptionTextView.isFirstResponder) {
+        [self.descriptionTextView resignFirstResponder];
         return;
     }
     DatePickerModalView *datePicker = [[DatePickerModalView alloc] init];
