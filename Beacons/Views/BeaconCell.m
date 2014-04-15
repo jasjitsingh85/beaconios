@@ -169,7 +169,7 @@
     self.timeLabel.hidden = NO;
     self.addressLabel.hidden = NO;
     self.descriptionLabel.text = beacon.beaconDescription;
-    self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
+    self.timeLabel.text = [beacon.time formattedTime].lowercaseString;
     
     if (beacon.creator.avatarURL) {
         self.avatarImageView.alpha = 1;

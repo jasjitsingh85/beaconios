@@ -110,7 +110,7 @@
     NSDictionary *properties = @{@"description" : description,
                                  @"num_invites" : @(numInvites),
                                  @"location" : location,
-                                 @"time" : [date formattedDate]};
+                                 @"time" : [date formattedTime]};
     [self sendEvent:@"set_hotspot" withProperties:properties];
     
 }

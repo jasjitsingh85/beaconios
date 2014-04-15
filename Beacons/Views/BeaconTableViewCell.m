@@ -118,7 +118,7 @@
         titleText = [titleText stringByAppendingString:[NSString stringWithFormat:@" @ %@", beacon.address]];
     }
     self.beaconTitleLabel.text = titleText;
-    self.timeLabel.text = [beacon.time formattedDate].lowercaseString;
+    self.timeLabel.text = [beacon.time formattedTime].lowercaseString;
     [self updateInvitedLabel];
 }
 
