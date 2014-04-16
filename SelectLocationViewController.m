@@ -255,10 +255,10 @@
         distanceLabel.text = @"0 ft";
     }
     else if ([indexPath isEqual:[self indexPathForToBeDetermined]]) {
-        nameLabel.text = @"To be decided...";
+        nameLabel.text = @"To Be Decided";
         nameLabel.textColor = [[ThemeManager sharedTheme] redColor];
         distanceLabel.text = nil;
-        addressLabel.text = nil;
+        addressLabel.text = @"Not sure where? You can update this later";
     }
     else if ([indexPath isEqual:[self indexPathForCustomLocation]]) {
         nameLabel.text = self.customLocation;

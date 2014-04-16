@@ -522,7 +522,7 @@
 - (void)didSelectToBeDetermined
 {
     self.useCurrentLocation = YES;
-    self.locationLabel.text = @"To be decided...";
+    self.locationLabel.text = @"To Be Decided";
     self.beaconCoordinate = [LocationTracker sharedTracker].currentLocation.coordinate;
     [self scrollToShowSetBeaconButton];
 }
