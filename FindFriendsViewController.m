@@ -311,15 +311,23 @@
 - (void)collapseSection:(NSInteger)section
 {
     [self.collapsedSections addObject:@(section)];
-    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
-    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    NSInteger numRowsExpanded = [self tableView:self.tableView numberOfRowsInExpandedSection:section];
+    NSMutableArray *indexPathsToDelete = [[NSMutableArray alloc] init];
+    for (NSInteger i=0; i<numRowsExpanded; i++) {
+        [indexPathsToDelete addObject:[NSIndexPath indexPathForRow:i inSection:section]];
+    }
+    [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)uncollapseSection:(NSInteger)section
 {
     [self.collapsedSections removeObject:@(section)];
-    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:section];
-    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    NSInteger numRowsExpanded = [self tableView:self.tableView numberOfRowsInExpandedSection:section];
+    NSMutableArray *indexPathsToInsert = [[NSMutableArray alloc] init];
+    for (NSInteger i=0; i<numRowsExpanded; i++) {
+        [indexPathsToInsert addObject:[NSIndexPath indexPathForRow:i inSection:section]];
+    }
+    [self.tableView insertRowsAtIndexPaths:indexPathsToInsert withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

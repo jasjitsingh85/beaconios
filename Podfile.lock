@@ -65,10 +65,10 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: a44069e3c9c89867544f6639482f155c7e5f9b41
   AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
-  BlocksKit: 1b106f407a11997fd79e1da31453758e51277613
+  BlocksKit: c10ccd83f4027d6a0af928d55d20e03b9280f73d
   BSKeyboardControls: b24def9d769f0990d228abb4e525492cb68a2189
   CocoaLumberjack: 19dceba2d0360ed383cba983bc3ef0dd089c42a1
-  CrittercismSDK: 3b4eefdb985e08702836e2a0d234e4d117e3116c
+  CrittercismSDK: c553b3556e3bf185c677c2dceddaae4cd1b7ee68
   FormatterKit: 1238e7a6800c750a5f50f5fec1cc430d8e3b71e7
   Foursquare-iOS-API: 5c306411e8b24fa69adc7d8a357e48dc0ba6e60b
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
@@ -77,4 +77,4 @@ SPEC CHECKSUMS:
   SDWebImage: 366188f04c019bfd712d45e3b36aa52070f4abd8
   UIView+Positioning: aa9fcb103b81d45cbbe5c2eceb76f397c2f9324c
 
-COCOAPODS: 0.29.0
+COCOAPODS: 0.32.1
