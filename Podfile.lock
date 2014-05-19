@@ -43,7 +43,7 @@ PODS:
   - FormatterKit/URLRequestFormatter (1.4.3)
   - Foursquare-iOS-API (2.0)
   - MBProgressHUD (0.8)
-  - Mixpanel (2.0.5)
+  - Mixpanel (2.3.6)
   - MSDynamicsDrawerViewController (1.5.1)
   - SDWebImage (3.6):
     - SDWebImage/Core
@@ -60,7 +60,7 @@ DEPENDENCIES:
   - FormatterKit
   - Foursquare-iOS-API (~> 2.0)
   - MBProgressHUD
-  - Mixpanel (~> 2.0.0)
+  - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController
   - SDWebImage
   - UIView+Positioning
@@ -75,7 +75,7 @@ SPEC CHECKSUMS:
   FormatterKit: 612f56cb00bcda20d8559a2b9a9e6ed9251b9752
   Foursquare-iOS-API: 5c306411e8b24fa69adc7d8a357e48dc0ba6e60b
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
-  Mixpanel: ae75a13e121828944468502004686277203bc13b
+  Mixpanel: b1c61efa748193777889dfe8b7f80471ceb95e97
   MSDynamicsDrawerViewController: 2409ca61449d8541a3ee640bfd2d230c3734d3c4
   SDWebImage: 7eb273e54ca8a2e506ad9bd5e80c35b2a4d7c95e
   UIView+Positioning: 635682ac4411a66bfe0d35588f0836c8a104408d
