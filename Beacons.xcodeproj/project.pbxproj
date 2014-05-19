@@ -69,6 +69,7 @@
 		9647102E17DEEB5700878C19 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102D17DEEB5700878C19 /* plus@2x.png */; };
 		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
+		966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 966C3EFF1929824F0082E2C6 /* NSURL+InterApp.m */; };
 		966DF3D618D66B3F00109002 /* Beacon+Time.m in Sources */ = {isa = PBXBuildFile; fileRef = 966DF3D518D66B3F00109002 /* Beacon+Time.m */; };
 		966F270717E174CF000B4B8C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 966F270617E174CF000B4B8C /* libPods.a */; };
 		9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9671D02C1825739100D03D66 /* helpButton@2x.png */; };
@@ -353,6 +354,8 @@
 		966070E1175AC989007379A0 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		966AC11B17CADBFA0093BB69 /* BeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconManager.h; sourceTree = "<group>"; };
 		966AC11C17CADBFA0093BB69 /* BeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManager.m; sourceTree = "<group>"; };
+		966C3EFE1929824F0082E2C6 /* NSURL+InterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+InterApp.h"; sourceTree = "<group>"; };
+		966C3EFF1929824F0082E2C6 /* NSURL+InterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+InterApp.m"; sourceTree = "<group>"; };
 		966DF3D418D66B3F00109002 /* Beacon+Time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Beacon+Time.h"; sourceTree = "<group>"; };
 		966DF3D518D66B3F00109002 /* Beacon+Time.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Beacon+Time.m"; sourceTree = "<group>"; };
 		966F270617E174CF000B4B8C /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -601,6 +604,8 @@
 		1FB74EE617764ED000F0F385 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				966C3EFE1929824F0082E2C6 /* NSURL+InterApp.h */,
+				966C3EFF1929824F0082E2C6 /* NSURL+InterApp.m */,
 				963B7654189C3D87006C6845 /* UIImageView+AnimationCompletion.h */,
 				963B7655189C3D87006C6845 /* UIImageView+AnimationCompletion.m */,
 				96859CF817EFD2E600C1C467 /* UIView+Alignment.h */,
@@ -1405,6 +1410,7 @@
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
 				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
+				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
 				963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,

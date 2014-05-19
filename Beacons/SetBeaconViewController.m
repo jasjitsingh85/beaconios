@@ -314,6 +314,15 @@
     }];
 }
 
+- (void)preloadWithDescription:(NSString *)description venueName:(NSString *)venueName coordinate:(CLLocationCoordinate2D)coordinate
+{
+    [self view];
+    self.descriptionTextView.text = description;
+    self.locationLabel.text = venueName;
+    self.useCurrentLocation = NO;
+    self.beaconCoordinate = coordinate;
+}
+
 - (void)scrollToShowSetBeaconButton
 {
     //scroll to show invite button for iPhone 4

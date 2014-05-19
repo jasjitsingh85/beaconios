@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 @class Beacon, SetBeaconViewController;
 
@@ -25,6 +26,7 @@
 @property (strong, nonatomic) Beacon *beacon;
 
 - (void)preloadWithRecommendation:(NSNumber *)recommendationID;
+- (void)preloadWithDescription:(NSString *)description venueName:(NSString *)venueName coordinate:(CLLocationCoordinate2D)coordinate;
 - (void)updateDescriptionPlaceholder;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <CocoaLumberjack/DDFileLogger.h>
+#import "NSURL+InterApp.h"
 #import "CenterNavigationController.h"
 #import "MenuViewController.h"
 #import "APIClient.h"
@@ -240,6 +241,24 @@
 {
     [self.setBeaconViewController updateDescriptionPlaceholder];
     [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:YES];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    if ([sourceApplication isEqualToString:@"hotspot.HappyHours"]) {
+        NSDictionary *parameters = [url queryParameters];
+        NSNumber *latitude = parameters[@"latitude"];
+        NSNumber *longitude = parameters[@"longitude"];
+        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
+        NSString *name = parameters[@"name"];
+        NSString *description = parameters[@"description"];
+        [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
+        [self.setBeaconViewController preloadWithDescription:description venueName:name coordinate:coordinate];
+    }
+    return YES;
 }
 
 #pragma mark - Beacon Profile
