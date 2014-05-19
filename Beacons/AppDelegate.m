@@ -248,7 +248,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    if ([sourceApplication isEqualToString:@"hotspot.HappyHours"]) {
+    if ([sourceApplication isEqualToString:kHappyHoursAppURLIdentifier]) {
         NSDictionary *parameters = [url queryParameters];
         NSNumber *latitude = parameters[@"latitude"];
         NSNumber *longitude = parameters[@"longitude"];

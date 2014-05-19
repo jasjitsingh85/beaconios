@@ -55,6 +55,9 @@ extern NSString * const MIXPANEL_TOKEN;
 //email
 #define kFeedbackEmailAddress @"info@gethotspotapp.com"
 
+//app linking
+extern NSString * const kHappyHoursAppURLIdentifier;
+
 //urls
 extern NSString * const kTermsURL;
 extern NSString * const kPrivacyURL;

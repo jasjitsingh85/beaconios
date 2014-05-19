@@ -23,3 +23,5 @@ NSString * const MIXPANEL_TOKEN = @"5ef90c03d9e72b7e1f460600d47de6ab";
 NSString * const kTermsURL = @"http://www.getbeacons.com/terms";
 NSString * const kPrivacyURL = @"http://www.getbeacons.com/privacy";
 
+NSString * const kHappyHoursAppURLIdentifier = @"com.hotspot.happyhours";
+
