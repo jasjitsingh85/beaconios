@@ -44,7 +44,7 @@ PODS:
   - Foursquare-iOS-API (2.0)
   - MBProgressHUD (0.8)
   - Mixpanel (2.3.6)
-  - MSDynamicsDrawerViewController (1.5.1)
+  - MSDynamicsDrawerViewController (1.0.2)
   - SDWebImage (3.6):
     - SDWebImage/Core
   - SDWebImage/Core (3.6)
@@ -61,23 +61,23 @@ DEPENDENCIES:
   - Foursquare-iOS-API (~> 2.0)
   - MBProgressHUD
   - Mixpanel (~> 2.3.6)
-  - MSDynamicsDrawerViewController
+  - MSDynamicsDrawerViewController (~> 1.0.0)
   - SDWebImage
   - UIView+Positioning
 
 SPEC CHECKSUMS:
-  AFNetworking: e403d4333a4e1956cb3fe42364c3c879f820c9a0
-  AHAlertView: 7e27f59e8b6adf659891fecf26de1d71c640ea5d
-  BlocksKit: d2f8e007646282b4ffc525c15bdf432ad3d11d78
-  BSKeyboardControls: 6c1f5e5e6ccc27fc1a5e7c30268fb4953de28352
-  CocoaLumberjack: 17803afbade3126a377d32b8d23367264b44ced6
-  CrittercismSDK: 2dd7d834502e4b12a2c2e4873c11580bec3778c1
-  FormatterKit: 612f56cb00bcda20d8559a2b9a9e6ed9251b9752
-  Foursquare-iOS-API: 5c306411e8b24fa69adc7d8a357e48dc0ba6e60b
-  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
-  Mixpanel: b1c61efa748193777889dfe8b7f80471ceb95e97
-  MSDynamicsDrawerViewController: 2409ca61449d8541a3ee640bfd2d230c3734d3c4
-  SDWebImage: 7eb273e54ca8a2e506ad9bd5e80c35b2a4d7c95e
-  UIView+Positioning: 635682ac4411a66bfe0d35588f0836c8a104408d
+  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
+  AHAlertView: 27ca35694babd935d908bd7f6e575175a8947b2e
+  BlocksKit: 07c8a80f04275efac6a5f8b973782489c083a182
+  BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
+  CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
+  CrittercismSDK: 9f19db3a1f0c16b35d8c29c69406852d184a7650
+  FormatterKit: f744aa7928003eba8317d6fd6998414fbc78f7a5
+  Foursquare-iOS-API: 5e4b94fcb4fb74c8f0b0598445502bf691dd5f6b
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  Mixpanel: 9aba38257fc4d2777ab5db1afc55e22bdfd57a4a
+  MSDynamicsDrawerViewController: 8d4c783d8cf3193e0356a0064b7d3929654d6097
+  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  UIView+Positioning: 870af80983bf495af2cb8a3a15b20e26fcc57ebb
 
 COCOAPODS: 0.32.1
