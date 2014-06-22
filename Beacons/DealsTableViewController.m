@@ -163,12 +163,10 @@
 
 - (void)didLoadDeals:(NSArray *)deals
 {
-    if (!deals.count) {
-        [AppDelegate sharedAppDelegate].centerNavigationController.dealsButton.alpha = 0.5;
-    }
-    else {
-        [AppDelegate sharedAppDelegate].centerNavigationController.dealsButton.alpha = 1;
-    }
+    CGFloat alpha = deals.count ? 1 : 0.5;
+    [UIView animateWithDuration:0.5 animations:^{
+        [AppDelegate sharedAppDelegate].centerNavigationController.dealsButton.alpha = alpha;
+    }];
 }
 
 - (void)reloadTableView
