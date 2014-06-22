@@ -299,7 +299,7 @@
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] getPath:@"recommendation/" parameters:@{@"recommendation_id" : recommendationID} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        Venue *venue = [[Venue alloc] initWithData:responseObject];
+        Venue *venue = [[Venue alloc] initWithFoursquareDictionary:responseObject];
         if (venue.name) {
             self.locationLabel.text = venue.name;
         }

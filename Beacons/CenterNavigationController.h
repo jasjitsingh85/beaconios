@@ -17,4 +17,7 @@
 
 - (void)setSelectedViewController:(UIViewController *)selectedViewController animated:(BOOL)animated;
 
+@property (strong, nonatomic) UIButton *menuButton;
+@property (strong, nonatomic) UIButton *dealsButton;
+
 @end

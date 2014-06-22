@@ -66,7 +66,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
     [self.tableViewContainer addSubview:self.tableView];
     
     CGFloat numButtons = 3;

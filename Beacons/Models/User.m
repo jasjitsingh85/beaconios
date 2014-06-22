@@ -56,6 +56,18 @@ static dispatch_once_t onceToken;
     return self;
 }
 
+- (id)initWithUserDictionary:(NSDictionary *)userDictionary
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    self.firstName = userDictionary[@"first_name"];
+    self.lastName = userDictionary[@"last_name"];
+    self.userID = userDictionary[@"id"];
+    return self;
+}
+
 - (void)setPhoneNumber:(NSString *)phoneNumber
 {
     _phoneNumber = phoneNumber;

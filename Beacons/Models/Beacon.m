@@ -11,6 +11,8 @@
 #import "Contact.h"
 #import "Constants.h"
 #import "BeaconStatus.h"
+#import "DealStatus.h"
+#import "Deal.h"
 #import "BeaconImage.h"
 #import "Utilities.h"
 
@@ -47,6 +49,20 @@
         [guestStatuses setObject:status forKey:key];
     }
     self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
+    
+//    deals
+    NSArray *dealStatusesDictionary = data[@"deal_statuses"];
+    if (!isEmpty(dealStatusesDictionary)) {
+        NSMutableArray *dealStatuses = [[NSMutableArray alloc] init];
+        for (NSDictionary *dealStatusDictionary in dealStatusesDictionary) {
+            [dealStatuses addObject:[[DealStatus alloc] initWithDictionary:dealStatusDictionary]];
+        }
+        self.dealStatuses = [NSArray arrayWithArray:dealStatuses];
+    }
+    NSDictionary *dealDictionary = data[@"deal"];
+    if (!isEmpty(dealDictionary)) {
+        self.deal = [[Deal alloc] initWithDictionary:dealDictionary];
+    }
     
     self.time = [NSDate dateWithTimeIntervalSince1970:[data[@"beacon_time"] doubleValue]];
     self.expirationDate = [NSDate dateWithTimeIntervalSince1970:[data[@"expiration"] doubleValue]];
@@ -98,6 +114,11 @@
     return NO;
 }
 
+- (BOOL)hasDeal
+{
+    return self.dealStatuses && self.dealStatuses.count;
+}
+
 - (BOOL)userAttending
 {
     if (self.isUserBeacon) {
@@ -111,6 +132,17 @@
 {
     BeaconStatus *userStatus = self.guestStatuses[[User loggedInUser].normalizedPhoneNumber];
     return userStatus && userStatus.beaconStatusOption == BeaconStatusOptionHere;
+}
+
+- (DealStatus *)userDealStatus
+{
+    DealStatus *dealStatus = nil;
+    if (self.dealStatuses) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user.userID = %@", [User loggedInUser].userID];
+        NSArray *results = [self.dealStatuses filteredArrayUsingPredicate:predicate];
+        dealStatus = [results firstObject];
+    }
+    return dealStatus;
 }
 
 - (void)geoCodeAddress

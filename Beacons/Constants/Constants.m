@@ -17,6 +17,10 @@ NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
 #endif
 NSString * const kBaseURLStringStaging = @"http://hotspotapp-staging.herokuapp.com/api/";
 
+NSString * const kDealStatusLocked = @"L";
+NSString * const kDealStatusUnlocked = @"U";
+NSString * const kDealStatusRedeemed = @"R";
+
 
 NSString * const MIXPANEL_TOKEN = @"5ef90c03d9e72b7e1f460600d47de6ab";
 

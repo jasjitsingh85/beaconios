@@ -8,13 +8,14 @@
 
 #import "CenterNavigationController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImage+Resize.h"
 #import "Theme.h"
 #import "BeaconManager.h"
 #import "AppDelegate.h"
 
 @interface CenterNavigationController ()
 
-@property (strong, nonatomic) UIButton *menuButton;
+@property (strong, nonatomic) NSNumber *openDirection;
 
 @end
 
@@ -28,7 +29,13 @@
     self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.menuButton.size = CGSizeMake(30, 30);
     [self menuButtonDefaultMode];
-    [self.menuButton addTarget:self action:@selector(toggleSideNav) forControlEvents:UIControlEventTouchDown];
+    [self.menuButton addTarget:self action:@selector(menuButtonTouched:) forControlEvents:UIControlEventTouchDown];
+    
+    self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.dealsButton.size = CGSizeMake(40, 30);
+    UIImage *dealImage = [[UIImage imageNamed:@"dealButtonSelected"] fitToSize:CGSizeMake(30, 22)];
+    [self.dealsButton setImage:dealImage    forState:UIControlStateNormal];
+    [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
 }
@@ -39,10 +46,26 @@
     [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
 }
 
-- (void)toggleSideNav
+- (void)menuButtonTouched:(id)sender
+{
+    [self toggleSideNav:MSDynamicsDrawerDirectionLeft];
+}
+
+- (void)dealsButtonTouched:(id)sender
+{
+    [self toggleSideNav:MSDynamicsDrawerDirectionRight];
+}
+
+- (void)toggleSideNav:(MSDynamicsDrawerDirection)direction
 {
     MSDynamicsDrawerPaneState paneState = [AppDelegate sharedAppDelegate].sideNavigationViewController.paneState == MSDynamicsDrawerPaneStateClosed ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed;
-    [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:paneState inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:YES completion:nil];
+    if (paneState == MSDynamicsDrawerPaneStateClosed) {
+        self.openDirection = nil;
+    }
+    else {
+        self.openDirection = @(direction);
+    }
+    [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:paneState inDirection:direction animated:YES allowUserInterruption:YES completion:nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -127,7 +150,11 @@
         [imageView removeFromSuperview];
     }];
     jadispatch_after_delay(0.1, dispatch_get_main_queue(), ^{
-        [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:MSDynamicsDrawerDirectionLeft animated:YES allowUserInterruption:NO completion:nil];
+        MSDynamicsDrawerDirection direction = MSDynamicsDrawerDirectionLeft;
+        if (self.openDirection && self.openDirection.integerValue == MSDynamicsDrawerDirectionRight) {
+            direction = MSDynamicsDrawerDirectionRight;
+        }
+        [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:direction animated:YES allowUserInterruption:NO completion:nil];
     });
 }
 
@@ -144,6 +171,7 @@
     if (showMenuButton) {
         viewController.navigationItem.hidesBackButton = NO;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
+        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.dealsButton];
         [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneDragRevealEnabled:YES forDirection:MSDynamicsDrawerDirectionLeft];
     }
     else {

@@ -25,6 +25,7 @@
 - (UIColor *)darkYellowColor;
 - (UIColor *)darkPurpleColor;
 - (UIColor *)darkOrangeColor;
+- (UIColor *)boneWhiteColor;
 - (UIColor *)darkPinkColor;
 - (UIImage *)blueCellImage;
 - (UIImage *)pinkCellImage;

@@ -80,7 +80,7 @@
 - (void)setBeacons:(NSArray *)beacons
 {
     _beacons = beacons;
-    [[LocationTracker sharedTracker] stopMonitoringAllRegions];
+    [[LocationTracker sharedTracker] stopMonitoringAllRegionsAroundHotspots];
     for (Beacon *beacon in beacons) {
         CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
         [[LocationTracker sharedTracker] monitorRegion:region];
@@ -105,7 +105,7 @@
                 failure:(void (^)(NSError *error))failure
 {
     NSDictionary *parameters = @{@"beacon_id" : beaconID};
-    [[APIClient sharedClient] getPath:@"beacon/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getPath:@"hotspot/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
         if (success) {
             success(beacon);
@@ -260,6 +260,14 @@
     localNotification.applicationIconBadgeNumber = 1;
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:beacon.beaconID.stringValue];
+}
+
+- (void)showNotification
+{
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = @"Set a Hotspot at the Ballroom to unlock deal";
+    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
 - (void)receivedDidExitRegionNotification:(NSNotification *)notification

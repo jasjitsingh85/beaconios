@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 
-@class FindFriendsViewController;
+@class FindFriendsViewController, Deal;
 @protocol FindFriendsViewControllerDelegate <NSObject>
 
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts;
@@ -23,5 +23,6 @@
 @property (assign, nonatomic) BOOL autoCheckSuggested;
 @property (strong, nonatomic) NSArray *selectedContacts;
 @property (strong, nonatomic) NSArray *inactiveContacts;
+@property (strong, nonatomic) Deal *deal;
 
 @end

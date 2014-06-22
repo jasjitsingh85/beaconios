@@ -36,7 +36,10 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
-		960D79F218BC2D6400E9462D /* menuBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960D79F118BC2D6400E9462D /* menuBackground@2x.png */; };
+		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
+		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
+		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
+		960631F319467F310011E132 /* menu_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631F219467F310011E132 /* menu_background@2x.png */; };
 		960D79F518BC580100E9462D /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 960D79F418BC580100E9462D /* MenuViewController.m */; };
 		9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E2175BEBC6005CF62D /* Beacon.m */; };
 		9615F4E7175BEBE6005CF62D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9615F4E6175BEBE6005CF62D /* User.m */; };
@@ -67,6 +70,9 @@
 		964638B218A45D5A007D6962 /* hotbotSmile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 964638B118A45D5A007D6962 /* hotbotSmile@2x.png */; };
 		9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */; };
 		9647102E17DEEB5700878C19 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647102D17DEEB5700878C19 /* plus@2x.png */; };
+		9651C797193E5A750083A0FE /* DealStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651C796193E5A750083A0FE /* DealStatus.m */; };
+		9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651C799193E72390083A0FE /* DealRedemptionViewController.m */; };
+		9651C79D193E74C20083A0FE /* DashedBorderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651C79C193E74C20083A0FE /* DashedBorderButton.m */; };
 		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
 		966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 966C3EFF1929824F0082E2C6 /* NSURL+InterApp.m */; };
@@ -126,6 +132,9 @@
 		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
 		96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1F18261902003A47F2 /* PermissionsViewController.m */; };
+		96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFE1311938209E00209799 /* DealsTableViewController.m */; };
+		96AFE1351938215000209799 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFE1341938215000209799 /* Deal.m */; };
+		96AFE1381938C19900209799 /* DealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFE1371938C19900209799 /* DealDetailViewController.m */; };
 		96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C28D3418AAF404001BE498 /* hotspotLogoLarge@2x.png */; };
 		96C28D3818AB0B3A001BE498 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C28D3618AB0B3A001BE498 /* Default@2x.png */; };
 		96C28D3918AB0B3A001BE498 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C28D3718AB0B3A001BE498 /* Default-568h@2x.png */; };
@@ -143,6 +152,7 @@
 		96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */; };
 		96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C87175AB97F006EA3A3 /* DefaultTheme.m */; };
 		96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C87C89175AB97F006EA3A3 /* Theme.m */; };
+		96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C8996B1939285F00F33CCA /* CommonMacros.m */; };
 		96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */; };
 		96C904C118CF5AC10020820A /* UIView+UIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904C018CF5AC10020820A /* UIView+UIImage.m */; };
 		96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */; };
@@ -165,11 +175,16 @@
 		96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD04180676E600D62462 /* UIView+Shadow.m */; };
 		96CBCD081807B69500D62462 /* EmptyBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */; };
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
+		96CD6C4B1947447500F69E8E /* dealButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CD6C491947447500F69E8E /* dealButtonSelected@2x.png */; };
+		96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CD6C4C194746A300F69E8E /* dealButtonNormal@2x.png */; };
 		96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */; };
 		96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D52D231838415300496923 /* SecretSettingsViewController.m */; };
 		96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D52D241838415300496923 /* SecretSettingsViewController.xib */; };
+		96D5EEF91957531300786C27 /* UIView+BounceAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D5EEF81957531300786C27 /* UIView+BounceAnimation.m */; };
+		96D5EEFC19575D6C00786C27 /* DealHours.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D5EEFB19575D6C00786C27 /* DealHours.m */; };
+		96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */; };
 		96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA504181A2D71001E5812 /* RandomObjectPicker.m */; };
 		96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DEA50A181A2E93001E5812 /* RandomObjectManager.m */; };
 		96E565D018E871720007545D /* GroupsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E565CF18E871720007545D /* GroupsViewController.m */; };
@@ -300,7 +315,11 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
-		960D79F118BC2D6400E9462D /* menuBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuBackground@2x.png"; sourceTree = "<group>"; };
+		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
+		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
+		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
+		960631EC194629850011E132 /* lock_closed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_closed@2x.png"; sourceTree = "<group>"; };
+		960631F219467F310011E132 /* menu_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_background@2x.png"; sourceTree = "<group>"; };
 		960D79F318BC580100E9462D /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		960D79F418BC580100E9462D /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		9615F4E1175BEBC6005CF62D /* Beacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beacon.h; sourceTree = "<group>"; };
@@ -351,6 +370,12 @@
 		964638B118A45D5A007D6962 /* hotbotSmile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotbotSmile@2x.png"; sourceTree = "<group>"; };
 		9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNav@2x.png"; sourceTree = "<group>"; };
 		9647102D17DEEB5700878C19 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
+		9651C795193E5A750083A0FE /* DealStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealStatus.h; sourceTree = "<group>"; };
+		9651C796193E5A750083A0FE /* DealStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealStatus.m; sourceTree = "<group>"; };
+		9651C798193E72390083A0FE /* DealRedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealRedemptionViewController.h; sourceTree = "<group>"; };
+		9651C799193E72390083A0FE /* DealRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealRedemptionViewController.m; sourceTree = "<group>"; };
+		9651C79B193E74C20083A0FE /* DashedBorderButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashedBorderButton.h; sourceTree = "<group>"; };
+		9651C79C193E74C20083A0FE /* DashedBorderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashedBorderButton.m; sourceTree = "<group>"; };
 		966070E0175AC989007379A0 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
 		966070E1175AC989007379A0 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
 		966AC11B17CADBFA0093BB69 /* BeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconManager.h; sourceTree = "<group>"; };
@@ -428,8 +453,8 @@
 		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
 		96A9871C17E51753007D77B8 /* InviteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteListViewController.h; sourceTree = "<group>"; };
 		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
-		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconStatus.h; sourceTree = "<group>"; };
-		96A9872017E517FB007D77B8 /* BeaconStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconStatus.m; sourceTree = "<group>"; };
+		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconStatus.h; path = ../BeaconStatus.h; sourceTree = "<group>"; };
+		96A9872017E517FB007D77B8 /* BeaconStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeaconStatus.m; path = ../BeaconStatus.m; sourceTree = "<group>"; };
 		96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraLarge@2x.png"; sourceTree = "<group>"; };
 		96A9872E17E68C44007D77B8 /* PhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoManager.h; sourceTree = "<group>"; };
 		96A9872F17E68C44007D77B8 /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
@@ -441,6 +466,12 @@
 		96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+ServerErrorMessage.m"; sourceTree = "<group>"; };
 		96AFCA1E18261902003A47F2 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionsViewController.h; path = ../PermissionsViewController.h; sourceTree = "<group>"; };
 		96AFCA1F18261902003A47F2 /* PermissionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionsViewController.m; path = ../PermissionsViewController.m; sourceTree = "<group>"; };
+		96AFE1301938209E00209799 /* DealsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealsTableViewController.h; sourceTree = "<group>"; };
+		96AFE1311938209E00209799 /* DealsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealsTableViewController.m; sourceTree = "<group>"; };
+		96AFE1331938215000209799 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
+		96AFE1341938215000209799 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
+		96AFE1361938C19900209799 /* DealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDetailViewController.h; sourceTree = "<group>"; };
+		96AFE1371938C19900209799 /* DealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDetailViewController.m; sourceTree = "<group>"; };
 		96C28D3418AAF404001BE498 /* hotspotLogoLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoLarge@2x.png"; sourceTree = "<group>"; };
 		96C28D3618AB0B3A001BE498 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		96C28D3718AB0B3A001BE498 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -461,6 +492,8 @@
 		96C87C87175AB97F006EA3A3 /* DefaultTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultTheme.m; sourceTree = "<group>"; };
 		96C87C88175AB97F006EA3A3 /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Theme.h; sourceTree = "<group>"; };
 		96C87C89175AB97F006EA3A3 /* Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Theme.m; sourceTree = "<group>"; };
+		96C8996A1939282600F33CCA /* CommonMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonMacros.h; sourceTree = "<group>"; };
+		96C8996B1939285F00F33CCA /* CommonMacros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMacros.m; sourceTree = "<group>"; };
 		96C904BC18CF54AD0020820A /* MapSnapshotImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapSnapshotImageView.h; sourceTree = "<group>"; };
 		96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapSnapshotImageView.m; sourceTree = "<group>"; };
 		96C904BF18CF5AC10020820A /* UIView+UIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIImage.h"; sourceTree = "<group>"; };
@@ -488,12 +521,19 @@
 		96CBCD061807B69500D62462 /* EmptyBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmptyBeaconViewController.h; sourceTree = "<group>"; };
 		96CBCD071807B69500D62462 /* EmptyBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmptyBeaconViewController.m; sourceTree = "<group>"; };
 		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
+		96CD6C491947447500F69E8E /* dealButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealButtonSelected@2x.png"; sourceTree = "<group>"; };
+		96CD6C4C194746A300F69E8E /* dealButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealButtonNormal@2x.png"; sourceTree = "<group>"; };
 		96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleUnselected@2x.png"; sourceTree = "<group>"; };
 		96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleSelected@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96D52D221838415300496923 /* SecretSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecretSettingsViewController.h; sourceTree = "<group>"; };
 		96D52D231838415300496923 /* SecretSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecretSettingsViewController.m; sourceTree = "<group>"; };
 		96D52D241838415300496923 /* SecretSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SecretSettingsViewController.xib; sourceTree = "<group>"; };
+		96D5EEF71957531300786C27 /* UIView+BounceAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+BounceAnimation.h"; sourceTree = "<group>"; };
+		96D5EEF81957531300786C27 /* UIView+BounceAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BounceAnimation.m"; sourceTree = "<group>"; };
+		96D5EEFA19575D6C00786C27 /* DealHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealHours.h; sourceTree = "<group>"; };
+		96D5EEFB19575D6C00786C27 /* DealHours.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealHours.m; sourceTree = "<group>"; };
+		96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happyHoursIcon@2x.png"; sourceTree = "<group>"; };
 		96DEA503181A2D71001E5812 /* RandomObjectPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjectPicker.h; sourceTree = "<group>"; };
 		96DEA504181A2D71001E5812 /* RandomObjectPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjectPicker.m; sourceTree = "<group>"; };
 		96DEA509181A2E93001E5812 /* RandomObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjectManager.h; sourceTree = "<group>"; };
@@ -636,6 +676,8 @@
 				963763A118DB890F005DC57D /* UIView+Edge.m */,
 				9625822718EA0D3000677D92 /* UIViewController+isVisible.h */,
 				9625822818EA0D3000677D92 /* UIViewController+isVisible.m */,
+				96D5EEF71957531300786C27 /* UIView+BounceAnimation.h */,
+				96D5EEF81957531300786C27 /* UIView+BounceAnimation.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -690,6 +732,10 @@
 				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
 				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
 				961FE29418D10F7100CF891A /* ExplanationPopupView.m */,
+				9651C79B193E74C20083A0FE /* DashedBorderButton.h */,
+				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
+				960631E71946206B0011E132 /* DealTableViewCell.h */,
+				960631E81946206B0011E132 /* DealTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -721,6 +767,14 @@
 				96A9873417E6A6C6007D77B8 /* BeaconImage.m */,
 				96E565D418E87CB80007545D /* Group.h */,
 				96E565D518E87CB80007545D /* Group.m */,
+				96AFE1331938215000209799 /* Deal.h */,
+				96AFE1341938215000209799 /* Deal.m */,
+				96A9871F17E517FB007D77B8 /* BeaconStatus.h */,
+				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
+				9651C795193E5A750083A0FE /* DealStatus.h */,
+				9651C796193E5A750083A0FE /* DealStatus.m */,
+				96D5EEFA19575D6C00786C27 /* DealHours.h */,
+				96D5EEFB19575D6C00786C27 /* DealHours.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -822,8 +876,6 @@
 				96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */,
 				96A9871C17E51753007D77B8 /* InviteListViewController.h */,
 				96A9871D17E51753007D77B8 /* InviteListViewController.m */,
-				96A9871F17E517FB007D77B8 /* BeaconStatus.h */,
-				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
 				96A9872E17E68C44007D77B8 /* PhotoManager.h */,
 				96A9872F17E68C44007D77B8 /* PhotoManager.m */,
 				969D649717EF85F200F5AB36 /* ImageViewController.h */,
@@ -854,6 +906,12 @@
 				96A8E03118D61A8800493C65 /* DatePickerModalView.m */,
 				96E565CE18E871720007545D /* GroupsViewController.h */,
 				96E565CF18E871720007545D /* GroupsViewController.m */,
+				96AFE1301938209E00209799 /* DealsTableViewController.h */,
+				96AFE1311938209E00209799 /* DealsTableViewController.m */,
+				96AFE1361938C19900209799 /* DealDetailViewController.h */,
+				96AFE1371938C19900209799 /* DealDetailViewController.m */,
+				9651C798193E72390083A0FE /* DealRedemptionViewController.h */,
+				9651C799193E72390083A0FE /* DealRedemptionViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -898,6 +956,8 @@
 		96859D0617F402F200C1C467 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				96C8996A1939282600F33CCA /* CommonMacros.h */,
+				96C8996B1939285F00F33CCA /* CommonMacros.m */,
 				96859D0C17F4048300C1C467 /* JAGrandCentralDispatch.h */,
 				96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */,
 				96DEA503181A2D71001E5812 /* RandomObjectPicker.h */,
@@ -911,31 +971,27 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
-				968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */,
-				96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */,
-				96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */,
-				9625822318E9E05300677D92 /* plusCircleGray@2x.png */,
-				963763A318DBD73C005DC57D /* downArrowRed@2x.png */,
-				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
-				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
-				96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */,
+				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
+				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
-				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
+				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
 				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
 				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
 				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
 				96D1D0D617E818A90033396F /* cameraSmall@2x.png */,
 				96CBCCE41805106A00D62462 /* Chat Bubbles */,
 				9691D26017FA93A50095BA80 /* chatButtonNormal@2x.png */,
+				96CD6C4C194746A300F69E8E /* dealButtonNormal@2x.png */,
 				9691D26117FA93A50095BA80 /* chatButtonSelected@2x.png */,
+				96CD6C491947447500F69E8E /* dealButtonSelected@2x.png */,
 				96ED6374181E3545001B7933 /* directionsArrow@2x.png */,
+				963763A318DBD73C005DC57D /* downArrowRed@2x.png */,
 				1FE67731175C3C88006F563C /* Fonts */,
 				96C7FE9F189737DA00A79CC3 /* fruityDrink@2x.png */,
 				96C7FE971897294100A79CC3 /* greenGradientBackground@2x.png */,
@@ -943,25 +999,34 @@
 				9671D02C1825739100D03D66 /* helpButton@2x.png */,
 				964638B118A45D5A007D6962 /* hotbotSmile@2x.png */,
 				9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */,
+				969BE31918D1FDDD00E2714A /* hotspotExplanation@2x.png */,
 				96C28D3418AAF404001BE498 /* hotspotLogoLarge@2x.png */,
 				9647102B17DEE81900878C19 /* hotspotLogoNav@2x.png */,
+				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				96EB3D9E18A19E310073CEDF /* InviteAnyoneAnimation */,
 				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
 				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
 				96EB3DD318A19E3C0073CEDF /* InviteMoreAnimation */,
 				96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */,
 				9671D03318273C0F00D03D66 /* lock@2x.png */,
+				960631EC194629850011E132 /* lock_closed@2x.png */,
+				960631EA194625320011E132 /* lock_open@2x.png */,
+				96A90B7218D0D20B008026CC /* mapPlaceholder@2x.png */,
 				96C7FE9E189737DA00A79CC3 /* martini@2x.png */,
-				960D79F118BC2D6400E9462D /* menuBackground@2x.png */,
+				960631F219467F310011E132 /* menu_background@2x.png */,
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
 				96CBCCE01805066700D62462 /* menuHome@2x.png */,
 				96CBCCDF1805066700D62462 /* menuInvite@2x.png */,
 				968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */,
 				968E287118C3DF5500CB447D /* menuSettings@2x.png */,
+				968515EA18E8F0DA005EAE10 /* minusCircleUnselected@2x.png */,
 				96C5F20A17DEE39000B48EE2 /* navBar@2x.png */,
 				96859D0117EFD77B00C1C467 /* orangeBackground@2x.png */,
 				96C7FE961897294100A79CC3 /* orangeGradientBackground@2x.png */,
 				9647102D17DEEB5700878C19 /* plus@2x.png */,
+				9625822318E9E05300677D92 /* plusCircleGray@2x.png */,
+				96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */,
+				96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */,
 				96C7FE991897294100A79CC3 /* redGradientBackground@2x.png */,
 				9690F2C918009A2B0010EFA3 /* rightArrow@2x.png */,
 				96C7FEC5189892B000A79CC3 /* rightArrowBlue@2x.png */,
@@ -1188,6 +1253,7 @@
 				96EB3DF518A19E3C0073CEDF /* inviteMoreAnimation0001.png in Resources */,
 				9671D03418273C0F00D03D66 /* lock@2x.png in Resources */,
 				96EB3DBF18A19E310073CEDF /* inviteAnyoneAnimation0006.png in Resources */,
+				96CD6C4B1947447500F69E8E /* dealButtonSelected@2x.png in Resources */,
 				96EB3DCA18A19E310073CEDF /* inviteAnyoneAnimation0017.png in Resources */,
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				96EB3DC418A19E310073CEDF /* inviteAnyoneAnimation0011.png in Resources */,
@@ -1234,7 +1300,6 @@
 				96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */,
 				96EB3E0118A19E3C0073CEDF /* inviteMoreAnimation0013.png in Resources */,
 				96EB3E0A18A19E3C0073CEDF /* inviteMoreAnimation0022.png in Resources */,
-				960D79F218BC2D6400E9462D /* menuBackground@2x.png in Resources */,
 				96EB3DB918A19E310073CEDF /* inviteAnyoneAnimation0000.png in Resources */,
 				96A90B7118D0D07B008026CC /* backgroundGradient@2x.png in Resources */,
 				96EB3E0218A19E3C0073CEDF /* inviteMoreAnimation0014.png in Resources */,
@@ -1260,11 +1325,13 @@
 				96EB3E0B18A19E3C0073CEDF /* inviteMoreAnimation0023.png in Resources */,
 				96EB3E0E18A19E3C0073CEDF /* inviteMoreAnimation0026.png in Resources */,
 				96EB3E1218A19E3C0073CEDF /* inviteMoreAnimation0030.png in Resources */,
+				960631F319467F310011E132 /* menu_background@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				96EB3DC018A19E310073CEDF /* inviteAnyoneAnimation0007.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
+				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
 				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				96C7FEA5189737DA00A79CC3 /* beer@2x.png in Resources */,
@@ -1275,6 +1342,7 @@
 				96EB3DCF18A19E310073CEDF /* inviteAnyoneAnimation0022.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
+				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
 				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
@@ -1288,8 +1356,10 @@
 				96EB3DC618A19E310073CEDF /* inviteAnyoneAnimation0013.png in Resources */,
 				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				96EB3DD118A19E310073CEDF /* inviteAnyoneAnimation0024.png in Resources */,
+				960631ED194629850011E132 /* lock_closed@2x.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
+				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				96EB3E0318A19E3C0073CEDF /* inviteMoreAnimation0015.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
@@ -1377,6 +1447,8 @@
 				96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96E565D018E871720007545D /* GroupsViewController.m in Sources */,
+				96D5EEF91957531300786C27 /* UIView+BounceAnimation.m in Sources */,
+				96D5EEFC19575D6C00786C27 /* DealHours.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,
 				96859CF417EFC3C600C1C467 /* FormView.m in Sources */,
@@ -1385,8 +1457,10 @@
 				96E623F01816485C0048125B /* BounceButton.m in Sources */,
 				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
+				9651C79D193E74C20083A0FE /* DashedBorderButton.m in Sources */,
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
+				96AFE1381938C19900209799 /* DealDetailViewController.m in Sources */,
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
@@ -1401,17 +1475,22 @@
 				96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */,
 				9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
+				9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */,
+				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
+				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
 				964638AE18A19F4B007D6962 /* RegistrationFlowViewController.m in Sources */,
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,
 				1F3EF24817979FD9005240E3 /* NotificationManager.m in Sources */,
 				96E565D318E87ACD0007545D /* EditGroupViewController.m in Sources */,
+				9651C797193E5A750083A0FE /* DealStatus.m in Sources */,
 				96F14C2317D84AF40093C976 /* ChatMessage.m in Sources */,
 				960D79F518BC580100E9462D /* MenuViewController.m in Sources */,
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
+				960631E91946206B0011E132 /* DealTableViewCell.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
 				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
 				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
@@ -1419,6 +1498,7 @@
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
+				96AFE1351938215000209799 /* Deal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1466,8 +1546,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "28881082-48E0-4EF0-BDE6-D294402EBC88";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "28881082-48E0-4EF0-BDE6-D294402EBC88";
+				PROVISIONING_PROFILE = "1220882F-C5D4-4F86-8793-29114E56BE90";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1220882F-C5D4-4F86-8793-29114E56BE90";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1486,7 +1566,7 @@
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1220882F-C5D4-4F86-8793-29114E56BE90";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

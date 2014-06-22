@@ -64,7 +64,7 @@
         }
     }
     
-    UIGraphicsBeginImageContextWithOptions(targetSize, YES, 0.0);
+    UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0);
     
     CGRect thumbnailRect = CGRectZero;
     thumbnailRect.origin = thumbnailPoint;

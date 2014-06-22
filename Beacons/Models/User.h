@@ -26,6 +26,7 @@
 + (User *)loggedInUser;
 + (void)logoutUser;
 - (id)initWithData:(NSDictionary *)userData;
+- (id)initWithUserDictionary:(NSDictionary *)userDictionary;
 - (NSString *)fullName;
 - (NSString *)abbreviatedName;
 

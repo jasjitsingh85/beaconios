@@ -11,6 +11,8 @@
 #import "NSURL+InterApp.h"
 #import "CenterNavigationController.h"
 #import "MenuViewController.h"
+#import "DealsTableViewController.h"
+#import "DealDetailViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
@@ -27,6 +29,7 @@
 #import "BeaconManager.h"
 #import "LockedViewController.h"
 #import "RandomObjectManager.h"
+#import "Deal.h"
 
 @interface AppDelegate()
 
@@ -57,9 +60,23 @@
         _sideNavigationViewController.gravityMagnitude = 8;
         [_sideNavigationViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler styler]] forDirection:MSDynamicsDrawerDirectionLeft];
         [_sideNavigationViewController setDrawerViewController:self.menuViewController forDirection:MSDynamicsDrawerDirectionLeft];
-        [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
         [_sideNavigationViewController setRevealWidth:278 forDirection:MSDynamicsDrawerDirectionLeft];
-        [_menuViewController view];
+        [self.menuViewController view];
+        
+        [self.dealsViewController view];
+        CGFloat rightRevealWidth = 278;
+        UIViewController *rightViewController = [[UIViewController alloc] init];
+//        rightViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
+        [rightViewController addChildViewController:self.dealsViewController];
+        self.dealsViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        [rightViewController.view addSubview:self.dealsViewController.view];
+        _dealsViewController.view.height = [UIScreen mainScreen].bounds.size.height;
+        _dealsViewController.view.width = rightRevealWidth;
+        _dealsViewController.view.x = [UIScreen mainScreen].bounds.size.width - rightRevealWidth;
+        _dealsViewController.view.y= 0;
+        [_sideNavigationViewController setDrawerViewController:rightViewController forDirection:MSDynamicsDrawerDirectionRight];
+        [_sideNavigationViewController setRevealWidth:rightRevealWidth forDirection:MSDynamicsDrawerDirectionRight];
+        [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
     }
     return _sideNavigationViewController;
 }
@@ -78,6 +95,16 @@
         _menuViewController = [MenuViewController new];
     }
     return _menuViewController;
+}
+
+- (DealsTableViewController *)dealsViewController
+{
+    if (!_dealsViewController) {
+        _dealsViewController = [[DealsTableViewController alloc] init];
+        _dealsViewController.tableView.width = [self.sideNavigationViewController revealWidthForDirection:MSDynamicsDrawerDirectionRight];
+        _dealsViewController.tableView.x = [UIScreen mainScreen].bounds.size.width - _dealsViewController.tableView.width;
+    }
+    return _dealsViewController;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -114,15 +141,20 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidRangeBeaconNotification:) name:kDidRangeBeaconNotification object:nil];
     
     //initialize location tracker
     [LocationTracker sharedTracker];
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
+    }
     
     [self.window makeKeyAndVisible];
     UIView *backgroundWindowView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundWindowView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menuBackground"]];
+    backgroundWindowView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
     [self.window addSubview:backgroundWindowView];
     [self.window sendSubviewToBack:backgroundWindowView];
+    
     return YES;
 }
 
@@ -262,6 +294,13 @@
 }
 
 #pragma mark - Beacon Profile
+- (void)setSelectedViewControllerToDetailForDeal:(Deal *)deal
+{
+    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
+    dealDetailViewController.deal = deal;
+    [self.centerNavigationController setSelectedViewController:dealDetailViewController animated:YES];
+}
+
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn
 {
     Beacon *beacon = [[Beacon alloc] init];
@@ -279,6 +318,9 @@
 {
     BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
     beaconProfileViewController.beacon = beacon;
+    if (beacon.deal) {
+        beaconProfileViewController.openToDealView = YES;
+    }
     [beaconProfileViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
 }
@@ -287,6 +329,20 @@
 {
     [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
     [self.setBeaconViewController preloadWithRecommendation:recommendationID];
+}
+
+- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal
+{
+    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
+    dealDetailViewController.deal = deal;
+    [self.centerNavigationController setSelectedViewController:dealDetailViewController];
+}
+
+- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID
+{
+    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
+    [self.centerNavigationController setSelectedViewController:dealDetailViewController];
+    [dealDetailViewController preloadWithDealID:dealID];
 }
 
 #pragma mark - Location
@@ -298,6 +354,26 @@
 - (void)receivedDidExitRegionNotification:(NSNotification *)notification
 {
     [[BeaconManager sharedManager] receivedDidExitRegionNotification:notification];
+}
+
+- (void)receivedDidRangeBeaconNotification:(NSNotification *)notification
+{
+    CLBeacon *beacon = notification.userInfo[@"beacon"];
+//    NSNumber *dealID = beacon.major;
+    NSNumber *dealID = @(14);
+    [[APIClient sharedClient] postRegionStateWithDealID:dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Deal *deal = [[Deal alloc] initWithDictionary:responseObject[@"deals"]];
+        BOOL shouldNotify = [responseObject[@"show_notification"] boolValue];
+        if (shouldNotify) {
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            localNotification.userInfo = @{@"dealID": dealID};
+            localNotification.alertBody = deal.notificationText;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
 }
 
 #pragma mark - Notifications

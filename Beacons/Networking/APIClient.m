@@ -9,6 +9,7 @@
 #import "APIClient.h"
 #import "UIImage+Resize.h"
 #import "Beacon.h"
+#import "Deal.h"
 #import "Contact.h"
 #import "AppDelegate.h"
 
@@ -22,7 +23,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -229,6 +230,55 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:success failure:failure];
     [self enqueueHTTPRequestOperation:operation];
+}
+
+#pragma mark - deals
+- (void)getDealWithID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{@"deal_id" : dealID};
+    [self getPath:@"deal/detail/" parameters:parameters success:success failure:failure];
+}
+
+- (void)postRegionStateWithDealID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+//    we only do this for entering regions with iBeacon for now but this can change later
+    NSDictionary *parameters = @{@"deal_id" : dealID,
+                                 @"region_type" : @"IBeacon",
+                                 @"region_state" : @"Enter"};
+    [self postPath:@"region_state/" parameters:parameters success:success failure:failure];
+}
+
+
+- (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{@"latitude" : @(coordinate.latitude),
+                                 @"longitude" : @(coordinate.longitude)};
+    [self getPath:@"deals/" parameters:parameters success:success failure:failure];
+}
+
+- (void)applyForDeal:(Deal *)deal invitedContacts:(NSArray *)contacts time:(NSDate *)time success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"invite_list"] = [self paramArrayForContacts:contacts];
+    parameters[@"deal_id"] = deal.dealID;
+    parameters[@"time"] = @([time timeIntervalSince1970]);
+    [[APIClient sharedClient] postPath:@"deal/apply/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
+        if (success) {
+            success(beacon);
+        }
+    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)redeemDeal:(Deal *)deal success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"deal_id" : deal.dealID};
+    [[APIClient sharedClient] postPath:@"deal/redeem/" parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Private

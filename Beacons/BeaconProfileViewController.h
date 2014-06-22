@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) Beacon *beacon;
 @property (assign, nonatomic) BOOL openToInviteView;
+@property (assign, nonatomic) BOOL openToDealView;
 
 - (void)refreshBeaconData;
 - (void)promptForCheckIn;

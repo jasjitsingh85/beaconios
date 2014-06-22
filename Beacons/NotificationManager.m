@@ -162,14 +162,17 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 {
     BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
     if (transitioningToForeground) {
-            NSNumber *beaconID = notification.userInfo[@"beaconID"];
+        NSNumber *beaconID = notification.userInfo[@"beaconID"];
+        NSNumber *dealID = notification.userInfo[@"dealID"];
             if (beaconID) {
                 [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
             }
+            else if (dealID) {
+                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDealID:dealID];
+            }
+        
     }
-    
 }
-
 
 
 @end

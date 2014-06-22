@@ -19,4 +19,6 @@
     #import "JAGrandCentralDispatch.h"
     #import "UIView+Edge.h"
     #import "UIViewController+isVisible.h"
+    #import "Theme.h"
+    #import "CommonMacros.h"
 #endif

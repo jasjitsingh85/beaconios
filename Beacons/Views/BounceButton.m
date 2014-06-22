@@ -7,6 +7,7 @@
 //
 
 #import "BounceButton.h"
+#import "UIView+BounceAnimation.h"
 
 @implementation BounceButton
 
@@ -21,13 +22,7 @@
 
 - (void)bounce
 {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.transform = CGAffineTransformIdentity;
-        }];
-    }];
+    [self bounceWithDuration:0.2 scale:1.2];
 }
 
 @end

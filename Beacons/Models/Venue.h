@@ -15,7 +15,9 @@
 @property (strong, nonatomic) NSString *address;
 @property (assign, nonatomic) CLLocationDistance distance;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
+@property (strong, nonatomic) NSURL *imageURL;
 
-- (id)initWithData:(NSDictionary *)data;
+- (id)initWithFoursquareDictionary:(NSDictionary *)data;
+- (id)initWithDealPlaceDictionary:(NSDictionary *)dictionary;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "FindFriendsViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImage+Resize.h"
 #import "GroupsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import "Contact.h"
@@ -15,6 +16,7 @@
 #import "APIClient.h"
 #import "User.h"
 #import "Group.h"
+#import "Deal.h"
 #import "Utilities.h"
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
@@ -170,6 +172,13 @@
     [self.navigationController pushViewController:groupsViewController animated:YES];
 }
 
+- (void)setDeal:(Deal *)deal
+{
+    [self view];
+    _deal = deal;
+    [self updateInviteButtonTextForDeal:nil];
+}
+
 - (void)populateContacts
 {
     self.suggestedList = @[];
@@ -278,6 +287,10 @@
 
 - (void)updateInviteButtonText:(Contact *)lastSelectedContact
 {
+    if (self.deal) {
+        [self updateInviteButtonTextForDeal:lastSelectedContact];
+        return;
+    }
     NSString *inviteButtonText = @"Set Hotspot";
     if (self.selectedContactDictionary.count) {
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
@@ -291,6 +304,27 @@
         }
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
+}
+
+- (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
+{
+    NSString *inviteButtonText;
+    if (!self.selectedContactDictionary.count) {
+        inviteButtonText = [NSString stringWithFormat:@"Invite %@ friends to unlock deal", self.deal.inviteRequirement];
+    }
+    else if (self.selectedContactDictionary.count < self.deal.inviteRequirement.integerValue) {
+        inviteButtonText = [NSString stringWithFormat:@"%d/%@ selected to unlock deal", self.selectedContactDictionary.count, self.deal.inviteRequirement];
+    }
+    else {
+        inviteButtonText = @"Unlock deal now!";
+    }
+    [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
+    BOOL unlock = self.selectedContactDictionary.count >= self.deal.inviteRequirement.integerValue;
+    UIImage *lockImage = unlock ? [UIImage imageNamed:@"lock_open"] : [UIImage imageNamed:@"lock_closed"];
+    CGSize imageSize = unlock ? CGSizeMake(41, 30) : CGSizeMake(41, 30);
+    UIImage *image = [lockImage fitToSize:imageSize];
+    [self.inviteButton setImage:image forState:UIControlStateNormal];
+    
 }
 
 #pragma mark - Table view data source

@@ -17,9 +17,12 @@
 #import "UIView+Shadow.h"
 #import "BeaconChatViewController.h"
 #import "InviteListViewController.h"
+#import "DealRedemptionViewController.h"
 #import "SetBeaconViewController.h"
 #import "HSNavigationController.h"
 #import "Beacon.h"
+#import "Deal.h"
+#import "Venue.h"
 #import "Theme.h"
 #import "User.h"
 #import "BeaconManager.h"
@@ -44,11 +47,13 @@
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
+@property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
 @property (strong, nonatomic) BounceButton *chatTabButton;
 @property (strong, nonatomic) BounceButton *inviteTabButton;
+@property (strong, nonatomic) BounceButton *dealButton;
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *locationLabel;
@@ -61,6 +66,7 @@
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @property (assign, nonatomic) BOOL keyboardShown;
 @property (assign, nonatomic) BOOL promptShowing;
+@property (assign, nonatomic) BOOL dealMode;
 
 @end
 
@@ -74,6 +80,7 @@
         self.beaconChatViewController.chatViewControllerDelegate = self;
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
+        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -93,6 +100,11 @@
     
     UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     self.view.backgroundColor = boneWhiteColor;
+    
+    [self addChildViewController:self.dealRedemptionViewController];
+    [self.view addSubview:self.dealRedemptionViewController.view];
+    self.dealRedemptionViewController.view.frame = self.view.bounds;
+    self.dealRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [self addChildViewController:self.beaconChatViewController];
     [self.view addSubview:self.beaconChatViewController.view];
@@ -126,34 +138,34 @@
     [self updateChatDesiredInsets];
     
     self.chatTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
-    CGRect chatTabButtonFrame;
-    chatTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
-    chatTabButtonFrame.origin = CGPointMake(0, self.descriptionView.frame.size.height - chatTabButtonFrame.size.height);
-    self.chatTabButton.frame = chatTabButtonFrame;
     [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonNormal"] forState:UIControlStateNormal];
     [self.chatTabButton setImage:[UIImage imageNamed:@"chatButtonSelected"] forState:UIControlStateSelected];
-    [self.chatTabButton addTarget:self action:@selector(chatTabTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.chatTabButton addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.chatTabButton];
     self.chatTabButton.selected = YES;
     
     self.inviteTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
-    CGRect inviteTabButtonFrame;
-    inviteTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
-    inviteTabButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.chatTabButton.frame), self.descriptionView.frame.size.height - inviteTabButtonFrame.size.height);
-    self.inviteTabButton.frame = inviteTabButtonFrame;
     [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonNormal"] forState:UIControlStateNormal];
     [self.inviteTabButton setImage:[UIImage imageNamed:@"invitedButtonSelected"] forState:UIControlStateSelected];
-    [self.inviteTabButton addTarget:self action:@selector(inviteTabTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteTabButton addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteTabButton];
     
-    UIView *verticalDivider = [[UIView alloc] init];
-    CGRect verticalDividerFrame;
-    verticalDividerFrame.size = CGSizeMake(1, 45);
-    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
-    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
-    verticalDivider.frame = verticalDividerFrame;
-    verticalDivider.backgroundColor = [UIColor whiteColor];
-    [self.descriptionView addSubview:verticalDivider];
+    self.dealButton = [BounceButton buttonWithType:UIButtonTypeCustom];
+    [self.dealButton setImage:[UIImage imageNamed:@"dealButtonNormal"] forState:UIControlStateNormal];
+    [self.dealButton setImage:[UIImage imageNamed:@"dealButtonSelected"] forState:UIControlStateSelected];
+    [self.dealButton addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.dealMode = NO;
+    
+    
+//    UIView *verticalDivider = [[UIView alloc] init];
+//    CGRect verticalDividerFrame;
+//    verticalDividerFrame.size = CGSizeMake(1, 45);
+//    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
+//    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
+//    verticalDivider.frame = verticalDividerFrame;
+//    verticalDivider.backgroundColor = [UIColor whiteColor];
+//    [self.descriptionView addSubview:verticalDivider];
     
     
     self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
@@ -220,6 +232,9 @@
     [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.directionsButton];
     
+    self.editButton = [UIButton navButtonWithTitle:@"Edit"];
+    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
     
     UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
     swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
@@ -241,20 +256,24 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
     
-    self.editButton = [UIButton navButtonWithTitle:@"Edit"];
-    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
-    self.navigationItem.rightBarButtonItem = editButtonItem;
     if (self.beacon) {
         self.editButton.hidden = !self.beacon.isUserBeacon;
     }
     
     if (self.openToInviteView) {
+        self.dealButton.selected = NO;
         self.chatTabButton.selected = NO;
         self.inviteTabButton.selected = YES;
         [self showInviteAnimated:NO];
     }
+    else if (self.openToDealView) {
+        self.dealButton.selected = YES;
+        self.chatTabButton.selected = NO;
+        self.inviteButton.selected = YES;
+        [self showDealAnimated:YES];
+    }
     else {
+        self.dealButton.selected = NO;
         self.chatTabButton.selected = YES;
         self.inviteTabButton.selected = NO;
         [self showChatAnimated:NO];
@@ -266,6 +285,45 @@
     [super viewDidAppear:animated];
     [self updateInviteListInsets];
     [self updateChatDesiredInsets];
+    [self updateDealRedemptionInsets];
+    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+    self.navigationItem.rightBarButtonItem = editButtonItem;
+}
+
+- (void)setDealMode:(BOOL)dealMode
+{
+    [self view];
+    _dealMode = dealMode;
+    if (dealMode) {
+        CGSize buttonSize = CGSizeMake(self.descriptionView.width/3.0, 42);
+        self.dealButton.size = buttonSize;
+        self.dealButton.bottom = self.descriptionView.height;
+        [self.descriptionView addSubview:self.dealButton];
+        
+        self.chatTabButton.size = buttonSize;
+        self.chatTabButton.x = self.dealButton.right;
+        self.chatTabButton.bottom = self.descriptionView.height;
+        [self.descriptionView addSubview:self.dealButton];
+        
+        self.inviteTabButton.size = buttonSize;
+        self.inviteTabButton.x = self.chatTabButton.right;
+        self.inviteTabButton.bottom = self.descriptionView.height;
+        [self.descriptionView addSubview:self.inviteTabButton];
+    }
+    else {
+        CGRect chatTabButtonFrame;
+        chatTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
+        chatTabButtonFrame.origin = CGPointMake(0, self.descriptionView.frame.size.height - chatTabButtonFrame.size.height);
+        self.chatTabButton.frame = chatTabButtonFrame;
+        [self.descriptionView addSubview:self.chatTabButton];
+        
+        CGRect inviteTabButtonFrame;
+        inviteTabButtonFrame.size = CGSizeMake(self.descriptionView.frame.size.width/2.0, 42);
+        inviteTabButtonFrame.origin = CGPointMake(CGRectGetMaxX(self.chatTabButton.frame), self.descriptionView.frame.size.height - inviteTabButtonFrame.size.height);
+        self.inviteTabButton.frame = inviteTabButtonFrame;
+        [self.descriptionView addSubview:self.inviteTabButton];
+        [self.dealButton removeFromSuperview];
+    }
 }
 
 - (void)refreshBeaconData
@@ -275,6 +333,9 @@
     }
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
         self.beacon = beacon;
+        if (self.beacon.deal) {
+            [self showDealAnimated:NO];
+        }
     } failure:nil];
     [self.beaconChatViewController reloadMessagesFromServerCompletion:nil];
 }
@@ -284,9 +345,6 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-    self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
-    self.imageView.beacon = beacon;
-    self.imageViewGradient.hidden = NO;
     self.timeLabel.text = beacon.time.shortFormattedDate;
     self.descriptionLabel.text = beacon.beaconDescription;
     if (beacon.address) {
@@ -313,6 +371,17 @@
     self.inviteButton.hidden = !beacon.userAttending;
     self.editButton.hidden = !beacon.isUserBeacon;
     
+    if (beacon.deal) {
+        self.dealMode = YES;
+        [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
+        self.imageView.mapDisabled = YES;
+        [self.imageView setImageWithURL:beacon.deal.venue.imageURL];
+    }
+    else {
+        self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
+        self.imageView.beacon = beacon;
+        self.imageViewGradient.hidden = NO;
+    }
     //let server know that user has seen this hotspot
     BOOL hasData = beacon.beaconDescription != nil;
     if (hasData) {
@@ -347,7 +416,7 @@
 {
     self.promptShowing = YES;
     self.openToInviteView = YES;
-    [self inviteTabTouched:nil];
+    [self showInviteAnimated:YES];
     [[BeaconManager sharedManager] promptUserToCheckInToBeacon:self.beacon success:^(BOOL checkedIn) {
         self.promptShowing = NO;
         [self refreshBeaconData];
@@ -418,6 +487,14 @@
     self.inviteListViewController.tableView.contentInset = insets;
 }
 
+- (void)updateDealRedemptionInsets
+{
+    CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame);
+    UIEdgeInsets insets = UIEdgeInsetsZero;
+    insets.top = topInset;
+    self.dealRedemptionViewController.tableView.contentInset = insets;
+}
+
 - (void)showPartialDescriptionViewAnimated:(BOOL)animated
 {
     self.fullDescriptionViewShown = NO;
@@ -428,6 +505,7 @@
         self.descriptionView.frame = frame;
         [self updateChatDesiredInsets];
         [self updateInviteListInsets];
+        [self updateDealRedemptionInsets];
     }];
 }
 
@@ -441,6 +519,7 @@
         self.descriptionView.frame = frame;
         [self updateChatDesiredInsets];
         [self updateInviteListInsets];
+        [self updateDealRedemptionInsets];
     }];
 }
 
@@ -448,6 +527,7 @@
 {
     self.inviteTabButton.selected = YES;
     self.chatTabButton.selected = NO;
+    self.dealButton.selected = NO;
     self.inviteListViewController.view.alpha = 1;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
@@ -463,6 +543,7 @@
 {
     self.inviteTabButton.selected = NO;
     self.chatTabButton.selected = YES;
+    self.dealButton.selected = NO;
     self.beaconChatViewController.view.alpha = 1;
     NSTimeInterval duration = animated ? 0.3 : 0.0;
     [UIView animateWithDuration:duration animations:^{
@@ -471,6 +552,24 @@
         self.inviteListViewController.view.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.inviteListViewController.view.alpha = 0;
+    }];
+}
+
+- (void)showDealAnimated:(BOOL)animated
+{
+    self.dealButton.selected = YES;
+    self.inviteTabButton.selected = NO;
+    self.chatTabButton.selected = NO;
+    self.dealRedemptionViewController.view.alpha = 1;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(self.beaconChatViewController.view.frame.size.width, 0);
+        self.inviteListViewController.view.transform = self.beaconChatViewController.view.transform;
+        self.dealRedemptionViewController.view.transform = CGAffineTransformIdentity;
+        self.beaconChatViewController.view.alpha = 0.0;
+        self.inviteListViewController.view.alpha = self.beaconChatViewController.view.alpha;
+    } completion:^(BOOL finished) {
+        self.beaconChatViewController.view.alpha = 0;
     }];
 }
 
@@ -509,35 +608,31 @@
     self.keyboardShown = NO;
 }
 
-#pragma mark - Buttons 
-- (void)chatTabTouched:(id)sender
+#pragma mark - Buttons
+
+- (void)tabButtonTouched:(UIButton *)sender
 {
-    if (self.fullDescriptionViewShown && !self.inviteTabButton.selected) {
+    if (self.fullDescriptionViewShown && sender.selected) {
         [self showPartialDescriptionViewAnimated:YES];
     }
-    else {
+    else if (!self.fullDescriptionViewShown && sender.selected) {
         [self showFullDescriptionViewAnimated:YES];
     }
-//    self.inviteListViewController.view.alpha = 0.0;
-    [self showChatAnimated:YES];
+    if (sender == self.chatTabButton) {
+        [self showChatAnimated:YES];
+    }
+    else if (sender == self.inviteTabButton) {
+        [self showInviteAnimated:YES];
+    }
+    else if (sender == self.dealButton) {
+        [self showDealAnimated:YES];
+    }
     [self.beaconChatViewController dismissKeyboard];
 }
 
 - (void)chatCameraButtonTouched:(id)sender
 {
     [self showCameraActionSheet];
-}
-
-- (void)inviteTabTouched:(id)sender
-{
-    if (self.fullDescriptionViewShown && self.inviteTabButton.selected) {
-        [self showPartialDescriptionViewAnimated:YES];
-    }
-    else {
-        [self showFullDescriptionViewAnimated:YES];
-    }
-    [self showInviteAnimated:YES];
-    [self.beaconChatViewController dismissKeyboard];
 }
 
 - (void)joinButtonTouched:(id)sender

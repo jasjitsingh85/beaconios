@@ -12,9 +12,11 @@
 @class CenterNavigationController,
 LoginViewController,
 MenuViewController,
+DealsTableViewController,
 SetBeaconViewController,
 User,
-Beacon;
+Beacon,
+Deal;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -23,6 +25,7 @@ Beacon;
 @property (strong, nonatomic) MSDynamicsDrawerViewController *sideNavigationViewController;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
+@property (strong, nonatomic) DealsTableViewController *dealsViewController;
 
 + (AppDelegate *)sharedAppDelegate;
 - (void)registeredWithResponse:(NSDictionary *)response;
@@ -32,8 +35,11 @@ Beacon;
 - (void)didFinishPermissions;
 - (void)contactAuthorizationStatusDenied;
 - (void)setSelectedViewControllerToHome;
+- (void)setSelectedViewControllerToDetailForDeal:(Deal *)deal;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
+- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal;
+- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID;
 
 @end

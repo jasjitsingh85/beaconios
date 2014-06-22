@@ -57,7 +57,7 @@
 
 - (UIColor *)greenColor
 {
-    return [UIColor unnormalizedColorWithRed:227 green:335 blue:209 alpha:255];
+    return [UIColor unnormalizedColorWithRed:227 green:235 blue:209 alpha:255];
 }
 
 - (UIColor *)darkGreenColor
@@ -89,6 +89,11 @@
 - (UIColor *)darkPurpleColor
 {
     return [UIColor unnormalizedColorWithRed:209 green:203 blue:223 alpha:255];
+}
+
+- (UIColor *)boneWhiteColor
+{
+    return [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
 }
 
 - (UIImage *)blueCellImage

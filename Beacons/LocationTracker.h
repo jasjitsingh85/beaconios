@@ -12,8 +12,11 @@
 extern NSString * const kDidEnterRegionNotification;
 extern NSString * const kDidExitRegionNotification;
 extern NSString * const kDidUpdateLocationNotification;
+extern NSString * const kDidRangeBeaconNotification;
 
 @interface LocationTracker : NSObject <CLLocationManagerDelegate>
+
+@property (readonly) BOOL authorized;
 
 + (LocationTracker *)sharedTracker;
 - (CLLocation *)currentLocation;
@@ -23,7 +26,8 @@ extern NSString * const kDidUpdateLocationNotification;
 - (void)stopTracking;
 - (void)monitorRegion:(CLRegion *)region;
 - (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier;
-- (void)stopMonitoringAllRegions;
+- (void)stopMonitoringAllRegionsAroundHotspots;
+- (void)startMonitoringBeaconRegions;
 - (CLLocationDistance)distanceFromCurrentLocationToCoordinate:(CLLocationCoordinate2D)coordinate;
 
 

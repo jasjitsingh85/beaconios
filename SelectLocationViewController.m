@@ -93,7 +93,7 @@
     NSArray *venueData = response[@"venues"];
     NSMutableArray *venues = [NSMutableArray new];
     for (NSDictionary *item in venueData) {
-        Venue *venue = [[Venue alloc] initWithData:item];
+        Venue *venue = [[Venue alloc] initWithFoursquareDictionary:item];
         [venues addObject:venue];
     }
     self.venues = venues;

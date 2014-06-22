@@ -49,8 +49,19 @@
     self.placeholderImageView.image = placeholder;
 }
 
+- (void)setMapDisabled:(BOOL)mapDisabled
+{
+    _mapDisabled = mapDisabled;
+    if (mapDisabled) {
+        self.placeholderImageView.alpha = 0;
+    }
+}
+
 - (void)update
 {
+    if (self.mapDisabled) {
+        return;
+    }
     MKMapSnapshotter *snapshotter = [[MKMapSnapshotter alloc] initWithOptions:self.snapshotOptions];
     [snapshotter startWithQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
               completionHandler:^(MKMapSnapshot *snapshot, NSError *error) {

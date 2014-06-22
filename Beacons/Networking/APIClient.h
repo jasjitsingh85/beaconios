@@ -12,7 +12,7 @@
 #import "NSError+ServerErrorMessage.h"
 #import "HTTPStatusCodes.h"
 
-@class Beacon, Contact;
+@class Beacon, Contact, Deal;
 @interface APIClient : AFHTTPClient
 
 + (APIClient *)sharedClient;
@@ -44,5 +44,10 @@
                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)postImage:(UIImage *)image forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)getDealWithID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)postRegionStateWithDealID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
+- (void)applyForDeal:(Deal *)deal invitedContacts:(NSArray *)contacts time:(NSDate *)time success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure;
+- (void)redeemDeal:(Deal *)deal success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

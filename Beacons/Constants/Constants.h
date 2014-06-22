@@ -22,6 +22,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDefaultsKeyHasFinishedPermissions @"hasFinishedPermissions"
 #define kDefaultsKeyCheckinPromptHotspots @"checkinPromptHotspots"
 #define kDefaultsKeyHasShownHotspotExplanation @"hasShownHotspotExplanation"
+#define kDefaultsKeyHasShownDealExplanation @"hasShownDealExplanation"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"
@@ -51,6 +52,12 @@ extern NSString * const MIXPANEL_TOKEN;
 //messages
 #define kMessageTypeUserMessage @"UM"
 #define kMessageTypeSystemMessage @"HM"
+
+//deals
+extern NSString * const kDealStatusLocked;
+extern NSString * const kDealStatusUnlocked;
+extern NSString * const kDealStatusRedeemed;
+
 
 //email
 #define kFeedbackEmailAddress @"info@gethotspotapp.com"
