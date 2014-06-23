@@ -59,6 +59,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (!self.loadingDeals && !self.lastUpdatedDeals) {
+        [self reloadDeals];
+    }
 }
 
 - (UIView *)emptyBeaconView
