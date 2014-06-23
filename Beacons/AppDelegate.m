@@ -359,8 +359,7 @@
 - (void)receivedDidRangeBeaconNotification:(NSNotification *)notification
 {
     CLBeacon *beacon = notification.userInfo[@"beacon"];
-//    NSNumber *dealID = beacon.major;
-    NSNumber *dealID = @(14);
+    NSNumber *dealID = beacon.major;
     [[APIClient sharedClient] postRegionStateWithDealID:dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Deal *deal = [[Deal alloc] initWithDictionary:responseObject[@"deals"]];
         BOOL shouldNotify = [responseObject[@"show_notification"] boolValue];
