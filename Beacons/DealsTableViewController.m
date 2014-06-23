@@ -153,7 +153,6 @@
         self.deals = [NSArray arrayWithArray:deals];
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
-        [self didLoadDeals:self.deals];
         if (completion) {
             completion();
         }
@@ -161,14 +160,6 @@
         if (completion) {
             completion();
         }
-    }];
-}
-
-- (void)didLoadDeals:(NSArray *)deals
-{
-    CGFloat alpha = deals.count ? 1 : 0.5;
-    [UIView animateWithDuration:0.5 animations:^{
-        [AppDelegate sharedAppDelegate].centerNavigationController.dealsButton.alpha = alpha;
     }];
 }
 
