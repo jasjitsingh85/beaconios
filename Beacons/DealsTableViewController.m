@@ -102,6 +102,9 @@
 
 - (void)didUpdateLocation:(NSNotification *)notification
 {
+    if (self.loadingDeals) {
+        return;
+    }
     if (!self.lastUpdatedDeals) {
         [self reloadDeals];
     }
@@ -126,19 +129,21 @@
 
 - (void)reloadDeals
 {
+    self.loadingDeals = YES;
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
     [[LocationTracker sharedTracker] fetchCurrentLocation:^(CLLocation *location) {
         [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            self.loadingDeals = NO;
             [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
         }];
     } failure:^(NSError *error) {
+        self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }];
 }
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
 {
-    self.loadingDeals = YES;
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
@@ -147,14 +152,12 @@
         }
         self.deals = [NSArray arrayWithArray:deals];
         [self reloadTableView];
-        self.loadingDeals = NO;
         self.lastUpdatedDeals = [NSDate date];
         [self didLoadDeals:self.deals];
         if (completion) {
             completion();
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.loadingDeals = NO;
         if (completion) {
             completion();
         }
