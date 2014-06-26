@@ -328,13 +328,13 @@
 #pragma mark - Find Friends Delegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
 {
-//    if (contacts.count >= self.deal.inviteRequirement.integerValue) {
+    if (contacts.count >= self.deal.inviteRequirement.integerValue) {
         [self setBeaconOnServerWithInvitedContacts:contacts];
-//    }
-//    else {
-//        NSString *message = [NSString stringWithFormat:@"Invite %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
-//        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//    }
+    }
+    else {
+        NSString *message = [NSString stringWithFormat:@"Invite %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
+        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 - (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts
