@@ -65,6 +65,8 @@ extern NSString * const kDealStatusRedeemed;
 //app linking
 extern NSString * const kHappyHoursAppURLIdentifier;
 
+extern NSString * const kAppID;
+
 //urls
 extern NSString * const kTermsURL;
 extern NSString * const kPrivacyURL;

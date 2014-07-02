@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <CocoaLumberjack/DDFileLogger.h>
+#import <FacebookSDK.h>
 #import "NSURL+InterApp.h"
 #import "CenterNavigationController.h"
 #import "MenuViewController.h"
@@ -180,6 +181,8 @@
         }
     }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
+    [FBSettings setDefaultAppID:kAppID];
+    [FBAppEvents activateApp];
 }
 
 - (void)contactAuthorizationStatusDenied

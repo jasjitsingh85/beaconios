@@ -16,6 +16,7 @@ PODS:
   - BlocksKit/UIKit (2.2.3):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
+  - Bolts (1.1.0)
   - BSKeyboardControls (2.2)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core
@@ -24,6 +25,8 @@ PODS:
   - CocoaLumberjack/Extensions (1.6.5.1):
     - CocoaLumberjack/Core
   - CrittercismSDK (4.3.3)
+  - Facebook-iOS-SDK (3.15.1):
+    - Bolts
   - FormatterKit (1.4.3):
     - FormatterKit/AddressFormatter
     - FormatterKit/ArrayFormatter
@@ -57,6 +60,7 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
+  - Facebook-iOS-SDK
   - FormatterKit
   - Foursquare-iOS-API (~> 2.0)
   - MBProgressHUD
@@ -69,9 +73,11 @@ SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   AHAlertView: 27ca35694babd935d908bd7f6e575175a8947b2e
   BlocksKit: 07c8a80f04275efac6a5f8b973782489c083a182
+  Bolts: 91c2af8eae1d44e1dd75946a5b0ae04a43ea43e4
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
   CrittercismSDK: 9f19db3a1f0c16b35d8c29c69406852d184a7650
+  Facebook-iOS-SDK: 56214af8e0ef16e751eb2804250326b709e571b8
   FormatterKit: f744aa7928003eba8317d6fd6998414fbc78f7a5
   Foursquare-iOS-API: 5e4b94fcb4fb74c8f0b0598445502bf691dd5f6b
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
@@ -80,4 +86,4 @@ SPEC CHECKSUMS:
   SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
   UIView+Positioning: 870af80983bf495af2cb8a3a15b20e26fcc57ebb
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1
