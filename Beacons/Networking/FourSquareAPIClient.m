@@ -11,6 +11,7 @@
 static NSString * const kFourSquareClientID = @"W2NADLA3QFZCLRLFIAUXVNUXMZYU02SFOWR3G4DYCT34D0H5";
 static NSString * const kFourSquareClientSecret = @"4UQ3LTEBD5S5YXWYSTAIBMODD3K0UZVSTMV0RRRBECIVZ4VN";
 static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
+static NSString * const kVersion = @"20140603";
 
 @interface FourSquareAPIClient() <BZFoursquareRequestDelegate>
 
@@ -36,6 +37,7 @@ static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
     self = [super init];
     if (self) {
         self.foursquare = [[BZFoursquare alloc] initWithClientID:kFourSquareClientID callbackURL:kFourSquareCallBackURL];
+        self.foursquare.version = kVersion;
         self.foursquare.clientSecret = kFourSquareClientSecret;
         self.requests = [NSMutableArray new];
         self.completionBlocks = [NSMutableArray new];
@@ -49,7 +51,7 @@ static NSString * const kFourSquareCallBackURL = @"http://www.getbeacons.com";
                                  @"query" : query,
                                  @"radius" : radius,
                                  @"limit" : limit,
-                                 @"v" : @"20140129"};
+                                 @"v" : kVersion};
     BZFoursquareRequest *request = [self.foursquare userlessRequestWithPath:@"venues/search" HTTPMethod:@"GET" parameters:parameters delegate:self];
     [self.requests addObject:request];
     [self.completionBlocks addObject:completion];
