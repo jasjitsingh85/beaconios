@@ -199,7 +199,7 @@
     self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 158, 194, 14)];
     self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
     self.invitedLabel.textColor = [UIColor whiteColor];
-    UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteTabTouched:)];
+    UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteLabelTouched:)];
     invitedTap.numberOfTapsRequired = YES;
     [self.invitedLabel addGestureRecognizer:invitedTap];
     self.invitedLabel.userInteractionEnabled = YES;
@@ -609,6 +609,11 @@
 }
 
 #pragma mark - Buttons
+
+- (void)inviteLabelTouched:(id)sender
+{
+    [self showInviteAnimated:YES];
+}
 
 - (void)tabButtonTouched:(UIButton *)sender
 {
