@@ -15,7 +15,7 @@
 
 @interface CenterNavigationController ()
 
-@property (strong, nonatomic) NSNumber *openDirection;
+@property (readonly) MSDynamicsDrawerDirection openDirection;
 
 @end
 
@@ -46,6 +46,18 @@
     [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
 }
 
+- (MSDynamicsDrawerDirection)openDirection
+{
+    MSDynamicsDrawerDirection openDirection = MSDynamicsDrawerDirectionNone;
+    if ([AppDelegate sharedAppDelegate].sideNavigationViewController.paneView.x > 0) {
+        openDirection = MSDynamicsDrawerDirectionLeft;
+    }
+    else {
+        openDirection = MSDynamicsDrawerDirectionRight;
+    }
+    return openDirection;
+}
+
 - (void)menuButtonTouched:(id)sender
 {
     [self toggleSideNav:MSDynamicsDrawerDirectionLeft];
@@ -59,12 +71,6 @@
 - (void)toggleSideNav:(MSDynamicsDrawerDirection)direction
 {
     MSDynamicsDrawerPaneState paneState = [AppDelegate sharedAppDelegate].sideNavigationViewController.paneState == MSDynamicsDrawerPaneStateClosed ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateClosed;
-    if (paneState == MSDynamicsDrawerPaneStateClosed) {
-        self.openDirection = nil;
-    }
-    else {
-        self.openDirection = @(direction);
-    }
     [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:paneState inDirection:direction animated:YES allowUserInterruption:YES completion:nil];
 }
 
@@ -151,7 +157,7 @@
     }];
     jadispatch_after_delay(0.1, dispatch_get_main_queue(), ^{
         MSDynamicsDrawerDirection direction = MSDynamicsDrawerDirectionLeft;
-        if (self.openDirection && self.openDirection.integerValue == MSDynamicsDrawerDirectionRight) {
+        if (self.openDirection && self.openDirection == MSDynamicsDrawerDirectionRight) {
             direction = MSDynamicsDrawerDirectionRight;
         }
         [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:direction animated:YES allowUserInterruption:NO completion:nil];
