@@ -23,5 +23,10 @@
 - (void)inviteToBeacon:(NSInteger)numInvites;
 - (void)setBeaconStatus:(NSString *)status forSelf:(BOOL)forSelf;
 - (void)inviteToApp:(NSString *)activityType completed:(BOOL)completed;
+- (void)viewedDealTable;
+- (void)viewedDeals:(NSInteger)numDeals;
+- (void)viewedDeal:(NSString *)dealID withPlaceName:(NSString *)placeName;
+- (void)invitedFriendsDeal:(NSString *)dealID withPlaceName:(NSString *)placeName;
+- (void)setDeal:(NSString *)dealID withPlaceName:(NSString *)placeName numberOfInvites:(NSInteger)numInvited;
 
 @end

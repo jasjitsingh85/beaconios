@@ -138,4 +138,35 @@
     [self sendEvent:@"invite_friends" withProperties:properties];
 }
 
+- (void)viewedDealTable
+{
+    [self sendEvent:@"viewed_deal_table" withProperties:nil];
+}
+
+- (void)viewedDeals:(NSInteger)numDeals
+{
+    NSDictionary *properties = @{@"num_deals" : @(numDeals)};
+    [self sendEvent:@"viewed_deals" withProperties:properties];
+}
+
+- (void)viewedDeal:(NSString *)dealID withPlaceName:(NSString *)placeName
+{
+    NSDictionary *properties = @{@"deal_id" : dealID, @"place" : placeName};
+    [self sendEvent:@"viewed_deal_detail" withProperties:properties];
+}
+
+- (void)invitedFriendsDeal:(NSString *)dealID withPlaceName:(NSString *)placeName
+{
+    NSDictionary *properties = @{@"deal_id" : dealID, @"place" : placeName};
+    [self sendEvent:@"invite_friends_deal" withProperties:properties];
+}
+
+- (void)setDeal:(NSString *)dealID withPlaceName:(NSString *)placeName numberOfInvites:(NSInteger)numInvited
+{
+    NSDictionary *properties = @{@"deal_id" : dealID, @"place" : placeName, @"num_invites": @(numInvited)};
+    [self sendEvent:@"set_deal" withProperties:properties];
+}
+
+
+
 @end

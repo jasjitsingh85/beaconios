@@ -19,6 +19,7 @@
 #import "Beacon.h"
 #import "User.h"
 #import "APIClient.h"
+#import "AnalyticsManager.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, FindFriendsViewControllerDelegate>
 
@@ -112,6 +113,14 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.deal) {
+        [[AnalyticsManager sharedManager] viewedDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+    }
+}
+
 - (void)preloadWithDealID:(NSNumber *)dealID
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
@@ -183,6 +192,7 @@
         findFriendsViewController.delegate = self;
         findFriendsViewController.deal = self.deal;
         [self.navigationController pushViewController:findFriendsViewController animated:YES];
+        [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
         [self showExplanationPopup];
     }
 }
@@ -330,6 +340,7 @@
 {
     if (contacts.count >= self.deal.inviteRequirement.integerValue) {
         [self setBeaconOnServerWithInvitedContacts:contacts];
+        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
     }
     else {
         NSString *message = [NSString stringWithFormat:@"Invite %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];

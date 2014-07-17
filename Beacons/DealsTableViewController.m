@@ -17,6 +17,7 @@
 #import "Deal.h"
 #import "Venue.h"
 #import "LoadingIndictor.h"
+#import "AnalyticsManager.h"
 
 @interface DealsTableViewController ()
 
@@ -62,6 +63,7 @@
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
     }
+    [[AnalyticsManager sharedManager] viewedDealTable];
 }
 
 - (UIView *)emptyBeaconView
@@ -138,6 +140,7 @@
         [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
             self.loadingDeals = NO;
             [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+            [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
         }];
     } failure:^(NSError *error) {
         self.loadingDeals = NO;
