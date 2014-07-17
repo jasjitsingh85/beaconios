@@ -141,6 +141,7 @@
             self.loadingDeals = NO;
             [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
             [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
         }];
     } failure:^(NSError *error) {
         self.loadingDeals = NO;

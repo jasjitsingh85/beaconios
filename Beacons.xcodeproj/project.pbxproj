@@ -74,6 +74,8 @@
 		9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651C799193E72390083A0FE /* DealRedemptionViewController.m */; };
 		9651C79D193E74C20083A0FE /* DashedBorderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651C79C193E74C20083A0FE /* DashedBorderButton.m */; };
 		966070E2175AC989007379A0 /* LineLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 966070E1175AC989007379A0 /* LineLayout.m */; };
+		9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9666524C19786CA300EE85F8 /* DealExplanationView.m */; };
+		96665251197880F500EE85F8 /* dealExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96665250197880F500EE85F8 /* dealExplanation@2x.png */; };
 		966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 966AC11C17CADBFA0093BB69 /* BeaconManager.m */; };
 		966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 966C3EFF1929824F0082E2C6 /* NSURL+InterApp.m */; };
 		966C3F02192983080082E2C6 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 966C3F01192983080082E2C6 /* Constants.m */; };
@@ -378,6 +380,9 @@
 		9651C79C193E74C20083A0FE /* DashedBorderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashedBorderButton.m; sourceTree = "<group>"; };
 		966070E0175AC989007379A0 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
 		966070E1175AC989007379A0 /* LineLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineLayout.m; sourceTree = "<group>"; };
+		9666524B19786CA300EE85F8 /* DealExplanationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealExplanationView.h; sourceTree = "<group>"; };
+		9666524C19786CA300EE85F8 /* DealExplanationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealExplanationView.m; sourceTree = "<group>"; };
+		96665250197880F500EE85F8 /* dealExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealExplanation@2x.png"; sourceTree = "<group>"; };
 		966AC11B17CADBFA0093BB69 /* BeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconManager.h; sourceTree = "<group>"; };
 		966AC11C17CADBFA0093BB69 /* BeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconManager.m; sourceTree = "<group>"; };
 		966C3EFE1929824F0082E2C6 /* NSURL+InterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+InterApp.h"; sourceTree = "<group>"; };
@@ -736,6 +741,8 @@
 				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
+				9666524B19786CA300EE85F8 /* DealExplanationView.h */,
+				9666524C19786CA300EE85F8 /* DealExplanationView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -971,6 +978,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96665250197880F500EE85F8 /* dealExplanation@2x.png */,
 				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
@@ -1317,6 +1325,7 @@
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */,
+				96665251197880F500EE85F8 /* dealExplanation@2x.png in Resources */,
 				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,
@@ -1498,6 +1507,7 @@
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
+				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,
 				96AFE1351938215000209799 /* Deal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

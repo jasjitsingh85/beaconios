@@ -23,6 +23,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDefaultsKeyCheckinPromptHotspots @"checkinPromptHotspots"
 #define kDefaultsKeyHasShownHotspotExplanation @"hasShownHotspotExplanation"
 #define kDefaultsKeyHasShownDealExplanation @"hasShownDealExplanation"
+#define kDefaultsKeyHasShownDealsIntroduction @"hasShownDealsIntroduction"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"
@@ -38,6 +39,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 //location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
+#define kDealsUpdatedNotification @"dealsUpdatedNotification"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"

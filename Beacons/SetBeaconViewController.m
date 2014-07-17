@@ -33,6 +33,8 @@
 #import "LockedViewController.h"
 #import "ExplanationPopupView.h"
 #import "DatePickerModalView.h"
+#import "DealExplanationView.h"
+#import "DealsTableViewController.h"
 
 #define MAX_CHARACTER_COUNT 40
 
@@ -178,6 +180,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(randomStringsUpdated:) name:kRandomStringsUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDealsUpdatedNotification:) name:kDealsUpdatedNotification object:nil];
 }
 
 - (void)dealloc
@@ -192,6 +195,27 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     [self updateDescriptionPlaceholder];
+}
+
+- (void)receivedDealsUpdatedNotification:(NSNotification *)notification
+{   BOOL hasShownDealsIntroduction = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealsIntroduction];
+    if (!hasShownDealsIntroduction) {
+        [self showDealsExplanation];
+    }
+}
+
+- (void)showDealsExplanation
+{
+    NSArray *deals = [AppDelegate sharedAppDelegate].dealsViewController.deals;
+    if (deals && deals.count) {
+        DealExplanationView *dealExplanationView = [[DealExplanationView alloc] init];
+        [dealExplanationView show];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownDealsIntroduction];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        dealExplanationView.dismissCompletionBlock = ^{
+            [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateOpen inDirection:MSDynamicsDrawerDirectionRight animated:YES allowUserInterruption:NO completion:nil];
+        };
+    }
 }
 
 - (void)willEnterForeground:(NSNotification *)notification
