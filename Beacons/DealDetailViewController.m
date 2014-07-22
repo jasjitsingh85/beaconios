@@ -8,6 +8,7 @@
 
 #import "DealDetailViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "UIView+Shadow.h"
 #import "NSDate+FormattedDate.h"
 #import "AppDelegate.h"
@@ -21,7 +22,9 @@
 #import "APIClient.h"
 #import "AnalyticsManager.h"
 
-@interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, FindFriendsViewControllerDelegate>
+const NSInteger maxCustomMessageLength = 159;
+
+@interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) UIImageView *imageView;
@@ -33,6 +36,7 @@
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) UIFont *headerFont;
 @property (strong, nonatomic) UIFont *detailFont;
+@property (strong, nonatomic) UITextView *customMessageTextView;
 
 @end
 
@@ -88,7 +92,7 @@
     inviteFriendsLabel.size = CGSizeMake(283, 33);
     inviteFriendsLabel.centerX = self.inviteFriendsButton.width/2.0;
     inviteFriendsLabel.bottom = self.inviteFriendsButton.height - 13;
-    inviteFriendsLabel.text = @"Invite Friends";
+    inviteFriendsLabel.text = @"Get Deal!";
     inviteFriendsLabel.font = [ThemeManager lightFontOfSize:1.3*15];
     inviteFriendsLabel.textAlignment = NSTextAlignmentCenter;
     inviteFriendsLabel.textColor = [UIColor colorWithRed:133/255.0 green:193/255.0 blue:255/255.0 alpha:1.0];
@@ -188,13 +192,41 @@
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else {
-        FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-        findFriendsViewController.delegate = self;
-        findFriendsViewController.deal = self.deal;
-        [self.navigationController pushViewController:findFriendsViewController animated:YES];
-        [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
-        [self showExplanationPopup];
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:nil message:@"Type a message"];
+        if (!self.customMessageTextView) {
+            self.customMessageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 250, 130)];
+            self.customMessageTextView.delegate = self;
+            self.customMessageTextView.font = [ThemeManager regularFontOfSize:12*1.3];
+            self.customMessageTextView.backgroundColor = [UIColor clearColor];
+        }
+        self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@ (%@), at %@ %@. I'm inviting you through this app, so you %@", self.deal.venue.name, self.deal.venue.address, self.date.formattedTime.lowercaseString, self.date.formattedDay.lowercaseString, self.deal.inviteDescription];
+        if (self.customMessageTextView.text.length > maxCustomMessageLength) {
+            self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. I'm inviting you through this app, so you %@", self.deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.inviteDescription];
+        }
+        self.customMessageTextView.backgroundColor = [UIColor whiteColor];
+        self.customMessageTextView.layer.cornerRadius = 8;
+        self.customMessageTextView.layer.borderColor = [UIColor grayColor].CGColor;
+        self.customMessageTextView.layer.borderWidth = 0.5;
+        [alertView setValue:self.customMessageTextView forKey:@"accessoryView"];
+        [alertView bk_addButtonWithTitle:@"Cancel" handler:nil];
+        [alertView bk_setCancelButtonWithTitle:@"Select Friends" handler:^{
+            [self selectFriends];
+        }];
+        [alertView bk_setDidShowBlock:^(UIAlertView *a) {
+            [self.customMessageTextView becomeFirstResponder];
+        }];
+        [alertView show];
     }
+}
+
+- (void)selectFriends
+{
+    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+    findFriendsViewController.delegate = self;
+    findFriendsViewController.deal = self.deal;
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -353,7 +385,7 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts time:self.date success:^(Beacon *beacon) {
+    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.customMessageTextView.text time:self.date success:^(Beacon *beacon) {
         [loadingIndicator hide:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
@@ -361,6 +393,17 @@
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
+}
+
+#pragma mark - UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSString *resultantText = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    if (resultantText.length > maxCustomMessageLength && resultantText.length > textView.text.length) {
+        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Your message is over the character limit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return NO;
+    }
+    return YES;
 }
 
 @end

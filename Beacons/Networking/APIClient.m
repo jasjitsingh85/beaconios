@@ -256,12 +256,13 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [self getPath:@"deals/" parameters:parameters success:success failure:failure];
 }
 
-- (void)applyForDeal:(Deal *)deal invitedContacts:(NSArray *)contacts time:(NSDate *)time success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
+- (void)applyForDeal:(Deal *)deal invitedContacts:(NSArray *)contacts customMessage:(NSString *)customMessage time:(NSDate *)time success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     parameters[@"invite_list"] = [self paramArrayForContacts:contacts];
     parameters[@"deal_id"] = deal.dealID;
     parameters[@"time"] = @([time timeIntervalSince1970]);
+    parameters[@"custom_message"] = customMessage;
     [[APIClient sharedClient] postPath:@"deal/apply/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
         if (success) {
