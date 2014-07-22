@@ -235,7 +235,7 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     Deal *deal = self.deals[indexPath.row];
-    [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDetailForDeal:deal];
+    [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDeal:deal animated:YES];
 }
 
 - (void)happyHoursButtonTouched:(id)sender

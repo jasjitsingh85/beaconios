@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.name = data[@"name"];
+        self.foursquareID = data[@"id"];
         NSNumber *latitude = [data valueForKeyPath:@"location.lat"];
         NSNumber *longitude = [data valueForKeyPath:@"location.lng"];
         self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
@@ -39,6 +40,7 @@
     self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
     self.address = dictionary[@"street_address"];
     self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];
+    self.foursquareID = dictionary[@"foursquare_id"];
     return self;
 }
 

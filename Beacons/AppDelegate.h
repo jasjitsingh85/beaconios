@@ -35,11 +35,10 @@ Deal;
 - (void)didFinishPermissions;
 - (void)contactAuthorizationStatusDenied;
 - (void)setSelectedViewControllerToHome;
-- (void)setSelectedViewControllerToDetailForDeal:(Deal *)deal;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
-- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal;
+- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated;
 - (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID;
 
 @end

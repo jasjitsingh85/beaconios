@@ -297,12 +297,6 @@
 }
 
 #pragma mark - Beacon Profile
-- (void)setSelectedViewControllerToDetailForDeal:(Deal *)deal
-{
-    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
-    dealDetailViewController.deal = deal;
-    [self.centerNavigationController setSelectedViewController:dealDetailViewController animated:YES];
-}
 
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn
 {
@@ -334,11 +328,11 @@
     [self.setBeaconViewController preloadWithRecommendation:recommendationID];
 }
 
-- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal
+- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated
 {
     DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
     dealDetailViewController.deal = deal;
-    [self.centerNavigationController setSelectedViewController:dealDetailViewController];
+    [self.centerNavigationController setSelectedViewController:dealDetailViewController animated:animated];
 }
 
 - (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID

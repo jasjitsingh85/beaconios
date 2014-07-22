@@ -18,6 +18,7 @@
 #import "Venue.h"
 #import "FindFriendsViewController.h"
 #import "Beacon.h"
+#import "Deal.h"
 #import "AppDelegate.h"
 #import "LoadingIndictor.h"
 #import "BeaconManager.h"
@@ -529,6 +530,28 @@
     self.locationLabel.text = venue.name;
     self.beaconCoordinate = venue.coordinate;
     [self scrollToShowSetBeaconButton];
+    if (venue.foursquareID) {
+        for (Deal *deal in [AppDelegate sharedAppDelegate].dealsViewController.deals) {
+            if (deal.venue.foursquareID && [deal.venue.foursquareID isEqual:venue.foursquareID]) {
+                [self showDealPromptForDeal:deal];
+            }
+        }
+    }
+}
+
+- (void)showDealPromptForDeal:(Deal *)deal
+{
+    if (![deal isAvailableAtDate:self.date]) {
+        return;
+    }
+    NSString *message = [NSString stringWithFormat:@"%@ at %@. Would you like to redeem for this deal?", deal.dealDescriptionShort.uppercaseString, deal.venue.name];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"You've found a deal!" message:message];
+    [alertView bk_addButtonWithTitle:@"No" handler:nil];
+    [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDeal:deal animated:YES];
+    }];
+    [alertView show];
+    
 }
 
 - (void)didSelectCurrentLocation

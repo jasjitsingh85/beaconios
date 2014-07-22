@@ -16,6 +16,7 @@
 @property (assign, nonatomic) CLLocationDistance distance;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 @property (strong, nonatomic) NSURL *imageURL;
+@property (strong, nonatomic) NSString *foursquareID;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;
 - (id)initWithDealPlaceDictionary:(NSDictionary *)dictionary;
