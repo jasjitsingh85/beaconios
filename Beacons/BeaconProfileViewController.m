@@ -375,6 +375,7 @@
         self.dealMode = YES;
         [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
         self.imageView.mapDisabled = YES;
+        self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.imageView setImageWithURL:beacon.deal.venue.imageURL];
     }
     else {
