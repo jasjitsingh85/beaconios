@@ -143,7 +143,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Invite"];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Select Friends"];
     UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
     [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
@@ -310,7 +310,7 @@
 {
     NSString *inviteButtonText;
     if (!self.selectedContactDictionary.count) {
-        inviteButtonText = [NSString stringWithFormat:@"Invite %@ friends to unlock deal", self.deal.inviteRequirement];
+        inviteButtonText = [NSString stringWithFormat:@"Select %@ friends to unlock deal", self.deal.inviteRequirement];
     }
     else if (self.selectedContactDictionary.count < self.deal.inviteRequirement.integerValue) {
         inviteButtonText = [NSString stringWithFormat:@"%d/%@ selected to unlock deal", self.selectedContactDictionary.count, self.deal.inviteRequirement];
