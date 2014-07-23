@@ -22,7 +22,6 @@
 #import "APIClient.h"
 #import "AnalyticsManager.h"
 
-const NSInteger maxCustomMessageLength = 159;
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, FindFriendsViewControllerDelegate>
 
@@ -92,7 +91,7 @@ const NSInteger maxCustomMessageLength = 159;
     inviteFriendsLabel.size = CGSizeMake(283, 33);
     inviteFriendsLabel.centerX = self.inviteFriendsButton.width/2.0;
     inviteFriendsLabel.bottom = self.inviteFriendsButton.height - 13;
-    inviteFriendsLabel.text = @"Get Deal!";
+    inviteFriendsLabel.text = @"Get Deal";
     inviteFriendsLabel.font = [ThemeManager lightFontOfSize:1.3*15];
     inviteFriendsLabel.textAlignment = NSTextAlignmentCenter;
     inviteFriendsLabel.textColor = [UIColor colorWithRed:133/255.0 green:193/255.0 blue:255/255.0 alpha:1.0];
@@ -125,6 +124,12 @@ const NSInteger maxCustomMessageLength = 159;
     }
 }
 
+- (BOOL)customMessageExceedsMaxLength:(NSString *)customMessage
+{
+    NSInteger maxLength = 159 - [User loggedInUser].fullName.length;
+    return customMessage.length > maxLength;
+}
+
 - (void)preloadWithDealID:(NSNumber *)dealID
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
@@ -151,14 +156,17 @@ const NSInteger maxCustomMessageLength = 159;
 {
     ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
     NSString *address = self.deal.venue.name;
-    NSString *inviteText = [NSString stringWithFormat:@"%@ invited you to redeem a group deal at %@. Join and %@", [User loggedInUser].firstName, address, self.deal.inviteDescription];
+    NSString *inviteText = self.customMessageTextView.text;
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
     [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
     [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager regularFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
     explanationPopupView.attributedInviteText = attributedText;
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealExplanation]) {
-        [explanationPopupView show];
+        jadispatch_after_delay(0.7, dispatch_get_main_queue(), ^{
+            [explanationPopupView show];
+        });
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownDealExplanation];
     }
 }
@@ -192,16 +200,16 @@ const NSInteger maxCustomMessageLength = 159;
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else {
-        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:nil message:@"Type a message"];
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:nil message:@"Type a message to your friends"];
         if (!self.customMessageTextView) {
             self.customMessageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 250, 130)];
             self.customMessageTextView.delegate = self;
             self.customMessageTextView.font = [ThemeManager regularFontOfSize:12*1.3];
             self.customMessageTextView.backgroundColor = [UIColor clearColor];
         }
-        self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@ (%@), at %@ %@. I'm inviting you through this app, so you %@", self.deal.venue.name, self.deal.venue.address, self.date.formattedTime.lowercaseString, self.date.formattedDay.lowercaseString, self.deal.inviteDescription];
-        if (self.customMessageTextView.text.length > maxCustomMessageLength) {
-            self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. I'm inviting you through this app, so you %@", self.deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.inviteDescription];
+        self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@ at %@ %@. %@", self.deal.venue.name, self.date.formattedTime, self.date.formattedDay.lowercaseString, self.deal.invitePrompt];
+        if ([self customMessageExceedsMaxLength:self.customMessageTextView.text]) {
+            self.customMessageTextView.text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. %@", self.deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.invitePrompt];
         }
         self.customMessageTextView.backgroundColor = [UIColor whiteColor];
         self.customMessageTextView.layer.cornerRadius = 8;
@@ -226,7 +234,7 @@ const NSInteger maxCustomMessageLength = 159;
     findFriendsViewController.deal = self.deal;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
-
+    [self showExplanationPopup];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -399,7 +407,7 @@ const NSInteger maxCustomMessageLength = 159;
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSString *resultantText = [textView.text stringByReplacingCharactersInRange:range withString:text];
-    if (resultantText.length > maxCustomMessageLength && resultantText.length > textView.text.length) {
+    if ([self customMessageExceedsMaxLength:resultantText] && resultantText.length > textView.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Your message is over the character limit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return NO;
     }

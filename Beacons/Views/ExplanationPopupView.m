@@ -40,7 +40,7 @@
     
     self.inviteTextView = [[UITextView alloc] init];
     self.inviteTextView.textColor = [UIColor blackColor];
-    self.inviteTextView.font = [ThemeManager lightFontOfSize:6.5*1.3];
+    self.inviteTextView.font = [ThemeManager lightFontOfSize:5.5*1.3];
     [self.chatBubble addSubview:self.inviteTextView];
     
     self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
