@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *dealDescription;
 @property (strong, nonatomic) NSString *dealDescriptionShort;
 @property (strong, nonatomic) NSString *inviteDescription;
+@property (strong, nonatomic) NSString *invitePrompt;
 @property (strong, nonatomic) NSString *notificationText;
 @property (strong, nonatomic) NSString *bonusDescription;
 @property (strong, nonatomic) NSString *additionalInfo;
