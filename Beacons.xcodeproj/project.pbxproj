@@ -65,6 +65,7 @@
 		963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 963FD68F1810FF33003509C2 /* JAInsetLabel.m */; };
 		964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */; };
 		964263B4181CEDF80015375C /* SugarPie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 964263B3181CEDC70015375C /* SugarPie.ttf */; };
+		964602531994103200979929 /* SetDealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964602521994103200979929 /* SetDealViewController.m */; };
 		964638AE18A19F4B007D6962 /* RegistrationFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 964638AD18A19F4B007D6962 /* RegistrationFlowViewController.m */; };
 		964638B018A4460A007D6962 /* waveBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 964638AF18A4460A007D6962 /* waveBackground@2x.png */; };
 		964638B218A45D5A007D6962 /* hotbotSmile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 964638B118A45D5A007D6962 /* hotbotSmile@2x.png */; };
@@ -366,6 +367,8 @@
 		964263AD181CE75D0015375C /* NavigationBarTitleLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationBarTitleLabel.h; sourceTree = "<group>"; };
 		964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationBarTitleLabel.m; sourceTree = "<group>"; };
 		964263B3181CEDC70015375C /* SugarPie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SugarPie.ttf; sourceTree = "<group>"; };
+		964602511994103200979929 /* SetDealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDealViewController.h; sourceTree = "<group>"; };
+		964602521994103200979929 /* SetDealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetDealViewController.m; sourceTree = "<group>"; };
 		964638AC18A19F4B007D6962 /* RegistrationFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFlowViewController.h; sourceTree = "<group>"; };
 		964638AD18A19F4B007D6962 /* RegistrationFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFlowViewController.m; sourceTree = "<group>"; };
 		964638AF18A4460A007D6962 /* waveBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waveBackground@2x.png"; sourceTree = "<group>"; };
@@ -919,6 +922,8 @@
 				96AFE1371938C19900209799 /* DealDetailViewController.m */,
 				9651C798193E72390083A0FE /* DealRedemptionViewController.h */,
 				9651C799193E72390083A0FE /* DealRedemptionViewController.m */,
+				964602511994103200979929 /* SetDealViewController.h */,
+				964602521994103200979929 /* SetDealViewController.m */,
 			);
 			path = Beacons;
 			sourceTree = "<group>";
@@ -1443,6 +1448,7 @@
 				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
+				964602531994103200979929 /* SetDealViewController.m in Sources */,
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
 				96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */,
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,

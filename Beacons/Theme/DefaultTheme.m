@@ -40,6 +40,11 @@
     return [UIColor unnormalizedColorWithRed:219 green:237 blue:240 alpha:255];
 }
 
+- (UIColor *)lightBlueColor
+{
+    return [UIColor unnormalizedColorWithRed:61 green:198 blue:210 alpha:255];
+}
+
 - (UIColor *)darkColor
 {
     return [UIColor unnormalizedColorWithRed:54 green:54 blue:57 alpha:255];

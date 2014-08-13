@@ -14,6 +14,7 @@
 #import "MenuViewController.h"
 #import "DealsTableViewController.h"
 #import "DealDetailViewController.h"
+#import "SetDealViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
@@ -330,9 +331,10 @@
 
 - (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated
 {
-    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
-    dealDetailViewController.deal = deal;
-    [self.centerNavigationController setSelectedViewController:dealDetailViewController animated:animated];
+//    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
+    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+    dealViewController.deal = deal;
+    [self.centerNavigationController setSelectedViewController:dealViewController animated:animated];
 }
 
 - (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID
