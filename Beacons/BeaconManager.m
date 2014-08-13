@@ -241,25 +241,6 @@
 
 - (void)didArriveAtBeaconWithID:(NSNumber *)beaconID
 {
-    DDLogInfo(@"did arrive at beacon with id %@", beaconID);
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beaconID = %@", beaconID];
-    NSArray *filtered = [self.beacons filteredArrayUsingPredicate:predicate];
-    Beacon *beacon = [filtered firstObject];
-    if (!beacon) {
-        return;
-    }
-//    make sure not expired
-    if (beacon.expired || beacon.inDistantFuture) {
-        return;
-    }
-    
-    DDLogInfo(@"will show push notification for beacon with id %@ expiration date %@", beacon.beaconID, beacon.expirationDate);
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"You arrived at a Hotspot. Want to check yourself in?";
-    localNotification.userInfo = @{@"beaconID" : beaconID};
-    localNotification.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    [[LocationTracker sharedTracker] stopMonitoringForRegionWithIdentifier:beacon.beaconID.stringValue];
 }
 
 - (void)showNotification
