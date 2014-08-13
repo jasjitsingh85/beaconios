@@ -108,21 +108,23 @@
     self.searchBar.searchBarStyle = UISearchBarStyleProminent;
     [self.view addSubview:self.searchBar];
     
-    self.tableView.backgroundColor = [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:1];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
-    self.inviteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
-    self.inviteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    self.inviteButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.inviteButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.inviteButton.backgroundColor = [UIColor colorWithRed:120/255.0 green:183/255.0 blue:200/255.0 alpha:1.0];
-    self.inviteButton.titleLabel.font = [ThemeManager lightFontOfSize:16];
+    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 61, self.view.width, 61)];
+    inviteButtonBackground.backgroundColor = [UIColor whiteColor];
+    inviteButtonBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    [self.view addSubview:inviteButtonBackground];
+    self.inviteButton = [[UIButton alloc] init];
+    self.inviteButton.size = CGSizeMake(249, 35);
+    self.inviteButton.centerX = inviteButtonBackground.width/2.0;
+    self.inviteButton.centerY = inviteButtonBackground.height/2.0;
+    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.inviteButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.inviteButton setImage:[UIImage imageNamed:@"rightArrow"] forState:UIControlStateNormal];
-    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0, 270, 0, 0);
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.inviteButton];
+    [inviteButtonBackground addSubview:self.inviteButton];
     [self updateInviteButtonText:nil];
     UIEdgeInsets insets = self.tableView.contentInset;
     insets.bottom = self.inviteButton.frame.size.height;
@@ -144,6 +146,9 @@
 {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Select Friends"];
+    if (self.deal) {
+        [self updateNavTitleForDeal:self.deal];
+    }
     UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
     [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
@@ -176,7 +181,13 @@
 {
     [self view];
     _deal = deal;
+    [self updateNavTitleForDeal:deal];
     [self updateInviteButtonTextForDeal:nil];
+}
+
+- (void)updateNavTitleForDeal:(Deal *)deal
+{
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"Select %@ Friends!", deal.inviteRequirement]];
 }
 
 - (void)populateContacts
@@ -308,22 +319,7 @@
 
 - (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
 {
-    NSString *inviteButtonText;
-    if (!self.selectedContactDictionary.count) {
-        inviteButtonText = [NSString stringWithFormat:@"Select %@ friends to unlock deal", self.deal.inviteRequirement];
-    }
-    else if (self.selectedContactDictionary.count < self.deal.inviteRequirement.integerValue) {
-        inviteButtonText = [NSString stringWithFormat:@"%d/%@ selected to unlock deal", self.selectedContactDictionary.count, self.deal.inviteRequirement];
-    }
-    else {
-        inviteButtonText = @"Unlock deal now!";
-    }
-    [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
-    BOOL unlock = self.selectedContactDictionary.count >= self.deal.inviteRequirement.integerValue;
-    UIImage *lockImage = unlock ? [UIImage imageNamed:@"lock_open"] : [UIImage imageNamed:@"lock_closed"];
-    CGSize imageSize = unlock ? CGSizeMake(41, 30) : CGSizeMake(41, 30);
-    UIImage *image = [lockImage fitToSize:imageSize];
-    [self.inviteButton setImage:image forState:UIControlStateNormal];
+    [self.inviteButton setTitle:@"Unlock Deal" forState:UIControlStateNormal];
     
 }
 

@@ -28,5 +28,6 @@
 - (void)viewedDeal:(NSString *)dealID withPlaceName:(NSString *)placeName;
 - (void)invitedFriendsDeal:(NSString *)dealID withPlaceName:(NSString *)placeName;
 - (void)setDeal:(NSString *)dealID withPlaceName:(NSString *)placeName numberOfInvites:(NSInteger)numInvited;
+- (void)postRegionState:(BOOL)success notified:(BOOL)notified;
 
 @end

@@ -13,6 +13,8 @@
 
 @interface DealTableViewCell()
 
+@property (strong, nonatomic) UIView *backgroundView;
+
 @end
 
 @implementation DealTableViewCell
@@ -24,53 +26,55 @@
         return nil;
     }
     
-    self.backgroundColor = [UIColor clearColor];
-    self.thumbnailContainerView = [[UIView alloc] init];
-    CGRect thumbnailFrame = CGRectZero;
-    thumbnailFrame.size = CGSizeMake(64, 64);
-    thumbnailFrame.origin.x = 16;
-    thumbnailFrame.origin.y = 0.5*(self.contentView.frame.size.height - thumbnailFrame.size.height);
-    self.thumbnailContainerView.frame = thumbnailFrame;
-    self.thumbnailContainerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    self.thumbnailContainerView.layer.cornerRadius = 10;
-    self.thumbnailContainerView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.thumbnailContainerView.layer.borderWidth = 1.5;
-    self.thumbnailContainerView.backgroundColor = [UIColor darkGrayColor];
-    [self.thumbnailContainerView setShadowWithColor:[UIColor blackColor] opacity:1 radius:2 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
-    [self.contentView addSubview:self.thumbnailContainerView];
+    self.venueImageView = [[UIImageView alloc] init];
+    self.venueImageView.height = 153;
+    self.venueImageView.width = self.width;
+    self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.venueImageView.clipsToBounds = YES;
+    [self.contentView addSubview:self.venueImageView];
     
-    self.thumbnailImageView = [[UIImageView alloc] initWithFrame:self.thumbnailContainerView.bounds];
-    self.thumbnailImageView.layer.cornerRadius = self.thumbnailContainerView.layer.cornerRadius;
-    self.thumbnailImageView.clipsToBounds = YES;
-    self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self.thumbnailContainerView addSubview:self.thumbnailImageView];
+    self.backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
+    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.venueImageView addSubview:self.backgroundView];
     
-    CGRect beaconTitleFrame = CGRectZero;
-    beaconTitleFrame.size = CGSizeMake(184, 21);
-    beaconTitleFrame.origin.x = CGRectGetMaxX(self.thumbnailContainerView.frame) + 13;
-    beaconTitleFrame.origin.y = CGRectGetMinY(self.thumbnailContainerView.frame);
-    self.beaconTitleLabel = [[UILabel alloc] initWithFrame:beaconTitleFrame];
-    self.beaconTitleLabel.font = [ThemeManager boldFontOfSize:1.3*10];
-    self.beaconTitleLabel.textColor = [UIColor whiteColor];
-    [self.contentView addSubview:self.beaconTitleLabel];
+    self.venueLabel = [[UILabel alloc] init];
+    self.venueLabel.font = [ThemeManager boldFontOfSize:19*1.3];
+    self.venueLabel.textColor = [UIColor whiteColor];
+    self.venueLabel.adjustsFontSizeToFitWidth = YES;
+    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabel.textAlignment = NSTextAlignmentCenter;
+    self.venueLabel.numberOfLines = 0;
+    [self.contentView addSubview:self.venueLabel];
     
-    CGRect timeFrame = CGRectZero;
-    timeFrame.size = beaconTitleFrame.size;
-    timeFrame.origin.x = beaconTitleFrame.origin.x;
-    timeFrame.origin.y = CGRectGetMaxY(beaconTitleFrame);
-    self.timeLabel = [[UILabel alloc] initWithFrame:timeFrame];
-    self.timeLabel.textColor = [UIColor colorWithWhite:203/255.0 alpha:1.0];
-    self.timeLabel.font = [ThemeManager regularFontOfSize:1.3*8.5];
-    [self.contentView addSubview:self.timeLabel];
+    self.descriptionLabel = [[UILabel alloc] init];
+    self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
+    self.descriptionLabel.size = CGSizeMake(191, 24);
+    self.descriptionLabel.centerX = self.width/2.0;
+    self.descriptionLabel.y = 90;
+    self.descriptionLabel.font = [ThemeManager regularFontOfSize:1.3*9];
+    self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabel.textColor = [UIColor whiteColor];
+    self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    [self.contentView addSubview:self.descriptionLabel];
     
-    CGRect invitedFrame = CGRectZero;
-    invitedFrame.size = beaconTitleFrame.size;
-    invitedFrame.origin.x = beaconTitleFrame.origin.x;
-    invitedFrame.origin.y = CGRectGetMaxY(timeFrame);
-    self.inviteLabel = [[UILabel alloc] initWithFrame:invitedFrame];
-    self.inviteLabel.textColor = self.timeLabel.textColor;
-    self.inviteLabel.font = self.timeLabel.font;
-    [self.contentView addSubview:self.inviteLabel];
+    self.venueDescriptionBackground = [[UIView alloc] init];
+    self.venueDescriptionBackground.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:self.venueDescriptionBackground];
+    
+    self.venueDescriptionLabel = [[UILabel alloc] init];
+    self.venueDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*10];
+    self.venueDescriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.venueDescriptionLabel.textColor = [UIColor blackColor];
+    self.venueDescriptionLabel.numberOfLines = 2;
+    [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
+    
+    self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.font = [ThemeManager boldFontOfSize:1.3*8];
+    self.distanceLabel.textColor = [UIColor blackColor];
+    self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:self.distanceLabel];
     
     return self;
 }
@@ -79,28 +83,53 @@
 {
     [super layoutSubviews];
     
-    CGRect titleLabelFrame = self.beaconTitleLabel.frame;
-    titleLabelFrame.origin.y = CGRectGetMinY(self.thumbnailContainerView.frame);
-    self.beaconTitleLabel.frame = titleLabelFrame;
+    self.venueImageView.height = 153;
+    self.venueImageView.width = self.width;
     
-    CGRect timeLabelFrame = self.timeLabel.frame;
-    timeLabelFrame.origin.y = CGRectGetMaxY(titleLabelFrame);
-    self.timeLabel.frame = timeLabelFrame;
+    self.venueLabel.width = self.width - 40;
+    self.venueLabel.centerX = self.width/2.0;
+    self.venueLabel.height = 41;
+    self.venueLabel.centerY = 69;
     
-    CGRect inviteLabelFrame = self.inviteLabel.frame;
-    inviteLabelFrame.origin.y = CGRectGetMaxY(timeLabelFrame);
-    self.inviteLabel.frame = inviteLabelFrame;
+    self.venueDescriptionBackground.width = self.width;
+    self.venueDescriptionBackground.height = 37;
+    self.venueDescriptionBackground.y = self.venueImageView.bottom;
+    self.venueDescriptionLabel.width = self.venueDescriptionBackground.width - 40;
+    self.venueDescriptionLabel.height = self.venueDescriptionBackground.height;
+    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
+    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+    
+    self.distanceLabel.size = CGSizeMake(35, 35);
+    self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    self.distanceLabel.clipsToBounds = YES;
+    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
+    self.distanceLabel.y = 11;
+    self.distanceLabel.right = self.contentView.width - 5;
+    
 }
 
 - (void)setDeal:(Deal *)deal
 {
     _deal = deal;
     
-    self.beaconTitleLabel.text = deal.venue.name;
-    self.timeLabel.text = deal.dealDescriptionShort;
-    self.inviteLabel.text = [NSString stringWithFormat:@"Invite %@ friends", self.deal.inviteRequirement];
-    [self.thumbnailImageView setImageWithURL:self.deal.venue.imageURL];
-    self.thumbnailImageView.clipsToBounds = YES;
+    self.venueLabel.text = self.deal.venue.name;
+    [self.venueImageView setImageWithURL:self.deal.venue.imageURL];
+    self.descriptionLabel.text = self.deal.dealDescriptionShort;
+    self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+    self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+}
+
+- (NSString *)stringForDistance:(CLLocationDistance)distance
+{
+    CGFloat distanceMiles = METERS_TO_MILES*distance;
+    NSString *distanceString;
+    if (distanceMiles < 0.25) {
+        distanceString = [NSString stringWithFormat:@"%0.0fft", METERS_TO_FEET*distance];
+    }
+    else {
+        distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
+    }
+    return distanceString;
 }
 
 @end

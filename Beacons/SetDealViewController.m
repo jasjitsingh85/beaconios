@@ -14,6 +14,12 @@
 #import "Deal.h"
 #import "Venue.h"
 #import "User.h"
+#import "APIClient.h"
+#import "FindFriendsViewController.h"
+#import "AnalyticsManager.h"
+#import "AppDelegate.h"
+#import "LoadingIndictor.h"
+#import "ExplanationPopupView.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionDescription,
@@ -22,7 +28,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionInvite
 };
 
-@interface SetDealViewController () <UITextViewDelegate>
+@interface SetDealViewController () <UITextViewDelegate, FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) UIView *dealDescriptionView;
 @property (strong, nonatomic) UIView *dealContentView;
@@ -173,6 +179,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self.inviteFriendsButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
     self.inviteFriendsButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.inviteFriendsButton addTarget:self action:@selector(selectFriends) forControlEvents:UIControlEventTouchUpInside];
     [self.inviteFriendsView addSubview:self.inviteFriendsButton];
 }
 
@@ -225,6 +232,35 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. %@", deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.invitePrompt];
     }
     return text;
+}
+
+- (void)selectFriends
+{
+    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+    findFriendsViewController.delegate = self;
+    findFriendsViewController.deal = self.deal;
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+    [self showExplanationPopup];
+}
+
+- (void)showExplanationPopup
+{
+    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
+    NSString *address = self.deal.venue.name;
+    NSString *inviteText = self.composeMessageTextView.text;
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
+    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
+    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager regularFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
+    explanationPopupView.attributedInviteText = attributedText;
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealExplanation]) {
+        jadispatch_after_delay(0.7, dispatch_get_main_queue(), ^{
+            [explanationPopupView show];
+        });
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownDealExplanation];
+    }
 }
 
 - (void)resetDate
@@ -343,6 +379,37 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     if (indexPath.row == DealSectionTime) {
         [self showDatePicker];
     }
+    else if (indexPath.row == DealSectionInvite) {
+        [self selectFriends];
+    }
+}
+
+#pragma mark - Find Friends Delegate
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts
+{
+    if (contacts.count >= self.deal.inviteRequirement.integerValue) {
+        [self setBeaconOnServerWithInvitedContacts:contacts];
+        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
+    }
+    else {
+        NSString *message = [NSString stringWithFormat:@"Invite %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
+        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
+- (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *view = appDelegate.window.rootViewController.view;
+    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.composeMessageTextView.text time:self.date success:^(Beacon *beacon) {
+        [loadingIndicator hide:YES];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+    } failure:^(NSError *error) {
+        [loadingIndicator hide:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
 }
 
 #pragma mark - Text View Delegate

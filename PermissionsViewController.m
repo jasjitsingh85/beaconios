@@ -123,7 +123,7 @@ typedef enum {
     self.viewMode = ViewModeContact;
     self.titleLabel.text = @"Sync Contacts!";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can invite friends to events"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can unlock local deals by texting your friends"]];
     [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
@@ -133,7 +133,7 @@ typedef enum {
     self.viewMode = ViewModePush;
     self.titleLabel.text = @"Push It.";
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Get invitations to events and chat in real-time"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"So you can chat with your friends and get deal invitations in real-time"]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }

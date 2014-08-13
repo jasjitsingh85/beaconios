@@ -11,12 +11,13 @@
 
 @interface DealTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) UIView *thumbnailContainerView;
-@property (strong, nonatomic) UIImageView *thumbnailImageView;
-@property (strong, nonatomic) UILabel *beaconTitleLabel;
-@property (strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) UIImageView *venueImageView;
+@property (strong, nonatomic) UILabel *venueLabel;
 @property (strong, nonatomic) UILabel *distanceLabel;
-@property (strong, nonatomic) UILabel *inviteLabel;
+@property (strong, nonatomic) UIView *descriptionBackground;
+@property (strong, nonatomic) UILabel *descriptionLabel;
+@property (strong, nonatomic) UIView *venueDescriptionBackground;
+@property (strong, nonatomic) UILabel *venueDescriptionLabel;
 
 @property (strong, nonatomic) Deal *deal;
 

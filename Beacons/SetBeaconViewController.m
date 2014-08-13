@@ -198,6 +198,7 @@
     [self updateDescriptionPlaceholder];
 }
 
+
 - (void)receivedDealsUpdatedNotification:(NSNotification *)notification
 {   BOOL hasShownDealsIntroduction = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealsIntroduction];
     if (!hasShownDealsIntroduction) {

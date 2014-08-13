@@ -167,6 +167,12 @@
     [self sendEvent:@"set_deal" withProperties:properties];
 }
 
+- (void)postRegionState:(BOOL)success notified:(BOOL)notified
+{
+    NSDictionary *properties = @{@"success" : @(success), @"notified" : @(notified)};
+    [self sendEvent:@"post_region_state" withProperties:properties];
+}
+
 
 
 @end

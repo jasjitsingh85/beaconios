@@ -31,12 +31,6 @@
     [self menuButtonDefaultMode];
     [self.menuButton addTarget:self action:@selector(menuButtonTouched:) forControlEvents:UIControlEventTouchDown];
     
-    self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.dealsButton.size = CGSizeMake(40, 30);
-    UIImage *dealImage = [[UIImage imageNamed:@"dealButtonSelected"] fitToSize:CGSizeMake(30, 22)];
-    [self.dealsButton setImage:dealImage    forState:UIControlStateNormal];
-    [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
 }
 
@@ -61,11 +55,6 @@
 - (void)menuButtonTouched:(id)sender
 {
     [self toggleSideNav:MSDynamicsDrawerDirectionLeft];
-}
-
-- (void)dealsButtonTouched:(id)sender
-{
-    [self toggleSideNav:MSDynamicsDrawerDirectionRight];
 }
 
 - (void)toggleSideNav:(MSDynamicsDrawerDirection)direction
@@ -177,7 +166,6 @@
     if (showMenuButton) {
         viewController.navigationItem.hidesBackButton = NO;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
-        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.dealsButton];
         [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneDragRevealEnabled:YES forDirection:MSDynamicsDrawerDirectionLeft];
     }
     else {

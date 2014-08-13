@@ -121,7 +121,7 @@
     [[RandomObjectManager sharedManager] updateStringsFromServer];
     
     [ThemeManager customizeAppAppearance];
-    self.centerNavigationController.selectedViewController = self.setBeaconViewController;
+    self.centerNavigationController.selectedViewController = self.dealsViewController;
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
@@ -276,7 +276,7 @@
 - (void)setSelectedViewControllerToHome
 {
     [self.setBeaconViewController updateDescriptionPlaceholder];
-    [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:YES];
+    [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:YES];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -285,14 +285,7 @@
          annotation:(id)annotation
 {
     if ([sourceApplication isEqualToString:kHappyHoursAppURLIdentifier]) {
-        NSDictionary *parameters = [url queryParameters];
-        NSNumber *latitude = parameters[@"latitude"];
-        NSNumber *longitude = parameters[@"longitude"];
-        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
-        NSString *name = parameters[@"name"];
-        NSString *description = parameters[@"description"];
-        [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
-        [self.setBeaconViewController preloadWithDescription:description venueName:name coordinate:coordinate];
+        [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:NO];
     }
     return YES;
 }
@@ -369,8 +362,9 @@
             localNotification.alertBody = deal.notificationText;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
         }
+        [[AnalyticsManager sharedManager] postRegionState:YES notified:shouldNotify];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [[AnalyticsManager sharedManager] postRegionState:NO notified:NO];
     }];
 }
 

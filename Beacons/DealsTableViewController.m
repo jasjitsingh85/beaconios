@@ -8,7 +8,9 @@
 
 #import "DealsTableViewController.h"
 #import "UIView+BounceAnimation.h"
+#import "UIView+Shadow.h"
 #import "DealDetailViewController.h"
+#import "SetDealViewController.h"
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
@@ -33,26 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
+    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    
+    self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotbotSmileCircle"]];
-    CGRect imageViewFrame = imageView.frame;
-    imageViewFrame.origin.y = 0.5*(headerView.frame.size.height - imageViewFrame.size.height);
-    imageViewFrame.origin.x = 13;
-    imageView.frame = imageViewFrame;
-    [headerView addSubview:imageView];
-    self.tableView.tableHeaderView = headerView;
-    
-    CGRect labelFrame = CGRectZero;
-    labelFrame.size = CGSizeMake(100, 50);
-    labelFrame.origin.x = 71;
-    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
-    label.text = @"Deals";
-    label.textColor = [UIColor whiteColor];
-    label.font = [ThemeManager boldFontOfSize:1.3*13];
-    [headerView addSubview:label];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 }
@@ -70,37 +57,13 @@
 {
     if (!_emptyBeaconView) {
         _emptyBeaconView = [[UIView alloc] init];
-        _emptyBeaconView.size = CGSizeMake(self.tableView.width, 100);
-        _emptyBeaconView.center = CGPointMake(self.tableView.width/2.0, self.tableView.height/2.0);
-        UILabel *titleLabel = [[UILabel alloc] init];
-        titleLabel.size = CGSizeMake(self.tableView.width, 20);
-        titleLabel.text = @"No Deals in Your Area";
-        titleLabel.font = [ThemeManager boldFontOfSize:15];
-        titleLabel.textColor = [UIColor whiteColor];
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        
-        UILabel *subtitleLabel = [[UILabel alloc] init];
-        subtitleLabel.size = CGSizeMake(self.tableView.width, 20);
-        subtitleLabel.y = titleLabel.bottom;
-        subtitleLabel.text = @"Check out Hotspot's Happy Hour app!";
-        subtitleLabel.numberOfLines = 0;
-        subtitleLabel.font = [ThemeManager regularFontOfSize:14];
-        subtitleLabel.textColor = [UIColor lightGrayColor];
-        subtitleLabel.textAlignment = NSTextAlignmentCenter;
-        
-        UIButton *happyHoursButton = [[UIButton alloc] init];
-        happyHoursButton.size = CGSizeMake(75, 75);
-        happyHoursButton.centerX = self.tableView.width/2.0;
-        happyHoursButton.y = subtitleLabel.bottom + 10;
-        happyHoursButton.imageView.layer.cornerRadius = 15;
-        happyHoursButton.imageView.clipsToBounds = YES;
-        [happyHoursButton setImage:[UIImage imageNamed:@"happyHoursIcon"] forState:UIControlStateNormal];
-        [happyHoursButton addTarget:self action:@selector(happyHoursButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_emptyBeaconView addSubview:titleLabel];
-        [_emptyBeaconView addSubview:subtitleLabel];
-        [_emptyBeaconView addSubview:happyHoursButton];
-        _emptyBeaconView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _emptyBeaconView.size = CGSizeMake(self.tableView.width, 149);
+        _emptyBeaconView.backgroundColor = [UIColor whiteColor];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"noDealsPlaceholder"]];
+        [_emptyBeaconView addSubview:imageView];
+        [_emptyBeaconView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(happyHoursButtonTouched:)];
+        [_emptyBeaconView addGestureRecognizer:tap];
     }
     return _emptyBeaconView;
 }
@@ -153,11 +116,15 @@
 {
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *deals = [[NSMutableArray alloc] init];
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            deal.venue.distance = [location distanceFromLocation:dealLocation];
             [deals addObject:deal];
         }
-        self.deals = [NSArray arrayWithArray:deals];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
+        self.deals = [deals sortedArrayUsingDescriptors:@[sort]];
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {
@@ -195,27 +162,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 92;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
-    view.backgroundColor = [UIColor colorWithRed:91/255.0 green:81/255.0 blue:79/255.0 alpha:1.0];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.tableView.width - 15, height)];
-    [view addEdge:UIRectEdgeTop | UIRectEdgeBottom width:1 color:[UIColor colorWithRed:63/255.0 green:59/255.0 blue:57/255.0 alpha:1.0]];
-    title.backgroundColor = [UIColor clearColor];
-    title.font = [ThemeManager regularFontOfSize:1.3*11.0];
-    title.textColor = [UIColor whiteColor];
-    [view addSubview:title];
-    title.text = @"TODAY";
-    return view;
+    return 197;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -225,6 +172,7 @@
     if (!cell) {
         cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     Deal *deal = self.deals[indexPath.row];
     cell.deal = deal;
@@ -235,7 +183,9 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     Deal *deal = self.deals[indexPath.row];
-    [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDeal:deal animated:YES];
+    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+    dealViewController.deal = deal;
+    [self.navigationController pushViewController:dealViewController animated:YES];
 }
 
 - (void)happyHoursButtonTouched:(id)sender

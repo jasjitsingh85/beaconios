@@ -41,6 +41,7 @@
     self.address = dictionary[@"street_address"];
     self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];
     self.foursquareID = dictionary[@"foursquare_id"];
+    self.placeDescription = dictionary[@"place_description"];
     return self;
 }
 
