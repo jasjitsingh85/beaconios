@@ -179,8 +179,21 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self.inviteFriendsButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
     self.inviteFriendsButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.inviteFriendsButton addTarget:self action:@selector(selectFriends) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.inviteFriendsView addSubview:self.inviteFriendsButton];
+}
+
+- (void)preloadWithDealID:(NSNumber *)dealID
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] getDealWithID:dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        Deal *deal = [[Deal alloc] initWithDictionary:responseObject[@"deals"]];
+        self.deal = deal;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
 }
 
 - (void)setDeal:(Deal *)deal
@@ -232,6 +245,17 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. %@", deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.invitePrompt];
     }
     return text;
+}
+
+- (void)inviteButtonTouched:(id)sender
+{
+    if (![self.deal isAvailableAtDate:self.date]) {
+        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    else {
+        [self selectFriends];
+    }
 }
 
 - (void)selectFriends
@@ -380,7 +404,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [self showDatePicker];
     }
     else if (indexPath.row == DealSectionInvite) {
-        [self selectFriends];
+        if (![self.deal isAvailableAtDate:self.date]) {
+            NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+            [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+        else {
+            [self inviteButtonTouched:nil];
+        }
     }
 }
 

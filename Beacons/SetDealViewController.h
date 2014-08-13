@@ -12,5 +12,6 @@
 @interface SetDealViewController : UITableViewController
 
 @property (strong, nonatomic) Deal *deal;
+- (void)preloadWithDealID:(NSNumber *)dealID;
 
 @end

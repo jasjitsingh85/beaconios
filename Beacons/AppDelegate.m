@@ -13,7 +13,6 @@
 #import "CenterNavigationController.h"
 #import "MenuViewController.h"
 #import "DealsTableViewController.h"
-#import "DealDetailViewController.h"
 #import "SetDealViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
@@ -65,19 +64,6 @@
         [_sideNavigationViewController setRevealWidth:278 forDirection:MSDynamicsDrawerDirectionLeft];
         [self.menuViewController view];
         
-        [self.dealsViewController view];
-        CGFloat rightRevealWidth = 278;
-        UIViewController *rightViewController = [[UIViewController alloc] init];
-//        rightViewController.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
-        [rightViewController addChildViewController:self.dealsViewController];
-        self.dealsViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-        [rightViewController.view addSubview:self.dealsViewController.view];
-        _dealsViewController.view.height = [UIScreen mainScreen].bounds.size.height;
-        _dealsViewController.view.width = rightRevealWidth;
-        _dealsViewController.view.x = [UIScreen mainScreen].bounds.size.width - rightRevealWidth;
-        _dealsViewController.view.y= 0;
-        [_sideNavigationViewController setDrawerViewController:rightViewController forDirection:MSDynamicsDrawerDirectionRight];
-        [_sideNavigationViewController setRevealWidth:rightRevealWidth forDirection:MSDynamicsDrawerDirectionRight];
         [_sideNavigationViewController setPaneViewController:self.centerNavigationController];
     }
     return _sideNavigationViewController;
@@ -103,8 +89,6 @@
 {
     if (!_dealsViewController) {
         _dealsViewController = [[DealsTableViewController alloc] init];
-        _dealsViewController.tableView.width = [self.sideNavigationViewController revealWidthForDirection:MSDynamicsDrawerDirectionRight];
-        _dealsViewController.tableView.x = [UIScreen mainScreen].bounds.size.width - _dealsViewController.tableView.width;
     }
     return _dealsViewController;
 }
@@ -324,7 +308,6 @@
 
 - (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated
 {
-//    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
     SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
     dealViewController.deal = deal;
     [self.centerNavigationController setSelectedViewController:dealViewController animated:animated];
@@ -332,7 +315,7 @@
 
 - (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID
 {
-    DealDetailViewController *dealDetailViewController = [[DealDetailViewController alloc] init];
+    SetDealViewController *dealDetailViewController = [[SetDealViewController alloc] init];
     [self.centerNavigationController setSelectedViewController:dealDetailViewController];
     [dealDetailViewController preloadWithDealID:dealID];
 }
