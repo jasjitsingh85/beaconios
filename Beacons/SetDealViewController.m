@@ -400,7 +400,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == DealSectionTime) {
+    if (indexPath.row == DealSectionDescription) {
+        [[[UIAlertView alloc] initWithTitle:nil message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    else if (indexPath.row == DealSectionTime) {
         [self showDatePicker];
     }
     else if (indexPath.row == DealSectionInvite) {
