@@ -71,6 +71,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    
     self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -175,8 +178,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.inviteFriendsButton.size = CGSizeMake(250, 35);
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
     self.inviteFriendsButton.centerY = self.inviteFriendsView.height/2.0;
-    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
     [self.inviteFriendsButton setTitle:@"Select Friends" forState:UIControlStateNormal];
+    UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
+    [self.inviteFriendsButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
+    self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 50.), 0., 0.);
+    self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
     self.inviteFriendsButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];

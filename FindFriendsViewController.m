@@ -321,6 +321,10 @@
 {
     [self.inviteButton setTitle:@"Unlock Deal" forState:UIControlStateNormal];
     
+    UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
+    [self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
+    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 55.), 0., 0.);
+    
 }
 
 #pragma mark - Table view data source
