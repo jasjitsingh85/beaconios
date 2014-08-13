@@ -176,7 +176,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
     self.inviteFriendsButton.centerY = self.inviteFriendsView.height/2.0;
     self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    [self.inviteFriendsButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
+    [self.inviteFriendsButton setTitle:@"Select Friends" forState:UIControlStateNormal];
     self.inviteFriendsButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];

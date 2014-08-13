@@ -121,7 +121,7 @@
     self.inviteButton.centerX = inviteButtonBackground.width/2.0;
     self.inviteButton.centerY = inviteButtonBackground.height/2.0;
     self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    self.inviteButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+    self.inviteButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
     [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [inviteButtonBackground addSubview:self.inviteButton];
