@@ -233,6 +233,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
     
     [self.tableView reloadData];
+    [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
 
 - (void)viewWillLayoutSubviews
