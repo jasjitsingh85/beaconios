@@ -437,7 +437,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
     }
     else {
-        NSString *message = [NSString stringWithFormat:@"Invite %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
+        NSString *message = [NSString stringWithFormat:@"Select %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
         [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
