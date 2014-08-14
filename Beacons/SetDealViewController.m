@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 
 @property (strong, nonatomic) NSDate *date;
 
+@property (assign, nonatomic) BOOL modifiedMessage;
+
 
 @end
 
@@ -210,7 +212,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self resetDate];
     [self.imageView setImageWithURL:deal.venue.imageURL];
     self.venueLabel.text = deal.venue.name;
-    self.descriptionLabel.text = deal.dealDescriptionShort;
+    self.descriptionLabel.text = deal.dealDescription;
     [self.descriptionLabel sizeToFit];
     self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
     self.descriptionLabel.y = 8;
@@ -315,6 +317,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 {
     self.date = datePicker.date;
     self.dateLabel.text = self.date.fullFormattedDate;
+    if (!self.modifiedMessage) {
+        self.composeMessageTextView.text = [self defaultInviteMessageForDeal:self.deal];
+    }
 }
 
 - (void)showDatePicker
@@ -455,6 +460,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 #pragma mark - Text View Delegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    self.modifiedMessage = YES;
     NSString *resultantText = [textView.text stringByReplacingCharactersInRange:range withString:text];
     if ([self customMessageExceedsMaxLength:resultantText] && resultantText.length > textView.text.length) {
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Your message is over the character limit" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
