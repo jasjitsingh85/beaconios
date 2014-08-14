@@ -146,9 +146,6 @@
     }];
     jadispatch_after_delay(0.1, dispatch_get_main_queue(), ^{
         MSDynamicsDrawerDirection direction = MSDynamicsDrawerDirectionLeft;
-        if (self.openDirection && self.openDirection == MSDynamicsDrawerDirectionRight) {
-            direction = MSDynamicsDrawerDirectionRight;
-        }
         [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneState:MSDynamicsDrawerPaneStateClosed inDirection:direction animated:YES allowUserInterruption:NO completion:nil];
     });
 }
