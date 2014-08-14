@@ -63,6 +63,13 @@
     self.beacons = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
+- (void)addBeacon:(Beacon *)beacon
+{
+    NSMutableArray *beacons = [NSMutableArray arrayWithArray:self.beacons];
+    [beacons addObject:beacon];
+    self.beacons = [NSArray arrayWithArray:beacons];
+}
+
 - (void)updateArchivedBeaconsWithBeacon:(Beacon *)beacon
 {
     NSMutableArray *beacons = self.beacons ? [NSMutableArray arrayWithArray:self.beacons] : [[NSMutableArray alloc] init];
@@ -264,21 +271,6 @@
     [[LocationTracker sharedTracker] fetchCurrentLocation:^(CLLocation *location) {
         self.dateLastSentLocation = [NSDate date];
         [[APIClient sharedClient] postLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if ([[responseObject allKeys] containsObject:@"isHere"] && [responseObject[@"isHere"] count]) {
-                [responseObject[@"isHere"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    Beacon *beacon = [[Beacon alloc] initWithData:obj];
-                    NSArray *checkInPrompts = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKeyCheckinPromptHotspots];
-                    BOOL hasAlreadyPrompted = checkInPrompts && [checkInPrompts containsObject:beacon.beaconID];
-                    if (!beacon.userHere && !hasAlreadyPrompted) {
-                        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                        localNotification.alertBody = @"Looks like you are at a hotspot. Want to check in?";
-                        localNotification.userInfo = @{kLocalNotificationTypeKey : kLocalNotificationTypeCheckinPrompt,
-                                                       @"beaconID" : beacon.beaconID};
-                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-                        *stop = YES;
-                    }
-                }];
-            }
             if (success) {
                 success();
             }
@@ -302,15 +294,6 @@
     CLLocation *location = notification.userInfo[@"location"];
     self.dateLastSentLocation = [NSDate date];
     [[APIClient sharedClient] postLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([[responseObject allKeys] containsObject:@"isHere"] && [responseObject[@"isHere"] count]) {
-            [responseObject[@"isHere"] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                Beacon *beacon = [[Beacon alloc] initWithData:obj];
-                if (!beacon.userHere) {
-                    [self promptUserToCheckInToBeacon:beacon success:nil failure:nil];
-                    *stop = YES;
-                }
-            }];
-        }
     } failure:nil];
     
 }

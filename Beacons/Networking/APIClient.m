@@ -12,6 +12,7 @@
 #import "Deal.h"
 #import "Contact.h"
 #import "AppDelegate.h"
+#import "BeaconManager.h"
 
 @implementation APIClient
 
@@ -265,6 +266,7 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     parameters[@"custom_message"] = customMessage;
     [[APIClient sharedClient] postPath:@"deal/apply/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
+        [[BeaconManager sharedManager] addBeacon:beacon];
         if (success) {
             success(beacon);
         }
