@@ -180,10 +180,14 @@
 		96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CBCD091807BC1200D62462 /* addFriendDark@2x.png */; };
 		96CD6C4B1947447500F69E8E /* dealButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CD6C491947447500F69E8E /* dealButtonSelected@2x.png */; };
 		96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CD6C4C194746A300F69E8E /* dealButtonNormal@2x.png */; };
+		96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CE79EA199D2324002574B8 /* iphoneWalkthrough3@2x.png */; };
+		96CE79ED199D2999002574B8 /* iphoneWalkthrough2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CE79EC199D2999002574B8 /* iphoneWalkthrough2@2x.png */; };
+		96CE79EF199D2A01002574B8 /* iphoneWalkthrough4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CE79EE199D2A01002574B8 /* iphoneWalkthrough4@2x.png */; };
 		96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */; };
 		96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */; };
 		96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D0D617E818A90033396F /* cameraSmall@2x.png */; };
 		96D1D55D199AFEC0007216F3 /* noDealsPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */; };
+		96D1D55F199B14BD007216F3 /* iphoneWalkthrough1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D55E199B14BD007216F3 /* iphoneWalkthrough1@2x.png */; };
 		96D1D561199B2D06007216F3 /* whiteChevron@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96D1D560199B2D06007216F3 /* whiteChevron@2x.png */; };
 		96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D52D231838415300496923 /* SecretSettingsViewController.m */; };
 		96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D52D241838415300496923 /* SecretSettingsViewController.xib */; };
@@ -533,10 +537,14 @@
 		96CBCD091807BC1200D62462 /* addFriendDark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendDark@2x.png"; sourceTree = "<group>"; };
 		96CD6C491947447500F69E8E /* dealButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealButtonSelected@2x.png"; sourceTree = "<group>"; };
 		96CD6C4C194746A300F69E8E /* dealButtonNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealButtonNormal@2x.png"; sourceTree = "<group>"; };
+		96CE79EA199D2324002574B8 /* iphoneWalkthrough3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphoneWalkthrough3@2x.png"; sourceTree = "<group>"; };
+		96CE79EC199D2999002574B8 /* iphoneWalkthrough2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphoneWalkthrough2@2x.png"; sourceTree = "<group>"; };
+		96CE79EE199D2A01002574B8 /* iphoneWalkthrough4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphoneWalkthrough4@2x.png"; sourceTree = "<group>"; };
 		96CF5AE418E8E1BD000D77C2 /* plusCircleUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleUnselected@2x.png"; sourceTree = "<group>"; };
 		96CF5AE518E8E1BD000D77C2 /* plusCircleSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plusCircleSelected@2x.png"; sourceTree = "<group>"; };
 		96D1D0D617E818A90033396F /* cameraSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraSmall@2x.png"; sourceTree = "<group>"; };
 		96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noDealsPlaceholder@2x.png"; sourceTree = "<group>"; };
+		96D1D55E199B14BD007216F3 /* iphoneWalkthrough1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphoneWalkthrough1@2x.png"; sourceTree = "<group>"; };
 		96D1D560199B2D06007216F3 /* whiteChevron@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteChevron@2x.png"; sourceTree = "<group>"; };
 		96D52D221838415300496923 /* SecretSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecretSettingsViewController.h; sourceTree = "<group>"; };
 		96D52D231838415300496923 /* SecretSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecretSettingsViewController.m; sourceTree = "<group>"; };
@@ -1027,6 +1035,10 @@
 				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
 				96EB3DD318A19E3C0073CEDF /* InviteMoreAnimation */,
 				96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */,
+				96CE79EC199D2999002574B8 /* iphoneWalkthrough2@2x.png */,
+				96D1D55E199B14BD007216F3 /* iphoneWalkthrough1@2x.png */,
+				96CE79EA199D2324002574B8 /* iphoneWalkthrough3@2x.png */,
+				96CE79EE199D2A01002574B8 /* iphoneWalkthrough4@2x.png */,
 				9671D03318273C0F00D03D66 /* lock@2x.png */,
 				960631EC194629850011E132 /* lock_closed@2x.png */,
 				960631EA194625320011E132 /* lock_open@2x.png */,
@@ -1265,6 +1277,7 @@
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				96EB3E0C18A19E3C0073CEDF /* inviteMoreAnimation0024.png in Resources */,
 				963B7622189C305A006C6845 /* handPhone@2x.png in Resources */,
+				96CE79EF199D2A01002574B8 /* iphoneWalkthrough4@2x.png in Resources */,
 				96C28D3918AB0B3A001BE498 /* Default-568h@2x.png in Resources */,
 				96EB3DC518A19E310073CEDF /* inviteAnyoneAnimation0012.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
@@ -1290,6 +1303,7 @@
 				96EB3DC218A19E310073CEDF /* inviteAnyoneAnimation0009.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
+				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
 				96EB3DD018A19E310073CEDF /* inviteAnyoneAnimation0023.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
@@ -1315,6 +1329,7 @@
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
+				96CE79ED199D2999002574B8 /* iphoneWalkthrough2@2x.png in Resources */,
 				96EB3DBD18A19E310073CEDF /* inviteAnyoneAnimation0004.png in Resources */,
 				96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */,
 				96EB3E0118A19E3C0073CEDF /* inviteMoreAnimation0013.png in Resources */,
@@ -1383,6 +1398,7 @@
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				96EB3E0318A19E3C0073CEDF /* inviteMoreAnimation0015.png in Resources */,
+				96D1D55F199B14BD007216F3 /* iphoneWalkthrough1@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

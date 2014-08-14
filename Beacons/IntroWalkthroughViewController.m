@@ -11,7 +11,7 @@
 #import "Theme.h"
 #import "RegisterViewController.h"
 
-int const numberOfPages = 4;
+int const numberOfPages = 5;
 
 typedef enum ScrollDirection {
     ScrollDirectionNone,
@@ -42,24 +42,10 @@ typedef enum ScrollDirection {
 @interface PhoneView : UIView <RegistrationPageView>
 
 @property (strong, nonatomic) UIImageView *phoneView;
-@property (strong, nonatomic) UILabel *hotspotDescriptionLabel;
-@property (strong, nonatomic) NSString *hotspotDescriptionText;
+@property (strong, nonatomic) UIImage *phoneImage;
+@property (strong, nonatomic) NSAttributedString *captionString;
 @property (strong, nonatomic) UILabel *captionLabel;
-
-@end
-
-@interface AnyDeviceView : UIView <RegistrationPageView>
-
-@property (strong, nonatomic) UIImageView *handPhoneView;
-@property (strong, nonatomic) UILabel *captionLabel;
-
-@end
-
-@interface InviteMoreView : UIView <RegistrationPageView>
-
-@property (strong, nonatomic) UIImageView *handPhoneView;
-@property (weak, nonatomic) AnyDeviceView *anyDeviceView;
-@property (strong, nonatomic) UILabel *captionLabel;
+- (id)initWithImage:(UIImage *)image captionString:(NSAttributedString *)captionString;
 
 @end
 
@@ -70,9 +56,10 @@ typedef enum ScrollDirection {
 @property (strong, nonatomic) UIPageControl *pageControl;
 @property (strong, nonatomic) NSArray *backgrounds;
 @property (strong, nonatomic) DrinkView *drinkView;
-@property (strong, nonatomic) PhoneView *phoneView;
-@property (strong, nonatomic) AnyDeviceView *anyDeviceView;
-@property (strong, nonatomic) InviteMoreView *inviteMoreView;
+@property (strong, nonatomic) PhoneView *phoneView1;
+@property (strong, nonatomic) PhoneView *phoneView2;
+@property (strong, nonatomic) PhoneView *phoneView3;
+@property (strong, nonatomic) PhoneView *phoneView4;
 @property (assign, nonatomic) ScrollDirection scrollDirection;
 
 @end
@@ -88,7 +75,7 @@ typedef enum ScrollDirection {
 {
     [super viewDidLoad];
     
-    NSArray *backgroundImageNames = @[@"redGradientBackground", @"blueGradientBackground", @"greenGradientBackground", @"orangeGradientBackground"];
+    NSArray *backgroundImageNames = @[@"redGradientBackground", @"blueGradientBackground", @"greenGradientBackground", @"redGradientBackground", @"orangeGradientBackground"];
     NSMutableArray *backgrounds = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<backgroundImageNames.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImageNames[i]]];
@@ -131,18 +118,41 @@ typedef enum ScrollDirection {
     [self.drinkView hideOffScreen];
     [self.view addSubview:self.drinkView];
     
-    self.phoneView = [[PhoneView alloc] init];
-    [self.phoneView hideOffScreen];
-    [self.view addSubview:self.phoneView];
+    NSString *line1 = @"Pick a Deal";
+    NSString *line2 = @"At a local bar or restaurant";
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", line1, line2]];
+    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString.string rangeOfString:line1]];
+    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString.string rangeOfString:line2]];
+    self.phoneView1 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough1"] captionString:attributedString];
+    [self.phoneView1 hideOffScreen];
+    [self.view addSubview:self.phoneView1];
     
-    self.anyDeviceView = [[AnyDeviceView alloc] init];
-    [self.anyDeviceView hideOffScreen];
-    [self.view addSubview:self.anyDeviceView];
+    NSString *view2Line1 = @"Write a Message";
+    NSString *view2Line2 = @"to a few friends";
+    NSMutableAttributedString *attributedString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view2Line1, view2Line2]];
+    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString2.string rangeOfString:view2Line1]];
+    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString2.string rangeOfString:view2Line2]];
+    self.phoneView2 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough2"] captionString:attributedString2];
+    [self.phoneView2 hideOffScreen];
+    [self.view addSubview:self.phoneView2];
     
-    self.inviteMoreView = [[InviteMoreView alloc] init];
-    [self.inviteMoreView hideOffScreen];
-    [self.view addSubview:self.inviteMoreView];
-    self.inviteMoreView.anyDeviceView = self.anyDeviceView;
+    NSString *view3Line1 = @"Select friends to text";
+    NSString *view3Line2 = @"(they don't even need the app!)";
+    NSMutableAttributedString *attributedString3 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view3Line1, view3Line2]];
+    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString3.string rangeOfString:view3Line1]];
+    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString3.string rangeOfString:view3Line2]];
+    self.phoneView3 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough3"] captionString:attributedString3];
+    [self.phoneView3 hideOffScreen];
+    [self.view addSubview:self.phoneView3];
+    
+    NSString *view4Line1 = @"Redeem deals right away!";
+    NSString *view4Line2 = @"(your friends don't even need to show up)";
+    NSMutableAttributedString *attributedString4 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view4Line1, view4Line2]];
+    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString4.string rangeOfString:view4Line1]];
+    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:14]} range:[attributedString4.string rangeOfString:view4Line2]];
+    self.phoneView4 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough4"] captionString:attributedString4];
+    [self.phoneView4 hideOffScreen];
+    [self.view addSubview:self.phoneView4];
     
     self.registerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     CGRect registerButtonFrame = CGRectZero;
@@ -227,7 +237,7 @@ typedef enum ScrollDirection {
         if(translation.x > 0) {
             [self.currentPageView animateOffFromLeft];
         }
-        else if (self.currentPageView != self.inviteMoreView) {
+        else if (self.currentPageView != self.phoneView4) {
             [self.currentPageView animateOffFromRight];
         }
     }
@@ -236,13 +246,13 @@ typedef enum ScrollDirection {
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     NSInteger page = floor(scrollView.contentOffset.x/scrollView.frame.size.width);
-    NSArray *pageViews = @[self.drinkView, self.phoneView, self.anyDeviceView, self.inviteMoreView];
+    NSArray *pageViews = @[self.drinkView, self.phoneView1, self.phoneView2, self.phoneView3, self.phoneView4];
     self.currentPageView = pageViews[page];
     if (self.scrollDirection == ScrollDirectionLeft) {
         [self.currentPageView animateInFromLeft];
     }
     else {
-        if (self.currentPageView != self.inviteMoreView) {
+        if (self.currentPageView != self.phoneView4) {
             [self.currentPageView animateInFromRight];
         }
     }
@@ -252,6 +262,24 @@ typedef enum ScrollDirection {
             [pageView hideOffScreen];
         }
     }
+}
+
++ (NSAttributedString *)multiLineAttributedStringWithLineTexts:(NSArray *)lines fonts:(NSArray *)fonts
+{
+    NSString *string = @"";
+    for (NSString *l in lines) {
+        if (string.length) {
+            string = [string stringByAppendingString:@"\n"];
+        }
+        string = [string stringByAppendingString:l];
+    }
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string];
+    for (NSInteger i=0; i<fonts.count; i++) {
+        UIFont *font = fonts[i];
+        NSString *line = lines[i];
+        [attributedString setAttributes:@{NSFontAttributeName : font} range:[attributedString.string rangeOfString:line]];
+    }
+    return attributedString;
 }
 
 @end
@@ -295,13 +323,15 @@ typedef enum ScrollDirection {
     
     self.captionLabel = [[UILabel alloc] init];
     CGRect captionFrame = CGRectZero;
-    captionFrame.size = CGSizeMake(290, 135);
+    captionFrame.size = CGSizeMake(290, 150);
     captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
-    captionFrame.origin.y = 290;
+    captionFrame.origin.y = 275;
     self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Hotspot is the fastest way to get groups of friends together.";
-    self.captionLabel.numberOfLines = 2;
-    self.captionLabel.font = [ThemeManager regularFontOfSize:18];
+//    self.captionLabel.text = @"Hotspot is the fastest way to get groups of friends together.";
+    self.captionLabel.attributedText = [IntroWalkthroughViewController
+                                        multiLineAttributedStringWithLineTexts:@[@"Get Sweet Deals", @"by texting your friends.", @"(they don't event have to show up!)"]
+                                        fonts:@[[ThemeManager boldFontOfSize:30], [ThemeManager boldFontOfSize:22], [ThemeManager regularFontOfSize:14]]];
+    self.captionLabel.numberOfLines = 3;
     self.captionLabel.textColor = [UIColor whiteColor];
     self.captionLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.captionLabel];
@@ -358,55 +388,41 @@ typedef enum ScrollDirection {
 
 @implementation PhoneView
 
-- (id)init
+- (id)initWithImage:(UIImage *)image captionString:(NSAttributedString *)captionString
 {
     self = [super init];
     if (!self) {
         return nil;
     }
-    
+    self.phoneImage = image;
+    self.captionString = captionString;
     self.userInteractionEnabled = NO;
     self.frame = [UIScreen mainScreen].bounds;
     self.backgroundColor = [UIColor clearColor];
     
-    self.phoneView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphoneVector"]];
+    self.phoneView = [[UIImageView alloc] initWithImage:self.phoneImage];
     CGRect phoneFrame = self.phoneView.frame;
-    phoneFrame.origin = CGPointMake(167/2.0, 199/2.0);
+    phoneFrame.size.width *= 1.2;
+    phoneFrame.size.height *= 1.2;
+    phoneFrame.origin.x = (self.width - phoneFrame.size.width)/2.0;
+    phoneFrame.origin.y = 199/2.0 - 10;
     self.phoneView.frame = phoneFrame;
     [self addSubview:self.phoneView];
-    
-    self.hotspotDescriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, 223/2.0, 200, 8)];
-    self.hotspotDescriptionLabel.font = [ThemeManager regularFontOfSize:7];
-    self.hotspotDescriptionLabel.textColor = [UIColor whiteColor];
-    self.hotspotDescriptionLabel.text = @"";
-    self.hotspotDescriptionText = @"Drinks with friends!";
-    [self.phoneView addSubview:self.hotspotDescriptionLabel];
     
     self.captionLabel = [[UILabel alloc] init];
     CGRect captionFrame = CGRectZero;
     captionFrame.size = CGSizeMake(270, 135);
     captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
-    captionFrame.origin.y = 290;
+    captionFrame.origin.y = 300;
     self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Tell your friends what you're up to, where you are, and who you're with - all at once.";
+    self.captionLabel.attributedText = self.captionString;
     self.captionLabel.numberOfLines = 3;
-    self.captionLabel.font = [ThemeManager regularFontOfSize:18];
+//    self.captionLabel.font = [ThemeManager regularFontOfSize:18];
     self.captionLabel.textColor = [UIColor whiteColor];
     self.captionLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.captionLabel];
     
     return self;
-}
-
-- (void)updateText:(NSTimer *)timer
-{
-    NSString *currentText = self.hotspotDescriptionLabel.text;
-    if (currentText.length == self.hotspotDescriptionText.length) {
-        [timer invalidate];
-    }
-    else {
-        self.hotspotDescriptionLabel.text = [self.hotspotDescriptionText substringToIndex:currentText.length+1];
-    }
 }
 
 - (void)hideOffScreen
@@ -420,12 +436,10 @@ typedef enum ScrollDirection {
     [UIView animateWithDuration:0.5 delay:0.2 options:0 animations:^{
         self.captionLabel.alpha = 1;
     } completion:nil];
-    self.hotspotDescriptionLabel.text = @"";
     self.phoneView.transform = CGAffineTransformMakeTranslation(300, 0);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
         self.phoneView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {
-        [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateText:) userInfo:nil repeats:YES];
     }];
 }
 
@@ -439,191 +453,6 @@ typedef enum ScrollDirection {
     [UIView animateWithDuration:0.5 animations:^{
         self.phoneView.transform = CGAffineTransformMakeTranslation(-300, 0);
         self.captionLabel.alpha = 0;
-    }];
-}
-
-- (void)animateOffFromLeft
-{
-    [UIView animateWithDuration:0.4 animations:^{
-        [self hideOffScreen];
-    }];
-}
-
-@end
-
-@implementation AnyDeviceView
-
-- (id)init
-{
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self.userInteractionEnabled = NO;
-    self.frame = [UIScreen mainScreen].bounds;
-    self.backgroundColor = [UIColor clearColor];
-    
-    self.handPhoneView = [[UIImageView alloc] init];
-    NSMutableArray *images = [[NSMutableArray alloc] init];
-    for (NSInteger i=0; i<26;i++) {
-        NSString *name = [NSString stringWithFormat:@"inviteAnyoneAnimation%04d", i];
-        [images addObject:[UIImage imageNamed:name]];
-    }
-    self.handPhoneView.animationImages = images;
-    self.handPhoneView.animationRepeatCount = 1;
-    self.handPhoneView.animationDuration = 0.5;
-    //preload images
-    [self.handPhoneView startAnimating];
-    CGRect handPhoneFrame = self.handPhoneView.frame;
-    UIImage *firstImage = [self.handPhoneView.animationImages firstObject];
-    handPhoneFrame.size = CGSizeMake(firstImage.size.width/2.0, firstImage.size.height/2.0);
-    handPhoneFrame.origin.y = 0;
-    handPhoneFrame.origin.x = 0;
-    self.handPhoneView.frame = handPhoneFrame;
-    [self addSubview:self.handPhoneView];
-    
-    self.captionLabel = [[UILabel alloc] init];
-    CGRect captionFrame = CGRectZero;
-    captionFrame.size = CGSizeMake(290, 135);
-    captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
-    captionFrame.origin.y = 290;
-    self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Send them all the info, even if they don't have the app or an iPhone.";
-    self.captionLabel.numberOfLines = 2;
-    self.captionLabel.font = [ThemeManager regularFontOfSize:18];
-    self.captionLabel.textColor = [UIColor whiteColor];
-    self.captionLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.captionLabel];
-    return self;
-}
-
-- (void)hideOffScreen
-{
-    self.handPhoneView.transform = CGAffineTransformMakeTranslation(350, 0);
-    self.captionLabel.alpha = 0;
-}
-
-- (void)animateInFromLeft
-{
-    self.alpha = 1;
-    self.handPhoneView.alpha = 1;
-    self.handPhoneView.transform = CGAffineTransformMakeTranslation(350, 0);
-    self.handPhoneView.image = [self.handPhoneView.animationImages firstObject];
-    jadispatch_after_delay(0.2, dispatch_get_main_queue(), ^{
-        self.handPhoneView.image = [self.handPhoneView.animationImages lastObject];
-        [self.handPhoneView startAnimating];
-    });
-    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
-        self.captionLabel.alpha = 1;
-    } completion:nil];
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
-        self.handPhoneView.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-
-    }];
-}
-
-- (void)animateInFromRight
-{
-    [self animateInFromLeft];
-}
-
-- (void)animateOffFromRight
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.captionLabel.alpha = 0;
-    }];
-}
-
-- (void)animateOffFromLeft
-{
-    [UIView animateWithDuration:0.4 animations:^{
-        [self hideOffScreen];
-    }];
-}
-
-@end
-
-@implementation InviteMoreView
-
-- (id)init
-{
-    self = [super init];
-    if (!self) {
-        return nil;
-    }
-    
-    self.userInteractionEnabled = NO;
-    self.frame = [UIScreen mainScreen].bounds;
-    self.backgroundColor = [UIColor clearColor];
-    
-    self.handPhoneView = [[UIImageView alloc] init];
-    NSMutableArray *images = [[NSMutableArray alloc] init];
-    for (NSInteger i=0; i<31;i++) {
-        NSString *name = [NSString stringWithFormat:@"inviteMoreAnimation%04d", i];
-        [images addObject:[UIImage imageNamed:name]];
-    }
-    self.handPhoneView.animationImages = images;
-    self.handPhoneView.animationRepeatCount = 1;
-    //preload images
-    [self.handPhoneView startAnimating];
-    CGRect handPhoneFrame = self.handPhoneView.frame;
-    UIImage *firstImage = [self.handPhoneView.animationImages firstObject];
-    handPhoneFrame.size = CGSizeMake(firstImage.size.width/2.0, firstImage.size.height/2.0);
-    handPhoneFrame.origin.y = 0;
-    handPhoneFrame.origin.x = 0;
-    self.handPhoneView.frame = handPhoneFrame;
-    [self addSubview:self.handPhoneView];
-    
-    self.captionLabel = [[UILabel alloc] init];
-    CGRect captionFrame = CGRectZero;
-    captionFrame.size = CGSizeMake(290, 135);
-    captionFrame.origin.x = 0.5*(self.frame.size.width - captionFrame.size.width);
-    captionFrame.origin.y = 290;
-    self.captionLabel.frame = captionFrame;
-    self.captionLabel.text = @"Your friends invite their friends so everyone gets to meet new people and have more fun.";
-    self.captionLabel.numberOfLines = 3;
-    self.captionLabel.font = [ThemeManager regularFontOfSize:18];
-    self.captionLabel.textColor = [UIColor whiteColor];
-    self.captionLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.captionLabel];
-    
-    return self;
-}
-
-- (void)hideOffScreen
-{
-    self.alpha = 0;
-}
-
-- (void)animateInFromLeft
-{
-    self.transform = CGAffineTransformIdentity;
-    self.anyDeviceView.alpha = 0;
-    self.alpha = 1;
-    self.handPhoneView.image = [self.handPhoneView.animationImages firstObject];
-    jadispatch_after_delay(0.01, dispatch_get_main_queue(), ^{
-        self.handPhoneView.image = [self.handPhoneView.animationImages lastObject];
-        [self.handPhoneView startAnimating];
-    });
-    
-    self.captionLabel.alpha = 0;
-    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
-        self.captionLabel.alpha = 1;
-    } completion:nil];
-
-}
-
-- (void)animateInFromRight
-{
-    [self animateInFromLeft];
-}
-
-- (void)animateOffFromRight
-{
-    [UIView animateWithDuration:0.5 animations:^{
-        self.transform = CGAffineTransformMakeTranslation(-350, 0);
     }];
 }
 
