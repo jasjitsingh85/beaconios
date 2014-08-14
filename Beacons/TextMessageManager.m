@@ -7,7 +7,6 @@
 //
 
 #import "TextMessageManager.h"
-#import "MapViewController.h"
 #import "AnalyticsManager.h"
 
 @interface TextMessageManager()

@@ -9,7 +9,6 @@
 #import "DealsTableViewController.h"
 #import "UIView+BounceAnimation.h"
 #import "UIView+Shadow.h"
-#import "DealDetailViewController.h"
 #import "SetDealViewController.h"
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"

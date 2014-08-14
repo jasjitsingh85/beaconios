@@ -9,7 +9,6 @@
 #import "ChatViewController.h"
 #import "ChatMessage.h"
 #import "ChatTableViewCell.h"
-#import "ChatTest.h"
 #import "User.h"
 #import "Theme.h"
 #import "AppDelegate.h"

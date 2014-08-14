@@ -23,7 +23,6 @@
 #import "LoadingIndictor.h"
 #import "BeaconManager.h"
 #import "CenterNavigationController.h"
-#import "MapViewController.h"
 #import "BeaconProfileViewController.h"
 #import "Contact.h"
 #import "BeaconStatus.h"
