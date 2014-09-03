@@ -16,7 +16,7 @@ PODS:
   - BlocksKit/UIKit (2.2.3):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Bolts (1.1.1)
+  - Bolts (1.1.2)
   - BSKeyboardControls (2.2)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core
@@ -48,9 +48,9 @@ PODS:
   - MBProgressHUD (0.8)
   - Mixpanel (2.3.6)
   - MSDynamicsDrawerViewController (1.0.2)
-  - SDWebImage (3.6):
+  - SDWebImage (3.7.1):
     - SDWebImage/Core
-  - SDWebImage/Core (3.6)
+  - SDWebImage/Core (3.7.1)
   - UIView+Positioning (1.0.1)
 
 DEPENDENCIES:
@@ -66,14 +66,14 @@ DEPENDENCIES:
   - MBProgressHUD
   - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController (~> 1.0.0)
-  - SDWebImage
+  - SDWebImage (~> 3.7)
   - UIView+Positioning
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   AHAlertView: 27ca35694babd935d908bd7f6e575175a8947b2e
   BlocksKit: 07c8a80f04275efac6a5f8b973782489c083a182
-  Bolts: 0ca796081c3e7c139bd86d6903c27f1b83036a5d
+  Bolts: 2635e8698a630774689441047f3465d78c48d485
   BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
   CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
   CrittercismSDK: 9f19db3a1f0c16b35d8c29c69406852d184a7650
@@ -83,7 +83,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   Mixpanel: 9aba38257fc4d2777ab5db1afc55e22bdfd57a4a
   MSDynamicsDrawerViewController: 8d4c783d8cf3193e0356a0064b7d3929654d6097
-  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
   UIView+Positioning: 870af80983bf495af2cb8a3a15b20e26fcc57ebb
 
 COCOAPODS: 0.33.1
