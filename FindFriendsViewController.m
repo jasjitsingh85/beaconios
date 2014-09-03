@@ -131,6 +131,8 @@
     self.tableView.contentInset = insets;
     self.inviteButtonShown = YES;
     
+    self.tableView.rowHeight = 40;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
