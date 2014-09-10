@@ -165,6 +165,9 @@
             }
         }
     }
+    if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+        [[LocationTracker sharedTracker] requestLocationPermission];
+    }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
     [FBSettings setDefaultAppID:kAppID];
     [FBAppEvents activateApp];

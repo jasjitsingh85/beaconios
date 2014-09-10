@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>“Your location is used to automatically alert you when you enter a venue with an active deal&quot;  </string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

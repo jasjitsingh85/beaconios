@@ -86,6 +86,9 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (void)requestLocationPermission
 {
+    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
+    }
     [self.locationManager startUpdatingLocation];
 }
 
