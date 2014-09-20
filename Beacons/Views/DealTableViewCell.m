@@ -8,6 +8,7 @@
 
 #import "DealTableViewCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#include <tgmath.h>
 #import "UIView+Shadow.h"
 #import "Venue.h"
 
@@ -124,7 +125,7 @@
     CGFloat distanceMiles = METERS_TO_MILES*distance;
     NSString *distanceString;
     if (distanceMiles < 0.25) {
-        distanceString = [NSString stringWithFormat:@"%0.0fft", METERS_TO_FEET*distance];
+        distanceString = [NSString stringWithFormat:@"%0.0fft", (floor((METERS_TO_FEET*distance)/10))*10];
     }
     else {
         distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];

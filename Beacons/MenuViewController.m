@@ -84,7 +84,7 @@
     
     UILabel *setHotSpotLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(setBeaconFrame), self.tableView.frame.size.width/3.0, 30)];
     setHotSpotLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-    setHotSpotLabel.text = @"Set Hotspot";
+    setHotSpotLabel.text = @"Deals";
     setHotSpotLabel.textAlignment = NSTextAlignmentCenter;
     setHotSpotLabel.textColor = [UIColor whiteColor];
     [self.buttonContainerView addSubview:setHotSpotLabel];
@@ -102,7 +102,7 @@
     
     UILabel *inviteFriendsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(setHotSpotLabel.frame), setHotSpotLabel.frame.origin.y, self.tableView.frame.size.width/3.0, 30)];
     inviteFriendsLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-    inviteFriendsLabel.text = @"Add Friends";
+    inviteFriendsLabel.text = @"Share";
     inviteFriendsLabel.textAlignment = NSTextAlignmentCenter;
     inviteFriendsLabel.textColor = [UIColor whiteColor];
     [self.buttonContainerView addSubview:inviteFriendsLabel];

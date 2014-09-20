@@ -24,6 +24,7 @@
 
 @interface FindFriendsViewController () <UISearchBarDelegate>
 
+@property (strong, nonatomic) NSArray *usersInContactsList;
 @property (strong, nonatomic) NSArray *recentsList;
 @property (strong, nonatomic) NSArray *suggestedList;
 @property (strong, nonatomic) NSArray *nonSuggestedList;
@@ -38,6 +39,7 @@
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
 @property (strong, nonatomic) NSArray *groups;
+@property (readonly) NSInteger findFriendSectionAllUsers;
 @property (readonly) NSInteger findFriendSectionRecents;
 @property (readonly) NSInteger findFriendSectionSuggested;
 @property (readonly) NSInteger findFriendSectionContacts;
@@ -72,19 +74,24 @@
     return _collapsedSections;
 }
 
-- (NSInteger)findFriendSectionRecents
+- (NSInteger)findFriendSectionAllUsers
 {
     return self.groups.count;
 }
 
-- (NSInteger)findFriendSectionSuggested
+- (NSInteger)findFriendSectionRecents
 {
     return self.groups.count + 1;
 }
 
-- (NSInteger)findFriendSectionContacts
+- (NSInteger)findFriendSectionSuggested
 {
     return self.groups.count + 2;
+}
+
+- (NSInteger)findFriendSectionContacts
+{
+    return self.groups.count + 3;
 }
 
 - (void)viewDidLoad
@@ -239,12 +246,15 @@
     self.recentsList = [allContacts filteredArrayUsingPredicate:recentPredicate];
     NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d && isRecent = %d",YES, NO];
     self.suggestedList = [allContacts filteredArrayUsingPredicate:suggestedPredicate];
+    NSPredicate *allUsersPredicate = [NSPredicate predicateWithFormat:@"isAllUser = %d", YES];
+    self.usersInContactsList = [allContacts filteredArrayUsingPredicate:allUsersPredicate];
     self.nonSuggestedList = allContacts;
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
     self.recentsList = [self.recentsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
+    self.usersInContactsList = [self.usersInContactsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     [self.tableView reloadData];
 }
@@ -253,6 +263,7 @@
 {
     NSArray *allContacts = self.contactDictionary.allValues;
     //separate users and nonusers
+    self.usersInContactsList = @[];
     self.recentsList = @[];
     self.suggestedList = @[];
     NSPredicate *nonsuggestedPredicate = [NSPredicate predicateWithFormat:@"fullName CONTAINS[cd] %@", searchText];
@@ -260,6 +271,7 @@
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
+    self.usersInContactsList = [self.usersInContactsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.recentsList = [self.recentsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
@@ -460,6 +472,8 @@
     Group *group = [self groupForSection:section];
     if (group) {
         contactList = group.contacts;
+    } else if (section == self.findFriendSectionAllUsers) {
+        contactList = self.usersInContactsList;
     }
     else if (section == self.findFriendSectionRecents) {
         contactList = self.recentsList;
@@ -509,6 +523,8 @@
     Group *group = [self groupForSection:section];
     if (group) {
         title = group.name;
+    } else  if (section == self.findFriendSectionAllUsers) {
+        title = @"Friends on Hotspot";
     }
     else  if (section == self.findFriendSectionRecents) {
         title = @"Recents";
@@ -524,7 +540,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3 + self.groups.count;
+    return 4 + self.groups.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -546,6 +562,8 @@
     if (group) {
         Group *group = self.groups[section];
         numRows = group.contacts.count;
+    } else if (section == self.findFriendSectionAllUsers) {
+        numRows = self.usersInContactsList.count;
     }
     else if (section == self.findFriendSectionRecents) {
         numRows = self.recentsList.count;
@@ -633,6 +651,8 @@
     if (!contact) {
     if (indexPath.section == self.findFriendSectionRecents) {
         contact = self.recentsList[indexPath.row];
+    } else if (indexPath.section == self.findFriendSectionAllUsers) {
+        contact = self.usersInContactsList[indexPath.row];
     }
     else if (indexPath.section == self.findFriendSectionSuggested) {
         contact = self.suggestedList[indexPath.row];
@@ -666,6 +686,9 @@
     if (indexPath.section < self.groups.count) {
         Group *group = self.groups[indexPath.section];
         contact = group.contacts[indexPath.row];
+    }
+    else if (indexPath.section == self.findFriendSectionAllUsers) {
+        contact = self.usersInContactsList[indexPath.row];
     }
     else if (indexPath.section == self.findFriendSectionRecents) {
         contact = self.recentsList[indexPath.row];
