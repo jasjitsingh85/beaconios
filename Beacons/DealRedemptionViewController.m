@@ -130,7 +130,7 @@
         return;
     }
     if ([self dealNow]) {
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"You can only redeem a deal once"];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"Only staff should redeem deal"];
         [alertView bk_addButtonWithTitle:@"Yes" handler:^{
             [self redeemDeal];
         }];
@@ -170,7 +170,7 @@
     NSString *title;
     if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
         color = activeColor;
-        title = @"Redeem this Deal";
+        title = @"Show Staff to Redeem";
     }
     else {
         color = inactiveColor;
@@ -181,7 +181,7 @@
             title = @"Deal Passed";
         }
         else {
-            title = @"Redeem this Deal";
+            title = @"Show Staff to Redeem";
         }
     }
     self.redeemButton.border.strokeColor = color.CGColor;

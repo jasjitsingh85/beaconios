@@ -16,6 +16,7 @@
 @property (strong, nonatomic) AFHTTPRequestOperation *updateFriendsOperation;
 @property (strong, nonatomic) NSArray *recommendedContacts;
 @property (strong, nonatomic) NSArray *recentContacts;
+@property (strong, nonatomic) NSArray *usersWhoAreContacts;
 @property (readonly) ABAuthorizationStatus authorizationStatus;
 
 + (ContactManager *)sharedManager;

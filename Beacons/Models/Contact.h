@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString *lastName;
 @property (strong, nonatomic) NSString *fullName;
 @property (strong, nonatomic) NSString *phoneNumber;
+@property (assign, nonatomic) BOOL isAllUser;
 @property (assign, nonatomic) BOOL isUser;
 @property (assign, nonatomic) BOOL isSuggested;
 @property (assign, nonatomic) BOOL isRecent;

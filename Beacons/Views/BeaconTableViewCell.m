@@ -126,12 +126,12 @@
 {
     
     NSInteger invited = 0;
-    NSInteger here = 0;
+    NSInteger going = 0;
     for (BeaconStatus *beaconStatus in self.beacon.guestStatuses.allValues) {
         invited += (beaconStatus.beaconStatusOption == BeaconStatusOptionInvited) || (beaconStatus.beaconStatusOption == BeaconStatusOptionHere) || (beaconStatus.beaconStatusOption == BeaconStatusOptionGoing);
-        here += beaconStatus.beaconStatusOption == BeaconStatusOptionHere;
+        going += beaconStatus.beaconStatusOption == BeaconStatusOptionGoing;
     }
-    self.inviteLabel.text = [NSString stringWithFormat:@"%d here, %d invited",here, invited];
+    self.inviteLabel.text = [NSString stringWithFormat:@"%d going, %d invited", going, invited];
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated

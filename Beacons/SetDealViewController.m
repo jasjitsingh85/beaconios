@@ -310,7 +310,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     else {
         self.date = now;
     }
-    self.dateLabel.text = @"Now";
+    self.dateLabel.text = @"Now (tap here to change)";
     [self.tableView reloadData];
 }
 
@@ -414,7 +414,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == DealSectionDescription) {
-        [[[UIAlertView alloc] initWithTitle:nil message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else if (indexPath.row == DealSectionTime) {
         [self showDatePicker];
@@ -438,8 +438,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
     }
     else {
-        NSString *message = [NSString stringWithFormat:@"Select %d more friends to unlock deal", self.deal.inviteRequirement.integerValue - contacts.count];
-        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        NSString *message = [NSString stringWithFormat:@"Just select %d more friends to unlock this deal", self.deal.inviteRequirement.integerValue - contacts.count];
+        [[[UIAlertView alloc] initWithTitle:@"You're Almost There..." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
 
