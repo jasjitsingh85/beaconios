@@ -42,12 +42,24 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 
 #pragma mark - Remote Notification Registering
 
+#define isAtLeastiOS8 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 - (void)registerForRemoteNotificationsSuccess:(void (^)(NSData *devToken))success failure:(void (^)(NSError *error))failure
 {
     self.remoteNotificationRegistrationSuccessBlock = success;
     self.remoteNotificationRegistrationFailureBlock = failure;
 #if !DEBUG
+    if (isAtLeastiOS8) {
+    //Right, that is the point
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                         |UIRemoteNotificationTypeSound
+                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }
+    else {
+    //register to receive notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+    }
 #else
     if (failure) {
         NSError *error = [[NSError alloc] initWithDomain:@"qsCustomErrorDomain" code:-1 userInfo:nil];
