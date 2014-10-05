@@ -158,14 +158,14 @@
     self.dealMode = NO;
     
     
-//    UIView *verticalDivider = [[UIView alloc] init];
-//    CGRect verticalDividerFrame;
-//    verticalDividerFrame.size = CGSizeMake(1, 45);
-//    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
-//    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
-//    verticalDivider.frame = verticalDividerFrame;
-//    verticalDivider.backgroundColor = [UIColor whiteColor];
-//    [self.descriptionView addSubview:verticalDivider];
+    //    UIView *verticalDivider = [[UIView alloc] init];
+    //    CGRect verticalDividerFrame;
+    //    verticalDividerFrame.size = CGSizeMake(1, 45);
+    //    verticalDividerFrame.origin.x = 0.5*self.descriptionView.frame.size.width - 0.5*verticalDividerFrame.size.width;
+    //    verticalDividerFrame.origin.y = self.descriptionView.frame.size.height - verticalDividerFrame.size.height;
+    //    verticalDivider.frame = verticalDividerFrame;
+    //    verticalDivider.backgroundColor = [UIColor whiteColor];
+    //    [self.descriptionView addSubview:verticalDivider];
     
     
     self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
@@ -402,7 +402,7 @@
 {
     self.promptShowing = YES;
     NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@ \n\nAre you coming?", self.beacon.creator.firstName, self.beacon.beaconDescription, self.beacon.time.fullFormattedDate, self.beacon.address];
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:inviteText];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"RSVP" message:inviteText];
     [alertView bk_addButtonWithTitle:@"More info" handler:^{
         self.promptShowing = NO;
     }];

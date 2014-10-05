@@ -126,7 +126,7 @@
 - (void)redeemButtonTouched:(id)sender
 {
     if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
-        [[[UIAlertView alloc] initWithTitle:nil message:@"This deal has already been redeemed and can't be redeemed again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This deal has already been redeemed and can't be redeemed again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
     if ([self dealNow]) {
@@ -156,7 +156,7 @@
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *message = responseObject[@"message"];
         NSString *dealStatus = responseObject[@"deal_status"];
-        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Deal Redemption" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         self.dealStatus.dealStatus = dealStatus;
         [self updateRedeemButtonAppearance];
     } failure:nil];

@@ -305,7 +305,7 @@
     if (!indexPath.section) {
         Contact *contact = self.filteredGroupContacts[indexPath.row];
         NSString *title = [NSString stringWithFormat:@"Are you sure you want to remove %@ from this group?", contact.firstName];
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:nil message:title];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Remove From Group?" message:title];
         [alertView bk_addButtonWithTitle:@"Yes" handler:^{
             [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
             [[ContactManager sharedManager] removeContacts:@[contact] fromGroup:self.group success:^{
@@ -327,7 +327,7 @@
     BOOL shouldAnimate = NO;
     if (alreadyInGroup) {
         NSString *message = [NSString stringWithFormat:@"%@ has already been added to this group", contact.fullName];
-        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else if (currentlySelected) {
         [self.contactsToAdd removeObject:contact];

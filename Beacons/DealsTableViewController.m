@@ -23,8 +23,12 @@
 @interface DealsTableViewController ()
 
 @property (strong, nonatomic) UIView *emptyBeaconView;
+@property (strong, nonatomic) UIView *enableLocationView;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
+@property (strong, nonatomic) UIButton *enableLocationButton;
+@property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (assign, nonatomic) BOOL loadingDeals;
+@property (assign, nonatomic) BOOL locationEnabled;
 
 @end
 
@@ -49,7 +53,51 @@
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
     }
+    
     [[AnalyticsManager sharedManager] viewedDealTable];
+}
+
+- (UIView *)enableLocationView
+{
+    if (!_enableLocationView) {
+        _enableLocationView = [[UIView alloc] init];
+        _enableLocationView.size = CGSizeMake(self.tableView.width, 200);
+        _enableLocationView.backgroundColor = [UIColor whiteColor];
+        [_enableLocationView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+        
+        self.enableLocationLabel = [[UILabel alloc] init];
+        self.enableLocationLabel.size = CGSizeMake(250, 200);
+        self.enableLocationLabel.font = [ThemeManager regularFontOfSize:14.];
+        self.enableLocationLabel.textColor = [UIColor colorWithWhite:102/255.0 alpha:1.0];
+        self.enableLocationLabel.numberOfLines = 6;
+        self.enableLocationLabel.textAlignment = NSTextAlignmentCenter;
+        self.enableLocationLabel.text = @"Want to see great deals nearby? Hotspot needs to know your location.\n\nAllow Location Access in Privacy > Location Services";
+        //        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
+        //        footerView.backgroundColor = [[ThemeManager sharedTheme] boneWhiteColor];
+        self.enableLocationLabel.centerX = self.enableLocationView.width/2.0;
+        self.enableLocationLabel.bottom = self.enableLocationView.height - 30;
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.enableLocationView.height)];
+        footerView.backgroundColor = [[ThemeManager sharedTheme] boneWhiteColor];
+        [footerView addSubview:self.enableLocationLabel];
+        [self.enableLocationView addSubview:footerView];
+        
+        if (&UIApplicationOpenSettingsURLString != NULL) {
+            self.enableLocationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.enableLocationButton.size = CGSizeMake(200, 35);
+            self.enableLocationButton.centerX = self.enableLocationView.width/2.0;
+            self.enableLocationButton.bottom = self.enableLocationView.height - 20;
+            self.enableLocationButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+            [self.enableLocationButton setTitle:@"Go to Hotspot Settings" forState:UIControlStateNormal];
+            self.enableLocationButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.enableLocationButton.frame.size.width - ( 50.), 0., 0.);
+            self.enableLocationButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., 0.);
+            self.enableLocationButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+            [self.enableLocationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self.enableLocationButton addTarget:self action:@selector(appSettingsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [self.enableLocationView addSubview:self.enableLocationButton];
+        }
+    }
+    return _enableLocationView;
 }
 
 - (UIView *)emptyBeaconView
@@ -83,6 +131,17 @@
     }
 }
 
+- (void)showEnableLocationView
+{
+    [self.tableView addSubview:self.enableLocationView];
+    self.enableLocationView.hidden = NO;
+}
+
+- (void)hideEnableLocationView
+{
+    self.enableLocationView.hidden = YES;
+}
+
 - (void)showEmptyDealsView
 {
     [self.tableView addSubview:self.emptyBeaconView];
@@ -97,18 +156,27 @@
 - (void)reloadDeals
 {
     self.loadingDeals = YES;
+    [self hideEnableLocationView];
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-    [[LocationTracker sharedTracker] fetchCurrentLocation:^(CLLocation *location) {
-        [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+    LocationTracker *locationTracker = [[LocationTracker alloc] init];
+    if (locationTracker.authorized) {
+        [locationTracker fetchCurrentLocation:^(CLLocation *location) {
+            [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+                self.loadingDeals = NO;
+                [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+                [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
+            }];
+        } failure:^(NSError *error) {
             self.loadingDeals = NO;
             [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-            [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
         }];
-    } failure:^(NSError *error) {
+    } else {
+        [self showEnableLocationView];
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    }];
+    }
+    
 }
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
@@ -195,6 +263,14 @@
         url = [NSURL URLWithString:@"http://itunes.apple.com/app/id879840229"];
     }
     [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)appSettingsButtonTouched:(id)sender
+{
+    if (&UIApplicationOpenSettingsURLString != NULL) {
+        NSURL *appSettings = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:appSettings];
+    }
 }
 
 @end
