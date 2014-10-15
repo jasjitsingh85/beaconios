@@ -316,7 +316,7 @@
         [self updateInviteButtonTextForDeal:lastSelectedContact];
         return;
     }
-    NSString *inviteButtonText = @"Set Hotspot";
+    NSString *inviteButtonText = @"Invite";
     if (self.selectedContactDictionary.count) {
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
