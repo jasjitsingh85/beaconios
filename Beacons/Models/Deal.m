@@ -28,6 +28,7 @@
     self.notificationText = dictionary[@"notification_text"];
     self.invitePrompt = dictionary[@"invite_prompt"];
     self.additionalInfo = dictionary[@"additional_info"];
+    self.dealType = dictionary[@"deal_type"];
     NSNumber *bonusRequirement = dictionary[@"bonus_invite_requirement"];
     if (!isEmpty(bonusRequirement)) {
         self.bonusRequirement = bonusRequirement;

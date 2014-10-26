@@ -36,6 +36,7 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
+		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -259,6 +260,7 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -932,6 +934,7 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41338FD519FA38CA0022211C /* marker@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
@@ -1172,6 +1175,7 @@
 				96C7FEA2189737DA00A79CC3 /* martini@2x.png in Resources */,
 				960631F319467F310011E132 /* menu_background@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
+				41338FD619FA38CA0022211C /* marker@2x.png in Resources */,
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
@@ -1379,7 +1383,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "2bf2cad4-7c39-4044-b1e0-da054e626fa7";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2bf2cad4-7c39-4044-b1e0-da054e626fa7";
@@ -1393,15 +1397,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2bf2cad4-7c39-4044-b1e0-da054e626fa7";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1432,7 +1436,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1459,7 +1463,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "ff433ab3-7db2-46fc-adeb-449ef99c51a8";
 				"PROVISIONING_PROFILE[sdk=*]" = "ff433ab3-7db2-46fc-adeb-449ef99c51a8";
@@ -1492,15 +1496,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ff433ab3-7db2-46fc-adeb-449ef99c51a8";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ff433ab3-7db2-46fc-adeb-449ef99c51a8";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

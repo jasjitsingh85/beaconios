@@ -10,6 +10,7 @@
 
 @interface DealsTableViewController : UITableViewController
 
+@property (strong, nonatomic) NSArray *events;
 @property (strong, nonatomic) NSArray *deals;
 
 @end

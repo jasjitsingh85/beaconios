@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
 @property (strong, nonatomic) UIButton *enableLocationButton;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
+@property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
 
@@ -182,8 +183,13 @@
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *events = [[NSMutableArray alloc] init];
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+        for (NSDictionary *eventJSON in responseObject[@"events"]) {
+            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
+            [events addObject:event];
+        }
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
@@ -191,6 +197,12 @@
             [deals addObject:deal];
         }
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
+        self.events = events;
+        if (self.events.count > 0) {
+            self.hasEvents = YES;
+        } else {
+           self.hasEvents = NO;
+        }
         self.deals = [deals sortedArrayUsingDescriptors:@[sort]];
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
@@ -224,13 +236,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.deals.count;
+    if (self.hasEvents) {
+        return (self.deals.count + 1);
+    } else {
+        return self.deals.count;
+    }
+    
+    //return self.deals.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 197;
 }
+
+//-(void)tappedOnCell:(UITapGestureRecognizer *) sender
+//{
+//    NSLog(@"Working");
+//    
+//    CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
+//    //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
+//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
+//    
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -241,7 +269,15 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    Deal *deal = self.deals[indexPath.row];
+    Deal *deal;
+    if (indexPath.row == 0 && self.hasEvents) {
+        deal = self.events[0];
+    } else if (indexPath.row == 0 && !self.hasEvents) {
+        deal = self.deals[indexPath.row];
+    } else {
+        deal = self.deals[indexPath.row - 1];
+    }
+    
     cell.deal = deal;
     return cell;
 }
@@ -249,7 +285,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Deal *deal = self.deals[indexPath.row];
+    Deal *deal;
+    if (self.hasEvents){
+        if (indexPath.row == 0) {
+            deal = self.events[0];
+        } else {
+            deal = self.deals[indexPath.row - 1];
+        }
+    } else {
+        deal = self.deals[indexPath.row];
+    }
+
     SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
     dealViewController.deal = deal;
     [self.navigationController pushViewController:dealViewController animated:YES];
