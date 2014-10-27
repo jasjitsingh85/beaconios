@@ -156,10 +156,10 @@
     self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 2, self.contentView.frame.size.height);
     [self.contentView addSubview:self.venueScroll];
     
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-    [recognizer setNumberOfTapsRequired:1];
-    self.venueScroll.userInteractionEnabled = YES;
-    [self.venueScroll addGestureRecognizer:recognizer];
+//    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+//    [recognizer setNumberOfTapsRequired:1];
+//    self.venueScroll.userInteractionEnabled = YES;
+//    [self.venueScroll addGestureRecognizer:recognizer];
     //[self.venueScroll setUserInteractionEnabled:NO];
     //[self.contentView addGestureRecognizer:self.venueScroll.panGestureRecognizer];
     
@@ -300,30 +300,5 @@
     [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
     [actionSheet showInView:self.venueDetailView];
 }
-
-//- (UITableView *)getTableView {
-//    // get the superview of this class, note the camel-case V to differentiate
-//    // from the class' superview property.
-//    UIView *superView = self.superview;
-//    
-//    /*
-//     check to see that *superView != nil* (if it is then we've walked up the
-//     entire chain of views without finding a UITableView object) and whether
-//     the superView is a UITableView.
-//     */
-//    while (superView && ![superView isKindOfClass:[UITableView class]]) {
-//        superView = superView.superview;
-//    }
-//    
-//    // if superView != nil, then it means we found the UITableView that contains
-//    // the cell.
-//    if (superView) {
-//        // cast the object and return
-//        return (UITableView *)superView;
-//    }
-//    
-//    // we did not find any UITableView
-//    return nil;
-//}
 
 @end

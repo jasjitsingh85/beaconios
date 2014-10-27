@@ -250,15 +250,30 @@
     return 197;
 }
 
-//-(void)tappedOnCell:(UITapGestureRecognizer *) sender
-//{
-//    NSLog(@"Working");
-//    
-//    CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
-//    //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
-//    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
-//    
-//}
+-(void)tappedOnCell:(UITapGestureRecognizer *) sender
+{
+    
+    CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
+    //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
+    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    Deal *deal;
+    if (self.hasEvents){
+        if (indexPath.row == 0) {
+            deal = self.events[0];
+        } else {
+            deal = self.deals[indexPath.row - 1];
+        }
+    } else {
+        deal = self.deals[indexPath.row];
+    }
+    
+    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+    dealViewController.deal = deal;
+    [self.navigationController pushViewController:dealViewController animated:YES];
+    
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -278,28 +293,33 @@
         deal = self.deals[indexPath.row - 1];
     }
     
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+    [recognizer setNumberOfTapsRequired:1];
+//    self.venueScroll.userInteractionEnabled = YES;
+    [cell.contentView addGestureRecognizer:recognizer];
+    
     cell.deal = deal;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Deal *deal;
-    if (self.hasEvents){
-        if (indexPath.row == 0) {
-            deal = self.events[0];
-        } else {
-            deal = self.deals[indexPath.row - 1];
-        }
-    } else {
-        deal = self.deals[indexPath.row];
-    }
-
-    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-    dealViewController.deal = deal;
-    [self.navigationController pushViewController:dealViewController animated:YES];
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    Deal *deal;
+//    if (self.hasEvents){
+//        if (indexPath.row == 0) {
+//            deal = self.events[0];
+//        } else {
+//            deal = self.deals[indexPath.row - 1];
+//        }
+//    } else {
+//        deal = self.deals[indexPath.row];
+//    }
+//
+//    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+//    dealViewController.deal = deal;
+//    [self.navigationController pushViewController:dealViewController animated:YES];
+//}
 
 - (void)happyHoursButtonTouched:(id)sender
 {
