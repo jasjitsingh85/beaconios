@@ -9,7 +9,6 @@
 #import "DealTableViewCell.h"
 #import <MapKit/MapKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-//#import "DealsTableViewController.h"
 #include <tgmath.h>
 #import "Utilities.h"
 #import "UIView+Shadow.h"
@@ -109,7 +108,7 @@
     self.venueDetailLabel = [[UILabel alloc] init];
     self.venueDetailLabel.font = [ThemeManager boldFontOfSize:16];
     self.venueDetailLabel.textColor = [UIColor whiteColor];
-//    self.venueDetailLabel.adjustsFontSizeToFitWidth = YES;
+    self.venueDetailLabel.adjustsFontSizeToFitWidth = YES;
 //    [self.venueDetailLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueDetailLabel.textAlignment = NSTextAlignmentLeft;
     self.venueDetailLabel.numberOfLines = 0;
@@ -178,7 +177,7 @@
     self.venueLabel.height = 41;
     self.venueLabel.centerY = 69;
     
-    self.venueDetailLabel.width = 105;
+    self.venueDetailLabel.width = .75 * self.venueDetailView.width;
     self.venueDetailLabel.x = 20;
     self.venueDetailLabel.height = 18;
     self.venueDetailLabel.y = 40;

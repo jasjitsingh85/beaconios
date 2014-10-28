@@ -37,6 +37,8 @@
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
+		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
+		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -261,6 +263,8 @@
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
+		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
+		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -627,6 +631,8 @@
 				961FE29418D10F7100CF891A /* ExplanationPopupView.m */,
 				9651C79B193E74C20083A0FE /* DashedBorderButton.h */,
 				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
+				41338FD719FE11D30022211C /* DealTableViewEventCell.h */,
+				41338FD919FE12080022211C /* DealTableViewEventCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
 				9666524B19786CA300EE85F8 /* DealExplanationView.h */,
@@ -1200,6 +1206,7 @@
 				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				960631ED194629850011E132 /* lock_closed@2x.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
+				41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */,
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				96D1D55F199B14BD007216F3 /* iphoneWalkthrough1@2x.png in Resources */,
@@ -1333,6 +1340,7 @@
 				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
 				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
 				963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */,
+				41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,

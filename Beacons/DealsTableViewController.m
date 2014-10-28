@@ -13,6 +13,7 @@
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
+#import "DealTableViewEventCell.h"
 #import "APIClient.h"
 #import "LocationTracker.h"
 #import "Deal.h"
@@ -22,6 +23,7 @@
 
 @interface DealsTableViewController ()
 
+@property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
@@ -247,12 +249,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 197;
+    if (self.hasEvents && indexPath.row==0) {
+        return 197;
+    } else {
+        return 197;
+    }
 }
 
--(void)tappedOnCell:(UITapGestureRecognizer *) sender
+-(void)tappedOnCell:(UITapGestureRecognizer *)sender
 {
-    
     CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
     //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
@@ -261,7 +266,7 @@
     Deal *deal;
     if (self.hasEvents){
         if (indexPath.row == 0) {
-            deal = self.events[0];
+            deal = self.events[self.currentEventCell.pageControl.currentPage];
         } else {
             deal = self.deals[indexPath.row - 1];
         }
@@ -277,29 +282,63 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"CellIdentifier";
-    DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
     Deal *deal;
-    if (indexPath.row == 0 && self.hasEvents) {
-        deal = self.events[0];
-    } else if (indexPath.row == 0 && !self.hasEvents) {
-        deal = self.deals[indexPath.row];
+    if (self.hasEvents) {
+        if (indexPath.row == 0) {
+            //static NSString *CellIdentifier = @"CellIdentifier";
+            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+            DealTableViewEventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[DealTableViewEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                cell.events = self.events;
+                cell.backgroundColor = [UIColor clearColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                self.currentEventCell = cell;
+            }
+            
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+            [recognizer setNumberOfTapsRequired:1];
+            [cell.contentView addGestureRecognizer:recognizer];
+        
+            return cell;
+        } else {
+            deal = self.deals[indexPath.row - 1];
+            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row - 1];
+            DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (!cell) {
+                cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                cell.backgroundColor = [UIColor clearColor];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+            [recognizer setNumberOfTapsRequired:1];
+            [cell.contentView addGestureRecognizer:recognizer];
+            
+            cell.deal = deal;
+            return cell;
+        }
     } else {
-        deal = self.deals[indexPath.row - 1];
+        deal = self.deals[indexPath.row];
+        
+        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+        DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (!cell) {
+            cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.backgroundColor = [UIColor clearColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+        [recognizer setNumberOfTapsRequired:1];
+        [cell.contentView addGestureRecognizer:recognizer];
+        
+        cell.deal = deal;
+        return cell;
+        
     }
     
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-    [recognizer setNumberOfTapsRequired:1];
-//    self.venueScroll.userInteractionEnabled = YES;
-    [cell.contentView addGestureRecognizer:recognizer];
-    
-    cell.deal = deal;
-    return cell;
 }
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
