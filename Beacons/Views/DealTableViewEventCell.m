@@ -21,7 +21,7 @@
 
 @interface DealTableViewEventCell()
 
-@property (strong, nonatomic) UIView *backgroundView;
+//@property (strong, nonatomic) UIView *backgroundView;
 
 @end
 
@@ -71,37 +71,65 @@
         eventImageView.contentMode = UIViewContentModeScaleAspectFill;
         eventImageView.clipsToBounds = YES;
         [eventImageView sd_setImageWithURL:deal.venue.imageURL];
+        [eventView addSubview:eventImageView];
         
         UIView *backgroundView = [[UIView alloc] initWithFrame:eventImageView.bounds];
         backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-//        backgroundView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.2];
+        //backgroundView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.2];
         backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        [eventImageView addSubview:backgroundView];
-        [eventView addSubview:eventImageView];
+        [eventView addSubview:backgroundView];
         
-        UILabel *timePlaceTitle =[[UILabel alloc] init];
-        timePlaceTitle.text = [@"Tonight @ " stringByAppendingString:deal.venue.name];
-        timePlaceTitle.font = [ThemeManager boldFontOfSize:14];
+//        UIView *whiteStrip = [[UIView alloc]init];
+//        whiteStrip.width = eventView.size.width;
+//        whiteStrip.height = 30;
+//        whiteStrip.y = 0;
+//        whiteStrip.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+//        [eventView addSubview:whiteStrip];
+        
+//        UILabel *timePlaceTitle =[[UILabel alloc] init];
+//        timePlaceTitle.text = @"Tonight";
+//        timePlaceTitle.font = [ThemeManager boldFontOfSize:16];
+//        //NSDictionary *attributes = @{NSFontAttributeName: [timePlaceTitle.font]};
+//        timePlaceTitle.width = eventView.size.width - 100;
+//        timePlaceTitle.centerX = eventView.size.width/2;
+//        timePlaceTitle.height = 30;
+//        timePlaceTitle.y = 0;
+//        timePlaceTitle.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+//        //timePlaceTitle.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+//        //timePlaceTitle.layer.cornerRadius = 10;
+//        //timePlaceTitle.clipsToBounds = YES;
+//        timePlaceTitle.adjustsFontSizeToFitWidth = YES;
+//        timePlaceTitle.textAlignment = NSTextAlignmentCenter;
+//        timePlaceTitle.numberOfLines = 0;
+//        [eventView addSubview:timePlaceTitle];
+        
+        UILabel *timeTitle =[[UILabel alloc] init];
+        timeTitle.text = deal.hoursAvailableString;
+        timeTitle.font = [ThemeManager boldFontOfSize:13];
         //NSDictionary *attributes = @{NSFontAttributeName: [timePlaceTitle.font]};
-        timePlaceTitle.width = 140;
-        timePlaceTitle.centerX = eventView.size.width/2;
-        timePlaceTitle.height = 20;
-        timePlaceTitle.y = 30;
-        timePlaceTitle.textColor = [[UIColor blackColor] colorWithAlphaComponent:1];
-        timePlaceTitle.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
-        timePlaceTitle.layer.cornerRadius = 10;
-        timePlaceTitle.clipsToBounds = YES;
-        timePlaceTitle.adjustsFontSizeToFitWidth = YES;
-        timePlaceTitle.textAlignment = NSTextAlignmentCenter;
-        timePlaceTitle.numberOfLines = 0;
-        [eventView addSubview:timePlaceTitle];
+        timeTitle.width = 120;
+        //timePlaceTitle.width = 110;
+        //timePlaceTitle.width = eventView.size.width;
+        timeTitle.x = 185;
+        timeTitle.height = 22;
+        timeTitle.y = 163;
+        //timePlaceTitle.y = 20;
+        timeTitle.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+        //timePlaceTitle.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+        //timePlaceTitle.layer.cornerRadius = 10;
+        //timePlaceTitle.clipsToBounds = YES;
+        timeTitle.adjustsFontSizeToFitWidth = YES;
+        timeTitle.textAlignment = NSTextAlignmentRight;
+        timeTitle.numberOfLines = 0;
+        [eventView addSubview:timeTitle];
         
         UILabel *eventTitle = [[UILabel alloc] init];
         eventTitle .width = eventView.size.width - 40;
         eventTitle.centerX = eventView.size.width/2;
         eventTitle.height = 40;
-        eventTitle.y = 70;
-        eventTitle.text = deal.dealDescriptionShort;
+        eventTitle.y = 60;
+        eventTitle.text = [NSString stringWithFormat: @"%@ @ %@", deal.dealDescriptionShort, deal.venue.name];
+        //eventTitle.text =[deal.dealDescriptionShort stringByAppendingString:deal.venue.name];
         eventTitle.font = [ThemeManager boldFontOfSize:19*1.3];
         eventTitle.textColor = [UIColor whiteColor];
         eventTitle.adjustsFontSizeToFitWidth = YES;
@@ -111,13 +139,15 @@
         [eventView addSubview:eventTitle];
         
         UILabel *dealInfo = [[UILabel alloc] init];
-        dealInfo.width = 200;
-        dealInfo.centerX = eventView.width/2;
-        dealInfo.height = 20;
-        dealInfo.y = 110;
+//        dealInfo.width = 200;
+//        dealInfo.centerX = eventView.width/2;
+//        dealInfo.height = 20;
+        dealInfo.y = 100;
         dealInfo.text = deal.dealDescription;
-        dealInfo.font = [ThemeManager regularFontOfSize:12];
-        dealInfo.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.85];
+        dealInfo.font = [ThemeManager regularFontOfSize:1.3*9];
+        dealInfo.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
+        dealInfo.size = CGSizeMake(221, 24);
+        dealInfo.centerX = self.width/2.0;
         dealInfo.textColor = [UIColor whiteColor];
         dealInfo.adjustsFontSizeToFitWidth = YES;
         dealInfo.textAlignment = NSTextAlignmentCenter;

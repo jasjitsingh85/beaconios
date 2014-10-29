@@ -26,6 +26,7 @@
 @property (strong, nonatomic) Venue *venue;
 
 @property (readonly) NSString *hoursAvailableString;
+@property (readonly) NSString *dealStartString;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (BOOL)isAvailableAtDate:(NSDate *)date;

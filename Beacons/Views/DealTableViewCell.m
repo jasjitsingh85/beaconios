@@ -15,6 +15,7 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Venue.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DealHours.h"
 
 @interface DealTableViewCell()
 
@@ -61,7 +62,7 @@
     
     self.descriptionLabel = [[UILabel alloc] init];
     self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
-    self.descriptionLabel.size = CGSizeMake(191, 24);
+    self.descriptionLabel.size = CGSizeMake(221, 24);
     self.descriptionLabel.centerX = self.width/2.0;
     self.descriptionLabel.y = 90;
     self.descriptionLabel.font = [ThemeManager regularFontOfSize:1.3*9];
@@ -69,6 +70,14 @@
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
     [self.venuePreviewView addSubview:self.descriptionLabel];
+    
+    self.dealTime = [[UILabel alloc] init];
+    self.dealTime.font = [ThemeManager boldFontOfSize:13];
+    self.dealTime.textColor = [UIColor whiteColor];
+    self.dealTime.adjustsFontSizeToFitWidth = YES;
+    self.dealTime.textAlignment = NSTextAlignmentRight;
+    self.dealTime.numberOfLines = 0;
+    [self.venuePreviewView addSubview:self.dealTime];
     
     //    self.venueDescriptionBackground = [[UIView alloc] init];
     //    self.venueDescriptionBackground.backgroundColor = [UIColor whiteColor];
@@ -78,14 +87,8 @@
     self.venueDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*10];
     self.venueDescriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.venueDescriptionLabel.textColor = [UIColor blackColor];
-    self.venueDescriptionLabel.numberOfLines = 2;
+    self.venueDescriptionLabel.numberOfLines = 0;
     [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
-    
-    self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager boldFontOfSize:1.3*8];
-    self.distanceLabel.textColor = [UIColor blackColor];
-    self.distanceLabel.backgroundColor = [UIColor whiteColor];
-    [self.venuePreviewView addSubview:self.distanceLabel];
     
     //venuePreviewView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0];
     [self.venueScroll addSubview:self.venuePreviewView];
@@ -148,7 +151,12 @@
     self.venueDetailDealSecondLineLabel.numberOfLines = 0;
     [self.venueDetailView addSubview:self.venueDetailDealSecondLineLabel];
     
-
+    self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.font = [ThemeManager regularFontOfSize:11];
+    self.distanceLabel.textColor = [UIColor whiteColor];
+    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    [self.venueDetailView addSubview:self.distanceLabel];
+    
     [self.venueScroll addSubview:self.venueDetailView];
     
     
@@ -177,14 +185,14 @@
     self.venueLabel.height = 41;
     self.venueLabel.centerY = 69;
     
-    self.venueDetailLabel.width = .75 * self.venueDetailView.width;
+    self.venueDetailLabel.width = self.venueDetailView.size.width * .7;
     self.venueDetailLabel.x = 20;
     self.venueDetailLabel.height = 18;
     self.venueDetailLabel.y = 40;
     
-    self.venueDescriptionLabel.width = .75 * self.venueDetailView.width;
+    self.venueDescriptionLabel.width = .6 * self.venueDetailView.width;
     self.venueDescriptionLabel.x = 20;
-    self.venueDescriptionLabel.height = 18;
+    self.venueDescriptionLabel.height = 33;
     self.venueDescriptionLabel.y = 60;
     
     self.venueDetailDealHeadingLabel.width = 60;
@@ -202,6 +210,11 @@
     self.venueDetailDealSecondLineLabel.height = 16;
     self.venueDetailDealSecondLineLabel.y = 155;
     
+    self.dealTime.width = 200;
+    self.dealTime.height = 50;
+    self.dealTime.x = 105;
+    self.dealTime.y=150;
+    
     
 //    self.venueDescriptionBackground.width = self.width;
 //    self.venueDescriptionBackground.height = 37;
@@ -212,11 +225,11 @@
 //    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
     self.distanceLabel.size = CGSizeMake(35, 35);
-    self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-    self.distanceLabel.clipsToBounds = YES;
+    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    //self.distanceLabel.clipsToBounds = YES;
     self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-    self.distanceLabel.y = 11;
-    self.distanceLabel.right = self.contentView.width - 5;
+    self.distanceLabel.y = 88;
+    self.distanceLabel.centerX = self.venueDetailView.size.width - 49;
     
 }
 
@@ -231,9 +244,10 @@
     self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
     self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
-    //self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
-    self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-    self.venueDescriptionLabel.text = @"Classy whisky. Delicious food.";
+    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
+    //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
+    self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+    self.dealTime.text = self.deal.dealStartString;
     
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
     
@@ -250,8 +264,8 @@
     self.mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
     [self.mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
         //self.mapSnapshotImage = mapSnap.image;
-        UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 100, 15, 90, 90)];
-        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 90, 90)];
+        UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 85, 25, 70, 70)];
+        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
         [mapImageView setImage:mapSnap.image];
         CALayer *imageLayer = mapImageView.layer;
         [imageLayer setCornerRadius:mapView.size.width/2];
@@ -276,14 +290,15 @@
 
 - (NSString *)stringForDistance:(CLLocationDistance)distance
 {
-    CGFloat distanceMiles = METERS_TO_MILES*distance;
+ //   CGFloat distanceMiles = METERS_TO_MILES*distance;
     NSString *distanceString;
-    if (distanceMiles < 0.25) {
-        distanceString = [NSString stringWithFormat:@"%0.0fft", (floor((METERS_TO_FEET*distance)/10))*10];
-    }
-    else {
-        distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
-    }
+//    if (distanceMiles < 0.25) {
+//        distanceString = [NSString stringWithFormat:@"%0.0fft", (floor((METERS_TO_FEET*distance)/10))*10];
+//    }
+//    else {
+        //distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
+//    }
+    distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
     return distanceString;
 }
 

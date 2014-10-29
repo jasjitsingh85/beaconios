@@ -10,6 +10,7 @@
 #import "Venue.h"
 #import "DealHours.h"
 #import "NSDate+FormattedDate.h"
+#import <math.h>
 
 @implementation Deal
 
@@ -64,7 +65,45 @@
     comps.second = hours.start;
     date = [gregorian dateFromComponents:comps];
     NSString *startString = [date formattedTime];
-    return [NSString stringWithFormat:@"%@-%@", startString, endString];
+    return [NSString stringWithFormat:@"%@ - %@", startString, endString];
+}
+
+- (NSString *)dealStartString
+{
+    DealHours *hours = [self.hours firstObject];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents *now = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
+    
+    now.second = (60*60*now.hour) + (60*now.minute) + now.second;
+    
+    if (now.second > hours.start && now.second < hours.end) {
+        return @"Now";
+    } else if (now.second < hours.start) {
+        const float roundingValue = 0.5;
+        CGFloat timeTillDeal = (hours.start - now.second)/(60*60);
+        int multiplier = floor(timeTillDeal / roundingValue);
+        NSString *hourString;
+        if (timeTillDeal == 1) {
+            hourString = @"hour";
+        } else {
+            hourString = @"hours";
+        }
+        NSString *timeTillDealString = [NSString stringWithFormat: @"%.1f", (multiplier * roundingValue)];
+        return [NSString stringWithFormat: @"Starts in %@ %@", timeTillDealString, hourString];;
+    } else {
+        return @"";
+    }
+
+//    comps.hour = 0;
+//    comps.minute = 0;
+//    comps.second = hours.end;
+//    NSDate *date = [gregorian dateFromComponents:comps];
+//    NSString * endString = [date formattedTime];
+//    comps.second = hours.start;
+//    date = [gregorian dateFromComponents:comps];
+//    NSString *startString = [date formattedTime];
+//    return [NSString stringWithFormat:@"%@-%@", startString, endString];
 }
 
 @end
