@@ -198,14 +198,15 @@
             deal.venue.distance = [location distanceFromLocation:dealLocation];
             [deals addObject:deal];
         }
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
+        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
         self.events = events;
         if (self.events.count > 0) {
             self.hasEvents = YES;
         } else {
            self.hasEvents = NO;
         }
-        self.deals = [deals sortedArrayUsingDescriptors:@[sort]];
+        self.deals = deals;
+        //self.deals = [deals sortedArrayUsingDescriptors:@[sort]];
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {

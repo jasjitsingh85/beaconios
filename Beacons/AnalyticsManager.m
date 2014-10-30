@@ -64,7 +64,7 @@
 
 - (BOOL)userIsBlacklisted:(User *)user
 {
-    NSArray *blackListPhones = @[@"6176337532", @"5413359388", @"6695556969"];
+    NSArray *blackListPhones = @[@"6176337532", @"5413359388", @"6695556969", @"5551234567"];
     BOOL blackListed = user.normalizedPhoneNumber && [blackListPhones containsObject:user.normalizedPhoneNumber];
     return blackListed;
 }
