@@ -13,7 +13,9 @@
 @interface DealTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) UIImageView *venueImageView;
-@property (strong, nonatomic) UILabel *venueLabel;
+@property (strong, nonatomic) UIImageView *backgroundGradient;
+@property (strong, nonatomic) UILabel *venueLabelLineOne;
+@property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *venueDetailLabel;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *dealTime;

@@ -65,7 +65,7 @@
     comps.second = hours.start;
     date = [gregorian dateFromComponents:comps];
     NSString *startString = [date formattedTime];
-    return [NSString stringWithFormat:@"%@ - %@", startString, endString];
+    return [NSString stringWithFormat:@"%@-%@", startString, endString];
 }
 
 - (NSString *)dealStartString
@@ -90,7 +90,7 @@
             hourString = @"hours";
         }
         NSString *timeTillDealString = [NSString stringWithFormat: @"%.1f", (multiplier * roundingValue)];
-        return [NSString stringWithFormat: @"Starts in %@ %@", timeTillDealString, hourString];;
+        return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];;
     } else {
         return @"";
     }

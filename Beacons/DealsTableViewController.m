@@ -44,7 +44,8 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
@@ -251,9 +252,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.hasEvents && indexPath.row==0) {
-        return 197;
+        return 253;
     } else {
-        return 197;
+        return 203;
     }
 }
 
