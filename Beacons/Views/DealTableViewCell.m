@@ -98,12 +98,12 @@
     //    self.venueDescriptionBackground.backgroundColor = [UIColor whiteColor];
     //    [self.contentView addSubview:self.venueDescriptionBackground];
     
-    self.venueDescriptionLabel = [[UILabel alloc] init];
-    self.venueDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-    self.venueDescriptionLabel.textAlignment = NSTextAlignmentCenter;
-    self.venueDescriptionLabel.textColor = [UIColor blackColor];
-    self.venueDescriptionLabel.numberOfLines = 0;
-    [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
+//    self.venueDescriptionLabel = [[UILabel alloc] init];
+//    self.venueDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*10];
+//    self.venueDescriptionLabel.textAlignment = NSTextAlignmentCenter;
+//    self.venueDescriptionLabel.textColor = [UIColor blackColor];
+//    self.venueDescriptionLabel.numberOfLines = 0;
+//    [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
     
     //venuePreviewView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0];
     [self.venueScroll addSubview:self.venuePreviewView];
@@ -129,48 +129,48 @@
 //    self.venueDetailLabel.adjustsFontSizeToFitWidth = YES;
 //    [self.venueDetailLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueDetailLabel.textAlignment = NSTextAlignmentLeft;
-    self.venueDetailLabel.numberOfLines = 1;
+    self.venueDetailLabel.numberOfLines = 0;
     [self.venueDetailView addSubview:self.venueDetailLabel];
     
-    self.venueDescriptionLabel = [[UILabel alloc] init];
-    self.venueDescriptionLabel.font = [ThemeManager regularFontOfSize:13];
-    self.venueDescriptionLabel.textColor = [UIColor whiteColor];
-//    self.venueDescriptionLabel.adjustsFontSizeToFitWidth = YES;
-    self.venueDescriptionLabel.textAlignment = NSTextAlignmentLeft;
-    self.venueDescriptionLabel.numberOfLines = 0;
-    [self.venueDetailView addSubview:self.venueDescriptionLabel];
+//    self.venueDescriptionLabel = [[UILabel alloc] init];
+//    self.venueDescriptionLabel.font = [ThemeManager regularFontOfSize:13];
+//    self.venueDescriptionLabel.textColor = [UIColor whiteColor];
+////    self.venueDescriptionLabel.adjustsFontSizeToFitWidth = YES;
+//    self.venueDescriptionLabel.textAlignment = NSTextAlignmentLeft;
+//    self.venueDescriptionLabel.numberOfLines = 0;
+//    [self.venueDetailView addSubview:self.venueDescriptionLabel];
     
     self.venueDetailDealHeadingLabel = [[UILabel alloc] init];
-    self.venueDetailDealHeadingLabel.font = [ThemeManager boldFontOfSize:1.3*9];
-    self.venueDetailDealHeadingLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
+    self.venueDetailDealHeadingLabel.font = [ThemeManager boldFontOfSize:13];
+    self.venueDetailDealHeadingLabel.textColor = [UIColor whiteColor];
     self.venueDetailDealHeadingLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.85];
     self.venueDetailDealHeadingLabel.text = @"THE DEAL";
-    self.venueDetailDealHeadingLabel.adjustsFontSizeToFitWidth = YES;
+    //self.venueDetailDealHeadingLabel.adjustsFontSizeToFitWidth = YES;
     self.venueDetailDealHeadingLabel.textAlignment = NSTextAlignmentCenter;
-    self.venueDetailDealHeadingLabel.numberOfLines = 0;
+    self.venueDetailDealHeadingLabel.numberOfLines = 1;
     [self.venueDetailView addSubview:self.venueDetailDealHeadingLabel];
     
     self.venueDetailDealFirstLineLabel = [[UILabel alloc] init];
-    self.venueDetailDealFirstLineLabel.font = [ThemeManager regularFontOfSize:13];
+    self.venueDetailDealFirstLineLabel.font = [ThemeManager boldFontOfSize:14];
     self.venueDetailDealFirstLineLabel.textColor = [UIColor whiteColor];
-//    self.venueDetailDealFirstLineLabel.adjustsFontSizeToFitWidth = YES;
+    //self.venueDetailDealFirstLineLabel.adjustsFontSizeToFitWidth = YES;
     self.venueDetailDealFirstLineLabel.textAlignment = NSTextAlignmentLeft;
-    self.venueDetailDealFirstLineLabel.numberOfLines = 0;
+    self.venueDetailDealFirstLineLabel.numberOfLines = 1;
     [self.venueDetailView addSubview:self.venueDetailDealFirstLineLabel];
     
     self.venueDetailDealSecondLineLabel = [[UILabel alloc] init];
-    self.venueDetailDealSecondLineLabel.font = [ThemeManager regularFontOfSize:1.3*9];
-    self.venueDetailDealSecondLineLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:0.9];
+    self.venueDetailDealSecondLineLabel.font = [ThemeManager regularFontOfSize:12];
+    self.venueDetailDealSecondLineLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:.8];
 //    self.venueDetailDealSecondLineLabel.adjustsFontSizeToFitWidth = YES;
     self.venueDetailDealSecondLineLabel.textAlignment = NSTextAlignmentLeft;
     self.venueDetailDealSecondLineLabel.numberOfLines = 0;
     [self.venueDetailView addSubview:self.venueDetailDealSecondLineLabel];
     
-    self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager regularFontOfSize:11];
-    self.distanceLabel.textColor = [UIColor whiteColor];
-    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
-    [self.venueDetailView addSubview:self.distanceLabel];
+//    self.distanceLabel = [[UILabel alloc] init];
+//    self.distanceLabel.font = [ThemeManager regularFontOfSize:11];
+//    self.distanceLabel.textColor = [UIColor whiteColor];
+//    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+//    [self.venueDetailView addSubview:self.distanceLabel];
     
     [self.venueScroll addSubview:self.venueDetailView];
     
@@ -205,9 +205,9 @@
     self.venueLabelLineTwo.height = 46;
     self.venueLabelLineTwo.y = 103;
     
-    self.venueDetailLabel.width = self.venueDetailView.size.width * .7;
+    self.venueDetailLabel.width = self.venueDetailView.size.width * .65;
     self.venueDetailLabel.x = 10;
-    self.venueDetailLabel.height = 24;
+    self.venueDetailLabel.height = 58;
     self.venueDetailLabel.y = 20;
     
     self.venueDescriptionLabel.width = .6 * self.venueDetailView.width;
@@ -215,20 +215,20 @@
     self.venueDescriptionLabel.height = 33;
     self.venueDescriptionLabel.y = 60;
     
-    self.venueDetailDealHeadingLabel.width = 60;
-    self.venueDetailDealHeadingLabel.x = 20;
-    self.venueDetailDealHeadingLabel.height = 16;
-    self.venueDetailDealHeadingLabel.y = 115;
+    self.venueDetailDealHeadingLabel.width = 120;
+    self.venueDetailDealHeadingLabel.x = 0;
+    self.venueDetailDealHeadingLabel.height = 24;
+    self.venueDetailDealHeadingLabel.y = 90;
     
-    self.venueDetailDealFirstLineLabel.width = self.venueDetailView.width - 40;
-    self.venueDetailDealFirstLineLabel.x = 20;
-    self.venueDetailDealFirstLineLabel.height = 30;
-    self.venueDetailDealFirstLineLabel.y = 130;
+    self.venueDetailDealFirstLineLabel.width = self.venueDetailView.width - 20;
+    self.venueDetailDealFirstLineLabel.x = 10;
+    self.venueDetailDealFirstLineLabel.height = 40;
+    self.venueDetailDealFirstLineLabel.y = 120;
     
-    self.venueDetailDealSecondLineLabel.width = self.venueDetailView.width - 40;
-    self.venueDetailDealSecondLineLabel.x = 20;
+    self.venueDetailDealSecondLineLabel.width = self.venueDetailView.width - 20;
+    self.venueDetailDealSecondLineLabel.x = 10;
     self.venueDetailDealSecondLineLabel.height = 16;
-    self.venueDetailDealSecondLineLabel.y = 155;
+    self.venueDetailDealSecondLineLabel.y = 150;
     
     self.dealTime.width = 200;
     self.dealTime.height = 30;
@@ -244,12 +244,12 @@
 //    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
 //    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
-    self.distanceLabel.size = CGSizeMake(35, 35);
-    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-    //self.distanceLabel.clipsToBounds = YES;
-    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-    self.distanceLabel.y = 88;
-    self.distanceLabel.centerX = self.venueDetailView.size.width - 49;
+//    self.distanceLabel.size = CGSizeMake(35, 35);
+//    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+//    //self.distanceLabel.clipsToBounds = YES;
+//    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
+//    self.distanceLabel.y = 88;
+//    self.distanceLabel.centerX = self.venueDetailView.size.width - 49;
     
 }
 
@@ -263,8 +263,8 @@
     self.venueDetailLabel.text = [self.deal.venue.name uppercaseString];
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     self.descriptionLabel.text = self.deal.dealDescriptionShort;
-    self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
     self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
@@ -272,6 +272,7 @@
     self.dealTime.text = [self.deal.dealStartString uppercaseString];
     
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
+
     
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
     //    MKCoordinateSpan span;
@@ -309,6 +310,7 @@
         [mapView addSubview:mapImageView];
         [self.venueDetailView addSubview:mapView];
     }];
+    
 }
 
 - (NSString *)stringForDistance:(CLLocationDistance)distance

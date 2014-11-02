@@ -80,17 +80,27 @@
     if (now.second > hours.start && now.second < hours.end) {
         return @"Now";
     } else if (now.second < hours.start) {
-        const float roundingValue = 0.5;
+        //const float roundingValue = 0.5;
         CGFloat timeTillDeal = (hours.start - now.second)/(60*60);
-        int multiplier = floor(timeTillDeal / roundingValue);
+        timeTillDeal = round(timeTillDeal * 2.0)/2.0;
+        //int multiplier = floor(timeTillDeal / roundingValue);
         NSString *hourString;
         if (timeTillDeal == 1) {
             hourString = @"hour";
         } else {
             hourString = @"hours";
         }
-        NSString *timeTillDealString = [NSString stringWithFormat: @"%.1f", (multiplier * roundingValue)];
-        return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];;
+        if (timeTillDeal == 0) {
+            return @"Now";
+        } else {
+            if (timeTillDeal == (int)timeTillDeal) {
+                NSString *timeTillDealString = [NSString stringWithFormat: @"%i", (int)timeTillDeal];
+                return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];
+            } else {
+                NSString *timeTillDealString = [NSString stringWithFormat: @"%.1f", (timeTillDeal)];
+                return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];
+            }
+        }
     } else {
         return @"";
     }
@@ -105,5 +115,6 @@
 //    NSString *startString = [date formattedTime];
 //    return [NSString stringWithFormat:@"%@-%@", startString, endString];
 }
+
 
 @end

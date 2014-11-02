@@ -32,8 +32,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 
 @property (strong, nonatomic) UIView *dealDescriptionView;
 @property (strong, nonatomic) UIView *dealContentView;
+@property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UILabel *venueLabel;
+@property (strong, nonatomic) UILabel *venueLabelLineOne;
+@property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UIView *descriptionBackground;
 @property (strong, nonatomic) UILabel *descriptionLabel;
@@ -91,17 +93,35 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.imageView.clipsToBounds = YES;
     [self.dealContentView addSubview:self.imageView];
     
-    self.venueLabel = [[UILabel alloc] init];
-    self.venueLabel.width = self.view.width - 40;
-    self.venueLabel.centerX = self.view.width/2.0;
-    self.venueLabel.height = 92;
-    self.venueLabel.centerY = 80;
-    self.venueLabel.font = [ThemeManager boldFontOfSize:19*1.3];
-    self.venueLabel.textColor = [UIColor whiteColor];
-    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.venueLabel.textAlignment = NSTextAlignmentCenter;
-    self.venueLabel.numberOfLines = 0;
-    [self.dealContentView addSubview:self.venueLabel];
+    //    CGFloat originForVenuePreview = 0;
+    self.backgroundView = [[UIView alloc] initWithFrame:self.dealContentView.bounds];
+    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.dealContentView addSubview:self.backgroundView];
+    
+    self.venueLabelLineOne = [[UILabel alloc] init];
+    self.venueLabelLineOne.width = self.view.width - 20;
+    self.venueLabelLineOne.x = 10;
+    self.venueLabelLineOne.height = 24;
+    self.venueLabelLineOne.y = 68;
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:24];
+    self.venueLabelLineOne.textColor = [UIColor whiteColor];
+//    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
+    self.venueLabelLineOne.numberOfLines = 1;
+    [self.dealContentView addSubview:self.venueLabelLineOne];
+    
+    self.venueLabelLineTwo = [[UILabel alloc] init];
+    self.venueLabelLineTwo.width = self.view.width - 20;
+    self.venueLabelLineTwo.x = 10;
+    self.venueLabelLineTwo.height = 40;
+    self.venueLabelLineTwo.y = 86;
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:40];
+    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    self.venueLabelLineTwo.numberOfLines = 1;
+    [self.dealContentView addSubview:self.venueLabelLineTwo ];
     
     self.descriptionBackground = [[UIView alloc] init];
     self.descriptionBackground.size = CGSizeMake(self.view.width, self.dealContentView.height - self.imageView.height);
@@ -210,8 +230,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     _deal = deal;
     [self view];
     [self resetDate];
-    [self.imageView setImageWithURL:deal.venue.imageURL];
-    self.venueLabel.text = deal.venue.name;
+    [self.imageView sd_setImageWithURL:deal.venue.imageURL];
+    //self.venueLabelLineOne.text = deal.venue.name;
     self.descriptionLabel.text = deal.dealDescription;
     [self.descriptionLabel sizeToFit];
     self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
@@ -219,6 +239,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.descriptionBackground.height = self.descriptionLabel.height + 40;
     self.descriptionBackground.bottom = self.dealContentView.height;
     
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     self.descriptionDetailLabel = [[UILabel alloc] init];
     self.descriptionDetailLabel.width = self.view.width - 40;
     self.descriptionDetailLabel.font = [ThemeManager lightFontOfSize:1.3*11];
@@ -471,6 +494,40 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [textView resignFirstResponder];
     }
     return YES;
+}
+
+-(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
+{
+    NSMutableDictionary *firstAndSecondLine = [[NSMutableDictionary alloc] init];
+    NSArray *arrayOfStrings = [originalString componentsSeparatedByString:@" "];
+    if ([arrayOfStrings count] == 1) {
+        [firstAndSecondLine setObject:@"" forKey:@"firstLine"];
+        [firstAndSecondLine setObject:originalString forKey:@"secondLine"];
+    } else {
+        NSMutableString *firstLine = [[NSMutableString alloc] init];
+        NSMutableString *secondLine = [[NSMutableString alloc] init];
+        NSInteger firstLineCharCount = 0;
+        for (int i = 0; i < [arrayOfStrings count]; i++) {
+            if ((firstLineCharCount + [arrayOfStrings[i] length] < 12 && i + 1 != [arrayOfStrings count]) || i == 0) {
+                if ([firstLine  length] == 0) {
+                    [firstLine appendString:arrayOfStrings[i]];
+                } else {
+                    [firstLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+                firstLineCharCount = firstLineCharCount + [arrayOfStrings[i] length];
+            } else {
+                if ([secondLine length] == 0) {
+                    [secondLine appendString:arrayOfStrings[i]];
+                } else {
+                    [secondLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+            }
+        }
+        [firstAndSecondLine setObject:firstLine forKey:@"firstLine"];
+        [firstAndSecondLine setObject:secondLine forKey:@"secondLine"];
+    }
+    
+    return firstAndSecondLine;
 }
 
 @end
