@@ -14,7 +14,7 @@
 - (NSString *)formattedTime
 {
     NSDateFormatter *timeFormatter = [NSDateFormatter new];
-    timeFormatter.dateFormat = @"ha";
+    timeFormatter.dateFormat = @"h:mma";
     return [timeFormatter stringFromDate:self];
 }
 
