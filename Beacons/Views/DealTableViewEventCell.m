@@ -49,20 +49,8 @@
     self.eventScroll.delegate = self;
     [self.contentView addSubview:self.eventScroll];
     
-    self.eventHeader = [[UILabel alloc] init];
-    self.eventHeader.text = @"HAPPENING TONIGHT";
-    self.eventHeader.textColor = [UIColor whiteColor];
-    self.eventHeader.font = [ThemeManager boldFontOfSize:13];
-    self.eventHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
-    self.eventHeader.textAlignment = NSTextAlignmentCenter;
-    self.eventHeader.width = 170;
-    self.eventHeader.height = 24;
-    self.eventHeader.x = 0;
-    self.eventHeader.y = 25;
-    [self.contentView addSubview:self.eventHeader];
-    
     self.pageControl = [[UIPageControl alloc] init];
-    self.pageControl.hidesForSinglePage = YES;
+    self.pageControl.hidesForSinglePage = NO;
     self.pageControl.numberOfPages = events.count;
     self.pageControl.centerX = self.contentView.width/2;
     self.pageControl.y = 233;
@@ -101,6 +89,18 @@
         pageControlBackground.y = 196;
         pageControlBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
         [eventView addSubview:pageControlBackground];
+        
+        UILabel *eventHeader = [[UILabel alloc] init];
+        eventHeader.text = deal.todayOrTonightString;
+        eventHeader.textColor = [UIColor whiteColor];
+        eventHeader.font = [ThemeManager boldFontOfSize:13];
+        eventHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
+        eventHeader.textAlignment = NSTextAlignmentCenter;
+        eventHeader.width = 170;
+        eventHeader.height = 24;
+        eventHeader.x = 0;
+        eventHeader.y = 25;
+        [eventView addSubview:eventHeader];
         
         UILabel *dealInfo = [[UILabel alloc] init];
         dealInfo.width = eventView.size.width;

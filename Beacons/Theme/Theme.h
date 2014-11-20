@@ -21,6 +21,7 @@
 - (UIColor *)pinkColor;
 - (UIColor *)lightBlueColor;
 - (UIColor *)darkColor;
+- (UIColor *)brownColor;
 - (UIColor *)darkBlueColor;
 - (UIColor *)darkGreenColor;
 - (UIColor *)darkYellowColor;
@@ -39,6 +40,7 @@
 - (NSString *)italicFontName;
 - (NSString *)boldFontName;
 - (NSString *)titleFontName;
+- (NSString *)mediumFontName;
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics;
 - (NSDictionary *)navigationBarTitleAndTextAttributes;
 @end
@@ -56,5 +58,6 @@
 + (UIFont *)boldFontOfSize:(CGFloat)size;
 + (UIFont *)italicFontOfSize:(CGFloat)size;
 + (UIFont *)titleFontOfSize:(CGFloat)size;
++ (UIFont *)mediumFontOfSize:(CGFloat)size;
 
 @end

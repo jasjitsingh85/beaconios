@@ -91,4 +91,10 @@
     return [UIFont fontWithName:titleFontName size:size];
 }
 
++ (UIFont *)mediumFontOfSize:(CGFloat)size
+{
+    NSString *mediumFontName = [[self sharedTheme] mediumFontName];
+    return [UIFont fontWithName:mediumFontName size:size];
+}
+
 @end

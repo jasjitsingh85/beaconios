@@ -13,10 +13,10 @@
 
 @property (strong, nonatomic) UIView *thumbnailContainerView;
 @property (strong, nonatomic) UIImageView *thumbnailImageView;
-@property (strong, nonatomic) UILabel *beaconTitleLabel;
-@property (strong, nonatomic) UILabel *timeLabel;
-@property (strong, nonatomic) UILabel *distanceLabel;
-@property (strong, nonatomic) UILabel *inviteLabel;
+@property (strong, nonatomic) UILabel *firstLine;
+@property (strong, nonatomic) UILabel *secondLine;
+//@property (strong, nonatomic) UILabel *distanceLabel;
+//@property (strong, nonatomic) UILabel *inviteLabel;
 
 @property (strong, nonatomic) Beacon *beacon;
 

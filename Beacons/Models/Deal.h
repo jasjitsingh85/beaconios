@@ -27,6 +27,7 @@
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;
+@property (readonly) NSString *todayOrTonightString;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (BOOL)isAvailableAtDate:(NSDate *)date;

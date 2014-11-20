@@ -37,7 +37,7 @@
 
 - (UIColor *)blueColor
 {
-    return [UIColor unnormalizedColorWithRed:219 green:237 blue:240 alpha:255];
+    return [UIColor unnormalizedColorWithRed:60 green:181 blue:194 alpha:255];
 }
 
 - (UIColor *)lightBlueColor
@@ -48,6 +48,11 @@
 - (UIColor *)darkColor
 {
     return [UIColor unnormalizedColorWithRed:54 green:54 blue:57 alpha:255];
+}
+
+- (UIColor *)brownColor
+{
+    return [UIColor unnormalizedColorWithRed:43 green:46 blue:47 alpha:255];
 }
 
 - (UIColor *)pinkColor
@@ -144,6 +149,11 @@
 - (NSString *)boldFontName
 {
     return @"HelveticaNeue-Bold";
+}
+
+- (NSString *)mediumFontName
+{
+    return @"HelveticaNeue-Medium";
 }
 
 - (NSString *)italicFontName

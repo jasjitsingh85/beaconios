@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) UIScrollView *eventScroll;
 @property (strong, nonatomic) UIPageControl *pageControl;
-@property (strong, nonatomic) UILabel *eventHeader;
 
 @property (strong, nonatomic) NSArray *events;
 

@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
+@property (strong, nonatomic) UILabel *eventLabelLineOne;
+@property (strong, nonatomic) UILabel *eventLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UIView *descriptionBackground;
 @property (strong, nonatomic) UILabel *descriptionLabel;
@@ -81,13 +83,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 218)];
-    self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 210)];
+    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 253)];
+    self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 243)];
     [self.dealDescriptionView addSubview:self.dealContentView];
-    [self.dealContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+//    [self.dealContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
     self.imageView = [[UIImageView alloc] init];
-    self.imageView.height = 157;
+    self.imageView.height = self.dealDescriptionView.height - 10;
     self.imageView.width = self.view.width;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
@@ -104,7 +106,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.venueLabelLineOne.x = 10;
     self.venueLabelLineOne.height = 24;
     self.venueLabelLineOne.y = 68;
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:24];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
     self.venueLabelLineOne.textColor = [UIColor whiteColor];
 //    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
@@ -116,17 +118,37 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.venueLabelLineTwo.x = 10;
     self.venueLabelLineTwo.height = 40;
     self.venueLabelLineTwo.y = 86;
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:40];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:50];
     self.venueLabelLineTwo.textColor = [UIColor whiteColor];
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
     self.venueLabelLineTwo.numberOfLines = 1;
     [self.dealContentView addSubview:self.venueLabelLineTwo ];
     
+    self.eventLabelLineOne = [[UILabel alloc] init];
+    self.eventLabelLineOne.width = self.view.width - 20;
+    self.eventLabelLineOne.x = 10;
+    self.eventLabelLineOne.height = 24;
+    self.eventLabelLineOne.y = 68;
+    self.eventLabelLineOne.font = [ThemeManager boldFontOfSize:16];
+    self.eventLabelLineOne.textColor = [UIColor whiteColor];
+    //    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.eventLabelLineOne.textAlignment = NSTextAlignmentLeft;
+    self.eventLabelLineOne.numberOfLines = 1;
+    [self.dealContentView addSubview:self.eventLabelLineOne];
+    
+    self.eventLabelLineTwo = [[UILabel alloc] init];
+    self.eventLabelLineTwo.width = self.view.width - 20;
+    self.eventLabelLineTwo.font = [ThemeManager boldFontOfSize:30];
+    self.eventLabelLineTwo.textColor = [UIColor whiteColor];
+    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    [self.dealContentView addSubview:self.eventLabelLineTwo];
+    
     self.descriptionBackground = [[UIView alloc] init];
     self.descriptionBackground.size = CGSizeMake(self.view.width, self.dealContentView.height - self.imageView.height);
     self.descriptionBackground.bottom = self.dealContentView.height;
-    self.descriptionBackground.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.descriptionBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     [self.dealContentView addSubview:self.descriptionBackground];
     
     self.descriptionLabel = [[UILabel alloc] init];
@@ -139,10 +161,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.descriptionLabel.numberOfLines = 2;
     [self.descriptionBackground addSubview:self.descriptionLabel];
     
-    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 165)];
-    self.composeMessageContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 157)];
+    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
+    self.composeMessageContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 127)];
     self.composeMessageContentView.backgroundColor = [UIColor whiteColor];
-    [self.composeMessageContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+//    [self.composeMessageContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.composeMessageView addSubview:self.composeMessageContentView];
     
     self.composeMessageTitleLabel = [[UILabel alloc] init];
@@ -150,7 +172,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.composeMessageTitleLabel.x = 21;
     self.composeMessageTitleLabel.width = self.composeMessageContentView.width - self.composeMessageTitleLabel.x;
     self.composeMessageTitleLabel.text = @"Message to friends:";
-    self.composeMessageTitleLabel.textColor = [UIColor blackColor];
+    self.composeMessageTitleLabel.textColor = [[ThemeManager sharedTheme] brownColor];
     self.composeMessageTitleLabel.font = [ThemeManager regularFontOfSize:1.3*11];
     [self.composeMessageContentView addSubview:self.composeMessageTitleLabel];
     
@@ -163,11 +185,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.composeMessageContentView.width;
-    self.composeMessageTextView.height = 117;
+    self.composeMessageTextView.height = 77;
     self.composeMessageTextView.bottom = self.composeMessageContentView.height;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
     self.composeMessageTextView.font = [ThemeManager regularFontOfSize:1.3*11];
-    self.composeMessageTextView.textColor = [UIColor blackColor];
+//    self.composeMessageTextView.textColor = [UIColor blackColor];
+    self.composeMessageTextView.textColor = [[ThemeManager sharedTheme] brownColor];
     self.composeMessageTextView.delegate = self;
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.composeMessageContentView addSubview:self.composeMessageTextView];
@@ -175,7 +198,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
     self.dateContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dateView.width, 47)];
     self.dateContentView.backgroundColor = [UIColor whiteColor];
-    [self.dateContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+//    [self.dateContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.dateView addSubview:self.dateContentView];
     
     self.dateTitleLabel = [[UILabel alloc] init];
@@ -195,12 +218,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.dateLabel.font = self.dateTitleLabel.font;
     [self.dateContentView addSubview:self.dateLabel];
     
-    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 54)];
+    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.inviteFriendsButton.size = CGSizeMake(250, 35);
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
     self.inviteFriendsButton.centerY = self.inviteFriendsView.height/2.0;
-    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
     [self.inviteFriendsButton setTitle:@"Select Friends" forState:UIControlStateNormal];
     UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
     [self.inviteFriendsButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
@@ -239,9 +262,40 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.descriptionBackground.height = self.descriptionLabel.height + 40;
     self.descriptionBackground.bottom = self.dealContentView.height;
     
-    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
-    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    if ([deal.dealType  isEqual: @"DT"]) {
+        self.venueLabelLineTwo.y = self.dealContentView.height - self.descriptionBackground.height - 45;
+        self.venueLabelLineTwo.x = 5;
+        self.venueLabelLineOne.y = self.venueLabelLineTwo.y - 20;
+        self.venueLabelLineOne.x = 5;
+        
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    } else {
+        self.eventLabelLineOne.text = [[NSString stringWithFormat:@"%@ @ %@", deal.hoursAvailableString, deal.venue.name] uppercaseString];
+        self.eventLabelLineOne.y = 15;
+        self.eventLabelLineOne.x = 5;
+        
+        self.eventLabelLineTwo.width = self.dealDescriptionView.width - 10;
+        self.eventLabelLineTwo.height = 140;
+        self.eventLabelLineTwo.numberOfLines = 0;
+        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.eventLabelLineTwo.text];
+        NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
+        paragrahStyle.lineSpacing = 1.f;
+        paragrahStyle.paragraphSpacing = 1.f;
+        paragrahStyle.paragraphSpacingBefore = 1.f;
+        paragrahStyle.maximumLineHeight = 28.f;
+        //[paragrahStyle setLineSpacing:1.f];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0, [self.eventLabelLineTwo.text length])];
+        self.eventLabelLineTwo.attributedText = attributedString ;
+//        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
+        self.eventLabelLineTwo.y = 35;
+        self.eventLabelLineTwo.x = 5;
+        //[self.eventLabelLineTwo sizeToFit];
+    }
+    
+    
     self.descriptionDetailLabel = [[UILabel alloc] init];
     self.descriptionDetailLabel.width = self.view.width - 40;
     self.descriptionDetailLabel.font = [ThemeManager lightFontOfSize:1.3*11];
@@ -255,6 +309,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
     
+    NSLog(@"%@",deal.dealType);
+        
     [self.tableView reloadData];
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
@@ -437,7 +493,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == DealSectionDescription) {
-        [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        if ([self.deal.dealType isEqual:@"DT"]) {
+            [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];   
+        }
     }
     else if (indexPath.row == DealSectionTime) {
         [self showDatePicker];

@@ -68,6 +68,16 @@
     return [NSString stringWithFormat:@"%@-%@", startString, endString];
 }
 
+- (NSString *)todayOrTonightString
+{
+    DealHours *hours = [self.hours firstObject];
+    if (hours.start <= 64800) {
+        return @"HAPPENING TODAY";
+    } else {
+        return @"HAPPENING TONIGHT";
+    }
+}
+
 - (NSString *)dealStartString
 {
     DealHours *hours = [self.hours firstObject];
