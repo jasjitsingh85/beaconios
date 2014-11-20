@@ -98,8 +98,8 @@
 {
     [super viewDidLoad];
     
-    UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
-    self.view.backgroundColor = boneWhiteColor;
+    //UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self addChildViewController:self.dealRedemptionViewController];
     [self.view addSubview:self.dealRedemptionViewController.view];
@@ -111,7 +111,7 @@
     self.beaconChatViewController.view.frame = self.view.bounds;
     self.beaconChatViewController.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.beaconChatViewController.cameraButton addTarget:self action:@selector(chatCameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.beaconChatViewController.tableView.backgroundColor = boneWhiteColor;
+    self.beaconChatViewController.tableView.backgroundColor = [UIColor   whiteColor];
     self.beaconChatViewController.textViewContainer.backgroundColor = [UIColor clearColor];
     self.beaconChatViewController.textViewContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.beaconChatViewController.textViewContainer setShadowWithColor:[UIColor whiteColor] opacity:1 radius:5.0 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
@@ -120,7 +120,7 @@
     [self.view addSubview:self.inviteListViewController.view];
     self.inviteListViewController.view.frame = self.view.bounds;
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.inviteListViewController.view.backgroundColor = boneWhiteColor;
+    self.inviteListViewController.view.backgroundColor = [UIColor whiteColor];
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
     self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
