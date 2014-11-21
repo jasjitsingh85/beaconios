@@ -112,7 +112,7 @@
     self.menuButton.backgroundColor = [UIColor clearColor];
     self.menuButton.layer.cornerRadius = 0;
     self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.menuButton.titleLabel.font = [ThemeManager mediumFontOfSize:20];
+    self.menuButton.titleLabel.font = [ThemeManager regularFontOfSize:20];
     self.menuButton.selected = NO;
 }
 

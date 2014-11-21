@@ -224,13 +224,14 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
     self.inviteFriendsButton.centerY = self.inviteFriendsView.height/2.0;
     self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    [self.inviteFriendsButton setTitle:@"Select Friends" forState:UIControlStateNormal];
+    [self.inviteFriendsButton setTitle:@"SELECT FRIENDS" forState:UIControlStateNormal];
     UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
     [self.inviteFriendsButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
-    self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 50.), 0., 0.);
+    self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
-    self.inviteFriendsButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
+    self.inviteFriendsButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.inviteFriendsView addSubview:self.inviteFriendsButton];

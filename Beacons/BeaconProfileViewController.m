@@ -242,12 +242,12 @@
     [self.descriptionView addSubview:self.joinButton];
     
     self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteButton.frame = CGRectMake(0, 150, 190, 26);
-    [self.inviteButton setTitle:@"TEXT MORE FRIENDS" forState:UIControlStateNormal];
+    self.inviteButton.frame = CGRectMake(0, 150, 160, 26);
+    [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
     self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.inviteButton.centerX = self.descriptionView.width/2;
-    [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
     self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
 //    self.inviteButton.layer.cornerRadius = 4;
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -327,11 +327,11 @@
     if (dealMode) {
         self.dealButton.size = CGSizeMake(40, 22);
         self.dealButton.x = self.descriptionView.size.width/6.0 - 20;
-        self.dealButton.bottom = self.descriptionView.height - 21;
+        self.dealButton.bottom = self.descriptionView.height - 18;
         [self.descriptionView addSubview:self.dealButton];
         
         UILabel *dealButtonLabel = [[UILabel alloc]init];
-        dealButtonLabel.bottom = self.descriptionView.height - 19;
+        dealButtonLabel.bottom = self.descriptionView.height - 17;
         dealButtonLabel.x = 0;
         dealButtonLabel.width = self.descriptionView.size.width/3;
         dealButtonLabel.height = 12;
@@ -343,11 +343,11 @@
         
         self.chatTabButton.size = CGSizeMake(30, 25);
         self.chatTabButton.x = self.dealButton.x + self.descriptionView.width/3.0 + 5;
-        self.chatTabButton.bottom = self.descriptionView.height - 20;
+        self.chatTabButton.bottom = self.descriptionView.height - 18;
         [self.descriptionView addSubview:self.dealButton];
         
         UILabel *chatButtonLabel = [[UILabel alloc]init];
-        chatButtonLabel.bottom = self.descriptionView.height - 19;
+        chatButtonLabel.bottom = self.descriptionView.height - 17;
         chatButtonLabel.x = self.descriptionView.size.width/3;
         chatButtonLabel.width = self.descriptionView.size.width/3;
         chatButtonLabel.height = 12;
@@ -359,11 +359,11 @@
         
         self.inviteTabButton.size = CGSizeMake(40, 25);
         self.inviteTabButton.x = self.dealButton.x + (2 * self.descriptionView.width/3.0);
-        self.inviteTabButton.bottom = self.descriptionView.height - 20;
+        self.inviteTabButton.bottom = self.descriptionView.height - 18;
         [self.descriptionView addSubview:self.inviteTabButton];
         
         UILabel *inviteButtonLabel = [[UILabel alloc]init];
-        inviteButtonLabel.bottom = self.descriptionView.height - 19;
+        inviteButtonLabel.bottom = self.descriptionView.height - 16;
         inviteButtonLabel.x = 2 * self.descriptionView.size.width/3 + 1;
         inviteButtonLabel.width = self.descriptionView.size.width/3;
         inviteButtonLabel.height = 12;

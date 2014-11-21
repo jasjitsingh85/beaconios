@@ -45,7 +45,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.title = @"Groups";
+    self.navigationItem.title = @"GROUPS";
     
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:NO];
     [[ContactManager sharedManager] getGroups:^(NSArray *groups) {

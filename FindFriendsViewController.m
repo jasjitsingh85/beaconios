@@ -127,9 +127,10 @@
     self.inviteButton.size = CGSizeMake(249, 35);
     self.inviteButton.centerX = inviteButtonBackground.width/2.0;
     self.inviteButton.centerY = inviteButtonBackground.height/2.0;
-    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    self.inviteButton.titleLabel.font = [ThemeManager regularFontOfSize:1.3*15];
+    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    self.inviteButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
     [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [inviteButtonBackground addSubview:self.inviteButton];
     [self updateInviteButtonText:nil];
@@ -154,7 +155,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Select Friends"];
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
+    navTitleLabel.backgroundColor = [UIColor clearColor];
+    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
+    navTitleLabel.textAlignment = NSTextAlignmentCenter;
+    navTitleLabel.textColor = [UIColor whiteColor];
+    navTitleLabel.text = @"SELECT FRIENDS";
+    self.navigationItem.titleView = navTitleLabel;
     if (self.deal) {
         [self updateNavTitleForDeal:self.deal];
     }
@@ -196,7 +204,23 @@
 
 - (void)updateNavTitleForDeal:(Deal *)deal
 {
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"Select %@ Friends!", deal.inviteRequirement]];
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
+    navTitleLabel.backgroundColor = [UIColor clearColor];
+    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
+    navTitleLabel.textAlignment = NSTextAlignmentCenter;
+    navTitleLabel.textColor = [UIColor whiteColor];
+    NSString *navTitle = [[NSString alloc] init];
+    if (deal.inviteRequirement.integerValue == 1) {
+        navTitle = [NSString stringWithFormat:@"SELECT %@ FRIEND", deal.inviteRequirement];
+    } else {
+        navTitle = [NSString stringWithFormat:@"SELECT %@ FRIENDS", deal.inviteRequirement];
+    }
+    navTitleLabel.text = navTitle;
+    self.navigationItem.titleView = navTitleLabel;
+    
+    
+//    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"SELECT %@ FRIENDS!", deal.inviteRequirement]];
 }
 
 - (void)populateContacts
@@ -316,7 +340,7 @@
         [self updateInviteButtonTextForDeal:lastSelectedContact];
         return;
     }
-    NSString *inviteButtonText = @"Invite";
+    NSString *inviteButtonText = @"TEXT FRIENDS";
     if (self.selectedContactDictionary.count) {
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
@@ -329,15 +353,16 @@
         }
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
+    self.inviteButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
 }
 
 - (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
 {
-    [self.inviteButton setTitle:@"Unlock Deal" forState:UIControlStateNormal];
+    [self.inviteButton setTitle:@"UNLOCK DEAL" forState:UIControlStateNormal];
     
     UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
     [self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
-    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 55.), 0., 0.);
+    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     
 }
 
