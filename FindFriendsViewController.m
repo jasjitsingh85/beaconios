@@ -241,20 +241,20 @@
 - (void)reloadData
 {
     NSArray *allContacts = self.contactDictionary.allValues;
+    NSPredicate *allUsersPredicate = [NSPredicate predicateWithFormat:@"isAllUser = %d", YES];
+    self.usersInContactsList = [allContacts filteredArrayUsingPredicate:allUsersPredicate];
     //separate users and nonusers
     NSPredicate *recentPredicate = [NSPredicate predicateWithFormat:@"isRecent = %d", YES];
     self.recentsList = [allContacts filteredArrayUsingPredicate:recentPredicate];
     NSPredicate *suggestedPredicate = [NSPredicate predicateWithFormat:@"isSuggested = %d && isRecent = %d",YES, NO];
     self.suggestedList = [allContacts filteredArrayUsingPredicate:suggestedPredicate];
-    NSPredicate *allUsersPredicate = [NSPredicate predicateWithFormat:@"isAllUser = %d", YES];
-    self.usersInContactsList = [allContacts filteredArrayUsingPredicate:allUsersPredicate];
     self.nonSuggestedList = allContacts;
     
     //sort both lists by name
     NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
+    self.usersInContactsList = [self.usersInContactsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.recentsList = [self.recentsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.suggestedList = [self.suggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
-    self.usersInContactsList = [self.usersInContactsList sortedArrayUsingDescriptors:@[sortDescriptor]];
     self.nonSuggestedList = [self.nonSuggestedList sortedArrayUsingDescriptors:@[sortDescriptor]];
     [self.tableView reloadData];
 }

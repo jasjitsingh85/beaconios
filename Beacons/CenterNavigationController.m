@@ -111,6 +111,8 @@
     [self.menuButton setTitle:nil forState:UIControlStateNormal];
     self.menuButton.backgroundColor = [UIColor clearColor];
     self.menuButton.layer.cornerRadius = 0;
+    self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.menuButton.titleLabel.font = [ThemeManager mediumFontOfSize:20];
     self.menuButton.selected = NO;
 }
 
@@ -120,6 +122,7 @@
     [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateSelected];
     [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateSelected];
     self.menuButton.backgroundColor = [UIColor whiteColor];
+    self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.menuButton.layer.cornerRadius = 9;
     self.menuButton.selected = YES;
 }
