@@ -55,13 +55,14 @@
 @property (strong, nonatomic) BounceButton *inviteTabButton;
 @property (strong, nonatomic) BounceButton *dealButton;
 @property (strong, nonatomic) UILabel *timeLabel;
-@property (strong, nonatomic) UILabel *descriptionLabel;
+@property (strong, nonatomic) UILabel *descriptionLabelLineOne;
+@property (strong, nonatomic) UILabel *descriptionLabelLineTwo;
 @property (strong, nonatomic) UILabel *locationLabel;
 @property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
 @property (strong, nonatomic) UIButton *inviteButton;
-@property (strong, nonatomic) UIButton *directionsButton;
-@property (strong, nonatomic) UIButton *editButton;
+//@property (strong, nonatomic) UIButton *directionsButton;
+//@property (strong, nonatomic) UIButton *editButton;
 @property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @property (assign, nonatomic) BOOL keyboardShown;
@@ -123,18 +124,24 @@
     self.inviteListViewController.view.backgroundColor = [UIColor whiteColor];
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
-    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
+//    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
     [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
     [self.view addSubview:self.descriptionView];
     self.fullDescriptionViewShown = YES;
     
-    self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 124)];
+    self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 240)];
     self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
     imageTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imageTap];
     self.imageView.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.imageView];
+    
+    UIView *backgroundView = [[UIView alloc] initWithFrame:self.descriptionView.bounds];
+    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.descriptionView addSubview:backgroundView];
+    
     [self updateChatDesiredInsets];
     
     self.chatTabButton = [BounceButton buttonWithType:UIButtonTypeCustom];
@@ -174,18 +181,36 @@
     self.imageViewGradient.frame = backgroundGradientFrame;
     [self.imageView addSubview:self.imageViewGradient];
     
+    UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
+    backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
+    backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
+    backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.imageView addSubview:backgroundViewBlack];
+    [self.imageView addSubview:backgroundViewOrange];
+    
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 72, 214, 23)];
     self.timeLabel.font = [ThemeManager lightFontOfSize:1.3*17];
     [self.timeLabel setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1.0 offset:CGSizeMake(0, 1.0) shouldDrawPath:NO];
     self.timeLabel.textColor = [UIColor whiteColor];
     [self.imageView addSubview:self.timeLabel];
     
-    self.descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 94, 264, 25)];
-    self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabel.font = [ThemeManager lightFontOfSize:1.3*17];
-    [self.descriptionLabel setShadowWithColor:[UIColor blackColor] opacity:0.7 radius:1.0 offset:CGSizeMake(0, 1.0) shouldDrawPath:NO];
-    self.descriptionLabel.textColor = [UIColor whiteColor];
-    [self.imageView addSubview:self.descriptionLabel];
+    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, self.descriptionView.width, 30)];
+//    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:30];
+    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+    self.descriptionLabelLineOne.numberOfLines = 1;
+    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionView addSubview:self.descriptionLabelLineOne];
+    
+    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, self.descriptionView.width, 46)];
+    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
+    self.descriptionLabelLineTwo.numberOfLines = 1;
+    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
     
     self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 132, 160, 14)];
     self.locationLabel.font = [ThemeManager regularFontOfSize:13];
@@ -223,17 +248,17 @@
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteButton];
     
-    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
-    CGRect directionsButtonFrame = CGRectZero;
-    directionsButtonFrame.size = directionsImage.size;
-    self.directionsButton.frame = directionsButtonFrame;
-    [self.directionsButton setImage:directionsImage forState:UIControlStateNormal];
-    [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
-    [self.descriptionView addSubview:self.directionsButton];
-    
-    self.editButton = [UIButton navButtonWithTitle:@"Edit"];
-    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
+//    CGRect directionsButtonFrame = CGRectZero;
+//    directionsButtonFrame.size = directionsImage.size;
+//    self.directionsButton.frame = directionsButtonFrame;
+//    [self.directionsButton setImage:directionsImage forState:UIControlStateNormal];
+//    [self.directionsButton addTarget:self action:@selector(getDirectionsToBeacon) forControlEvents:UIControlEventTouchUpInside];
+//    [self.descriptionView addSubview:self.directionsButton];
+//    
+//    self.editButton = [UIButton navButtonWithTitle:@"Edit"];
+//    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     
     UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
@@ -257,7 +282,7 @@
     [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
     
     if (self.beacon) {
-        self.editButton.hidden = !self.beacon.isUserBeacon;
+//        self.editButton.hidden = !self.beacon.isUserBeacon;
     }
     
     if (self.openToInviteView) {
@@ -286,8 +311,8 @@
     [self updateInviteListInsets];
     [self updateChatDesiredInsets];
     [self updateDealRedemptionInsets];
-    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
-    self.navigationItem.rightBarButtonItem = editButtonItem;
+//    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
+//    self.navigationItem.rightBarButtonItem = editButtonItem;
 }
 
 - (void)setDealMode:(BOOL)dealMode
@@ -295,20 +320,53 @@
     [self view];
     _dealMode = dealMode;
     if (dealMode) {
-        CGSize buttonSize = CGSizeMake(self.descriptionView.width/3.0, 42);
-        self.dealButton.size = buttonSize;
-        self.dealButton.bottom = self.descriptionView.height;
+        self.dealButton.size = CGSizeMake(40, 22);
+        self.dealButton.x = self.descriptionView.size.width/6.0 - 20;
+        self.dealButton.bottom = self.descriptionView.height - 21;
         [self.descriptionView addSubview:self.dealButton];
         
-        self.chatTabButton.size = buttonSize;
-        self.chatTabButton.x = self.dealButton.right;
-        self.chatTabButton.bottom = self.descriptionView.height;
+        UILabel *dealButtonLabel = [[UILabel alloc]init];
+        dealButtonLabel.bottom = self.descriptionView.height - 19;
+        dealButtonLabel.x = 0;
+        dealButtonLabel.width = self.descriptionView.size.width/3;
+        dealButtonLabel.height = 12;
+        dealButtonLabel.textAlignment = NSTextAlignmentCenter;
+        dealButtonLabel.font = [ThemeManager boldFontOfSize:10];
+        dealButtonLabel.textColor = [UIColor whiteColor];
+        dealButtonLabel.text = @"DEALS";
+        [self.descriptionView addSubview:dealButtonLabel];
+        
+        self.chatTabButton.size = CGSizeMake(30, 25);
+        self.chatTabButton.x = self.dealButton.x + self.descriptionView.width/3.0 + 5;
+        self.chatTabButton.bottom = self.descriptionView.height - 20;
         [self.descriptionView addSubview:self.dealButton];
         
-        self.inviteTabButton.size = buttonSize;
-        self.inviteTabButton.x = self.chatTabButton.right;
-        self.inviteTabButton.bottom = self.descriptionView.height;
+        UILabel *chatButtonLabel = [[UILabel alloc]init];
+        chatButtonLabel.bottom = self.descriptionView.height - 19;
+        chatButtonLabel.x = self.descriptionView.size.width/3;
+        chatButtonLabel.width = self.descriptionView.size.width/3;
+        chatButtonLabel.height = 12;
+        chatButtonLabel.textAlignment = NSTextAlignmentCenter;
+        chatButtonLabel.font = [ThemeManager boldFontOfSize:10];
+        chatButtonLabel.textColor = [UIColor whiteColor];
+        chatButtonLabel.text = @"MESSAGES";
+        [self.descriptionView addSubview:chatButtonLabel];
+        
+        self.inviteTabButton.size = CGSizeMake(40, 25);
+        self.inviteTabButton.x = self.dealButton.x + (2 * self.descriptionView.width/3.0);
+        self.inviteTabButton.bottom = self.descriptionView.height - 20;
         [self.descriptionView addSubview:self.inviteTabButton];
+        
+        UILabel *inviteButtonLabel = [[UILabel alloc]init];
+        inviteButtonLabel.bottom = self.descriptionView.height - 19;
+        inviteButtonLabel.x = 2 * self.descriptionView.size.width/3 + 1;
+        inviteButtonLabel.width = self.descriptionView.size.width/3;
+        inviteButtonLabel.height = 12;
+        inviteButtonLabel.textAlignment = NSTextAlignmentCenter;
+        inviteButtonLabel.font = [ThemeManager boldFontOfSize:10];
+        inviteButtonLabel.textColor = [UIColor whiteColor];
+        inviteButtonLabel.text = @"INVITEES";
+        [self.descriptionView addSubview:inviteButtonLabel];
     }
     else {
         CGRect chatTabButtonFrame;
@@ -346,22 +404,24 @@
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
     self.timeLabel.text = beacon.time.shortFormattedDate;
-    self.descriptionLabel.text = beacon.beaconDescription;
+    NSMutableDictionary *dealTitle = [self parseStringIntoTwoLines:self.beacon.deal.dealDescriptionShort];
+    self.descriptionLabelLineOne.text = [[dealTitle objectForKey:@"firstLine"] uppercaseString];
+    self.descriptionLabelLineTwo.text = [[dealTitle objectForKey:@"secondLine"] uppercaseString];
     if (beacon.address) {
         self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:beacon.address
                                                                             attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
     }
     if (self.locationLabel.text) {
-        self.directionsButton.hidden = NO;
-        CGRect directionsButtonFrame = self.directionsButton.frame;
+//        self.directionsButton.hidden = NO;
+//        CGRect directionsButtonFrame = self.directionsButton.frame;
         CGFloat textWidth = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width;
         textWidth = MIN(textWidth, self.locationLabel.frame.size.width);
-        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + textWidth + 8;
-        directionsButtonFrame.origin.y = CGRectGetMinY(self.locationLabel.frame) + 0.5*(self.locationLabel.frame.size.height - directionsButtonFrame.size.height);
-        self.directionsButton.frame = directionsButtonFrame;
+//        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + textWidth + 8;
+//        directionsButtonFrame.origin.y = CGRectGetMinY(self.locationLabel.frame) + 0.5*(self.locationLabel.frame.size.height - directionsButtonFrame.size.height);
+//        self.directionsButton.frame = directionsButtonFrame;
     }
     else {
-        self.directionsButton.hidden = YES;
+//        self.directionsButton.hidden = YES;
     }
     [self updateInvitedLabel];
     
@@ -369,7 +429,7 @@
     
     self.joinButton.hidden = beacon.userAttending;
     self.inviteButton.hidden = !beacon.userAttending;
-    self.editButton.hidden = !beacon.isUserBeacon;
+//    self.editButton.hidden = !beacon.isUserBeacon;
     
     if (beacon.deal) {
         self.dealMode = YES;
@@ -874,6 +934,40 @@
     }
     [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];
+}
+
+-(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
+{
+    NSMutableDictionary *firstAndSecondLine = [[NSMutableDictionary alloc] init];
+    NSArray *arrayOfStrings = [originalString componentsSeparatedByString:@" "];
+    if ([arrayOfStrings count] == 1) {
+        [firstAndSecondLine setObject:@"" forKey:@"firstLine"];
+        [firstAndSecondLine setObject:originalString forKey:@"secondLine"];
+    } else {
+        NSMutableString *firstLine = [[NSMutableString alloc] init];
+        NSMutableString *secondLine = [[NSMutableString alloc] init];
+        NSInteger firstLineCharCount = 0;
+        for (int i = 0; i < [arrayOfStrings count]; i++) {
+            if ((firstLineCharCount + [arrayOfStrings[i] length] < 12 && i + 1 != [arrayOfStrings count]) || i == 0) {
+                if ([firstLine  length] == 0) {
+                    [firstLine appendString:arrayOfStrings[i]];
+                } else {
+                    [firstLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+                firstLineCharCount = firstLineCharCount + [arrayOfStrings[i] length];
+            } else {
+                if ([secondLine length] == 0) {
+                    [secondLine appendString:arrayOfStrings[i]];
+                } else {
+                    [secondLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+            }
+        }
+        [firstAndSecondLine setObject:firstLine forKey:@"firstLine"];
+        [firstAndSecondLine setObject:secondLine forKey:@"secondLine"];
+    }
+    
+    return firstAndSecondLine;
 }
 
 
