@@ -58,7 +58,7 @@
 @property (strong, nonatomic) UILabel *descriptionLabelLineOne;
 @property (strong, nonatomic) UILabel *descriptionLabelLineTwo;
 @property (strong, nonatomic) UILabel *locationLabel;
-@property (strong, nonatomic) UILabel *invitedLabel;
+//@property (strong, nonatomic) UILabel *invitedLabel;
 @property (strong, nonatomic) UIButton *joinButton;
 @property (strong, nonatomic) UIButton *inviteButton;
 //@property (strong, nonatomic) UIButton *directionsButton;
@@ -190,13 +190,12 @@
     [self.imageView addSubview:backgroundViewBlack];
     [self.imageView addSubview:backgroundViewOrange];
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 72, 214, 23)];
-    self.timeLabel.font = [ThemeManager lightFontOfSize:1.3*17];
-    [self.timeLabel setShadowWithColor:[UIColor blackColor] opacity:0.9 radius:1.0 offset:CGSizeMake(0, 1.0) shouldDrawPath:NO];
+    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
+    self.timeLabel.font = [ThemeManager boldFontOfSize:22];
     self.timeLabel.textColor = [UIColor whiteColor];
-    [self.imageView addSubview:self.timeLabel];
+    [self.descriptionView addSubview:self.timeLabel];
     
-    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 25, self.descriptionView.width, 30)];
+    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, self.descriptionView.width, 30)];
 //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:30];
     self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
@@ -204,7 +203,7 @@
     self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
     [self.descriptionView addSubview:self.descriptionLabelLineOne];
     
-    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, self.descriptionView.width, 46)];
+    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, self.descriptionView.width, 46)];
     //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
     self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
@@ -212,8 +211,8 @@
     self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
     [self.descriptionView addSubview:self.descriptionLabelLineTwo];
     
-    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 132, 160, 14)];
-    self.locationLabel.font = [ThemeManager regularFontOfSize:13];
+    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 83, self.descriptionView.width, 30)];
+    self.locationLabel.font = [ThemeManager boldFontOfSize:30];
     self.locationLabel.textColor = [UIColor whiteColor];
     [self.descriptionView addSubview:self.locationLabel];
     UITapGestureRecognizer *locationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon)];
@@ -221,30 +220,36 @@
     [self.locationLabel addGestureRecognizer:locationTap];
     self.locationLabel.userInteractionEnabled = YES;
     
-    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 158, 194, 14)];
-    self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
-    self.invitedLabel.textColor = [UIColor whiteColor];
-    UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteLabelTouched:)];
-    invitedTap.numberOfTapsRequired = YES;
-    [self.invitedLabel addGestureRecognizer:invitedTap];
-    self.invitedLabel.userInteractionEnabled = YES;
-    [self.descriptionView addSubview:self.invitedLabel];
+//    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 158, 194, 14)];
+//    self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
+//    self.invitedLabel.textColor = [UIColor whiteColor];
+//    UITapGestureRecognizer *invitedTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteLabelTouched:)];
+//    invitedTap.numberOfTapsRequired = YES;
+//    [self.invitedLabel addGestureRecognizer:invitedTap];
+//    self.invitedLabel.userInteractionEnabled = YES;
+//    [self.descriptionView addSubview:self.invitedLabel];
     
     self.joinButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.joinButton.frame = CGRectMake(226, 139, 73, 31);
-    [self.joinButton setTitle:@"Join" forState:UIControlStateNormal];
-    [self.joinButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    self.joinButton.backgroundColor = [UIColor whiteColor];
-    self.joinButton.layer.cornerRadius = 4;
+    self.joinButton.frame = CGRectMake(0, 150, 70, 26);
+    [self.joinButton setTitle:@"JOIN" forState:UIControlStateNormal];
+    [self.joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.joinButton.centerX = self.descriptionView.width/2;
+    self.joinButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.joinButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.joinButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
+//    self.joinButton.layer.cornerRadius = 4;
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
     
     self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteButton.frame = self.joinButton.frame;
-    [self.inviteButton setTitle:@"Invite" forState:UIControlStateNormal];
-    [self.inviteButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    self.inviteButton.backgroundColor = [UIColor whiteColor];
-    self.inviteButton.layer.cornerRadius = 4;
+    self.inviteButton.frame = CGRectMake(0, 150, 190, 26);
+    [self.inviteButton setTitle:@"TEXT MORE FRIENDS" forState:UIControlStateNormal];
+    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.inviteButton.centerX = self.descriptionView.width/2;
+    [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
+//    self.inviteButton.layer.cornerRadius = 4;
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.inviteButton];
     
@@ -403,13 +408,16 @@
     [self view];
     _beacon = beacon;
     self.beaconChatViewController.beacon = beacon;
-    self.timeLabel.text = beacon.time.shortFormattedDate;
+    self.timeLabel.text = beacon.time.formattedTime;
     NSMutableDictionary *dealTitle = [self parseStringIntoTwoLines:self.beacon.deal.dealDescriptionShort];
     self.descriptionLabelLineOne.text = [[dealTitle objectForKey:@"firstLine"] uppercaseString];
     self.descriptionLabelLineTwo.text = [[dealTitle objectForKey:@"secondLine"] uppercaseString];
+    NSString *venueString = [NSString stringWithFormat:@"@ %@", [beacon.deal.venue.name uppercaseString]];
     if (beacon.address) {
-        self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:beacon.address
+        self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:venueString
                                                                             attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
+    } else {
+        self.locationLabel.text = venueString;
     }
     if (self.locationLabel.text) {
 //        self.directionsButton.hidden = NO;
@@ -423,7 +431,7 @@
     else {
 //        self.directionsButton.hidden = YES;
     }
-    [self updateInvitedLabel];
+//    [self updateInvitedLabel];
     
     self.inviteListViewController.beaconStatuses = beacon.guestStatuses.allValues;
     
@@ -436,7 +444,7 @@
         [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.imageView setImageWithURL:beacon.deal.venue.imageURL];
+        [self.imageView sd_setImageWithURL:beacon.deal.venue.imageURL];
     }
     else {
         self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
@@ -514,22 +522,22 @@
     [actionSheet showInView:self.view];
 }
 
-- (void)updateInvitedLabel
-{
-    NSString *creatorText = [self.beacon.creator firstName];
-    NSString *otherText;
-    if (self.beacon.guestStatuses && self.beacon.guestStatuses.count > 1) {
-        NSInteger otherCount = self.beacon.guestStatuses.count - 1;
-        NSString *other = otherCount == 1 ? @"other..." : @"others...";
-        otherText = [NSString stringWithFormat:@"and %d %@", otherCount, other];
-    }
-    if (otherText) {
-        self.invitedLabel.text = [NSString stringWithFormat:@"%@ %@", creatorText, otherText];
-    }
-    else {
-        self.invitedLabel.text = creatorText;
-    }
-}
+//- (void)updateInvitedLabel
+//{
+//    NSString *creatorText = [self.beacon.creator firstName];
+//    NSString *otherText;
+//    if (self.beacon.guestStatuses && self.beacon.guestStatuses.count > 1) {
+//        NSInteger otherCount = self.beacon.guestStatuses.count - 1;
+//        NSString *other = otherCount == 1 ? @"other..." : @"others...";
+//        otherText = [NSString stringWithFormat:@"and %d %@", otherCount, other];
+//    }
+//    if (otherText) {
+//        self.invitedLabel.text = [NSString stringWithFormat:@"%@ %@", creatorText, otherText];
+//    }
+//    else {
+//        self.invitedLabel.text = creatorText;
+//    }
+//}
 
 - (void)updateChatDesiredInsets
 {

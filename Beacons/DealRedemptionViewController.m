@@ -233,10 +233,10 @@
     cell.backgroundColor = [UIColor whiteColor];
     [cell.contentView addSubview:self.countdownLabel];
     cell.indentationLevel = 1;
-    cell.indentationWidth = 19;
+    cell.indentationWidth = 15;
     self.countdownLabel.size = CGSizeMake(cell.contentView.width, 23);
     self.countdownLabel.y = 30;
-    self.countdownLabel.x = 33;
+    self.countdownLabel.x = 20;
     self.countdownLabel.textAlignment = NSTextAlignmentLeft;
     
 //    [cell.contentView addSubview:self.timeLeftLabel];
@@ -251,7 +251,7 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     cell.indentationLevel = 1;
-    cell.indentationWidth = 19;
+    cell.indentationWidth = 5;
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.text = @"HERE'S THE DEAL:";
     cell.textLabel.font = [ThemeManager boldFontOfSize:16];

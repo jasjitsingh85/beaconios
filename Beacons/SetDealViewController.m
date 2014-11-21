@@ -139,7 +139,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.eventLabelLineTwo = [[UILabel alloc] init];
     self.eventLabelLineTwo.width = self.view.width - 20;
-    self.eventLabelLineTwo.font = [ThemeManager boldFontOfSize:30];
+    self.eventLabelLineTwo.font = [ThemeManager boldFontOfSize:26];
     self.eventLabelLineTwo.textColor = [UIColor whiteColor];
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
@@ -277,7 +277,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         self.eventLabelLineOne.x = 5;
         
         self.eventLabelLineTwo.width = self.dealDescriptionView.width - 10;
-        self.eventLabelLineTwo.height = 140;
+        self.eventLabelLineTwo.height = 150;
         self.eventLabelLineTwo.numberOfLines = 0;
         self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
         NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.eventLabelLineTwo.text];
@@ -285,14 +285,23 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         paragrahStyle.lineSpacing = 1.f;
         paragrahStyle.paragraphSpacing = 1.f;
         paragrahStyle.paragraphSpacingBefore = 1.f;
-        paragrahStyle.maximumLineHeight = 28.f;
+        paragrahStyle.maximumLineHeight = 26.f;
         //[paragrahStyle setLineSpacing:1.f];
         [attributedString addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0, [self.eventLabelLineTwo.text length])];
         self.eventLabelLineTwo.attributedText = attributedString ;
 //        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
-        self.eventLabelLineTwo.y = 35;
         self.eventLabelLineTwo.x = 5;
-        //[self.eventLabelLineTwo sizeToFit];
+        [self.eventLabelLineTwo sizeToFit];
+        self.eventLabelLineTwo.bottom = self.dealContentView.height - self.descriptionBackground.height - 5;
+        
+        UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
+        backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+        UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
+        backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
+        backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [self.imageView addSubview:backgroundViewBlack];
+        [self.imageView addSubview:backgroundViewOrange];
     }
     
     
