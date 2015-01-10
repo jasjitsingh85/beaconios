@@ -67,9 +67,13 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (void)startMonitoringBeaconRegions
 {
+//    iBEACON
+//    step 1
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"66278782-119A-4BED-B12D-5BD38BB1DDD7"];
     CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"hotspot"];
+//    beaconRegion.notifyEntryStateOnDisplay = YES;
     [self.locationManager startMonitoringForRegion:beaconRegion];
+    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
 }
 
 - (void)startTrackingIfAuthorized
@@ -187,6 +191,9 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
+//    iBEACON
+//    step 3
+//    after entering region and starting to range for beacon. this gives you distance reading
     CLBeacon *beacon = [beacons firstObject];
     if (beacon && self.fetchingiBeacon) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidRangeBeaconNotification object:nil userInfo:@{@"beacon" : beacon}];
@@ -200,9 +207,13 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
+    //    iBEACON
+    //    step 2
+//    called when you first connect to beacon
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         self.fetchingiBeacon = YES;
         CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
+        //beaconRegion.notifyEntryStateOnDisplay = YES;
         [self.locationManager startRangingBeaconsInRegion:beaconRegion];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:kDidEnterRegionNotification object:self userInfo:@{@"region" : region}];

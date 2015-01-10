@@ -263,6 +263,7 @@
 #if DEBUG
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = @"Debugging. Exited region";
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 #endif
 }
 

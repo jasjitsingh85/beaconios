@@ -337,6 +337,9 @@
 
 - (void)receivedDidRangeBeaconNotification:(NSNotification *)notification
 {
+//    iBEACON
+//    step 4
+//    notification observer for did range beacon
     CLBeacon *beacon = notification.userInfo[@"beacon"];
     NSNumber *dealID = beacon.major;
     [[APIClient sharedClient] postRegionStateWithDealID:dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {

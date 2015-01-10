@@ -91,16 +91,16 @@
         [eventView addSubview:pageControlBackground];
         
         UILabel *eventHeader = [[UILabel alloc] init];
-        eventHeader.text = deal.todayOrTonightString;
+        eventHeader.text = @"DAILY SPECIALS";
         eventHeader.textColor = [UIColor whiteColor];
         eventHeader.font = [ThemeManager boldFontOfSize:13];
         eventHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
         eventHeader.textAlignment = NSTextAlignmentCenter;
-        eventHeader.width = 170;
+        eventHeader.width = 140;
         eventHeader.height = 24;
         eventHeader.x = 0;
         eventHeader.y = 25;
-        [eventView addSubview:eventHeader];
+        [self.contentView addSubview:eventHeader];
         
         UILabel *dealInfo = [[UILabel alloc] init];
         dealInfo.width = eventView.size.width;

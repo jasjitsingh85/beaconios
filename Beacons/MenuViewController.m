@@ -27,6 +27,10 @@
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIView *menuViewContainer;
+@property (strong, nonatomic) UIView *dealsContainer;
+@property (strong, nonatomic) UIView *groupContainer;
+@property (strong, nonatomic) UIView *shareContainer;
+@property (strong, nonatomic) UIView *settingContainer;
 //@property (strong, nonatomic) UIView *buttonContainerView;
 @property (strong, nonatomic) UIView *customHeaderView;
 @property (strong, nonatomic) UIButton *dealsButton;
@@ -64,7 +68,6 @@
     [self.view addSubview:self.menuViewContainer];
     
     NSArray *beacons = [BeaconManager sharedManager].beacons;
-    NSLog(@"Beacon Count: %d", beacons.count);
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50*beacons.count) style:UITableViewStylePlain];
         //    self.tableView.tableHeaderView = self.customHeaderView;
     self.tableView.showsVerticalScrollIndicator = NO;
@@ -86,14 +89,14 @@
 //
 //    [self.menuViewContainer addSubview:dealsContainer];
     
-    UIView *dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
-    [self.menuViewContainer addSubview:dealsContainer];
+    self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
+    [self.menuViewContainer addSubview:self.dealsContainer];
     self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.dealsButton setTitle:@"DEALS" forState:UIControlStateNormal];
     self.dealsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.dealsButton.titleLabel.textColor = [UIColor whiteColor];
     [self.dealsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.dealsButton setFrame:CGRectMake(0, 0, dealsContainer.size.width, 50)];
+    [self.dealsButton setFrame:CGRectMake(0, 0, self.dealsContainer.size.width, 50)];
     self.dealsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.dealsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -102,8 +105,8 @@
     dealsIcon.frame = CGRectMake(20, 16, 20, 18);
     dealsIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.dealsButton addSubview:dealsIcon];
-    [dealsContainer addSubview:self.tableView];
-    [dealsContainer addSubview:self.dealsButton];
+    [self.dealsContainer addSubview:self.tableView];
+    [self.dealsContainer addSubview:self.dealsButton];
     
 //    UIView *groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + dealsContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
 //    UILabel *groupLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, groupContainer.size.width, 50)];
@@ -114,14 +117,14 @@
 //    [groupContainer addSubview:groupLabel];
 //    [self.menuViewContainer addSubview:groupContainer];
     
-    UIView *groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + dealsContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
-    [self.menuViewContainer addSubview:groupContainer];
+    self.groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.dealsContainer.y + self.tableView.height, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.groupContainer];
     self.groupsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.groupsButton setTitle:@"GROUPS" forState:UIControlStateNormal];
     self.groupsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.groupsButton.titleLabel.textColor = [UIColor whiteColor];
     [self.groupsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.groupsButton setFrame:CGRectMake(0, 0, groupContainer.size.width, 50)];
+    [self.groupsButton setFrame:CGRectMake(0, 0, self.groupContainer.size.width, 50)];
     self.groupsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.groupsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.groupsButton addTarget:self action:@selector(groupButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -131,16 +134,16 @@
     groupsIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.groupsButton addSubview:groupsIcon];
     
-    [groupContainer addSubview:self.groupsButton];
+    [self.groupContainer addSubview:self.groupsButton];
     
-    UIView *shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + dealsContainer.size.height + 50, self.menuViewContainer.frame.size.width, 50)];
-    [self.menuViewContainer addSubview:shareContainer];
+    self.shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.groupContainer.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.shareContainer];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.inviteFriendsButton setTitle:@"SHARE" forState:UIControlStateNormal];
     [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
-    [self.inviteFriendsButton setFrame:CGRectMake(0, 0, shareContainer.size.width, 50)];
+    [self.inviteFriendsButton setFrame:CGRectMake(0, 0, self.shareContainer.size.width, 50)];
     self.inviteFriendsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.inviteFriendsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -150,10 +153,10 @@
     shareIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.inviteFriendsButton addSubview:shareIcon];
     
-    [shareContainer addSubview:self.inviteFriendsButton];
+    [self.shareContainer addSubview:self.inviteFriendsButton];
     
-    UIView *settingContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + dealsContainer.size.height + 100, self.menuViewContainer.frame.size.width, 50)];
-    [self.menuViewContainer addSubview:settingContainer];
+    self.settingContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.shareContainer.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.settingContainer];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.settingsButton setTitle:@"SETTINGS" forState:UIControlStateNormal];
     self.settingsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
@@ -169,7 +172,7 @@
     settingsIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.settingsButton addSubview:settingsIcon];
     
-    [settingContainer addSubview:self.settingsButton];
+    [self.settingContainer addSubview:self.settingsButton];
     
 //    CGFloat numButtons = 3;
 //    CGSize buttonSize = CGSizeMake(50, 50);
@@ -263,6 +266,12 @@
     NSArray *beacons = [BeaconManager sharedManager].beacons;
     if (beacons) {
         beaconCount = beacons.count;
+        self.tableView.frame = CGRectMake(0, 50, self.view.width, 50*beaconCount);
+        self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.size.height);
+        self.groupContainer.frame = CGRectMake(0, self.dealsContainer.origin.y + self.tableView.size.height + 50, self.menuViewContainer.frame.size.width, 50);
+        self.shareContainer.frame = CGRectMake(0, self.groupContainer.origin.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+        self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+        
         NSMutableDictionary *daySeparatedBeacons = [[NSMutableDictionary alloc] init];
         for (Beacon *beacon in beacons) {
             NSDate *day = beacon.time.day;
