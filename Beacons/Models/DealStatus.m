@@ -37,6 +37,9 @@
         self.contact = [[Contact alloc] initWithData:contactDictionary];
     }
     
+    NSString *feedback = dictionary[@"feedback_boolean"];
+    self.feedback = [feedback boolValue];
+    
     return self;
 }
 

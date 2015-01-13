@@ -16,7 +16,7 @@
 @interface DealRedemptionViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) DashedBorderButton *redeemButton;
-@property (strong, nonatomic) UILabel *redeemLabel;
+@property (strong, nonatomic) UIButton *feedbackButton;
 @property (strong, nonatomic) UILabel *countdownLabel;
 //@property (strong, nonatomic) UILabel *timeLeftLabel;
 
@@ -50,19 +50,20 @@
     self.redeemButton.size = CGSizeMake(280, 42);
     [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.redeemLabel = [[UILabel alloc] init];
-    self.redeemLabel.size = CGSizeMake(186, 44);
-    self.redeemLabel.font = [ThemeManager regularFontOfSize:1.3*9];
-    self.redeemLabel.textColor = [UIColor unnormalizedColorWithRed:94 green:94 blue:94 alpha:255];
-    self.redeemLabel.numberOfLines = 2;
-    self.redeemLabel.textAlignment = NSTextAlignmentCenter;
-    self.redeemLabel.text = @"When you arrive, show them this deal. Then, tap to redeem!";
+    self.feedbackButton = [[UIButton alloc] init];
+    self.feedbackButton.size = CGSizeMake(self.view.width, 34);
+    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+    self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
+    self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
+    self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
     footerView.backgroundColor = [UIColor whiteColor];
-    [footerView addSubview:self.redeemLabel];
-    self.redeemLabel.centerX = footerView.width/2.0;
+    self.feedbackButton.bottom = footerView.height + 10;
+    [footerView addSubview:self.feedbackButton];
+    self.feedbackButton.centerX = footerView.width/2.0;
     self.redeemButton.centerX = footerView.width/2.0;
-    self.redeemButton.bottom = footerView.height - 18;
+    self.redeemButton.bottom = footerView.height - 40;
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [footerView addSubview:self.redeemButton];
     self.tableView.tableFooterView = footerView;
 }
@@ -121,7 +122,14 @@
     self.deal = deal;
     self.dealStatus = dealStatus;
     [self updateRedeemButtonAppearance];
+    [self updateFeedbackButtonAppearance];
     [self.tableView reloadData];
+}
+
+- (void)feedbackButtonTouched:(id)sender
+{
+    [self feedbackDeal];
+//    [self.feedbackButton setTitle:@"Feedback submitted" forState:UIControlStateNormal];
 }
 
 - (void)redeemButtonTouched:(id)sender
@@ -152,12 +160,47 @@
     [alertView show];
 }
 
+- (void)feedbackDeal
+{
+    [[APIClient sharedClient] feedbackDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *feedbackStatus = responseObject[@"feedback_status"];
+        self.dealStatus.feedback = [feedbackStatus boolValue];
+        [self updateFeedbackButtonAppearance];
+    } failure:nil];
+}
+
+- (void)updateFeedbackButtonAppearance
+{
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentCenter];
+    [style setLineBreakMode:NSLineBreakByWordWrapping];
+    
+    NSDictionary *dict1 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
+                            NSFontAttributeName:[ThemeManager regularFontOfSize:14],
+                            NSParagraphStyleAttributeName:style}; // Added line
+    NSDictionary *dict2 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
+                            NSFontAttributeName:[ThemeManager boldFontOfSize:14],
+                            NSParagraphStyleAttributeName:style}; // Added line
+    if (!self.dealStatus.feedback) {
+        NSLog(@"%d", self.dealStatus.feedback);
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
+        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem getting this deal? " attributes:dict1]];
+        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Tap here." attributes:dict2]];
+        [self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+    }
+    else {
+        NSLog(@"Submitted");
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
+        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Feedback submitted" attributes:dict1]];
+        [self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+    }
+    
+}
+
 - (void)redeemDeal
 {
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *message = responseObject[@"message"];
         NSString *dealStatus = responseObject[@"deal_status"];
-        [[[UIAlertView alloc] initWithTitle:@"Deal Redemption" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         self.dealStatus.dealStatus = dealStatus;
         [self updateRedeemButtonAppearance];
     } failure:nil];

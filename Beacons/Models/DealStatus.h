@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *bonusStatus;
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
+@property (assign, nonatomic) BOOL feedback;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

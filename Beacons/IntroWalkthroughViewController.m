@@ -119,7 +119,7 @@ typedef enum ScrollDirection {
     [self.view addSubview:self.drinkView];
     
     NSString *line1 = @"Pick a Deal";
-    NSString *line2 = @"At a local bar or restaurant";
+    NSString *line2 = @"at a local bar or restaurant";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", line1, line2]];
     [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString.string rangeOfString:line1]];
     [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString.string rangeOfString:line2]];

@@ -284,6 +284,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"deal/redeem/" parameters:parameters success:success failure:failure];
 }
 
+- (void)feedbackDeal:(Deal *)deal success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"deal_id" : deal.dealID};
+    [[APIClient sharedClient] postPath:@"deal/feedback/" parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {
