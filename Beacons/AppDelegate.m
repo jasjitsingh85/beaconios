@@ -232,6 +232,7 @@
     self.window.rootViewController = [[PermissionsViewController alloc] init];
     [[AnalyticsManager sharedManager] setupForUser];
     [CrashManager setupForUser];
+    [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
 }
 
 - (void)didFinishPermissions

@@ -180,7 +180,7 @@
                             NSParagraphStyleAttributeName:style}; // Added line
     NSDictionary *dict2 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
                             NSFontAttributeName:[ThemeManager boldFontOfSize:14],
-                            NSParagraphStyleAttributeName:style}; // Added line
+                            NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:[[ThemeManager sharedTheme] lightBlueColor]}; // Added line
     if (!self.dealStatus.feedback) {
         NSLog(@"%d", self.dealStatus.feedback);
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];

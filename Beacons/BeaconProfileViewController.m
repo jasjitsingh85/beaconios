@@ -181,14 +181,14 @@
     self.imageViewGradient.frame = backgroundGradientFrame;
     [self.imageView addSubview:self.imageViewGradient];
     
-    UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
-    backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
-    backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
-    backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.imageView addSubview:backgroundViewBlack];
-    [self.imageView addSubview:backgroundViewOrange];
+//    UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
+//    backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+//    UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
+//    backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
+//    backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    [self.imageView addSubview:backgroundViewBlack];
+//    [self.imageView addSubview:backgroundViewOrange];
     
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
     self.timeLabel.font = [ThemeManager boldFontOfSize:22];

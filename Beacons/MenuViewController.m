@@ -117,7 +117,7 @@
 //    [groupContainer addSubview:groupLabel];
 //    [self.menuViewContainer addSubview:groupContainer];
     
-    self.groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.dealsContainer.y + self.tableView.height, self.menuViewContainer.frame.size.width, 50)];
+    self.groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.groupContainer];
     self.groupsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.groupsButton setTitle:@"GROUPS" forState:UIControlStateNormal];
@@ -267,8 +267,8 @@
     if (beacons) {
         beaconCount = beacons.count;
         self.tableView.frame = CGRectMake(0, 50, self.view.width, 50*beaconCount);
-        self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.size.height);
-        self.groupContainer.frame = CGRectMake(0, self.dealsContainer.origin.y + self.tableView.size.height + 50, self.menuViewContainer.frame.size.width, 50);
+        self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
+        self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
         self.shareContainer.frame = CGRectMake(0, self.groupContainer.origin.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50);
         self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
         
