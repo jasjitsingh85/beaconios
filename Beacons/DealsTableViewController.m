@@ -8,6 +8,7 @@
 
 #import "DealsTableViewController.h"
 #import "UIView+BounceAnimation.h"
+#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
 #import "SetDealViewController.h"
 #import "CenterNavigationController.h"
@@ -57,6 +58,7 @@
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
     }
+
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }

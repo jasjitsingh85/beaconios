@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <CocoaLumberjack/DDFileLogger.h>
+//#import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK.h>
 #import "NSURL+InterApp.h"
 #import "CenterNavigationController.h"
@@ -145,6 +146,8 @@
     return YES;
 }
 
+
+
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[AnalyticsManager sharedManager] appForeground];
@@ -268,15 +271,23 @@
     [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:YES];
 }
 
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString *)sourceApplication
+//         annotation:(id)annotation
+//{
+//    if ([sourceApplication isEqualToString:kHappyHoursAppURLIdentifier]) {
+//        [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:NO];
+//    }
+//    return YES;
+//}
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation
-{
-    if ([sourceApplication isEqualToString:kHappyHoursAppURLIdentifier]) {
-        [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:NO];
-    }
-    return YES;
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
 }
 
 #pragma mark - Beacon Profile
