@@ -40,6 +40,13 @@
         [hours addObject:[[DealHours alloc] initWithDictionary:hoursDictionary]];
     }
     self.hours = [NSArray arrayWithArray:hours];
+    
+    if ([self.inviteRequirement intValue] > 1) {
+        self.groupDeal = YES;
+    } else {
+        self.groupDeal = NO;
+    }
+    
     return self;
 }
 

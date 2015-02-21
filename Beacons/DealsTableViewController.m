@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
 #import "DealTableViewEventCell.h"
+//#import "BounceButton.h"
 #import "APIClient.h"
 #import "LocationTracker.h"
 #import "Deal.h"
@@ -27,12 +28,17 @@
 @property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
+@property (strong, nonatomic) UIView *dealTypeToggle;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
 @property (strong, nonatomic) UIButton *enableLocationButton;
+@property (strong, nonatomic) UIButton *textOneFriend;
+@property (strong, nonatomic) UIButton *textManyFriends;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
+@property (assign, nonatomic) BOOL groupDeal;
+@property (strong, nonatomic) NSArray *allDeals;
 
 @end
 
@@ -45,9 +51,35 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
+    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 124, [[UIScreen mainScreen] bounds].size.width, 60);
+    self.dealTypeToggle = [[UIView alloc] initWithFrame:frame];
+    self.dealTypeToggle.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.9];
+    [self.view addSubview:self.dealTypeToggle];
+    
     self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 60.0, 0.0);
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;  
+    
+    
+    self.textOneFriend = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.textOneFriend.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
+    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButtonSelected"] forState:UIControlStateNormal];
+//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateHighlighted];
+    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateSelected];
+    [self.textOneFriend addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealTypeToggle addSubview:self.textOneFriend];
+    self.textOneFriend.selected = NO;
+    
+    self.textManyFriends = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.textManyFriends.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
+    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButtonSelected"] forState:UIControlStateNormal];
+    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateSelected];
+//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateHighlighted];
+    [self.textManyFriends addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealTypeToggle addSubview:self.textManyFriends];
+    self.textManyFriends.selected = YES;
+    self.dealTypeToggle.hidden = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 }
@@ -59,6 +91,7 @@
         [self reloadDeals];
     }
 
+    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }
@@ -167,6 +200,9 @@
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
+            //REMOVE THIS LINE AFTER DEMO
+            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:41.311272 longitude:-72.932041];
+            //REMOVE THIS LINE AFTER DEMO
             [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
                 self.loadingDeals = NO;
                 [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
@@ -208,8 +244,16 @@
         } else {
            self.hasEvents = NO;
         }
-        self.deals = deals;
-        //self.deals = [deals sortedArrayUsingDescriptors:@[sort]];
+        self.allDeals = deals;
+        self.deals = self.allDeals;
+        
+        NSPredicate *predicate;
+        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
+        NSLog(@"%lu", (unsigned long)[[self.allDeals filteredArrayUsingPredicate:predicate] count]);
+        if ([[self.allDeals filteredArrayUsingPredicate:predicate] count] > 0) {
+            self.dealTypeToggle.hidden = NO;
+        };
+        
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {
@@ -226,6 +270,18 @@
 {
     if (self.deals && self.deals.count) {
         [self hideEmptyDealsView];
+        NSPredicate *predicate;
+        if (self.groupDeal) {
+            predicate = [NSPredicate predicateWithFormat:@"groupDeal = YES"];
+            self.textManyFriends.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
+            self.textOneFriend.backgroundColor = [UIColor clearColor];
+        }
+        else {
+            predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
+            self.textOneFriend.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
+            self.textManyFriends.backgroundColor = [UIColor clearColor];
+        }
+        self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
     }
     else {
         [self showEmptyDealsView];
@@ -380,6 +436,63 @@
         NSURL *appSettings = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
         [[UIApplication sharedApplication] openURL:appSettings];
     }
+}
+
+- (void)tabButtonTouched:(UIButton *)sender
+{
+//    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+
+    if (sender == self.textOneFriend) {
+        self.groupDeal = NO;
+        [self showTextOneFriendAnimated:YES];
+    }
+    else if (sender == self.textManyFriends) {
+        self.groupDeal = YES;
+        [self showTextManyFriendsAnimated:YES];
+    }
+    
+    [self reloadTableView];
+}
+
+- (void)showTextOneFriendAnimated:(BOOL)animated
+{
+    self.textOneFriend.selected = YES;
+    self.textManyFriends.selected = NO;
+    //self.beaconChatViewController.view.alpha = 1;
+//    NSTimeInterval duration = animated ? 0.3 : 0.0;
+//    [UIView animateWithDuration:duration animations:^{
+////        self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
+////        self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
+////        self.inviteListViewController.view.alpha = 0.0;
+////    } completion:^(BOOL finished) {
+////        self.inviteListViewController.view.alpha = 0;
+//    }];
+}
+
+- (void)showTextManyFriendsAnimated:(BOOL)animated
+{
+    self.textOneFriend.selected = NO;
+    self.textManyFriends.selected = YES;
+    //self.dealRedemptionViewController.view.alpha = 1;
+//    NSTimeInterval duration = animated ? 0.3 : 0.0;
+//    [UIView animateWithDuration:duration animations:^{
+////        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(self.beaconChatViewController.view.frame.size.width, 0);
+////        self.inviteListViewController.view.transform = self.beaconChatViewController.view.transform;
+////        self.dealRedemptionViewController.view.transform = CGAffineTransformIdentity;
+////        self.beaconChatViewController.view.alpha = 0.0;
+////        self.inviteListViewController.view.alpha = self.beaconChatViewController.view.alpha;
+//    } completion:^(BOOL finished) {
+////        self.beaconChatViewController.view.alpha = 0;
+//        
+//        //self.textManyFriends.backgroundColor = [UIColor redColor];
+//    }];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGRect newFrame = self.dealTypeToggle.frame;
+    newFrame.origin.x = 0;
+    newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height - 60);
+    self.dealTypeToggle.frame = newFrame;
 }
 
 @end

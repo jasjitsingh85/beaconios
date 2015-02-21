@@ -39,6 +39,10 @@
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
+		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
+		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
+		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
+		415353B71A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
 		41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */; };
@@ -269,6 +273,10 @@
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
+		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
+		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
+		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
+		415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButtonSelected@2x.png"; sourceTree = "<group>"; };
 		41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shareIcon@2x.png"; sourceTree = "<group>"; };
@@ -951,7 +959,11 @@
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
+				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
+				415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */,
+				415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */,
+				415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */,
 				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
@@ -1138,6 +1150,7 @@
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
+				415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
@@ -1174,6 +1187,7 @@
 				964638B018A4460A007D6962 /* waveBackground@2x.png in Resources */,
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
+				415353B71A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
 				96CE79ED199D2999002574B8 /* iphoneWalkthrough2@2x.png in Resources */,
 				96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */,
@@ -1214,6 +1228,8 @@
 				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
+				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
+				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
 				96C7FE9B1897294100A79CC3 /* greenGradientBackground@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
