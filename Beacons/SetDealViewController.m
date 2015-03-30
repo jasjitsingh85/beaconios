@@ -20,6 +20,8 @@
 #import "AppDelegate.h"
 #import "LoadingIndictor.h"
 #import "ExplanationPopupView.h"
+#import <AVFoundation/AVFoundation.h>
+#import "UIImage+Resize.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionDescription,
@@ -34,14 +36,15 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) UIView *dealContentView;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *eventLabelLineOne;
 @property (strong, nonatomic) UILabel *eventLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
-@property (strong, nonatomic) UIView *descriptionBackground;
-@property (strong, nonatomic) UILabel *descriptionLabel;
-@property (strong, nonatomic) UILabel *descriptionDetailLabel;
+@property (strong, nonatomic) UIView *cameraPreview;
+//@property (strong, nonatomic) UILabel *descriptionLabel;
+//@property (strong, nonatomic) UILabel *descriptionDetailLabel;
 
 @property (strong, nonatomic) UIView *composeMessageView;
 @property (strong, nonatomic) UIView *composeMessageContentView;
@@ -55,6 +58,11 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 
 @property (strong, nonatomic) UIView *inviteFriendsView;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
+@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+@property (assign, nonatomic) BOOL haveImage;
+@property (assign, nonatomic) BOOL frontCamera;
+@property (strong, nonatomic) NSString *imageUrl;
+@property (strong, nonatomic) UIButton *retakePictureButton;
 
 @property (strong, nonatomic) NSDate *date;
 
@@ -88,12 +96,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self.dealDescriptionView addSubview:self.dealContentView];
 //    [self.dealContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
-    self.imageView = [[UIImageView alloc] init];
-    self.imageView.height = self.dealDescriptionView.height - 10;
-    self.imageView.width = self.view.width;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.imageView.clipsToBounds = YES;
-    [self.dealContentView addSubview:self.imageView];
+//    self.imageView = [[UIImageView alloc] init];
+//    self.imageView.height = self.dealDescriptionView.height - 10;
+//    self.imageView.width = self.view.width;
+//    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.imageView.clipsToBounds = YES;
+//    [self.dealContentView addSubview:self.imageView];
     
     //    CGFloat originForVenuePreview = 0;
     self.backgroundView = [[UIView alloc] initWithFrame:self.dealContentView.bounds];
@@ -145,21 +153,69 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
     [self.dealContentView addSubview:self.eventLabelLineTwo];
     
-    self.descriptionBackground = [[UIView alloc] init];
-    self.descriptionBackground.size = CGSizeMake(self.view.width, self.dealContentView.height - self.imageView.height);
-    self.descriptionBackground.bottom = self.dealContentView.height;
-    self.descriptionBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    [self.dealContentView addSubview:self.descriptionBackground];
+    self.cameraPreview = [[UIView alloc] init];
+    self.cameraPreview.size = CGSizeMake(self.view.width, self.dealContentView.height);
+    self.cameraPreview.bottom = self.dealContentView.height;
+    self.cameraPreview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    [self.dealContentView addSubview:self.cameraPreview];
     
-    self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.height = 10;
-    self.descriptionLabel.width = self.view.width - 40;
-    self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
-    self.descriptionLabel.font = [ThemeManager boldFontOfSize:1.3*12];
-    self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
-    self.descriptionLabel.textColor = [UIColor whiteColor];
-    self.descriptionLabel.numberOfLines = 2;
-    [self.descriptionBackground addSubview:self.descriptionLabel];
+    UIImage *topGradientImage = [UIImage imageNamed:@"topPictureGradient"];
+    UIImageView *topGradient = [[UIImageView alloc] initWithImage:topGradientImage];
+    topGradient.size = CGSizeMake(self.view.width, self.dealContentView.height);
+    topGradient.bottom = self.dealContentView.height - 3;
+    [self.dealContentView addSubview:topGradient];
+    
+    UIButton *toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *toggleCameraImage = [UIImage imageNamed:@"toggleCamera"];
+    [toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
+    toggleCamera.frame = CGRectMake(self.dealContentView.width - 53, -12, 60, 60);
+    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
+    [toggleCamera addTarget:self action:@selector(toggleCamera:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealContentView addSubview:toggleCamera];
+    
+    UIButton *takePicture = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *takePictureImage = [UIImage imageNamed:@"takePictureButton"];
+    [takePicture setImage:takePictureImage forState:UIControlStateNormal];
+    takePicture.frame = CGRectMake(0, self.dealContentView.height - 60 , 100, 60);
+    takePicture.centerX = self.dealContentView.width/2;
+    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
+    [takePicture addTarget:self action:@selector(captureImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealContentView addSubview:takePicture];
+    
+    
+    self.imageView = [[UIImageView alloc] init];
+    self.imageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
+    self.imageView.bottom = self.dealContentView.height;
+    //self.imageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+    [self.dealContentView addSubview:self.imageView];
+    
+    self.retakePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage *retakePicture = [UIImage imageNamed:@"retakePicture"];
+    [self.retakePictureButton setImage:retakePicture forState:UIControlStateNormal];
+    self.retakePictureButton.size = CGSizeMake(30, 25);
+    self.retakePictureButton.x = self.dealContentView.width - 35;
+    self.retakePictureButton.bottom = self.dealContentView.height - 10;
+    self.retakePictureButton.hidden = YES;
+    [self.retakePictureButton addTarget:self action:@selector(retakePicture:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealContentView addSubview:self.retakePictureButton];
+    
+    UIImage *bottomGradientImage = [UIImage imageNamed:@"bottomPictureGradient"];
+    UIImageView *bottomGradient = [[UIImageView alloc] initWithImage:bottomGradientImage];
+    bottomGradient.size = CGSizeMake(self.view.width, 60);
+    bottomGradient.bottom = self.dealContentView.height;
+    [self.dealContentView addSubview:bottomGradient];
+    
+    self.imageUrl = @"";
+    self.frontCamera = YES;
+//    self.descriptionLabel = [[UILabel alloc] init];
+//    self.descriptionLabel.height = 10;
+//    self.descriptionLabel.width = self.view.width - 40;
+//    self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
+//    self.descriptionLabel.font = [ThemeManager boldFontOfSize:1.3*12];
+//    self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+//    self.descriptionLabel.textColor = [UIColor whiteColor];
+//    self.descriptionLabel.numberOfLines = 2;
+//    [self.descriptionBackground addSubview:self.descriptionLabel];
     
     self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
     self.composeMessageContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 127)];
@@ -254,69 +310,70 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     _deal = deal;
     [self view];
     [self resetDate];
-    [self.imageView sd_setImageWithURL:deal.venue.imageURL];
+    [self initializeCamera];
+    //[self.imageView sd_setImageWithURL:deal.venue.imageURL];
     //self.venueLabelLineOne.text = deal.venue.name;
-    self.descriptionLabel.text = deal.dealDescription;
-    [self.descriptionLabel sizeToFit];
-    self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
-    self.descriptionLabel.y = 8;
-    self.descriptionBackground.height = self.descriptionLabel.height + 40;
-    self.descriptionBackground.bottom = self.dealContentView.height;
-    
+//    self.descriptionLabel.text = deal.dealDescription;
+//    [self.descriptionLabel sizeToFit];
+//    self.descriptionLabel.centerX = self.descriptionBackground.width/2.0;
+//    self.descriptionLabel.y = 8;
+//    self.descriptionBackground.height = self.descriptionLabel.height + 40;
+//    self.descriptionBackground.bottom = self.dealContentView.height;
+//    
     if ([deal.dealType  isEqual: @"DT"]) {
-        self.venueLabelLineTwo.y = self.dealContentView.height - self.descriptionBackground.height - 45;
-        self.venueLabelLineTwo.x = 5;
-        self.venueLabelLineOne.y = self.venueLabelLineTwo.y - 20;
-        self.venueLabelLineOne.x = 5;
-        
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+//        self.venueLabelLineTwo.y = self.dealContentView.height - self.descriptionBackground.height - 45;
+//        self.venueLabelLineTwo.x = 5;
+//        self.venueLabelLineOne.y = self.venueLabelLineTwo.y - 20;
+//        self.venueLabelLineOne.x = 5;
+//        
+//        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+//        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+//        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     } else {
-        self.eventLabelLineOne.text = [[NSString stringWithFormat:@"%@ @ %@", deal.hoursAvailableString, deal.venue.name] uppercaseString];
-        self.eventLabelLineOne.y = 15;
-        self.eventLabelLineOne.x = 5;
-        
-        self.eventLabelLineTwo.width = self.dealDescriptionView.width - 10;
-        self.eventLabelLineTwo.height = 150;
-        self.eventLabelLineTwo.numberOfLines = 0;
-        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
-        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.eventLabelLineTwo.text];
-        NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
-        paragrahStyle.lineSpacing = 1.f;
-        paragrahStyle.paragraphSpacing = 1.f;
-        paragrahStyle.paragraphSpacingBefore = 1.f;
-        paragrahStyle.maximumLineHeight = 26.f;
-        //[paragrahStyle setLineSpacing:1.f];
-        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0, [self.eventLabelLineTwo.text length])];
-        self.eventLabelLineTwo.attributedText = attributedString ;
+//        self.eventLabelLineOne.text = [[NSString stringWithFormat:@"%@ @ %@", deal.hoursAvailableString, deal.venue.name] uppercaseString];
+//        self.eventLabelLineOne.y = 15;
+//        self.eventLabelLineOne.x = 5;
+//        
+//        self.eventLabelLineTwo.width = self.dealDescriptionView.width - 10;
+//        self.eventLabelLineTwo.height = 150;
+//        self.eventLabelLineTwo.numberOfLines = 0;
 //        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
-        self.eventLabelLineTwo.x = 5;
-        [self.eventLabelLineTwo sizeToFit];
-        self.eventLabelLineTwo.bottom = self.dealContentView.height - self.descriptionBackground.height - 5;
-        
-        UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
+//        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:self.eventLabelLineTwo.text];
+//        NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
+//        paragrahStyle.lineSpacing = 1.f;
+//        paragrahStyle.paragraphSpacing = 1.f;
+//        paragrahStyle.paragraphSpacingBefore = 1.f;
+//        paragrahStyle.maximumLineHeight = 26.f;
+//        //[paragrahStyle setLineSpacing:1.f];
+//        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0, [self.eventLabelLineTwo.text length])];
+//        self.eventLabelLineTwo.attributedText = attributedString ;
+////        self.eventLabelLineTwo.text = [deal.additionalInfo uppercaseString];
+//        self.eventLabelLineTwo.x = 5;
+//        [self.eventLabelLineTwo sizeToFit];
+//        self.eventLabelLineTwo.bottom = self.dealContentView.height - self.descriptionBackground.height - 5;
+    
+        UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.dealDescriptionView.bounds];
         backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-        UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
+        UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.dealDescriptionView.bounds];
         backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
         backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        [self.imageView addSubview:backgroundViewBlack];
-        [self.imageView addSubview:backgroundViewOrange];
+        [self.dealDescriptionView addSubview:backgroundViewBlack];
+        [self.dealDescriptionView addSubview:backgroundViewOrange];
     }
     
-    
-    self.descriptionDetailLabel = [[UILabel alloc] init];
-    self.descriptionDetailLabel.width = self.view.width - 40;
-    self.descriptionDetailLabel.font = [ThemeManager lightFontOfSize:1.3*11];
-    self.descriptionDetailLabel.textColor = [UIColor whiteColor];
-    self.descriptionDetailLabel.textAlignment = NSTextAlignmentCenter;
-    self.descriptionDetailLabel.text = @"(They don't even have to show up)";
-    [self.descriptionDetailLabel sizeToFit];
-    self.descriptionDetailLabel.centerX = self.descriptionBackground.width/2.0;
-    self.descriptionDetailLabel.y = self.descriptionLabel.bottom + 4;
-    [self.descriptionBackground addSubview:self.descriptionDetailLabel];
-    
+//    
+//    self.descriptionDetailLabel = [[UILabel alloc] init];
+//    self.descriptionDetailLabel.width = self.view.width - 40;
+//    self.descriptionDetailLabel.font = [ThemeManager lightFontOfSize:1.3*11];
+//    self.descriptionDetailLabel.textColor = [UIColor whiteColor];
+//    self.descriptionDetailLabel.textAlignment = NSTextAlignmentCenter;
+//    self.descriptionDetailLabel.text = @"(They don't even have to show up)";
+//    [self.descriptionDetailLabel sizeToFit];
+//    self.descriptionDetailLabel.centerX = self.descriptionBackground.width/2.0;
+//    self.descriptionDetailLabel.y = self.descriptionLabel.bottom + 4;
+//    [self.descriptionBackground addSubview:self.descriptionDetailLabel];
+
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
     
     NSLog(@"%@",deal.dealType);
@@ -353,8 +410,16 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else {
+        [self uploadPicture];
         [self selectFriends];
     }
+}
+
+- (void)retakePicture:(id)sender
+{
+    self.retakePictureButton.hidden = YES;
+    self.image = nil;
+    [self.imageView setImage:self.image];
 }
 
 - (void)selectFriends
@@ -410,6 +475,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     if (!self.modifiedMessage) {
         self.composeMessageTextView.text = [self defaultInviteMessageForDeal:self.deal];
     }
+}
+
+- (void)toggleCamera:(id)sender
+{
+    self.frontCamera = !self.frontCamera;
+    [self initializeCamera];
 }
 
 - (void)showDatePicker
@@ -503,8 +574,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == DealSectionDescription) {
-        if ([self.deal.dealType isEqual:@"DT"]) {
-            [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];   
+        if ([self.deal.dealType isEqual:@"DT"] && self.haveImage == NO) {
+            [self captureImage];
+//            [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];   
         }
     }
     else if (indexPath.row == DealSectionTime) {
@@ -539,7 +611,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.composeMessageTextView.text time:self.date success:^(Beacon *beacon) {
+    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.composeMessageTextView.text time:self.date imageUrl:self.imageUrl success:^(Beacon *beacon) {
         [loadingIndicator hide:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
@@ -596,6 +668,149 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     }
     
     return firstAndSecondLine;
+}
+
+- (void) initializeCamera {
+    AVCaptureSession *session = [[AVCaptureSession alloc] init];
+    session.sessionPreset = AVCaptureSessionPresetPhoto;
+    
+    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+    [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    
+    captureVideoPreviewLayer.frame = self.cameraPreview.bounds;
+    [self.cameraPreview.layer addSublayer:captureVideoPreviewLayer];
+    
+    UIView *view = [self cameraPreview];
+    CALayer *viewLayer = [view layer];
+    [viewLayer setMasksToBounds:YES];
+    
+    CGRect bounds = [view bounds];
+    [captureVideoPreviewLayer setFrame:bounds];
+    
+    NSArray *devices = [AVCaptureDevice devices];
+    AVCaptureDevice *frontCamera;
+    AVCaptureDevice *backCamera;
+    
+    for (AVCaptureDevice *device in devices) {
+        
+        NSLog(@"Device name: %@", [device localizedName]);
+        
+        if ([device hasMediaType:AVMediaTypeVideo]) {
+            
+            if ([device position] == AVCaptureDevicePositionBack) {
+                NSLog(@"Device position : back");
+                backCamera = device;
+            }
+            else {
+                NSLog(@"Device position : front");
+                frontCamera = device;
+            }
+        }
+    }
+    
+    if (!self.frontCamera) {
+        NSError *error = nil;
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:nil];
+        if (!input) {
+            NSLog(@"ERROR: trying to open camera: %@", error);
+        }
+        [session addInput:input];
+    }
+    
+    if (self.frontCamera) {
+        NSError *error = nil;
+        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:nil];
+        if (!input) {
+            NSLog(@"ERROR: trying to open camera: %@", error);
+        }
+        [session addInput:input];
+    }
+    
+    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+    [self.stillImageOutput setOutputSettings:outputSettings];
+    
+    [session addOutput:self.stillImageOutput];
+    
+    [session startRunning];
+}
+
+- (void) captureImage { //method to capture image from AVCaptureSession video feed
+    AVCaptureConnection *videoConnection = nil;
+    for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
+        
+        for (AVCaptureInputPort *port in [connection inputPorts]) {
+            
+            if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
+                videoConnection = connection;
+                break;
+            }
+        }
+        
+        if (videoConnection) {
+            break;
+        }
+    }
+    
+    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
+    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+        
+        if (imageSampleBuffer != NULL) {
+            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+            [self processImage:[UIImage imageWithData:imageData]];
+        }
+    }];
+}
+
+- (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
+    self.haveImage = YES;
+    self.retakePictureButton.hidden = NO;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(320, self.dealContentView.height));
+    [image drawInRect: CGRectMake(0, 0, 320, self.dealContentView.height)];
+    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    CGRect cropRect = CGRectMake(0, 55, 320, self.dealContentView.height - 106);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
+    
+    UIImage *unflippedImage = [UIImage imageWithCGImage:imageRef];
+    
+    if (self.frontCamera) {
+        self.image = [UIImage imageWithCGImage:unflippedImage.CGImage
+                                         scale:unflippedImage.scale
+                                   orientation:UIImageOrientationUpMirrored];
+    } else {
+        self.image = unflippedImage;
+    }
+    
+    
+    [self.imageView setImage:self.image];
+    
+    CGImageRelease(imageRef);
+    
+}
+
+- (void) uploadPicture {
+        if (self.haveImage) {
+//            UIImage *scaledImage;
+//            CGFloat maxDimension = 720;
+//            if (self.image.size.width >= self.image.size.height) {
+//                scaledImage = [self.image scaledToSize:CGSizeMake(maxDimension, maxDimension*self.image.size.height/self.image.size.width)];
+//            }
+//            else {
+//                scaledImage = [self.image scaledToSize:CGSizeMake(maxDimension*self.image.size.width/self.image.size.height, maxDimension)];
+//            }
+            
+            [[APIClient sharedClient] postImage:self.image forBeaconWithID:[NSNumber numberWithInt:1000] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *baseURL = @"https://s3.amazonaws.com/hotspot-photo/";
+                NSString *imageKey = responseObject[@"image_key"];
+                self.imageUrl = [baseURL stringByAppendingString:imageKey];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+            }];
+        }
 }
 
 @end
