@@ -28,28 +28,30 @@
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame formTitles:(NSArray *)formTitles
+- (id)initWithFrame:(CGRect)frame formTitles:(NSArray *)formTitles formPlaceholders:(NSArray *)formPlaceholders
 {
     self = [self initWithFrame:frame];
     if (!self) {
         return nil;
     }
     self.formTitles = formTitles;
+    self.formPlaceholders = formPlaceholders;
     return self;
 }
 
-- (void)setFormTitles:(NSArray *)formTitles
+- (void)setFormPlaceholders:(NSArray *)formPlaceholders
 {
-    _formTitles = formTitles;
+    _formPlaceholders = formPlaceholders;
     
     [self removeAllTextFields];
-    NSMutableArray *textFields = [[NSMutableArray alloc] initWithCapacity:formTitles.count];
-    for (NSInteger i=0; i<formTitles.count; i++) {
-        NSString *title = formTitles[i];
+    NSMutableArray *textFields = [[NSMutableArray alloc] initWithCapacity:formPlaceholders.count];
+    for (NSInteger i=0; i<formPlaceholders.count; i++) {
+        NSString *title = formPlaceholders[i];
         CGRect textFieldFrame = CGRectZero;
         textFieldFrame.size.width = self.frame.size.width;
-        textFieldFrame.size.height = self.frame.size.height/formTitles.count;
+        textFieldFrame.size.height = self.frame.size.height/formPlaceholders.count;
         textFieldFrame.origin.y = i*textFieldFrame.size.height;
+        textFieldFrame.origin.x = 85;
         NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
         InsetTextField *textField = [[InsetTextField alloc] initWithFrame:textFieldFrame];
         [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -61,12 +63,12 @@
         [self addSubview:textField];
         [textFields addObject:textField];
         //add divider between text fields
-        if (i < formTitles.count - 1) {
+        if (i < formPlaceholders.count - 1) {
             CGRect dividerFrame;
             dividerFrame.size = CGSizeMake(self.frame.size.width, 1);
             dividerFrame.origin.y = CGRectGetMaxY(textField.frame) - dividerFrame.size.height;
             UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
-            dividerView.backgroundColor = [UIColor lightGrayColor];
+            //dividerView.backgroundColor = [UIColor lightGrayColor];
             [self addSubview:dividerView];
             
             textField.returnKeyType = UIReturnKeyNext;
@@ -76,6 +78,41 @@
         }
     }
     self.textFields = [NSArray arrayWithArray:textFields];
+}
+
+- (void)setFormTitles:(NSArray *)formTitles
+{
+    _formTitles = formTitles;
+    
+    for (NSInteger i=0; i<formTitles.count; i++) {
+        NSString *title = formTitles[i];
+        CGRect textFieldFrame = CGRectZero;
+        textFieldFrame.size.width = self.frame.size.width;
+        textFieldFrame.size.height = self.frame.size.height/formTitles.count;
+        textFieldFrame.origin.y = i*textFieldFrame.size.height;
+        textFieldFrame.origin.x = 25;
+        NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
+        UILabel *fieldTitle = [[UILabel alloc] initWithFrame:textFieldFrame];
+        fieldTitle.text = title;
+        fieldTitle.textColor = [UIColor blackColor];
+        fieldTitle.font = [ThemeManager boldFontOfSize:16];
+        [self addSubview:fieldTitle];
+        //[textFields addObject:fieldTitle];
+        //add divider between text fields
+        //        if (i < formTitles.count - 1) {
+        //            CGRect dividerFrame;
+        //            dividerFrame.size = CGSizeMake(self.frame.size.width, 1);
+        //            dividerFrame.origin.y = CGRectGetMaxY(textField.frame) - dividerFrame.size.height;
+        //            UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
+        //            //dividerView.backgroundColor = [UIColor lightGrayColor];
+        //            [self addSubview:dividerView];
+        //
+        //            textField.returnKeyType = UIReturnKeyNext;
+        //        }
+        //        else {
+        //            textField.returnKeyType = UIReturnKeyDone;
+        //        }
+    }
     
 }
 

@@ -19,11 +19,12 @@
 
 @property (weak, nonatomic) id<FormViewDelegate> delegate;
 @property (strong, nonatomic) NSArray *formTitles;
+@property (strong, nonatomic) NSArray *formPlaceholders;
 @property (strong, nonatomic) NSArray *keyboardTypes;
 @property (strong, nonatomic) UIColor *placeholderTextColor;
 @property (strong, nonatomic) UIColor *textColor;
 
-- (id)initWithFrame:(CGRect)frame formTitles:(NSArray *)formTitles;
+- (id)initWithFrame:(CGRect)frame formTitles:(NSArray *)formTitles formPlaceholders:(NSArray *)formPlaceholders;
 - (UITextField *)textFieldAtIndex:(NSInteger)index;
 - (void)endEditing;
 
