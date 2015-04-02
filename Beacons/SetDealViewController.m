@@ -22,6 +22,7 @@
 #import "ExplanationPopupView.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Resize.h"
+#import "UIView+UIImage.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionDescription,
@@ -63,6 +64,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (assign, nonatomic) BOOL frontCamera;
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) UIButton *retakePictureButton;
+@property (strong, nonatomic) AVCaptureSession *session;
 
 @property (strong, nonatomic) NSDate *date;
 
@@ -480,7 +482,54 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)toggleCamera:(id)sender
 {
     self.frontCamera = !self.frontCamera;
-    [self initializeCamera];
+    
+    //Change camera source
+    if(self.session)
+    {
+        //Indicate that some changes will be made to the session
+        [self.session beginConfiguration];
+        
+        //Remove existing input
+        AVCaptureInput* currentCameraInput = [self.session.inputs objectAtIndex:0];
+        [self.session removeInput:currentCameraInput];
+        
+        //Get new input
+        AVCaptureDevice *newCamera = nil;
+        if(((AVCaptureDeviceInput*)currentCameraInput).device.position == AVCaptureDevicePositionBack)
+        {
+            newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
+        }
+        else
+        {
+            newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
+        }
+        
+        //Add input to session
+        NSError *err = nil;
+        AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&err];
+        if(!newVideoInput || err)
+        {
+            NSLog(@"Error creating capture device input: %@", err.localizedDescription);
+        }
+        else
+        {
+            [self.session addInput:newVideoInput];
+        }
+        
+        //Commit all the configuration changes at once
+        [self.session commitConfiguration];
+    }
+    
+}
+
+- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
+{
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices)
+    {
+        if ([device position] == position) return device;
+    }
+    return nil;
 }
 
 - (void)showDatePicker
@@ -671,10 +720,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 }
 
 - (void) initializeCamera {
-    AVCaptureSession *session = [[AVCaptureSession alloc] init];
-    session.sessionPreset = AVCaptureSessionPresetPhoto;
+    self.session = [[AVCaptureSession alloc] init];
+    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
     
-    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
     [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
     captureVideoPreviewLayer.frame = self.cameraPreview.bounds;
@@ -714,7 +763,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         if (!input) {
             NSLog(@"ERROR: trying to open camera: %@", error);
         }
-        [session addInput:input];
+        [self.session addInput:input];
     }
     
     if (self.frontCamera) {
@@ -723,19 +772,22 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         if (!input) {
             NSLog(@"ERROR: trying to open camera: %@", error);
         }
-        [session addInput:input];
+        [self.session addInput:input];
     }
     
     self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
     NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
     [self.stillImageOutput setOutputSettings:outputSettings];
     
-    [session addOutput:self.stillImageOutput];
+    [self.session addOutput:self.stillImageOutput];
     
-    [session startRunning];
+    [self.session startRunning];
+    
 }
 
 - (void) captureImage { //method to capture image from AVCaptureSession video feed
+
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     AVCaptureConnection *videoConnection = nil;
     for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
         
@@ -766,12 +818,12 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.haveImage = YES;
     self.retakePictureButton.hidden = NO;
     
-    UIGraphicsBeginImageContext(CGSizeMake(320, self.dealContentView.height));
-    [image drawInRect: CGRectMake(0, 0, 320, self.dealContentView.height)];
+    UIGraphicsBeginImageContext(CGSizeMake(self.dealDescriptionView.width, self.dealDescriptionView.height));
+    [image drawInRect: CGRectMake(0, 0, self.dealDescriptionView.width, self.dealDescriptionView.height)];
     UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    CGRect cropRect = CGRectMake(0, 55, 320, self.dealContentView.height - 106);
+    CGRect cropRect = CGRectMake(0, 55, self.dealDescriptionView.width, self.dealDescriptionView.height - 106);
     CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
     
     UIImage *unflippedImage = [UIImage imageWithCGImage:imageRef];
@@ -787,25 +839,21 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     [self.imageView setImage:self.image];
     
+    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    
     CGImageRelease(imageRef);
     
 }
 
 - (void) uploadPicture {
         if (self.haveImage) {
-//            UIImage *scaledImage;
-//            CGFloat maxDimension = 720;
-//            if (self.image.size.width >= self.image.size.height) {
-//                scaledImage = [self.image scaledToSize:CGSizeMake(maxDimension, maxDimension*self.image.size.height/self.image.size.width)];
-//            }
-//            else {
-//                scaledImage = [self.image scaledToSize:CGSizeMake(maxDimension*self.image.size.width/self.image.size.height, maxDimension)];
-//            }
             
-            [[APIClient sharedClient] postImage:self.image forBeaconWithID:[NSNumber numberWithInt:1000] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            UIImage *imageToUpload = [self.imageView UIImage];
+            [[APIClient sharedClient] postImage:imageToUpload forBeaconWithID:[NSNumber numberWithInt:1000] success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSString *baseURL = @"https://s3.amazonaws.com/hotspot-photo/";
                 NSString *imageKey = responseObject[@"image_key"];
                 self.imageUrl = [baseURL stringByAppendingString:imageKey];
+                NSLog(@"%@", self.imageUrl);
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 
