@@ -65,6 +65,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) UIButton *retakePictureButton;
 @property (strong, nonatomic) AVCaptureSession *session;
+@property (strong, nonatomic) UILabel *topPictureLabel;
+@property (strong, nonatomic) UILabel *bottomPictureLabel;
 
 @property (strong, nonatomic) NSDate *date;
 
@@ -167,6 +169,17 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     topGradient.bottom = self.dealContentView.height - 3;
     [self.dealContentView addSubview:topGradient];
     
+    self.topPictureLabel = [[UILabel alloc] init];
+    self.topPictureLabel.height = 20;
+    self.topPictureLabel.width = self.view.width - 100;
+    self.topPictureLabel.centerX = self.cameraPreview.width/2.0;
+    self.topPictureLabel.y = 10;
+    self.topPictureLabel.font = [ThemeManager regularFontOfSize:14];
+    self.topPictureLabel.textAlignment = NSTextAlignmentCenter;
+    self.topPictureLabel.textColor = [UIColor whiteColor];
+    self.topPictureLabel.text = @"No Picture Added";
+    [self.dealContentView addSubview:self.topPictureLabel];
+    
     UIButton *toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *toggleCameraImage = [UIImage imageNamed:@"toggleCamera"];
     [toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
@@ -191,21 +204,32 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     //self.imageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
     [self.dealContentView addSubview:self.imageView];
     
+    UIImage *bottomGradientImage = [UIImage imageNamed:@"bottomPictureGradient"];
+    UIImageView *bottomGradient = [[UIImageView alloc] initWithImage:bottomGradientImage];
+    bottomGradient.size = CGSizeMake(self.view.width, 80);
+    bottomGradient.bottom = self.dealContentView.height;
+    [self.dealContentView addSubview:bottomGradient];
+    
     self.retakePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *retakePicture = [UIImage imageNamed:@"retakePicture"];
     [self.retakePictureButton setImage:retakePicture forState:UIControlStateNormal];
-    self.retakePictureButton.size = CGSizeMake(30, 25);
-    self.retakePictureButton.x = self.dealContentView.width - 35;
-    self.retakePictureButton.bottom = self.dealContentView.height - 10;
+    self.retakePictureButton.size = CGSizeMake(60, 45);
+    self.retakePictureButton.x = self.dealContentView.width - 55;
+    self.retakePictureButton.bottom = self.dealContentView.height - 0;
     self.retakePictureButton.hidden = YES;
     [self.retakePictureButton addTarget:self action:@selector(retakePicture:) forControlEvents:UIControlEventTouchUpInside];
     [self.dealContentView addSubview:self.retakePictureButton];
     
-    UIImage *bottomGradientImage = [UIImage imageNamed:@"bottomPictureGradient"];
-    UIImageView *bottomGradient = [[UIImageView alloc] initWithImage:bottomGradientImage];
-    bottomGradient.size = CGSizeMake(self.view.width, 60);
-    bottomGradient.bottom = self.dealContentView.height;
-    [self.dealContentView addSubview:bottomGradient];
+//    self.bottomPictureLabel = [[UILabel alloc] init];
+//    self.bottomPictureLabel.height = 20;
+//    self.bottomPictureLabel.width = self.view.width - 100;
+//    self.bottomPictureLabel.centerX = self.cameraPreview.width/2.0;
+//    self.bottomPictureLabel.bottom = 10;
+//    self.topPictureLabel.font = [ThemeManager regularFontOfSize:14];
+//    self.topPictureLabel.textAlignment = NSTextAlignmentCenter;
+//    self.topPictureLabel.textColor = [UIColor whiteColor];
+//    self.topPictureLabel.text = @"Picture Added!";
+//    [self.dealContentView addSubview:self.topPictureLabel];
     
     self.imageUrl = @"";
     self.frontCamera = YES;
