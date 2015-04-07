@@ -40,6 +40,7 @@
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
+		413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -281,6 +282,8 @@
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
+		413B7B191AD44F0500EB5385 /* PaymentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentsViewController.h; sourceTree = "<group>"; };
+		413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentsViewController.m; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -682,6 +685,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		413B7B181AD44EE500EB5385 /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				413B7B191AD44F0500EB5385 /* PaymentsViewController.h */,
+				413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */,
+			);
+			name = Payments;
+			sourceTree = "<group>";
+		};
 		9615F4E0175BEBA9005CF62D /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -825,6 +837,7 @@
 		96585A15199D3A6000A6E02A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				413B7B181AD44EE500EB5385 /* Payments */,
 				96585A14199D39CD00A6E02A /* Deals */,
 				96585A1C199D3AF700A6E02A /* Beacons */,
 				96585A1B199D3AE300A6E02A /* Settings */,
@@ -1345,6 +1358,7 @@
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
+				413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */,
 				96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
 				966DF3D618D66B3F00109002 /* Beacon+Time.m in Sources */,

@@ -16,7 +16,32 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Bolts (1.1.2)
+  - Bolts (1.1.4)
+  - Braintree (3.7.1):
+    - Braintree/API
+    - Braintree/Drop-In
+    - Braintree/Payments
+    - Braintree/PayPal
+    - Braintree/UI
+    - Braintree/Venmo
+  - Braintree/API (3.7.1)
+  - Braintree/Drop-In (3.7.1):
+    - Braintree/API
+    - Braintree/Payments
+    - Braintree/PayPal
+    - Braintree/UI
+    - Braintree/Venmo
+  - Braintree/Payments (3.7.1):
+    - Braintree/API
+    - Braintree/PayPal
+    - Braintree/Venmo
+  - Braintree/PayPal (3.7.1):
+    - Braintree/API
+    - Braintree/UI
+  - Braintree/UI (3.7.1):
+    - Braintree/API
+  - Braintree/Venmo (3.7.1):
+    - Braintree/API
   - BSKeyboardControls (2.2)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core
@@ -57,6 +82,7 @@ DEPENDENCIES:
   - AFNetworking (~> 1.2)
   - AHAlertView
   - BlocksKit (~> 2.2.5)
+  - Braintree
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
@@ -70,20 +96,21 @@ DEPENDENCIES:
   - UIView+Positioning
 
 SPEC CHECKSUMS:
-  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
-  AHAlertView: 27ca35694babd935d908bd7f6e575175a8947b2e
-  BlocksKit: 4439e7f30a9f90743462ca63545a15c1f4304cef
-  Bolts: 2635e8698a630774689441047f3465d78c48d485
-  BSKeyboardControls: c9aa1bdbb5ecd454aa3d0b2279f79c5dc4b6c6ad
-  CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
-  CrittercismSDK: 9f19db3a1f0c16b35d8c29c69406852d184a7650
-  Facebook-iOS-SDK: 56214af8e0ef16e751eb2804250326b709e571b8
-  FormatterKit: f744aa7928003eba8317d6fd6998414fbc78f7a5
-  Foursquare-iOS-API: 5e4b94fcb4fb74c8f0b0598445502bf691dd5f6b
-  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
-  Mixpanel: 9aba38257fc4d2777ab5db1afc55e22bdfd57a4a
-  MSDynamicsDrawerViewController: 8d4c783d8cf3193e0356a0064b7d3929654d6097
-  SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
-  UIView+Positioning: 870af80983bf495af2cb8a3a15b20e26fcc57ebb
+  AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
+  AHAlertView: 38dcd9e1e3c9c2e5d4da82dfd519d78fea4cad9a
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
+  Braintree: 3919426c18f95396e1d35102a7b74b07c90aba49
+  BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
+  CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
+  CrittercismSDK: 6f26c25dacacc71fed8018d7fbb2761578bbb271
+  Facebook-iOS-SDK: fbac4ae5c9ac995d67e7afe658dd7cdaf3adbce7
+  FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c
+  Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
+  MBProgressHUD: 8688c331cb64702283be37ab8d7d329cdd25f251
+  Mixpanel: dc56111f1b327b38e0ae5a805f33f5d0c9e7f7f2
+  MSDynamicsDrawerViewController: 7c95dcc55f5558a778294a3983efbcb85e9a9942
+  SDWebImage: ed3095af2ff88b436426037444979b917f6c5575
+  UIView+Positioning: e3bf0946adc9d174b9bac668d4a39ecd850c813f
 
 COCOAPODS: 0.33.1
