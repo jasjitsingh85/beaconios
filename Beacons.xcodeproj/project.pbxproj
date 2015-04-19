@@ -49,7 +49,6 @@
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
 		41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */; };
 		41BEAC2B1A1DE4750069F932 /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */; };
-		41ED34C81AC8D33800A77A92 /* topPictureGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34C71AC8D33800A77A92 /* topPictureGradient@2x.png */; };
 		41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34C91AC8D68400A77A92 /* topPictureGradient@2x.png */; };
 		41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34CB1AC8D73F00A77A92 /* toggleCamera@2x.png */; };
 		41ED34CE1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34CD1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png */; };
@@ -1146,7 +1145,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Jeff Ames";
 				TargetAttributes = {
 					963399371758512100AF9D89 = {
@@ -1235,7 +1234,6 @@
 				9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */,
 				41ED34CE1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png in Resources */,
 				96C7FEA71898158200A79CC3 /* iphoneVector@2x.png in Resources */,
-				41ED34C81AC8D33800A77A92 /* topPictureGradient@2x.png in Resources */,
 				96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */,
 				96C7FE9C1897294100A79CC3 /* blueGradientBackground@2x.png in Resources */,
 				41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */,
@@ -1451,6 +1449,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1504,6 +1503,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1539,6 +1539,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;

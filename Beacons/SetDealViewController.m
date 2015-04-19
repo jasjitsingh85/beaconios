@@ -337,6 +337,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self view];
     [self resetDate];
     [self initializeCamera];
+//    NSString *ImageURL = @"https://s3-us-west-2.amazonaws.com/hotspot-venue-images/screenshot_220.png";
+//    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+//    self.imageView.image = [UIImage imageWithData:imageData];
+
     //[self.imageView sd_setImageWithURL:deal.venue.imageURL];
     //self.venueLabelLineOne.text = deal.venue.name;
 //    self.descriptionLabel.text = deal.dealDescription;

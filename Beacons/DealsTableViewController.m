@@ -201,9 +201,10 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:41.311272 longitude:-72.932041];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:41.311272 longitude:-72.932041];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
                 [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
@@ -318,6 +319,7 @@
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
 {
+    
     CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
     //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];

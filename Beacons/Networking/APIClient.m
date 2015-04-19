@@ -291,6 +291,24 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"deal/feedback/" parameters:parameters success:success failure:failure];
 }
 
+- (void)getClientToken:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"client_token/" parameters:parameters success:success failure:failure];
+}
+
+- (void)postPurchase: (NSString *)paymentNonce forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce , @"beacon_id" : beaconID };
+    [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
+- (void)checkIfPaymentOnFile:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"beacon_id" : beaconID };
+    [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {

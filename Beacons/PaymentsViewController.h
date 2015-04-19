@@ -8,8 +8,12 @@
 
 #import <Braintree/Braintree.h>
 
-@interface PaymentsViewController () <BTDropInViewControllerDelegate>
+@interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate>
 
 @property (nonatomic, strong) Braintree *braintree;
+@property (nonatomic, strong) NSNumber *beaconID;
+
+- (id) initWithClientToken: (NSString *)clientToken ;
+- (void) openPaymentModal;
 
 @end

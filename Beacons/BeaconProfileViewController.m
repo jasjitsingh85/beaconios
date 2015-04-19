@@ -42,12 +42,14 @@
 #import "AnalyticsManager.h"
 #import "ContactManager.h"
 #import "BeaconMapSnapshotImageView.h"
+#import "PaymentsViewController.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
 @property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
+@property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
@@ -82,12 +84,37 @@
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
+        [self initPaymentsViewController];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
     }
     return self;
+}
+
+- (void) initPaymentsViewController {
+    
+    
+    [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *clientToken = responseObject[@"client_token"];
+        self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        self.paymentsViewController.beaconID = self.beacon.beaconID;
+        [self addChildViewController:self.paymentsViewController];
+        //[self.view addSubview:self.paymentsViewController.view];
+        self.paymentsViewController.view.frame = self.view.bounds;
+        
+        [[APIClient sharedClient] checkIfPaymentOnFile:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSNumber *dismiss_payment_modal = responseObject[@"dismiss_payment_modal"];
+            if ([dismiss_payment_modal isEqual:@0]) {
+                [self.paymentsViewController openPaymentModal];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+    
 }
 
 - (void)dealloc
@@ -122,6 +149,7 @@
     self.inviteListViewController.view.frame = self.view.bounds;
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.inviteListViewController.view.backgroundColor = [UIColor whiteColor];
+    
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
 //    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
@@ -316,6 +344,7 @@
     [self updateInviteListInsets];
     [self updateChatDesiredInsets];
     [self updateDealRedemptionInsets];
+//    [self.paymentsViewController openPaymentModal];
 //    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
 //    self.navigationItem.rightBarButtonItem = editButtonItem;
 }

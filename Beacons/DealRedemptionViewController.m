@@ -111,7 +111,7 @@
     NSInteger hours = floor(interval/(60.0*60.0));
     NSInteger minutes = floor((interval - hours*60*60)/60.0);
     NSInteger seconds = interval - 60*60*hours - 60*minutes;
-    NSString *timeLeft = [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
+    NSString *timeLeft = [NSString stringWithFormat:@"%ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
     self.countdownLabel.text = [NSString stringWithFormat:@"%@ %@", self.countdownLabel.text, timeLeft];
 }
 
