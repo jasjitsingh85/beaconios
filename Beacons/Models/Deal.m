@@ -47,6 +47,9 @@
         self.groupDeal = NO;
     }
     
+    NSString *inAppPayment = dictionary[@"in_app_payment"];
+    self.inAppPayment = [inAppPayment boolValue];
+    
     return self;
 }
 

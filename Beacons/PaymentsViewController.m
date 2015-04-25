@@ -21,7 +21,6 @@
 
 - (id) initWithClientToken: (NSString *)clientToken  {
     self = [super init];
-    NSLog(@"Client Token: %@", clientToken);
     self.clientToken = clientToken;
     if (!self) {
         return nil;
@@ -38,8 +37,8 @@
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
     
-    dropInViewController.summaryTitle = @"Margarita at Oaxaca";
-    dropInViewController.summaryDescription = @"To ensure speedy service (and low fees) Oaxaca requires you open a tab through Hotspot";
+    dropInViewController.summaryTitle = @"Margarita";
+    dropInViewController.summaryDescription = @"Oaxaca requires you open a tab through Hotspot";
     dropInViewController.displayAmount = @"$3";
     dropInViewController.callToActionText = @"Open Tab";
     

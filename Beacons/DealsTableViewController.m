@@ -201,7 +201,7 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:41.311272 longitude:-72.932041];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
             //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
             [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{

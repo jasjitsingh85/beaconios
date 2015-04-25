@@ -35,37 +35,49 @@
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+}
+
+- (void)updateDealType
+{
+    NSLog(@"IN APP PAYMENT: %d", self.deal.inAppPayment);
+    if (self.deal.inAppPayment) {
+        
+    } else {
+        [self loadCouponDeal];
+    }
+}
+
+- (void)loadCouponDeal
+{
     
-    self.countdownLabel = [[UILabel alloc] init];
-    self.countdownLabel.font = [ThemeManager boldFontOfSize:16];
-    self.countdownLabel.textColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
+        self.countdownLabel = [[UILabel alloc] init];
+        self.countdownLabel.font = [ThemeManager boldFontOfSize:16];
+        self.countdownLabel.textColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
     
-//    self.timeLeftLabel = [[UILabel alloc] init];
-//    self.timeLeftLabel.font = [ThemeManager boldFontOfSize:1.3*19];
-//    self.timeLeftLabel.textColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
     
-    self.redeemButton = [DashedBorderButton buttonWithType:UIButtonTypeCustom];
-    self.redeemButton.layer.cornerRadius = 6;
-    self.redeemButton.size = CGSizeMake(280, 42);
-    [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        self.redeemButton = [DashedBorderButton buttonWithType:UIButtonTypeCustom];
+        self.redeemButton.layer.cornerRadius = 6;
+        self.redeemButton.size = CGSizeMake(280, 42);
+        [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.feedbackButton = [[UIButton alloc] init];
-    self.feedbackButton.size = CGSizeMake(self.view.width, 34);
-    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
-    self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
-    self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
-    self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
-    footerView.backgroundColor = [UIColor whiteColor];
-    self.feedbackButton.bottom = footerView.height + 10;
-    [footerView addSubview:self.feedbackButton];
-    self.feedbackButton.centerX = footerView.width/2.0;
-    self.redeemButton.centerX = footerView.width/2.0;
-    self.redeemButton.bottom = footerView.height - 40;
-    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:self.redeemButton];
-    self.tableView.tableFooterView = footerView;
+        self.feedbackButton = [[UIButton alloc] init];
+        self.feedbackButton.size = CGSizeMake(self.view.width, 34);
+        self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+        self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
+        self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
+        self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
+        footerView.backgroundColor = [UIColor whiteColor];
+        self.feedbackButton.bottom = footerView.height + 10;
+        [footerView addSubview:self.feedbackButton];
+        self.feedbackButton.centerX = footerView.width/2.0;
+        self.redeemButton.centerX = footerView.width/2.0;
+        self.redeemButton.bottom = footerView.height - 40;
+        [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [footerView addSubview:self.redeemButton];
+        self.tableView.tableFooterView = footerView;
+    
 }
 
 - (BOOL)dealPassed
@@ -121,6 +133,7 @@
     
     self.deal = deal;
     self.dealStatus = dealStatus;
+    [self updateDealType];
     [self updateRedeemButtonAppearance];
     [self updateFeedbackButtonAppearance];
     [self.tableView reloadData];
@@ -293,19 +306,24 @@
 - (UITableViewCell *)dealDescriptionCell
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    cell.indentationLevel = 1;
-    cell.indentationWidth = 5;
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.text = @"HERE'S THE DEAL:";
-    cell.textLabel.font = [ThemeManager boldFontOfSize:16];
-    cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    cell.detailTextLabel.y = 45;
-    cell.detailTextLabel.text = self.deal.dealDescription;
-    cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
-    cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
-    cell.detailTextLabel.numberOfLines = 0;
-    return cell;
     
+    if (self.deal.inAppPayment){
+        
+    } else {
+        cell.indentationLevel = 1;
+        cell.indentationWidth = 5;
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.text = @"HERE'S THE DEAL:";
+        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
+        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
+        cell.detailTextLabel.y = 45;
+        cell.detailTextLabel.text = self.deal.dealDescription;
+        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
+        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
+        cell.detailTextLabel.numberOfLines = 0;
+    }
+    
+    return cell;
 }
 
 

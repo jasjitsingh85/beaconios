@@ -39,12 +39,15 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
 			<string>com.hotspot.hotspot</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>hotspot</string>
 				<string>fb741683799178892</string>
+				<string>com.hotspot.hotspot</string>
 			</array>
 		</dict>
 	</array>

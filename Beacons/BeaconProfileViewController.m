@@ -105,10 +105,11 @@
         self.paymentsViewController.view.frame = self.view.bounds;
         
         [[APIClient sharedClient] checkIfPaymentOnFile:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSNumber *dismiss_payment_modal = responseObject[@"dismiss_payment_modal"];
-            if ([dismiss_payment_modal isEqual:@0]) {
+            NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+            BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
+            //if (dismiss_payment_modal) {
                 [self.paymentsViewController openPaymentModal];
-            }
+            //}
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
@@ -367,7 +368,7 @@
         dealButtonLabel.textAlignment = NSTextAlignmentCenter;
         dealButtonLabel.font = [ThemeManager boldFontOfSize:10];
         dealButtonLabel.textColor = [UIColor whiteColor];
-        dealButtonLabel.text = @"DEALS";
+        dealButtonLabel.text = @"DEAL";
         [self.descriptionView addSubview:dealButtonLabel];
         
         self.chatTabButton.size = CGSizeMake(30, 25);

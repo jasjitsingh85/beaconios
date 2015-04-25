@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSArray *hours;
 @property (strong, nonatomic) Venue *venue;
 @property (assign, nonatomic) BOOL groupDeal;
+@property (assign, nonatomic) BOOL inAppPayment;
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;

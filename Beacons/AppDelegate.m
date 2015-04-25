@@ -32,6 +32,7 @@
 #import "LockedViewController.h"
 #import "RandomObjectManager.h"
 #import "Deal.h"
+#import <Braintree/Braintree.h>
 
 @interface AppDelegate()
 
@@ -142,6 +143,8 @@
     backgroundWindowView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
     [self.window addSubview:backgroundWindowView];
     [self.window sendSubviewToBack:backgroundWindowView];
+    
+    [Braintree setReturnURLScheme:@"com.hotspot.hotspot"];
     
     return YES;
 }
@@ -287,7 +290,8 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     // attempt to extract a token from the url
-    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    //return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    return [Braintree handleOpenURL:url sourceApplication:sourceApplication];
 }
 
 #pragma mark - Beacon Profile
