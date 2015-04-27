@@ -43,6 +43,7 @@
 #import "ContactManager.h"
 #import "BeaconMapSnapshotImageView.h"
 #import "PaymentsViewController.h"
+#import "WebViewController.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -50,6 +51,7 @@
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
 @property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
+@property (strong, nonatomic) WebViewController *venmoWebviewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
@@ -85,12 +87,21 @@
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [self initPaymentsViewController];
+        [self initVenmoWebviewController];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
     }
     return self;
+}
+
+- (void) initVenmoWebviewController
+{
+    NSString *venmoStringURL = [NSString stringWithFormat:@"https://api.venmo.com/v1/oauth/authorize?client_id=2565&scope=make_payments&response_type=code&redirect_uri=https://www.getbeacons.com/api/venmo_oauth/?user_id=%@", [User loggedInUser].userID];
+    
+    NSURL *venmoURL = [NSURL URLWithString:venmoStringURL];
+    self.venmoWebviewController = [[WebViewController alloc] initWithTitle:@"Venmo" andURL:venmoURL];
 }
 
 - (void) initPaymentsViewController {
@@ -107,9 +118,9 @@
         [[APIClient sharedClient] checkIfPaymentOnFile:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
-            //if (dismiss_payment_modal) {
+            if (!dismiss_payment_modal) {
                 [self.paymentsViewController openPaymentModal];
-            //}
+            }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
         
@@ -219,35 +230,35 @@
 //    [self.imageView addSubview:backgroundViewBlack];
 //    [self.imageView addSubview:backgroundViewOrange];
     
-    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
-    self.timeLabel.font = [ThemeManager boldFontOfSize:22];
-    self.timeLabel.textColor = [UIColor whiteColor];
-    [self.descriptionView addSubview:self.timeLabel];
-    
-    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, self.descriptionView.width, 30)];
-//    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:30];
-    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
-    self.descriptionLabelLineOne.numberOfLines = 1;
-    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
-    [self.descriptionView addSubview:self.descriptionLabelLineOne];
-    
-    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, self.descriptionView.width, 46)];
-    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
-    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
-    self.descriptionLabelLineTwo.numberOfLines = 1;
-    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
-    
-    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 83, self.descriptionView.width, 30)];
-    self.locationLabel.font = [ThemeManager boldFontOfSize:30];
-    self.locationLabel.textColor = [UIColor whiteColor];
-    [self.descriptionView addSubview:self.locationLabel];
-    UITapGestureRecognizer *locationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon)];
-    locationTap.numberOfTapsRequired = 1;
-    [self.locationLabel addGestureRecognizer:locationTap];
-    self.locationLabel.userInteractionEnabled = YES;
+//    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
+//    self.timeLabel.font = [ThemeManager boldFontOfSize:22];
+//    self.timeLabel.textColor = [UIColor whiteColor];
+//    [self.descriptionView addSubview:self.timeLabel];
+//    
+//    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, self.descriptionView.width, 30)];
+////    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+//    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:30];
+//    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+//    self.descriptionLabelLineOne.numberOfLines = 1;
+//    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
+//    [self.descriptionView addSubview:self.descriptionLabelLineOne];
+//    
+//    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, self.descriptionView.width, 46)];
+//    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+//    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+//    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
+//    self.descriptionLabelLineTwo.numberOfLines = 1;
+//    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+//    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
+//    
+//    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 83, self.descriptionView.width, 30)];
+//    self.locationLabel.font = [ThemeManager boldFontOfSize:30];
+//    self.locationLabel.textColor = [UIColor whiteColor];
+//    [self.descriptionView addSubview:self.locationLabel];
+//    UITapGestureRecognizer *locationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon)];
+//    locationTap.numberOfTapsRequired = 1;
+//    [self.locationLabel addGestureRecognizer:locationTap];
+//    self.locationLabel.userInteractionEnabled = YES;
     
 //    self.invitedLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 158, 194, 14)];
 //    self.invitedLabel.font = [ThemeManager regularFontOfSize:13];
@@ -270,17 +281,17 @@
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
     
-    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteButton.frame = CGRectMake(0, 150, 160, 26);
-    [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
-    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.inviteButton.centerX = self.descriptionView.width/2;
-    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-    self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
-//    self.inviteButton.layer.cornerRadius = 4;
-    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.descriptionView addSubview:self.inviteButton];
+//    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.inviteButton.frame = CGRectMake(0, 150, 160, 26);
+//    [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
+//    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+//    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.inviteButton.centerX = self.descriptionView.width/2;
+//    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+//    self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
+////    self.inviteButton.layer.cornerRadius = 4;
+//    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.descriptionView addSubview:self.inviteButton];
     
 //    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
@@ -348,6 +359,20 @@
 //    [self.paymentsViewController openPaymentModal];
 //    UIBarButtonItem *editButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.editButton];
 //    self.navigationItem.rightBarButtonItem = editButtonItem;
+    //UIImage *btnImage = [UIImage imageNamed:@"menuInvite.png"];
+    //UIButton *textFriendsButton = [[UIButton alloc]  init];
+    //[textFriendsButton setImage:btnImage forState:UIControlStateNormal];
+    //UIButton *textFriendsButton = [UIButton navButtonWithTitle:@"+ Friends"];
+    //textFriendsButton.width = 50;
+    UIButton *textFriendsButton = [[UIButton alloc] init];
+    CGRect listButtonFrame = CGRectMake(0, 0 , 30, 30);
+    textFriendsButton.frame = listButtonFrame;
+    UIImage *btnImage = [UIImage imageNamed:@"addFriendDark.png"];
+    [textFriendsButton setImage:btnImage forState:UIControlStateNormal];
+    [textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *textFriendsBarButton = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
+    //[textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = textFriendsBarButton;
 }
 
 - (void)setDealMode:(BOOL)dealMode
@@ -760,6 +785,7 @@
 
 - (void)inviteButtonTouched:(id)sender
 {
+    //[self enableVenmoButtonTouched];
     [self inviteMoreFriends];
 }
 
@@ -1006,6 +1032,22 @@
     }
     
     return firstAndSecondLine;
+}
+
+- (void)enableVenmoButtonTouched
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.venmoWebviewController];
+    
+    navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+    
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
+    
+//    if (self.venmoWebviewController.dismissModal) {
+//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//    }
+    
 }
 
 

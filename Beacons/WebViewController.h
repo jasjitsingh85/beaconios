@@ -10,6 +10,8 @@
 
 @interface WebViewController : UIViewController <UIWebViewDelegate>
 
+@property (nonatomic, assign) BOOL dismissModal;
+
 - (id)initWithTitle:(NSString *)title andURL:(NSURL *)url;
 
 @end

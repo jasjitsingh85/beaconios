@@ -38,6 +38,9 @@
     if (self) {
         self.url = url;
         self.title = title;
+        self.view = self.webView;
+        NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.url];
+        [self.webView loadRequest:requestObj];
     }
     return self;
 }
@@ -46,9 +49,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.view = self.webView;
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.url];
-    [self.webView loadRequest:requestObj];
+    
+    //self.view = self.webView;
+    //NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.url];
+    //[self.webView loadRequest:requestObj];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,6 +79,16 @@
 {
     [self.loadingIndicator stopAnimating];
     [self.loadingIndicator removeFromSuperview];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSString *URLString = [[request URL] absoluteString];
+    if (![URLString isEqualToString:[self.url absoluteString]]) {
+        NSLog(@"ABSOLUTE STRING: %@", URLString);
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return YES;
+    }
+    return YES;
 }
 
 @end

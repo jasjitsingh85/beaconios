@@ -44,9 +44,9 @@
     
     // The way you present your BTDropInViewController instance is up to you.
     // In this example, we wrap it in a new, modally presented navigation controller:
-    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                                          target:self
-                                                                                                          action:@selector(userDidCancelPayment)];
+//    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+//                                                                                                          target:self
+//                                                                                                          action:@selector(userDidCancelPayment)];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
     [self presentViewController:navigationController

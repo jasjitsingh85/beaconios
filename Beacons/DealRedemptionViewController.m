@@ -39,12 +39,47 @@
 
 - (void)updateDealType
 {
-    NSLog(@"IN APP PAYMENT: %d", self.deal.inAppPayment);
     if (self.deal.inAppPayment) {
-        
+        [self loadPaymentDeal];
     } else {
         [self loadCouponDeal];
     }
+}
+
+- (void) loadPaymentDeal
+{
+//    self.countdownLabel = [[UILabel alloc] init];
+//    self.countdownLabel.font = [ThemeManager boldFontOfSize:16];
+//    self.countdownLabel.textColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
+//    
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
+    
+    self.redeemButton = [DashedBorderButton buttonWithType:UIButtonTypeCustom];
+    self.redeemButton.layer.cornerRadius = 6;
+    self.redeemButton.border.lineWidth = 4;
+    self.redeemButton.border.strokeColor = [UIColor colorWithRed:138/255. green:136/255. blue:136/255. alpha:1].CGColor;
+    self.redeemButton.border.fillColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1].CGColor;
+    self.redeemButton.border.lineDashPattern = @[@10, @10];
+    self.redeemButton.size = CGSizeMake(280, 200);
+    [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.feedbackButton = [[UIButton alloc] init];
+    self.feedbackButton.size = CGSizeMake(self.view.width, 34);
+    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+    self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
+    self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
+    self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
+    footerView.backgroundColor = [UIColor whiteColor];
+    self.feedbackButton.bottom = footerView.height + 10;
+    [footerView addSubview:self.feedbackButton];
+    self.feedbackButton.centerX = footerView.width/2.0;
+    self.redeemButton.centerX = footerView.width/2.0;
+    self.redeemButton.bottom = footerView.height - 40;
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [footerView addSubview:self.redeemButton];
+    self.tableView.tableFooterView = footerView;
+    
 }
 
 - (void)loadCouponDeal
@@ -193,11 +228,11 @@
                             NSParagraphStyleAttributeName:style}; // Added line
     NSDictionary *dict2 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
                             NSFontAttributeName:[ThemeManager boldFontOfSize:14],
-                            NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:[[ThemeManager sharedTheme] lightBlueColor]}; // Added line
+                            NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:[UIColor colorWithRed:0/255. green:162/255. blue:255/255. alpha:1]}; // Added line
     if (!self.dealStatus.feedback) {
         NSLog(@"%d", self.dealStatus.feedback);
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
-        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem getting this deal? " attributes:dict1]];
+        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem? " attributes:dict1]];
         [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Tap here." attributes:dict2]];
         [self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
     }
@@ -222,7 +257,7 @@
 - (void)updateRedeemButtonAppearance
 {
     UIColor *inactiveColor = [UIColor colorWithWhite:205/255.0 alpha:1.0];
-    UIColor *activeColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
+    UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
     UIColor *color;
     NSString *title;
     if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
@@ -308,7 +343,17 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
     if (self.deal.inAppPayment){
-        
+//        cell.indentationLevel = 1;
+//        cell.indentationWidth = 5;
+//        cell.backgroundColor = [UIColor whiteColor];
+//        cell.textLabel.text = @"HERE'S THE DEAL:";
+//        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
+//        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
+//        cell.detailTextLabel.y = 45;
+//        cell.detailTextLabel.text = self.deal.dealDescription;
+//        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
+//        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
+//        cell.detailTextLabel.numberOfLines = 0;
     } else {
         cell.indentationLevel = 1;
         cell.indentationWidth = 5;

@@ -154,4 +154,9 @@
         }];
 }
 
+- (NSURL *)imageUrl
+{
+    
+}
+
 @end

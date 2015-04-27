@@ -31,5 +31,6 @@
 
 - (id)initWithData:(NSDictionary *)data;
 - (void)updateWithData:(NSDictionary *)data;
+- (NSURL *)imageURL;
 
 @end
