@@ -18,6 +18,10 @@
 @property (strong, nonatomic) DashedBorderButton *redeemButton;
 @property (strong, nonatomic) UIButton *feedbackButton;
 @property (strong, nonatomic) UILabel *countdownLabel;
+@property (strong, nonatomic) UILabel *voucherTitle;
+@property (strong, nonatomic) UILabel *itemName;
+@property (strong, nonatomic) UILabel *venueName;
+@property (strong, nonatomic) UILabel *serverMessage;
 //@property (strong, nonatomic) UILabel *timeLeftLabel;
 
 @end
@@ -60,8 +64,38 @@
     self.redeemButton.border.strokeColor = [UIColor colorWithRed:138/255. green:136/255. blue:136/255. alpha:1].CGColor;
     self.redeemButton.border.fillColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1].CGColor;
     self.redeemButton.border.lineDashPattern = @[@10, @10];
-    self.redeemButton.size = CGSizeMake(280, 200);
+    self.redeemButton.size = CGSizeMake(280, 185);
     [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.voucherTitle = [[UILabel alloc] init];
+    self.voucherTitle.size = CGSizeMake(self.redeemButton.width, 34);
+    self.voucherTitle.y = 20;
+    self.voucherTitle.textAlignment = NSTextAlignmentCenter;
+    self.voucherTitle.text = @"VOUCHER FOR:";
+    [self.redeemButton addSubview:self.voucherTitle];
+    
+    self.itemName = [[UILabel alloc] init];
+    self.itemName.size = CGSizeMake(self.redeemButton.width, 34);
+    self.itemName.font = [ThemeManager boldFontOfSize:34];
+    self.itemName.y = 55;
+    self.itemName.textAlignment = NSTextAlignmentCenter;
+    self.itemName.text = @"MARGARITA";
+    [self.redeemButton addSubview:self.itemName];
+    
+    self.venueName = [[UILabel alloc] init];
+    self.venueName.size = CGSizeMake(self.redeemButton.width, 34);
+    self.venueName.textAlignment = NSTextAlignmentCenter;
+    self.venueName.y = 95;
+    self.venueName.text = @"AT UNIVERSITY BAR";
+    [self.redeemButton addSubview:self.venueName];
+    
+    self.serverMessage = [[UILabel alloc] init];
+    self.serverMessage.size = CGSizeMake(self.redeemButton.width, 34);
+    self.serverMessage.textAlignment = NSTextAlignmentCenter;
+    self.serverMessage.y = 135;
+    self.serverMessage.text = @"SERVER ONLY: TAP TO REDEEM";
+    self.serverMessage.font = [ThemeManager boldFontOfSize:14];
+    [self.redeemButton addSubview:self.serverMessage];
     
     self.feedbackButton = [[UIButton alloc] init];
     self.feedbackButton.size = CGSizeMake(self.view.width, 34);
@@ -75,9 +109,9 @@
     [footerView addSubview:self.feedbackButton];
     self.feedbackButton.centerX = footerView.width/2.0;
     self.redeemButton.centerX = footerView.width/2.0;
-    self.redeemButton.bottom = footerView.height - 40;
+    self.redeemButton.bottom = 205;
     [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [footerView addSubview:self.redeemButton];
+    [self.tableView addSubview:self.redeemButton];
     self.tableView.tableFooterView = footerView;
     
 }
@@ -256,28 +290,32 @@
 
 - (void)updateRedeemButtonAppearance
 {
-    UIColor *inactiveColor = [UIColor colorWithWhite:205/255.0 alpha:1.0];
-    UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
-    UIColor *color;
     NSString *title;
-    if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
-        color = activeColor;
-        title = @"Show Staff to Redeem";
-    }
-    else {
-        color = inactiveColor;
-        if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
-            title = @"Deal Redeemed";
-        }
-        else if ([self dealPassed]){
-            title = @"Deal Passed";
-        }
-        else {
+    if (self.deal.inAppPayment) {
+            title = @"";
+    } else {
+        UIColor *inactiveColor = [UIColor colorWithWhite:205/255.0 alpha:1.0];
+        UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
+        UIColor *color;
+        if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+            color = activeColor;
             title = @"Show Staff to Redeem";
         }
+        else {
+            color = inactiveColor;
+            if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+                title = @"Deal Redeemed";
+            }
+            else if ([self dealPassed]){
+                title = @"Deal Passed";
+            }
+            else {
+                title = @"Show Staff to Redeem";
+            }
+        }
+        self.redeemButton.border.strokeColor = color.CGColor;
+        [self.redeemButton setTitleColor:color forState:UIControlStateNormal];
     }
-    self.redeemButton.border.strokeColor = color.CGColor;
-    [self.redeemButton setTitleColor:color forState:UIControlStateNormal];
     [self.redeemButton setTitle:title forState:UIControlStateNormal];
 }
 

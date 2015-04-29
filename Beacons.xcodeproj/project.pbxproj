@@ -52,6 +52,7 @@
 		41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */; };
 		41E6B3EC1AEE345100D34EAF /* addFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */; };
 		41E6B3EE1AEE350A00D34EAF /* addFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */; };
+		41E6B3F01AF0B78B00D34EAF /* addFriendWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */; };
 		41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34C91AC8D68400A77A92 /* topPictureGradient@2x.png */; };
 		41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34CB1AC8D73F00A77A92 /* toggleCamera@2x.png */; };
 		41ED34CE1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34CD1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png */; };
@@ -297,6 +298,7 @@
 		41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
 		41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
 		41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
+		41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriendWhite@2x.png"; sourceTree = "<group>"; };
 		41ED34C71AC8D33800A77A92 /* topPictureGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topPictureGradient@2x.png"; sourceTree = "<group>"; };
 		41ED34C91AC8D68400A77A92 /* topPictureGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topPictureGradient@2x.png"; sourceTree = "<group>"; };
 		41ED34CB1AC8D73F00A77A92 /* toggleCamera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toggleCamera@2x.png"; sourceTree = "<group>"; };
@@ -1009,6 +1011,7 @@
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
+				41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */,
 				41ED34D31AC9C52F00A77A92 /* retakePicture@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
@@ -1190,6 +1193,7 @@
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
+				41E6B3F01AF0B78B00D34EAF /* addFriendWhite@2x.png in Resources */,
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
 				41ED34D41AC9C52F00A77A92 /* retakePicture@2x.png in Resources */,

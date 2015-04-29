@@ -367,7 +367,7 @@
     UIButton *textFriendsButton = [[UIButton alloc] init];
     CGRect listButtonFrame = CGRectMake(0, 0 , 30, 30);
     textFriendsButton.frame = listButtonFrame;
-    UIImage *btnImage = [UIImage imageNamed:@"addFriendDark.png"];
+    UIImage *btnImage = [UIImage imageNamed:@"addFriendWhite.png"];
     [textFriendsButton setImage:btnImage forState:UIControlStateNormal];
     [textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *textFriendsBarButton = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
@@ -393,7 +393,6 @@
         dealButtonLabel.textAlignment = NSTextAlignmentCenter;
         dealButtonLabel.font = [ThemeManager boldFontOfSize:10];
         dealButtonLabel.textColor = [UIColor whiteColor];
-        dealButtonLabel.text = @"DEAL";
         [self.descriptionView addSubview:dealButtonLabel];
         
         self.chatTabButton.size = CGSizeMake(30, 25);
@@ -425,8 +424,15 @@
         inviteButtonLabel.textAlignment = NSTextAlignmentCenter;
         inviteButtonLabel.font = [ThemeManager boldFontOfSize:10];
         inviteButtonLabel.textColor = [UIColor whiteColor];
-        inviteButtonLabel.text = @"INVITEES";
         [self.descriptionView addSubview:inviteButtonLabel];
+        if (self.beaconChatViewController.beacon.deal.inAppPayment)
+        {
+            dealButtonLabel.text = @"VOUCHER";
+            inviteButtonLabel.text = @"GROUP TAB";
+        } else {
+            dealButtonLabel.text = @"DEAL";
+            inviteButtonLabel.text = @"INVITEES";
+        }
     }
     else {
         CGRect chatTabButtonFrame;
