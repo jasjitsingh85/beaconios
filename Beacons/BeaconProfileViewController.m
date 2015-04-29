@@ -365,9 +365,9 @@
     //UIButton *textFriendsButton = [UIButton navButtonWithTitle:@"+ Friends"];
     //textFriendsButton.width = 50;
     UIButton *textFriendsButton = [[UIButton alloc] init];
-    CGRect listButtonFrame = CGRectMake(0, 0 , 30, 30);
+    CGRect listButtonFrame = CGRectMake(0, 0 , 28, 25);
     textFriendsButton.frame = listButtonFrame;
-    UIImage *btnImage = [UIImage imageNamed:@"addFriendWhite.png"];
+    UIImage *btnImage = [UIImage imageNamed:@"textFriendsWhite.png"];
     [textFriendsButton setImage:btnImage forState:UIControlStateNormal];
     [textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *textFriendsBarButton = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
@@ -428,7 +428,7 @@
         if (self.beaconChatViewController.beacon.deal.inAppPayment)
         {
             dealButtonLabel.text = @"VOUCHER";
-            inviteButtonLabel.text = @"GROUP TAB";
+            inviteButtonLabel.text = @"GROUP";
         } else {
             dealButtonLabel.text = @"DEAL";
             inviteButtonLabel.text = @"INVITEES";

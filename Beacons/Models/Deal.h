@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString *bonusDescription;
 @property (strong, nonatomic) NSString *additionalInfo;
 @property (strong, nonatomic) NSString *dealType;
+@property (strong, nonatomic) NSString *itemName;
 @property (strong, nonatomic) NSNumber *inviteRequirement;
 @property (strong, nonatomic) NSNumber *bonusRequirement;
 @property (strong, nonatomic) NSArray *hours;

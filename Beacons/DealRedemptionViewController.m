@@ -10,6 +10,7 @@
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "DashedBorderButton.h"
 #import "Deal.h"
+#import "Venue.h"
 #import "DealStatus.h"
 #import "APIClient.h"
 
@@ -79,14 +80,14 @@
     self.itemName.font = [ThemeManager boldFontOfSize:34];
     self.itemName.y = 55;
     self.itemName.textAlignment = NSTextAlignmentCenter;
-    self.itemName.text = @"MARGARITA";
+    self.itemName.text = [self.deal.itemName uppercaseString];
     [self.redeemButton addSubview:self.itemName];
     
     self.venueName = [[UILabel alloc] init];
     self.venueName.size = CGSizeMake(self.redeemButton.width, 34);
     self.venueName.textAlignment = NSTextAlignmentCenter;
     self.venueName.y = 95;
-    self.venueName.text = @"AT UNIVERSITY BAR";
+    self.venueName.text = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
     [self.redeemButton addSubview:self.venueName];
     
     self.serverMessage = [[UILabel alloc] init];
@@ -217,7 +218,7 @@
 - (void)redeemButtonTouched:(id)sender
 {
     if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This deal has already been redeemed and can't be redeemed again" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
     if ([self dealNow]) {
@@ -232,10 +233,10 @@
     NSString *message;
     NSString *title = @"Sorry";
     if ([self dealUpcoming]) {
-        message = @"This deal isn't going on right now.";
+        message = @"This voucher isn't available yet.";
     }
     else {
-        message = @"This deal has passed.";
+        message = @"This voucher has expired.";
     }
     UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
     [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
@@ -291,8 +292,59 @@
 - (void)updateRedeemButtonAppearance
 {
     NSString *title;
+    NSString *voucherTitleText;
+    NSString *itemNameText;
+    NSString *venueNameText;
+    NSString *serverMessageText;
+    
     if (self.deal.inAppPayment) {
-            title = @"";
+        title = @"";
+        UIColor *inactiveColor = [UIColor colorWithRed:105/255. green:193/255. blue:98/255. alpha:1];
+        UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
+        UIColor *backgroundColor;
+        UIColor *color;
+        
+        if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+            color = activeColor;
+            backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
+            voucherTitleText = @"VOUCHER FOR:";
+            itemNameText = [self.deal.itemName uppercaseString];
+            venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
+            serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
+        }
+        else {
+            color = inactiveColor;
+            backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
+            self.voucherTitle.textColor = color;
+            self.itemName.textColor = color;
+            self.venueName.textColor = color;
+            self.serverMessage.textColor = color;
+            if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+                voucherTitleText = [self.deal.itemName uppercaseString];
+                itemNameText = @"REDEEMED";
+                venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
+                serverMessageText = @"VOUCHER CAN'T BE REUSED";
+            }
+            else if ([self dealPassed]){
+                voucherTitleText = @"";
+                itemNameText = @"EXPIRED";
+                venueNameText = @"";
+                serverMessageText = @"";
+            }
+            else {
+                voucherTitleText = @"";
+                itemNameText = @"INACTIVE";
+                venueNameText = @"";
+                serverMessageText = @"";
+            }
+        }
+        self.redeemButton.border.strokeColor = color.CGColor;
+        self.voucherTitle.text = voucherTitleText;
+        self.itemName.text = itemNameText;
+        self.venueName.text = venueNameText;
+        self.serverMessage.text = serverMessageText;
+        self.redeemButton.border.fillColor = backgroundColor.CGColor;
+        
     } else {
         UIColor *inactiveColor = [UIColor colorWithWhite:205/255.0 alpha:1.0];
         UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
