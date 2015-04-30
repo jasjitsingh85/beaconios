@@ -8,6 +8,8 @@
 
 #import "PaymentsViewController.h"
 #import "APIClient.h"
+#import "Deal.h"
+#import "Venue.h"
 
 @interface PaymentsViewController()
 
@@ -29,17 +31,18 @@
     }
 }
 
-- (void)openPaymentModal {
-
+- (void)openPaymentModalWithDeal: (Deal *)deal {
+    
     // Create and retain a `Braintree` instance with the client token
     self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
     // Create a BTDropInViewController
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
-    
-    dropInViewController.summaryTitle = @"Margarita";
-    dropInViewController.summaryDescription = @"Oaxaca requires you open a tab through Hotspot";
-    dropInViewController.displayAmount = @"$3";
+//    
+    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
+    dropInViewController.summaryDescription = @"You will only be charged for redeemed drinks";
+    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
+    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"Open Tab";
     
     // The way you present your BTDropInViewController instance is up to you.

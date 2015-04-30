@@ -86,7 +86,7 @@
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
-        [self initPaymentsViewController];
+//        [self initPaymentsViewController];
         [self initVenmoWebviewController];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
@@ -104,7 +104,7 @@
     self.venmoWebviewController = [[WebViewController alloc] initWithTitle:@"Venmo" andURL:venmoURL];
 }
 
-- (void) initPaymentsViewController {
+- (void) initPaymentsViewControllerAndSetDeal: (Deal *)deal {
     
     
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -119,7 +119,7 @@
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (!dismiss_payment_modal) {
-                [self.paymentsViewController openPaymentModal];
+                [self.paymentsViewController openPaymentModalWithDeal:deal];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
@@ -503,6 +503,7 @@
     if (beacon.deal) {
         self.dealMode = YES;
         [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
+        [self initPaymentsViewControllerAndSetDeal:beacon.deal];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.imageView sd_setImageWithURL:beacon.deal.venue.imageURL];

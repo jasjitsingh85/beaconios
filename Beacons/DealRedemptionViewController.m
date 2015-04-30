@@ -12,6 +12,7 @@
 #import "Deal.h"
 #import "Venue.h"
 #import "DealStatus.h"
+#import "LoadingIndictor.h"
 #import "APIClient.h"
 
 @interface DealRedemptionViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -284,10 +285,12 @@
 
 - (void)redeemDeal
 {
+    //[LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *dealStatus = responseObject[@"deal_status"];
         self.dealStatus.dealStatus = dealStatus;
         [self updateRedeemButtonAppearance];
+        //[LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:nil];
 }
 

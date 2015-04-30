@@ -7,6 +7,8 @@
 //
 
 #import <Braintree/Braintree.h>
+#import "Deal.h"
+#import "Venue.h"
 
 @interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate>
 
@@ -14,6 +16,6 @@
 @property (nonatomic, strong) NSNumber *beaconID;
 
 - (id) initWithClientToken: (NSString *)clientToken ;
-- (void) openPaymentModal;
+- (void) openPaymentModalWithDeal: (Deal *)deal;
 
 @end

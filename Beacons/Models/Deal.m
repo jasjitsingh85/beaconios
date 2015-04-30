@@ -27,6 +27,7 @@
     self.inviteRequirement = dictionary[@"invite_requirement"];
     self.bonusDescription = dictionary[@"bonus_description"];
     self.itemName = dictionary[@"item_name"];
+    self.itemPrice = dictionary[@"item_price"];
     self.notificationText = dictionary[@"notification_text"];
     self.invitePrompt = dictionary[@"invite_prompt"];
     self.additionalInfo = dictionary[@"additional_info"];
