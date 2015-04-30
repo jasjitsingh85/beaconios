@@ -104,16 +104,18 @@
     self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
     self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
     self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
     footerView.backgroundColor = [UIColor whiteColor];
-    self.feedbackButton.bottom = footerView.height + 10;
-    [footerView addSubview:self.feedbackButton];
+    self.feedbackButton.bottom = 264;
     self.feedbackButton.centerX = footerView.width/2.0;
+    [self.tableView addSubview:self.feedbackButton];
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
     self.redeemButton.centerX = footerView.width/2.0;
     self.redeemButton.bottom = 205;
-    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.tableView addSubview:self.redeemButton];
-    self.tableView.tableFooterView = footerView;
+    //[self.tableView addSubview:footerView];
+    //self.tableView.tableFooterView = footerView;
     
 }
 
@@ -299,14 +301,14 @@
     
     if (self.deal.inAppPayment) {
         title = @"";
-        UIColor *inactiveColor = [UIColor colorWithRed:105/255. green:193/255. blue:98/255. alpha:1];
-        UIColor *activeColor = [UIColor unnormalizedColorWithRed:138 green:136 blue:136 alpha:255];
+        UIColor *activeColor = [UIColor colorWithRed:105/255. green:193/255. blue:98/255. alpha:1];
+        UIColor *inactiveColor = [UIColor unnormalizedColorWithRed:110 green:110 blue:110 alpha:255];
         UIColor *backgroundColor;
         UIColor *color;
         
         if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
             color = activeColor;
-            backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
+            backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
             voucherTitleText = @"VOUCHER FOR:";
             itemNameText = [self.deal.itemName uppercaseString];
             venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
@@ -314,11 +316,7 @@
         }
         else {
             color = inactiveColor;
-            backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
-            self.voucherTitle.textColor = color;
-            self.itemName.textColor = color;
-            self.venueName.textColor = color;
-            self.serverMessage.textColor = color;
+            backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
             if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
                 voucherTitleText = [self.deal.itemName uppercaseString];
                 itemNameText = @"REDEEMED";
@@ -338,6 +336,11 @@
                 serverMessageText = @"";
             }
         }
+        self.voucherTitle.textColor = color;
+        self.itemName.textColor = color;
+        self.venueName.textColor = color;
+        self.serverMessage.textColor = color;
+        
         self.redeemButton.border.strokeColor = color.CGColor;
         self.voucherTitle.text = voucherTitleText;
         self.itemName.text = itemNameText;
