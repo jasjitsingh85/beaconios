@@ -59,6 +59,10 @@
 {
     [super viewWillAppear:animated];
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.title];
+    if ([self.title isEqualToString:@"Venmo"])
+    {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,11 +86,28 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    NSString *URLString = [[request URL] absoluteString];
-    if (![URLString isEqualToString:[self.url absoluteString]]) {
-        NSLog(@"ABSOLUTE STRING: %@", URLString);
-        [self dismissViewControllerAnimated:YES completion:nil];
-        return YES;
+    if ([self.title isEqualToString:@"Venmo"]) {
+        if (![[self.url absoluteString] containsString:URLString]) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                NSLog(@"%d",[URLString hasPrefix:@"https://www.getbeacons.com/api/venmo_oauth"]);
+                if ([URLString hasPrefix:@"https://www.getbeacons.com/api/venmo_oauth"]) {
+                    NSLog(@"HAS PREFIX");
+                    if ([URLString containsString:@"User+denied+your+application"]) {
+                        NSLog(@"USER DENIED ACCES");
+                    } else {
+                        NSLog(@"USER ACCEPTED ACCESS");
+                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSkippedVenmo];
+                        NSLog(@"Hide Venmo %d", [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]);
+                    }
+                    NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.url];
+                    [self.webView loadRequest:requestObj];
+                    //return YES;
+                } else if ([URLString hasPrefix:@"https://venmo.com/w/signup"]) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://venmo.com/w/signup?from=oauth&client_id=2565"]];
+                }
+            }];
+            return YES;
+        }
     }
     return YES;
 }

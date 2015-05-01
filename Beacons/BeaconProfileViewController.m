@@ -53,6 +53,7 @@
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 @property (strong, nonatomic) WebViewController *venmoWebviewController;
 @property (strong, nonatomic) UIView *descriptionView;
+@property (strong, nonatomic) UIView *enableVenmoView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
 @property (strong, nonatomic) UIView *imageViewGradient;
 @property (strong, nonatomic) BounceButton *chatTabButton;
@@ -86,8 +87,8 @@
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
-//        [self initPaymentsViewController];
         [self initVenmoWebviewController];
+        [self updateVenmoView];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -181,6 +182,38 @@
     backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.descriptionView addSubview:backgroundView];
+    
+    self.enableVenmoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 80)];
+    self.enableVenmoView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
+    UILabel *venmoTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, self.descriptionView.size.width, 30)];
+    venmoTitle.text = @"Enable Venmo for automatic repayment";
+    venmoTitle.font = [ThemeManager lightFontOfSize:15];
+    venmoTitle.textAlignment = NSTextAlignmentCenter;
+    [self.enableVenmoView addSubview:venmoTitle];
+    [self.descriptionView addSubview:self.enableVenmoView];
+    
+    UIButton *enableVenmoButton = [[UIButton alloc] init];
+    enableVenmoButton.frame = CGRectMake(30, self.enableVenmoView.height - 38, 130, 25);
+    enableVenmoButton.backgroundColor = [UIColor unnormalizedColorWithRed:73 green:151 blue:207 alpha:255];
+    enableVenmoButton.titleLabel.font = [ThemeManager mediumFontOfSize:16];
+    [enableVenmoButton setTitle:@"Enable Venmo" forState:UIControlStateNormal];
+    [enableVenmoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [enableVenmoButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [enableVenmoButton addTarget:self action:@selector(enableVenmoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.enableVenmoView addSubview:enableVenmoButton];
+    
+    UIButton *skipVenmoButton = [[UIButton alloc] init];
+    skipVenmoButton.frame = CGRectMake(170, self.enableVenmoView.height - 38, 130, 25);
+    skipVenmoButton.backgroundColor = [UIColor clearColor];
+    skipVenmoButton.titleLabel.font = [ThemeManager lightFontOfSize:16];
+    [skipVenmoButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [skipVenmoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [skipVenmoButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [skipVenmoButton addTarget:self action:@selector(skipVenmoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.enableVenmoView.hidden = YES;
+    [self.enableVenmoView addSubview:skipVenmoButton];
+    
+    [self updateVenmoView];
     
     [self updateChatDesiredInsets];
     
@@ -1041,7 +1074,7 @@
     return firstAndSecondLine;
 }
 
-- (void)enableVenmoButtonTouched
+- (void)enableVenmoButtonTouched:(id)sender
 {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.venmoWebviewController];
     
@@ -1051,10 +1084,27 @@
                        animated:YES
                      completion:nil];
     
-//    if (self.venmoWebviewController.dismissModal) {
-//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-//    }
+}
+
+- (void)skipVenmoButtonTouched:(id)sender
+{
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Skip Venmo?" message:@"Are you sure you'd want to skip setting up Venmo?"];
+    [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSkippedVenmo];
+        self.enableVenmoView.hidden = YES;
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [alertView show];
     
+}
+
+- (void) updateVenmoView
+{
+    NSLog(@"Show venmo view: %d", [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]);
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]) {
+        NSLog(@"VENMO WORKING");
+        self.enableVenmoView.hidden = NO;
+    }
 }
 
 

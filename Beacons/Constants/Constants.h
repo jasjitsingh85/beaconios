@@ -24,6 +24,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDefaultsKeyHasShownHotspotExplanation @"hasShownHotspotExplanation"
 #define kDefaultsKeyHasShownDealExplanation @"hasShownDealExplanation"
 #define kDefaultsKeyHasShownDealsIntroduction @"hasShownDealsIntroduction"
+#define kDefaultsKeyHasSkippedVenmo @"hasSkippedVenmo"
 
 //notifications
 #define kPushNotificationTypeMessage @"Message"
