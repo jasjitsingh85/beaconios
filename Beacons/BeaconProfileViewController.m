@@ -88,7 +88,7 @@
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [self initVenmoWebviewController];
-        [self updateVenmoView];
+        [self initPaymentsViewControllerAndSetDeal];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -105,8 +105,8 @@
     self.venmoWebviewController = [[WebViewController alloc] initWithTitle:@"Venmo" andURL:venmoURL];
 }
 
-- (void) initPaymentsViewControllerAndSetDeal: (Deal *)deal {
-    
+- (void) initPaymentsViewControllerAndSetDeal//: //(Deal *)deal {
+{
     
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
@@ -120,7 +120,7 @@
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (!dismiss_payment_modal) {
-                [self.paymentsViewController openPaymentModalWithDeal:deal];
+                [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         }];
@@ -212,8 +212,6 @@
     [skipVenmoButton addTarget:self action:@selector(skipVenmoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.enableVenmoView.hidden = YES;
     [self.enableVenmoView addSubview:skipVenmoButton];
-    
-    [self updateVenmoView];
     
     [self updateChatDesiredInsets];
     
@@ -536,7 +534,7 @@
     if (beacon.deal) {
         self.dealMode = YES;
         [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
-        [self initPaymentsViewControllerAndSetDeal:beacon.deal];
+        [self updateVenmoView];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.imageView sd_setImageWithURL:beacon.deal.venue.imageURL];
@@ -1098,11 +1096,18 @@
     
 }
 
+-(BOOL) isUserCreator
+{
+    NSLog(@"%@", self.beacon.creator.userID);
+    NSLog(@"%@", [User loggedInUser].userID);
+    return (self.beacon.creator.userID == [User loggedInUser].userID);
+}
+
 - (void) updateVenmoView
 {
-    NSLog(@"Show venmo view: %d", [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]);
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]) {
-        NSLog(@"VENMO WORKING");
+    
+    NSLog(@"is user creator: %d", [self isUserCreator]);
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo] && [self isUserCreator]) {
         self.enableVenmoView.hidden = NO;
     }
 }

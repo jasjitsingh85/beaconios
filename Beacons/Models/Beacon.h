@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSString *address;
 @property (nonatomic, strong) NSDate *time;
 @property (nonatomic, strong) NSDate *expirationDate;
+@property (assign, nonatomic) BOOL isAuthorized;
 @property (readonly) BOOL userAttending;
 @property (readonly) BOOL userHere;
 @property (readonly) DealStatus *userDealStatus;

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic) BOOL feedback;
+@property (assign, nonatomic) BOOL paymentAuthorization;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -220,30 +220,35 @@
 
 - (void)redeemButtonTouched:(id)sender
 {
-    if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        return;
-    }
-    if ([self dealNow]) {
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"Only staff should redeem deal"];
-        [alertView bk_addButtonWithTitle:@"Yes" handler:^{
-            [self redeemDeal];
-        }];
-        [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+    if (self.dealStatus.paymentAuthorization || !self.deal.inAppPayment) {
+        if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            return;
+        }
+        if ([self dealNow]) {
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"Only staff should redeem deal"];
+            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+                [self redeemDeal];
+            }];
+            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+            [alertView show];
+            return;
+        }
+        NSString *message;
+        NSString *title = @"Sorry";
+        if ([self dealUpcoming]) {
+            message = @"This voucher isn't available yet.";
+        }
+        else {
+            message = @"This voucher has expired.";
+        }
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
+        [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
         [alertView show];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Voucher Inactive" message:@"The host hasn't opened a tab" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
-    NSString *message;
-    NSString *title = @"Sorry";
-    if ([self dealUpcoming]) {
-        message = @"This voucher isn't available yet.";
-    }
-    else {
-        message = @"This voucher has expired.";
-    }
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
-    [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
-    [alertView show];
 }
 
 - (void)feedbackDeal
@@ -309,7 +314,7 @@
         UIColor *backgroundColor;
         UIColor *color;
         
-        if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+        if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
             color = activeColor;
             backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
             voucherTitleText = @"VOUCHER FOR:";
@@ -324,13 +329,18 @@
                 voucherTitleText = [self.deal.itemName uppercaseString];
                 itemNameText = @"REDEEMED";
                 venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
-                serverMessageText = @"VOUCHER CAN'T BE REUSED";
+                serverMessageText = @"VOUCHER CANNOT BE REUSED";
             }
             else if ([self dealPassed]){
                 voucherTitleText = @"";
                 itemNameText = @"EXPIRED";
                 venueNameText = @"";
                 serverMessageText = @"";
+            } else if (!self.dealStatus.paymentAuthorization) {
+                voucherTitleText = @"VOUCHER";
+                itemNameText = @"INACTIVE";
+                venueNameText = @"TAB HASN'T BEEN OPENED";
+                serverMessageText = @"VOUCHER CANNOT BE USED";
             }
             else {
                 voucherTitleText = @"";
@@ -358,8 +368,7 @@
         if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
             color = activeColor;
             title = @"Show Staff to Redeem";
-        }
-        else {
+        } else {
             color = inactiveColor;
             if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
                 title = @"Deal Redeemed";

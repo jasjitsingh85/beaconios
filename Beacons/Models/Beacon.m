@@ -79,6 +79,9 @@
         [images addObject:beaconImage];
     }
     self.images = [NSArray arrayWithArray:images];
+    
+    NSString *isAuthorized = data[@"is_authorized"];
+    self.isAuthorized = [isAuthorized boolValue];
 }
 
 #pragma mark - NSCoding

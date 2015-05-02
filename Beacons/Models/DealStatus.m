@@ -40,6 +40,13 @@
     NSString *feedback = dictionary[@"feedback_boolean"];
     self.feedback = [feedback boolValue];
     
+    NSString *payment_authorization = dictionary[@"payment_authorization"];
+    if (payment_authorization == nil || payment_authorization == (id)[NSNull null]) {
+        self.paymentAuthorization = NO;
+    } else {
+        self.paymentAuthorization = YES;
+    }
+    
     return self;
 }
 
