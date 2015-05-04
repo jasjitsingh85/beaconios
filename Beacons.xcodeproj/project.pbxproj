@@ -36,6 +36,9 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
+		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
+		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
+		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
@@ -283,6 +286,10 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
+		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
+		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
+		4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanation@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
@@ -672,6 +679,8 @@
 				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
 				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
 				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
+				410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */,
+				410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */,
 				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
 				961FE29418D10F7100CF891A /* ExplanationPopupView.m */,
 				9651C79B193E74C20083A0FE /* DashedBorderButton.h */,
@@ -1000,6 +1009,8 @@
 				41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */,
+				4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */,
+				4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */,
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
@@ -1219,6 +1230,7 @@
 				41ED34D21AC9B3B000A77A92 /* takePictureButton@2x.png in Resources */,
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
+				4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */,
 				96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
@@ -1226,6 +1238,7 @@
 				41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */,
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
+				4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
@@ -1355,6 +1368,7 @@
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
+				4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
 				96C7FE951897270200A79CC3 /* IntroWalkthroughViewController.m in Sources */,
 				961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */,

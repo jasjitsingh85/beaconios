@@ -129,7 +129,7 @@ typedef enum {
     self.titleLabel.text = @"Sync Contacts";
     [self removeSubtitleLabels];
     self.subtitles = [self subtitleLabelsForStrings:@[@"To unlock local deals by texting your friends"]];
-    [self.confirmButton setTitle:@"SYNC CONTACTS" forState:UIControlStateNormal];
+    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
 

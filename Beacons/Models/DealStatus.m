@@ -8,6 +8,7 @@
 
 #import "DealStatus.h"
 #import "User.h"
+#import "Deal.h"
 #import "Contact.h"
 
 @implementation DealStatus
@@ -46,6 +47,8 @@
     } else {
         self.paymentAuthorization = YES;
     }
+    
+    self.deal = [[Deal alloc] initWithDictionary:dictionary[@"deal"]];
     
     return self;
 }

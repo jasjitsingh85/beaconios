@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class User, Contact;
+@class User, Contact, Deal;
 @interface DealStatus : NSObject
 
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) Contact *contact;
+@property (strong, nonatomic) Deal *deal;
 @property (strong, nonatomic) NSString *dealStatus;
 @property (strong, nonatomic) NSString *bonusStatus;
 @property (strong, nonatomic) NSDate *startDate;

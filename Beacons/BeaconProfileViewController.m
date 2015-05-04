@@ -44,6 +44,7 @@
 #import "BeaconMapSnapshotImageView.h"
 #import "PaymentsViewController.h"
 #import "WebViewController.h"
+#import "PaymentExplanationPopupView.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -88,7 +89,9 @@
         self.inviteListViewController.delegate = self;
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [self initVenmoWebviewController];
-        [self initPaymentsViewControllerAndSetDeal];
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
+            [self initPaymentsViewControllerAndSetDeal];
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -105,9 +108,21 @@
     self.venmoWebviewController = [[WebViewController alloc] initWithTitle:@"Venmo" andURL:venmoURL];
 }
 
+- (void) showPaymentsExplanationPopup
+{
+    NSLog(@"show payments is user: %d", [self isUserCreator]);
+    if (self.beacon.deal.inAppPayment && [self isUserCreator]) {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]) {
+            PaymentExplanationPopupView *paymentExplanationPopupView = [[PaymentExplanationPopupView alloc] init];
+            paymentExplanationPopupView.beaconProfileViewController = self;
+            [paymentExplanationPopupView show];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownPaymentExplanation];
+        }
+    }
+}
+
 - (void) initPaymentsViewControllerAndSetDeal//: //(Deal *)deal {
 {
-    
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
         self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
@@ -537,7 +552,8 @@
         [self updateVenmoView];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.imageView sd_setImageWithURL:beacon.deal.venue.imageURL];
+        [self.imageView sd_setImageWithURL:self.beacon.deal.venue.imageURL];
+        [self showPaymentsExplanationPopup];
     }
     else {
         self.imageView.region = MKCoordinateRegionMakeWithDistance(beacon.coordinate, 800, 1500);
