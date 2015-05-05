@@ -289,9 +289,13 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    // attempt to extract a token from the url
-    //return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-    return [Braintree handleOpenURL:url sourceApplication:sourceApplication];
+    
+    //attempt to extract a token from the url
+    if ([sourceApplication isEqualToString:kVenmoAppURLIdentifier]) {
+        return [Braintree handleOpenURL:url sourceApplication:sourceApplication];
+    } else {
+        return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+    }
 }
 
 #pragma mark - Beacon Profile

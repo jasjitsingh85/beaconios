@@ -248,12 +248,12 @@
         self.allDeals = deals;
         self.deals = self.allDeals;
         
-        NSPredicate *predicate;
-        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-        NSLog(@"%lu", (unsigned long)[[self.allDeals filteredArrayUsingPredicate:predicate] count]);
-        if ([[self.allDeals filteredArrayUsingPredicate:predicate] count] > 0) {
-            self.dealTypeToggle.hidden = NO;
-        };
+//        NSPredicate *predicate;
+//        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
+//        NSLog(@"%lu", (unsigned long)[[self.allDeals filteredArrayUsingPredicate:predicate] count]);
+//        if ([[self.allDeals filteredArrayUsingPredicate:predicate] count] > 0) {
+//            self.dealTypeToggle.hidden = NO;
+//        };
         
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
@@ -271,18 +271,19 @@
 {
     if (self.deals && self.deals.count) {
         [self hideEmptyDealsView];
-        NSPredicate *predicate;
-        if (self.groupDeal) {
-            predicate = [NSPredicate predicateWithFormat:@"groupDeal = YES"];
-            self.textManyFriends.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-            self.textOneFriend.backgroundColor = [UIColor clearColor];
-        }
-        else {
-            predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-            self.textOneFriend.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-            self.textManyFriends.backgroundColor = [UIColor clearColor];
-        }
-        self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
+//        NSPredicate *predicate;
+//        if (self.groupDeal) {
+//            predicate = [NSPredicate predicateWithFormat:@"groupDeal = YES"];
+//            self.textManyFriends.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
+//            self.textOneFriend.backgroundColor = [UIColor clearColor];
+//        }
+//        else {
+//            predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
+//            self.textOneFriend.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
+//            self.textManyFriends.backgroundColor = [UIColor clearColor];
+//        }
+        //self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
+        self.deals = self.allDeals;
     }
     else {
         [self showEmptyDealsView];

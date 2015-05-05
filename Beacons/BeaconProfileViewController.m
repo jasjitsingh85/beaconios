@@ -110,7 +110,6 @@
 
 - (void) showPaymentsExplanationPopup
 {
-    NSLog(@"show payments is user: %d", [self isUserCreator]);
     if (self.beacon.deal.inAppPayment && [self isUserCreator]) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]) {
             PaymentExplanationPopupView *paymentExplanationPopupView = [[PaymentExplanationPopupView alloc] init];
@@ -133,16 +132,26 @@
         
         [[APIClient sharedClient] checkIfPaymentOnFile:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (!dismiss_payment_modal) {
                 [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
             }
+            [self refreshDeal];
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
     
+}
+
+- (void) refreshDeal
+{
+    [self refreshBeaconData];
+    [self.dealRedemptionViewController setDeal:self.beacon.deal andDealStatus:self.beacon.userDealStatus];
 }
 
 - (void)dealloc
@@ -199,18 +208,26 @@
     [self.descriptionView addSubview:backgroundView];
     
     self.enableVenmoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 80)];
-    self.enableVenmoView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
-    UILabel *venmoTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, self.descriptionView.size.width, 30)];
-    venmoTitle.text = @"Enable Venmo for automatic repayment";
-    venmoTitle.font = [ThemeManager lightFontOfSize:15];
-    venmoTitle.textAlignment = NSTextAlignmentCenter;
-    [self.enableVenmoView addSubview:venmoTitle];
+    //self.enableVenmoView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
     [self.descriptionView addSubview:self.enableVenmoView];
     
+    UIImage *topGradientImage = [UIImage imageNamed:@"topPictureGradient"];
+    UIImageView *topGradient = [[UIImageView alloc] initWithImage:topGradientImage];
+    topGradient.size = CGSizeMake(self.view.width, self.enableVenmoView.height);
+    topGradient.bottom = self.enableVenmoView.height - 3;
+    [self.enableVenmoView addSubview:topGradient];
+    
+    UILabel *venmoTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, self.descriptionView.size.width, 30)];
+    venmoTitle.text = @"Enable Venmo for automatic repayment";
+    venmoTitle.textColor = [UIColor whiteColor];
+    venmoTitle.font = [ThemeManager regularFontOfSize:16];
+    venmoTitle.textAlignment = NSTextAlignmentCenter;
+    [self.enableVenmoView addSubview:venmoTitle];
+    
     UIButton *enableVenmoButton = [[UIButton alloc] init];
-    enableVenmoButton.frame = CGRectMake(30, self.enableVenmoView.height - 38, 130, 25);
+    enableVenmoButton.frame = CGRectMake(30, self.enableVenmoView.height - 38, 120, 25);
     enableVenmoButton.backgroundColor = [UIColor unnormalizedColorWithRed:73 green:151 blue:207 alpha:255];
-    enableVenmoButton.titleLabel.font = [ThemeManager mediumFontOfSize:16];
+    enableVenmoButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     [enableVenmoButton setTitle:@"Enable Venmo" forState:UIControlStateNormal];
     [enableVenmoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [enableVenmoButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -218,12 +235,12 @@
     [self.enableVenmoView addSubview:enableVenmoButton];
     
     UIButton *skipVenmoButton = [[UIButton alloc] init];
-    skipVenmoButton.frame = CGRectMake(170, self.enableVenmoView.height - 38, 130, 25);
-    skipVenmoButton.backgroundColor = [UIColor clearColor];
-    skipVenmoButton.titleLabel.font = [ThemeManager lightFontOfSize:16];
+    skipVenmoButton.frame = CGRectMake(170, self.enableVenmoView.height - 38, 120, 25);
+    skipVenmoButton.backgroundColor = [UIColor blackColor];
+    skipVenmoButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     [skipVenmoButton setTitle:@"Skip" forState:UIControlStateNormal];
-    [skipVenmoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [skipVenmoButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [skipVenmoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [skipVenmoButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [skipVenmoButton addTarget:self action:@selector(skipVenmoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.enableVenmoView.hidden = YES;
     [self.enableVenmoView addSubview:skipVenmoButton];
@@ -972,11 +989,10 @@
     }
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self refreshBeaconData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        //[LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
     [[AnalyticsManager sharedManager] inviteToBeacon:contacts.count];
@@ -1114,15 +1130,12 @@
 
 -(BOOL) isUserCreator
 {
-    NSLog(@"%@", self.beacon.creator.userID);
-    NSLog(@"%@", [User loggedInUser].userID);
     return (self.beacon.creator.userID == [User loggedInUser].userID);
 }
 
 - (void) updateVenmoView
 {
     
-    NSLog(@"is user creator: %d", [self isUserCreator]);
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo] && [self isUserCreator]) {
         self.enableVenmoView.hidden = NO;
     }

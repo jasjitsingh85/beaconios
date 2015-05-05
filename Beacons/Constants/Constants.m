@@ -30,4 +30,5 @@ NSString * const kTermsURL = @"http://www.getbeacons.com/terms";
 NSString * const kPrivacyURL = @"http://www.getbeacons.com/privacy";
 
 NSString * const kHappyHoursAppURLIdentifier = @"com.hotspot.happyhours";
+NSString * const kVenmoAppURLIdentifier = @"net.kortina.labs.Venmo";
 

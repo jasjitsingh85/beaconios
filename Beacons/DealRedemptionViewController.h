@@ -16,5 +16,6 @@
 @property (strong, nonatomic) DealStatus *dealStatus;
 
 - (void)setDeal:(Deal *)deal andDealStatus:(DealStatus *)dealStatus;
+- (void)updateRedeemButtonAppearance;
 
 @end

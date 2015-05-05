@@ -44,6 +44,7 @@
     //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"Open Tab";
+    dropInViewController.view.tintColor = [[ThemeManager sharedTheme] blueColor];
     
     // The way you present your BTDropInViewController instance is up to you.
     // In this example, we wrap it in a new, modally presented navigation controller:
@@ -52,6 +53,10 @@
 //                                                                                                          action:@selector(userDidCancelPayment)];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
+    navigationController.navigationBar.topItem.title = @"ONE TIME SETUP";
+    navigationController.navigationBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
+    navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self presentViewController:navigationController
                        animated:YES
                      completion:nil];
@@ -63,6 +68,7 @@
 
 - (void)dropInViewController:(__unused BTDropInViewController *)viewController didSucceedWithPaymentMethod:(BTPaymentMethod *)paymentMethod {
     self.nonce = paymentMethod.nonce;
+    NSLog(@"DID SUCCEED WITH PAYMENT METHOD: %@", paymentMethod);
     [self postNonceToServer:self.nonce]; // Send payment method nonce to your server
 }
 
@@ -72,12 +78,24 @@
 
 - (void)postNonceToServer:(NSString *)paymentMethodNonce {
     [[APIClient sharedClient] postPurchase:paymentMethodNonce forBeaconWithID:self.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success %@", responseObject[@"payment_authorized"]);
-        [self dismissViewControllerAnimated:YES completion:nil];
+        NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
+        NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+        NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
+        BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
+        if (dismiss_payment_modal) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self showCardDeclined];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Card Declined" message:@"Please try another payment method" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self showCardDeclined];
         NSLog(@"Failure");
     }];
+}
+
+- (void) showCardDeclined
+{
+    [[[UIAlertView alloc] initWithTitle:@"Card Declined" message:@"Please try another payment method" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 @end
