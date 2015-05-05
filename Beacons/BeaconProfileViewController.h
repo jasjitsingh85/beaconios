@@ -18,5 +18,6 @@
 - (void)refreshBeaconData;
 - (void)promptForCheckIn;
 - (void)initPaymentsViewControllerAndSetDeal;
+- (void)refreshDeal;
 
 @end

@@ -10,6 +10,7 @@
 #import "APIClient.h"
 #import "Deal.h"
 #import "Venue.h"
+#import "BeaconProfileViewController.h"
 
 @interface PaymentsViewController()
 
@@ -19,6 +20,8 @@
 @end
 
 @implementation PaymentsViewController
+
+@synthesize beaconProfileViewController = _beaconProfileViewController;
 
 
 - (id) initWithClientToken: (NSString *)clientToken  {
@@ -34,32 +37,35 @@
 - (void)openPaymentModalWithDeal: (Deal *)deal {
     
     // Create and retain a `Braintree` instance with the client token
-    self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
-    // Create a BTDropInViewController
-    BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
-    // This is where you might want to customize your Drop in. (See below.)
-//    
-    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
-    dropInViewController.summaryDescription = @"You will only be charged for redeemed drinks";
-    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
-    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
-    dropInViewController.callToActionText = @"Open Tab";
-    dropInViewController.view.tintColor = [[ThemeManager sharedTheme] blueColor];
-    
-    // The way you present your BTDropInViewController instance is up to you.
-    // In this example, we wrap it in a new, modally presented navigation controller:
-//    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-//                                                                                                          target:self
-//                                                                                                          action:@selector(userDidCancelPayment)];
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
-    navigationController.navigationBar.topItem.title = @"ONE TIME SETUP";
-    navigationController.navigationBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
-    navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self presentViewController:navigationController
-                       animated:YES
-                     completion:nil];
+    [Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
+        //self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
+        // Create a BTDropInViewController
+        self.braintree = braintree;
+        BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
+        // This is where you might want to customize your Drop in. (See below.)
+        //
+        dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
+        dropInViewController.summaryDescription = @"You will only be charged for redeemed drinks";
+        //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
+        //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
+        dropInViewController.callToActionText = @"Open Tab";
+        dropInViewController.view.tintColor = [[ThemeManager sharedTheme] blueColor];
+        
+        // The way you present your BTDropInViewController instance is up to you.
+        // In this example, we wrap it in a new, modally presented navigation controller:
+        //    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+        //                                                                                                          target:self
+        //                                                                                                          action:@selector(userDidCancelPayment)];
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
+        navigationController.navigationBar.topItem.title = @"ONE TIME SETUP";
+        navigationController.navigationBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
+        navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
+    }];
 }
 
 - (void)userDidCancelPayment {
@@ -84,6 +90,7 @@
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (dismiss_payment_modal) {
             [self dismissViewControllerAnimated:YES completion:nil];
+            [self.beaconProfileViewController refreshDeal];
         } else {
             [self showCardDeclined];
         }

@@ -10,10 +10,15 @@
 #import "Deal.h"
 #import "Venue.h"
 
-@interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate>
+@class BeaconProfileViewController;
+
+@interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate> {
+    BeaconProfileViewController *_beaconProfileViewController;
+}
 
 @property (nonatomic, strong) Braintree *braintree;
 @property (nonatomic, strong) NSNumber *beaconID;
+@property (nonatomic, strong) BeaconProfileViewController *beaconProfileViewController;
 
 - (id) initWithClientToken: (NSString *)clientToken ;
 - (void) openPaymentModalWithDeal: (Deal *)deal;

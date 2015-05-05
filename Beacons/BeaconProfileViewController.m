@@ -125,6 +125,7 @@
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
         self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        self.paymentsViewController.beaconProfileViewController = self;
         self.paymentsViewController.beaconID = self.beacon.beaconID;
         [self addChildViewController:self.paymentsViewController];
         //[self.view addSubview:self.paymentsViewController.view];
@@ -134,10 +135,9 @@
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
-            //if (!dismiss_payment_modal) {
+            if (!dismiss_payment_modal && self.beacon.deal.inAppPayment) {
                 [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
-            //}
-            [self refreshDeal];
+            }
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
