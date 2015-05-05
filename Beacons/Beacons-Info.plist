@@ -50,6 +50,16 @@
 				<string>com.hotspot.hotspot</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.hotspot.hotspot</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.hotspot.hotspot.payments</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>81</string>

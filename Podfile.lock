@@ -16,31 +16,42 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Bolts (1.1.4)
-  - Braintree (3.7.1):
+  - Bolts (1.1.5):
+    - Bolts/AppLinks
+    - Bolts/Tasks
+  - Bolts/AppLinks (1.1.5):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.1.5)
+  - Braintree (3.8.0-rc2):
     - Braintree/API
+    - Braintree/Coinbase
     - Braintree/Drop-In
     - Braintree/Payments
     - Braintree/PayPal
     - Braintree/UI
     - Braintree/Venmo
-  - Braintree/API (3.7.1)
-  - Braintree/Drop-In (3.7.1):
+  - Braintree/API (3.8.0-rc2)
+  - Braintree/Coinbase (3.8.0-rc2):
     - Braintree/API
+    - coinbase-official/OAuth (~> 2.1.1)
+  - Braintree/Drop-In (3.8.0-rc2):
+    - Braintree/API
+    - Braintree/Coinbase
     - Braintree/Payments
     - Braintree/PayPal
     - Braintree/UI
     - Braintree/Venmo
-  - Braintree/Payments (3.7.1):
+  - Braintree/Payments (3.8.0-rc2):
     - Braintree/API
+    - Braintree/Coinbase
     - Braintree/PayPal
     - Braintree/Venmo
-  - Braintree/PayPal (3.7.1):
+  - Braintree/PayPal (3.8.0-rc2):
     - Braintree/API
     - Braintree/UI
-  - Braintree/UI (3.7.1):
+  - Braintree/UI (3.8.0-rc2):
     - Braintree/API
-  - Braintree/Venmo (3.7.1):
+  - Braintree/Venmo (3.8.0-rc2):
     - Braintree/API
   - BSKeyboardControls (2.2)
   - CocoaLumberjack (1.6.5.1):
@@ -49,6 +60,7 @@ PODS:
   - CocoaLumberjack/Core (1.6.5.1)
   - CocoaLumberjack/Extensions (1.6.5.1):
     - CocoaLumberjack/Core
+  - coinbase-official/OAuth (2.1.4)
   - CrittercismSDK (4.3.3)
   - Facebook-iOS-SDK (3.15.1):
     - Bolts
@@ -99,10 +111,11 @@ SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AHAlertView: 38dcd9e1e3c9c2e5d4da82dfd519d78fea4cad9a
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
-  Braintree: 3919426c18f95396e1d35102a7b74b07c90aba49
+  Bolts: aac24961496d504aa56fc267cde95162a71bac39
+  Braintree: 107d22885e12c023b58809654447f4515ac68a75
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
+  coinbase-official: 4ad3ac862840657b4184345eb84af8166ab2b04e
   CrittercismSDK: 6f26c25dacacc71fed8018d7fbb2761578bbb271
   Facebook-iOS-SDK: fbac4ae5c9ac995d67e7afe658dd7cdaf3adbce7
   FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c

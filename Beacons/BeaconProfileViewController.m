@@ -134,9 +134,9 @@
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
-            if (!dismiss_payment_modal) {
+            //if (!dismiss_payment_modal) {
                 [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
-            }
+            //}
             [self refreshDeal];
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

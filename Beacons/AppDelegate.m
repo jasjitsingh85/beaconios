@@ -144,7 +144,7 @@
     [self.window addSubview:backgroundWindowView];
     [self.window sendSubviewToBack:backgroundWindowView];
     
-    [Braintree setReturnURLScheme:@"com.hotspot.hotspot"];
+    [Braintree setReturnURLScheme:@"com.hotspot.hotspot.payments"];
     
     return YES;
 }
