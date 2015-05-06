@@ -138,6 +138,7 @@
             if (!dismiss_payment_modal && self.beacon.deal.inAppPayment) {
                 [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
             }
+            [self refreshDeal];
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];

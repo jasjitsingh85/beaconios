@@ -21,15 +21,12 @@
         return nil;
     }
     self.dealID = dictionary[@"id"];
-    self.dealDescription = dictionary[@"deal_description"];
-    self.dealDescriptionShort = dictionary[@"deal_description_short"];
     self.inviteDescription = dictionary[@"invite_description"];
     self.inviteRequirement = dictionary[@"invite_requirement"];
     self.bonusDescription = dictionary[@"bonus_description"];
     self.itemName = dictionary[@"item_name"];
     self.itemPrice = dictionary[@"item_price"];
     self.notificationText = dictionary[@"notification_text"];
-    self.invitePrompt = dictionary[@"invite_prompt"];
     self.additionalInfo = dictionary[@"additional_info"];
     self.dealType = dictionary[@"deal_type"];
     NSNumber *bonusRequirement = dictionary[@"bonus_invite_requirement"];
@@ -51,6 +48,16 @@
     
     NSString *inAppPayment = dictionary[@"in_app_payment"];
     self.inAppPayment = [inAppPayment boolValue];
+    
+    if (self.inAppPayment) {
+        self.dealDescriptionShort = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];
+        self.dealDescription = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];
+        self.invitePrompt = [NSString stringWithFormat:@"We're getting our first %@ for $%@",[self.itemName lowercaseString], self.itemPrice];
+    } else {
+        self.dealDescriptionShort = dictionary[@"deal_description_short"];
+        self.dealDescription = dictionary[@"deal_description"];
+        self.invitePrompt = dictionary[@"invite_prompt"];
+    }
     
     return self;
 }
