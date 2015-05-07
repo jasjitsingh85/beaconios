@@ -157,9 +157,4 @@
         }];
 }
 
-- (NSURL *)imageUrl
-{
-    
-}
-
 @end
