@@ -177,7 +177,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.topPictureLabel.font = [ThemeManager regularFontOfSize:14];
     self.topPictureLabel.textAlignment = NSTextAlignmentCenter;
     self.topPictureLabel.textColor = [UIColor whiteColor];
-    self.topPictureLabel.text = @"No Picture Added";
+    self.topPictureLabel.text = @"Add Picture (Optional)";
     [self.dealContentView addSubview:self.topPictureLabel];
     
     UIButton *toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];

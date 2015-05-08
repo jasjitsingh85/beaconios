@@ -80,7 +80,7 @@
     self.descriptionLabel.height = 25;
     self.descriptionLabel.x = 0;
     self.descriptionLabel.y = 150;
-    self.descriptionLabel.font = [ThemeManager regularFontOfSize:1.3*9];
+    self.descriptionLabel.font = [ThemeManager regularFontOfSize:13];
     self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
@@ -166,16 +166,15 @@
     self.venueDetailDealSecondLineLabel.numberOfLines = 0;
     [self.venueDetailView addSubview:self.venueDetailDealSecondLineLabel];
     
-//    self.distanceLabel = [[UILabel alloc] init];
-//    self.distanceLabel.font = [ThemeManager regularFontOfSize:11];
-//    self.distanceLabel.textColor = [UIColor whiteColor];
-//    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
-//    [self.venueDetailView addSubview:self.distanceLabel];
+    self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.font = [ThemeManager mediumFontOfSize:13];
+    self.distanceLabel.textColor = [UIColor blackColor];
+    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
     
-    [self.venueScroll addSubview:self.venueDetailView];
+    //[self.venueScroll addSubview:self.venueDetailView];
     
     
-    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 2, self.contentView.frame.size.height);
+    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 1, self.contentView.frame.size.height);
     [self.contentView addSubview:self.venueScroll];
     
 //    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
@@ -243,13 +242,13 @@
 //    self.venueDescriptionLabel.height = self.venueDescriptionBackground.height;
 //    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
 //    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
-    
-//    self.distanceLabel.size = CGSizeMake(35, 35);
-//    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-//    //self.distanceLabel.clipsToBounds = YES;
-//    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-//    self.distanceLabel.y = 88;
-//    self.distanceLabel.centerX = self.venueDetailView.size.width - 49;
+
+    self.distanceLabel.size = CGSizeMake(37, 37);
+    self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    self.distanceLabel.clipsToBounds = YES;
+    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
+    self.distanceLabel.y = 65;
+    self.distanceLabel.centerX = self.venueDetailView.size.width - 40;
     
 }
 
@@ -264,7 +263,7 @@
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     self.descriptionLabel.text = self.deal.dealDescriptionShort;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
     self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
@@ -308,7 +307,8 @@
         [mapImageView addGestureRecognizer:singleTap];
         
         [mapView addSubview:mapImageView];
-        [self.venueDetailView addSubview:mapView];
+        [self.venuePreviewView addSubview:mapView];
+        [self.venuePreviewView addSubview:self.distanceLabel];
     }];
     
 }
