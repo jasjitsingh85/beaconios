@@ -80,10 +80,10 @@
     self.descriptionLabel.height = 25;
     self.descriptionLabel.x = 0;
     self.descriptionLabel.y = 150;
-    self.descriptionLabel.font = [ThemeManager regularFontOfSize:13];
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:13];
     self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
-    self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
     [self.venuePreviewView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
@@ -167,8 +167,8 @@
     [self.venueDetailView addSubview:self.venueDetailDealSecondLineLabel];
     
     self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager mediumFontOfSize:13];
-    self.distanceLabel.textColor = [UIColor blackColor];
+    self.distanceLabel.font = [ThemeManager boldFontOfSize:14];
+    self.distanceLabel.textColor = [UIColor whiteColor];
     //self.distanceLabel.backgroundColor = [UIColor whiteColor];
     
     //[self.venueScroll addSubview:self.venueDetailView];
@@ -231,7 +231,7 @@
     
     self.dealTime.width = 200;
     self.dealTime.height = 30;
-    self.dealTime.x = self.venuePreviewView.size.width*.62;
+    //self.dealTime.x = self.venuePreviewView.size.width*.62;
     self.dealTime.y=148;
     
     
@@ -247,8 +247,8 @@
     self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
     self.distanceLabel.clipsToBounds = YES;
     self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-    self.distanceLabel.y = 65;
-    self.distanceLabel.centerX = self.venueDetailView.size.width - 40;
+    self.distanceLabel.y = 37;
+    self.distanceLabel.centerX = self.venueDetailView.size.width - 33;
     
 }
 
@@ -256,12 +256,21 @@
 {
     _deal = deal;
     
-    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-    self.venueDetailLabel.text = [self.deal.venue.name uppercaseString];
+    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = self.deal.dealDescriptionShort;
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@",[self.deal.venue.name uppercaseString]];
+    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
+                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                                                        attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
+                                                                           context:nil]
+    .size.width;
+
+    self.dealTime.x = descriptionLabelWidth + 10;
+    
+    self.descriptionLabel.width = descriptionLabelWidth + 5;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
     self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
@@ -273,43 +282,44 @@
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
 
     
-    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-    //    MKCoordinateSpan span;
-    //    //You can set span for how much Zoom to be display
-    //    span.latitudeDelta=.15;
-    //    span.longitudeDelta=.15;
+//    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
+//    //    MKCoordinateSpan span;
+//    //    //You can set span for how much Zoom to be display
+//    //    span.latitudeDelta=.15;
+//    //    span.longitudeDelta=.15;
+//    
+//    options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 700, 700);
+//    options.scale = [UIScreen mainScreen].scale;
+//    options.size = CGSizeMake(120, 120);
     
-    options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 700, 700);
-    options.scale = [UIScreen mainScreen].scale;
-    options.size = CGSizeMake(120, 120);
-    
-    self.mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
-    [self.mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
+    //self.mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
+    //[self.mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
         //self.mapSnapshotImage = mapSnap.image;
-        UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 85, 25, 120, 120)];
-        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-15, -45, 120, 120)];
-        [mapImageView setImage:mapSnap.image];
+        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 55, 25, 120, 120)];
+        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.venuePreviewView.width - 45, 15, 22, 30)];
+        //[mapImageView setImage:mapSnap.image];
+        [mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
         CALayer *imageLayer = mapImageView.layer;
-        [imageLayer setCornerRadius:mapView.size.width/2];
-        [imageLayer setBorderWidth:3];
-        [imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
+        //[imageLayer setCornerRadius:mapView.size.width/2];
+        //[imageLayer setBorderWidth:3];
+        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
         //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
         [imageLayer setMasksToBounds:YES];
         
-        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 15, (mapImageView.frame.size.height/2) - 15, 30, 30)];
-        UIImage *markerImage = [UIImage imageNamed:@"marker"];
-        [markerImageView setImage:markerImage];
-        [mapImageView addSubview:markerImageView];
+        //UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 15, (mapImageView.frame.size.height/2) - 15, 30, 30)];
+        //UIImage *markerImage = [UIImage imageNamed:@"marker"];
+        //[markerImageView setImage:markerImage];
+        //[mapImageView addSubview:markerImageView];
         
         [mapImageView setUserInteractionEnabled:YES];
         UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
         [singleTap setNumberOfTapsRequired:1];
         [mapImageView addGestureRecognizer:singleTap];
         
-        [mapView addSubview:mapImageView];
-        [self.venuePreviewView addSubview:mapView];
+        //[mapView addSubview:mapImageView];
+        [self.venuePreviewView addSubview:mapImageView];
         [self.venuePreviewView addSubview:self.distanceLabel];
-    }];
+   // }];
     
 }
 
