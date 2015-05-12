@@ -999,9 +999,10 @@
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self refreshBeaconData];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //[LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }];
     [[AnalyticsManager sharedManager] inviteToBeacon:contacts.count];

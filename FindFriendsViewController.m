@@ -345,16 +345,16 @@
         [self updateInviteButtonTextForDeal:lastSelectedContact];
         return;
     }
-    NSString *inviteButtonText = @"TEXT FRIENDS";
+    NSString *inviteButtonText = @"INVITE FRIENDS";
     if (self.selectedContactDictionary.count) {
         Contact *contact = lastSelectedContact ? lastSelectedContact : [self.selectedContactDictionary.allValues firstObject];
         if (self.selectedContactDictionary.count == 1) {
-            inviteButtonText = [NSString stringWithFormat:@"Invite %@", contact.firstName];
+            //inviteButtonText = [NSString stringWithFormat:@"INVITE %@", contact.firstName];
         }
         else {
-            NSInteger otherCount = self.selectedContactDictionary.count - 1;
-            NSString *plural = otherCount == 1 ? @"other" : @"others";
-            inviteButtonText = [NSString stringWithFormat:@"Invite %@ and %d %@", contact.firstName, otherCount, plural];
+            //NSInteger otherCount = self.selectedContactDictionary.count - 1;
+            //NSString *plural = otherCount == 1 ? @"other" : @"others";
+            //inviteButtonText = [NSString stringWithFormat:@"INVITE %@ and %d %@", contact.firstName, otherCount, plural];
         }
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
