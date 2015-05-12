@@ -53,6 +53,8 @@
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
 		41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */; };
 		41BEAC2B1A1DE4750069F932 /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */; };
+		41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74331B017C7300D6EFC1 /* RewardsViewController.m */; };
+		41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */; };
 		41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */; };
 		41E6B3F01AF0B78B00D34EAF /* addFriendWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */; };
 		41E6B3F41AF0B91000D34EAF /* textFriendsWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3F31AF0B91000D34EAF /* textFriendsWhite@2x.png */; };
@@ -302,6 +304,10 @@
 		41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shareIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsIcon@2x.png"; sourceTree = "<group>"; };
+		41BF74321B017C6100D6EFC1 /* RewardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsViewController.h; sourceTree = "<group>"; };
+		41BF74331B017C7300D6EFC1 /* RewardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsViewController.m; sourceTree = "<group>"; };
+		41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardExplanationPopupView.h; sourceTree = "<group>"; };
+		41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardExplanationPopupView.m; sourceTree = "<group>"; };
 		41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
 		41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
 		41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addFriends@2x.png"; sourceTree = "<group>"; };
@@ -677,6 +683,8 @@
 				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
 				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
 				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
+				41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */,
+				41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */,
 				410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */,
 				410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */,
 				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
@@ -708,6 +716,8 @@
 			children = (
 				413B7B191AD44F0500EB5385 /* PaymentsViewController.h */,
 				413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */,
+				41BF74331B017C7300D6EFC1 /* RewardsViewController.m */,
+				41BF74321B017C6100D6EFC1 /* RewardsViewController.h */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1396,6 +1406,7 @@
 				966DF3D618D66B3F00109002 /* Beacon+Time.m in Sources */,
 				96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */,
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
+				41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */,
 				96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96E565D018E871720007545D /* GroupsViewController.m in Sources */,
@@ -1432,6 +1443,7 @@
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
+				41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */,
 				964638AE18A19F4B007D6962 /* RegistrationFlowViewController.m in Sources */,
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,
 				1F7E19F9177BF313005E9BA1 /* WebViewController.m in Sources */,

@@ -21,6 +21,7 @@
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
 #import "NavigationBarTitleLabel.h"
+#import "RewardsViewController.h"
 
 @interface FindFriendsViewController () <UISearchBarDelegate>
 
@@ -43,6 +44,7 @@
 @property (readonly) NSInteger findFriendSectionRecents;
 @property (readonly) NSInteger findFriendSectionSuggested;
 @property (readonly) NSInteger findFriendSectionContacts;
+@property (nonatomic, strong) RewardsViewController *rewardsViewController;
 
 @end
 
@@ -97,6 +99,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self.rewardsViewController updateRewardsScore];
 
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -166,9 +171,9 @@
     if (self.deal) {
         [self updateNavTitleForDeal:self.deal];
     }
-    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
-    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
+//    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
+//    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
     
     NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
     if (updateFriendsOperation && !updateFriendsOperation.isFinished) {

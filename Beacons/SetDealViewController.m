@@ -23,6 +23,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "UIImage+Resize.h"
 #import "UIView+UIImage.h"
+#import "RewardsViewController.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionDescription,
@@ -67,6 +68,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) AVCaptureSession *session;
 @property (strong, nonatomic) UILabel *topPictureLabel;
 @property (strong, nonatomic) UILabel *bottomPictureLabel;
+@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
 @property (strong, nonatomic) NSDate *date;
 
@@ -91,6 +93,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [super viewDidLoad];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    
+    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self.rewardsViewController updateRewardsScore];
     
     self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

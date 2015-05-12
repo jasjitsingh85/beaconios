@@ -22,6 +22,8 @@
 #import "Venue.h"
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
+#import "RewardsViewController.h"
+#import "UIButton+HSNavButton.h"
 
 @interface DealsTableViewController ()
 
@@ -39,6 +41,7 @@
 @property (assign, nonatomic) BOOL locationEnabled;
 @property (assign, nonatomic) BOOL groupDeal;
 @property (strong, nonatomic) NSArray *allDeals;
+@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
 @end
 
@@ -51,35 +54,39 @@
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 124, [[UIScreen mainScreen] bounds].size.width, 60);
-    self.dealTypeToggle = [[UIView alloc] initWithFrame:frame];
-    self.dealTypeToggle.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.9];
-    [self.view addSubview:self.dealTypeToggle];
+    
+    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self.rewardsViewController updateRewardsScore];
+    
+//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 124, [[UIScreen mainScreen] bounds].size.width, 60);
+//    self.dealTypeToggle = [[UIView alloc] initWithFrame:frame];
+//    self.dealTypeToggle.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.9];
+//    [self.view addSubview:self.dealTypeToggle];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 60.0, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;  
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
-    self.textOneFriend = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.textOneFriend.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
-    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButtonSelected"] forState:UIControlStateNormal];
-//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateHighlighted];
-    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateSelected];
-    [self.textOneFriend addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealTypeToggle addSubview:self.textOneFriend];
-    self.textOneFriend.selected = NO;
-    
-    self.textManyFriends = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.textManyFriends.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
-    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButtonSelected"] forState:UIControlStateNormal];
-    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateSelected];
-//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateHighlighted];
-    [self.textManyFriends addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealTypeToggle addSubview:self.textManyFriends];
-    self.textManyFriends.selected = YES;
-    self.dealTypeToggle.hidden = YES;
+//    self.textOneFriend = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.textOneFriend.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
+//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButtonSelected"] forState:UIControlStateNormal];
+////    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateHighlighted];
+//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateSelected];
+//    [self.textOneFriend addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealTypeToggle addSubview:self.textOneFriend];
+//    self.textOneFriend.selected = NO;
+//    
+//    self.textManyFriends = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.textManyFriends.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
+//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButtonSelected"] forState:UIControlStateNormal];
+//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateSelected];
+////    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateHighlighted];
+//    [self.textManyFriends addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealTypeToggle addSubview:self.textManyFriends];
+//    self.textManyFriends.selected = YES;
+//    self.dealTypeToggle.hidden = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 }
