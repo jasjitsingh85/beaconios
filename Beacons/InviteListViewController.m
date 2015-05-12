@@ -13,6 +13,8 @@
 
 @interface InviteListViewController ()
 
+@property (strong, nonatomic) UIButton *inviteButton;
+
 @end
 
 @implementation InviteListViewController
@@ -32,6 +34,21 @@
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
+//    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 61 - 240, self.view.width, 61)];
+//    inviteButtonBackground.backgroundColor = [UIColor whiteColor];
+//    inviteButtonBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+//    [self.view addSubview:inviteButtonBackground];
+//    self.inviteButton = [[UIButton alloc] init];
+//    self.inviteButton.size = CGSizeMake(249, 35);
+//    self.inviteButton.centerX = inviteButtonBackground.width/2.0;
+//    self.inviteButton.centerY = inviteButtonBackground.height/2.0;
+//    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+//    self.inviteButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+//    [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [inviteButtonBackground addSubview:self.inviteButton]; 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
@@ -73,6 +90,7 @@
     NSInteger numRows = 0;
     if (self.beaconStatuses && self.beaconStatuses.count) {
         numRows = self.beaconStatuses.count;
+        NSLog(@"num rows: %ld", (long)numRows);
     }
     return numRows;
 }

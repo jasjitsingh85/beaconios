@@ -45,6 +45,7 @@
 #import "PaymentsViewController.h"
 #import "WebViewController.h"
 #import "PaymentExplanationPopupView.h"
+#import "RewardsViewController.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -53,6 +54,7 @@
 @property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 @property (strong, nonatomic) WebViewController *venmoWebviewController;
+@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIView *enableVenmoView;
 @property (strong, nonatomic) BeaconMapSnapshotImageView *imageView;
@@ -87,6 +89,7 @@
         self.beaconChatViewController.chatViewControllerDelegate = self;
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
+        self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [self initVenmoWebviewController];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
@@ -122,6 +125,7 @@
 
 - (void) initPaymentsViewControllerAndSetDeal//: //(Deal *)deal {
 {
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
         self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
@@ -133,7 +137,6 @@
         
         [[APIClient sharedClient] checkIfPaymentOnFile:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
-            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (!dismiss_payment_modal && self.beacon.deal.inAppPayment) {
                 [self.paymentsViewController openPaymentModalWithDeal:self.beacon.deal];
@@ -188,6 +191,7 @@
     self.inviteListViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.inviteListViewController.view.backgroundColor = [UIColor whiteColor];
     
+    [self.rewardsViewController updateRewardsScore];
     
     self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
 //    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
@@ -345,17 +349,19 @@
     [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.descriptionView addSubview:self.joinButton];
     
-//    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.inviteButton.frame = CGRectMake(0, 150, 160, 26);
-//    [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
-//    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-//    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-//    self.inviteButton.centerX = self.descriptionView.width/2;
-//    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-//    self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
-////    self.inviteButton.layer.cornerRadius = 4;
-//    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.descriptionView addSubview:self.inviteButton];
+    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.inviteButton.frame = CGRectMake(0, 150, 180, 26);
+    [self.inviteButton setTitle:@"INVITE MORE FRIENDS" forState:UIControlStateNormal];
+    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.inviteButton.centerX = self.descriptionView.width/2;
+    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+    //self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
+    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    //    self.inviteButton.layer.cornerRadius = 4;
+    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.descriptionView addSubview:self.inviteButton];
+    self.inviteButton.hidden = YES;
     
 //    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
@@ -403,7 +409,7 @@
     else if (self.openToDealView) {
         self.dealButton.selected = YES;
         self.chatTabButton.selected = NO;
-        self.inviteButton.selected = YES;
+        //self.inviteButton.selected = YES;
         [self showDealAnimated:YES];
     }
     else {
@@ -428,15 +434,15 @@
     //[textFriendsButton setImage:btnImage forState:UIControlStateNormal];
     //UIButton *textFriendsButton = [UIButton navButtonWithTitle:@"+ Friends"];
     //textFriendsButton.width = 50;
-    UIButton *textFriendsButton = [[UIButton alloc] init];
-    CGRect listButtonFrame = CGRectMake(0, 0 , 28, 25);
-    textFriendsButton.frame = listButtonFrame;
-    UIImage *btnImage = [UIImage imageNamed:@"textFriendsWhite.png"];
-    [textFriendsButton setImage:btnImage forState:UIControlStateNormal];
-    [textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *textFriendsBarButton = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
-    //[textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = textFriendsBarButton;
+//    UIButton *textFriendsButton = [[UIButton alloc] init];
+//    CGRect listButtonFrame = CGRectMake(0, 0 , 28, 25);
+//    textFriendsButton.frame = listButtonFrame;
+//    UIImage *btnImage = [UIImage imageNamed:@"textFriendsWhite.png"];
+//    [textFriendsButton setImage:btnImage forState:UIControlStateNormal];
+//    [textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *textFriendsBarButton = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
+//    //[textFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = textFriendsBarButton;
 }
 
 - (void)setDealMode:(BOOL)dealMode
@@ -488,14 +494,13 @@
         inviteButtonLabel.textAlignment = NSTextAlignmentCenter;
         inviteButtonLabel.font = [ThemeManager boldFontOfSize:10];
         inviteButtonLabel.textColor = [UIColor whiteColor];
+        inviteButtonLabel.text = @"INVITEES";
         [self.descriptionView addSubview:inviteButtonLabel];
         if (self.beaconChatViewController.beacon.deal.inAppPayment)
         {
             dealButtonLabel.text = @"VOUCHER";
-            inviteButtonLabel.text = @"GROUP";
         } else {
             dealButtonLabel.text = @"DEAL";
-            inviteButtonLabel.text = @"INVITEES";
         }
     }
     else {
@@ -561,7 +566,7 @@
     self.inviteListViewController.beaconStatuses = beacon.guestStatuses.allValues;
     
     self.joinButton.hidden = beacon.userAttending;
-    self.inviteButton.hidden = !beacon.userAttending;
+    //self.inviteButton.hidden = !beacon.userAttending;
 //    self.editButton.hidden = !beacon.isUserBeacon;
     
     if (beacon.deal) {
@@ -705,19 +710,19 @@
     }];
 }
 
-- (void)showFullDescriptionViewAnimated:(BOOL)animated
-{
-    self.fullDescriptionViewShown = YES;
-    NSTimeInterval duration = animated ? 0.3 : 0.0;
-    [UIView animateWithDuration:duration animations:^{
-        CGRect frame = self.descriptionView.frame;
-        frame.origin.y = 0;
-        self.descriptionView.frame = frame;
-        [self updateChatDesiredInsets];
-        [self updateInviteListInsets];
-        [self updateDealRedemptionInsets];
-    }];
-}
+//- (void)showFullDescriptionViewAnimated:(BOOL)animated
+//{
+//    self.fullDescriptionViewShown = YES;
+//    NSTimeInterval duration = animated ? 0.3 : 0.0;
+//    [UIView animateWithDuration:duration animations:^{
+//        CGRect frame = self.descriptionView.frame;
+//        frame.origin.y = 0;
+//        self.descriptionView.frame = frame;
+//        [self updateChatDesiredInsets];
+//        [self updateInviteListInsets];
+//        [self updateDealRedemptionInsets];
+//    }];
+//}
 
 - (void)showInviteAnimated:(BOOL)animated
 {
@@ -813,20 +818,23 @@
 
 - (void)tabButtonTouched:(UIButton *)sender
 {
-    if (self.fullDescriptionViewShown && sender.selected) {
-        [self showPartialDescriptionViewAnimated:YES];
-    }
-    else if (!self.fullDescriptionViewShown && sender.selected) {
-        [self showFullDescriptionViewAnimated:YES];
-    }
+//    if (self.fullDescriptionViewShown && sender.selected) {
+//        [self showPartialDescriptionViewAnimated:YES];
+//    }
+//    else if (!self.fullDescriptionViewShown && sender.selected) {
+//        [self showFullDescriptionViewAnimated:YES];
+//    }
     if (sender == self.chatTabButton) {
         [self showChatAnimated:YES];
+        self.inviteButton.hidden = YES;
     }
     else if (sender == self.inviteTabButton) {
         [self showInviteAnimated:YES];
+        self.inviteButton.hidden = NO;
     }
     else if (sender == self.dealButton) {
         [self showDealAnimated:YES];
+        self.inviteButton.hidden = YES;
     }
     [self.beaconChatViewController dismissKeyboard];
 }
@@ -896,15 +904,15 @@
     [actionSheet showInView:self.view];
 }
 
-- (void)descriptionViewSwipedDown:(UISwipeGestureRecognizer *)swipeGestureRecognizer
-{
-    [self showFullDescriptionViewAnimated:YES];
-}
-
-- (void)descriptionViewSwipedUp:(UISwipeGestureRecognizer *)swipeGestureRecognizer
-{
-    [self showPartialDescriptionViewAnimated:YES];
-}
+//- (void)descriptionViewSwipedDown:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+//{
+//    [self showFullDescriptionViewAnimated:YES];
+//}
+//
+//- (void)descriptionViewSwipedUp:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+//{
+//    [self showPartialDescriptionViewAnimated:YES];
+//}
 
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)source
 {
@@ -929,15 +937,15 @@
 }
 
 #pragma mark - ChatViewControllerDelegate
-- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
-{
-    if (velocity.y > 1) {
-        [self showPartialDescriptionViewAnimated:YES];
-    }
-    if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
-        [self showFullDescriptionViewAnimated:YES];
-    }
-}
+//- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
+//{
+//    if (velocity.y > 1) {
+//        [self showPartialDescriptionViewAnimated:YES];
+//    }
+//    if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
+//        [self showFullDescriptionViewAnimated:YES];
+//    }
+//}
 
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage
 {

@@ -33,13 +33,13 @@
 @property (strong, nonatomic) UIView *dealTypeToggle;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
 @property (strong, nonatomic) UIButton *enableLocationButton;
-@property (strong, nonatomic) UIButton *textOneFriend;
-@property (strong, nonatomic) UIButton *textManyFriends;
+//@property (strong, nonatomic) UIButton *textOneFriend;
+//@property (strong, nonatomic) UIButton *textManyFriends;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
-@property (assign, nonatomic) BOOL groupDeal;
+//@property (assign, nonatomic) BOOL groupDeal;
 @property (strong, nonatomic) NSArray *allDeals;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
@@ -98,7 +98,8 @@
         [self reloadDeals];
     }
 
-    self.groupDeal = YES;
+    [self.rewardsViewController updateRewardsScore];
+//    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }
@@ -226,7 +227,6 @@
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }
-    
 }
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
@@ -448,55 +448,55 @@
     }
 }
 
-- (void)tabButtonTouched:(UIButton *)sender
-{
-//    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//- (void)tabButtonTouched:(UIButton *)sender
+//{
+////    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+//
+//    if (sender == self.textOneFriend) {
+//        self.groupDeal = NO;
+//        [self showTextOneFriendAnimated:YES];
+//    }
+//    else if (sender == self.textManyFriends) {
+//        self.groupDeal = YES;
+//        [self showTextManyFriendsAnimated:YES];
+//    }
+//    
+//    [self reloadTableView];
+//}
 
-    if (sender == self.textOneFriend) {
-        self.groupDeal = NO;
-        [self showTextOneFriendAnimated:YES];
-    }
-    else if (sender == self.textManyFriends) {
-        self.groupDeal = YES;
-        [self showTextManyFriendsAnimated:YES];
-    }
-    
-    [self reloadTableView];
-}
+//- (void)showTextOneFriendAnimated:(BOOL)animated
+//{
+//    self.textOneFriend.selected = YES;
+//    self.textManyFriends.selected = NO;
+//    //self.beaconChatViewController.view.alpha = 1;
+////    NSTimeInterval duration = animated ? 0.3 : 0.0;
+////    [UIView animateWithDuration:duration animations:^{
+//////        self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
+//////        self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
+//////        self.inviteListViewController.view.alpha = 0.0;
+//////    } completion:^(BOOL finished) {
+//////        self.inviteListViewController.view.alpha = 0;
+////    }];
+//}
 
-- (void)showTextOneFriendAnimated:(BOOL)animated
-{
-    self.textOneFriend.selected = YES;
-    self.textManyFriends.selected = NO;
-    //self.beaconChatViewController.view.alpha = 1;
-//    NSTimeInterval duration = animated ? 0.3 : 0.0;
-//    [UIView animateWithDuration:duration animations:^{
-////        self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
-////        self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
-////        self.inviteListViewController.view.alpha = 0.0;
+//- (void)showTextManyFriendsAnimated:(BOOL)animated
+//{
+//    self.textOneFriend.selected = NO;
+//    self.textManyFriends.selected = YES;
+//    //self.dealRedemptionViewController.view.alpha = 1;
+////    NSTimeInterval duration = animated ? 0.3 : 0.0;
+////    [UIView animateWithDuration:duration animations:^{
+//////        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(self.beaconChatViewController.view.frame.size.width, 0);
+//////        self.inviteListViewController.view.transform = self.beaconChatViewController.view.transform;
+//////        self.dealRedemptionViewController.view.transform = CGAffineTransformIdentity;
+//////        self.beaconChatViewController.view.alpha = 0.0;
+//////        self.inviteListViewController.view.alpha = self.beaconChatViewController.view.alpha;
 ////    } completion:^(BOOL finished) {
-////        self.inviteListViewController.view.alpha = 0;
-//    }];
-}
-
-- (void)showTextManyFriendsAnimated:(BOOL)animated
-{
-    self.textOneFriend.selected = NO;
-    self.textManyFriends.selected = YES;
-    //self.dealRedemptionViewController.view.alpha = 1;
-//    NSTimeInterval duration = animated ? 0.3 : 0.0;
-//    [UIView animateWithDuration:duration animations:^{
-////        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(self.beaconChatViewController.view.frame.size.width, 0);
-////        self.inviteListViewController.view.transform = self.beaconChatViewController.view.transform;
-////        self.dealRedemptionViewController.view.transform = CGAffineTransformIdentity;
-////        self.beaconChatViewController.view.alpha = 0.0;
-////        self.inviteListViewController.view.alpha = self.beaconChatViewController.view.alpha;
-//    } completion:^(BOOL finished) {
-////        self.beaconChatViewController.view.alpha = 0;
-//        
-//        //self.textManyFriends.backgroundColor = [UIColor redColor];
-//    }];
-}
+//////        self.beaconChatViewController.view.alpha = 0;
+////        
+////        //self.textManyFriends.backgroundColor = [UIColor redColor];
+////    }];
+//}
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGRect newFrame = self.dealTypeToggle.frame;

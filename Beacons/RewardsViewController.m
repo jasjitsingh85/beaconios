@@ -49,6 +49,7 @@
 
 -(void)rewardsButtonTouched:(id)sender
 {
+    [self updateRewardsScore];
     [self.rewardExplanationPopupView show];
 }
 
