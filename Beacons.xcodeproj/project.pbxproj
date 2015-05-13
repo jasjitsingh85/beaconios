@@ -40,6 +40,8 @@
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
+		41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */; };
+		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
@@ -290,6 +292,10 @@
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
 		4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanation@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsStoreViewController.h; sourceTree = "<group>"; };
+		41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsStoreViewController.m; sourceTree = "<group>"; };
+		41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardTableViewCell.h; sourceTree = "<group>"; };
+		41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardTableViewCell.m; sourceTree = "<group>"; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
@@ -695,6 +701,8 @@
 				41338FD919FE12080022211C /* DealTableViewEventCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
+				41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */,
+				41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */,
 				9666524B19786CA300EE85F8 /* DealExplanationView.h */,
 				9666524C19786CA300EE85F8 /* DealExplanationView.m */,
 			);
@@ -718,6 +726,8 @@
 				413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */,
 				41BF74331B017C7300D6EFC1 /* RewardsViewController.m */,
 				41BF74321B017C6100D6EFC1 /* RewardsViewController.h */,
+				41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */,
+				41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1388,6 +1398,7 @@
 				96C87C8A175AB97F006EA3A3 /* DefaultTheme.m in Sources */,
 				96A3BC2718564AA800CA1F99 /* HSNavigationController.m in Sources */,
 				9625822918EA0D3000677D92 /* UIViewController+isVisible.m in Sources */,
+				41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */,
 				96C904C118CF5AC10020820A /* UIView+UIImage.m in Sources */,
 				9626BC3918D623FA00E90E22 /* NSDate+Day.m in Sources */,
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
@@ -1441,6 +1452,7 @@
 				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
+				41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
 				41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */,

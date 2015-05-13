@@ -56,6 +56,7 @@
     
     
     self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self addChildViewController:self.rewardsViewController];
     [self.rewardsViewController updateRewardsScore];
     
 //    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 124, [[UIScreen mainScreen] bounds].size.width, 60);
