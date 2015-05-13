@@ -46,6 +46,7 @@
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
 		413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */; };
+		4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -301,6 +302,7 @@
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
 		413B7B191AD44F0500EB5385 /* PaymentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentsViewController.h; sourceTree = "<group>"; };
 		413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentsViewController.m; sourceTree = "<group>"; };
+		4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goldCoin@2x.png"; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -1042,6 +1044,7 @@
 				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
+				4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */,
 				41ED34D11AC9B3B000A77A92 /* takePictureButton@2x.png */,
 				41ED34CD1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
@@ -1250,6 +1253,7 @@
 				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
 				4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */,
 				96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */,
+				4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */,
