@@ -101,6 +101,7 @@
     [super viewDidLoad];
     
     self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self addChildViewController:self.rewardsViewController];
     [self.rewardsViewController updateRewardsScore];
 
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];

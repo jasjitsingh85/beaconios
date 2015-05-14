@@ -1,3 +1,4 @@
+
 //
 //  RewardTableViewCell.m
 //  Beacons
@@ -98,7 +99,17 @@
     self.dealTime.numberOfLines = 0;
     [self.venuePreviewView addSubview:self.dealTime];
     
-    //venuePreviewView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0];
+    self.redeemRewardButton = [[UIButton alloc] init];
+    self.redeemRewardButton.frame = CGRectMake(self.venuePreviewView.size.width - 80, 45, 70, 30);
+    [self.redeemRewardButton setBackgroundImage:[UIImage imageNamed:@"goldCoinWithBackground"] forState:UIControlStateNormal];
+    //self.redeemRewardButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.redeemRewardButton.layer.cornerRadius = 4;
+    //[self.redeemRewardButton setTitle:@"" forState:UIControlStateNormal];
+    [self.redeemRewardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.redeemRewardButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0)];
+    self.redeemRewardButton.titleLabel.font = [ThemeManager mediumFontOfSize:16];
+    [self.venuePreviewView addSubview:self.redeemRewardButton];
+    
     [self.contentView addSubview:self.venuePreviewView];
 
     
@@ -164,12 +175,15 @@
 {
     _deal = deal;
     
+    NSLog(@"ITEM POINT COST: %@", self.deal.itemPointCost);
+    
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
     self.venueLabelLineOne.text = [self.deal.itemName uppercaseString];
     //self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     //[self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@",[self.deal.venue.name uppercaseString]];
+    [self.redeemRewardButton setTitle:[NSString stringWithFormat:@"%@", self.deal.itemPointCost] forState:UIControlStateNormal];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  @ %@",[self.deal.venue.name uppercaseString]];
     float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
@@ -225,8 +239,8 @@
     [mapImageView addGestureRecognizer:singleTap];
     
     //[mapView addSubview:mapImageView];
-    [self.venuePreviewView addSubview:mapImageView];
-    [self.venuePreviewView addSubview:self.distanceLabel];
+    //[self.venuePreviewView addSubview:mapImageView];
+    //[self.venuePreviewView addSubview:self.distanceLabel];
     // }];
     
 }

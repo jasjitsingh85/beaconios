@@ -95,6 +95,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
     self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    [self addChildViewController:self.rewardsViewController];
     [self.rewardsViewController updateRewardsScore];
     
     self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];

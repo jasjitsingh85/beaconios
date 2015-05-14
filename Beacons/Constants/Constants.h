@@ -40,6 +40,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 
 //location notifications
 #define kNotificationBeaconUpdated @"notificationBeaconUpdated"
+#define kNotificationRewardsUpdated @"notificationRewardsUpdated"
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 #define kDealsUpdatedNotification @"dealsUpdatedNotification"
 

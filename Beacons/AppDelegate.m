@@ -29,6 +29,7 @@
 #import "PermissionsViewController.h"
 #import "Beacon.h"
 #import "BeaconManager.h"
+#import "RewardManager.h"
 #import "LockedViewController.h"
 #import "RandomObjectManager.h"
 #import "Deal.h"
@@ -176,6 +177,7 @@
         [[LocationTracker sharedTracker] requestLocationPermission];
     }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
+    [[RewardManager sharedManager] updateActiveVouchers:nil failure:nil];
     [FBSettings setDefaultAppID:kAppID];
     [FBAppEvents activateApp];
 }

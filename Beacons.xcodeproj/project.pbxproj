@@ -47,6 +47,10 @@
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
 		413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */; };
 		4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */; };
+		4148E9C11B0414740050D3E3 /* goldCoinWithBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9C01B0414740050D3E3 /* goldCoinWithBackground.png */; };
+		4148E9C41B0434880050D3E3 /* Voucher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C31B0434880050D3E3 /* Voucher.m */; };
+		4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C61B0439030050D3E3 /* RewardManager.m */; };
+		4148E9CA1B047FBE0050D3E3 /* VoucherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -303,6 +307,13 @@
 		413B7B191AD44F0500EB5385 /* PaymentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentsViewController.h; sourceTree = "<group>"; };
 		413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentsViewController.m; sourceTree = "<group>"; };
 		4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "goldCoin@2x.png"; sourceTree = "<group>"; };
+		4148E9C01B0414740050D3E3 /* goldCoinWithBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldCoinWithBackground.png; sourceTree = "<group>"; };
+		4148E9C21B04347E0050D3E3 /* Voucher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voucher.h; sourceTree = "<group>"; };
+		4148E9C31B0434880050D3E3 /* Voucher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voucher.m; sourceTree = "<group>"; };
+		4148E9C51B0438F80050D3E3 /* RewardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardManager.h; sourceTree = "<group>"; };
+		4148E9C61B0439030050D3E3 /* RewardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardManager.m; sourceTree = "<group>"; };
+		4148E9C81B047F9E0050D3E3 /* VoucherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoucherTableViewCell.h; sourceTree = "<group>"; };
+		4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherTableViewCell.m; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -687,6 +698,8 @@
 				964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */,
 				9671F66618BD5603007DF715 /* BeaconTableViewCell.h */,
 				9671F66718BD5603007DF715 /* BeaconTableViewCell.m */,
+				4148E9C81B047F9E0050D3E3 /* VoucherTableViewCell.h */,
+				4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */,
 				96C904BC18CF54AD0020820A /* MapSnapshotImageView.h */,
 				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
 				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
@@ -753,6 +766,8 @@
 				96E565D518E87CB80007545D /* Group.m */,
 				96AFE1331938215000209799 /* Deal.h */,
 				96AFE1341938215000209799 /* Deal.m */,
+				4148E9C21B04347E0050D3E3 /* Voucher.h */,
+				4148E9C31B0434880050D3E3 /* Voucher.m */,
 				96A9871F17E517FB007D77B8 /* BeaconStatus.h */,
 				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
 				9651C795193E5A750083A0FE /* DealStatus.h */,
@@ -1008,6 +1023,8 @@
 				1F8E3AFC179F8849001B8BE0 /* CrashManager.m */,
 				966AC11B17CADBFA0093BB69 /* BeaconManager.h */,
 				966AC11C17CADBFA0093BB69 /* BeaconManager.m */,
+				4148E9C51B0438F80050D3E3 /* RewardManager.h */,
+				4148E9C61B0439030050D3E3 /* RewardManager.m */,
 				96C8996A1939282600F33CCA /* CommonMacros.h */,
 				96C8996B1939285F00F33CCA /* CommonMacros.m */,
 				96859D0C17F4048300C1C467 /* JAGrandCentralDispatch.h */,
@@ -1050,6 +1067,7 @@
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
+				4148E9C01B0414740050D3E3 /* goldCoinWithBackground.png */,
 				41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */,
 				41ED34D31AC9C52F00A77A92 /* retakePicture@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
@@ -1240,6 +1258,7 @@
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
+				4148E9C11B0414740050D3E3 /* goldCoinWithBackground.png in Resources */,
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				963B7622189C305A006C6845 /* handPhone@2x.png in Resources */,
@@ -1410,8 +1429,10 @@
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
 				964602531994103200979929 /* SetDealViewController.m in Sources */,
+				4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */,
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
 				96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */,
+				4148E9CA1B047FBE0050D3E3 /* VoucherTableViewCell.m in Sources */,
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
@@ -1459,6 +1480,7 @@
 				41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
+				4148E9C41B0434880050D3E3 /* Voucher.m in Sources */,
 				41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */,
 				964638AE18A19F4B007D6962 /* RegistrationFlowViewController.m in Sources */,
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,

@@ -261,7 +261,7 @@
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@",[self.deal.venue.name uppercaseString]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  @ %@ (%@)", [self.deal.venue.name uppercaseString], [self stringForDistance:deal.venue.distance]];
     float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
@@ -272,11 +272,11 @@
     
     self.descriptionLabel.width = descriptionLabelWidth + 5;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
     self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-    self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
     self.dealTime.text = [self.deal.dealStartString uppercaseString];
     
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
@@ -333,7 +333,7 @@
 //    else {
         //distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
 //    }
-    distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
+    distanceString = [NSString stringWithFormat:@"%0.1f mi", METERS_TO_MILES*distance];
     return distanceString;
 }
 

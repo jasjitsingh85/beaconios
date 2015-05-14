@@ -90,6 +90,7 @@
         self.inviteListViewController = [[InviteListViewController alloc] init];
         self.inviteListViewController.delegate = self;
         self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+        [self addChildViewController:self.rewardsViewController];
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
         [self initVenmoWebviewController];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){

@@ -30,6 +30,7 @@
 @property (strong, nonatomic) UIView *venuePreviewView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
+@property (strong, nonatomic) UIButton *redeemRewardButton;
 
 @property (strong, nonatomic) Deal *deal;
 
