@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking/AFNetworking.h>
 
 @class Voucher;
 @interface RewardManager : NSObject
@@ -18,5 +19,6 @@
 - (void)updateActiveVouchers:(void (^)(NSArray *beacons))success
               failure:(void (^)(NSError *error))failure;
 - (void)getActiveVouchers:(void (^)(NSArray *beacons, BOOL cached))success failure:(void (^)(NSError *error))failure;
+- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

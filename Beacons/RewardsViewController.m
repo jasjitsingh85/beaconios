@@ -48,14 +48,14 @@
         NSString *rewards_score = responseObject[@"total_rewards"];
 //        self.rewards_score_nav_item = [UIButton navButtonWithTitle:[NSString stringWithFormat:@"%@", rewards_score]];
         self.rewards_score_nav_item = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.rewards_score_nav_item setFrame:CGRectMake(0, 0, 58, 22)];
+        [self.rewards_score_nav_item setFrame:CGRectMake(0, 0, 58, 20)];
         [self.rewards_score_nav_item setBackgroundImage:[UIImage imageNamed:@"goldCoin"] forState:UIControlStateNormal];
         [self.rewards_score_nav_item setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0, 15.0, 0.0)];
-        [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0.0)];
+        [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0.0)];
         [self.rewards_score_nav_item setTitle:[NSString stringWithFormat:@"%@", rewards_score] forState:UIControlStateNormal];
         [self.rewards_score_nav_item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rewards_score_nav_item addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [self.rewards_score_nav_item.titleLabel setFont:[ThemeManager mediumFontOfSize:16]];
+        [self.rewards_score_nav_item.titleLabel setFont:[ThemeManager boldFontOfSize:15]];
         self.navItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rewards_score_nav_item];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //self.rewards_score_nav_item = [UIButton navButtonWithTitle:@"ERROR"];

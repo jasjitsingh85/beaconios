@@ -257,6 +257,13 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [self getPath:@"deals/" parameters:parameters success:success failure:failure];
 }
 
+- (void)getRewardsNearCoordinate:(CLLocationCoordinate2D)coordinate success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{@"latitude" : @(coordinate.latitude),
+                                 @"longitude" : @(coordinate.longitude)};
+    [self getPath:@"rewards/" parameters:parameters success:success failure:failure];
+}
+
 - (void)applyForDeal:(Deal *)deal invitedContacts:(NSArray *)contacts customMessage:(NSString *)customMessage time:(NSDate *)time imageUrl:(NSString *)imageUrl success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -312,7 +319,13 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 - (void)getRewardsScore:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
     NSDictionary *parameters = @{};
-    [[APIClient sharedClient] getPath:@"rewards/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] getPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+}
+
+- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"deal_id" : dealID };
+    [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
 }
 
 #pragma mark - Private

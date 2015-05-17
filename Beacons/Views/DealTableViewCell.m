@@ -256,12 +256,18 @@
 {
     _deal = deal;
     
-    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
-    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    if (deal.inAppPayment) {
+        self.venueLabelLineOne.text = [deal.itemName uppercaseString];
+        self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
+    } else {
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    }
+    
     self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  @ %@ (%@)", [self.deal.venue.name uppercaseString], [self stringForDistance:deal.venue.distance]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@ (%@)", [self.deal.venue.name uppercaseString], [self stringForDistance:deal.venue.distance]];
     float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
@@ -296,29 +302,29 @@
     //[self.mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
         //self.mapSnapshotImage = mapSnap.image;
         //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 55, 25, 120, 120)];
-        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.venuePreviewView.width - 45, 15, 22, 30)];
+        //UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.venuePreviewView.width - 45, 15, 22, 30)];
         //[mapImageView setImage:mapSnap.image];
-        [mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
-        CALayer *imageLayer = mapImageView.layer;
+        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
+        //CALayer *imageLayer = mapImageView.layer;
         //[imageLayer setCornerRadius:mapView.size.width/2];
         //[imageLayer setBorderWidth:3];
         //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
         //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
-        [imageLayer setMasksToBounds:YES];
+        //[imageLayer setMasksToBounds:YES];
         
         //UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 15, (mapImageView.frame.size.height/2) - 15, 30, 30)];
         //UIImage *markerImage = [UIImage imageNamed:@"marker"];
         //[markerImageView setImage:markerImage];
         //[mapImageView addSubview:markerImageView];
         
-        [mapImageView setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
-        [singleTap setNumberOfTapsRequired:1];
-        [mapImageView addGestureRecognizer:singleTap];
+        //[mapImageView setUserInteractionEnabled:YES];
+        //UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
+        //[singleTap setNumberOfTapsRequired:1];
+        //[mapImageView addGestureRecognizer:singleTap];
         
         //[mapView addSubview:mapImageView];
-        [self.venuePreviewView addSubview:mapImageView];
-        [self.venuePreviewView addSubview:self.distanceLabel];
+        //[self.venuePreviewView addSubview:mapImageView];
+        //[self.venuePreviewView addSubview:self.distanceLabel];
    // }];
     
 }

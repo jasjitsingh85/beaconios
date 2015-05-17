@@ -63,7 +63,7 @@
 {
     self.isUpdatingRewards = YES;
     __weak RewardManager *weakSelf = self;
-    [[APIClient sharedClient] getPath:@"rewards/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getPath:@"reward/voucher/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *vouchers = [[NSMutableArray alloc] init];
         for (NSDictionary *voucherData in responseObject[@"vouchers"]) {
             Voucher *voucher = [[Voucher alloc] initWithDictionary:voucherData];
@@ -80,6 +80,12 @@
         }
         weakSelf.isUpdatingRewards = NO;
     }];
+}
+
+- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"deal_id" : dealID};
+    [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
 }
 
 @end

@@ -31,6 +31,8 @@
 #import "AnalyticsManager.h"
 #import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "RewardManager.h"
 
 @interface RewardsStoreViewController ()
 
@@ -67,7 +69,8 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
-    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.backgroundColor = [[ThemeManager sharedTheme] boneWhiteColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
@@ -81,7 +84,6 @@
     }
     
     [self.rewardsViewController updateRewardsScore];
-    //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }
@@ -213,26 +215,26 @@
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
 {
-    [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *events = [[NSMutableArray alloc] init];
+    [[APIClient sharedClient] getRewardsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-        for (NSDictionary *dealJSON in responseObject[@"deals"]) {
+        for (NSDictionary *dealJSON in responseObject[@"unlocked_deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            deal.locked = NO;
+            deal.venue.distance = [location distanceFromLocation:dealLocation];
+            [deals addObject:deal];
+        }
+        for (NSDictionary *dealJSON in responseObject[@"locked_deals"]) {
+            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            deal.locked = YES;
             deal.venue.distance = [location distanceFromLocation:dealLocation];
             [deals addObject:deal];
         }
         //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
         self.allDeals = deals;
         self.deals = self.allDeals;
-        
-        //        NSPredicate *predicate;
-        //        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-        //        NSLog(@"%lu", (unsigned long)[[self.allDeals filteredArrayUsingPredicate:predicate] count]);
-        //        if ([[self.allDeals filteredArrayUsingPredicate:predicate] count] > 0) {
-        //            self.dealTypeToggle.hidden = NO;
-        //        };
         
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
@@ -250,18 +252,6 @@
 {
     if (self.deals && self.deals.count) {
         [self hideEmptyDealsView];
-        //        NSPredicate *predicate;
-        //        if (self.groupDeal) {
-        //            predicate = [NSPredicate predicateWithFormat:@"groupDeal = YES"];
-        //            self.textManyFriends.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-        //            self.textOneFriend.backgroundColor = [UIColor clearColor];
-        //        }
-        //        else {
-        //            predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-        //            self.textOneFriend.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-        //            self.textManyFriends.backgroundColor = [UIColor clearColor];
-        //        }
-        //self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
         self.deals = self.allDeals;
     }
     else {
@@ -279,32 +269,51 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.deals.count;
+    return self.deals.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        return 110;
+    return 110;
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
 {
-    
     CGPoint touchLocation = [sender locationOfTouch:0 inView:self.tableView];
     //NSIndexPath *indexPath = [[self getTableView]  indexPathForCell:self];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     Deal *deal;
-    deal = self.deals[indexPath.row];
+    if (indexPath.row != 0) {
+        deal = self.deals[indexPath.row - 1];
+        
+        
+        if (!deal.locked) {
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
+            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+                [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Working");
+                }];
+            }];
+            
+            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+            [alertView show];
+            return;
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Not Enough Points" message:@"You don't have enough points to purchase this item" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+    }
+//
+//
+//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Deal *deal;
-    deal = self.deals[indexPath.row];
-    
     NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
     RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -318,7 +327,13 @@
     [recognizer setNumberOfTapsRequired:1];
     [cell.contentView addGestureRecognizer:recognizer];
     
-    cell.deal = deal;
+    if (indexPath.row == 0) {
+        cell.deal = nil;
+    } else {
+        deal = self.deals[indexPath.row - 1];
+        cell.deal = deal;
+    }
+
     return cell;
     
 }

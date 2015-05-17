@@ -29,6 +29,7 @@
 @property (strong, nonatomic) Venue *venue;
 @property (assign, nonatomic) BOOL groupDeal;
 @property (assign, nonatomic) BOOL inAppPayment;
+@property (assign, nonatomic) BOOL locked;
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;

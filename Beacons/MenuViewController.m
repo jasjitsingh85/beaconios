@@ -329,16 +329,16 @@
     self.beacons = [BeaconManager sharedManager].beacons;
     if (self.beacons) {
         beaconCount = self.beacons.count;
-        NSMutableDictionary *daySeparatedBeacons = [[NSMutableDictionary alloc] init];
-        for (Beacon *beacon in self.beacons) {
-            NSDate *day = beacon.time.day;
-            if (![daySeparatedBeacons.allKeys containsObject:day]) {
-                daySeparatedBeacons[day] = [[NSMutableArray alloc] init];
-            }
-            NSMutableArray *dates = daySeparatedBeacons[day];
-            [dates addObject:beacon];
-        }
-        self.daySeparatedBeacons = [NSDictionary dictionaryWithDictionary:daySeparatedBeacons];
+//        NSMutableDictionary *daySeparatedBeacons = [[NSMutableDictionary alloc] init];
+//        for (Beacon *beacon in self.beacons) {
+//            NSDate *day = beacon.time.day;
+//            if (![daySeparatedBeacons.allKeys containsObject:day]) {
+//                daySeparatedBeacons[day] = [[NSMutableArray alloc] init];
+//            }
+//            NSMutableArray *dates = daySeparatedBeacons[day];
+//            [dates addObject:beacon];
+//        }
+//        self.daySeparatedBeacons = [NSDictionary dictionaryWithDictionary:daySeparatedBeacons];
         jadispatch_main_qeue(^{
             [self.tableView reloadData];
             if (!self.beacons || !self.beacons.count) {
@@ -487,53 +487,57 @@
 //
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([self.daySeparatedBeacons count] > 0) {
-        NSDate *date = [self dateForSection:section];
-        NSInteger count = [self.daySeparatedBeacons[date] count];
-        return count;
-    } else {
-        return [self.vouchers count];
-    }
+//    if ([self.daySeparatedBeacons count] > 0) {
+//        NSDate *date = [self dateForSection:section];
+//        NSInteger count = [self.daySeparatedBeacons[date] count];
+//        return count;
+//    } else {
+//        return [self.vouchers count];
+//    }
+    self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * ([self.beacons count] + [self.vouchers count]));
+    return [self.beacons count] + [self.vouchers count];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * (self.daySeparatedBeacons.allKeys.count + [self.vouchers count])
-                                      );
-    return self.daySeparatedBeacons.allKeys.count + [self.vouchers count];
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    
+//}
 
-- (NSDate *)dateForSection:(NSInteger)section
-{
-        NSArray *sorted = [self.daySeparatedBeacons.allKeys sortedArrayUsingSelector:@selector(compare:)];
-        return sorted[section];
-}
+//- (NSDate *)dateForSection:(NSInteger)section
+//{
+//        NSArray *sorted = [self.daySeparatedBeacons.allKeys sortedArrayUsingSelector:@selector(compare:)];
+//        return sorted[section];
+//}
 
-- (Beacon *)beaconForIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"WORKING");
-    NSDate *date = [self dateForSection:indexPath.section];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
-    NSArray *sortedBeacons =
-    [self.daySeparatedBeacons[date] sortedArrayUsingDescriptors:@[sortDescriptor]];
-    return sortedBeacons[indexPath.row];
-}
+//- (Beacon *)beaconForIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSLog(@"WORKING");
+//    NSDate *date = [self dateForSection:indexPath.section];
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
+//    NSArray *sortedBeacons =
+//    [self.daySeparatedBeacons[date] sortedArrayUsingDescriptors:@[sortDescriptor]];
+//    return sortedBeacons[indexPath.row];
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"return height working");
     return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.daySeparatedBeacons count] != indexPath.row) {
+//    NSLog(@"Voucher Count: %lu", (unsigned long)[self.vouchers count]);
+//    NSLog(@"Beacons Count: %lu", (unsigned long)[self.beacons count]);
+//    NSLog(@"IndexPath Count: %lu", (unsigned long)indexPath.row);
+    
+    if ([self.beacons count] > indexPath.row) {
         static NSString *CellIdentifier = @"Cell";
         BeaconTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[BeaconTableViewCell alloc] init];
         }
-        cell.beacon = [self beaconForIndexPath:indexPath];
+        //cell.beacon = [self beaconForIndexPath:indexPath];
+        cell.beacon = self.beacons[indexPath.row];
         [self updateNavigationItems];
         return cell;
     } else {
@@ -542,7 +546,8 @@
         if (!cell) {
             cell = [[VoucherTableViewCell alloc] init];
         }
-        cell.voucher = self.vouchers[indexPath.row - [self.daySeparatedBeacons count]];
+        NSLog(@"Voucher Counter: %ld", (long)indexPath.row);
+        cell.voucher = self.vouchers[indexPath.row - [self.beacons count]];
         [self updateNavigationItems];
         return cell;
     }
@@ -550,7 +555,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Beacon *beacon = [self beaconForIndexPath:indexPath];
+    //Beacon *beacon = [self beaconForIndexPath:indexPath];
+    Beacon *beacon = self.beacons[indexPath.row];
     [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -560,7 +566,7 @@
     int itemCount = (int)[self.beacons count] + (int)[self.vouchers count];
     self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * itemCount);
     self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
-    self.groupContainer.frame = CGRectMake(0, 50 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
     self.shareContainer.frame = CGRectMake(0, self.groupContainer.origin.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];

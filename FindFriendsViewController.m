@@ -364,7 +364,7 @@
 
 - (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
 {
-    [self.inviteButton setTitle:@"UNLOCK DEAL" forState:UIControlStateNormal];
+    [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
     
     UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
     [self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];

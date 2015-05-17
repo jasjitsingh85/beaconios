@@ -51,6 +51,7 @@
 		4148E9C41B0434880050D3E3 /* Voucher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C31B0434880050D3E3 /* Voucher.m */; };
 		4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C61B0439030050D3E3 /* RewardManager.m */; };
 		4148E9CA1B047FBE0050D3E3 /* VoucherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */; };
+		4148E9CC1B083F8F0050D3E3 /* storeIntroCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -314,6 +315,7 @@
 		4148E9C61B0439030050D3E3 /* RewardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardManager.m; sourceTree = "<group>"; };
 		4148E9C81B047F9E0050D3E3 /* VoucherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoucherTableViewCell.h; sourceTree = "<group>"; };
 		4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherTableViewCell.m; sourceTree = "<group>"; };
+		4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storeIntroCell.png; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -1075,6 +1077,7 @@
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
 				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
 				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
+				4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */,
 				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
 				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
 				96D1D0D617E818A90033396F /* cameraSmall@2x.png */,
@@ -1295,6 +1298,7 @@
 				964638B218A45D5A007D6962 /* hotbotSmile@2x.png in Resources */,
 				96C7FE9A1897294100A79CC3 /* orangeGradientBackground@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
+				4148E9CC1B083F8F0050D3E3 /* storeIntroCell.png in Resources */,
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				964638B018A4460A007D6962 /* waveBackground@2x.png in Resources */,
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
