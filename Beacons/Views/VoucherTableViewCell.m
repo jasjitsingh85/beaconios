@@ -29,7 +29,7 @@
     }
     
     self.backgroundColor = [UIColor clearColor];
-    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 48)];
     //    CGRect thumbnailFrame = CGRectZero;
     //    thumbnailFrame.size = CGSizeMake(64, 64);
     //    thumbnailFrame.origin.x = 16;
@@ -41,12 +41,20 @@
     //    self.thumbnailContainerView.layer.borderWidth = 1.5;
     //    self.thumbnailContainerView.backgroundColor = [UIColor darkGrayColor];
     //    [self.thumbnailContainerView setShadowWithColor:[UIColor blackColor] opacity:1 radius:2 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
-    self.contentView.backgroundColor = [UIColor unnormalizedColorWithRed:41 green:41 blue:41 alpha:255];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.size.width, 48)];
+    backgroundView.backgroundColor = [UIColor unnormalizedColorWithRed:0 green:161 blue:157 alpha:255];
+    [self.contentView addSubview:backgroundView];
+    //self.contentView.backgroundColor = [UIColor unnormalizedColorWithRed:0 green:161 blue:157 alpha:255];
     [self.contentView addSubview:self.thumbnailContainerView];
     
     self.thumbnailImageView = [[UIImageView alloc] initWithFrame:self.thumbnailContainerView.bounds];
     self.thumbnailImageView.clipsToBounds = YES;
     [self.thumbnailContainerView addSubview:self.thumbnailImageView];
+    
+    UIImageView *goldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"singleGoldCoin"]];
+    goldCoin.centerX = self.thumbnailContainerView.width/2;
+    goldCoin.centerY = self.thumbnailContainerView.height/2;
+    [self.thumbnailContainerView addSubview:goldCoin];
     
     //    CGRect beaconTitleFrame = CGRectZero;
     //    beaconTitleFrame.size = CGSizeMake(184, 21);
@@ -119,7 +127,7 @@
     ////        self.thumbnailImageView.layer.cornerRadius = self.thumbnailContainerView.layer.cornerRadius;
     ////    }
     NSString *firstLine = [NSString stringWithFormat:@"VOUCHER FOR %@", [self.voucher.deal.itemName uppercaseString]];
-    NSString *secondLine = [NSString stringWithFormat:@"@ %@", [self.voucher.deal.venue.name uppercaseString]];
+    NSString *secondLine = [NSString stringWithFormat:@"@%@", [self.voucher.deal.venue.name uppercaseString]];
     //    if (beacon.address && beacon.address.length) {
     //        titleText = [titleText stringByAppendingString:[NSString stringWithFormat:@" @ %@", beacon.address]];
     //    }

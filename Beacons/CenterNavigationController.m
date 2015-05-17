@@ -12,6 +12,7 @@
 #import "Theme.h"
 #import "BeaconManager.h"
 #import "AppDelegate.h"
+#import "RewardManager.h"
 
 @interface CenterNavigationController ()
 
@@ -32,12 +33,14 @@
     [self.menuButton addTarget:self action:@selector(menuButtonTouched:) forControlEvents:UIControlEventTouchDown];
     
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
+    [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers)) options:0 context:NULL];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
+    [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers))];
 }
 
 - (MSDynamicsDrawerDirection)openDirection
@@ -71,7 +74,17 @@
     if (object == [BeaconManager sharedManager]) {
         NSInteger beaconCount = 0;
         if ([BeaconManager sharedManager].beacons) {
-            beaconCount = [BeaconManager sharedManager].beacons.count;
+            beaconCount = [BeaconManager sharedManager].beacons.count + [RewardManager sharedManager].vouchers.count;
+        }
+        jadispatch_main_qeue(^{
+            [self updateMenuButton:beaconCount];
+        });
+    }
+    
+    if (object == [RewardManager sharedManager]) {
+        NSInteger beaconCount = 0;
+        if ([RewardManager sharedManager].vouchers) {
+            beaconCount = [BeaconManager sharedManager].beacons.count + [RewardManager sharedManager].vouchers.count;
         }
         jadispatch_main_qeue(^{
             [self updateMenuButton:beaconCount];

@@ -28,7 +28,7 @@
     }
     
     self.backgroundColor = [UIColor clearColor];
-    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
+    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 48)];
 //    CGRect thumbnailFrame = CGRectZero;
 //    thumbnailFrame.size = CGSizeMake(64, 64);
 //    thumbnailFrame.origin.x = 16;
@@ -40,7 +40,9 @@
 //    self.thumbnailContainerView.layer.borderWidth = 1.5;
 //    self.thumbnailContainerView.backgroundColor = [UIColor darkGrayColor];
 //    [self.thumbnailContainerView setShadowWithColor:[UIColor blackColor] opacity:1 radius:2 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
-    self.contentView.backgroundColor = [UIColor unnormalizedColorWithRed:41 green:41 blue:41 alpha:255];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.size.width, 48)];
+    backgroundView.backgroundColor = [UIColor unnormalizedColorWithRed:41 green:41 blue:41 alpha:255];
+    [self.contentView addSubview:backgroundView];
     [self.contentView addSubview:self.thumbnailContainerView];
     
     self.thumbnailImageView = [[UIImageView alloc] initWithFrame:self.thumbnailContainerView.bounds];
