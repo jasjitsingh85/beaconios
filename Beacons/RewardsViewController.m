@@ -51,8 +51,16 @@
         [self.rewards_score_nav_item setFrame:CGRectMake(0, 0, 58, 20)];
         [self.rewards_score_nav_item setBackgroundImage:[UIImage imageNamed:@"goldCoin"] forState:UIControlStateNormal];
         [self.rewards_score_nav_item setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0, 15.0, 0.0)];
-        [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0.0)];
         [self.rewards_score_nav_item setTitle:[NSString stringWithFormat:@"%@", rewards_score] forState:UIControlStateNormal];
+        if ([self.rewards_score_nav_item.titleLabel.text length] == 1) {
+            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -3, 0, 0.0)];
+        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 2) {
+            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -11, 0, 0.0)];
+        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 3) {
+            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0.0)];
+        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 4) {
+            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -28, 0, 0.0)];
+        }
         [self.rewards_score_nav_item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.rewards_score_nav_item addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.rewards_score_nav_item.titleLabel setFont:[ThemeManager boldFontOfSize:15]];
