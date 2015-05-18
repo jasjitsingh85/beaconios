@@ -292,6 +292,7 @@
             UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
             [alertView bk_addButtonWithTitle:@"Yes" handler:^{
                 [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     NSLog(@"Working");

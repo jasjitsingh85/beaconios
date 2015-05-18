@@ -16,6 +16,5 @@
 @property (strong, nonatomic) Voucher *voucher;
 
 - (void)setDeal:(Deal *)deal andVoucher:(Voucher *)voucher;
-- (void)updateRedeemButtonAppearance;
 
 @end

@@ -179,62 +179,6 @@
     
     [self.settingContainer addSubview:self.settingsButton];
     
-//    CGFloat numButtons = 3;
-//    CGSize buttonSize = CGSizeMake(50, 50);
-//    UIImage *setBeaconSpotImage = [UIImage imageNamed:@"menuSetHotspot"];
-//    self.setBeaconButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    CGRect setBeaconFrame = CGRectZero;
-//    setBeaconFrame.size = buttonSize;
-//    setBeaconFrame.origin.x = 0.5*(self.buttonContainerView.frame.size.width/numButtons - buttonSize.width);
-//    setBeaconFrame.origin.y = 18;
-//    self.setBeaconButton.frame = setBeaconFrame;
-//    [self.setBeaconButton setImage:setBeaconSpotImage forState:UIControlStateNormal];
-//    [self.setBeaconButton addTarget:self action:@selector(setBeaconButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.buttonContainerView addSubview:self.setBeaconButton];
-//    
-//    UILabel *setHotSpotLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(setBeaconFrame), self.tableView.frame.size.width/3.0, 30)];
-//    setHotSpotLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-//    setHotSpotLabel.text = @"Deals";
-//    setHotSpotLabel.textAlignment = NSTextAlignmentCenter;
-//    setHotSpotLabel.textColor = [UIColor whiteColor];
-//    [self.buttonContainerView addSubview:setHotSpotLabel];
-//    
-//    UIImage *inviteFriendsImage = [UIImage imageNamed:@"menuInvite"];
-//    self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    CGRect inviteFrame = CGRectZero;
-//    inviteFrame.size = buttonSize;
-//    inviteFrame.origin.x = self.buttonContainerView.frame.size.width/numButtons + 0.5*(self.buttonContainerView.frame.size.width/numButtons - buttonSize.width);
-//    inviteFrame.origin.y = 18;
-//    self.inviteFriendsButton.frame = inviteFrame;
-//    [self.inviteFriendsButton setImage:inviteFriendsImage forState:UIControlStateNormal];
-//    [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.buttonContainerView addSubview:self.inviteFriendsButton];
-//    
-//    UILabel *inviteFriendsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(setHotSpotLabel.frame), setHotSpotLabel.frame.origin.y, self.tableView.frame.size.width/3.0, 30)];
-//    inviteFriendsLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-//    inviteFriendsLabel.text = @"Share";
-//    inviteFriendsLabel.textAlignment = NSTextAlignmentCenter;
-//    inviteFriendsLabel.textColor = [UIColor whiteColor];
-//    [self.buttonContainerView addSubview:inviteFriendsLabel];
-//    
-//    UIImage *settingsImage = [UIImage imageNamed:@"menuSettings"];
-//    self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    CGRect settingsFrame = CGRectZero;
-//    settingsFrame.size = buttonSize;
-//    settingsFrame.origin.x = 2*self.buttonContainerView.frame.size.width/numButtons + 0.5*(self.buttonContainerView.frame.size.width/numButtons - buttonSize.width);
-//    settingsFrame.origin.y = 18;
-//    self.settingsButton.frame = settingsFrame;
-//    [self.settingsButton setImage:settingsImage forState:UIControlStateNormal];
-//    [self.settingsButton addTarget:self action:@selector(settingsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.buttonContainerView addSubview:self.settingsButton];
-//    
-//    UILabel *settingsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(inviteFriendsLabel.frame), setHotSpotLabel.frame.origin.y, self.tableView.frame.size.width/3.0, 30)];
-//    settingsLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-//    settingsLabel.text = @"Settings";
-//    settingsLabel.textAlignment = NSTextAlignmentCenter;
-//    settingsLabel.textColor = [UIColor whiteColor];
-//    [self.buttonContainerView addSubview:settingsLabel];
-    
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingBeacons)) options:0 context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
@@ -353,9 +297,9 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
-    [[RewardManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers))];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[BeaconManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(beacons))];
+    //[[RewardManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers))];
 }
 
 //- (UIView *)emptyBeaconView
@@ -456,11 +400,15 @@
 
 - (void)beaconUpdated:(NSNotification *)notification
 {
-    
+   [self.tableView reloadData];
 }
 
 - (void)rewardsUpdated:(NSNotification *)notification
 {
+    NSLog(@"WORKING@@@@@@");
+    [[RewardManager sharedManager] updateActiveVouchers:^(NSArray *beacons) {
+        [self.tableView reloadData];
+    } failure:nil];
     
 }
 

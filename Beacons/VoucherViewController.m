@@ -44,7 +44,7 @@
 
 @interface VoucherViewController () <SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) VoucherRedemptionViewController *dealRedemptionViewController;
+@property (strong, nonatomic) VoucherRedemptionViewController *voucherRedemptionViewController;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIImageView *imageView;
@@ -74,7 +74,7 @@
     if (self) {
         self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
         [self addChildViewController:self.rewardsViewController];
-        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
+        self.voucherRedemptionViewController = [[VoucherRedemptionViewController alloc] init];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -85,8 +85,8 @@
 
 - (void) refreshDeal
 {
-    [self refreshVoucherData];
-    [self.dealRedemptionViewController setDeal:self.voucher.deal];
+    //[self refreshVoucherData];
+    //[self.voucherRedemptionViewController setDeal:self.voucher.deal andVoucher:self.voucher];
 }
 
 - (void)dealloc
@@ -101,10 +101,10 @@
     //UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self addChildViewController:self.dealRedemptionViewController];
-    [self.view addSubview:self.dealRedemptionViewController.view];
-    self.dealRedemptionViewController.view.frame = self.view.bounds;
-    self.dealRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self addChildViewController:self.voucherRedemptionViewController];
+    [self.view addSubview:self.voucherRedemptionViewController.view];
+    self.voucherRedemptionViewController.view.frame = self.view.bounds;
+    self.voucherRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [self.rewardsViewController updateRewardsScore];
     
@@ -126,6 +126,8 @@
     backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.descriptionView addSubview:backgroundView];
+    
+    [self.voucherRedemptionViewController setDeal:self.voucher.deal andVoucher:self.voucher];
     
     [self refreshVoucherData];
     
@@ -229,9 +231,8 @@
 {
     if (self.voucher.deal) {
         self.dealMode = YES;
-        [self.dealRedemptionViewController setDeal:self.voucher.deal];
+        //[self.voucherRedemptionViewController setDeal:self.voucher.deal andVoucher:self.voucher];
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        NSLog(@"IMAGE URL: %@", self.voucher.deal.venue.imageURL);
         [self.imageView sd_setImageWithURL:self.voucher.deal.venue.imageURL];
         //[self.imageView sd_setImageWithURL:self.voucher.deal.venue.imageURL];
     }
@@ -258,7 +259,7 @@
     CGFloat topInset = CGRectGetMaxY(self.descriptionView.frame);
     UIEdgeInsets insets = UIEdgeInsetsZero;
     insets.top = topInset;
-    self.dealRedemptionViewController.tableView.contentInset = insets;
+    self.voucherRedemptionViewController.tableView.contentInset = insets;
 }
 
 //- (void)showPartialDescriptionViewAnimated:(BOOL)animated

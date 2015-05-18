@@ -327,6 +327,17 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     NSDictionary *parameters = @{ @"deal_id" : dealID };
     [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
 }
+- (void)redeemVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
+    [[APIClient sharedClient] putPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+}
+
+- (void)deleteVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
+    [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+}
 
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact

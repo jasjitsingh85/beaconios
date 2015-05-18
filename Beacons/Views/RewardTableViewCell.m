@@ -28,6 +28,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "DealHours.h"
 #import "Deal.h"
+#import "RewardManager.h"
 
 @interface RewardTableViewCell()
 
@@ -357,9 +358,9 @@
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
         [alertView bk_addButtonWithTitle:@"Yes" handler:^{
             [[RewardManager sharedManager] purchaseRewardItem:self.deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"Working");
+                NSLog(@"Failure");
             }];
         }];
         
