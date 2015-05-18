@@ -546,7 +546,6 @@
         if (!cell) {
             cell = [[VoucherTableViewCell alloc] init];
         }
-        NSLog(@"Voucher Counter: %ld", (long)indexPath.row);
         cell.voucher = self.vouchers[indexPath.row - [self.beacons count]];
         [self updateNavigationItems];
         return cell;
@@ -556,9 +555,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //Beacon *beacon = [self beaconForIndexPath:indexPath];
-    Beacon *beacon = self.beacons[indexPath.row];
-    [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([self.beacons count] > indexPath.row){
+        Beacon *beacon = self.beacons[indexPath.row];
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        Voucher *voucher = self.vouchers[indexPath.row - [self.beacons count]];
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToVoucherViewWithVoucher:voucher];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (void)updateNavigationItems

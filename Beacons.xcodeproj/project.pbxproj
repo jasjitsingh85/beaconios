@@ -53,6 +53,8 @@
 		4148E9CA1B047FBE0050D3E3 /* VoucherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */; };
 		4148E9CC1B083F8F0050D3E3 /* storeIntroCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */; };
 		4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */; };
+		4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */; };
+		4148E9D41B098AE20050D3E3 /* VoucherRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -318,6 +320,10 @@
 		4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherTableViewCell.m; sourceTree = "<group>"; };
 		4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = storeIntroCell.png; sourceTree = "<group>"; };
 		4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "singleGoldCoin@2x.png"; sourceTree = "<group>"; };
+		4148E9CF1B09459B0050D3E3 /* VoucherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoucherViewController.h; sourceTree = "<group>"; };
+		4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherViewController.m; sourceTree = "<group>"; };
+		4148E9D21B098AD00050D3E3 /* VoucherRedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoucherRedemptionViewController.h; sourceTree = "<group>"; };
+		4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherRedemptionViewController.m; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -885,6 +891,8 @@
 			children = (
 				96AFE1301938209E00209799 /* DealsTableViewController.h */,
 				96AFE1311938209E00209799 /* DealsTableViewController.m */,
+				4148E9D21B098AD00050D3E3 /* VoucherRedemptionViewController.h */,
+				4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */,
 				9651C798193E72390083A0FE /* DealRedemptionViewController.h */,
 				9651C799193E72390083A0FE /* DealRedemptionViewController.m */,
 				964602511994103200979929 /* SetDealViewController.h */,
@@ -993,6 +1001,8 @@
 				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
 				96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */,
 				96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */,
+				4148E9CF1B09459B0050D3E3 /* VoucherViewController.h */,
+				4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */,
 				96A9871C17E51753007D77B8 /* InviteListViewController.h */,
 				96A9871D17E51753007D77B8 /* InviteListViewController.m */,
 			);
@@ -1484,6 +1494,7 @@
 				9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */,
 				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
+				4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
 				41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
@@ -1509,6 +1520,7 @@
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
 				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,
+				4148E9D41B098AE20050D3E3 /* VoucherRedemptionViewController.m in Sources */,
 				96AFE1351938215000209799 /* Deal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

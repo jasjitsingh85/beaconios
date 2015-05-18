@@ -32,6 +32,8 @@
 @interface RewardTableViewCell()
 
 @property (strong, nonatomic) UIView *backgroundView;
+@property (strong, nonatomic) UIView *priceContainer;
+@property (strong, nonatomic) UILabel *priceLabel;
 
 @end
 
@@ -198,7 +200,7 @@
         .size.width;
         
         self.dealTime.x = descriptionLabelWidth + 10;
-        
+    
         self.descriptionLabel.width = descriptionLabelWidth + 5;
         //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
         //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
@@ -207,6 +209,27 @@
         //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
         self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
         //self.dealTime.text = [self stringForDistance:self.deal.venue.distance];
+        
+        self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(descriptionLabelWidth + 10, self.descriptionLabel.origin.y - 3, 80, 30)];
+        self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+        [self.priceContainer addSubview:self.priceLabel];
+        
+        self.priceLabel.text = [NSString stringWithFormat: @"%@", self.deal.itemPointCost];
+        self.priceLabel.font = [ThemeManager boldFontOfSize:18];
+        self.priceLabel.textColor = [UIColor whiteColor];
+        NSInteger stringLength = [self.priceLabel.text length];
+    
+        UIImageView *goldCoin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"goldCoin"]];
+        if (stringLength == 2) {
+           goldCoin.x = -14;
+        } else if (stringLength == 3) {
+            goldCoin.x = -5;
+        }
+        goldCoin.y = 5;
+        
+        [self.priceContainer addSubview:goldCoin];
+        [self.priceContainer addSubview:self.priceLabel];
+        [self.venuePreviewView addSubview:self.priceContainer];
         
         //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
         

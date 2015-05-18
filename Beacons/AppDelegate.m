@@ -34,6 +34,7 @@
 #import "RandomObjectManager.h"
 #import "Deal.h"
 #import <Braintree/Braintree.h>
+#import "VoucherViewController.h"
 
 @interface AppDelegate()
 
@@ -324,6 +325,15 @@
     }
     [beaconProfileViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+}
+
+- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher
+{
+    VoucherViewController *voucherViewController = [[VoucherViewController alloc] init];
+    voucherViewController.voucher = voucher;
+    voucherViewController.openToDealView = YES;
+    [voucherViewController refreshVoucherData];
+    [self.centerNavigationController setSelectedViewController:voucherViewController animated:YES];
 }
 
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID
