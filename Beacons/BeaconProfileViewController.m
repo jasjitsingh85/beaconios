@@ -201,7 +201,7 @@
     self.fullDescriptionViewShown = YES;
     
     self.imageView = [[BeaconMapSnapshotImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 240)];
-    self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
+    //self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
     UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
     imageTap.numberOfTapsRequired = 1;
     [self.imageView addGestureRecognizer:imageTap];

@@ -314,7 +314,7 @@
         UIColor *backgroundColor;
         UIColor *color;
         
-        if ([self dealNow] && ![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
+        if (![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
             color = activeColor;
             backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
             voucherTitleText = @"VOUCHER FOR:";
