@@ -405,7 +405,6 @@
 
 - (void)rewardsUpdated:(NSNotification *)notification
 {
-    NSLog(@"WORKING@@@@@@");
     [[RewardManager sharedManager] updateActiveVouchers:^(NSArray *beacons) {
         [self.tableView reloadData];
     } failure:nil];
