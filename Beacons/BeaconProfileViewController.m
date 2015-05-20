@@ -46,6 +46,7 @@
 #import "WebViewController.h"
 #import "PaymentExplanationPopupView.h"
 #import "RewardsViewController.h"
+#import "DealStatus.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -156,7 +157,6 @@
 - (void) refreshDeal
 {
     [self refreshBeaconData];
-    [self.dealRedemptionViewController setDeal:self.beacon.deal andDealStatus:self.beacon.userDealStatus];
 }
 
 - (void)dealloc
@@ -528,6 +528,7 @@
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
         self.beacon = beacon;
         if (self.beacon.deal) {
+            [self.dealRedemptionViewController setBeacon:self.beacon];
             [self showDealAnimated:NO];
         }
     } failure:nil];
@@ -572,11 +573,11 @@
     
     if (beacon.deal) {
         self.dealMode = YES;
-        [self.dealRedemptionViewController setDeal:beacon.deal andDealStatus:beacon.userDealStatus];
+        [self.dealRedemptionViewController setBeaconDeal:beacon];
         [self updateVenmoView];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.imageView sd_setImageWithURL:self.beacon.deal.venue.imageURL];
+        [self.imageView sd_setImageWithURL:self.beacon.userDealStatus.imageURL];
         [self showPaymentsExplanationPopup];
     }
     else {

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class User, Contact, Deal;
+@class User, Contact, Deal, Venue;
 @interface DealStatus : NSObject
 
 @property (strong, nonatomic) User *user;
@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic) BOOL feedback;
 @property (assign, nonatomic) BOOL paymentAuthorization;
+@property (strong, nonatomic) NSURL *imageURL;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

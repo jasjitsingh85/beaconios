@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@class DealStatus, Deal;
+@class DealStatus, Deal, Beacon;
 @interface DealRedemptionViewController : UIViewController
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) Beacon *beacon;
 @property (strong, nonatomic) DealStatus *dealStatus;
 
-- (void)setDeal:(Deal *)deal andDealStatus:(DealStatus *)dealStatus;
+- (void)setBeaconDeal:(Beacon *)beacon;
 - (void)updateRedeemButtonAppearance;
 
 @end

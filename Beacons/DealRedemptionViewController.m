@@ -11,9 +11,11 @@
 #import "DashedBorderButton.h"
 #import "Deal.h"
 #import "Venue.h"
+#import "Beacon.h"
 #import "DealStatus.h"
 #import "LoadingIndictor.h"
 #import "APIClient.h"
+#import "BeaconManager.h"
 
 @interface DealRedemptionViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -200,16 +202,18 @@
     self.countdownLabel.text = [NSString stringWithFormat:@"%@ %@", self.countdownLabel.text, timeLeft];
 }
 
-- (void)setDeal:(Deal *)deal andDealStatus:(DealStatus *)dealStatus
+- (void)setBeaconDeal:(Beacon *)beacon
 {
     [self view];
-    
-    self.deal = deal;
-    self.dealStatus = dealStatus;
+    _beacon = beacon;
+    self.beacon = beacon;
+    self.deal = beacon.deal;
+    self.dealStatus = beacon.userDealStatus;
     [self updateDealType];
     [self updateRedeemButtonAppearance];
     [self updateFeedbackButtonAppearance];
     [self.tableView reloadData];
+
 }
 
 - (void)feedbackButtonTouched:(id)sender
@@ -220,7 +224,7 @@
 
 - (void)redeemButtonTouched:(id)sender
 {
-    if (self.dealStatus.paymentAuthorization || !self.deal.inAppPayment) {
+    if ((self.dealStatus.paymentAuthorization || !self.deal.inAppPayment)) {
         if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
@@ -292,9 +296,10 @@
 {
     //[LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *dealStatus = responseObject[@"deal_status"];
-        self.dealStatus.dealStatus = dealStatus;
-        [self updateRedeemButtonAppearance];
+        [self refreshBeaconDataInDeal];
+        //NSString *dealStatus = responseObject[@"deal_status"];
+        //self.dealStatus.dealStatus = dealStatus;
+        //[self updateRedeemButtonAppearance];
         //[LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:nil];
 }
@@ -321,8 +326,7 @@
             itemNameText = [self.deal.itemName uppercaseString];
             venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
             serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
-        }
-        else {
+        } else {
             color = inactiveColor;
             backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
             if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
@@ -474,6 +478,13 @@
     }
     
     return cell;
+}
+
+-(void)refreshBeaconDataInDeal
+{
+    [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
+        [self setBeaconDeal:beacon];
+    } failure:nil];
 }
 
 
