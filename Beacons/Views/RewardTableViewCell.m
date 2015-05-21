@@ -63,28 +63,28 @@
     CGFloat originForVenuePreview = 0;
     self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(originForVenuePreview, 0, self.contentView.frame.size.width, 110)];
     //self.backgroundView = [[UIView alloc] initWithFrame:self.venuePreviewView.bounds];
-    self.backgroundView.backgroundColor = [UIColor whiteColor];
-    //self.backgroundView.backgroundColor = [[ThemeManager sharedTheme] boneWhiteColor];
-    //self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    //[self.venuePreviewView addSubview:self.backgroundView];
+    //self.backgroundView.backgroundColor = [UIColor whiteColor];
+    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.venuePreviewView addSubview:self.backgroundView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.font = [ThemeManager mediumFontOfSize:30];
-    self.venueLabelLineOne.textColor = [UIColor blackColor];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:30];
+    self.venueLabelLineOne.textColor = [UIColor whiteColor];
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
     self.venueLabelLineOne.numberOfLines = 1;
     [self.venuePreviewView addSubview:self.venueLabelLineOne];
     
-    self.venueLabelLineTwo = [[UILabel alloc] init];
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
-    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
-    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
-    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    self.venueLabelLineTwo.numberOfLines = 1;
-    [self.venuePreviewView addSubview:self.venueLabelLineTwo];
+//    self.venueLabelLineTwo = [[UILabel alloc] init];
+//    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+//    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+//    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
+//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+//    self.venueLabelLineTwo.numberOfLines = 1;
+//    [self.venuePreviewView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
     self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
@@ -137,7 +137,7 @@
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 30;
+    self.venueLabelLineOne.y = 33;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
