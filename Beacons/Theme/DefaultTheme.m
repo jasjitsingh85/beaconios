@@ -87,7 +87,7 @@
 
 - (UIColor *)redColor
 {
-    return [UIColor colorWithRed:234/255.0 green:109/255.0 blue:90/255.0 alpha:1.0];
+    return [UIColor colorWithRed:225/255.0 green:86/255.0 blue:72/255.0 alpha:1.0];
 }
 
 
@@ -168,7 +168,7 @@
 
 - (UIImage *)navigationBackgroundForBarMetrics:(UIBarMetrics)metrics
 {
-    return [UIImage imageNamed:@"navBar"];
+    return [UIImage imageNamed:@"navBarUpdated"];
 }
 
 - (NSDictionary *)navigationBarTitleAndTextAttributes

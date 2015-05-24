@@ -46,8 +46,8 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>hotspot</string>
-				<string>fb741683799178892</string>
 				<string>com.hotspot.hotspot</string>
+				<string>fb741683799178892</string>
 				<string>com.hotspot.hotspot.payments</string>
 			</array>
 		</dict>

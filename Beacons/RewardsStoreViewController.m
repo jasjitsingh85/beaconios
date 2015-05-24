@@ -16,7 +16,7 @@
 
 #import "RewardsStoreViewController.h"
 #import "UIView+BounceAnimation.h"
-#import <FacebookSDK.h>
+//#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
 #import "SetDealViewController.h"
 #import "CenterNavigationController.h"

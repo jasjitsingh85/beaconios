@@ -29,6 +29,7 @@
 {
     id <Theme> theme = [self sharedTheme];
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[CenterNavigationController class], nil];
+    //[navigationBarAppearance setBackgroundColor:[[ThemeManager sharedTheme] redColor]];
     [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     [navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];

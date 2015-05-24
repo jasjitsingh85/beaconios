@@ -377,16 +377,16 @@
 //    [self.editButton addTarget:self action:@selector(editButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
-    swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
-    [self.descriptionView addGestureRecognizer:swipeDownGestureRecognizer];
-    swipeDownGestureRecognizer.delegate = self;
-    
-    UISwipeGestureRecognizer *swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedUp:)];
-    swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    [self.descriptionView addGestureRecognizer:swipeUpGestureRecognizer];
-    swipeUpGestureRecognizer.delegate = self;
+//    UISwipeGestureRecognizer* swipeDownGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedDown:)];
+//    swipeDownGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+//    swipeDownGestureRecognizer.numberOfTouchesRequired = 1;
+//    [self.descriptionView addGestureRecognizer:swipeDownGestureRecognizer];
+//    swipeDownGestureRecognizer.delegate = self;
+//    
+//    UISwipeGestureRecognizer *swipeUpGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(descriptionViewSwipedUp:)];
+//    swipeUpGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
+//    [self.descriptionView addGestureRecognizer:swipeUpGestureRecognizer];
+//    swipeUpGestureRecognizer.delegate = self;
     
     
 }

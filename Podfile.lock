@@ -54,6 +54,7 @@ PODS:
   - Braintree/Venmo (3.8.0-rc2):
     - Braintree/API
   - BSKeyboardControls (2.2)
+  - CCTemplate (0.2.0)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core
     - CocoaLumberjack/Extensions
@@ -62,8 +63,19 @@ PODS:
     - CocoaLumberjack/Core
   - coinbase-official/OAuth (2.1.4)
   - CrittercismSDK (4.3.3)
-  - Facebook-iOS-SDK (3.15.1):
-    - Bolts
+  - FBSDKCoreKit (4.1.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+    - FBSDKCoreKit/no-arc
+  - FBSDKCoreKit/arc (4.1.0):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.1.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.1.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.1.0):
+    - FBSDKCoreKit
   - FormatterKit (1.4.3):
     - FormatterKit/AddressFormatter
     - FormatterKit/ArrayFormatter
@@ -82,6 +94,10 @@ PODS:
   - FormatterKit/UnitOfInformationFormatter (1.4.3)
   - FormatterKit/URLRequestFormatter (1.4.3)
   - Foursquare-iOS-API (2.0)
+  - libPhoneNumber-iOS (0.8.4)
+  - MaveSDK (0.6.3):
+    - CCTemplate (= 0.2.0)
+    - libPhoneNumber-iOS (~> 0.8.3)
   - MBProgressHUD (0.8)
   - Mixpanel (2.3.6)
   - MSDynamicsDrawerViewController (1.0.2)
@@ -98,9 +114,12 @@ DEPENDENCIES:
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
-  - Facebook-iOS-SDK
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKShareKit
   - FormatterKit
   - Foursquare-iOS-API (~> 2.0)
+  - MaveSDK
   - MBProgressHUD
   - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController (~> 1.0.0)
@@ -114,12 +133,17 @@ SPEC CHECKSUMS:
   Bolts: aac24961496d504aa56fc267cde95162a71bac39
   Braintree: 107d22885e12c023b58809654447f4515ac68a75
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
+  CCTemplate: f00efa85dad31e12b8a766b8e8198eb772c71c4f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
   coinbase-official: 4ad3ac862840657b4184345eb84af8166ab2b04e
   CrittercismSDK: 6f26c25dacacc71fed8018d7fbb2761578bbb271
-  Facebook-iOS-SDK: fbac4ae5c9ac995d67e7afe658dd7cdaf3adbce7
+  FBSDKCoreKit: 469ed167195f860dbd2b4c4bbaa33d2e90598db9
+  FBSDKLoginKit: ff6224762732e3698f30942e4544321b8c7a23e6
+  FBSDKShareKit: 8002faf0c564ff3625eadd16e506b0b0fbf3adef
   FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c
   Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
+  libPhoneNumber-iOS: dbfc7b4128510a4955df3e5a6f125393fc9ebc2f
+  MaveSDK: 20e8a620254bff1f858d7a6586b4ba19ff6a1e22
   MBProgressHUD: 8688c331cb64702283be37ab8d7d329cdd25f251
   Mixpanel: dc56111f1b327b38e0ae5a805f33f5d0c9e7f7f2
   MSDynamicsDrawerViewController: 7c95dcc55f5558a778294a3983efbcb85e9a9942

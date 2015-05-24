@@ -25,6 +25,7 @@
 #import "GroupsViewController.h"
 #import "Theme.h"
 #import "VoucherTableViewCell.h"
+#import <MaveSDK.h>
 
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -144,7 +145,7 @@
     self.shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.groupContainer.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.shareContainer];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.inviteFriendsButton setTitle:@"SHARE" forState:UIControlStateNormal];
+    [self.inviteFriendsButton setTitle:@"FREE DRINKS" forState:UIControlStateNormal];
     [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
@@ -153,7 +154,7 @@
     self.inviteFriendsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"shareIcon"]];
+    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"singleGoldCoin"]];
     shareIcon.frame = CGRectMake(21, 16, 20, 18);
     shareIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.inviteFriendsButton addSubview:shareIcon];
@@ -389,7 +390,16 @@
 
 - (void)inviteFriendsButtonTouched:(id)sender
 {
-    [Utilities presentFriendInviter];
+    [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+        // Code to present Mave's view controller from yours, e.g:
+        //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+        [self presentViewController:inviteController animated:YES completion:nil];
+    } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+        // Code to transition back to your view controller after Mave's
+        // is dismissed (sent invites or cancelled), e.g:
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    } inviteContext:@"Menu"];
+    
 }
 
 - (void)groupButtonTouched:(id)sender

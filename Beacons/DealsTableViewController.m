@@ -8,7 +8,7 @@
 
 #import "DealsTableViewController.h"
 #import "UIView+BounceAnimation.h"
-#import <FacebookSDK.h>
+//#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
 #import "SetDealViewController.h"
 #import "CenterNavigationController.h"
@@ -24,6 +24,10 @@
 #import "AnalyticsManager.h"
 #import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <MaveSDK.h>
+
 
 @interface DealsTableViewController ()
 
@@ -69,27 +73,31 @@
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
-//    self.textOneFriend = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.textOneFriend.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
-//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButtonSelected"] forState:UIControlStateNormal];
-////    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateHighlighted];
-//    [self.textOneFriend setImage:[UIImage imageNamed:@"oneOnOneButton"] forState:UIControlStateSelected];
-//    [self.textOneFriend addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.dealTypeToggle addSubview:self.textOneFriend];
-//    self.textOneFriend.selected = NO;
-//    
-//    self.textManyFriends = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.textManyFriends.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width/2, 0, [[UIScreen mainScreen] bounds].size.width/2, 60.0);
-//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButtonSelected"] forState:UIControlStateNormal];
-//    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateSelected];
-////    [self.textManyFriends setImage:[UIImage imageNamed:@"manyFriendButton"] forState:UIControlStateHighlighted];
-//    [self.textManyFriends addTarget:self action:@selector(tabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.dealTypeToggle addSubview:self.textManyFriends];
-//    self.textManyFriends.selected = YES;
-//    self.dealTypeToggle.hidden = YES;
+    [self checkToLaunchInvitationModal];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
+
+}
+
+- (void) checkToLaunchInvitationModal
+{
+    
+    NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
+    
+    NSLog(@"Launch Count: %ld", (long)launchCount);
+    NSLog(@"APP Count: %ld", (long)((launchCount + 1) % 3));
+    
+    if ((launchCount + 1) % 3 == 0) {
+        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+            // Code to present Mave's view controller from yours, e.g:
+            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+            [self presentViewController:inviteController animated:YES completion:nil];
+        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+            // Code to transition back to your view controller after Mave's
+            // is dismissed (sent invites or cancelled), e.g:
+            [controller dismissViewControllerAnimated:YES completion:nil];
+        } inviteContext:@"Popup"];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -210,10 +218,10 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
                 [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
