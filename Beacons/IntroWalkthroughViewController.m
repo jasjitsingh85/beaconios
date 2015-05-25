@@ -75,7 +75,7 @@ typedef enum ScrollDirection {
 {
     [super viewDidLoad];
     
-    NSArray *backgroundImageNames = @[@"redGradientBackground", @"blueGradientBackground", @"greenGradientBackground", @"redGradientBackground", @"orangeGradientBackground"];
+    NSArray *backgroundImageNames = @[@"redGradientBackground", @"blueGradientBackground", @"greenGradientBackground", @"redGradientBackground", @"orangeBackground"];
     NSMutableArray *backgrounds = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<backgroundImageNames.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:backgroundImageNames[i]]];
@@ -119,37 +119,37 @@ typedef enum ScrollDirection {
     [self.view addSubview:self.drinkView];
     
     NSString *line1 = @"Pick a Deal";
-    NSString *line2 = @"at a local bar or restaurant";
+    NSString *line2 = @"at a local bar";
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", line1, line2]];
-    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString.string rangeOfString:line1]];
-    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString.string rangeOfString:line2]];
+    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:26]} range:[attributedString.string rangeOfString:line1]];
+    [attributedString setAttributes:@{NSFontAttributeName : [ThemeManager mediumFontOfSize:20]} range:[attributedString.string rangeOfString:line2]];
     self.phoneView1 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough1"] captionString:attributedString];
     [self.phoneView1 hideOffScreen];
     [self.view addSubview:self.phoneView1];
     
-    NSString *view2Line1 = @"Write a Message";
+    NSString *view2Line1 = @"Type a Message";
     NSString *view2Line2 = @"to a few friends";
     NSMutableAttributedString *attributedString2 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view2Line1, view2Line2]];
-    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString2.string rangeOfString:view2Line1]];
-    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString2.string rangeOfString:view2Line2]];
+    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:26]} range:[attributedString2.string rangeOfString:view2Line1]];
+    [attributedString2 setAttributes:@{NSFontAttributeName : [ThemeManager mediumFontOfSize:20]} range:[attributedString2.string rangeOfString:view2Line2]];
     self.phoneView2 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough2"] captionString:attributedString2];
     [self.phoneView2 hideOffScreen];
     [self.view addSubview:self.phoneView2];
     
-    NSString *view3Line1 = @"Select friends to text";
-    NSString *view3Line2 = @"(they don't even need the app!)";
+    NSString *view3Line1 = @"Select Friends to Text";
+    NSString *view3Line2 = @"(they don't need the app)";
     NSMutableAttributedString *attributedString3 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view3Line1, view3Line2]];
-    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString3.string rangeOfString:view3Line1]];
-    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:16]} range:[attributedString3.string rangeOfString:view3Line2]];
+    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:26]} range:[attributedString3.string rangeOfString:view3Line1]];
+    [attributedString3 setAttributes:@{NSFontAttributeName : [ThemeManager mediumFontOfSize:20]} range:[attributedString3.string rangeOfString:view3Line2]];
     self.phoneView3 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough3"] captionString:attributedString3];
     [self.phoneView3 hideOffScreen];
     [self.view addSubview:self.phoneView3];
     
-    NSString *view4Line1 = @"Redeem deals right away!";
-    NSString *view4Line2 = @"(your friends don't even need to show up)";
+    NSString *view4Line1 = @"Redeem Instantly";
+    NSString *view4Line2 = @"(by showing voucher to staff)";
     NSMutableAttributedString *attributedString4 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", view4Line1, view4Line2]];
-    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:20]} range:[attributedString4.string rangeOfString:view4Line1]];
-    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:14]} range:[attributedString4.string rangeOfString:view4Line2]];
+    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:26]} range:[attributedString4.string rangeOfString:view4Line1]];
+    [attributedString4 setAttributes:@{NSFontAttributeName : [ThemeManager mediumFontOfSize:20]} range:[attributedString4.string rangeOfString:view4Line2]];
     self.phoneView4 = [[PhoneView alloc] initWithImage:[UIImage imageNamed:@"iphoneWalkthrough4"] captionString:attributedString4];
     [self.phoneView4 hideOffScreen];
     [self.view addSubview:self.phoneView4];
@@ -329,8 +329,8 @@ typedef enum ScrollDirection {
     self.captionLabel.frame = captionFrame;
 //    self.captionLabel.text = @"Hotspot is the fastest way to get groups of friends together.";
     self.captionLabel.attributedText = [IntroWalkthroughViewController
-                                        multiLineAttributedStringWithLineTexts:@[@"Get Sweet Deals", @"by texting your friends.", @"(they don't even have to show up!)"]
-                                        fonts:@[[ThemeManager boldFontOfSize:30], [ThemeManager boldFontOfSize:22], [ThemeManager regularFontOfSize:14]]];
+                                        multiLineAttributedStringWithLineTexts:@[@"Save Over 50%", @"on drinks at local bars"]
+                                        fonts:@[[ThemeManager boldFontOfSize:30], [ThemeManager boldFontOfSize:24]]];
     self.captionLabel.numberOfLines = 3;
     self.captionLabel.textColor = [UIColor whiteColor];
     self.captionLabel.textAlignment = NSTextAlignmentCenter;

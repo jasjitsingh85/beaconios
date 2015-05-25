@@ -58,5 +58,6 @@
 - (void)redeemVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)deleteVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)getRewardsScore: (void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)earnFriendInvitationRewardForReferringUser:(NSString *)referringUserPhoneNumber andCurrentUser:(NSString *)currentUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
 
 @end

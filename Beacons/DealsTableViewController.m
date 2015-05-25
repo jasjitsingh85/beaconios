@@ -84,9 +84,6 @@
     
     NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
     
-    NSLog(@"Launch Count: %ld", (long)launchCount);
-    NSLog(@"APP Count: %ld", (long)((launchCount + 1) % 3));
-    
     if ((launchCount + 1) % 3 == 0) {
         [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
             // Code to present Mave's view controller from yours, e.g:
