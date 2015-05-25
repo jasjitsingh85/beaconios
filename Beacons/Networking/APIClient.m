@@ -339,9 +339,9 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
 }
 
-- (void)earnFriendInvitationRewardForReferringUser:(NSString *)referringUserPhoneNumber andCurrentUser:(NSString *)currentUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+- (void)earnFriendInvitationReward:(NSString *)referringUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
-    NSDictionary *parameters = @{ @"referring_user" : referringUserPhoneNumber, @"current_user" : currentUserPhoneNumber };
+    NSDictionary *parameters = @{ @"referring_user" : referringUserPhoneNumber };
     [[APIClient sharedClient] postPath:@"rewards/" parameters:parameters success:success failure:failure];
 }
 

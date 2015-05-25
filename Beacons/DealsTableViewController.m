@@ -123,6 +123,7 @@
         self.enableLocationLabel.font = [ThemeManager regularFontOfSize:14.];
         self.enableLocationLabel.textColor = [UIColor colorWithWhite:102/255.0 alpha:1.0];
         self.enableLocationLabel.numberOfLines = 6;
+        self.enableLocationView.hidden = YES;
         self.enableLocationLabel.textAlignment = NSTextAlignmentCenter;
         self.enableLocationLabel.text = @"Want to see great deals nearby? Hotspot needs to know your location.\n\nAllow Location Access in Privacy > Location Services";
         //        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];

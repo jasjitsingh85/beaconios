@@ -388,13 +388,10 @@
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
     
     [[MaveSDK sharedInstance] getReferringData:^(MAVEReferringData *referringData) {
-        // Do something with the referring data, e.g.
         MAVEUserData *referringUser = referringData.referringUser;
         NSString *referringUserPhone = referringData.currentUser.phone;
-        //NSDictionary *customData = referringData.customData;
         if (referringUser) {
-            NSLog(@"REFERRING USER: %@", referringUser);
-            [[APIClient sharedClient] earnFriendInvitationRewardForReferringUser:referringUserPhone andCurrentUser:phone success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[APIClient sharedClient] earnFriendInvitationReward:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Successful referral");
             } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
                 NSLog(@"Failure for referral");
