@@ -48,7 +48,7 @@
 #import "RewardsViewController.h"
 #import "DealStatus.h"
 
-@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, ChatViewControllerDelegate, InviteListViewControllerDelegate, SetBeaconViewControllerDelegate, DealRedemptionViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) BeaconChatViewController *beaconChatViewController;
 @property (strong, nonatomic) InviteListViewController *inviteListViewController;
@@ -93,6 +93,7 @@
         self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
         [self addChildViewController:self.rewardsViewController];
         self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
+        self.dealRedemptionViewController.delegate = self;
         [self initVenmoWebviewController];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
             [self initPaymentsViewControllerAndSetDeal];

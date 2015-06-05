@@ -47,6 +47,8 @@
 
 @implementation AppDelegate
 
+//@synthesize kochavaTracker;
+
 + (AppDelegate *)sharedAppDelegate
 {
     return [UIApplication sharedApplication].delegate;
@@ -107,6 +109,9 @@
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     [DDLog addLogger:fileLogger];
     [CrashManager enableCrittercism];
+//    NSDictionary *initDict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                              @"myKochavaAppId", @"kohotspot-deals-with-friends55666e25a8b3b", nil];
+//    kochavaTracker = [[KochavaTracker alloc] initKochavaWithParams:initDict];
     
     
     //update content from server
@@ -457,6 +462,7 @@
                                                            annotation:annotation];
     return YES;
 }
+
 
 #pragma mark - Beacon Profile
 

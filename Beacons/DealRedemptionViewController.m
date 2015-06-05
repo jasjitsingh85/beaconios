@@ -31,6 +31,7 @@
 @end
 
 @implementation DealRedemptionViewController
+@synthesize delegate;
 
 - (void)viewDidLoad
 {
@@ -224,7 +225,8 @@
 
 - (void)redeemButtonTouched:(id)sender
 {
-    if ((self.dealStatus.paymentAuthorization || !self.deal.inAppPayment)) {
+    
+    if (!self.deal.inAppPayment) {
         if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
@@ -250,8 +252,40 @@
         [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
         [alertView show];
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"Voucher Inactive" message:@"The host hasn't opened a tab" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        return;
+        if (self.dealStatus.paymentAuthorization) {
+            if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                return;
+            } else {
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"Only staff should redeem deal"];
+                [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+                    [self redeemDeal];
+                }];
+                [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+                [alertView show];
+                return;
+            }
+        } else {
+            if ([self.delegate isUserCreator]) {
+                [self.delegate initPaymentsViewControllerAndSetDeal];
+            } else {
+                [[[UIAlertView alloc] initWithTitle:@"Voucher Inactive" message:@"The host hasn't opened a tab" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                return;
+            }
+        }
+//            NSString *message;
+//        NSString *title = @"Sorry";
+//        if ([self dealUpcoming]) {
+//            message = @"This voucher isn't available yet.";
+//        }
+//        else {
+//            message = @"This voucher has expired.";
+//        }
+//        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
+//        [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
+//        [alertView show];
+//        }
+        
     }
 }
 
@@ -341,10 +375,17 @@
                 venueNameText = @"";
                 serverMessageText = @"";
             } else if (!self.dealStatus.paymentAuthorization) {
-                voucherTitleText = @"VOUCHER";
-                itemNameText = @"INACTIVE";
-                venueNameText = @"TAB HASN'T BEEN OPENED";
-                serverMessageText = @"VOUCHER CANNOT BE USED";
+                if ([self.delegate isUserCreator]) {
+                    voucherTitleText = @"TAP HERE TO";
+                    itemNameText = @"OPEN TAB";
+                    venueNameText = @"TAP HASN'T BEEN OPENED";
+                    serverMessageText = @"VOUCHER IS INACTIVE";
+                } else {
+                    voucherTitleText = @"VOUCHER";
+                    itemNameText = @"INACTIVE";
+                    venueNameText = @"HOST HAS NOT OPENED TAB";
+                    serverMessageText = @"VOUCHER CANNOT BE USED";
+                }
             }
             else {
                 voucherTitleText = @"";

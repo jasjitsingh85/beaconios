@@ -193,10 +193,10 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
-            [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+            [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
                 [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];

@@ -19,7 +19,9 @@ Beacon,
 Voucher,
 Deal;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate> //{
+//    KochavaTracker *kochavaTracker;
+//}
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CenterNavigationController *centerNavigationController;
@@ -27,6 +29,7 @@ Deal;
 @property (strong, nonatomic) SetBeaconViewController *setBeaconViewController;
 @property (strong, nonatomic) MenuViewController *menuViewController;
 @property (strong, nonatomic) DealsTableViewController *dealsViewController;
+//@property(readonly) KochavaTracker *kochavaTracker;
 
 + (AppDelegate *)sharedAppDelegate;
 - (void)registeredWithResponse:(NSDictionary *)response;

@@ -38,6 +38,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) UIView *dealContentView;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIImageView *fallBackImageView;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
@@ -65,6 +66,8 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (assign, nonatomic) BOOL frontCamera;
 @property (strong, nonatomic) NSString *imageUrl;
 @property (strong, nonatomic) UIButton *retakePictureButton;
+@property (strong, nonatomic) UIButton *takePicture;
+@property (strong, nonatomic) UIButton *toggleCamera;
 @property (strong, nonatomic) AVCaptureSession *session;
 @property (strong, nonatomic) UILabel *topPictureLabel;
 @property (strong, nonatomic) UILabel *bottomPictureLabel;
@@ -186,22 +189,22 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.topPictureLabel.text = @"Add Picture (Optional)";
     [self.dealContentView addSubview:self.topPictureLabel];
     
-    UIButton *toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *toggleCameraImage = [UIImage imageNamed:@"toggleCamera"];
-    [toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
-    toggleCamera.frame = CGRectMake(self.dealContentView.width - 53, -12, 60, 60);
+    [self.toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
+    self.toggleCamera.frame = CGRectMake(self.dealContentView.width - 53, -12, 60, 60);
     //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
-    [toggleCamera addTarget:self action:@selector(toggleCamera:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealContentView addSubview:toggleCamera];
+    [self.toggleCamera addTarget:self action:@selector(toggleCamera:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealContentView addSubview:self.toggleCamera];
     
-    UIButton *takePicture = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.takePicture = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *takePictureImage = [UIImage imageNamed:@"takePictureButton"];
-    [takePicture setImage:takePictureImage forState:UIControlStateNormal];
-    takePicture.frame = CGRectMake(0, self.dealContentView.height - 60 , 100, 60);
-    takePicture.centerX = self.dealContentView.width/2;
+    [self.takePicture setImage:takePictureImage forState:UIControlStateNormal];
+    self.takePicture.frame = CGRectMake(0, self.dealContentView.height - 60 , 100, 60);
+    self.takePicture.centerX = self.dealContentView.width/2;
     //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
-    [takePicture addTarget:self action:@selector(captureImage) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealContentView addSubview:takePicture];
+    [self.takePicture addTarget:self action:@selector(captureImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealContentView addSubview:self.takePicture];
     
     
     self.imageView = [[UIImageView alloc] init];
@@ -239,6 +242,14 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.imageUrl = @"";
     self.frontCamera = YES;
+    
+    self.fallBackImageView = [[UIImageView alloc] init];
+    //self.fallBackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addFriends"]];
+    self.fallBackImageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
+    self.fallBackImageView.bottom = self.dealContentView.height;
+    //self.fallBackImageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+    [self.dealContentView addSubview:self.fallBackImageView];
+    
 //    self.descriptionLabel = [[UILabel alloc] init];
 //    self.descriptionLabel.height = 10;
 //    self.descriptionLabel.width = self.view.width - 40;
@@ -342,10 +353,29 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     _deal = deal;
     [self view];
     [self resetDate];
-    [self initializeCamera];
-//    NSString *ImageURL = @"https://s3-us-west-2.amazonaws.com/hotspot-venue-images/screenshot_220.png";
-//    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
-//    self.imageView.image = [UIImage imageWithData:imageData];
+    
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    
+    if(status == AVAuthorizationStatusAuthorized) {
+        [self initializeCamera];
+    } else if(status == AVAuthorizationStatusDenied){
+        [self cameraUnavailable];
+    } else if(status == AVAuthorizationStatusRestricted){
+        [self cameraUnavailable];
+    } else if(status == AVAuthorizationStatusNotDetermined){
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            if(granted){
+                [self initializeCamera];
+            } else {
+                [self cameraUnavailable];
+            }
+        }];
+    }
+    
+    
+      //NSString *ImageURL = @"https://s3-us-west-2.amazonaws.com/hotspot-venue-images/screenshot_220.png";
+      //NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
+      //self.imageView.image = [UIImage imageWithData:imageData];
 
     //[self.imageView sd_setImageWithURL:deal.venue.imageURL];
     //self.venueLabelLineOne.text = deal.venue.name;
@@ -658,7 +688,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 {
     if (indexPath.row == DealSectionDescription) {
         if ([self.deal.dealType isEqual:@"DT"] && self.haveImage == NO) {
-            [self captureImage];
+            //[self captureImage];
 //            [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];   
         }
     }
@@ -753,7 +783,15 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     return firstAndSecondLine;
 }
 
+- (void) cameraUnavailable {
+    [self.fallBackImageView sd_setImageWithURL:self.deal.venue.imageURL];
+    self.takePicture.hidden = YES;
+    self.toggleCamera.hidden = YES;
+    
+}
+
 - (void) initializeCamera {
+    
     self.session = [[AVCaptureSession alloc] init];
     self.session.sessionPreset = AVCaptureSessionPresetPhoto;
     
