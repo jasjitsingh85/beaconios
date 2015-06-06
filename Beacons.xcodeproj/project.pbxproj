@@ -76,6 +76,7 @@
 		41ED34D71AC9F91400A77A92 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34D51AC9F91400A77A92 /* Default-568h@2x.png */; };
 		41ED34D81AC9F91400A77A92 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41ED34D61AC9F91400A77A92 /* Default@2x.png */; };
 		41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144051B10E9C10010BCF1 /* navBarUpdated@2x.png */; };
+		41F144091B22B30B0010BCF1 /* HotspotAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F144081B22B30A0010BCF1 /* HotspotAnnotation.m */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -350,6 +351,8 @@
 		41ED34D51AC9F91400A77A92 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		41ED34D61AC9F91400A77A92 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		41F144051B10E9C10010BCF1 /* navBarUpdated@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBarUpdated@2x.png"; sourceTree = "<group>"; };
+		41F144071B22B2F80010BCF1 /* HotspotAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotspotAnnotation.h; sourceTree = "<group>"; };
+		41F144081B22B30A0010BCF1 /* HotspotAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotspotAnnotation.m; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -760,6 +763,8 @@
 			children = (
 				1FE67714175C0EA0006F563C /* BeaconAnnotation.h */,
 				1FE67715175C0EA0006F563C /* BeaconAnnotation.m */,
+				41F144071B22B2F80010BCF1 /* HotspotAnnotation.h */,
+				41F144081B22B30A0010BCF1 /* HotspotAnnotation.m */,
 				9615F4E1175BEBC6005CF62D /* Beacon.h */,
 				9615F4E2175BEBC6005CF62D /* Beacon.m */,
 				9615F4E5175BEBE6005CF62D /* User.h */,
@@ -1471,6 +1476,7 @@
 				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
 				9651C79D193E74C20083A0FE /* DashedBorderButton.m in Sources */,
+				41F144091B22B30B0010BCF1 /* HotspotAnnotation.m in Sources */,
 				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,

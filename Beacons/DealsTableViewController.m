@@ -27,9 +27,12 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <MaveSDK.h>
+#import <MapKit/MapKit.h>
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import "Utilities.h"
+#import "HotspotAnnotation.h"
 
-
-@interface DealsTableViewController ()
+@interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
@@ -40,17 +43,22 @@
 //@property (strong, nonatomic) UIButton *textOneFriend;
 //@property (strong, nonatomic) UIButton *textManyFriends;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
+@property (strong, nonatomic) UILabel *mapLabel;
 @property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
 //@property (assign, nonatomic) BOOL groupDeal;
 @property (strong, nonatomic) NSArray *allDeals;
+@property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
+@property (strong, nonatomic) MKMapView *mapView;
+@property (assign, nonatomic) NSInteger *currentTopRow;
+@property (nonatomic, assign) CGFloat lastContentOffset;
+
 
 @end
 
 @implementation DealsTableViewController
-
 
 - (void)viewDidLoad
 {
@@ -68,12 +76,40 @@
 //    self.dealTypeToggle.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.9];
 //    [self.view addSubview:self.dealTypeToggle];
     
+    self.tableView = [[UITableView alloc] init];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.frame = CGRectMake(0, 125, self.view.width, self.view.height);
+    self.tableView.contentInset = UIEdgeInsetsMake(7.0, 0.0, self.view.height - 200, 0.0);
+    self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
     
     [self checkToLaunchInvitationModal];
+    
+    //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 125)];
+    [self.mapView setShowsUserLocation:YES];
+//    self.mapView.zoomEnabled = NO;
+//    self.mapView.scrollEnabled = NO;
+//    self.mapView.userInteractionEnabled = NO;
+    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
+      initWithTarget:self action:@selector(getDirectionsToBeacon:)];
+    tapped.numberOfTapsRequired = 1;
+    tapped.numberOfTouchesRequired = 1;
+    [self.mapView addGestureRecognizer:tapped];
+    [self.view addSubview:self.mapView];
+    //[self.view addSubview:tapView];
+    
+    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 100, 22)];
+    self.mapLabel.textAlignment = NSTextAlignmentCenter;
+    self.mapLabel.font = [ThemeManager boldFontOfSize:10];
+    self.mapLabel.textColor = [UIColor whiteColor];
+    self.mapLabel.backgroundColor = [UIColor blackColor];
+    [self.mapView addSubview:self.mapLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -114,7 +150,7 @@
 {
     if (!_enableLocationView) {
         _enableLocationView = [[UIView alloc] init];
-        _enableLocationView.size = CGSizeMake(self.tableView.width, 200);
+        _enableLocationView.size = CGSizeMake(self.tableView.width, 175);
         _enableLocationView.backgroundColor = [UIColor whiteColor];
         [_enableLocationView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
         
@@ -211,29 +247,30 @@
 {
     self.loadingDeals = YES;
     [self hideEnableLocationView];
-    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
-                [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
             }];
         } failure:^(NSError *error) {
             self.loadingDeals = NO;
-            [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         }];
     } else {
         [self showEnableLocationView];
         self.loadingDeals = NO;
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }
+    
 }
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
@@ -259,6 +296,11 @@
         } else {
            self.hasEvents = NO;
         }
+        
+        self.dealInView = [[Deal alloc] init];
+        self.dealInView = deals[0];
+        [self updateMapCoordinates];
+    
         self.allDeals = deals;
         self.deals = self.allDeals;
         
@@ -325,11 +367,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.hasEvents && indexPath.row==0) {
-        return 253;
-    } else {
-        return 203;
-    }
+
+    return 203;
+    //    if (self.hasEvents && indexPath.row==0) {
+//        return 253;
+//    } else {
+//        return 203;
+//    }
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
@@ -505,11 +549,91 @@
 ////    }];
 //}
 
+-(void) updateMapCoordinates
+{
+
+    CLLocationCoordinate2D initialLocation = CLLocationCoordinate2DMake(self.dealInView.venue.coordinate.latitude, self.dealInView.venue.coordinate.longitude);
+    
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    [annotation setCoordinate:initialLocation];
+    //MKAnnotationView *annotationView = [self mapView:self.mapView viewForAnnotation:annotation];
+    MKPointAnnotation *lastObject = self.mapView.annotations.lastObject;
+    [self.mapView addAnnotation:annotation];
+    
+    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(initialLocation, 550, 550)];
+    [self.mapView setRegion:adjustedRegion animated:YES];
+    [self.mapView removeAnnotation:lastObject];
+    
+    self.mapLabel.text = [NSString stringWithFormat:@"%@ (%@)", [self.dealInView.venue.name uppercaseString], [self stringForDistance:self.dealInView.venue.distance]];
+    //self.mapLabel.text = [NSString stringWithFormat:@"%@", [self stringForDistance:self.dealInView.venue.distance]];
+    float mapLabelWidth = [self widthOfString:self.mapLabel.text withFont:self.mapLabel.font];
+    self.mapLabel.width = mapLabelWidth + 10;
+    self.mapLabel.x = self.view.width - self.mapLabel.width;
+    
+}
+
+//- (MKAnnotationView *)mapView:(MKMapView *)map viewForAnnotation:(id <MKAnnotation>)annotation
+//{
+//    static NSString *AnnotationViewID = @"annotationViewID";
+//    
+//    MKAnnotationView *annotationView = (MKAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
+//    
+//    if (annotationView == nil)
+//    {
+//        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
+//    }
+//
+//    annotationView.image = [UIImage imageNamed:@"mapMarker"];
+//    annotationView.annotation = annotation;
+//    
+//    return annotationView;
+//}
+
+- (NSString *)stringForDistance:(CLLocationDistance)distance
+{
+    //   CGFloat distanceMiles = METERS_TO_MILES*distance;
+    NSString *distanceString;
+    //    if (distanceMiles < 0.25) {
+    //        distanceString = [NSString stringWithFormat:@"%0.0fft", (floor((METERS_TO_FEET*distance)/10))*10];
+    //    }
+    //    else {
+    //distanceString = [NSString stringWithFormat:@"%0.1fmi", METERS_TO_MILES*distance];
+    //    }
+    distanceString = [NSString stringWithFormat:@"%0.1f mi", METERS_TO_MILES*distance];
+    return distanceString;
+}
+
+- (CGFloat)widthOfString:(NSString *)string withFont:(NSFont *)font {
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
+}
+
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGRect newFrame = self.dealTypeToggle.frame;
-    newFrame.origin.x = 0;
-    newFrame.origin.y = self.tableView.contentOffset.y+(self.tableView.frame.size.height - 60);
-    self.dealTypeToggle.frame = newFrame;
+    
+    NSIndexPath *currentIndexPath= self.tableView.indexPathsForVisibleRows[0];
+    
+    float changeDealIndex = self.tableView.contentOffset.y/(currentIndexPath.row + 1);
+    
+    if (changeDealIndex > 115 && currentIndexPath.row + 1 < [self.deals count]) {
+        self.dealInView = self.deals[currentIndexPath.row + 1];
+        [self updateMapCoordinates];
+    } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
+        self.dealInView = self.deals[0];
+        [self updateMapCoordinates];
+    }
+}
+
+- (void)getDirectionsToBeacon:(UIGestureRecognizer *)recognizer
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
+    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
+        [Utilities launchGoogleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
+    }];
+    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
+        [Utilities launchAppleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
+    }];
+    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
+    [actionSheet showInView:self.view];
 }
 
 @end

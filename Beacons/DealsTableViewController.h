@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DealsTableViewController : UITableViewController
+typedef enum ScrollDirection {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+} ScrollDirection;
+
+@interface DealsTableViewController : UIViewController
 
 @property (strong, nonatomic) NSArray *events;
 @property (strong, nonatomic) NSArray *deals;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end

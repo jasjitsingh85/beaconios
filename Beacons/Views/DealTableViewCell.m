@@ -77,10 +77,10 @@
     self.descriptionLabel = [[UILabel alloc] init];
     self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
     self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
-    self.descriptionLabel.height = 25;
+    self.descriptionLabel.height = 30;
     self.descriptionLabel.x = 0;
-    self.descriptionLabel.y = 150;
-    self.descriptionLabel.font = [ThemeManager boldFontOfSize:13];
+    self.descriptionLabel.y = 145;
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:16];
     self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
@@ -197,12 +197,12 @@
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 80;
+    self.venueLabelLineOne.y = 75;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 103;
+    self.venueLabelLineTwo.y = 98;
     
     self.venueDetailLabel.width = self.venueDetailView.size.width * .65;
     self.venueDetailLabel.x = 10;
@@ -232,7 +232,7 @@
     self.dealTime.width = 200;
     self.dealTime.height = 30;
     //self.dealTime.x = self.venuePreviewView.size.width*.62;
-    self.dealTime.y=148;
+    self.dealTime.y=145;
     
     
 //    self.venueDescriptionBackground.width = self.width;
@@ -267,7 +267,7 @@
     
     self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@ (%@)", [self.deal.venue.name uppercaseString], [self stringForDistance:deal.venue.distance]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
     float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                                         attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
