@@ -47,6 +47,7 @@
 @property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
+@property (assign, nonatomic) BOOL mapViewFullScreen;
 //@property (assign, nonatomic) BOOL groupDeal;
 @property (strong, nonatomic) NSArray *allDeals;
 @property (strong, nonatomic) Deal *dealInView;
@@ -104,12 +105,13 @@
     [self.view addSubview:self.mapView];
     //[self.view addSubview:tapView];
     
-    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 100, 22)];
+    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
     self.mapLabel.textAlignment = NSTextAlignmentCenter;
     self.mapLabel.font = [ThemeManager boldFontOfSize:10];
     self.mapLabel.textColor = [UIColor whiteColor];
     self.mapLabel.backgroundColor = [UIColor blackColor];
     [self.mapView addSubview:self.mapLabel];
+    self.mapViewFullScreen = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -625,15 +627,33 @@
 
 - (void)getDirectionsToBeacon:(UIGestureRecognizer *)recognizer
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
-    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
-        [Utilities launchGoogleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
-    }];
-    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
-        [Utilities launchAppleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
-    }];
-    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
-    [actionSheet showInView:self.view];
+ 
+    if (self.mapViewFullScreen) {
+        [UIView animateWithDuration:.5f animations:^{
+            CGRect theFrame = self.mapView.frame;
+            theFrame.size.height -= self.view.size.height - 125;
+            self.mapView.frame = theFrame;
+        }];
+        //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
+    } else {
+        //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
+        [UIView animateWithDuration:.5f animations:^{
+            CGRect theFrame = self.mapView.frame;
+            theFrame.size.height += self.view.size.height - 125;
+            self.mapView.frame = theFrame;
+        }];
+    }
+    self.mapViewFullScreen = !self.mapViewFullScreen;
+    
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
+//    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
+//        [Utilities launchGoogleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
+//    }];
+//    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
+//        [Utilities launchAppleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
+//    }];
+//    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
+//    [actionSheet showInView:self.view];
 }
 
 @end
