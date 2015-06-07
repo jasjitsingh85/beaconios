@@ -14,6 +14,7 @@
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
+#import "HappyHourTableViewCell.h"
 //#import "DealTableViewEventCell.h"
 //#import "BounceButton.h"
 #import "APIClient.h"
@@ -367,24 +368,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (self.hasEvents) {
-//        return (self.deals.count + 1);
-//    } else {
-        return self.deals.count;
-//    }
-    
-    //return self.deals.count;
+
+    return self.deals.count + self.happyHours.count;
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    return 203;
-    //    if (self.hasEvents && indexPath.row==0) {
-//        return 253;
-//    } else {
-//        return 203;
-//    }
+    if (indexPath.row < self.deals.count) {
+        return 203;
+    } else {
+        return 153;
+    }
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
@@ -395,62 +390,25 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchLocation];
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Deal *deal;
-//    if (self.hasEvents){
-//        if (indexPath.row == 0) {
-//            deal = self.events[self.currentEventCell.pageControl.currentPage];
-//        } else {
-//            deal = self.deals[indexPath.row - 1];
-//        }
-//    } else {
-        deal = self.deals[indexPath.row];
-//    }
     
-    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-    dealViewController.deal = deal;
-    [self.navigationController pushViewController:dealViewController animated:YES];
+    if (indexPath.row < self.deals.count) {
+        Deal *deal;
+        deal = self.deals[indexPath.row];
+        SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+        dealViewController.deal = deal;
+        [self.navigationController pushViewController:dealViewController animated:YES];
+    } else {
+        HappyHour *happyHour;
+        happyHour = self.happyHours[indexPath.row - self.deals.count];
+        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Deal *deal;
-//    if (self.hasEvents) {
-//        if (indexPath.row == 0) {
-//            //static NSString *CellIdentifier = @"CellIdentifier";
-//            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-//            DealTableViewEventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//            if (!cell) {
-//                cell = [[DealTableViewEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//                cell.events = self.events;
-//                cell.backgroundColor = [UIColor clearColor];
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//                self.currentEventCell = cell;
-//            }
-//            
-//            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-//            [recognizer setNumberOfTapsRequired:1];
-//            [cell.contentView addGestureRecognizer:recognizer];
-//        
-//            return cell;
-//        } else {
-//            deal = self.deals[indexPath.row - 1];
-//            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row - 1];
-//            DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//            if (!cell) {
-//                cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//                cell.backgroundColor = [UIColor clearColor];
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            }
-//            
-//            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-//            [recognizer setNumberOfTapsRequired:1];
-//            [cell.contentView addGestureRecognizer:recognizer];
-//            
-//            cell.deal = deal;
-//            return cell;
-//        }
-//    } else {
+    if (indexPath.row < self.deals.count) {
+        Deal *deal;
         deal = self.deals[indexPath.row];
         
         NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
@@ -468,9 +426,26 @@
         
         cell.deal = deal;
         return cell;
+    } else {
+        HappyHour *happyHour;
+        happyHour = self.happyHours[indexPath.row - self.deals.count];
         
-//    }
-    
+        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+        HappyHourTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (!cell) {
+            cell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.backgroundColor = [UIColor clearColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+        [recognizer setNumberOfTapsRequired:1];
+        [cell.contentView addGestureRecognizer:recognizer];
+        
+        cell.happyHour = happyHour;
+        return cell;
+    }
 }
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

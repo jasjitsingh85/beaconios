@@ -79,6 +79,7 @@
 		41F144091B22B30B0010BCF1 /* HotspotAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F144081B22B30A0010BCF1 /* HotspotAnnotation.m */; };
 		41F1440C1B24D6E40010BCF1 /* HappyHour.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F1440B1B24D6E40010BCF1 /* HappyHour.m */; };
 		41F1440F1B24DA8C0010BCF1 /* HappyHourVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F1440E1B24DA8C0010BCF1 /* HappyHourVenue.m */; };
+		41F144121B24F4380010BCF1 /* HappyHourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -359,6 +360,8 @@
 		41F1440B1B24D6E40010BCF1 /* HappyHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHour.m; sourceTree = "<group>"; };
 		41F1440D1B24DA3F0010BCF1 /* HappyHourVenue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyHourVenue.h; sourceTree = "<group>"; };
 		41F1440E1B24DA8C0010BCF1 /* HappyHourVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourVenue.m; sourceTree = "<group>"; };
+		41F144101B24F4220010BCF1 /* HappyHourTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyHourTableViewCell.h; sourceTree = "<group>"; };
+		41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourTableViewCell.m; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -731,6 +734,8 @@
 				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
 				41338FD719FE11D30022211C /* DealTableViewEventCell.h */,
 				41338FD919FE12080022211C /* DealTableViewEventCell.m */,
+				41F144101B24F4220010BCF1 /* HappyHourTableViewCell.h */,
+				41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
 				41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */,
@@ -1466,6 +1471,7 @@
 				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */,
+				41F144121B24F4380010BCF1 /* HappyHourTableViewCell.m in Sources */,
 				41F1440C1B24D6E40010BCF1 /* HappyHour.m in Sources */,
 				96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,
