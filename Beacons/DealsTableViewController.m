@@ -14,7 +14,7 @@
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
-#import "DealTableViewEventCell.h"
+//#import "DealTableViewEventCell.h"
 //#import "BounceButton.h"
 #import "APIClient.h"
 #import "LocationTracker.h"
@@ -31,10 +31,12 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
 #import "HotspotAnnotation.h"
+#import "HappyHour.h"
+#import "HappyHourVenue.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
+//@property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
 @property (strong, nonatomic) UIView *dealTypeToggle;
@@ -44,12 +46,12 @@
 //@property (strong, nonatomic) UIButton *textManyFriends;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (strong, nonatomic) UILabel *mapLabel;
-@property (assign, nonatomic) BOOL hasEvents;
+//@property (assign, nonatomic) BOOL hasEvents;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
 @property (assign, nonatomic) BOOL mapViewFullScreen;
 //@property (assign, nonatomic) BOOL groupDeal;
-@property (strong, nonatomic) NSArray *allDeals;
+//@property (strong, nonatomic) NSArray *allDeals;
 @property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (strong, nonatomic) MKMapView *mapView;
@@ -275,33 +277,43 @@
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *events = [[NSMutableArray alloc] init];
+        //NSMutableArray *events = [[NSMutableArray alloc] init];
         NSMutableArray *deals = [[NSMutableArray alloc] init];
+        NSMutableArray *happyHours = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-        for (NSDictionary *eventJSON in responseObject[@"events"]) {
-            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
-            [events addObject:event];
-        }
+//        for (NSDictionary *eventJSON in responseObject[@"events"]) {
+//            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
+//            [events addObject:event];
+//        }
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
             deal.venue.distance = [location distanceFromLocation:dealLocation];
             [deals addObject:deal];
         }
-        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
-        self.events = events;
-        if (self.events.count > 0) {
-            self.hasEvents = YES;
-        } else {
-           self.hasEvents = NO;
+        
+        for (NSDictionary *happyHourJSON in responseObject[@"happy_hours"]) {
+            HappyHour *happyHour = [[HappyHour alloc] initWithDictionary:happyHourJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:happyHour.venue.coordinate.latitude longitude:happyHour.venue.coordinate.longitude];
+            happyHour.venue.distance = [location distanceFromLocation:dealLocation];
+            [happyHours addObject:happyHour];
         }
+        
+        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
+//        self.events = events;
+//        if (self.events.count > 0) {
+//            self.hasEvents = YES;
+//        } else {
+//           self.hasEvents = NO;
+//        }
         
         self.dealInView = [[Deal alloc] init];
         self.dealInView = deals[0];
         [self updateMapCoordinates];
     
-        self.allDeals = deals;
-        self.deals = self.allDeals;
+//        self.allDeals = deals;
+        self.deals = deals;
+        self.happyHours = happyHours;
         
 //        NSPredicate *predicate;
 //        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
@@ -338,7 +350,7 @@
 //            self.textManyFriends.backgroundColor = [UIColor clearColor];
 //        }
         //self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
-        self.deals = self.allDeals;
+        //self.deals = self.allDeals;
     }
     else {
         [self showEmptyDealsView];
@@ -355,11 +367,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.hasEvents) {
-        return (self.deals.count + 1);
-    } else {
+//    if (self.hasEvents) {
+//        return (self.deals.count + 1);
+//    } else {
         return self.deals.count;
-    }
+//    }
     
     //return self.deals.count;
 }
@@ -384,15 +396,15 @@
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     Deal *deal;
-    if (self.hasEvents){
-        if (indexPath.row == 0) {
-            deal = self.events[self.currentEventCell.pageControl.currentPage];
-        } else {
-            deal = self.deals[indexPath.row - 1];
-        }
-    } else {
+//    if (self.hasEvents){
+//        if (indexPath.row == 0) {
+//            deal = self.events[self.currentEventCell.pageControl.currentPage];
+//        } else {
+//            deal = self.deals[indexPath.row - 1];
+//        }
+//    } else {
         deal = self.deals[indexPath.row];
-    }
+//    }
     
     SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
     dealViewController.deal = deal;
@@ -403,42 +415,42 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Deal *deal;
-    if (self.hasEvents) {
-        if (indexPath.row == 0) {
-            //static NSString *CellIdentifier = @"CellIdentifier";
-            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-            DealTableViewEventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (!cell) {
-                cell = [[DealTableViewEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                cell.events = self.events;
-                cell.backgroundColor = [UIColor clearColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                self.currentEventCell = cell;
-            }
-            
-            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-            [recognizer setNumberOfTapsRequired:1];
-            [cell.contentView addGestureRecognizer:recognizer];
-        
-            return cell;
-        } else {
-            deal = self.deals[indexPath.row - 1];
-            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row - 1];
-            DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (!cell) {
-                cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                cell.backgroundColor = [UIColor clearColor];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-            [recognizer setNumberOfTapsRequired:1];
-            [cell.contentView addGestureRecognizer:recognizer];
-            
-            cell.deal = deal;
-            return cell;
-        }
-    } else {
+//    if (self.hasEvents) {
+//        if (indexPath.row == 0) {
+//            //static NSString *CellIdentifier = @"CellIdentifier";
+//            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+//            DealTableViewEventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//            if (!cell) {
+//                cell = [[DealTableViewEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//                cell.events = self.events;
+//                cell.backgroundColor = [UIColor clearColor];
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//                self.currentEventCell = cell;
+//            }
+//            
+//            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+//            [recognizer setNumberOfTapsRequired:1];
+//            [cell.contentView addGestureRecognizer:recognizer];
+//        
+//            return cell;
+//        } else {
+//            deal = self.deals[indexPath.row - 1];
+//            NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row - 1];
+//            DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//            if (!cell) {
+//                cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//                cell.backgroundColor = [UIColor clearColor];
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            }
+//            
+//            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+//            [recognizer setNumberOfTapsRequired:1];
+//            [cell.contentView addGestureRecognizer:recognizer];
+//            
+//            cell.deal = deal;
+//            return cell;
+//        }
+//    } else {
         deal = self.deals[indexPath.row];
         
         NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
@@ -457,7 +469,7 @@
         cell.deal = deal;
         return cell;
         
-    }
+//    }
     
 }
 
