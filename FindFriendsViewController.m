@@ -217,7 +217,7 @@
     navTitleLabel.textAlignment = NSTextAlignmentCenter;
     navTitleLabel.textColor = [UIColor whiteColor];
     NSString *navTitle = [[NSString alloc] init];
-    if (deal.inviteRequirement.integerValue == 1) {
+    if (deal.inviteRequirement.integerValue <= 1) {
         navTitle = [NSString stringWithFormat:@"SELECT FRIENDS"];
     } else {
         navTitle = [NSString stringWithFormat:@"SELECT %@ FRIENDS", deal.inviteRequirement];

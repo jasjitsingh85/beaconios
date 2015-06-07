@@ -38,14 +38,14 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) UIView *dealContentView;
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIImageView *fallBackImageView;
+//@property (strong, nonatomic) UIImageView *fallBackImageView;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *eventLabelLineOne;
 @property (strong, nonatomic) UILabel *eventLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
-@property (strong, nonatomic) UIView *cameraPreview;
+//@property (strong, nonatomic) UIView *cameraPreview;
 //@property (strong, nonatomic) UILabel *descriptionLabel;
 //@property (strong, nonatomic) UILabel *descriptionDetailLabel;
 
@@ -61,16 +61,16 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 
 @property (strong, nonatomic) UIView *inviteFriendsView;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
-@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
-@property (assign, nonatomic) BOOL haveImage;
-@property (assign, nonatomic) BOOL frontCamera;
-@property (strong, nonatomic) NSString *imageUrl;
-@property (strong, nonatomic) UIButton *retakePictureButton;
-@property (strong, nonatomic) UIButton *takePicture;
-@property (strong, nonatomic) UIButton *toggleCamera;
-@property (strong, nonatomic) AVCaptureSession *session;
-@property (strong, nonatomic) UILabel *topPictureLabel;
-@property (strong, nonatomic) UILabel *bottomPictureLabel;
+//@property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
+//@property (assign, nonatomic) BOOL haveImage;
+//@property (assign, nonatomic) BOOL frontCamera;
+//@property (strong, nonatomic) NSString *imageUrl;
+//@property (strong, nonatomic) UIButton *retakePictureButton;
+//@property (strong, nonatomic) UIButton *takePicture;
+//@property (strong, nonatomic) UIButton *toggleCamera;
+//@property (strong, nonatomic) AVCaptureSession *session;
+//@property (strong, nonatomic) UILabel *topPictureLabel;
+//@property (strong, nonatomic) UILabel *bottomPictureLabel;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
 @property (strong, nonatomic) NSDate *date;
@@ -166,11 +166,11 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
     [self.dealContentView addSubview:self.eventLabelLineTwo];
     
-    self.cameraPreview = [[UIView alloc] init];
-    self.cameraPreview.size = CGSizeMake(self.view.width, self.dealContentView.height);
-    self.cameraPreview.bottom = self.dealContentView.height;
-    self.cameraPreview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
-    [self.dealContentView addSubview:self.cameraPreview];
+//    self.cameraPreview = [[UIView alloc] init];
+//    self.cameraPreview.size = CGSizeMake(self.view.width, self.dealContentView.height);
+//    self.cameraPreview.bottom = self.dealContentView.height;
+//    self.cameraPreview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+//    [self.dealContentView addSubview:self.cameraPreview];
     
     UIImage *topGradientImage = [UIImage imageNamed:@"topPictureGradient"];
     UIImageView *topGradient = [[UIImageView alloc] initWithImage:topGradientImage];
@@ -178,33 +178,33 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     topGradient.bottom = self.dealContentView.height - 3;
     [self.dealContentView addSubview:topGradient];
     
-    self.topPictureLabel = [[UILabel alloc] init];
-    self.topPictureLabel.height = 20;
-    self.topPictureLabel.width = self.view.width - 100;
-    self.topPictureLabel.centerX = self.cameraPreview.width/2.0;
-    self.topPictureLabel.y = 10;
-    self.topPictureLabel.font = [ThemeManager regularFontOfSize:14];
-    self.topPictureLabel.textAlignment = NSTextAlignmentCenter;
-    self.topPictureLabel.textColor = [UIColor whiteColor];
-    self.topPictureLabel.text = @"Add Picture (Optional)";
-    [self.dealContentView addSubview:self.topPictureLabel];
+//    self.topPictureLabel = [[UILabel alloc] init];
+//    self.topPictureLabel.height = 20;
+//    self.topPictureLabel.width = self.view.width - 100;
+//    self.topPictureLabel.centerX = self.cameraPreview.width/2.0;
+//    self.topPictureLabel.y = 10;
+//    self.topPictureLabel.font = [ThemeManager regularFontOfSize:14];
+//    self.topPictureLabel.textAlignment = NSTextAlignmentCenter;
+//    self.topPictureLabel.textColor = [UIColor whiteColor];
+//    self.topPictureLabel.text = @"Add Picture (Optional)";
+//    [self.dealContentView addSubview:self.topPictureLabel];
     
-    self.toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *toggleCameraImage = [UIImage imageNamed:@"toggleCamera"];
-    [self.toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
-    self.toggleCamera.frame = CGRectMake(self.dealContentView.width - 53, -12, 60, 60);
-    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
-    [self.toggleCamera addTarget:self action:@selector(toggleCamera:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealContentView addSubview:self.toggleCamera];
-    
-    self.takePicture = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *takePictureImage = [UIImage imageNamed:@"takePictureButton"];
-    [self.takePicture setImage:takePictureImage forState:UIControlStateNormal];
-    self.takePicture.frame = CGRectMake(0, self.dealContentView.height - 60 , 100, 60);
-    self.takePicture.centerX = self.dealContentView.width/2;
-    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
-    [self.takePicture addTarget:self action:@selector(captureImage) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealContentView addSubview:self.takePicture];
+//    self.toggleCamera = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *toggleCameraImage = [UIImage imageNamed:@"toggleCamera"];
+//    [self.toggleCamera setImage:toggleCameraImage forState:UIControlStateNormal];
+//    self.toggleCamera.frame = CGRectMake(self.dealContentView.width - 53, -12, 60, 60);
+//    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
+//    [self.toggleCamera addTarget:self action:@selector(toggleCamera:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealContentView addSubview:self.toggleCamera];
+//    
+//    self.takePicture = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *takePictureImage = [UIImage imageNamed:@"takePictureButton"];
+//    [self.takePicture setImage:takePictureImage forState:UIControlStateNormal];
+//    self.takePicture.frame = CGRectMake(0, self.dealContentView.height - 60 , 100, 60);
+//    self.takePicture.centerX = self.dealContentView.width/2;
+//    //[btnTwo setTitle:@"vc2:v1" forState:UIControlStateNormal];
+//    [self.takePicture addTarget:self action:@selector(captureImage) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealContentView addSubview:self.takePicture];
     
     
     self.imageView = [[UIImageView alloc] init];
@@ -219,15 +219,15 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     bottomGradient.bottom = self.dealContentView.height;
     [self.dealContentView addSubview:bottomGradient];
     
-    self.retakePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *retakePicture = [UIImage imageNamed:@"retakePicture"];
-    [self.retakePictureButton setImage:retakePicture forState:UIControlStateNormal];
-    self.retakePictureButton.size = CGSizeMake(60, 45);
-    self.retakePictureButton.x = self.dealContentView.width - 55;
-    self.retakePictureButton.bottom = self.dealContentView.height - 0;
-    self.retakePictureButton.hidden = YES;
-    [self.retakePictureButton addTarget:self action:@selector(retakePicture:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealContentView addSubview:self.retakePictureButton];
+//    self.retakePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *retakePicture = [UIImage imageNamed:@"retakePicture"];
+//    [self.retakePictureButton setImage:retakePicture forState:UIControlStateNormal];
+//    self.retakePictureButton.size = CGSizeMake(60, 45);
+//    self.retakePictureButton.x = self.dealContentView.width - 55;
+//    self.retakePictureButton.bottom = self.dealContentView.height - 0;
+//    self.retakePictureButton.hidden = YES;
+//    [self.retakePictureButton addTarget:self action:@selector(retakePicture:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealContentView addSubview:self.retakePictureButton];
     
 //    self.bottomPictureLabel = [[UILabel alloc] init];
 //    self.bottomPictureLabel.height = 20;
@@ -240,15 +240,15 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.topPictureLabel.text = @"Picture Added!";
 //    [self.dealContentView addSubview:self.topPictureLabel];
     
-    self.imageUrl = @"";
-    self.frontCamera = YES;
+//    self.imageUrl = @"";
+//    self.frontCamera = YES;
     
-    self.fallBackImageView = [[UIImageView alloc] init];
-    //self.fallBackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addFriends"]];
-    self.fallBackImageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
-    self.fallBackImageView.bottom = self.dealContentView.height;
-    //self.fallBackImageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
-    [self.dealContentView addSubview:self.fallBackImageView];
+//    self.fallBackImageView = [[UIImageView alloc] init];
+//    //self.fallBackImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addFriends"]];
+//    self.fallBackImageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
+//    self.fallBackImageView.bottom = self.dealContentView.height;
+//    //self.fallBackImageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+//    [self.dealContentView addSubview:self.fallBackImageView];
     
 //    self.descriptionLabel = [[UILabel alloc] init];
 //    self.descriptionLabel.height = 10;
@@ -354,30 +354,30 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self view];
     [self resetDate];
     
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    
-    if(status == AVAuthorizationStatusAuthorized) {
-        [self initializeCamera];
-    } else if(status == AVAuthorizationStatusDenied){
-        [self cameraUnavailable];
-    } else if(status == AVAuthorizationStatusRestricted){
-        [self cameraUnavailable];
-    } else if(status == AVAuthorizationStatusNotDetermined){
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-            if(granted){
-                [self initializeCamera];
-            } else {
-                [self cameraUnavailable];
-            }
-        }];
-    }
+//    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+//    
+//    if(status == AVAuthorizationStatusAuthorized) {
+//        [self initializeCamera];
+//    } else if(status == AVAuthorizationStatusDenied){
+//        [self cameraUnavailable];
+//    } else if(status == AVAuthorizationStatusRestricted){
+//        [self cameraUnavailable];
+//    } else if(status == AVAuthorizationStatusNotDetermined){
+//        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+//            if(granted){
+//                [self initializeCamera];
+//            } else {
+//                [self cameraUnavailable];
+//            }
+//        }];
+//    }
     
     
       //NSString *ImageURL = @"https://s3-us-west-2.amazonaws.com/hotspot-venue-images/screenshot_220.png";
       //NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
       //self.imageView.image = [UIImage imageWithData:imageData];
 
-    //[self.imageView sd_setImageWithURL:deal.venue.imageURL];
+    [self.imageView sd_setImageWithURL:deal.venue.imageURL];
     //self.venueLabelLineOne.text = deal.venue.name;
 //    self.descriptionLabel.text = deal.dealDescription;
 //    [self.descriptionLabel sizeToFit];
@@ -476,17 +476,17 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
         [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
     else {
-        [self uploadPicture];
+//        [self uploadPicture];
         [self selectFriends];
     }
 }
 
-- (void)retakePicture:(id)sender
-{
-    self.retakePictureButton.hidden = YES;
-    self.image = nil;
-    [self.imageView setImage:self.image];
-}
+//- (void)retakePicture:(id)sender
+//{
+//    self.retakePictureButton.hidden = YES;
+//    self.image = nil;
+//    [self.imageView setImage:self.image];
+//}
 
 - (void)selectFriends
 {
@@ -543,48 +543,48 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     }
 }
 
-- (void)toggleCamera:(id)sender
-{
-    self.frontCamera = !self.frontCamera;
-    
-    //Change camera source
-    if(self.session)
-    {
-        //Indicate that some changes will be made to the session
-        [self.session beginConfiguration];
-        
-        //Remove existing input
-        AVCaptureInput* currentCameraInput = [self.session.inputs objectAtIndex:0];
-        [self.session removeInput:currentCameraInput];
-        
-        //Get new input
-        AVCaptureDevice *newCamera = nil;
-        if(((AVCaptureDeviceInput*)currentCameraInput).device.position == AVCaptureDevicePositionBack)
-        {
-            newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
-        }
-        else
-        {
-            newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
-        }
-        
-        //Add input to session
-        NSError *err = nil;
-        AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&err];
-        if(!newVideoInput || err)
-        {
-            NSLog(@"Error creating capture device input: %@", err.localizedDescription);
-        }
-        else
-        {
-            [self.session addInput:newVideoInput];
-        }
-        
-        //Commit all the configuration changes at once
-        [self.session commitConfiguration];
-    }
-    
-}
+//- (void)toggleCamera:(id)sender
+//{
+//    self.frontCamera = !self.frontCamera;
+//    
+//    //Change camera source
+//    if(self.session)
+//    {
+//        //Indicate that some changes will be made to the session
+//        [self.session beginConfiguration];
+//        
+//        //Remove existing input
+//        AVCaptureInput* currentCameraInput = [self.session.inputs objectAtIndex:0];
+//        [self.session removeInput:currentCameraInput];
+//        
+//        //Get new input
+//        AVCaptureDevice *newCamera = nil;
+//        if(((AVCaptureDeviceInput*)currentCameraInput).device.position == AVCaptureDevicePositionBack)
+//        {
+//            newCamera = [self cameraWithPosition:AVCaptureDevicePositionFront];
+//        }
+//        else
+//        {
+//            newCamera = [self cameraWithPosition:AVCaptureDevicePositionBack];
+//        }
+//        
+//        //Add input to session
+//        NSError *err = nil;
+//        AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:newCamera error:&err];
+//        if(!newVideoInput || err)
+//        {
+//            NSLog(@"Error creating capture device input: %@", err.localizedDescription);
+//        }
+//        else
+//        {
+//            [self.session addInput:newVideoInput];
+//        }
+//        
+//        //Commit all the configuration changes at once
+//        [self.session commitConfiguration];
+//    }
+//    
+//}
 
 - (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
 {
@@ -687,7 +687,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == DealSectionDescription) {
-        if ([self.deal.dealType isEqual:@"DT"] && self.haveImage == NO) {
+        if ([self.deal.dealType isEqual:@"DT"]) {
             //[self captureImage];
 //            [[[UIAlertView alloc] initWithTitle:@"The Fine Print" message:self.deal.additionalInfo delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];   
         }
@@ -724,7 +724,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.composeMessageTextView.text time:self.date imageUrl:self.imageUrl success:^(Beacon *beacon) {
+    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:self.composeMessageTextView.text time:self.date imageUrl:@"" success:^(Beacon *beacon) {
         [loadingIndicator hide:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
@@ -783,154 +783,154 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     return firstAndSecondLine;
 }
 
-- (void) cameraUnavailable {
-    [self.fallBackImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.takePicture.hidden = YES;
-    self.toggleCamera.hidden = YES;
-    
-}
+//- (void) cameraUnavailable {
+//    [self.fallBackImageView sd_setImageWithURL:self.deal.venue.imageURL];
+//    self.takePicture.hidden = YES;
+//    self.toggleCamera.hidden = YES;
+//    
+//}
 
-- (void) initializeCamera {
-    
-    self.session = [[AVCaptureSession alloc] init];
-    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
-    
-    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
-    captureVideoPreviewLayer.frame = self.cameraPreview.bounds;
-    [self.cameraPreview.layer addSublayer:captureVideoPreviewLayer];
-    
-    UIView *view = [self cameraPreview];
-    CALayer *viewLayer = [view layer];
-    [viewLayer setMasksToBounds:YES];
-    
-    CGRect bounds = [view bounds];
-    [captureVideoPreviewLayer setFrame:bounds];
-    
-    NSArray *devices = [AVCaptureDevice devices];
-    AVCaptureDevice *frontCamera;
-    AVCaptureDevice *backCamera;
-    
-    for (AVCaptureDevice *device in devices) {
-        
-        NSLog(@"Device name: %@", [device localizedName]);
-        
-        if ([device hasMediaType:AVMediaTypeVideo]) {
-            
-            if ([device position] == AVCaptureDevicePositionBack) {
-                NSLog(@"Device position : back");
-                backCamera = device;
-            }
-            else {
-                NSLog(@"Device position : front");
-                frontCamera = device;
-            }
-        }
-    }
-    
-    if (!self.frontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:nil];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [self.session addInput:input];
-    }
-    
-    if (self.frontCamera) {
-        NSError *error = nil;
-        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:nil];
-        if (!input) {
-            NSLog(@"ERROR: trying to open camera: %@", error);
-        }
-        [self.session addInput:input];
-    }
-    
-    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [self.stillImageOutput setOutputSettings:outputSettings];
-    
-    [self.session addOutput:self.stillImageOutput];
-    
-    [self.session startRunning];
-    
-}
+//- (void) initializeCamera {
+//    
+//    self.session = [[AVCaptureSession alloc] init];
+//    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
+//    
+//    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+//    [captureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+//    
+//    captureVideoPreviewLayer.frame = self.cameraPreview.bounds;
+//    [self.cameraPreview.layer addSublayer:captureVideoPreviewLayer];
+//    
+//    UIView *view = [self cameraPreview];
+//    CALayer *viewLayer = [view layer];
+//    [viewLayer setMasksToBounds:YES];
+//    
+//    CGRect bounds = [view bounds];
+//    [captureVideoPreviewLayer setFrame:bounds];
+//    
+//    NSArray *devices = [AVCaptureDevice devices];
+//    AVCaptureDevice *frontCamera;
+//    AVCaptureDevice *backCamera;
+//    
+//    for (AVCaptureDevice *device in devices) {
+//        
+//        NSLog(@"Device name: %@", [device localizedName]);
+//        
+//        if ([device hasMediaType:AVMediaTypeVideo]) {
+//            
+//            if ([device position] == AVCaptureDevicePositionBack) {
+//                NSLog(@"Device position : back");
+//                backCamera = device;
+//            }
+//            else {
+//                NSLog(@"Device position : front");
+//                frontCamera = device;
+//            }
+//        }
+//    }
+//    
+//    if (!self.frontCamera) {
+//        NSError *error = nil;
+//        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:backCamera error:nil];
+//        if (!input) {
+//            NSLog(@"ERROR: trying to open camera: %@", error);
+//        }
+//        [self.session addInput:input];
+//    }
+//    
+//    if (self.frontCamera) {
+//        NSError *error = nil;
+//        AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera error:nil];
+//        if (!input) {
+//            NSLog(@"ERROR: trying to open camera: %@", error);
+//        }
+//        [self.session addInput:input];
+//    }
+//    
+//    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+//    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+//    [self.stillImageOutput setOutputSettings:outputSettings];
+//    
+//    [self.session addOutput:self.stillImageOutput];
+//    
+//    [self.session startRunning];
+//    
+//}
 
-- (void) captureImage { //method to capture image from AVCaptureSession video feed
+//- (void) captureImage { //method to capture image from AVCaptureSession video feed
+//
+//    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+//    AVCaptureConnection *videoConnection = nil;
+//    for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
+//        
+//        for (AVCaptureInputPort *port in [connection inputPorts]) {
+//            
+//            if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
+//                videoConnection = connection;
+//                break;
+//            }
+//        }
+//        
+//        if (videoConnection) {
+//            break;
+//        }
+//    }
+//    
+//    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
+//    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+//        
+//        if (imageSampleBuffer != NULL) {
+//            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+//            [self processImage:[UIImage imageWithData:imageData]];
+//        }
+//    }];
+//}
 
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    AVCaptureConnection *videoConnection = nil;
-    for (AVCaptureConnection *connection in self.stillImageOutput.connections) {
-        
-        for (AVCaptureInputPort *port in [connection inputPorts]) {
-            
-            if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
-                videoConnection = connection;
-                break;
-            }
-        }
-        
-        if (videoConnection) {
-            break;
-        }
-    }
-    
-    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
-    [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:videoConnection completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-        
-        if (imageSampleBuffer != NULL) {
-            NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-            [self processImage:[UIImage imageWithData:imageData]];
-        }
-    }];
-}
+//- (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
+//    self.haveImage = YES;
+//    self.retakePictureButton.hidden = NO;
+//    
+//    UIGraphicsBeginImageContext(CGSizeMake(self.dealDescriptionView.width, self.dealDescriptionView.height));
+//    [image drawInRect: CGRectMake(0, 0, self.dealDescriptionView.width, self.dealDescriptionView.height)];
+//    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    CGRect cropRect = CGRectMake(0, 55, self.dealDescriptionView.width, self.dealDescriptionView.height - 106);
+//    CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
+//    
+//    UIImage *unflippedImage = [UIImage imageWithCGImage:imageRef];
+//    
+//    if (self.frontCamera) {
+//        self.image = [UIImage imageWithCGImage:unflippedImage.CGImage
+//                                         scale:unflippedImage.scale
+//                                   orientation:UIImageOrientationUpMirrored];
+//    } else {
+//        self.image = unflippedImage;
+//    }
+//    
+//    
+//    [self.imageView setImage:self.image];
+//    
+//    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+//    
+//    CGImageRelease(imageRef);
+//    
+//}
 
-- (void) processImage:(UIImage *)image { //process captured image, crop, resize and rotate
-    self.haveImage = YES;
-    self.retakePictureButton.hidden = NO;
-    
-    UIGraphicsBeginImageContext(CGSizeMake(self.dealDescriptionView.width, self.dealDescriptionView.height));
-    [image drawInRect: CGRectMake(0, 0, self.dealDescriptionView.width, self.dealDescriptionView.height)];
-    UIImage *smallImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    CGRect cropRect = CGRectMake(0, 55, self.dealDescriptionView.width, self.dealDescriptionView.height - 106);
-    CGImageRef imageRef = CGImageCreateWithImageInRect([smallImage CGImage], cropRect);
-    
-    UIImage *unflippedImage = [UIImage imageWithCGImage:imageRef];
-    
-    if (self.frontCamera) {
-        self.image = [UIImage imageWithCGImage:unflippedImage.CGImage
-                                         scale:unflippedImage.scale
-                                   orientation:UIImageOrientationUpMirrored];
-    } else {
-        self.image = unflippedImage;
-    }
-    
-    
-    [self.imageView setImage:self.image];
-    
-    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-    
-    CGImageRelease(imageRef);
-    
-}
-
-- (void) uploadPicture {
-        if (self.haveImage) {
-            
-            UIImage *imageToUpload = [self.imageView UIImage];
-            [[APIClient sharedClient] postImage:imageToUpload forBeaconWithID:[NSNumber numberWithInt:1000] success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSString *baseURL = @"https://s3.amazonaws.com/hotspot-photo/";
-                NSString *imageKey = responseObject[@"image_key"];
-                self.imageUrl = [baseURL stringByAppendingString:imageKey];
-                NSLog(@"%@", self.imageUrl);
-                
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-            }];
-        }
-}
+//- (void) uploadPicture {
+//        if (self.haveImage) {
+//            
+//            UIImage *imageToUpload = [self.imageView UIImage];
+//            [[APIClient sharedClient] postImage:imageToUpload forBeaconWithID:[NSNumber numberWithInt:1000] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSString *baseURL = @"https://s3.amazonaws.com/hotspot-photo/";
+//                NSString *imageKey = responseObject[@"image_key"];
+//                self.imageUrl = [baseURL stringByAppendingString:imageKey];
+//                NSLog(@"%@", self.imageUrl);
+//                
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                
+//            }];
+//        }
+//}
 
 @end

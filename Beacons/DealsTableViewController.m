@@ -82,7 +82,7 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, 125, self.view.width, self.view.height);
+    self.tableView.frame = CGRectMake(0, 100, self.view.width, self.view.height);
     self.tableView.contentInset = UIEdgeInsetsMake(7.0, 0.0, self.view.height - 200, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
@@ -92,13 +92,10 @@
     [self checkToLaunchInvitationModal];
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 125)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 100)];
     [self.mapView setShowsUserLocation:YES];
-//    self.mapView.zoomEnabled = NO;
-//    self.mapView.scrollEnabled = NO;
-//    self.mapView.userInteractionEnabled = NO;
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
-      initWithTarget:self action:@selector(getDirectionsToBeacon:)];
+      initWithTarget:self action:@selector(toggleMapView:)];
     tapped.numberOfTapsRequired = 1;
     tapped.numberOfTouchesRequired = 1;
     [self.mapView addGestureRecognizer:tapped];
@@ -625,13 +622,13 @@
     }
 }
 
-- (void)getDirectionsToBeacon:(UIGestureRecognizer *)recognizer
+- (void)toggleMapView:(UIGestureRecognizer *)recognizer
 {
  
     if (self.mapViewFullScreen) {
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
-            theFrame.size.height -= self.view.size.height - 125;
+            theFrame.size.height -= self.view.size.height - 100;
             self.mapView.frame = theFrame;
         }];
         //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
@@ -639,7 +636,7 @@
         //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
-            theFrame.size.height += self.view.size.height - 125;
+            theFrame.size.height += self.view.size.height - 100;
             self.mapView.frame = theFrame;
         }];
     }
