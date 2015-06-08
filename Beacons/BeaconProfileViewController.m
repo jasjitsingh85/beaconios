@@ -578,7 +578,7 @@
         [self updateVenmoView];
         self.imageView.mapDisabled = YES;
         self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [self.imageView sd_setImageWithURL:self.beacon.userDealStatus.imageURL];
+        [self.imageView sd_setImageWithURL:self.beacon.deal.venue.imageURL];
         [self showPaymentsExplanationPopup];
     }
     else {
