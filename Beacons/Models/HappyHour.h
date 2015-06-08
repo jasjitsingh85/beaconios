@@ -20,5 +20,6 @@
 
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
+- (NSString *) happyHourStartString;
 
 @end

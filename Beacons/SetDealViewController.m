@@ -24,6 +24,7 @@
 #import "UIImage+Resize.h"
 #import "UIView+UIImage.h"
 #import "RewardsViewController.h"
+#import "UIButton+HSNavButton.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {
     DealSectionDescription,
@@ -71,7 +72,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //@property (strong, nonatomic) AVCaptureSession *session;
 //@property (strong, nonatomic) UILabel *topPictureLabel;
 //@property (strong, nonatomic) UILabel *bottomPictureLabel;
-@property (strong, nonatomic) RewardsViewController *rewardsViewController;
+//@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
 @property (strong, nonatomic) NSDate *date;
 
@@ -97,9 +98,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
-    [self addChildViewController:self.rewardsViewController];
-    [self.rewardsViewController updateRewardsScore];
+    UIButton *cancelButton = [UIButton navButtonWithTitle:@"Skip"];
+    [cancelButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    
+//    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+//    [self addChildViewController:self.rewardsViewController];
+//    [self.rewardsViewController updateRewardsScore];
     
     self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -781,6 +786,18 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     }
     
     return firstAndSecondLine;
+}
+
+- (void)skipButtonTouched:(id)sender
+{
+    if (![self.deal isAvailableAtDate:self.date]) {
+        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    else {
+        NSArray *noContact = [[NSArray alloc] init];
+        [self setBeaconOnServerWithInvitedContacts:noContact];
+    }
 }
 
 //- (void) cameraUnavailable {

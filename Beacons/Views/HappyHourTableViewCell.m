@@ -41,7 +41,7 @@
     
     self.backgroundCellView = [[UIView alloc] init];
     self.backgroundCellView.height = 146;
-    self.backgroundCellView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:.3];
+    self.backgroundCellView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:.15];
     self.backgroundCellView.width = self.width;
     [self.contentView addSubview:self.backgroundCellView];
     
@@ -77,7 +77,7 @@
     
     self.dealTime = [[UILabel alloc] init];
     self.dealTime.font = [ThemeManager boldFontOfSize:16];
-    self.dealTime.textColor = [UIColor whiteColor];
+    self.dealTime.textColor = [[UIColor blackColor] colorWithAlphaComponent:.7];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
@@ -159,8 +159,6 @@
 {
     _happyHour = happyHour;
     
-    NSLog(@"HAPPY HOUR: %@", self.happyHour.happyHourDescription);
-    
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:@"HAPPY HOUR"];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
@@ -183,7 +181,10 @@
     //self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
     //self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    //self.dealTime.text = [self.deal.dealStartString uppercaseString];
+    self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
+//    if ([self.dealTime.text isEqualToString:@"NOW"]) {
+//        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
+//    }
     
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
     

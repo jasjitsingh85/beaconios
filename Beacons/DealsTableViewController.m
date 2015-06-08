@@ -55,7 +55,6 @@
 //@property (strong, nonatomic) NSArray *allDeals;
 @property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
-@property (strong, nonatomic) MKMapView *mapView;
 @property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 
@@ -69,7 +68,6 @@
     [super viewDidLoad];
     UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
     self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
-    
     
     self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     [self addChildViewController:self.rewardsViewController];
@@ -96,6 +94,7 @@
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 100)];
+    self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
       initWithTarget:self action:@selector(toggleMapView:)];
@@ -289,7 +288,11 @@
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
             deal.venue.distance = [location distanceFromLocation:dealLocation];
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            [self.mapView addAnnotation:annotation];
             [deals addObject:deal];
         }
         
@@ -299,14 +302,6 @@
             happyHour.venue.distance = [location distanceFromLocation:dealLocation];
             [happyHours addObject:happyHour];
         }
-        
-        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"venue.distance" ascending:YES];
-//        self.events = events;
-//        if (self.events.count > 0) {
-//            self.hasEvents = YES;
-//        } else {
-//           self.hasEvents = NO;
-//        }
         
         self.dealInView = [[Deal alloc] init];
         self.dealInView = deals[0];
@@ -333,6 +328,29 @@
             completion();
         }
     }];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // If it's the user location, just return nil.
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    // Handle any custom annotations.
+    if ([annotation isKindOfClass:[MKPointAnnotation class]])
+    {
+        MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"CustomPinAnnotationView"];
+        if (!pinView)
+        {
+            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
+            pinView.canShowCallout = YES;
+            pinView.pinColor = MKPinAnnotationColorPurple;
+        } else {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+    return nil;
 }
 
 - (void)reloadTableView
@@ -372,6 +390,13 @@
     return self.deals.count + self.happyHours.count;
 
 }
+
+//- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
+//{
+//    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"pin"];
+//    annView.pinColor = MKPinAnnotationColorGreen;
+//    return annView;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -540,15 +565,8 @@
 
     CLLocationCoordinate2D initialLocation = CLLocationCoordinate2DMake(self.dealInView.venue.coordinate.latitude, self.dealInView.venue.coordinate.longitude);
     
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:initialLocation];
-    //MKAnnotationView *annotationView = [self mapView:self.mapView viewForAnnotation:annotation];
-    MKPointAnnotation *lastObject = self.mapView.annotations.lastObject;
-    [self.mapView addAnnotation:annotation];
-    
     MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(initialLocation, 550, 550)];
     [self.mapView setRegion:adjustedRegion animated:YES];
-    [self.mapView removeAnnotation:lastObject];
     
     self.mapLabel.text = [NSString stringWithFormat:@"%@ (%@)", [self.dealInView.venue.name uppercaseString], [self stringForDistance:self.dealInView.venue.distance]];
     //self.mapLabel.text = [NSString stringWithFormat:@"%@", [self stringForDistance:self.dealInView.venue.distance]];
@@ -598,10 +616,13 @@
     
     NSIndexPath *currentIndexPath= self.tableView.indexPathsForVisibleRows[0];
     
-    float changeDealIndex = self.tableView.contentOffset.y/(currentIndexPath.row + 1);
+ //   float changeDealIndex = self.tableView.contentOffset.y/(currentIndexPath.row + 1);
     
-    if (changeDealIndex > 115 && currentIndexPath.row + 1 < [self.deals count]) {
+    if (currentIndexPath.row + 1 < self.deals.count) {
         self.dealInView = self.deals[currentIndexPath.row + 1];
+        [self updateMapCoordinates];
+    } else if (currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count)){
+        self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
         [self updateMapCoordinates];
     } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
         self.dealInView = self.deals[0];

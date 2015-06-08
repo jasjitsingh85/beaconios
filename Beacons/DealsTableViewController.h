@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 
 typedef enum ScrollDirection {
     ScrollDirectionNone,
@@ -17,11 +18,14 @@ typedef enum ScrollDirection {
     ScrollDirectionCrazy,
 } ScrollDirection;
 
-@interface DealsTableViewController : UIViewController
+@interface DealsTableViewController : UIViewController <MKMapViewDelegate> {
+    MKMapView *_mapView;
+}
 
 @property (strong, nonatomic) NSArray *events;
 @property (strong, nonatomic) NSArray *deals;
 @property (strong, nonatomic) NSArray *happyHours;
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) MKMapView *mapView;
 
 @end

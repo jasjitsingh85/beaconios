@@ -284,6 +284,9 @@
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
     self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
     self.dealTime.text = [self.deal.dealStartString uppercaseString];
+//    if ([self.dealTime.text isEqualToString:@"NOW"]) {
+//        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
+//    }
     
     //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
 

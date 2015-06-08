@@ -49,7 +49,7 @@
         self.paymentAuthorization = YES;
     }
 
-    self.imageURL = [NSURL URLWithString:dictionary[@"conditional_image_url"]];
+    //self.imageURL = [NSURL URLWithString:dictionary[@"conditional_image_url"]];
     
     self.deal = [[Deal alloc] initWithDictionary:dictionary[@"deal"]];
     
