@@ -250,10 +250,11 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 }
 
 
-- (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+- (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
     NSDictionary *parameters = @{@"latitude" : @(coordinate.latitude),
-                                 @"longitude" : @(coordinate.longitude)};
+                                 @"longitude" : @(coordinate.longitude),
+                                 @"radius" : radius };
     [self getPath:@"deals/" parameters:parameters success:success failure:failure];
 }
 

@@ -12,6 +12,7 @@
     CLLocationCoordinate2D coordinate;
 }
 
+@property (assign, nonatomic) BOOL hotspotPin;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;

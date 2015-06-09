@@ -713,19 +713,19 @@
     }];
 }
 
-//- (void)showFullDescriptionViewAnimated:(BOOL)animated
-//{
-//    self.fullDescriptionViewShown = YES;
-//    NSTimeInterval duration = animated ? 0.3 : 0.0;
-//    [UIView animateWithDuration:duration animations:^{
-//        CGRect frame = self.descriptionView.frame;
-//        frame.origin.y = 0;
-//        self.descriptionView.frame = frame;
-//        [self updateChatDesiredInsets];
-//        [self updateInviteListInsets];
-//        [self updateDealRedemptionInsets];
-//    }];
-//}
+- (void)showFullDescriptionViewAnimated:(BOOL)animated
+{
+    self.fullDescriptionViewShown = YES;
+    NSTimeInterval duration = animated ? 0.3 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        CGRect frame = self.descriptionView.frame;
+        frame.origin.y = 0;
+        self.descriptionView.frame = frame;
+        [self updateChatDesiredInsets];
+        [self updateInviteListInsets];
+        [self updateDealRedemptionInsets];
+    }];
+}
 
 - (void)showInviteAnimated:(BOOL)animated
 {
@@ -821,12 +821,12 @@
 
 - (void)tabButtonTouched:(UIButton *)sender
 {
-//    if (self.fullDescriptionViewShown && sender.selected) {
-//        [self showPartialDescriptionViewAnimated:YES];
-//    }
-//    else if (!self.fullDescriptionViewShown && sender.selected) {
-//        [self showFullDescriptionViewAnimated:YES];
-//    }
+    if (self.fullDescriptionViewShown && sender.selected) {
+        [self showPartialDescriptionViewAnimated:YES];
+    }
+    else if (!self.fullDescriptionViewShown && sender.selected) {
+        [self showFullDescriptionViewAnimated:YES];
+    }
     if (sender == self.chatTabButton) {
         [self showChatAnimated:YES];
         self.inviteButton.hidden = YES;
@@ -907,15 +907,15 @@
     [actionSheet showInView:self.view];
 }
 
-//- (void)descriptionViewSwipedDown:(UISwipeGestureRecognizer *)swipeGestureRecognizer
-//{
-//    [self showFullDescriptionViewAnimated:YES];
-//}
-//
-//- (void)descriptionViewSwipedUp:(UISwipeGestureRecognizer *)swipeGestureRecognizer
-//{
-//    [self showPartialDescriptionViewAnimated:YES];
-//}
+- (void)descriptionViewSwipedDown:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+{
+    [self showFullDescriptionViewAnimated:YES];
+}
+
+- (void)descriptionViewSwipedUp:(UISwipeGestureRecognizer *)swipeGestureRecognizer
+{
+    [self showPartialDescriptionViewAnimated:YES];
+}
 
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)source
 {
@@ -940,15 +940,15 @@
 }
 
 #pragma mark - ChatViewControllerDelegate
-//- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
-//{
-//    if (velocity.y > 1) {
-//        [self showPartialDescriptionViewAnimated:YES];
-//    }
-//    if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
-//        [self showFullDescriptionViewAnimated:YES];
-//    }
-//}
+- (void)chatViewController:(ChatViewController *)chatViewController willEndDraggingWithVelocity:(CGPoint)velocity
+{
+    if (velocity.y > 1) {
+        [self showPartialDescriptionViewAnimated:YES];
+    }
+    if (chatViewController.tableView.contentOffset.y < (-chatViewController.tableView.contentInset.top - 20) && !self.fullDescriptionViewShown && !self.keyboardShown) {
+        [self showFullDescriptionViewAnimated:YES];
+    }
+}
 
 - (void)chatViewController:(ChatViewController *)chatViewController didSelectChatMessage:(ChatMessage *)chatMessage
 {

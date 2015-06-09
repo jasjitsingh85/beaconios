@@ -41,13 +41,13 @@
     
     self.backgroundCellView = [[UIView alloc] init];
     self.backgroundCellView.height = 146;
-    self.backgroundCellView.backgroundColor = [[UIColor lightGrayColor] colorWithAlphaComponent:.15];
+    self.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     self.backgroundCellView.width = self.width;
     [self.contentView addSubview:self.backgroundCellView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:30];
-    self.venueLabelLineOne.textColor = [[UIColor blackColor] colorWithAlphaComponent:.7];
+    self.venueLabelLineOne.textColor = [[ThemeManager sharedTheme] brownColor];
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
@@ -56,7 +56,7 @@
     
     self.venueLabelLineTwo = [[UILabel alloc] init];
     self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
-    self.venueLabelLineTwo.textColor = [[UIColor blackColor] colorWithAlphaComponent:.7];
+    self.venueLabelLineTwo.textColor = [[ThemeManager sharedTheme] brownColor];
     //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;

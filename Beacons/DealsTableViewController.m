@@ -35,7 +35,7 @@
 #import "HappyHour.h"
 #import "HappyHourVenue.h"
 
-@interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 //@property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
@@ -57,6 +57,8 @@
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic, strong) UIView *redoSearchContainer;
+@property (nonatomic, strong) UIButton *redoSearchButton;
 
 
 @end
@@ -111,6 +113,28 @@
     self.mapLabel.backgroundColor = [UIColor blackColor];
     [self.mapView addSubview:self.mapLabel];
     self.mapViewFullScreen = NO;
+    
+    UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+    [panRec setDelegate:self];
+    [self.mapView addGestureRecognizer:panRec];
+    
+    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 55)];
+    self.redoSearchContainer.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
+    [self.mapView addSubview:self.redoSearchContainer];
+    
+    self.redoSearchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.redoSearchButton.size = CGSizeMake(250, 35);
+    self.redoSearchButton.centerX = self.redoSearchContainer.width/2.0;
+    self.redoSearchButton.centerY = self.redoSearchContainer.height/2.0;
+    self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    [self.redoSearchButton setTitle:@"Redo Search in Area" forState:UIControlStateNormal];
+    //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+    //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
+    self.redoSearchButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+    [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.redoSearchContainer addSubview:self.redoSearchButton];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -253,10 +277,10 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            //[self loadDealsNearCoordinate:location.coordinate withCompletion:^{
-            [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+            [self loadDealsNearCoordinate:location.coordinate withRadius:@"2" withCompletion:^{
+            //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
@@ -274,9 +298,9 @@
     
 }
 
-- (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withCompletion:(void (^)())completion
+- (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius withCompletion:(void (^)())completion
 {
-    [[APIClient sharedClient] getDealsNearCoordinate:coordinate success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getDealsNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSMutableArray *events = [[NSMutableArray alloc] init];
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         NSMutableArray *happyHours = [[NSMutableArray alloc] init];
@@ -292,6 +316,7 @@
             deal.venue.distance = [location distanceFromLocation:dealLocation];
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             [annotation setCoordinate:dealLocation2D];
+            annotation.title = @"hotspotPin";
             [self.mapView addAnnotation:annotation];
             [deals addObject:deal];
         }
@@ -300,6 +325,10 @@
             HappyHour *happyHour = [[HappyHour alloc] initWithDictionary:happyHourJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:happyHour.venue.coordinate.latitude longitude:happyHour.venue.coordinate.longitude];
             happyHour.venue.distance = [location distanceFromLocation:dealLocation];
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            [self.mapView addAnnotation:annotation];
             [happyHours addObject:happyHour];
         }
         
@@ -344,8 +373,17 @@
         {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = YES;
-            pinView.pinColor = MKPinAnnotationColorPurple;
+            if ([annotation.title isEqualToString:@"hotspotPin"]){
+                pinView.pinColor = MKPinAnnotationColorRed;
+            } else {
+                pinView.pinColor = MKPinAnnotationColorPurple;
+            }
         } else {
+            if ([annotation.title isEqualToString:@"hotspotPin"]){
+                pinView.pinColor = MKPinAnnotationColorRed;
+            } else {
+                pinView.pinColor = MKPinAnnotationColorPurple;
+            }
             pinView.annotation = annotation;
         }
         return pinView;
@@ -618,10 +656,10 @@
     
  //   float changeDealIndex = self.tableView.contentOffset.y/(currentIndexPath.row + 1);
     
-    if (currentIndexPath.row + 1 < self.deals.count) {
+    if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
         self.dealInView = self.deals[currentIndexPath.row + 1];
         [self updateMapCoordinates];
-    } else if (currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count)){
+    } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
         self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
         [self updateMapCoordinates];
     } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
@@ -639,6 +677,8 @@
             theFrame.size.height -= self.view.size.height - 100;
             self.mapView.frame = theFrame;
         }];
+        
+        [self hideRedoSearchContainer];
         //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
     } else {
         //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
@@ -659,6 +699,51 @@
 //    }];
 //    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
 //    [actionSheet showInView:self.view];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer {
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.mapViewFullScreen){
+        [self showRedoSearchContainer];
+        
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded && self.mapViewFullScreen)
+    {
+        
+    }
+}
+
+- (void) showRedoSearchContainer
+{
+    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+        CGRect frame = self.mapLabel.frame;
+        frame.origin.x = self.view.width + self.mapLabel.width;
+        self.mapLabel.frame = frame; // move to new location
+    }];
+    
+    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+        CGRect frame = self.redoSearchContainer.frame;
+        frame.origin.y = self.view.height - 55;
+        self.redoSearchContainer.frame = frame; // move to new location
+    }];
+}
+
+- (void) hideRedoSearchContainer
+{
+    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+        CGRect frame = self.mapLabel.frame;
+        frame.origin.x = self.view.width - self.mapLabel.width;
+        self.mapLabel.frame = frame; // move to new location
+    }];
+    
+    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+        CGRect frame = self.redoSearchContainer.frame;
+        frame.origin.y = self.view.height;
+        self.redoSearchContainer.frame = frame; // move to new location
+    }];
 }
 
 @end
