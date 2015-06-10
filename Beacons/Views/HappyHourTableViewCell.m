@@ -178,10 +178,8 @@
     
     self.venueLabelLineTwo.text = @"HAPPY HOUR";
     
-    NSLog(@"%@", self.happyHour.happyHourDescription);
     self.venueDetailLabel.text = self.happyHour.happyHourDescription;
     //[self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
-    NSLog(@"%@", self.happyHour.venue.name);
     self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@", [self.happyHour.venue.name uppercaseString]];
 //    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
 //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
@@ -209,7 +207,6 @@
     //self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
     //self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    NSLog(@"DEAL TIME: %@", [self.happyHour.happyHourStartString uppercaseString]);
     self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
 //    if ([self.dealTime.text isEqualToString:@"NOW"]) {
 //        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];

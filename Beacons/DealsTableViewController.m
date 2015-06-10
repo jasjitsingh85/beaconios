@@ -719,26 +719,29 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    NSIndexPath *currentIndexPath= self.tableView.indexPathsForVisibleRows[0];
     
-    if (self.deals.count > 0) {
-        if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
-            self.dealInView = self.deals[currentIndexPath.row + 1];
-        } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
-            self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
-        } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
-            self.dealInView = self.deals[0];
+    if (self.deals.count > 0 || self.happyHours.count > 0) {
+    
+    NSIndexPath *currentIndexPath = self.tableView.indexPathsForVisibleRows[0];
+        if (self.deals.count > 0) {
+            if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
+                self.dealInView = self.deals[currentIndexPath.row + 1];
+            } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
+                self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
+            } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
+                self.dealInView = self.deals[0];
+            }
+            [self updateMapCoordinates];
+        } else if (self.deals.count == 0 && self.happyHours.count > 0) {
+            if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 < self.happyHours.count) {
+                self.dealInView = self.happyHours[currentIndexPath.row + 1];
+            } else if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
+                self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
+            } else if (self.tableView.contentOffset.y < 65 && self.tableView.contentOffset.y > 0) {
+                self.dealInView = self.happyHours[0];
+            }
+            [self updateMapCoordinates];
         }
-        [self updateMapCoordinates];
-    } else if (self.deals.count == 0 && self.happyHours.count > 0) {
-        if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.happyHours.count) {
-            self.dealInView = self.happyHours[currentIndexPath.row + 1];
-        } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
-            self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
-        } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
-            self.dealInView = self.happyHours[0];
-        }
-        [self updateMapCoordinates];
     }
 }
 
