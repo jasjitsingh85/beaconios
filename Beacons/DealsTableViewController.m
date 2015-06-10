@@ -409,15 +409,19 @@
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = YES;
             if ([annotation.title isEqualToString:@"hotspotPin"]){
-                pinView.pinColor = MKPinAnnotationColorRed;
+                //pinView.pinColor = MKPinAnnotationColorRed;
+                pinView.image = [UIImage imageNamed:@"redPin"];
             } else {
-                pinView.pinColor = MKPinAnnotationColorPurple;
+                //pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"greyPin"];
             }
         } else {
             if ([annotation.title isEqualToString:@"hotspotPin"]){
-                pinView.pinColor = MKPinAnnotationColorRed;
+                //pinView.pinColor = MKPinAnnotationColorRed;
+                pinView.image = [UIImage imageNamed:@"redPin"];
             } else {
-                pinView.pinColor = MKPinAnnotationColorPurple;
+                //pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"greyPin"];
             }
             pinView.annotation = annotation;
         }
