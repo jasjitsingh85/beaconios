@@ -12,7 +12,7 @@
 
 @interface HappyHourTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) UIImageView *venueImageView;
+@property (strong, nonatomic) UIImageView *backgroundImageView;
 @property (strong, nonatomic) UIImageView *backgroundGradient;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;

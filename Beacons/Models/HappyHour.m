@@ -65,7 +65,7 @@
             }
         }
     } else {
-        return @"";
+        return @"Ended";
     }
 }
 

@@ -479,7 +479,7 @@
     if (indexPath.row < self.deals.count) {
         return 203;
     } else {
-        return 153;
+        return 113;
     }
 }
 
