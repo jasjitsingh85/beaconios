@@ -76,12 +76,12 @@
     
     self.descriptionLabel = [[UILabel alloc] init];
     self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
-    self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
+    //self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 30;
     self.descriptionLabel.x = 0;
     self.descriptionLabel.y = 145;
     self.descriptionLabel.font = [ThemeManager boldFontOfSize:16];
-    self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
+    //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
     [self.venuePreviewView addSubview:self.descriptionLabel];
@@ -267,12 +267,21 @@
     
     self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
-    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
-                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                                        attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
-                                                                           context:nil]
-    .size.width;
+    NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
+    self.descriptionLabel.text = venueName;
+    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:16]}];
+    
+    CGFloat descriptionLabelWidth;
+    if (textSize.width < self.contentView.width * .6) {
+        descriptionLabelWidth = textSize.width;
+    } else {
+        descriptionLabelWidth = self.contentView.width * .6;
+    }
+    
+//    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
+//                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+//                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
+//                                                                           context:nil].size.width;
 
     self.dealTime.x = descriptionLabelWidth + 10;
     

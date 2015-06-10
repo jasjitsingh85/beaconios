@@ -110,7 +110,7 @@
     self.mapLabel.textAlignment = NSTextAlignmentCenter;
     self.mapLabel.font = [ThemeManager boldFontOfSize:10];
     self.mapLabel.textColor = [UIColor whiteColor];
-    self.mapLabel.backgroundColor = [UIColor blackColor];
+    self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
     [self.mapView addSubview:self.mapLabel];
     self.mapViewFullScreen = NO;
     
@@ -127,14 +127,16 @@
     self.redoSearchButton.centerX = self.redoSearchContainer.width/2.0;
     self.redoSearchButton.centerY = self.redoSearchContainer.height/2.0;
     self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    [self.redoSearchButton setTitle:@"Redo Search in Area" forState:UIControlStateNormal];
+    [self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
     //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
-    self.redoSearchButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+    self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
+    
+    self.dealInView = [[Deal alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -223,9 +225,9 @@
         _emptyBeaconView.backgroundColor = [UIColor whiteColor];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"noDealsPlaceholder"]];
         [_emptyBeaconView addSubview:imageView];
-        [_emptyBeaconView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(happyHoursButtonTouched:)];
-        [_emptyBeaconView addGestureRecognizer:tap];
+        //[_emptyBeaconView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+        //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(happyHoursButtonTouched:)];
+        //[_emptyBeaconView addGestureRecognizer:tap];
     }
     return _emptyBeaconView;
 }
@@ -279,9 +281,10 @@
             //REMOVE THIS LINE AFTER DEMO
             //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:@"2" withCompletion:^{
+            [self loadDealsNearCoordinate:location.coordinate withRadius:nil withCompletion:^{
             //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
                 self.loadingDeals = NO;
+                [self updateDealInMap];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
@@ -298,6 +301,41 @@
     
 }
 
+- (void) updateDealInMap
+{
+    if (self.deals.count > 0){
+        self.dealInView = self.deals[0];
+        [self updateMapCoordinates];
+    }
+}
+
+- (CLLocationDistance)getRadius
+{
+    CLLocationCoordinate2D centerCoor = [self getCenterCoordinate];
+    // init center location from center coordinate
+    CLLocation *centerLocation = [[CLLocation alloc] initWithLatitude:centerCoor.latitude longitude:centerCoor.longitude];
+    
+    CLLocationCoordinate2D topCenterCoor = [self getTopCenterCoordinate];
+    CLLocation *topCenterLocation = [[CLLocation alloc] initWithLatitude:topCenterCoor.latitude longitude:topCenterCoor.longitude];
+    
+    CLLocationDistance radius = [centerLocation distanceFromLocation:topCenterLocation];
+    
+    return radius/1000;
+}
+
+- (CLLocationCoordinate2D)getTopCenterCoordinate
+{
+    // to get coordinate from CGPoint of your map
+    CLLocationCoordinate2D topCenterCoor = [self.mapView convertPoint:CGPointMake(self.mapView.frame.size.width / 2.0f, 0) toCoordinateFromView:self.mapView];
+    return topCenterCoor;
+}
+
+- (CLLocationCoordinate2D)getCenterCoordinate
+{
+    CLLocationCoordinate2D centerCoor = [self.mapView centerCoordinate];
+    return centerCoor;
+}
+
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius withCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -309,6 +347,8 @@
 //            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
 //            [events addObject:event];
 //        }
+        [self.mapView removeAnnotations:[self.mapView annotations]];
+        
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
@@ -331,12 +371,7 @@
             [self.mapView addAnnotation:annotation];
             [happyHours addObject:happyHour];
         }
-        
-        self.dealInView = [[Deal alloc] init];
-        self.dealInView = deals[0];
-        [self updateMapCoordinates];
     
-//        self.allDeals = deals;
         self.deals = deals;
         self.happyHours = happyHours;
         
@@ -393,7 +428,7 @@
 
 - (void)reloadTableView
 {
-    if (self.deals && self.deals.count) {
+    if ((self.deals && self.deals.count) || (self.happyHours && self.happyHours.count)) {
         [self hideEmptyDealsView];
 //        NSPredicate *predicate;
 //        if (self.groupDeal) {
@@ -419,12 +454,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.deals.count ? 1 : 0;
+    return self.deals.count + self.happyHours.count ? 1 : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
     return self.deals.count + self.happyHours.count;
 
 }
@@ -470,44 +504,53 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.row < self.deals.count) {
         Deal *deal;
         deal = self.deals[indexPath.row];
         
-        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-        DealTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
+        DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
         
-        if (!cell) {
-            cell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.backgroundColor = [UIColor clearColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (!dealCell) {
+            dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
+            dealCell.backgroundColor = [UIColor clearColor];
+            dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
         [recognizer setNumberOfTapsRequired:1];
-        [cell.contentView addGestureRecognizer:recognizer];
+        [dealCell.contentView addGestureRecognizer:recognizer];
         
-        cell.deal = deal;
-        return cell;
+        dealCell.deal = deal;
+        return dealCell;
     } else {
         HappyHour *happyHour;
         happyHour = self.happyHours[indexPath.row - self.deals.count];
         
-        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-        HappyHourTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
+        HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];
         
-        if (!cell) {
-            cell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.backgroundColor = [UIColor clearColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (!happyHourCell) {
+            happyHourCell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HappyHourCellIdentifier];
+            happyHourCell.backgroundColor = [UIColor clearColor];
+            happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
         [recognizer setNumberOfTapsRequired:1];
-        [cell.contentView addGestureRecognizer:recognizer];
+        [happyHourCell.contentView addGestureRecognizer:recognizer];
         
-        cell.happyHour = happyHour;
-        return cell;
+        happyHourCell.happyHour = happyHour;
+        if (indexPath.row % 2 == 0) {
+            happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.05];
+            //happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+        } else {
+            //happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.15];
+            happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+        }
+
+        return happyHourCell;
     }
 }
 
@@ -538,6 +581,26 @@
         url = [NSURL URLWithString:@"http://itunes.apple.com/app/id879840229"];
     }
     [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void) redoSearchButtonTouched:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    CLLocationCoordinate2D newMapCenter = [self.mapView centerCoordinate];
+    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
+    [self loadDealsNearCoordinate:newMapCenter withRadius:radiusString withCompletion:^{
+        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+        self.loadingDeals = NO;
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        //[self toggleMapViewFrame];
+        [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
+    }];
+    
+//    if (self.deals.count > 0){
+//        self.dealInView = self.deals[0];
+//        [self updateMapCoordinates];
+//    }
 }
 
 - (void)appSettingsButtonTouched:(id)sender
@@ -654,23 +717,34 @@
     
     NSIndexPath *currentIndexPath= self.tableView.indexPathsForVisibleRows[0];
     
- //   float changeDealIndex = self.tableView.contentOffset.y/(currentIndexPath.row + 1);
-    
-    if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
-        self.dealInView = self.deals[currentIndexPath.row + 1];
+    if (self.deals.count > 0) {
+        if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
+            self.dealInView = self.deals[currentIndexPath.row + 1];
+        } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
+            self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
+        } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
+            self.dealInView = self.deals[0];
+        }
         [self updateMapCoordinates];
-    } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
-        self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
-        [self updateMapCoordinates];
-    } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
-        self.dealInView = self.deals[0];
+    } else if (self.deals.count == 0 && self.happyHours.count > 0) {
+        if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.happyHours.count) {
+            self.dealInView = self.happyHours[currentIndexPath.row + 1];
+        } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
+            self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
+        } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
+            self.dealInView = self.happyHours[0];
+        }
         [self updateMapCoordinates];
     }
 }
 
-- (void)toggleMapView:(UIGestureRecognizer *)recognizer
+- (void)toggleMapView:(id)sender
 {
- 
+    [self toggleMapViewFrame];
+}
+
+- (void)toggleMapViewFrame
+{
     if (self.mapViewFullScreen) {
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
@@ -689,16 +763,6 @@
         }];
     }
     self.mapViewFullScreen = !self.mapViewFullScreen;
-    
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
-//    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
-//        [Utilities launchGoogleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
-//    }];
-//    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
-//        [Utilities launchAppleMapsDirectionsToCoordinate:self.dealInView.venue.coordinate addressDictionary:nil destinationName:self.dealInView.venue.name];
-//    }];
-//    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
-//    [actionSheet showInView:self.view];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -709,22 +773,18 @@
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.mapViewFullScreen){
         [self showRedoSearchContainer];
-        
-    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded && self.mapViewFullScreen)
-    {
-        
     }
 }
 
 - (void) showRedoSearchContainer
 {
-    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.mapLabel.frame;
         frame.origin.x = self.view.width + self.mapLabel.width;
         self.mapLabel.frame = frame; // move to new location
     }];
     
-    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
         frame.origin.y = self.view.height - 55;
         self.redoSearchContainer.frame = frame; // move to new location

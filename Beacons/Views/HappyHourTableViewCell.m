@@ -41,12 +41,12 @@
     
     self.backgroundCellView = [[UIView alloc] init];
     self.backgroundCellView.height = 146;
-    self.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
+//    self.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
     self.backgroundCellView.width = self.width;
     [self.contentView addSubview:self.backgroundCellView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:30];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:24];
     self.venueLabelLineOne.textColor = [[ThemeManager sharedTheme] brownColor];
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
@@ -55,7 +55,7 @@
     [self.backgroundCellView addSubview:self.venueLabelLineOne];
     
     self.venueLabelLineTwo = [[UILabel alloc] init];
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:40];
     self.venueLabelLineTwo.textColor = [[ThemeManager sharedTheme] brownColor];
     //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
@@ -64,19 +64,19 @@
     [self.backgroundCellView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
-    self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
+    self.descriptionLabel.backgroundColor = [[[ThemeManager sharedTheme] brownColor] colorWithAlphaComponent:0.9];
+    //self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 30;
     self.descriptionLabel.x = 0;
-    self.descriptionLabel.y = 105;
-    self.descriptionLabel.font = [ThemeManager boldFontOfSize:16];
-    self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabel.y = 95;
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:18];
+    //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
     [self.backgroundCellView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager boldFontOfSize:16];
+    self.dealTime.font = [ThemeManager boldFontOfSize:18];
     self.dealTime.textColor = [[UIColor blackColor] colorWithAlphaComponent:.7];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
@@ -100,12 +100,12 @@
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 35;
+    self.venueLabelLineOne.y = 32;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 58;
+    self.venueLabelLineTwo.y = 52;
     
 //    self.venueDetailLabel.width = self.venueDetailView.size.width * .65;
 //    self.venueDetailLabel.x = 10;
@@ -135,7 +135,7 @@
     self.dealTime.width = 200;
     self.dealTime.height = 30;
     //self.dealTime.x = self.venuePreviewView.size.width*.62;
-    self.dealTime.y=105;
+    self.dealTime.y=95;
     
     
     //    self.venueDescriptionBackground.width = self.width;
@@ -157,20 +157,32 @@
 
 - (void)setHappyHour:(HappyHour *)happyHour
 {
+    
     _happyHour = happyHour;
     
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:@"HAPPY HOUR"];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
+    NSLog(@"%@", self.happyHour.happyHourDescription);
     self.venueDetailLabel.text = self.happyHour.happyHourDescription;
     //[self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
+    NSLog(@"%@", self.happyHour.venue.name);
     self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@", [self.happyHour.venue.name uppercaseString]];
-    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
-                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-                                                                        attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
-                                                                           context:nil]
-    .size.width;
+//    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
+//                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+//                                                                        attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
+//                                                                           context:nil]
+//    .size.width;
+    
+    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:18]}];
+    
+    CGFloat descriptionLabelWidth;
+    if (textSize.width < self.contentView.width * .65) {
+        descriptionLabelWidth = textSize.width;
+    } else {
+        descriptionLabelWidth = self.contentView.width * .65;
+    }
     
     self.dealTime.x = descriptionLabelWidth + 10;
     

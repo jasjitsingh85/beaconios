@@ -252,9 +252,15 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 
 - (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
-    NSDictionary *parameters = @{@"latitude" : @(coordinate.latitude),
-                                 @"longitude" : @(coordinate.longitude),
-                                 @"radius" : radius };
+    NSDictionary *parameters;
+    if (radius != nil) {
+        parameters = @{@"latitude" : @(coordinate.latitude),
+                                     @"longitude" : @(coordinate.longitude),
+                                     @"radius" : radius };
+    } else {
+        parameters = @{@"latitude" : @(coordinate.latitude),
+                    @"longitude" : @(coordinate.longitude)};
+    }
     [self getPath:@"deals/" parameters:parameters success:success failure:failure];
 }
 
