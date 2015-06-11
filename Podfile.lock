@@ -16,13 +16,13 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Bolts (1.1.5):
+  - Bolts (1.2.0):
     - Bolts/AppLinks
     - Bolts/Tasks
-  - Bolts/AppLinks (1.1.5):
+  - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.1.5)
-  - Braintree (3.8.0-rc2):
+  - Bolts/Tasks (1.2.0)
+  - Braintree (3.8.2):
     - Braintree/API
     - Braintree/Coinbase
     - Braintree/Drop-In
@@ -30,28 +30,28 @@ PODS:
     - Braintree/PayPal
     - Braintree/UI
     - Braintree/Venmo
-  - Braintree/API (3.8.0-rc2)
-  - Braintree/Coinbase (3.8.0-rc2):
+  - Braintree/API (3.8.2)
+  - Braintree/Coinbase (3.8.2):
     - Braintree/API
     - coinbase-official/OAuth (~> 2.1.1)
-  - Braintree/Drop-In (3.8.0-rc2):
+  - Braintree/Drop-In (3.8.2):
     - Braintree/API
     - Braintree/Coinbase
     - Braintree/Payments
     - Braintree/PayPal
     - Braintree/UI
     - Braintree/Venmo
-  - Braintree/Payments (3.8.0-rc2):
+  - Braintree/Payments (3.8.2):
     - Braintree/API
     - Braintree/Coinbase
     - Braintree/PayPal
     - Braintree/Venmo
-  - Braintree/PayPal (3.8.0-rc2):
+  - Braintree/PayPal (3.8.2):
     - Braintree/API
     - Braintree/UI
-  - Braintree/UI (3.8.0-rc2):
+  - Braintree/UI (3.8.2):
     - Braintree/API
-  - Braintree/Venmo (3.8.0-rc2):
+  - Braintree/Venmo (3.8.2):
     - Braintree/API
   - BSKeyboardControls (2.2)
   - CCTemplate (0.2.0)
@@ -130,8 +130,8 @@ SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AHAlertView: 38dcd9e1e3c9c2e5d4da82dfd519d78fea4cad9a
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Bolts: aac24961496d504aa56fc267cde95162a71bac39
-  Braintree: 107d22885e12c023b58809654447f4515ac68a75
+  Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  Braintree: 080df550178940580e54b4b1acad8beb13839f29
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   CCTemplate: f00efa85dad31e12b8a766b8e8198eb772c71c4f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e

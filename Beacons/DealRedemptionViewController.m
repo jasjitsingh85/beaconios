@@ -368,12 +368,12 @@
                 itemNameText = @"REDEEMED";
                 venueNameText = [NSString stringWithFormat:@"AT %@", [self.deal.venue.name uppercaseString]];
                 serverMessageText = @"VOUCHER CANNOT BE REUSED";
-            }
-            else if ([self dealPassed]){
-                voucherTitleText = @"";
-                itemNameText = @"EXPIRED";
-                venueNameText = @"";
-                serverMessageText = @"";
+//            }
+//            else if ([self dealPassed]){
+//                voucherTitleText = @"";
+//                itemNameText = @"EXPIRED";
+//                venueNameText = @"";
+//                serverMessageText = @"";
             } else if (!self.dealStatus.paymentAuthorization) {
                 if ([self.delegate isUserCreator]) {
                     voucherTitleText = @"TAP HERE TO";

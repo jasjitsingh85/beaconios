@@ -37,10 +37,10 @@
 - (void)openPaymentModalWithDeal: (Deal *)deal {
     
     // Create and retain a `Braintree` instance with the client token
-    [Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
-        //self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
+    //[Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
+        self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
         // Create a BTDropInViewController
-        self.braintree = braintree;
+//        self.braintree = braintree;
         BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
         // This is where you might want to customize your Drop in. (See below.)
         //
@@ -65,7 +65,7 @@
         [self presentViewController:navigationController
                            animated:YES
                          completion:nil];
-    }];
+   // }];
 }
 
 - (void)userDidCancelPayment {

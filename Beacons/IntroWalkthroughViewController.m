@@ -329,7 +329,7 @@ typedef enum ScrollDirection {
     self.captionLabel.frame = captionFrame;
 //    self.captionLabel.text = @"Hotspot is the fastest way to get groups of friends together.";
     self.captionLabel.attributedText = [IntroWalkthroughViewController
-                                        multiLineAttributedStringWithLineTexts:@[@"Save Over 50%", @"on drinks at local bars"]
+                                        multiLineAttributedStringWithLineTexts:@[@"Happy Hour", @"is now on-demand"]
                                         fonts:@[[ThemeManager boldFontOfSize:30], [ThemeManager boldFontOfSize:24]]];
     self.captionLabel.numberOfLines = 3;
     self.captionLabel.textColor = [UIColor whiteColor];
