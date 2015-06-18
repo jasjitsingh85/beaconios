@@ -85,8 +85,8 @@
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, 100, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(7.0, 0.0, self.view.height - 200, 0.0);
+    self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
+    self.tableView.contentInset = UIEdgeInsetsMake(5.0, 0.0, self.view.height, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -95,7 +95,7 @@
     [self checkToLaunchInvitationModal];
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 100)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 0)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
@@ -279,10 +279,10 @@
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:nil withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:nil withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:nil withCompletion:^{
                 self.loadingDeals = NO;
                 [self updateDealInMap];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
@@ -477,7 +477,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.deals.count) {
-        return 203;
+        return 151;
     } else {
         return 113;
     }
