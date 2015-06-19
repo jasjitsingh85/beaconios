@@ -14,12 +14,14 @@
 + (id)navButtonWithTitle:(NSString *)title
 {
     UIButton *button = [[UIButton alloc] init];
-    button.frame = CGRectMake(0, 0, 50, 30);
-    button.backgroundColor = [UIColor whiteColor];
-    button.layer.cornerRadius = 4;
+    button.size = CGSizeMake(40, 25);
+    //button.backgroundColor = [UIColor clearColor];
+    button.layer.cornerRadius = 2;
+    button.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    button.layer.borderWidth = 1.0;
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [ThemeManager regularFontOfSize:12];
+    button.titleLabel.font = [ThemeManager regularFontOfSize:10];
     return button;
 }
 

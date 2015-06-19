@@ -37,22 +37,20 @@
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-//@property (strong, nonatomic) DealTableViewEventCell *currentEventCell;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
-@property (strong, nonatomic) UIView *dealTypeToggle;
+@property (strong, nonatomic) UIView *dealTypeToggleContainer;
+@property (strong, nonatomic) UIView *viewContainer;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
 @property (strong, nonatomic) UIButton *enableLocationButton;
-//@property (strong, nonatomic) UIButton *textOneFriend;
-//@property (strong, nonatomic) UIButton *textManyFriends;
+@property (strong, nonatomic) UIButton *sliderThumb;
+@property (strong, nonatomic) UIButton *mapListToggleButton;
 @property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (strong, nonatomic) UILabel *mapLabel;
-//@property (assign, nonatomic) BOOL hasEvents;
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
-@property (assign, nonatomic) BOOL mapViewFullScreen;
-//@property (assign, nonatomic) BOOL groupDeal;
-//@property (strong, nonatomic) NSArray *allDeals;
+@property (assign, nonatomic) BOOL isMapViewActive;
 @property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (assign, nonatomic) NSInteger *currentTopRow;
@@ -68,17 +66,99 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    //UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+    //self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
-    [self addChildViewController:self.rewardsViewController];
-    [self.rewardsViewController updateRewardsScore];
+    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
+    self.navigationItem.titleView = searchBarContainer;
     
-//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 124, [[UIScreen mainScreen] bounds].size.width, 60);
-//    self.dealTypeToggle = [[UIView alloc] initWithFrame:frame];
-//    self.dealTypeToggle.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.9];
-//    [self.view addSubview:self.dealTypeToggle];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
+    //weird hack for black search bar issue
+    self.searchBar.backgroundImage = [UIImage new];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    //self.searchBar.delegate = self;
+    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    self.searchBar.translucent = NO;
+    self.searchBar.layer.cornerRadius = 12;
+    self.searchBar.layer.borderWidth = 1.0;
+    self.searchBar.centerX = searchBarContainer.width/2.1;
+    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    [searchBarContainer addSubview:self.searchBar];
+    //[self.view addSubview:self.searchBar];
+    
+    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
+    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
+    
+    self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:self.viewContainer];
+    
+    //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    //[self addChildViewController:self.rewardsViewController];
+    //[self.rewardsViewController updateRewardsScore];
+    
+    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 70, [[UIScreen mainScreen] bounds].size.width, 70);
+    self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
+    self.dealTypeToggleContainer.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.dealTypeToggleContainer];
+    
+    UIImageView *sliderTrack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider"]];
+    sliderTrack.centerX = self.view.width/2;
+    sliderTrack.y = 39;
+    [self.dealTypeToggleContainer addSubview:sliderTrack];
+    
+    self.sliderThumb = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [self.sliderThumb setImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+    self.sliderThumb.y = 30;
+//    self.sliderThumb.x = 30;
+    self.sliderThumb.centerX = self.view.width/2;
+    [self.dealTypeToggleContainer addSubview:self.sliderThumb];
+    
+    UIImageView *hotspotSliderLabel = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotSliderLabel"]];
+    //hotspotSliderImage.size = CGSizeMake(30, 100);
+    hotspotSliderLabel.height = 25;
+    hotspotSliderLabel.width = 73;
+    hotspotSliderLabel.centerX = self.view.width/2;
+    hotspotSliderLabel.y = 5;
+    [self.dealTypeToggleContainer addSubview:hotspotSliderLabel];
+    
+    UILabel *happyHourLabel = [[UILabel alloc] initWithFrame:CGRectMake(11, 10, 70, 20)];
+    happyHourLabel.text = @"HAPPY HOURS";
+    happyHourLabel.font = [ThemeManager lightFontOfSize:9];
+    happyHourLabel.textAlignment = NSTextAlignmentCenter;
+    [self.dealTypeToggleContainer addSubview:happyHourLabel];
+    
+    UILabel *rewardsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 78, 10, 70, 20)];
+    rewardsLabel.text = @"REWARDS";
+    rewardsLabel.font = [ThemeManager lightFontOfSize:9];
+    rewardsLabel.textAlignment = NSTextAlignmentCenter;
+    [self.dealTypeToggleContainer addSubview:rewardsLabel];
+    
+    UIButton *happyHourButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    happyHourButton.size = CGSizeMake(70, 70);
+    happyHourButton.x = 10;
+    happyHourButton.y = 0;
+    //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+    [happyHourButton addTarget:self action:@selector(happyHourButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealTypeToggleContainer addSubview:happyHourButton];
+    
+    UIButton *hotspotButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    hotspotButton.size = CGSizeMake(70, 70);
+    hotspotButton.centerX = self.view.width/2;
+    hotspotButton.y = 0;
+    //hotspotButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+    [hotspotButton addTarget:self action:@selector(hotspotButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealTypeToggleContainer addSubview:hotspotButton];
+    
+    UIButton *rewardsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rewardsButton.size = CGSizeMake(70, 70);
+    rewardsButton.x = self.view.width - 80;
+    rewardsButton.y = 0;
+    //rewardsButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+    [rewardsButton addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.dealTypeToggleContainer addSubview:rewardsButton];
+    
     
     self.tableView = [[UITableView alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -90,12 +170,12 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
+    [self.viewContainer addSubview:self.tableView];
     
     [self checkToLaunchInvitationModal];
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 0)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
@@ -103,7 +183,8 @@
     tapped.numberOfTapsRequired = 1;
     tapped.numberOfTouchesRequired = 1;
     [self.mapView addGestureRecognizer:tapped];
-    [self.view addSubview:self.mapView];
+    [self.mapView setHidden:YES];
+    [self.viewContainer addSubview:self.mapView];
     //[self.view addSubview:tapView];
     
     self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
@@ -112,7 +193,7 @@
     self.mapLabel.textColor = [UIColor whiteColor];
     self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
     [self.mapView addSubview:self.mapLabel];
-    self.mapViewFullScreen = NO;
+    self.isMapViewActive = NO;
     
     UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
     [panRec setDelegate:self];
@@ -752,24 +833,48 @@
 
 - (void)toggleMapViewFrame
 {
-    if (self.mapViewFullScreen) {
-        [UIView animateWithDuration:.5f animations:^{
-            CGRect theFrame = self.mapView.frame;
-            theFrame.size.height -= self.view.size.height - 100;
-            self.mapView.frame = theFrame;
-        }];
-        
-        [self hideRedoSearchContainer];
-        //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
-    } else {
-        //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
-        [UIView animateWithDuration:.5f animations:^{
-            CGRect theFrame = self.mapView.frame;
-            theFrame.size.height += self.view.size.height - 100;
-            self.mapView.frame = theFrame;
-        }];
-    }
-    self.mapViewFullScreen = !self.mapViewFullScreen;
+//    if (self.isMapViewActive) {
+//        [UIView animateWithDuration:.5f animations:^{
+//            CGRect theFrame = self.mapView.frame;
+//            theFrame.size.height -= self.view.size.height - 100;
+//            self.mapView.frame = theFrame;
+//        }];
+//        
+//        [self hideRedoSearchContainer];
+//        //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
+//    } else {
+//        //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
+//        [UIView animateWithDuration:.5f animations:^{
+//            CGRect theFrame = self.mapView.frame;
+//            theFrame.size.height += self.view.size.height - 100;
+//            self.mapView.frame = theFrame;
+//        }];
+//    }
+    
+    [UIView transitionWithView:self.viewContainer
+                      duration:.75
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        
+                        if (!self.isMapViewActive) {
+                            [self.tableView setHidden:YES];
+                            [self.mapView setHidden:NO];
+                        } else {
+                            [self.tableView setHidden:NO];
+                            [self.mapView setHidden:YES];
+                        }
+                        
+                    } completion:^(BOOL finished) {
+                        if (finished) {
+                            self.isMapViewActive = !self.isMapViewActive;
+                            if (self.isMapViewActive) {
+                                [self.mapListToggleButton setTitle:@"LIST" forState:UIControlStateNormal];
+                            } else {
+                                [self.mapListToggleButton setTitle:@"MAP" forState:UIControlStateNormal];
+                            }
+                        }
+                    }];
+    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -778,7 +883,7 @@
 
 - (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer {
     
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.mapViewFullScreen){
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.isMapViewActive){
         [self showRedoSearchContainer];
     }
 }
@@ -810,6 +915,27 @@
         CGRect frame = self.redoSearchContainer.frame;
         frame.origin.y = self.view.height;
         self.redoSearchContainer.frame = frame; // move to new location
+    }];
+}
+
+- (void) happyHourButtonTouched:(id)sender
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
+    }];
+}
+
+- (void) hotspotButtonTouched:(id)sender
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
+    }];
+}
+
+- (void) rewardsButtonTouched:(id)sender
+{
+    [UIView animateWithDuration:0.5f animations:^{
+        self.sliderThumb.frame = CGRectMake(self.view.width - 55, 30, 30, 30);
     }];
 }
 

@@ -29,11 +29,12 @@
 {
     id <Theme> theme = [self sharedTheme];
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearanceWhenContainedIn:[CenterNavigationController class], nil];
-    //[navigationBarAppearance setBackgroundColor:[[ThemeManager sharedTheme] redColor]];
-    [navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-    [navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
+    [navigationBarAppearance setBackgroundColor:[UIColor whiteColor]];
+    navigationBarAppearance.barTintColor = [UIColor whiteColor];
+    //[navigationBarAppearance setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    //[navigationBarAppearance setShadowImage:[[UIImage alloc] init]];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     navigationBarAppearance.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 
@@ -41,7 +42,7 @@
 {
     id <Theme> theme = [self sharedTheme];
     [navigationBar setBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-    [navigationBar setShadowImage:[[UIImage alloc] init]];
+    //[navigationBar setShadowImage:[[UIImage alloc] init]];
     navigationBar.titleTextAttributes = [theme navigationBarTitleAndTextAttributes];
 }
 

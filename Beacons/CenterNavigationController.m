@@ -28,7 +28,7 @@
     [super viewDidLoad];
     self.delegate = self;
     self.menuButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.menuButton.size = CGSizeMake(30, 30);
+    self.menuButton.size = CGSizeMake(25, 25);
     [self menuButtonDefaultMode];
     [self.menuButton addTarget:self action:@selector(menuButtonTouched:) forControlEvents:UIControlEventTouchDown];
     
@@ -125,7 +125,7 @@
     self.menuButton.backgroundColor = [UIColor clearColor];
     self.menuButton.layer.cornerRadius = 0;
     self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.menuButton.titleLabel.font = [ThemeManager regularFontOfSize:20];
+    self.menuButton.titleLabel.font = [ThemeManager regularFontOfSize:18];
     self.menuButton.selected = NO;
 }
 
@@ -133,8 +133,8 @@
 {
     [self.menuButton setImage:nil forState:UIControlStateNormal];
     [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateSelected];
-    [self.menuButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateSelected];
-    self.menuButton.backgroundColor = [UIColor whiteColor];
+    [self.menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    self.menuButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
     self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.menuButton.layer.cornerRadius = 9;
     self.menuButton.selected = YES;
