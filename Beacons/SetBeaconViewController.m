@@ -207,7 +207,7 @@
 
 - (void)showDealsExplanation
 {
-    NSArray *deals = [AppDelegate sharedAppDelegate].dealsViewController.deals;
+    NSArray *deals = [AppDelegate sharedAppDelegate].dealsViewController.hotspots;
     if (deals && deals.count) {
         DealExplanationView *dealExplanationView = [[DealExplanationView alloc] init];
         [dealExplanationView show];
@@ -531,7 +531,7 @@
     self.beaconCoordinate = venue.coordinate;
     [self scrollToShowSetBeaconButton];
     if (venue.foursquareID) {
-        for (Deal *deal in [AppDelegate sharedAppDelegate].dealsViewController.deals) {
+        for (Deal *deal in [AppDelegate sharedAppDelegate].dealsViewController.hotspots) {
             if (deal.venue.foursquareID && [deal.venue.foursquareID isEqual:venue.foursquareID]) {
                 [self showDealPromptForDeal:deal];
             }

@@ -34,8 +34,18 @@
 #import "HotspotAnnotation.h"
 #import "HappyHour.h"
 #import "HappyHourVenue.h"
+#import "RewardTableViewCell.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "RewardManager.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+
+typedef enum dealTypeStates
+{
+    HAPPY_HOUR,
+    HOTSPOT,
+    REWARD
+} DealTypes;
 
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
@@ -57,6 +67,7 @@
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
+@property (nonatomic, assign) DealTypes dealType;
 
 
 @end
@@ -93,6 +104,8 @@
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
+    
+    self.dealType = HOTSPOT;
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     //[self addChildViewController:self.rewardsViewController];
@@ -166,7 +179,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(5.0, 0.0, self.view.height, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(5.0, 0.0, 80, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -367,7 +380,7 @@
                 self.loadingDeals = NO;
                 [self updateDealInMap];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
+                [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
             }];
         } failure:^(NSError *error) {
@@ -384,8 +397,8 @@
 
 - (void) updateDealInMap
 {
-    if (self.deals.count > 0){
-        self.dealInView = self.deals[0];
+    if (self.hotspots.count > 0){
+        self.dealInView = self.hotspots[0];
         [self updateMapCoordinates];
     }
 }
@@ -423,6 +436,7 @@
         //NSMutableArray *events = [[NSMutableArray alloc] init];
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         NSMutableArray *happyHours = [[NSMutableArray alloc] init];
+        NSMutableArray *rewards = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
 //        for (NSDictionary *eventJSON in responseObject[@"events"]) {
 //            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
@@ -452,9 +466,27 @@
             [self.mapView addAnnotation:annotation];
             [happyHours addObject:happyHour];
         }
+        
+        for (NSDictionary *dealJSON in responseObject[@"unlocked_rewards"]) {
+            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            deal.locked = NO;
+            deal.venue.distance = [location distanceFromLocation:dealLocation];
+            [rewards addObject:deal];
+        }
+        for (NSDictionary *dealJSON in responseObject[@"locked_rewards"]) {
+            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+            deal.locked = YES;
+            deal.venue.distance = [location distanceFromLocation:dealLocation];
+            [rewards addObject:deal];
+        }
     
-        self.deals = deals;
+        self.hotspots = deals;
+        self.selectedDeals = deals;
         self.happyHours = happyHours;
+        self.rewards = rewards;
+        NSLog(@"REWARDS: %@", self.rewards);
         
 //        NSPredicate *predicate;
 //        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
@@ -513,21 +545,8 @@
 
 - (void)reloadTableView
 {
-    if ((self.deals && self.deals.count) || (self.happyHours && self.happyHours.count)) {
+    if (self.selectedDeals && self.selectedDeals.count){
         [self hideEmptyDealsView];
-//        NSPredicate *predicate;
-//        if (self.groupDeal) {
-//            predicate = [NSPredicate predicateWithFormat:@"groupDeal = YES"];
-//            self.textManyFriends.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-//            self.textOneFriend.backgroundColor = [UIColor clearColor];
-//        }
-//        else {
-//            predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-//            self.textOneFriend.backgroundColor = [UIColor colorWithRed:37./255 green:37./255 blue:37./255 alpha:1.0];
-//            self.textManyFriends.backgroundColor = [UIColor clearColor];
-//        }
-        //self.deals = [self.allDeals filteredArrayUsingPredicate:predicate];
-        //self.deals = self.allDeals;
     }
     else {
         [self showEmptyDealsView];
@@ -539,29 +558,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.deals.count + self.happyHours.count ? 1 : 0;
+    return self.selectedDeals ? 1 : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.deals.count + self.happyHours.count;
+    return self.selectedDeals.count;
 
 }
 
-//- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
-//{
-//    MKPinAnnotationView *annView=[[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"pin"];
-//    annView.pinColor = MKPinAnnotationColorGreen;
-//    return annView;
-//}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.deals.count) {
-        return 151;
-    } else {
-        return 113;
-    }
+
+    return 151;
+//    if (indexPath.row < self.hotspots.count) {
+//        return 151;
+//    } else {
+//        return 113;
+//    }
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
@@ -573,26 +587,45 @@
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row < self.deals.count) {
+    if (self.dealType == HOTSPOT) {
         Deal *deal;
-        deal = self.deals[indexPath.row];
+        deal = self.selectedDeals[indexPath.row];
         SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
         dealViewController.deal = deal;
         [self.navigationController pushViewController:dealViewController animated:YES];
-    } else {
+    } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
-        happyHour = self.happyHours[indexPath.row - self.deals.count];
+        happyHour = self.selectedDeals[indexPath.row];
         [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else if (self.dealType == REWARD) {
+        Deal *deal;
+        deal = self.selectedDeals[indexPath.row];
+        if (!deal.locked) {
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
+            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+                [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Working");
+                }];
+            }];
+            
+            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+            [alertView show];
+            return;
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Not Enough Points" message:@"You don't have enough points to purchase this item" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row < self.deals.count) {
+    if (self.dealType == HOTSPOT) {
         Deal *deal;
-        deal = self.deals[indexPath.row];
+        deal = self.hotspots[indexPath.row];
         
         NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
         DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
@@ -609,9 +642,9 @@
         
         dealCell.deal = deal;
         return dealCell;
-    } else {
+    } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
-        happyHour = self.happyHours[indexPath.row - self.deals.count];
+        happyHour = self.happyHours[indexPath.row];
         
         NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
         HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];
@@ -636,6 +669,29 @@
         }
 
         return happyHourCell;
+    } else if (self.dealType == REWARD) {
+        Deal *deal;
+        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+        RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (!cell) {
+            cell = [[RewardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell.backgroundColor = [UIColor clearColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+        [recognizer setNumberOfTapsRequired:1];
+        [cell.contentView addGestureRecognizer:recognizer];
+        
+//        if (indexPath.row == 0) {
+//            cell.deal = nil;
+//        } else {
+            deal = self.selectedDeals[indexPath.row];
+            cell.deal = deal;
+//        }
+        
+        return cell;
     }
 }
 
@@ -678,7 +734,7 @@
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         //[self toggleMapViewFrame];
-        [[AnalyticsManager sharedManager] viewedDeals:self.deals.count];
+        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
         [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
     }];
     
@@ -798,33 +854,33 @@
     return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    
-    if (self.deals.count > 0 || self.happyHours.count > 0) {
-    
-    NSIndexPath *currentIndexPath = self.tableView.indexPathsForVisibleRows[0];
-        if (self.deals.count > 0) {
-            if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.deals.count) {
-                self.dealInView = self.deals[currentIndexPath.row + 1];
-            } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.deals.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
-                self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
-            } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
-                self.dealInView = self.deals[0];
-            }
-            [self updateMapCoordinates];
-        } else if (self.deals.count == 0 && self.happyHours.count > 0) {
-            if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 < self.happyHours.count) {
-                self.dealInView = self.happyHours[currentIndexPath.row + 1];
-            } else if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.deals.count + self.happyHours.count - 1)){
-                self.dealInView = self.happyHours[currentIndexPath.row - [self.deals count] + 1];
-            } else if (self.tableView.contentOffset.y < 65 && self.tableView.contentOffset.y > 0) {
-                self.dealInView = self.happyHours[0];
-            }
-            [self updateMapCoordinates];
-        }
-    }
-}
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    
+//    
+//    if (self.hotspots.count > 0 || self.happyHours.count > 0) {
+//    
+//    NSIndexPath *currentIndexPath = self.tableView.indexPathsForVisibleRows[0];
+//        if (self.hotspots.count > 0) {
+//            if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.hotspots.count) {
+//                self.dealInView = self.hotspots[currentIndexPath.row + 1];
+//            } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.hotspots.count && currentIndexPath.row < (self.hotspots.count + self.happyHours.count - 1)){
+//                self.dealInView = self.happyHours[currentIndexPath.row - [self.hotspots count] + 1];
+//            } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
+//                self.dealInView = self.hotspots[0];
+//            }
+//            [self updateMapCoordinates];
+//        } else if (self.hotspots.count == 0 && self.happyHours.count > 0) {
+//            if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 < self.happyHours.count) {
+//                self.dealInView = self.happyHours[currentIndexPath.row + 1];
+//            } else if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.hotspots.count + self.happyHours.count - 1)){
+//                self.dealInView = self.happyHours[currentIndexPath.row - [self.hotspots count] + 1];
+//            } else if (self.tableView.contentOffset.y < 65 && self.tableView.contentOffset.y > 0) {
+//                self.dealInView = self.happyHours[0];
+//            }
+//            [self updateMapCoordinates];
+//        }
+//    }
+//}
 
 - (void)toggleMapView:(id)sender
 {
@@ -920,22 +976,34 @@
 
 - (void) happyHourButtonTouched:(id)sender
 {
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
+    } completion:^(BOOL finished) {
+        self.dealType = HAPPY_HOUR;
+        self.selectedDeals = self.happyHours;
+        [self reloadTableView];
     }];
 }
 
 - (void) hotspotButtonTouched:(id)sender
 {
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
+    } completion:^(BOOL finished) {
+        self.dealType = HOTSPOT;
+        self.selectedDeals = self.hotspots;
+        [self reloadTableView];
     }];
 }
 
 - (void) rewardsButtonTouched:(id)sender
 {
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width - 55, 30, 30, 30);
+    } completion:^(BOOL finished) {
+        self.dealType = REWARD;
+        self.selectedDeals = self.rewards;
+        [self reloadTableView];
     }];
 }
 
