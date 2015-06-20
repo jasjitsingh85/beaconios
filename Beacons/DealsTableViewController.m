@@ -51,6 +51,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UIView *enableLocationView;
 @property (strong, nonatomic) UIView *dealTypeToggleContainer;
 @property (strong, nonatomic) UIView *viewContainer;
+@property (strong, nonatomic) UIView *mapViewContainer;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
 @property (strong, nonatomic) UIButton *enableLocationButton;
 @property (strong, nonatomic) UIButton *sliderThumb;
@@ -61,12 +62,14 @@ typedef enum dealTypeStates
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
 @property (assign, nonatomic) BOOL isMapViewActive;
+@property (assign, nonatomic) BOOL isMapViewDealShowing;
 @property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
 @property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
+@property (strong, nonatomic) UIView *selectedDealInMap;
 @property (nonatomic, assign) DealTypes dealType;
 @property (nonatomic, assign) DealTypes previousDealType;
 
@@ -116,6 +119,11 @@ typedef enum dealTypeStates
     self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
     self.dealTypeToggleContainer.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.dealTypeToggleContainer];
+    
+    UIView *topBorder = [[UIView alloc] init];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255];
+    topBorder.frame = CGRectMake(0, 0, self.view.width, 1.0);
+    [self.dealTypeToggleContainer addSubview:topBorder];
     
     UIImageView *sliderTrack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider"]];
     sliderTrack.centerX = self.view.width/2;
@@ -173,7 +181,6 @@ typedef enum dealTypeStates
     [rewardsButton addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.dealTypeToggleContainer addSubview:rewardsButton];
     
-    
     self.tableView = [[UITableView alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -188,17 +195,20 @@ typedef enum dealTypeStates
     
     [self checkToLaunchInvitationModal];
     
+    self.mapViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height - 70)];
+    self.mapViewContainer.hidden = YES;
+    [self.viewContainer addSubview:self.mapViewContainer];
+    
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 65, self.view.size.width, self.view.size.height - 70 - 65)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
-      initWithTarget:self action:@selector(toggleMapView:)];
+      initWithTarget:self action:@selector(showMapViewDeal:)];
     tapped.numberOfTapsRequired = 1;
     tapped.numberOfTouchesRequired = 1;
     [self.mapView addGestureRecognizer:tapped];
-    [self.mapView setHidden:YES];
-    [self.viewContainer addSubview:self.mapView];
+    [self.mapViewContainer addSubview:self.mapView];
     //[self.view addSubview:tapView];
     
     self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
@@ -208,6 +218,11 @@ typedef enum dealTypeStates
     self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
     [self.mapView addSubview:self.mapLabel];
     self.isMapViewActive = NO;
+    self.isMapViewDealShowing = NO;
+    
+    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 70, self.view.width, 151)];
+    self.selectedDealInMap.backgroundColor = [UIColor blackColor];
+    [self.mapViewContainer addSubview:self.selectedDealInMap];
     
     UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
     [panRec setDelegate:self];
@@ -448,12 +463,12 @@ typedef enum dealTypeStates
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
-            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
+//            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
             deal.venue.distance = [location distanceFromLocation:dealLocation];
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            [annotation setCoordinate:dealLocation2D];
-            annotation.title = @"hotspotPin";
-            [self.mapView addAnnotation:annotation];
+//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+//            [annotation setCoordinate:dealLocation2D];
+//            annotation.title = @"hotspotPin";
+//            [self.mapView addAnnotation:annotation];
             [deals addObject:deal];
         }
         
@@ -461,10 +476,10 @@ typedef enum dealTypeStates
             HappyHour *happyHour = [[HappyHour alloc] initWithDictionary:happyHourJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:happyHour.venue.coordinate.latitude longitude:happyHour.venue.coordinate.longitude];
             happyHour.venue.distance = [location distanceFromLocation:dealLocation];
-            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            [annotation setCoordinate:dealLocation2D];
-            [self.mapView addAnnotation:annotation];
+//            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
+//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+//            [annotation setCoordinate:dealLocation2D];
+//            [self.mapView addAnnotation:annotation];
             [happyHours addObject:happyHour];
         }
         
@@ -487,7 +502,8 @@ typedef enum dealTypeStates
         self.selectedDeals = deals;
         self.happyHours = happyHours;
         self.rewards = rewards;
-        NSLog(@"REWARDS: %@", self.rewards);
+        
+        [self reloadAnnotations];
         
 //        NSPredicate *predicate;
 //        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
@@ -508,6 +524,29 @@ typedef enum dealTypeStates
     }];
 }
 
+- (void) reloadAnnotations
+{
+    [self.mapView removeAnnotations:[self.mapView annotations]];
+    
+    if (self.dealType == HOTSPOT || self.dealType == REWARD) {
+        for (Deal *deal in self.selectedDeals) {
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            annotation.title = @"hotspotPin";
+            [self.mapView addAnnotation:annotation];
+        }
+    } else {
+        for (HappyHour *happyHour in self.selectedDeals) {
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            [self.mapView addAnnotation:annotation];
+        }
+    }
+    
+}
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // If it's the user location, just return nil.
@@ -522,23 +561,24 @@ typedef enum dealTypeStates
         {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = YES;
-            if ([annotation.title isEqualToString:@"hotspotPin"]){
+            if (self.dealType == HOTSPOT){
                 //pinView.pinColor = MKPinAnnotationColorRed;
                 pinView.image = [UIImage imageNamed:@"redPin"];
-            } else {
+            } else if (self.dealType == HAPPY_HOUR) {
                 //pinView.pinColor = MKPinAnnotationColorPurple;
                 pinView.image = [UIImage imageNamed:@"greyPin"];
             }
         } else {
-            if ([annotation.title isEqualToString:@"hotspotPin"]){
+            if (self.dealType == HOTSPOT){
                 //pinView.pinColor = MKPinAnnotationColorRed;
                 pinView.image = [UIImage imageNamed:@"redPin"];
-            } else {
+            } else if (self.dealType == HAPPY_HOUR) {
                 //pinView.pinColor = MKPinAnnotationColorPurple;
                 pinView.image = [UIImage imageNamed:@"greyPin"];
             }
             pinView.annotation = annotation;
         }
+        
         return pinView;
     }
     return nil;
@@ -837,23 +877,6 @@ typedef enum dealTypeStates
     
 }
 
-//- (MKAnnotationView *)mapView:(MKMapView *)map viewForAnnotation:(id <MKAnnotation>)annotation
-//{
-//    static NSString *AnnotationViewID = @"annotationViewID";
-//    
-//    MKAnnotationView *annotationView = (MKAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationViewID];
-//    
-//    if (annotationView == nil)
-//    {
-//        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationViewID];
-//    }
-//
-//    annotationView.image = [UIImage imageNamed:@"mapMarker"];
-//    annotationView.annotation = annotation;
-//    
-//    return annotationView;
-//}
-
 - (NSString *)stringForDistance:(CLLocationDistance)distance
 {
     //   CGFloat distanceMiles = METERS_TO_MILES*distance;
@@ -901,6 +924,28 @@ typedef enum dealTypeStates
 //    }
 //}
 
+- (void)showMapViewDeal:(id)sender
+{
+    if (self.isMapViewDealShowing) {
+        [UIView animateWithDuration:.5f animations:^{
+            CGRect theFrame = self.mapView.frame;
+            theFrame.size.height += 151;
+            self.mapView.frame = theFrame;
+            
+            self.selectedDealInMap.y = self.view.height - 70;
+        }];
+    } else {
+        [UIView animateWithDuration:.5f animations:^{
+            CGRect theFrame = self.mapView.frame;
+            theFrame.size.height -= 151;
+            self.mapView.frame = theFrame;
+            
+            self.selectedDealInMap.y = self.view.height - 70 - 151;
+        }];
+    }
+    self.isMapViewDealShowing = !self.isMapViewDealShowing;
+}
+
 - (void)toggleMapView:(id)sender
 {
     [self toggleMapViewFrame];
@@ -908,24 +953,6 @@ typedef enum dealTypeStates
 
 - (void)toggleMapViewFrame
 {
-//    if (self.isMapViewActive) {
-//        [UIView animateWithDuration:.5f animations:^{
-//            CGRect theFrame = self.mapView.frame;
-//            theFrame.size.height -= self.view.size.height - 100;
-//            self.mapView.frame = theFrame;
-//        }];
-//        
-//        [self hideRedoSearchContainer];
-//        //self.mapView.frame = CGRectMake(0,0, self.view.size.width, 125);
-//    } else {
-//        //self.mapView.frame = CGRectMake(0, 0, self.view.size.width, self.view.size.height);
-//        [UIView animateWithDuration:.5f animations:^{
-//            CGRect theFrame = self.mapView.frame;
-//            theFrame.size.height += self.view.size.height - 100;
-//            self.mapView.frame = theFrame;
-//        }];
-//    }
-    
     [UIView transitionWithView:self.viewContainer
                       duration:.75
                        options:UIViewAnimationOptionTransitionFlipFromLeft
@@ -933,10 +960,10 @@ typedef enum dealTypeStates
                         
                         if (!self.isMapViewActive) {
                             [self.tableView setHidden:YES];
-                            [self.mapView setHidden:NO];
+                            [self.mapViewContainer setHidden:NO];
                         } else {
                             [self.tableView setHidden:NO];
-                            [self.mapView setHidden:YES];
+                            [self.mapViewContainer setHidden:YES];
                         }
                         
                     } completion:^(BOOL finished) {
@@ -1002,6 +1029,7 @@ typedef enum dealTypeStates
         self.dealType = HAPPY_HOUR;
         self.selectedDeals = self.happyHours;
         [self reloadTableViewAfterDealToggle];
+        [self reloadAnnotations];
     }];
 }
 
@@ -1014,6 +1042,7 @@ typedef enum dealTypeStates
         self.dealType = HOTSPOT;
         self.selectedDeals = self.hotspots;
         [self reloadTableViewAfterDealToggle];
+        [self reloadAnnotations];
     }];
 }
 
@@ -1026,6 +1055,7 @@ typedef enum dealTypeStates
         self.dealType = REWARD;
         self.selectedDeals = self.rewards;
         [self reloadTableViewAfterDealToggle];
+        [self reloadAnnotations];
     }];
 }
 
