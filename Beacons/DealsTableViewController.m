@@ -59,13 +59,15 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *enableLocationLabel;
 @property (strong, nonatomic) UILabel *mapLabel;
 @property (strong, nonatomic) UISearchBar *searchBar;
+@property (assign, nonatomic) CLLocationCoordinate2D mapCenter;
+@property (assign, nonatomic) float initialRadius;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
 @property (assign, nonatomic) BOOL isMapViewActive;
 @property (assign, nonatomic) BOOL isMapViewDealShowing;
-@property (strong, nonatomic) Deal *dealInView;
+//@property (strong, nonatomic) Deal *dealInView;
 @property (strong, nonatomic) RewardsViewController *rewardsViewController;
-@property (assign, nonatomic) NSInteger *currentTopRow;
+//@property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
@@ -87,20 +89,20 @@ typedef enum dealTypeStates
     UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
     self.navigationItem.titleView = searchBarContainer;
     
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
-    //weird hack for black search bar issue
-    self.searchBar.backgroundImage = [UIImage new];
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    //self.searchBar.delegate = self;
-    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-    self.searchBar.translucent = NO;
-    self.searchBar.layer.cornerRadius = 12;
-    self.searchBar.layer.borderWidth = 1.0;
-    self.searchBar.centerX = searchBarContainer.width/2.1;
-    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
-    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    [searchBarContainer addSubview:self.searchBar];
-    //[self.view addSubview:self.searchBar];
+//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
+//    //weird hack for black search bar issue
+//    self.searchBar.backgroundImage = [UIImage new];
+//    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+//    //self.searchBar.delegate = self;
+//    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+//    self.searchBar.translucent = NO;
+//    self.searchBar.layer.cornerRadius = 12;
+//    self.searchBar.layer.borderWidth = 1.0;
+//    self.searchBar.centerX = searchBarContainer.width/2.1;
+//    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+//    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+//    [searchBarContainer addSubview:self.searchBar];
+//    //[self.view addSubview:self.searchBar];
     
     self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
@@ -110,6 +112,8 @@ typedef enum dealTypeStates
     [self.view addSubview:self.viewContainer];
 
     self.dealType = HOTSPOT;
+    
+    self.initialRadius = 1.6;
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     //[self addChildViewController:self.rewardsViewController];
@@ -200,7 +204,7 @@ typedef enum dealTypeStates
     [self.viewContainer addSubview:self.mapViewContainer];
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 65, self.view.size.width, self.view.size.height - 70 - 65)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 70 - 64)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
@@ -211,12 +215,12 @@ typedef enum dealTypeStates
     [self.mapViewContainer addSubview:self.mapView];
     //[self.view addSubview:tapView];
     
-    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
-    self.mapLabel.textAlignment = NSTextAlignmentCenter;
-    self.mapLabel.font = [ThemeManager boldFontOfSize:10];
-    self.mapLabel.textColor = [UIColor whiteColor];
-    self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
-    [self.mapView addSubview:self.mapLabel];
+//    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
+//    self.mapLabel.textAlignment = NSTextAlignmentCenter;
+//    self.mapLabel.font = [ThemeManager boldFontOfSize:10];
+//    self.mapLabel.textColor = [UIColor whiteColor];
+//    self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
+//    [self.mapView addSubview:self.mapLabel];
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
@@ -246,7 +250,7 @@ typedef enum dealTypeStates
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
     
-    self.dealInView = [[Deal alloc] init];
+//    self.dealInView = [[Deal alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -391,10 +395,11 @@ typedef enum dealTypeStates
             //REMOVE THIS LINE AFTER DEMO
             CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            //[self loadDealsNearCoordinate:location.coordinate withRadius:nil withCompletion:^{
-            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:nil withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
-                [self updateDealInMap];
+                self.mapCenter = staticLocation.coordinate;
+                [self updateMapCoordinates];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
@@ -411,13 +416,13 @@ typedef enum dealTypeStates
     
 }
 
-- (void) updateDealInMap
-{
-    if (self.hotspots.count > 0){
-        self.dealInView = self.hotspots[0];
-        [self updateMapCoordinates];
-    }
-}
+//- (void) updateDealInMap
+//{
+//    if (self.hotspots.count > 0){
+//        self.dealInView = self.hotspots[0];
+//        [self updateMapCoordinates];
+//    }
+//}
 
 - (CLLocationDistance)getRadius
 {
@@ -786,9 +791,9 @@ typedef enum dealTypeStates
 - (void) redoSearchButtonTouched:(id)sender
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    CLLocationCoordinate2D newMapCenter = [self.mapView centerCoordinate];
+    self.mapCenter = [self.mapView centerCoordinate];
     NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
-    [self loadDealsNearCoordinate:newMapCenter withRadius:radiusString withCompletion:^{
+    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
         //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
@@ -864,16 +869,17 @@ typedef enum dealTypeStates
 -(void) updateMapCoordinates
 {
 
-    CLLocationCoordinate2D initialLocation = CLLocationCoordinate2DMake(self.dealInView.venue.coordinate.latitude, self.dealInView.venue.coordinate.longitude);
+    CLLocationCoordinate2D initialLocation = CLLocationCoordinate2DMake(self.mapCenter.latitude, self.mapCenter.longitude);
     
-    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(initialLocation, 550, 550)];
+    MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(initialLocation, self.initialRadius * 1000, self.initialRadius * 1000 * (self.view.height/self.view.width))];
+    
     [self.mapView setRegion:adjustedRegion animated:YES];
     
-    self.mapLabel.text = [NSString stringWithFormat:@"%@ (%@)", [self.dealInView.venue.name uppercaseString], [self stringForDistance:self.dealInView.venue.distance]];
+//    self.mapLabel.text = [NSString stringWithFormat:@"%@ (%@)", [self.dealInView.venue.name uppercaseString], [self stringForDistance:self.dealInView.venue.distance]];
     //self.mapLabel.text = [NSString stringWithFormat:@"%@", [self stringForDistance:self.dealInView.venue.distance]];
-    float mapLabelWidth = [self widthOfString:self.mapLabel.text withFont:self.mapLabel.font];
-    self.mapLabel.width = mapLabelWidth + 10;
-    self.mapLabel.x = self.view.width - self.mapLabel.width;
+//    float mapLabelWidth = [self widthOfString:self.mapLabel.text withFont:self.mapLabel.font];
+//    self.mapLabel.width = mapLabelWidth + 10;
+//    self.mapLabel.x = self.view.width - self.mapLabel.width;
     
 }
 
