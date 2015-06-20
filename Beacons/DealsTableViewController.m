@@ -68,6 +68,7 @@ typedef enum dealTypeStates
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
 @property (nonatomic, assign) DealTypes dealType;
+@property (nonatomic, assign) DealTypes previousDealType;
 
 
 @end
@@ -104,7 +105,7 @@ typedef enum dealTypeStates
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
-    
+
     self.dealType = HOTSPOT;
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
@@ -551,7 +552,25 @@ typedef enum dealTypeStates
     else {
         [self showEmptyDealsView];
     }
+    
     [self.tableView reloadData];
+}
+
+- (void) reloadTableViewAfterDealToggle
+{
+    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
+    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
+    if (self.dealType == REWARD) {
+        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
+    } else if (self.dealType == HAPPY_HOUR) {
+        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
+    } else if (self.dealType == HOTSPOT) {
+        if (self.previousDealType == HAPPY_HOUR) {
+            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
+        } else {
+            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -979,9 +998,10 @@ typedef enum dealTypeStates
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
     } completion:^(BOOL finished) {
+        self.previousDealType = self.dealType;
         self.dealType = HAPPY_HOUR;
         self.selectedDeals = self.happyHours;
-        [self reloadTableView];
+        [self reloadTableViewAfterDealToggle];
     }];
 }
 
@@ -990,9 +1010,10 @@ typedef enum dealTypeStates
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
     } completion:^(BOOL finished) {
+        self.previousDealType = self.dealType;
         self.dealType = HOTSPOT;
         self.selectedDeals = self.hotspots;
-        [self reloadTableView];
+        [self reloadTableViewAfterDealToggle];
     }];
 }
 
@@ -1001,9 +1022,10 @@ typedef enum dealTypeStates
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width - 55, 30, 30, 30);
     } completion:^(BOOL finished) {
+        self.previousDealType = self.dealType;
         self.dealType = REWARD;
         self.selectedDeals = self.rewards;
-        [self reloadTableView];
+        [self reloadTableViewAfterDealToggle];
     }];
 }
 
