@@ -10,7 +10,8 @@
 #import "UIView+BounceAnimation.h"
 //#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
-#import "SetDealViewController.h"
+//#import "SetDealViewController.h"
+#import "DealDetailViewController.h"
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
@@ -266,7 +267,6 @@ typedef enum dealTypeStates
     [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
-
     
     self.venueImageView = [[UIImageView alloc] init];
     self.venueImageView.height = 146;
@@ -765,7 +765,7 @@ typedef enum dealTypeStates
     if (self.dealType == HOTSPOT) {
         Deal *deal;
         deal = self.selectedDeals[indexPath.row];
-        SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
         dealViewController.deal = deal;
         [self.navigationController pushViewController:dealViewController animated:YES];
     } else if (self.dealType == HAPPY_HOUR) {
@@ -927,55 +927,7 @@ typedef enum dealTypeStates
     }
 }
 
-//- (void)tabButtonTouched:(UIButton *)sender
-//{
-////    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-//
-//    if (sender == self.textOneFriend) {
-//        self.groupDeal = NO;
-//        [self showTextOneFriendAnimated:YES];
-//    }
-//    else if (sender == self.textManyFriends) {
-//        self.groupDeal = YES;
-//        [self showTextManyFriendsAnimated:YES];
-//    }
-//    
-//    [self reloadTableView];
-//}
 
-//- (void)showTextOneFriendAnimated:(BOOL)animated
-//{
-//    self.textOneFriend.selected = YES;
-//    self.textManyFriends.selected = NO;
-//    //self.beaconChatViewController.view.alpha = 1;
-////    NSTimeInterval duration = animated ? 0.3 : 0.0;
-////    [UIView animateWithDuration:duration animations:^{
-//////        self.inviteListViewController.view.transform = CGAffineTransformMakeTranslation(self.inviteListViewController.view.frame.size.width, 0);
-//////        self.beaconChatViewController.view.transform = CGAffineTransformIdentity;
-//////        self.inviteListViewController.view.alpha = 0.0;
-//////    } completion:^(BOOL finished) {
-//////        self.inviteListViewController.view.alpha = 0;
-////    }];
-//}
-
-//- (void)showTextManyFriendsAnimated:(BOOL)animated
-//{
-//    self.textOneFriend.selected = NO;
-//    self.textManyFriends.selected = YES;
-//    //self.dealRedemptionViewController.view.alpha = 1;
-////    NSTimeInterval duration = animated ? 0.3 : 0.0;
-////    [UIView animateWithDuration:duration animations:^{
-//////        self.beaconChatViewController.view.transform = CGAffineTransformMakeTranslation(self.beaconChatViewController.view.frame.size.width, 0);
-//////        self.inviteListViewController.view.transform = self.beaconChatViewController.view.transform;
-//////        self.dealRedemptionViewController.view.transform = CGAffineTransformIdentity;
-//////        self.beaconChatViewController.view.alpha = 0.0;
-//////        self.inviteListViewController.view.alpha = self.beaconChatViewController.view.alpha;
-////    } completion:^(BOOL finished) {
-//////        self.beaconChatViewController.view.alpha = 0;
-////        
-////        //self.textManyFriends.backgroundColor = [UIColor redColor];
-////    }];
-//}
 
 -(void) updateMapCoordinates
 {
@@ -1013,33 +965,6 @@ typedef enum dealTypeStates
     return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
-//-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    
-//    
-//    if (self.hotspots.count > 0 || self.happyHours.count > 0) {
-//    
-//    NSIndexPath *currentIndexPath = self.tableView.indexPathsForVisibleRows[0];
-//        if (self.hotspots.count > 0) {
-//            if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 < self.hotspots.count) {
-//                self.dealInView = self.hotspots[currentIndexPath.row + 1];
-//            } else if (self.tableView.contentOffset.y > 115 && currentIndexPath.row + 1 >= self.hotspots.count && currentIndexPath.row < (self.hotspots.count + self.happyHours.count - 1)){
-//                self.dealInView = self.happyHours[currentIndexPath.row - [self.hotspots count] + 1];
-//            } else if (self.tableView.contentOffset.y < 115 && self.tableView.contentOffset.y > 0) {
-//                self.dealInView = self.hotspots[0];
-//            }
-//            [self updateMapCoordinates];
-//        } else if (self.hotspots.count == 0 && self.happyHours.count > 0) {
-//            if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 < self.happyHours.count) {
-//                self.dealInView = self.happyHours[currentIndexPath.row + 1];
-//            } else if (self.tableView.contentOffset.y > 65 && currentIndexPath.row + 1 >= self.happyHours.count && currentIndexPath.row < (self.hotspots.count + self.happyHours.count - 1)){
-//                self.dealInView = self.happyHours[currentIndexPath.row - [self.hotspots count] + 1];
-//            } else if (self.tableView.contentOffset.y < 65 && self.tableView.contentOffset.y > 0) {
-//                self.dealInView = self.happyHours[0];
-//            }
-//            [self updateMapCoordinates];
-//        }
-//    }
-//}
 
 - (void)toggleMapViewDeal:(id)sender
 {
@@ -1257,7 +1182,7 @@ typedef enum dealTypeStates
 {
     if (self.dealType == HOTSPOT) {
         Deal *deal = self.selectedDeals[self.selectedDealIndex];
-        SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
         dealViewController.deal = deal;
         [self.navigationController pushViewController:dealViewController animated:YES];
     } else if (self.dealType == HAPPY_HOUR) {

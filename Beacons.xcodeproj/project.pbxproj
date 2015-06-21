@@ -89,6 +89,7 @@
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
+		41FD06211B37179600F7DD08 /* DealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FD06201B37179600F7DD08 /* DealDetailViewController.m */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -380,6 +381,8 @@
 		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
 		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
+		41FD061F1B37178000F7DD08 /* DealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDetailViewController.h; sourceTree = "<group>"; };
+		41FD06201B37179600F7DD08 /* DealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDetailViewController.m; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -933,6 +936,8 @@
 				9651C799193E72390083A0FE /* DealRedemptionViewController.m */,
 				964602511994103200979929 /* SetDealViewController.h */,
 				964602521994103200979929 /* SetDealViewController.m */,
+				41FD061F1B37178000F7DD08 /* DealDetailViewController.h */,
+				41FD06201B37179600F7DD08 /* DealDetailViewController.m */,
 			);
 			name = Deals;
 			sourceTree = "<group>";
@@ -1498,6 +1503,7 @@
 				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
+				41FD06211B37179600F7DD08 /* DealDetailViewController.m in Sources */,
 				964602531994103200979929 /* SetDealViewController.m in Sources */,
 				4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */,
 				1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */,
