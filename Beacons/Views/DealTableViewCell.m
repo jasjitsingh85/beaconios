@@ -45,9 +45,9 @@
     [self.backgroundGradient setImage:gradientImage];
     [self.venueImageView addSubview:self.backgroundGradient];
     
-    self.venueScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
-    self.venueScroll.pagingEnabled = YES;
-    self.venueScroll.showsHorizontalScrollIndicator = NO;
+//    self.venueScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
+//    self.venueScroll.pagingEnabled = YES;
+//    self.venueScroll.showsHorizontalScrollIndicator = NO;
 
     CGFloat originForVenuePreview = 0;
     self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(originForVenuePreview, 0, self.contentView.frame.size.width, 146)];
@@ -106,7 +106,7 @@
 //    [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
     
     //venuePreviewView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0];
-    [self.venueScroll addSubview:self.venuePreviewView];
+//    [self.venueScroll addSubview:self.venuePreviewView];
     
 //    CGFloat originForVenueDetail = self.contentView.frame.size.width;
 //    self.venueDetailView = [[UIView alloc] initWithFrame:CGRectMake(originForVenueDetail, 0, self.contentView.frame.size.width, 196)];
@@ -175,8 +175,8 @@
     //[self.venueScroll addSubview:self.venueDetailView];
     
     
-    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 1, self.contentView.frame.size.height);
-    [self.contentView addSubview:self.venueScroll];
+//    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 1, self.contentView.frame.size.height);
+    [self.contentView addSubview:self.venuePreviewView];
     
 //    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
 //    [recognizer setNumberOfTapsRequired:1];
@@ -205,44 +205,10 @@
     self.venueLabelLineTwo.height = 46;
     self.venueLabelLineTwo.y = 49;
     
-    self.venueDetailLabel.width = self.venueDetailView.size.width * .65;
-    self.venueDetailLabel.x = 10;
-    self.venueDetailLabel.height = 58;
-    self.venueDetailLabel.y = 20;
-    
-    self.venueDescriptionLabel.width = .6 * self.venueDetailView.width;
-    self.venueDescriptionLabel.x = 20;
-    self.venueDescriptionLabel.height = 33;
-    self.venueDescriptionLabel.y = 60;
-    
-    self.venueDetailDealHeadingLabel.width = 120;
-    self.venueDetailDealHeadingLabel.x = 0;
-    self.venueDetailDealHeadingLabel.height = 24;
-    self.venueDetailDealHeadingLabel.y = 90;
-    
-    self.venueDetailDealFirstLineLabel.width = self.venueDetailView.width - 20;
-    self.venueDetailDealFirstLineLabel.x = 10;
-    self.venueDetailDealFirstLineLabel.height = 40;
-    self.venueDetailDealFirstLineLabel.y = 120;
-    
-    self.venueDetailDealSecondLineLabel.width = self.venueDetailView.width - 20;
-    self.venueDetailDealSecondLineLabel.x = 10;
-    self.venueDetailDealSecondLineLabel.height = 16;
-    self.venueDetailDealSecondLineLabel.y = 150;
-    
     self.dealTime.width = 200;
     self.dealTime.height = 20;
     self.dealTime.x = 8;
     self.dealTime.y=117;
-    
-    
-//    self.venueDescriptionBackground.width = self.width;
-//    self.venueDescriptionBackground.height = 37;
-//    self.venueDescriptionBackground.y = self.venueImageView.bottom;
-//    self.venueDescriptionLabel.width = self.venueDescriptionBackground.width - 40;
-//    self.venueDescriptionLabel.height = self.venueDescriptionBackground.height;
-//    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
-//    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
 
     self.distanceLabel.size = CGSizeMake(67, 20);
     //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
@@ -270,7 +236,7 @@
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     }
     
-    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
+//    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
     self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
@@ -293,10 +259,10 @@
     self.descriptionLabel.width = descriptionLabelWidth + 10;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
     self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
-    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
+//    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
+//    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
+//    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
     self.dealTime.text = [self.deal.dealStartString uppercaseString];
 //    if ([self.dealTime.text isEqualToString:@"NOW"]) {
 //        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
@@ -370,7 +336,7 @@
         [Utilities launchAppleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
     }];
     [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
-    [actionSheet showInView:self.venueDetailView];
+//    [actionSheet showInView:self.venueDetailView];
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString

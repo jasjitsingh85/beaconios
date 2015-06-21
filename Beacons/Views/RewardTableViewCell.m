@@ -48,7 +48,7 @@
     }
     
     self.venueImageView = [[UIImageView alloc] init];
-    self.venueImageView.height = 104;
+    self.venueImageView.height = 146;
     self.venueImageView.width = self.width;
     self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -68,8 +68,13 @@
     self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.venuePreviewView addSubview:self.backgroundView];
     
+    UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.contentView.size.width, 60)];
+    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+    [backgroundGradient setImage:gradientImage];
+    [self.venuePreviewView addSubview:backgroundGradient];
+    
     self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:30];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
     self.venueLabelLineOne.textColor = [UIColor whiteColor];
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
@@ -77,21 +82,21 @@
     self.venueLabelLineOne.numberOfLines = 1;
     [self.venuePreviewView addSubview:self.venueLabelLineOne];
     
-//    self.venueLabelLineTwo = [[UILabel alloc] init];
-//    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
-//    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
-//    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
-//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-//    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-//    self.venueLabelLineTwo.numberOfLines = 1;
-//    [self.venuePreviewView addSubview:self.venueLabelLineTwo];
+    self.venueLabelLineTwo = [[UILabel alloc] init];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
+    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    self.venueLabelLineTwo.numberOfLines = 1;
+    [self.venuePreviewView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
+    self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
     self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 25;
     self.descriptionLabel.x = 0;
-    self.descriptionLabel.y = 65;
+    self.descriptionLabel.y = 90;
     self.descriptionLabel.font = [ThemeManager boldFontOfSize:13];
     self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
@@ -137,27 +142,17 @@
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 33;
+    self.venueLabelLineOne.y = 35;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 50;
+    self.venueLabelLineTwo.y = 49;
     
-    self.venueDescriptionLabel.width = .6 * self.venuePreviewView.width;
-    self.venueDescriptionLabel.x = 20;
-    self.venueDescriptionLabel.height = 33;
-    self.venueDescriptionLabel.y = 60;
-    
-    self.venueDetailDealHeadingLabel.width = 120;
-    self.venueDetailDealHeadingLabel.x = 0;
-    self.venueDetailDealHeadingLabel.height = 24;
-    self.venueDetailDealHeadingLabel.y = 90;
-    
-    self.dealTime.width = 200;
-    self.dealTime.height = 30;
-    //self.dealTime.x = self.venuePreviewView.size.width*.62;
-    self.dealTime.y=62;
+//    self.dealTime.width = 200;
+//    self.dealTime.height = 20;
+//    self.dealTime.x = 8;
+//    self.dealTime.y=117;
     
     
     //    self.venueDescriptionBackground.width = self.width;
@@ -187,13 +182,12 @@
     } else {
         //[self.venuePreviewView addSubview:self.redeemRewardButton];
         [self.venuePreviewView addSubview:self.descriptionLabel];
-        //NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
-        self.venueLabelLineOne.text = [self.deal.itemName uppercaseString];
-        //self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        self.venueDetailLabel.text = self.deal.dealDescriptionShort;
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
         [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
         [self.redeemRewardButton setTitle:[NSString stringWithFormat:@"%@", self.deal.itemPointCost] forState:UIControlStateNormal];
-        self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@ (%@)",[self.deal.venue.name uppercaseString], [self stringForDistance:self.deal.venue.distance]];
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE",[self.deal.itemName uppercaseString]];
         float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                                             attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
@@ -203,30 +197,19 @@
         self.dealTime.x = descriptionLabelWidth + 10;
     
         self.descriptionLabel.width = descriptionLabelWidth + 5;
-        //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-        //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-        self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
-        self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
-        //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-        self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
         //self.dealTime.text = [self stringForDistance:self.deal.venue.distance];
         
-        self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(descriptionLabelWidth + 10, self.descriptionLabel.origin.y - 3, 80, 30)];
-        self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+        self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 117, 80, 20)];
+        self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, -5, 50, 30)];
         [self.priceContainer addSubview:self.priceLabel];
         
-        self.priceLabel.text = [NSString stringWithFormat: @"%@", self.deal.itemPointCost];
-        self.priceLabel.font = [ThemeManager boldFontOfSize:18];
+        self.priceLabel.text = [NSString stringWithFormat: @"x %@", self.deal.itemPointCost];
+        self.priceLabel.font = [ThemeManager lightFontOfSize:14];
         self.priceLabel.textColor = [UIColor whiteColor];
-        NSInteger stringLength = [self.priceLabel.text length];
     
         UIImageView *goldCoin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"goldCoin"]];
-        if (stringLength == 2) {
-           goldCoin.x = -14;
-        } else if (stringLength == 3) {
-            goldCoin.x = -5;
-        }
-        goldCoin.y = 5;
+        goldCoin.x = 8;
+        goldCoin.y = 3;
         
         [self.priceContainer addSubview:goldCoin];
         [self.priceContainer addSubview:self.priceLabel];

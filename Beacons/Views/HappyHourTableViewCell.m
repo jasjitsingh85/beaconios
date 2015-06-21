@@ -40,7 +40,7 @@
 //    [self.contentView addSubview:self.venueImageView];
     
     self.backgroundCellView = [[UIView alloc] init];
-    self.backgroundCellView.height = 106;
+    self.backgroundCellView.height = 146;
 //    self.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
     self.backgroundCellView.width = self.width;
     [self.contentView addSubview:self.backgroundCellView];
@@ -51,10 +51,15 @@
     self.backgroundImageView.clipsToBounds = YES;
     [self.backgroundCellView addSubview:self.backgroundImageView];
     
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    [blurEffectView setFrame:self.backgroundImageView.bounds];
-    [self.backgroundImageView addSubview:blurEffectView];
+    UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.contentView.size.width, 60)];
+    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+    [backgroundGradient setImage:gradientImage];
+    [self.backgroundCellView addSubview:backgroundGradient];
+    
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    [blurEffectView setFrame:self.backgroundImageView.bounds];
+//    [self.backgroundImageView addSubview:blurEffectView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
@@ -75,20 +80,20 @@
     [self.backgroundCellView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.backgroundColor = [[UIColor unnormalizedColorWithRed:108 green:56 blue:233 alpha:255] colorWithAlphaComponent:0.9];
+    self.descriptionLabel.backgroundColor = [[UIColor unnormalizedColorWithRed:162 green:60 blue:233 alpha:255] colorWithAlphaComponent:0.9];
 //    self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
 //    self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
-    self.descriptionLabel.height = 30;
+    self.descriptionLabel.height = 26;
     self.descriptionLabel.x = 0;
-    self.descriptionLabel.y = 65;
-    self.descriptionLabel.font = [ThemeManager boldFontOfSize:16];
+    self.descriptionLabel.y = 90;
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:14];
     //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
     [self.backgroundCellView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager boldFontOfSize:16];
+    self.dealTime.font = [ThemeManager lightFontOfSize:14];
     self.dealTime.textColor = [UIColor whiteColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
@@ -96,8 +101,9 @@
     [self.backgroundCellView addSubview:self.dealTime];
     
     self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager boldFontOfSize:14];
+    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
     self.distanceLabel.textColor = [UIColor whiteColor];
+    [self.backgroundCellView addSubview:self.distanceLabel];
     
     return self;
 }
@@ -106,64 +112,31 @@
 {
     [super layoutSubviews];
     
-//    self.venueImageView.height = 196;
+//    self.venueImageView.height = 146;
 //    self.venueImageView.width = self.width;
     
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 32;
+    self.venueLabelLineOne.y = 35;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 25;
-    
-//    self.venueDetailLabel.width = self.venueDetailView.size.width * .60;
-//    self.venueDetailLabel.x = 10;
-//    self.venueDetailLabel.height = 58;
-//    self.venueDetailLabel.y = 20;
-    
-//    self.venueDescriptionLabel.width = .6 * self.venueDetailView.width;
-//    self.venueDescriptionLabel.x = 20;
-//    self.venueDescriptionLabel.height = 33;
-//    self.venueDescriptionLabel.y = 60;
-    
-//    self.venueDetailDealHeadingLabel.width = 120;
-//    self.venueDetailDealHeadingLabel.x = 0;
-//    self.venueDetailDealHeadingLabel.height = 24;
-//    self.venueDetailDealHeadingLabel.y = 90;
-//    
-//    self.venueDetailDealFirstLineLabel.width = self.venueDetailView.width - 20;
-//    self.venueDetailDealFirstLineLabel.x = 10;
-//    self.venueDetailDealFirstLineLabel.height = 40;
-//    self.venueDetailDealFirstLineLabel.y = 120;
-//    
-//    self.venueDetailDealSecondLineLabel.width = self.venueDetailView.width - 20;
-//    self.venueDetailDealSecondLineLabel.x = 10;
-//    self.venueDetailDealSecondLineLabel.height = 16;
-//    self.venueDetailDealSecondLineLabel.y = 150;
+    self.venueLabelLineTwo.y = 49;
     
     self.dealTime.width = 200;
-    self.dealTime.height = 30;
-    //self.dealTime.x = self.venuePreviewView.size.width*.62;
-    self.dealTime.y=65;
+    self.dealTime.height = 20;
+    self.dealTime.x = 8;
+    self.dealTime.y=117;
     
-    
-    //    self.venueDescriptionBackground.width = self.width;
-    //    self.venueDescriptionBackground.height = 37;
-    //    self.venueDescriptionBackground.y = self.venueImageView.bottom;
-    //    self.venueDescriptionLabel.width = self.venueDescriptionBackground.width - 40;
-    //    self.venueDescriptionLabel.height = self.venueDescriptionBackground.height;
-    //    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
-    //    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
-    
-    self.distanceLabel.size = CGSizeMake(37, 37);
-    self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-    self.distanceLabel.clipsToBounds = YES;
-    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-    self.distanceLabel.y = 37;
-    self.distanceLabel.centerX = self.venueDetailView.size.width - 33;
+    self.distanceLabel.size = CGSizeMake(67, 20);
+    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    //self.distanceLabel.clipsToBounds = YES;
+    self.distanceLabel.textAlignment = NSTextAlignmentRight;
+    self.distanceLabel.y = 117;
+    self.distanceLabel.x = self.contentView.size.width - 77;
+    //self.distanceLabel.centerX = self.venueDetailView.size.width - 33;
     
 }
 
@@ -172,22 +145,20 @@
     
     _happyHour = happyHour;
     
-//    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:@"HAPPY HOUR"];
-//    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-//    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-    
-    self.venueLabelLineTwo.text = @"HAPPY HOUR";
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:[self.happyHour.venue.name uppercaseString]];
+    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
     self.venueDetailLabel.text = self.happyHour.happyHourDescription;
     //[self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  @%@", [self.happyHour.venue.name uppercaseString]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", @"HAPPY HOUR"];
 //    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
 //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
 //                                                                        attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
 //                                                                           context:nil]
 //    .size.width;
     
-    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:16]}];
+    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
     
     CGFloat descriptionLabelWidth;
     if (textSize.width < self.contentView.width * .60) {
@@ -202,7 +173,7 @@
     
     self.descriptionLabel.width = descriptionLabelWidth + 5;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    self.distanceLabel.text = [self stringForDistance:happyHour.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.happyHour.happyHourDescription;
     //self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";

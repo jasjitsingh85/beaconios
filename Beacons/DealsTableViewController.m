@@ -37,6 +37,7 @@
 #import "RewardTableViewCell.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
@@ -60,6 +61,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *mapLabel;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (assign, nonatomic) CLLocationCoordinate2D mapCenter;
+@property (strong, nonatomic) UITapGestureRecognizer *mapTapped;
 @property (assign, nonatomic) float initialRadius;
 @property (assign, nonatomic) BOOL loadingDeals;
 @property (assign, nonatomic) BOOL locationEnabled;
@@ -74,7 +76,16 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UIView *selectedDealInMap;
 @property (nonatomic, assign) DealTypes dealType;
 @property (nonatomic, assign) DealTypes previousDealType;
+@property (nonatomic, assign) int selectedDealIndex;
 
+@property (nonatomic, strong) UIImageView *venueImageView;
+@property (nonatomic, strong) UIImageView *backgroundGradient;
+@property (nonatomic, strong) UIView *venueView;
+@property (strong, nonatomic) UILabel *venueLabelLineOne;
+@property (strong, nonatomic) UILabel *venueLabelLineTwo;
+@property (strong, nonatomic) UILabel *descriptionLabel;
+@property (strong, nonatomic) UILabel *dealTime;
+@property (strong, nonatomic) UILabel *distanceLabel;
 
 @end
 
@@ -207,11 +218,12 @@ typedef enum dealTypeStates
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 70 - 64)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
-    UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc]
-      initWithTarget:self action:@selector(showMapViewDeal:)];
-    tapped.numberOfTapsRequired = 1;
-    tapped.numberOfTouchesRequired = 1;
-    [self.mapView addGestureRecognizer:tapped];
+    self.mapTapped = [[UITapGestureRecognizer alloc]
+      initWithTarget:self action:@selector(toggleMapViewDeal:)];
+    self.mapTapped.numberOfTapsRequired = 1;
+    self.mapTapped.numberOfTouchesRequired = 1;
+    self.mapTapped.enabled = NO;
+    [self.mapView addGestureRecognizer:self.mapTapped];
     [self.mapViewContainer addSubview:self.mapView];
     //[self.view addSubview:tapView];
     
@@ -224,15 +236,20 @@ typedef enum dealTypeStates
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
-    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 70, self.view.width, 151)];
-    self.selectedDealInMap.backgroundColor = [UIColor blackColor];
+    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 70, self.view.width, 146)];
+    self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
+    UITapGestureRecognizer *selectedDealTapped = [[UITapGestureRecognizer alloc]
+                      initWithTarget:self action:@selector(tappedOnSelectedDealInMap:)];
+    selectedDealTapped.numberOfTapsRequired = 1;
+    selectedDealTapped.numberOfTouchesRequired = 1;
+    [self.selectedDealInMap addGestureRecognizer:selectedDealTapped];
     [self.mapViewContainer addSubview:self.selectedDealInMap];
     
     UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
     [panRec setDelegate:self];
     [self.mapView addGestureRecognizer:panRec];
     
-    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 55)];
+    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, -55, self.view.width, 55)];
     self.redoSearchContainer.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
     [self.mapView addSubview:self.redoSearchContainer];
     
@@ -249,8 +266,93 @@ typedef enum dealTypeStates
     [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
+
     
-//    self.dealInView = [[Deal alloc] init];
+    self.venueImageView = [[UIImageView alloc] init];
+    self.venueImageView.height = 146;
+    self.venueImageView.width = self.view.width;
+    self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.venueImageView.clipsToBounds = YES;
+    [self.selectedDealInMap addSubview:self.venueImageView];
+    
+    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
+    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+    [self.backgroundGradient setImage:gradientImage];
+    [self.venueImageView addSubview:self.backgroundGradient];
+    
+    self.venueView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.selectedDealInMap.frame.size.width, 146)];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
+    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.venueView addSubview:backgroundView];
+    
+    self.venueLabelLineOne = [[UILabel alloc] init];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+    self.venueLabelLineOne.textColor = [UIColor whiteColor];
+    self.venueLabelLineOne.width = self.view.width - 20;
+    self.venueLabelLineOne.x = 5;
+    self.venueLabelLineOne.height = 30;
+    self.venueLabelLineOne.y = 35;
+    //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
+    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
+    self.venueLabelLineOne.numberOfLines = 1;
+    [self.venueView addSubview:self.venueLabelLineOne];
+    
+    self.venueLabelLineTwo = [[UILabel alloc] init];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+    self.venueLabelLineTwo.width = self.view.width - 20;
+    self.venueLabelLineTwo.x = 4;
+    self.venueLabelLineTwo.height = 46;
+    self.venueLabelLineTwo.y = 49;
+    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
+    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    self.venueLabelLineTwo.numberOfLines = 1;
+    [self.venueView addSubview:self.venueLabelLineTwo];
+    
+    self.descriptionLabel = [[UILabel alloc] init];
+    self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+    //self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
+    self.descriptionLabel.height = 26;
+    self.descriptionLabel.x = 0;
+    self.descriptionLabel.y = 90;
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:14];
+    //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabel.textColor = [UIColor whiteColor];
+    self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
+    [self.venueView addSubview:self.descriptionLabel];
+    
+    self.dealTime = [[UILabel alloc] init];
+    self.dealTime.font = [ThemeManager lightFontOfSize:14];
+    self.dealTime.textColor = [UIColor whiteColor];
+    //self.dealTime.adjustsFontSizeToFitWidth = YES;
+    self.dealTime.width = 200;
+    self.dealTime.height = 20;
+    self.dealTime.x = 8;
+    self.dealTime.y=117;
+    self.dealTime.textAlignment = NSTextAlignmentLeft;
+    self.dealTime.numberOfLines = 0;
+    [self.venueView addSubview:self.dealTime];
+    
+    self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
+    self.distanceLabel.size = CGSizeMake(67, 20);
+    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    //self.distanceLabel.clipsToBounds = YES;
+    self.distanceLabel.textAlignment = NSTextAlignmentRight;
+    self.distanceLabel.y = 117;
+    self.distanceLabel.x = self.view.width - 77;
+    self.distanceLabel.textColor = [UIColor whiteColor];
+    [self.venueView addSubview:self.distanceLabel];
+    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    
+    //[self.venueScroll addSubview:self.venueDetailView];
+    
+    [self.selectedDealInMap addSubview:self.venueView];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
@@ -534,18 +636,23 @@ typedef enum dealTypeStates
     [self.mapView removeAnnotations:[self.mapView annotations]];
     
     if (self.dealType == HOTSPOT || self.dealType == REWARD) {
+        int dealIndex = 0;
         for (Deal *deal in self.selectedDeals) {
             CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             [annotation setCoordinate:dealLocation2D];
-            annotation.title = @"hotspotPin";
+            annotation.title = [NSString stringWithFormat:@"%d", dealIndex];
+            ++dealIndex;
             [self.mapView addAnnotation:annotation];
         }
     } else {
+        int happyHourIndex = 0;
         for (HappyHour *happyHour in self.selectedDeals) {
             CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             [annotation setCoordinate:dealLocation2D];
+            annotation.title = [NSString stringWithFormat:@"%d", happyHourIndex];
+            ++happyHourIndex;
             [self.mapView addAnnotation:annotation];
         }
     }
@@ -565,21 +672,21 @@ typedef enum dealTypeStates
         if (!pinView)
         {
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
-            pinView.canShowCallout = YES;
+            pinView.canShowCallout = NO;
             if (self.dealType == HOTSPOT){
-                //pinView.pinColor = MKPinAnnotationColorRed;
-                pinView.image = [UIImage imageNamed:@"redPin"];
+                pinView.pinColor = MKPinAnnotationColorRed;
+                //pinView.image = [UIImage imageNamed:@"redPin"];
             } else if (self.dealType == HAPPY_HOUR) {
-                //pinView.pinColor = MKPinAnnotationColorPurple;
-                pinView.image = [UIImage imageNamed:@"greyPin"];
+                pinView.pinColor = MKPinAnnotationColorPurple;
+                //pinView.image = [UIImage imageNamed:@"greyPin"];
             }
         } else {
             if (self.dealType == HOTSPOT){
-                //pinView.pinColor = MKPinAnnotationColorRed;
-                pinView.image = [UIImage imageNamed:@"redPin"];
+                pinView.pinColor = MKPinAnnotationColorRed;
+                //pinView.image = [UIImage imageNamed:@"redPin"];
             } else if (self.dealType == HAPPY_HOUR) {
-                //pinView.pinColor = MKPinAnnotationColorPurple;
-                pinView.image = [UIImage imageNamed:@"greyPin"];
+                pinView.pinColor = MKPinAnnotationColorPurple;
+                //pinView.image = [UIImage imageNamed:@"greyPin"];
             }
             pinView.annotation = annotation;
         }
@@ -797,7 +904,7 @@ typedef enum dealTypeStates
         //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        //[self toggleMapViewFrame];
+        [self hideRedoSearchContainer];
         [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
         [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
     }];
@@ -930,23 +1037,27 @@ typedef enum dealTypeStates
 //    }
 //}
 
-- (void)showMapViewDeal:(id)sender
+- (void)toggleMapViewDeal:(id)sender
 {
     if (self.isMapViewDealShowing) {
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
-            theFrame.size.height += 151;
+            theFrame.size.height += 146;
             self.mapView.frame = theFrame;
             
             self.selectedDealInMap.y = self.view.height - 70;
+            
+            self.mapTapped.enabled = NO;
         }];
     } else {
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
-            theFrame.size.height -= 151;
+            theFrame.size.height -= 146;
             self.mapView.frame = theFrame;
             
-            self.selectedDealInMap.y = self.view.height - 70 - 151;
+            self.selectedDealInMap.y = self.view.height - 70 - 146;
+            
+            self.mapTapped.enabled = YES;
         }];
     }
     self.isMapViewDealShowing = !self.isMapViewDealShowing;
@@ -998,30 +1109,30 @@ typedef enum dealTypeStates
 
 - (void) showRedoSearchContainer
 {
-    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
-        CGRect frame = self.mapLabel.frame;
-        frame.origin.x = self.view.width + self.mapLabel.width;
-        self.mapLabel.frame = frame; // move to new location
-    }];
+//    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
+//        CGRect frame = self.mapLabel.frame;
+//        frame.origin.x = self.view.width + self.mapLabel.width;
+//        self.mapLabel.frame = frame; // move to new location
+//    }];
     
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
-        frame.origin.y = self.view.height - 55;
+        frame.origin.y = 0;
         self.redoSearchContainer.frame = frame; // move to new location
     }];
 }
 
 - (void) hideRedoSearchContainer
 {
-    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
-        CGRect frame = self.mapLabel.frame;
-        frame.origin.x = self.view.width - self.mapLabel.width;
-        self.mapLabel.frame = frame; // move to new location
-    }];
+//    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+//        CGRect frame = self.mapLabel.frame;
+//        frame.origin.x = self.view.width - self.mapLabel.width;
+//        self.mapLabel.frame = frame; // move to new location
+//    }];
     
-    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
+    [UIView animateWithDuration:0.35 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
-        frame.origin.y = self.view.height;
+        frame.origin.y = -55;
         self.redoSearchContainer.frame = frame; // move to new location
     }];
 }
@@ -1063,6 +1174,88 @@ typedef enum dealTypeStates
         [self reloadTableViewAfterDealToggle];
         [self reloadAnnotations];
     }];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    self.selectedDealIndex = [view.annotation.title intValue];
+    
+    if (self.dealType == HOTSPOT) {
+        Deal *deal = self.selectedDeals[self.selectedDealIndex];
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+        
+        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
+
+
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+        
+        CGFloat descriptionLabelWidth;
+        if (textSize.width < self.view.width * .6) {
+            descriptionLabelWidth = textSize.width;
+        } else {
+            descriptionLabelWidth = self.view.width * .6;
+        }
+        
+        self.descriptionLabel.width = descriptionLabelWidth + 10;
+
+        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+        self.dealTime.text = [deal.dealStartString uppercaseString];
+        
+    } else if (self.dealType == HAPPY_HOUR) {
+        
+    } else if (self.dealType == REWARD) {
+        
+    }
+    
+    [self toggleMapViewDeal:nil];
+    
+}
+
+-(void)tappedOnSelectedDealInMap:(id)sender
+{
+    if (self.dealType == HOTSPOT) {
+        Deal *deal = self.selectedDeals[self.selectedDealIndex];
+        SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+        dealViewController.deal = deal;
+        [self.navigationController pushViewController:dealViewController animated:YES];
+    }
+}
+
+-(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
+{
+    NSMutableDictionary *firstAndSecondLine = [[NSMutableDictionary alloc] init];
+    NSArray *arrayOfStrings = [originalString componentsSeparatedByString:@" "];
+    if ([arrayOfStrings count] == 1) {
+        [firstAndSecondLine setObject:@"" forKey:@"firstLine"];
+        [firstAndSecondLine setObject:originalString forKey:@"secondLine"];
+    } else {
+        NSMutableString *firstLine = [[NSMutableString alloc] init];
+        NSMutableString *secondLine = [[NSMutableString alloc] init];
+        NSInteger firstLineCharCount = 0;
+        for (int i = 0; i < [arrayOfStrings count]; i++) {
+            if ((firstLineCharCount + [arrayOfStrings[i] length] < 12 && i + 1 != [arrayOfStrings count]) || i == 0) {
+                if ([firstLine  length] == 0) {
+                    [firstLine appendString:arrayOfStrings[i]];
+                } else {
+                    [firstLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+                firstLineCharCount = firstLineCharCount + [arrayOfStrings[i] length];
+            } else {
+                if ([secondLine length] == 0) {
+                    [secondLine appendString:arrayOfStrings[i]];
+                } else {
+                    [secondLine appendString:[NSString stringWithFormat:@" %@", arrayOfStrings[i]]];
+                }
+            }
+        }
+        [firstAndSecondLine setObject:firstLine forKey:@"firstLine"];
+        [firstAndSecondLine setObject:secondLine forKey:@"secondLine"];
+    }
+    
+    return firstAndSecondLine;
 }
 
 @end
