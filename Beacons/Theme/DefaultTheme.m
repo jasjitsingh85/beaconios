@@ -42,7 +42,7 @@
 
 - (UIColor *)lightBlueColor
 {
-    return [UIColor unnormalizedColorWithRed:61 green:198 blue:210 alpha:255];
+    return [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
 }
 
 - (UIColor *)darkColor
@@ -67,7 +67,7 @@
 
 - (UIColor *)greenColor
 {
-    return [UIColor unnormalizedColorWithRed:227 green:235 blue:209 alpha:255];
+    return [UIColor unnormalizedColorWithRed:75 green:202 blue:105 alpha:255];
 }
 
 - (UIColor *)darkGreenColor
@@ -93,7 +93,7 @@
 
 - (UIColor *)purpleColor
 {
-    return [UIColor unnormalizedColorWithRed:237 green:236 blue:243 alpha:255];
+    return [UIColor unnormalizedColorWithRed:165 green:55 blue:238 alpha:255];
 }
 
 - (UIColor *)darkPurpleColor

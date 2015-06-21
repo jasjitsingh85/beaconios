@@ -92,7 +92,7 @@
     [self.venuePreviewView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 25;
     self.descriptionLabel.x = 0;
@@ -102,13 +102,13 @@
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
     
-    self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager lightFontOfSize:16];
-    self.dealTime.textColor = [UIColor blackColor];
-    //self.dealTime.adjustsFontSizeToFitWidth = YES;
-    self.dealTime.textAlignment = NSTextAlignmentLeft;
-    self.dealTime.numberOfLines = 0;
-    [self.venuePreviewView addSubview:self.dealTime];
+//    self.dealTime = [[UILabel alloc] init];
+//    self.dealTime.font = [ThemeManager lightFontOfSize:14];
+//    self.dealTime.textColor = [UIColor whiteColor];
+//    //self.dealTime.adjustsFontSizeToFitWidth = YES;
+//    self.dealTime.textAlignment = NSTextAlignmentLeft;
+//    self.dealTime.numberOfLines = 0;
+//    [self.venuePreviewView addSubview:self.dealTime];
     
     self.redeemRewardButton = [[UIButton alloc] init];
     self.redeemRewardButton.frame = CGRectMake(self.venuePreviewView.size.width - 80, 45, 70, 30);
@@ -123,11 +123,10 @@
     
     [self.contentView addSubview:self.venuePreviewView];
 
-    
-//    self.distanceLabel = [[UILabel alloc] init];
-//    self.distanceLabel.font = [ThemeManager boldFontOfSize:14];
-//    self.distanceLabel.textColor = [UIColor blackColor];
-//    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    self.distanceLabel = [[UILabel alloc] init];
+    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
+    self.distanceLabel.textColor = [UIColor whiteColor];
+    [self.venuePreviewView addSubview:self.distanceLabel];
     
     return self;
 }
@@ -163,12 +162,12 @@
     //    self.venueDescriptionLabel.centerX = self.venueDescriptionBackground.width/2.0;
     //    [self.venueDescriptionBackground setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
-    self.distanceLabel.size = CGSizeMake(37, 37);
-    self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-    self.distanceLabel.clipsToBounds = YES;
-    self.distanceLabel.textAlignment = NSTextAlignmentCenter;
-    self.distanceLabel.y = 37;
-    self.distanceLabel.centerX = self.venuePreviewView.size.width - 33;
+    self.distanceLabel.size = CGSizeMake(67, 20);
+    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+    //self.distanceLabel.clipsToBounds = YES;
+    self.distanceLabel.textAlignment = NSTextAlignmentRight;
+    self.distanceLabel.y = 117;
+    self.distanceLabel.x = self.venuePreviewView.width - 77;
     
 }
 
@@ -197,6 +196,7 @@
         self.dealTime.x = descriptionLabelWidth + 10;
     
         self.descriptionLabel.width = descriptionLabelWidth + 5;
+        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
         //self.dealTime.text = [self stringForDistance:self.deal.venue.distance];
         
         self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 117, 80, 20)];

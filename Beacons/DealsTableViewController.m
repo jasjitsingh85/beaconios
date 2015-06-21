@@ -674,19 +674,23 @@ typedef enum dealTypeStates
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = NO;
             if (self.dealType == HOTSPOT){
-                pinView.pinColor = MKPinAnnotationColorRed;
-                //pinView.image = [UIImage imageNamed:@"redPin"];
+                //pinView.pinColor = MKPinAnnotationColorRed;
+                pinView.image = [UIImage imageNamed:@"bluePin"];
             } else if (self.dealType == HAPPY_HOUR) {
-                pinView.pinColor = MKPinAnnotationColorPurple;
-                //pinView.image = [UIImage imageNamed:@"greyPin"];
+                //pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"purplePin"];
+            } else if (self.dealType == REWARD) {
+                pinView.image = [UIImage imageNamed:@"greenPin"];
             }
         } else {
             if (self.dealType == HOTSPOT){
-                pinView.pinColor = MKPinAnnotationColorRed;
-                //pinView.image = [UIImage imageNamed:@"redPin"];
+                //pinView.pinColor = MKPinAnnotationColorRed;
+                pinView.image = [UIImage imageNamed:@"bluePin"];
             } else if (self.dealType == HAPPY_HOUR) {
-                pinView.pinColor = MKPinAnnotationColorPurple;
-                //pinView.image = [UIImage imageNamed:@"greyPin"];
+                //pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"purplePin"];
+            } else if (self.dealType == REWARD) {
+                pinView.image = [UIImage imageNamed:@"greenPin"];
             }
             pinView.annotation = annotation;
         }
@@ -1180,16 +1184,56 @@ typedef enum dealTypeStates
 {
     self.selectedDealIndex = [view.annotation.title intValue];
     
-    if (self.dealType == HOTSPOT) {
+    if (self.dealType == HOTSPOT || self.dealType == REWARD) {
         Deal *deal = self.selectedDeals[self.selectedDealIndex];
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        
         [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
-
-
-        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+        self.dealTime.text = [deal.dealStartString uppercaseString];
+        
+        if (self.dealType == HOTSPOT) {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+            
+            CGFloat descriptionLabelWidth;
+            if (textSize.width < self.view.width * .6) {
+                descriptionLabelWidth = textSize.width;
+            } else {
+                descriptionLabelWidth = self.view.width * .6;
+            }
+            
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+            
+            self.descriptionLabel.width = descriptionLabelWidth + 10;
+        } else {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
+            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+            
+            CGFloat descriptionLabelWidth;
+            if (textSize.width < self.view.width * .6) {
+                descriptionLabelWidth = textSize.width;
+            } else {
+                descriptionLabelWidth = self.view.width * .6;
+            }
+            
+            self.dealTime.text = @"";
+            
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+            
+            self.descriptionLabel.width = descriptionLabelWidth + 10;
+        }
+        
+    } else if (self.dealType == HAPPY_HOUR) {
+        HappyHour *deal = self.selectedDeals[self.selectedDealIndex];
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
+        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+        self.dealTime.text = [deal.happyHourStartString uppercaseString];
+        self.descriptionLabel.text = @"  HAPPY HOUR";
         CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
         
         CGFloat descriptionLabelWidth;
@@ -1199,14 +1243,9 @@ typedef enum dealTypeStates
             descriptionLabelWidth = self.view.width * .6;
         }
         
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] purpleColor];
+        
         self.descriptionLabel.width = descriptionLabelWidth + 10;
-
-        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-        self.dealTime.text = [deal.dealStartString uppercaseString];
-        
-    } else if (self.dealType == HAPPY_HOUR) {
-        
-    } else if (self.dealType == REWARD) {
         
     }
     
@@ -1221,6 +1260,28 @@ typedef enum dealTypeStates
         SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
         dealViewController.deal = deal;
         [self.navigationController pushViewController:dealViewController animated:YES];
+    } else if (self.dealType == HAPPY_HOUR) {
+        HappyHour *happyHour;
+        happyHour = self.selectedDeals[self.selectedDealIndex];
+        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else if (self.dealType == REWARD) {
+        Deal *deal = self.selectedDeals[self.selectedDealIndex];
+        if (!deal.locked) {
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
+            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+                [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Failure");
+                }];
+            }];
+            
+            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+            [alertView show];
+            return;
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Not Enough Points" message:@"You don't have enough points to purchase this item" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 }
 

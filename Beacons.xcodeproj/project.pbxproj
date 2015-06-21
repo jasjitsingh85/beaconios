@@ -86,6 +86,9 @@
 		41F144121B24F4380010BCF1 /* HappyHourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */; };
 		41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144131B27C3460010BCF1 /* greyPin@2x.png */; };
 		41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144141B27C3460010BCF1 /* redPin@2x.png */; };
+		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
+		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
+		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -374,6 +377,9 @@
 		41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourTableViewCell.m; sourceTree = "<group>"; };
 		41F144131B27C3460010BCF1 /* greyPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyPin@2x.png"; sourceTree = "<group>"; };
 		41F144141B27C3460010BCF1 /* redPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redPin@2x.png"; sourceTree = "<group>"; };
+		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
+		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
+		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1113,7 +1119,10 @@
 				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
+				41FD061D1B3703C900F7DD08 /* purplePin@2x.png */,
+				41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */,
 				4148E9BE1B03D56A0050D3E3 /* goldCoin@2x.png */,
+				41FD06191B37021F00F7DD08 /* bluePin@2x.png */,
 				41ED34D11AC9B3B000A77A92 /* takePictureButton@2x.png */,
 				41ED34CD1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
@@ -1383,6 +1392,7 @@
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
+				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
 				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
@@ -1393,6 +1403,7 @@
 				41BEAC2B1A1DE4750069F932 /* settingsIcon@2x.png in Resources */,
 				96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */,
 				96D1D561199B2D06007216F3 /* whiteChevron@2x.png in Resources */,
+				41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */,
 				96C7FE9D1897294100A79CC3 /* redGradientBackground@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
@@ -1405,6 +1416,7 @@
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
 				96C7FE9B1897294100A79CC3 /* greenGradientBackground@2x.png in Resources */,
+				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
