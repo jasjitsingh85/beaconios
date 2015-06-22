@@ -771,7 +771,10 @@ typedef enum dealTypeStates
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
         happyHour = self.selectedDeals[indexPath.row];
-        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+        dealViewController.happyHour = happyHour;
+        [self.navigationController pushViewController:dealViewController animated:YES];
     } else if (self.dealType == REWARD) {
         Deal *deal;
         deal = self.selectedDeals[indexPath.row];

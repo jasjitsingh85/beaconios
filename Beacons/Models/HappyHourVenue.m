@@ -22,6 +22,8 @@
     self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
     self.address = dictionary[@"street_address"];
     self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];
+    self.placeDescription = dictionary[@"place_description"];
+    
     return self;
 }
 
