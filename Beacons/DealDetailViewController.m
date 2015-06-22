@@ -11,6 +11,10 @@
 #import "Deal.h"
 #import "Venue.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <MapKit/MapKit.h>
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import "Utilities.h"
+#import "SetDealViewController.h"
 
 @interface DealDetailViewController ()
 
@@ -37,7 +41,7 @@
     
     mainScroll.showsVerticalScrollIndicator = NO;
     
-    mainScroll.contentSize = CGSizeMake(self.view.width, 1000);
+    mainScroll.contentSize = CGSizeMake(self.view.width, 800);
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -84,15 +88,15 @@
     [self.venueImageView addSubview:self.venueLabelLineTwo];
     
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width, 35);
+    self.getDealButton.size = CGSizeMake(self.view.width, 40);
     self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = self.view.height - 35;
+    self.getDealButton.y = self.view.height - 40;
     self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
     self.getDealButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
     [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [self.getDealButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.dealTime = [[UILabel alloc] init];
     self.dealTime.font = [ThemeManager lightFontOfSize:16];
@@ -189,6 +193,78 @@
     directionHeadingLabel.textAlignment = NSTextAlignmentCenter;
     [mainScroll addSubview:directionHeadingLabel];
     
+    //MKMapView *mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
+    
+    
+        MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
+        //    MKCoordinateSpan span;
+        //    //You can set span for how much Zoom to be display
+        //    span.latitudeDelta=.15;
+        //    span.longitudeDelta=.15;
+    
+        CLLocationCoordinate2D center = self.deal.venue.coordinate;
+        options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 300, 300);
+        center.latitude -= options.region.span.latitudeDelta * 0.12;
+        options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
+        options.scale = [UIScreen mainScreen].scale;
+        options.size = CGSizeMake(self.view.width, 200);
+    
+    MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
+    [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
+        //mapSnapshotImage = mapSnap.image;
+        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
+        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, docTextLabel.y + docTextLabel.size.height + 70, self.view.width, 200)];
+        [mapImageView setImage:mapSnap.image];
+        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
+        //CALayer *imageLayer = mapImageView.layer;
+        //[imageLayer setCornerRadius:200/2];
+        //[imageLayer setBorderWidth:3];
+        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
+        //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
+        //[imageLayer setMasksToBounds:YES];
+        
+        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20 - 30, 40, 40)];
+        UIImage *markerImage = [UIImage imageNamed:@"bluePin"];
+        [markerImageView setImage:markerImage];
+        [mapImageView addSubview:markerImageView];
+        
+        [mapImageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
+        [singleTap setNumberOfTapsRequired:1];
+        [mapImageView addGestureRecognizer:singleTap];
+        
+        CGSize textSize = [self.deal.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
+        
+        int addressContainerWidth;
+        if (textSize.width < (self.view.width - 10)) {
+            addressContainerWidth = textSize.width + 100;
+        } else {
+            addressContainerWidth = self.view.width - 10;
+        }
+        
+        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
+        addressContainer.backgroundColor = [UIColor whiteColor];
+        addressContainer.centerX = self.view.width/2;
+        [mapImageView addSubview:addressContainer];
+        
+        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
+        address.text = [self.deal.venue.address uppercaseString];
+        address.textAlignment = NSTextAlignmentCenter;
+        address.font = [ThemeManager lightFontOfSize:13];
+        [addressContainer addSubview:address];
+        
+        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
+        getDirections.text = @"GET DIRECTIONS";
+        getDirections.textAlignment = NSTextAlignmentCenter;
+        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
+        getDirections.font = [ThemeManager lightFontOfSize:13];
+        [addressContainer addSubview:getDirections];
+        
+        [mainScroll addSubview:mapImageView];
+        //[mainScroll addSubview:mapImageView];
+        //[self.venuePreviewView addSubview:self.distanceLabel];
+     }];
+    
     [self.view addSubview:mainScroll];
    
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
@@ -251,6 +327,26 @@
     //    }
     distanceString = [NSString stringWithFormat:@"%0.1f mi", METERS_TO_MILES*distance];
     return distanceString;
+}
+
+- (void)getDirectionsToBeacon:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
+    [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
+        [Utilities launchGoogleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+    }];
+    [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
+        [Utilities launchAppleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+    }];
+    [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void) getDealButtonTouched:(id)sender
+{
+    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+    dealViewController.deal = self.deal;
+    [self.navigationController pushViewController:dealViewController animated:YES];
 }
 
 @end
