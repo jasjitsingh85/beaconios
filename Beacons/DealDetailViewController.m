@@ -30,15 +30,24 @@
 {
     [super viewDidLoad];
     
+    UIScrollView *mainScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
+    
+    mainScroll.scrollEnabled = YES;
+    mainScroll.userInteractionEnabled = YES;
+    
+    mainScroll.showsVerticalScrollIndicator = NO;
+    
+    mainScroll.contentSize = CGSizeMake(self.view.width, 1000);
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.venueImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 196)];
+    self.venueImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 166)];
     self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.venueImageView.clipsToBounds = YES;
-    [self.view addSubview:self.venueImageView];
+    [mainScroll addSubview:self.venueImageView];
     
-    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 137, self.venueImageView.size.width, 60)];
+    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 105, self.venueImageView.size.width, 60)];
     UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
     [self.backgroundGradient setImage:gradientImage];
     [self.venueImageView addSubview:self.backgroundGradient];
@@ -49,12 +58,12 @@
     [self.venueImageView addSubview:backgroundView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:28];
     self.venueLabelLineOne.textColor = [UIColor whiteColor];
     self.venueLabelLineOne.width = self.view.width - 20;
-    self.venueLabelLineOne.x = 5;
+    self.venueLabelLineOne.x = 10;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 35;
+    self.venueLabelLineOne.y = 50;
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
@@ -62,12 +71,12 @@
     [self.venueImageView addSubview:self.venueLabelLineOne];
     
     self.venueLabelLineTwo = [[UILabel alloc] init];
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
     self.venueLabelLineTwo.textColor = [UIColor whiteColor];
     self.venueLabelLineTwo.width = self.view.width - 20;
-    self.venueLabelLineTwo.x = 4;
+    self.venueLabelLineTwo.x = 10;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 49;
+    self.venueLabelLineTwo.y = 79;
     //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
@@ -84,38 +93,115 @@
     [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.getDealButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.getDealButton];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager lightFontOfSize:14];
+    self.dealTime.font = [ThemeManager lightFontOfSize:16];
     self.dealTime.textColor = [UIColor whiteColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.width = 200;
     self.dealTime.height = 20;
-    self.dealTime.x = 8;
-    self.dealTime.y=117;
+    self.dealTime.x = 13;
+    self.dealTime.y=135;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
     [self.venueImageView addSubview:self.dealTime];
     
     self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
+    self.distanceLabel.font = [ThemeManager lightFontOfSize:16];
     self.distanceLabel.size = CGSizeMake(67, 20);
     //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
     //self.distanceLabel.clipsToBounds = YES;
     self.distanceLabel.textAlignment = NSTextAlignmentRight;
-    self.distanceLabel.y = 117;
-    self.distanceLabel.x = self.view.width - 77;
+    self.distanceLabel.y = 135;
+    self.distanceLabel.x = self.view.width - 80;
     self.distanceLabel.textColor = [UIColor whiteColor];
     [self.venueImageView addSubview:self.distanceLabel];
+    
+    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
+    dealIcon.centerX = self.view.width/2;
+    dealIcon.y = 180;
+    [mainScroll addSubview:dealIcon];
+    
+    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.width, 30)];
+    dealHeadingLabel.centerX = self.view.width/2;
+    dealHeadingLabel.text = @"THE DEAL";
+    dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:dealHeadingLabel];
+    
+    UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, self.view.width, 30)];
+    dealTextLabel.centerX = self.view.width/2;
+    dealTextLabel.font = [ThemeManager lightFontOfSize:13];
+    dealTextLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:dealTextLabel];
+    
+    UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
+    venueIcon.centerX = self.view.width/2;
+    venueIcon.y = 260;
+    [mainScroll addSubview:venueIcon];
+    
+    UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, self.view.width, 30)];
+    venueHeadingLabel.centerX = self.view.width/2;
+    venueHeadingLabel.text = @"THE VENUE";
+    venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:venueHeadingLabel];
+    
+    UILabel *venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, self.view.width, 60)];
+    venueTextLabel.centerX = self.view.width/2;
+    venueTextLabel.font = [ThemeManager lightFontOfSize:13];
+    venueTextLabel.width = self.view.width - 50;
+    venueTextLabel.centerX = self.view.width/2;
+    venueTextLabel.numberOfLines = 0;
+    venueTextLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:venueTextLabel];
+    
+    UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
+    docIcon.centerX = self.view.width/2;
+    docIcon.y = venueTextLabel.y + venueTextLabel.size.height + 10;
+    [mainScroll addSubview:docIcon];
+    
+    UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 30, self.view.width, 30)];
+    docHeadingLabel.centerX = self.view.width/2;
+    docHeadingLabel.text = @"HOW THIS WORKS";
+    docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    docHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:docHeadingLabel];
+    
+    UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 50, self.view.width, 60)];
+    docTextLabel.centerX = self.view.width/2;
+    docTextLabel.font = [ThemeManager lightFontOfSize:13];
+    docTextLabel.width = self.view.width - 50;
+    docTextLabel.centerX = self.view.width/2;
+    docTextLabel.numberOfLines = 0;
+    docTextLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:docTextLabel];
+    
+    UIImageView *directionsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"directionsIcon"]];
+    directionsIcon.centerX = self.view.width/2;
+    directionsIcon.y = docTextLabel.y + docTextLabel.size.height + 10;
+    [mainScroll addSubview:directionsIcon];
+    
+    UILabel *directionHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, docTextLabel.y + docTextLabel.size.height + 30, self.view.width, 30)];
+    directionHeadingLabel.centerX = self.view.width/2;
+    directionHeadingLabel.text = @"DIRECTIONS";
+    directionHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    directionHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [mainScroll addSubview:directionHeadingLabel];
+    
+    [self.view addSubview:mainScroll];
    
-    [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     self.dealTime.text = [self.deal.dealStartString uppercaseString];
+    dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@", [self.deal.itemName lowercaseString], self.deal.itemPrice];
+    venueTextLabel.text = self.deal.venue.placeDescription;
+    docTextLabel.text = @"Just tap 'Get This Deal', pay for your drink, and present the voucher to your server. You will only be charged once the voucher is redeemed";
+    
+    [self.view addSubview:self.getDealButton];
     
 }
 

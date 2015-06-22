@@ -90,6 +90,10 @@
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
 		41FD06211B37179600F7DD08 /* DealDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FD06201B37179600F7DD08 /* DealDetailViewController.m */; };
+		41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */; };
+		41FD06271B377C6700F7DD08 /* documentIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06231B377C6700F7DD08 /* documentIcon@2x.png */; };
+		41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06241B377C6700F7DD08 /* venueIcon@2x.png */; };
+		41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06251B377C6700F7DD08 /* dollarSign@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -383,6 +387,10 @@
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
 		41FD061F1B37178000F7DD08 /* DealDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDetailViewController.h; sourceTree = "<group>"; };
 		41FD06201B37179600F7DD08 /* DealDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDetailViewController.m; sourceTree = "<group>"; };
+		41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "directionsIcon@2x.png"; sourceTree = "<group>"; };
+		41FD06231B377C6700F7DD08 /* documentIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "documentIcon@2x.png"; sourceTree = "<group>"; };
+		41FD06241B377C6700F7DD08 /* venueIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "venueIcon@2x.png"; sourceTree = "<group>"; };
+		41FD06251B377C6700F7DD08 /* dollarSign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dollarSign@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1098,6 +1106,10 @@
 			isa = PBXGroup;
 			children = (
 				41338FD519FA38CA0022211C /* marker@2x.png */,
+				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
+				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
+				41FD06241B377C6700F7DD08 /* venueIcon@2x.png */,
+				41FD06251B377C6700F7DD08 /* dollarSign@2x.png */,
 				41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */,
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
@@ -1345,6 +1357,7 @@
 				96A9872D17E6633A007D77B8 /* cameraLarge@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
 				4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */,
+				41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
@@ -1394,6 +1407,7 @@
 				41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				41338FD619FA38CA0022211C /* marker@2x.png in Resources */,
+				41FD06271B377C6700F7DD08 /* documentIcon@2x.png in Resources */,
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				962FD0211820D28900E74268 /* annotationShadowLarge@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
@@ -1432,7 +1446,9 @@
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				96D1D55F199B14BD007216F3 /* iphoneWalkthrough1@2x.png in Resources */,
+				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
+				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
