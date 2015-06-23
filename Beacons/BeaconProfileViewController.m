@@ -92,8 +92,8 @@
 //        self.inviteListViewController.delegate = self;
 //        self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
 //        [self addChildViewController:self.rewardsViewController];
-        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
-        self.dealRedemptionViewController.delegate = self;
+//        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
+//        self.dealRedemptionViewController.delegate = self;
         //[self initVenmoWebviewController];
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
             [self initPaymentsViewControllerAndSetDeal];
@@ -172,6 +172,8 @@
     //UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
+    self.dealRedemptionViewController.delegate = self;
     [self addChildViewController:self.dealRedemptionViewController];
     [self.view addSubview:self.dealRedemptionViewController.view];
     self.dealRedemptionViewController.view.frame = self.view.bounds;
@@ -196,13 +198,13 @@
 //    
 //    [self.rewardsViewController updateRewardsScore];
     
-    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 166)];
+    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 146)];
 //    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
     [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
     [self.view addSubview:self.descriptionView];
     self.fullDescriptionViewShown = YES;
     
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.descriptionView.frame.size.width, 166)];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.descriptionView.frame.size.width, 146)];
     self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
@@ -357,19 +359,19 @@
 //    [self.joinButton addTarget:self action:@selector(joinButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.descriptionView addSubview:self.joinButton];
     
-    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteButton.frame = CGRectMake(0, 150, 180, 26);
-    [self.inviteButton setTitle:@"INVITE MORE FRIENDS" forState:UIControlStateNormal];
-    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.inviteButton.centerX = self.descriptionView.width/2;
-    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-    //self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
-    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    //    self.inviteButton.layer.cornerRadius = 4;
-    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.descriptionView addSubview:self.inviteButton];
-    self.inviteButton.hidden = YES;
+//    self.inviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.inviteButton.frame = CGRectMake(0, 150, 180, 26);
+//    [self.inviteButton setTitle:@"INVITE MORE FRIENDS" forState:UIControlStateNormal];
+//    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+//    self.inviteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    self.inviteButton.centerX = self.descriptionView.width/2;
+//    [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+//    //self.inviteButton.backgroundColor = [UIColor colorWithRed:53/255.0 green:194/255.0 blue:211/255.0 alpha:.8];
+//    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+//    //    self.inviteButton.layer.cornerRadius = 4;
+//    [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.descriptionView addSubview:self.inviteButton];
+//    self.inviteButton.hidden = YES;
     
 //    self.directionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    UIImage *directionsImage = [UIImage imageNamed:@"directionsArrow"];
@@ -398,35 +400,35 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-//    [super viewWillAppear:animated];
-//    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
-//    [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
-//    
-//    if (self.beacon) {
-////        self.editButton.hidden = !self.beacon.isUserBeacon;
-//    }
-//    
-//    if (self.openToInviteView) {
-//        self.dealButton.selected = NO;
-//        self.chatTabButton.selected = NO;
-//        self.inviteTabButton.selected = YES;
-//        [self showInviteAnimated:NO];
-//    }
-//    else if (self.openToDealView) {
-//        self.dealButton.selected = YES;
-//        self.chatTabButton.selected = NO;
-//        //self.inviteButton.selected = YES;
-//        [self showDealAnimated:YES];
-//    }
-//    else {
-//        self.dealButton.selected = NO;
-//        self.chatTabButton.selected = YES;
-//        self.inviteTabButton.selected = NO;
-//        [self showChatAnimated:NO];
-//    }
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+////    [super viewWillAppear:animated];
+////    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+////    [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
+////    
+////    if (self.beacon) {
+//////        self.editButton.hidden = !self.beacon.isUserBeacon;
+////    }
+////    
+////    if (self.openToInviteView) {
+////        self.dealButton.selected = NO;
+////        self.chatTabButton.selected = NO;
+////        self.inviteTabButton.selected = YES;
+////        [self showInviteAnimated:NO];
+////    }
+////    else if (self.openToDealView) {
+////        self.dealButton.selected = YES;
+////        self.chatTabButton.selected = NO;
+////        //self.inviteButton.selected = YES;
+////        [self showDealAnimated:YES];
+////    }
+////    else {
+////        self.dealButton.selected = NO;
+////        self.chatTabButton.selected = YES;
+////        self.inviteTabButton.selected = NO;
+////        [self showChatAnimated:NO];
+////    }
+//}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -622,18 +624,18 @@
     [alertView show];
 }
 
-//- (void)promptForCheckIn
-//{
-//    self.promptShowing = YES;
-//    self.openToInviteView = YES;
-//    [self showInviteAnimated:YES];
-//    [[BeaconManager sharedManager] promptUserToCheckInToBeacon:self.beacon success:^(BOOL checkedIn) {
-//        self.promptShowing = NO;
-//        [self refreshBeaconData];
-//    } failure:^(NSError *error) {
-//        self.promptShowing = NO;
-//    }];
-//}
+- (void)promptForCheckIn
+{
+    self.promptShowing = YES;
+    self.openToInviteView = YES;
+    //[self showInviteAnimated:YES];
+    [[BeaconManager sharedManager] promptUserToCheckInToBeacon:self.beacon success:^(BOOL checkedIn) {
+        self.promptShowing = NO;
+        [self refreshBeaconData];
+    } failure:^(NSError *error) {
+        self.promptShowing = NO;
+    }];
+}
 
 - (void)promptToInviteFriends
 {

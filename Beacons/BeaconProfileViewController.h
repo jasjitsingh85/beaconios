@@ -18,6 +18,7 @@
 - (void)refreshBeaconData;
 - (void)promptForCheckIn;
 - (void)initPaymentsViewControllerAndSetDeal;
+- (void) inviteMoreFriends;
 - (void)refreshDeal;
 
 @end

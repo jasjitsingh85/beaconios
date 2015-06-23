@@ -68,7 +68,6 @@
 		41E23A841B33A9B100676254 /* slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A831B33A9B100676254 /* slider@2x.png */; };
 		41E23A861B33AEFB00676254 /* thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A851B33AEFB00676254 /* thumb@2x.png */; };
 		41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */; };
-		41E23A8A1B33B0C600676254 /* hotspotSliderLabel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */; };
 		41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */; };
 		41E6B3F01AF0B78B00D34EAF /* addFriendWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */; };
 		41E6B3F41AF0B91000D34EAF /* textFriendsWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E6B3F31AF0B91000D34EAF /* textFriendsWhite@2x.png */; };
@@ -100,6 +99,9 @@
 		41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */; };
 		41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */; };
 		41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */; };
+		41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */; };
+		41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */; };
+		41FD063B1B3A15B400F7DD08 /* fingerprintIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD063A1B3A15B400F7DD08 /* fingerprintIcon@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -403,6 +405,9 @@
 		41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tapDivider@2x.png"; sourceTree = "<group>"; };
 		41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "creditCardIcon@2x.png"; sourceTree = "<group>"; };
 		41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveVoucher@2x.png"; sourceTree = "<group>"; };
+		41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeVoucher@2x.png"; sourceTree = "<group>"; };
+		41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redeemedVoucher@2x.png"; sourceTree = "<group>"; };
+		41FD063A1B3A15B400F7DD08 /* fingerprintIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fingerprintIcon@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1139,8 +1144,10 @@
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
 				41F144131B27C3460010BCF1 /* greyPin@2x.png */,
 				41F144141B27C3460010BCF1 /* redPin@2x.png */,
+				41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
+				41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */,
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
@@ -1160,6 +1167,7 @@
 				41FD06191B37021F00F7DD08 /* bluePin@2x.png */,
 				41ED34D11AC9B3B000A77A92 /* takePictureButton@2x.png */,
 				41ED34CD1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png */,
+				41FD063A1B3A15B400F7DD08 /* fingerprintIcon@2x.png */,
 				96727DDE1800ABC700E75EE9 /* addFriendNormal@2x.png */,
 				96727DDF1800ABC700E75EE9 /* addFriendSelected@2x.png */,
 				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
@@ -1393,7 +1401,6 @@
 				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
 				41ED34D71AC9F91400A77A92 /* Default-568h@2x.png in Resources */,
-				41E23A8A1B33B0C600676254 /* hotspotSliderLabel@2x.png in Resources */,
 				964638B218A45D5A007D6962 /* hotbotSmile@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
 				4148E9CC1B083F8F0050D3E3 /* storeIntroCell.png in Resources */,
@@ -1403,6 +1410,7 @@
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
+				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
 				415353B71A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png in Resources */,
 				9647102E17DEEB5700878C19 /* plus@2x.png in Resources */,
@@ -1439,6 +1447,7 @@
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
 				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
+				41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				41ED34D81AC9F91400A77A92 /* Default@2x.png in Resources */,
 				96C7FEA5189737DA00A79CC3 /* beer@2x.png in Resources */,
@@ -1462,6 +1471,7 @@
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
+				41FD063B1B3A15B400F7DD08 /* fingerprintIcon@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				96A90B7318D0D20B008026CC /* mapPlaceholder@2x.png in Resources */,
 				960631ED194629850011E132 /* lock_closed@2x.png in Resources */,

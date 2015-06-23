@@ -13,6 +13,7 @@
 @protocol DealRedemptionViewControllerDelegate <NSObject>
 
 - (void)initPaymentsViewControllerAndSetDeal;
+- (void) inviteMoreFriends;
 -(BOOL) isUserCreator;
 
 @end
