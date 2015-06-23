@@ -403,7 +403,7 @@
             [singleTap setNumberOfTapsRequired:1];
             [mapImageView addGestureRecognizer:singleTap];
             
-            CGSize textSize = [self.deal.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
+            CGSize textSize = [self.happyHour.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
             
             int addressContainerWidth;
             if (textSize.width < (self.view.width - 10)) {
@@ -418,7 +418,7 @@
             [mapImageView addSubview:addressContainer];
             
             UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-            address.text = [self.deal.venue.address uppercaseString];
+            address.text = [self.happyHour.venue.address uppercaseString];
             address.textAlignment = NSTextAlignmentCenter;
             address.font = [ThemeManager lightFontOfSize:13];
             [addressContainer addSubview:address];
