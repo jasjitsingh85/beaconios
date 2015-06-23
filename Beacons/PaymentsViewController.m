@@ -44,12 +44,12 @@
         BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
         // This is where you might want to customize your Drop in. (See below.)
         //
-        dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
-        dropInViewController.summaryDescription = @"You will only be charged for redeemed drinks";
+        dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ for %@", deal.itemPrice, deal.itemName];
+        dropInViewController.summaryDescription = @"You'll only be charged when your drink is redeemed";
         //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
         //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
         dropInViewController.callToActionText = @"Open Tab";
-        dropInViewController.view.tintColor = [[ThemeManager sharedTheme] blueColor];
+        dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
         
         // The way you present your BTDropInViewController instance is up to you.
         // In this example, we wrap it in a new, modally presented navigation controller:
@@ -59,9 +59,9 @@
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
         navigationController.navigationBar.topItem.title = @"ONE TIME SETUP";
-        navigationController.navigationBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
-        navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [[ThemeManager sharedTheme] redColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
+        navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
         [self presentViewController:navigationController
                            animated:YES
                          completion:nil];

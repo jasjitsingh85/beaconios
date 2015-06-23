@@ -24,7 +24,7 @@
 #import "Venue.h"
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
-#import "RewardsViewController.h"
+//#import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -69,7 +69,7 @@ typedef enum dealTypeStates
 @property (assign, nonatomic) BOOL isMapViewActive;
 @property (assign, nonatomic) BOOL isMapViewDealShowing;
 //@property (strong, nonatomic) Deal *dealInView;
-@property (strong, nonatomic) RewardsViewController *rewardsViewController;
+//@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 //@property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
@@ -203,7 +203,7 @@ typedef enum dealTypeStates
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(5.0, 0.0, 80, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 80, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -383,7 +383,7 @@ typedef enum dealTypeStates
         [self reloadDeals];
     }
 
-    [self.rewardsViewController updateRewardsScore];
+//    [self.rewardsViewController updateRewardsScore];
 //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];

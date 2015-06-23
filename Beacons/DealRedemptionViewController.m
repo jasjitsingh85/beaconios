@@ -19,6 +19,13 @@
 
 @interface DealRedemptionViewController () <UITableViewDataSource, UITableViewDelegate>
 
+//typedef enum voucherStates
+//{
+//    ACTIVE,
+//    INACTIVE,
+//    REDEEMED
+//} VoucherStates;
+
 @property (strong, nonatomic) DashedBorderButton *redeemButton;
 @property (strong, nonatomic) UIButton *feedbackButton;
 @property (strong, nonatomic) UILabel *countdownLabel;
@@ -26,6 +33,10 @@
 @property (strong, nonatomic) UILabel *itemName;
 @property (strong, nonatomic) UILabel *venueName;
 @property (strong, nonatomic) UILabel *serverMessage;
+@property (strong, nonatomic) UIImageView *headerIcon;
+@property (strong, nonatomic) UILabel *headerTitle;
+@property (strong, nonatomic) UILabel *headerExplanationText;
+//@property (nonatomic, assign) VoucherStates voucherState;
 //@property (strong, nonatomic) UILabel *timeLeftLabel;
 
 @end
@@ -46,15 +57,6 @@
     [self.view addSubview:self.tableView];
 }
 
-- (void)updateDealType
-{
-    if (self.deal.inAppPayment) {
-        [self loadPaymentDeal];
-    } else {
-        [self loadCouponDeal];
-    }
-}
-
 - (void) loadPaymentDeal
 {
 //    self.countdownLabel = [[UILabel alloc] init];
@@ -62,6 +64,9 @@
 //    self.countdownLabel.textColor = [UIColor unnormalizedColorWithRed:53 green:194 blue:211 alpha:255];
 //    
 //    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
+    
+    self.headerIcon = [[UIImageView alloc] init];
+    self.headerIcon.centerX = self.view.width/2;
     
     self.redeemButton = [DashedBorderButton buttonWithType:UIButtonTypeCustom];
     self.redeemButton.layer.cornerRadius = 6;
@@ -459,7 +464,7 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     if (!indexPath.row) {
-        cell = [self countdownCell];
+        //cell = [self countdownCell];
     }
     else if (indexPath.row == 1) {
         cell = [self dealDescriptionCell];
@@ -468,25 +473,25 @@
     return cell;
 }
 
-- (UITableViewCell *)countdownCell
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.backgroundColor = [UIColor whiteColor];
-    [cell.contentView addSubview:self.countdownLabel];
-    cell.indentationLevel = 1;
-    cell.indentationWidth = 15;
-    self.countdownLabel.size = CGSizeMake(cell.contentView.width, 23);
-    self.countdownLabel.y = 30;
-    self.countdownLabel.x = 20;
-    self.countdownLabel.textAlignment = NSTextAlignmentLeft;
-    
-//    [cell.contentView addSubview:self.timeLeftLabel];
-//    self.timeLeftLabel.size = CGSizeMake(cell.contentView.width, 31);
-//    self.timeLeftLabel.y = 37;
-//    self.timeLeftLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    self.timeLeftLabel.textAlignment = NSTextAlignmentCenter;
-    return cell;
-}
+//- (UITableViewCell *)countdownCell
+//{
+//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    cell.backgroundColor = [UIColor whiteColor];
+//    [cell.contentView addSubview:self.countdownLabel];
+//    cell.indentationLevel = 1;
+//    cell.indentationWidth = 15;
+//    self.countdownLabel.size = CGSizeMake(cell.contentView.width, 23);
+//    self.countdownLabel.y = 30;
+//    self.countdownLabel.x = 20;
+//    self.countdownLabel.textAlignment = NSTextAlignmentLeft;
+//    
+////    [cell.contentView addSubview:self.timeLeftLabel];
+////    self.timeLeftLabel.size = CGSizeMake(cell.contentView.width, 31);
+////    self.timeLeftLabel.y = 37;
+////    self.timeLeftLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+////    self.timeLeftLabel.textAlignment = NSTextAlignmentCenter;
+//    return cell;
+//}
 
 - (UITableViewCell *)dealDescriptionCell
 {

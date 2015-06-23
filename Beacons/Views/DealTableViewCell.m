@@ -49,12 +49,11 @@
 //    self.venueScroll.pagingEnabled = YES;
 //    self.venueScroll.showsHorizontalScrollIndicator = NO;
 
-    CGFloat originForVenuePreview = 0;
-    self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(originForVenuePreview, 0, self.contentView.frame.size.width, 146)];
+    self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
     self.backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
     self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.venuePreviewView addSubview:self.backgroundView];
+    //self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.venueImageView addSubview:self.backgroundView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
