@@ -105,24 +105,24 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 130)];
+    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 120)];
     //self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 243)];
     [self.dealDescriptionView addSubview:self.dealContentView];
 //    [self.dealContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     
     UIImageView *groupIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupIcon"]];
     groupIcon.centerX = self.view.width/2;
-    groupIcon.y = 40;
+    groupIcon.y = 20;
     [self.dealDescriptionView addSubview:groupIcon];
     
-    UILabel *groupHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 30)];
+    UILabel *groupHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 30)];
     groupHeadingLabel.centerX = self.view.width/2;
     groupHeadingLabel.text = @"BETTER WITH FRIENDS";
     groupHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     groupHeadingLabel.textAlignment = NSTextAlignmentCenter;
     [self.dealDescriptionView addSubview:groupHeadingLabel];
     
-    UILabel *groupTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, self.view.width - 50, 60)];
+    UILabel *groupTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, self.view.width - 50, 60)];
     groupTextLabel.centerX = self.view.width/2;
     groupTextLabel.font = [ThemeManager lightFontOfSize:13];
     groupTextLabel.textAlignment = NSTextAlignmentCenter;
@@ -281,7 +281,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.descriptionLabel.numberOfLines = 2;
 //    [self.descriptionBackground addSubview:self.descriptionLabel];
     
-    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 165)];
+    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 175)];
     self.composeMessageContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 127)];
     self.composeMessageContentView.backgroundColor = [UIColor whiteColor];
 //    [self.composeMessageContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
@@ -289,10 +289,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     UIImageView *composeMessageIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"composeMessageIcon"]];
     composeMessageIcon.centerX = self.view.width/2;
-    composeMessageIcon.y = 30;
+    composeMessageIcon.y = 10;
     [self.composeMessageView addSubview:composeMessageIcon];
     
-    UILabel *composeHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 30)];
+    UILabel *composeHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, self.view.width, 30)];
     composeHeadingLabel.centerX = self.view.width/2;
     composeHeadingLabel.text = @"MESSAGE TO FRIENDS";
     composeHeadingLabel.font = [ThemeManager boldFontOfSize:12];
@@ -308,31 +308,31 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.composeMessageTitleLabel.font = [ThemeManager regularFontOfSize:1.3*11];
 //    [self.composeMessageContentView addSubview:self.composeMessageTitleLabel];
     
-    UIView *topDivider = [[UIView alloc] init];
-    topDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
+    UIImageView *topDivider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tapDivider"]];
+    //topDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
     topDivider.width = self.composeMessageContentView.width;
-    topDivider.height = 0.5;
-    topDivider.y = 85;
+    topDivider.height = 12;
+    topDivider.y = 65;
     [self.composeMessageView addSubview:topDivider];
     
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.composeMessageContentView.width;
     self.composeMessageTextView.height = 77;
-    self.composeMessageTextView.y = 90;
+    self.composeMessageTextView.y = 80;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
     self.composeMessageTextView.textAlignment = NSTextAlignmentCenter;
     self.composeMessageTextView.font = [ThemeManager lightFontOfSize:15];
 //    self.composeMessageTextView.textColor = [UIColor blackColor];
-    self.composeMessageTextView.textColor = [[ThemeManager sharedTheme] brownColor];
+    self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.delegate = self;
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.composeMessageContentView addSubview:self.composeMessageTextView];
     
     UIView *bottomDivider = [[UIView alloc] init];
-    bottomDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
+    bottomDivider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
     bottomDivider.width = self.composeMessageContentView.width;
     bottomDivider.height = 0.5;
-    bottomDivider.y = 170;
+    bottomDivider.y = 165;
     [self.composeMessageView addSubview:bottomDivider];
     
     self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
@@ -343,13 +343,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     UIImageView *timeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeIcon"]];
     timeIcon.centerX = self.view.width/2;
-    timeIcon.y = 20;
+    timeIcon.y = 15;
     [self.dateView addSubview:timeIcon];
     
     self.dateTitleLabel = [[UILabel alloc] init];
     self.dateTitleLabel.height = 50;
     self.dateTitleLabel.x = 0;
-    self.dateTitleLabel.y = 30;
+    self.dateTitleLabel.y = 25;
     self.dateTitleLabel.width = self.view.width;
     self.dateTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.dateTitleLabel.font = [ThemeManager boldFontOfSize:12];
@@ -359,7 +359,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.dateLabel = [[UILabel alloc] init];
     self.dateLabel.height = 50;
-    self.dateLabel.y = 70;
+    self.dateLabel.y = 65;
     self.dateLabel.x = 79;
     self.dateLabel.width = self.view.width;
     self.dateLabel.textColor = [UIColor blackColor];
@@ -565,7 +565,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
     [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
     [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager regularFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
     explanationPopupView.attributedInviteText = attributedText;
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealExplanation]) {
