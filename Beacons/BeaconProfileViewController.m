@@ -70,6 +70,7 @@
 //@property (strong, nonatomic) UILabel *invitedLabel;
 //@property (strong, nonatomic) UIButton *joinButton;
 @property (strong, nonatomic) UIButton *inviteButton;
+@property (strong, nonatomic) UIButton *feedbackButton;
 //@property (strong, nonatomic) UIButton *directionsButton;
 //@property (strong, nonatomic) UIButton *editButton;
 //@property (strong, nonatomic) UIView *addPictureView;
@@ -171,6 +172,18 @@
     
     //UIColor *boneWhiteColor = [UIColor colorWithRed:248/255.0 green:243/255.0 blue:236/255.0 alpha:1.0];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.feedbackButton = [[UIButton alloc] init];
+    self.feedbackButton.size = CGSizeMake(90, 25);
+    //button.backgroundColor = [UIColor clearColor];
+    self.feedbackButton.layer.cornerRadius = 2;
+    self.feedbackButton.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    self.feedbackButton.layer.borderWidth = 1.0;
+    [self.feedbackButton setTitle:@"REPORT ISSUE" forState:UIControlStateNormal];
+    [self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.feedbackButton];
     
     self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
     self.dealRedemptionViewController.delegate = self;
@@ -1161,6 +1174,52 @@
 //        self.enableVenmoView.hidden = NO;
 //    }
 //}
+
+- (void) feedbackButtonTouched:(id)sender
+{
+    [self feedbackDeal];
+}
+
+- (void)feedbackDeal
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] feedbackDeal:self.beacon.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *feedbackStatus = responseObject[@"feedback_status"];
+        self.beacon.userDealStatus.feedback = [feedbackStatus boolValue];
+        [self updateFeedbackButtonAppearance];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    } failure:nil];
+}
+
+- (void)updateFeedbackButtonAppearance
+{
+    self.feedbackButton.size = CGSizeMake(100, 25);
+    [self.feedbackButton setTitle:@"ISSUE REPORTED" forState:UIControlStateNormal];
+//    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+//    [style setAlignment:NSTextAlignmentCenter];
+//    [style setLineBreakMode:NSLineBreakByWordWrapping];
+//    
+//    NSDictionary *dict1 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
+//                            NSFontAttributeName:[ThemeManager regularFontOfSize:14],
+//                            NSParagraphStyleAttributeName:style}; // Added line
+//    NSDictionary *dict2 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
+//                            NSFontAttributeName:[ThemeManager boldFontOfSize:14],
+//                            NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:[UIColor colorWithRed:0/255. green:162/255. blue:255/255. alpha:1]}; // Added line
+//    if (!self.dealStatus.feedback) {
+//        NSLog(@"%d", self.dealStatus.feedback);
+//        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
+//        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem? " attributes:dict1]];
+//        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Tap here." attributes:dict2]];
+//        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+//    }
+//    else {
+//        NSLog(@"Submitted");
+//        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
+//        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Feedback submitted" attributes:dict1]];
+//        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+//    }
+    
+}
 
 
 

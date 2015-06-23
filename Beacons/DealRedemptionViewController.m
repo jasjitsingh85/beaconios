@@ -143,7 +143,7 @@
     self.serverMessage = [[UILabel alloc] init];
     self.serverMessage.size = CGSizeMake(self.redeemButton.width, 20);
     self.serverMessage.textAlignment = NSTextAlignmentCenter;
-    self.serverMessage.y = 110;
+    self.serverMessage.y = 108;
     self.serverMessage.text = @"SERVER ONLY: TAP TO REDEEM";
     self.serverMessage.font = [ThemeManager boldFontOfSize:11];
     [self.redeemButton addSubview:self.serverMessage];
@@ -270,16 +270,16 @@
     self.dealStatus = beacon.userDealStatus;
     //[self loadPaymentDeal];
     [self updateRedeemButtonAppearance];
-    [self updateFeedbackButtonAppearance];
+    //[self updateFeedbackButtonAppearance];
     [self.tableView reloadData];
 
 }
 
-- (void)feedbackButtonTouched:(id)sender
-{
-    [self feedbackDeal];
-//    [self.feedbackButton setTitle:@"Feedback submitted" forState:UIControlStateNormal];
-}
+//- (void)feedbackButtonTouched:(id)sender
+//{
+//    [self feedbackDeal];
+////    [self.feedbackButton setTitle:@"Feedback submitted" forState:UIControlStateNormal];
+//}
 
 - (void)redeemButtonTouched:(id)sender
 {
@@ -347,43 +347,6 @@
 //    }
 }
 
-- (void)feedbackDeal
-{
-    [[APIClient sharedClient] feedbackDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *feedbackStatus = responseObject[@"feedback_status"];
-        self.dealStatus.feedback = [feedbackStatus boolValue];
-        [self updateFeedbackButtonAppearance];
-    } failure:nil];
-}
-
-- (void)updateFeedbackButtonAppearance
-{
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [style setAlignment:NSTextAlignmentCenter];
-    [style setLineBreakMode:NSLineBreakByWordWrapping];
-    
-    NSDictionary *dict1 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
-                            NSFontAttributeName:[ThemeManager regularFontOfSize:14],
-                            NSParagraphStyleAttributeName:style}; // Added line
-    NSDictionary *dict2 = @{NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone),
-                            NSFontAttributeName:[ThemeManager boldFontOfSize:14],
-                            NSParagraphStyleAttributeName:style, NSForegroundColorAttributeName:[UIColor colorWithRed:0/255. green:162/255. blue:255/255. alpha:1]}; // Added line
-    if (!self.dealStatus.feedback) {
-        NSLog(@"%d", self.dealStatus.feedback);
-        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
-        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem? " attributes:dict1]];
-        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Tap here." attributes:dict2]];
-        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
-    }
-    else {
-        NSLog(@"Submitted");
-        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
-        [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Feedback submitted" attributes:dict1]];
-        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
-    }
-    
-}
-
 - (void)redeemDeal
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
@@ -406,7 +369,8 @@
 
     title = @"";
     UIColor *activeColor = [UIColor colorWithRed:73/255. green:115/255. blue:68/255. alpha:1];
-    UIColor *inactiveColor = [UIColor unnormalizedColorWithRed:110 green:110 blue:110 alpha:255];
+    UIColor *inactiveColor = [UIColor unnormalizedColorWithRed:156 green:156 blue:156 alpha:255];
+    UIColor *accentColor;
     UIColor *backgroundColor;
     UIColor *color;
     
@@ -419,35 +383,39 @@
         itemNameText = [NSString stringWithFormat:@"ONE %@", [self.deal.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
-        [self.headerIcon setImage:[UIImage imageNamed:@"creditCardIcon"]];
-        self.headerTitle.text = @"ALMOST THERE!";
+        accentColor = color;
+        [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
+        self.headerTitle.text = @"GET THINGS STARTED!";
         self.headerExplanationText.text = @"All we need now is a credit card on file. You're only charged when voucher is redeemed";
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
     } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
-        voucherTitleText = [self.deal.itemName uppercaseString];
-        itemNameText = @"REDEEMED";
+        voucherTitleText = @"VOUCHER FOR:";
+        itemNameText = [NSString stringWithFormat:@"ONE %@", [self.deal.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
-        serverMessageText = @"VOUCHER CANNOT BE REUSED";
-        [self.headerIcon setImage:[UIImage imageNamed:@"creditCardIcon"]];
-        self.headerTitle.text = @"ALMOST THERE!";
+        serverMessageText = @"REDEEMED";
+        accentColor = [UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255];
+        [self.headerIcon setImage:[UIImage imageNamed:@"drinkIcon"]];
+        self.headerTitle.text = @"DON'T FORGET TO TIP!";
         self.headerExplanationText.text = @"All we need now is a credit card on file. You're only charged when voucher is redeemed";
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
+        [self.voucherIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
 
     } else if (!self.dealStatus.paymentAuthorization) {
         [self.headerIcon setImage:[UIImage imageNamed:@"creditCardIcon"]];
         self.headerTitle.text = @"ALMOST THERE!";
         self.headerExplanationText.text = @"All we need now is a credit card on file. You're only charged when voucher is redeemed";
         [self.redeemButton setImage:[UIImage imageNamed:@"inactiveVoucher"] forState:UIControlStateNormal];
+        accentColor = color;
     }
     
     
     self.voucherTitle.textColor = color;
     self.itemName.textColor = color;
     self.venueName.textColor = color;
-    self.serverMessage.textColor = color;
+    self.serverMessage.textColor = accentColor;
     
     self.voucherTitle.text = voucherTitleText;
     self.itemName.text = itemNameText;
