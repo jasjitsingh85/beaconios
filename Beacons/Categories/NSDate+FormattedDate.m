@@ -42,11 +42,11 @@
     NSString *stringFromDate;
     if ([self.day sameDay:[NSDate today]]) {
         timeFormatter.dateFormat = @"h:mm a";
-        stringFromDate = [NSString stringWithFormat:@"Today, %@", [timeFormatter stringFromDate:self]];
+        stringFromDate = [NSString stringWithFormat:@"       Today, %@", [timeFormatter stringFromDate:self]];
     }
     else if ([self.day sameDay:[NSDate tomorrow]]) {
         timeFormatter.dateFormat = @"h:mm a";
-        stringFromDate = [NSString stringWithFormat:@"Tomorrow, %@", [timeFormatter stringFromDate:self]];
+        stringFromDate = [NSString stringWithFormat:@"   Tomorrow, %@", [timeFormatter stringFromDate:self]];
         
     }
     else if ([self.week sameWeek:[NSDate date]]) {

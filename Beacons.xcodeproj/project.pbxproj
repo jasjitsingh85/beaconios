@@ -96,6 +96,7 @@
 		41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06251B377C6700F7DD08 /* dollarSign@2x.png */; };
 		41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */; };
 		41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD062C1B38F0A800F7DD08 /* composeMessageIcon@2x.png */; };
+		41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -395,6 +396,7 @@
 		41FD06251B377C6700F7DD08 /* dollarSign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dollarSign@2x.png"; sourceTree = "<group>"; };
 		41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupIcon@2x.png"; sourceTree = "<group>"; };
 		41FD062C1B38F0A800F7DD08 /* composeMessageIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "composeMessageIcon@2x.png"; sourceTree = "<group>"; };
+		41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeIcon@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1115,6 +1117,7 @@
 				41FD06241B377C6700F7DD08 /* venueIcon@2x.png */,
 				41FD06251B377C6700F7DD08 /* dollarSign@2x.png */,
 				41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */,
+				41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */,
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
@@ -1407,6 +1410,7 @@
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */,
 				966652531978AE1E00EE85F8 /* dealExplanation@2x.png in Resources */,
+				41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */,
 				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,
 				96859D0217EFD77B00C1C467 /* orangeBackground@2x.png in Resources */,
 				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,

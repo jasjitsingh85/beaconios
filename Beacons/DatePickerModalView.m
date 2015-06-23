@@ -46,7 +46,7 @@
     self.datePicker.centerY = self.dateContainerView.height/2.0;
     [self.dateContainerView addSubview:self.datePicker];
     [self addSubview:self.dateContainerView];
-    [self.dateContainerView setShadowWithColor:[UIColor blackColor] opacity:0.5 radius:8 offset:CGSizeMake(0, -4) shouldDrawPath:YES];
+    [self.dateContainerView setShadowWithColor:[UIColor blackColor] opacity:.5 radius:8 offset:CGSizeMake(0, -4) shouldDrawPath:YES];
     self.dateContainerView.backgroundColor = [UIColor whiteColor];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismiss)];

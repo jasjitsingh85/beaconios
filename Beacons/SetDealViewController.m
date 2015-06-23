@@ -20,7 +20,7 @@
 #import "AppDelegate.h"
 #import "LoadingIndictor.h"
 #import "ExplanationPopupView.h"
-#import <AVFoundation/AVFoundation.h>
+//#import <AVFoundation/AVFoundation.h>
 #import "UIImage+Resize.h"
 #import "UIView+UIImage.h"
 #import "RewardsViewController.h"
@@ -308,47 +308,63 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.composeMessageTitleLabel.font = [ThemeManager regularFontOfSize:1.3*11];
 //    [self.composeMessageContentView addSubview:self.composeMessageTitleLabel];
     
-    UIView *divider = [[UIView alloc] init];
-    divider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
-    divider.width = self.composeMessageContentView.width;
-    divider.height = 0.5;
-    divider.y = 90;
-    [self.composeMessageView addSubview:divider];
+    UIView *topDivider = [[UIView alloc] init];
+    topDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
+    topDivider.width = self.composeMessageContentView.width;
+    topDivider.height = 0.5;
+    topDivider.y = 85;
+    [self.composeMessageView addSubview:topDivider];
     
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.composeMessageContentView.width;
     self.composeMessageTextView.height = 77;
-    self.composeMessageTextView.y = 95;
+    self.composeMessageTextView.y = 90;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
-    self.composeMessageTextView.font = [ThemeManager regularFontOfSize:1.3*11];
+    self.composeMessageTextView.textAlignment = NSTextAlignmentCenter;
+    self.composeMessageTextView.font = [ThemeManager lightFontOfSize:15];
 //    self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.textColor = [[ThemeManager sharedTheme] brownColor];
     self.composeMessageTextView.delegate = self;
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.composeMessageContentView addSubview:self.composeMessageTextView];
     
-    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 64)];
-    self.dateContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dateView.width, 47)];
-    self.dateContentView.backgroundColor = [UIColor whiteColor];
+    UIView *bottomDivider = [[UIView alloc] init];
+    bottomDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
+    bottomDivider.width = self.composeMessageContentView.width;
+    bottomDivider.height = 0.5;
+    bottomDivider.y = 170;
+    [self.composeMessageView addSubview:bottomDivider];
+    
+    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
+    //self.dateContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 100)];
+    //self.dateContentView.backgroundColor = [UIColor whiteColor];
 //    [self.dateContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
-    [self.dateView addSubview:self.dateContentView];
+    //[self.dateView addSubview:self.dateContentView];
+    
+    UIImageView *timeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeIcon"]];
+    timeIcon.centerX = self.view.width/2;
+    timeIcon.y = 20;
+    [self.dateView addSubview:timeIcon];
     
     self.dateTitleLabel = [[UILabel alloc] init];
-    self.dateTitleLabel.height = self.dateContentView.height;
-    self.dateTitleLabel.x = self.composeMessageTitleLabel.x;
-    self.dateTitleLabel.width = self.dateContentView.width - self.dateTitleLabel.x;
-    self.dateTitleLabel.font = self.composeMessageTitleLabel.font;
+    self.dateTitleLabel.height = 50;
+    self.dateTitleLabel.x = 0;
+    self.dateTitleLabel.y = 30;
+    self.dateTitleLabel.width = self.view.width;
+    self.dateTitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.dateTitleLabel.font = [ThemeManager boldFontOfSize:12];
     self.dateTitleLabel.textColor = self.composeMessageTitleLabel.textColor;
-    self.dateTitleLabel.text = @"When:";
-    [self.dateContentView addSubview:self.dateTitleLabel];
+    self.dateTitleLabel.text = @"CHOOSE TIME TO MEET";
+    [self.dateView addSubview:self.dateTitleLabel];
     
     self.dateLabel = [[UILabel alloc] init];
-    self.dateLabel.height = self.dateContentView.height;
-    self.dateLabel.x = 90;
-    self.dateLabel.width = self.dateContentView.width - self.dateLabel.x;
-    self.dateLabel.textColor = [UIColor colorWithWhite:171/255.0 alpha:1.0];
-    self.dateLabel.font = self.dateTitleLabel.font;
-    [self.dateContentView addSubview:self.dateLabel];
+    self.dateLabel.height = 50;
+    self.dateLabel.y = 70;
+    self.dateLabel.x = 79;
+    self.dateLabel.width = self.view.width;
+    self.dateLabel.textColor = [UIColor blackColor];
+    self.dateLabel.font = [ThemeManager lightFontOfSize:15];
+    [self.dateView addSubview:self.dateLabel];
     
     self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 70)];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -486,8 +502,6 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    [self.descriptionBackground addSubview:self.descriptionDetailLabel];
 
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
-    
-    NSLog(@"%@",deal.dealType);
         
     [self.tableView reloadData];
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
@@ -631,15 +645,15 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    
 //}
 
-- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
-{
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
-    for (AVCaptureDevice *device in devices)
-    {
-        if ([device position] == position) return device;
-    }
-    return nil;
-}
+//- (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition) position
+//{
+//    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+//    for (AVCaptureDevice *device in devices)
+//    {
+//        if ([device position] == position) return device;
+//    }
+//    return nil;
+//}
 
 - (void)showDatePicker
 {
