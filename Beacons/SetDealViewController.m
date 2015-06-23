@@ -41,11 +41,11 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 @property (strong, nonatomic) UIImageView *imageView;
 //@property (strong, nonatomic) UIImageView *fallBackImageView;
 @property (strong, nonatomic) UIImage *image;
-@property (strong, nonatomic) UILabel *venueLabelLineOne;
-@property (strong, nonatomic) UILabel *venueLabelLineTwo;
-@property (strong, nonatomic) UILabel *eventLabelLineOne;
-@property (strong, nonatomic) UILabel *eventLabelLineTwo;
-@property (strong, nonatomic) UILabel *distanceLabel;
+//@property (strong, nonatomic) UILabel *venueLabelLineOne;
+//@property (strong, nonatomic) UILabel *venueLabelLineTwo;
+//@property (strong, nonatomic) UILabel *eventLabelLineOne;
+//@property (strong, nonatomic) UILabel *eventLabelLineTwo;
+//@property (strong, nonatomic) UILabel *distanceLabel;
 //@property (strong, nonatomic) UIView *cameraPreview;
 //@property (strong, nonatomic) UILabel *descriptionLabel;
 //@property (strong, nonatomic) UILabel *descriptionDetailLabel;
@@ -95,24 +95,40 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
-    
-    UIButton *cancelButton = [UIButton navButtonWithTitle:@"Skip"];
-    [cancelButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+//    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
 //    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
 //    [self addChildViewController:self.rewardsViewController];
 //    [self.rewardsViewController updateRewardsScore];
     
-    self.view.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 253)];
-    self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 243)];
+    self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 130)];
+    //self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 243)];
     [self.dealDescriptionView addSubview:self.dealContentView];
 //    [self.dealContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
+    
+    UIImageView *groupIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupIcon"]];
+    groupIcon.centerX = self.view.width/2;
+    groupIcon.y = 40;
+    [self.dealDescriptionView addSubview:groupIcon];
+    
+    UILabel *groupHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 30)];
+    groupHeadingLabel.centerX = self.view.width/2;
+    groupHeadingLabel.text = @"BETTER WITH FRIENDS";
+    groupHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    groupHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.dealDescriptionView addSubview:groupHeadingLabel];
+    
+    UILabel *groupTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, self.view.width - 50, 60)];
+    groupTextLabel.centerX = self.view.width/2;
+    groupTextLabel.font = [ThemeManager lightFontOfSize:13];
+    groupTextLabel.textAlignment = NSTextAlignmentCenter;
+    groupTextLabel.numberOfLines = 2;
+    groupTextLabel.text = @"Share the fun - get free drinks when you invite friends to join you out.";
+    [self.dealDescriptionView addSubview:groupTextLabel];
     
 //    self.imageView = [[UIImageView alloc] init];
 //    self.imageView.height = self.dealDescriptionView.height - 10;
@@ -122,54 +138,54 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    [self.dealContentView addSubview:self.imageView];
     
     //    CGFloat originForVenuePreview = 0;
-    self.backgroundView = [[UIView alloc] initWithFrame:self.dealContentView.bounds];
-    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.dealContentView addSubview:self.backgroundView];
-    
-    self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.width = self.view.width - 20;
-    self.venueLabelLineOne.x = 10;
-    self.venueLabelLineOne.height = 24;
-    self.venueLabelLineOne.y = 68;
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
-    self.venueLabelLineOne.textColor = [UIColor whiteColor];
-//    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
-    self.venueLabelLineOne.numberOfLines = 1;
-    [self.dealContentView addSubview:self.venueLabelLineOne];
-    
-    self.venueLabelLineTwo = [[UILabel alloc] init];
-    self.venueLabelLineTwo.width = self.view.width - 20;
-    self.venueLabelLineTwo.x = 10;
-    self.venueLabelLineTwo.height = 40;
-    self.venueLabelLineTwo.y = 86;
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:50];
-    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
-    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    self.venueLabelLineTwo.numberOfLines = 1;
-    [self.dealContentView addSubview:self.venueLabelLineTwo ];
-    
-    self.eventLabelLineOne = [[UILabel alloc] init];
-    self.eventLabelLineOne.width = self.view.width - 20;
-    self.eventLabelLineOne.x = 10;
-    self.eventLabelLineOne.height = 24;
-    self.eventLabelLineOne.y = 68;
-    self.eventLabelLineOne.font = [ThemeManager boldFontOfSize:16];
-    self.eventLabelLineOne.textColor = [UIColor whiteColor];
-    //    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.eventLabelLineOne.textAlignment = NSTextAlignmentLeft;
-    self.eventLabelLineOne.numberOfLines = 1;
-    [self.dealContentView addSubview:self.eventLabelLineOne];
-    
-    self.eventLabelLineTwo = [[UILabel alloc] init];
-    self.eventLabelLineTwo.width = self.view.width - 20;
-    self.eventLabelLineTwo.font = [ThemeManager boldFontOfSize:26];
-    self.eventLabelLineTwo.textColor = [UIColor whiteColor];
-    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-    self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    [self.dealContentView addSubview:self.eventLabelLineTwo];
+//    self.backgroundView = [[UIView alloc] initWithFrame:self.dealContentView.bounds];
+//    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+//    self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    [self.dealContentView addSubview:self.backgroundView];
+//    
+//    self.venueLabelLineOne = [[UILabel alloc] init];
+//    self.venueLabelLineOne.width = self.view.width - 20;
+//    self.venueLabelLineOne.x = 10;
+//    self.venueLabelLineOne.height = 24;
+//    self.venueLabelLineOne.y = 68;
+//    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+//    self.venueLabelLineOne.textColor = [UIColor whiteColor];
+////    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//    self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
+//    self.venueLabelLineOne.numberOfLines = 1;
+//    [self.dealContentView addSubview:self.venueLabelLineOne];
+//    
+//    self.venueLabelLineTwo = [[UILabel alloc] init];
+//    self.venueLabelLineTwo.width = self.view.width - 20;
+//    self.venueLabelLineTwo.x = 10;
+//    self.venueLabelLineTwo.height = 40;
+//    self.venueLabelLineTwo.y = 86;
+//    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:50];
+//    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+//    self.venueLabelLineTwo.numberOfLines = 1;
+//    [self.dealContentView addSubview:self.venueLabelLineTwo ];
+//    
+//    self.eventLabelLineOne = [[UILabel alloc] init];
+//    self.eventLabelLineOne.width = self.view.width - 20;
+//    self.eventLabelLineOne.x = 10;
+//    self.eventLabelLineOne.height = 24;
+//    self.eventLabelLineOne.y = 68;
+//    self.eventLabelLineOne.font = [ThemeManager boldFontOfSize:16];
+//    self.eventLabelLineOne.textColor = [UIColor whiteColor];
+//    //    [self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//    self.eventLabelLineOne.textAlignment = NSTextAlignmentLeft;
+//    self.eventLabelLineOne.numberOfLines = 1;
+//    [self.dealContentView addSubview:self.eventLabelLineOne];
+//    
+//    self.eventLabelLineTwo = [[UILabel alloc] init];
+//    self.eventLabelLineTwo.width = self.view.width - 20;
+//    self.eventLabelLineTwo.font = [ThemeManager boldFontOfSize:26];
+//    self.eventLabelLineTwo.textColor = [UIColor whiteColor];
+//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//    self.eventLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+//    [self.dealContentView addSubview:self.eventLabelLineTwo];
     
 //    self.cameraPreview = [[UIView alloc] init];
 //    self.cameraPreview.size = CGSizeMake(self.view.width, self.dealContentView.height);
@@ -177,11 +193,11 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.cameraPreview.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
 //    [self.dealContentView addSubview:self.cameraPreview];
     
-    UIImage *topGradientImage = [UIImage imageNamed:@"topPictureGradient"];
-    UIImageView *topGradient = [[UIImageView alloc] initWithImage:topGradientImage];
-    topGradient.size = CGSizeMake(self.view.width, self.dealContentView.height);
-    topGradient.bottom = self.dealContentView.height - 3;
-    [self.dealContentView addSubview:topGradient];
+//    UIImage *topGradientImage = [UIImage imageNamed:@"topPictureGradient"];
+//    UIImageView *topGradient = [[UIImageView alloc] initWithImage:topGradientImage];
+//    topGradient.size = CGSizeMake(self.view.width, self.dealContentView.height);
+//    topGradient.bottom = self.dealContentView.height - 3;
+//    [self.dealContentView addSubview:topGradient];
     
 //    self.topPictureLabel = [[UILabel alloc] init];
 //    self.topPictureLabel.height = 20;
@@ -212,17 +228,17 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    [self.dealContentView addSubview:self.takePicture];
     
     
-    self.imageView = [[UIImageView alloc] init];
-    self.imageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
-    self.imageView.bottom = self.dealContentView.height;
-    //self.imageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
-    [self.dealContentView addSubview:self.imageView];
+//    self.imageView = [[UIImageView alloc] init];
+//    self.imageView.size = CGSizeMake(self.view.width, self.dealContentView.height);
+//    self.imageView.bottom = self.dealContentView.height;
+//    //self.imageView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+//    [self.dealContentView addSubview:self.imageView];
     
-    UIImage *bottomGradientImage = [UIImage imageNamed:@"bottomPictureGradient"];
-    UIImageView *bottomGradient = [[UIImageView alloc] initWithImage:bottomGradientImage];
-    bottomGradient.size = CGSizeMake(self.view.width, 80);
-    bottomGradient.bottom = self.dealContentView.height;
-    [self.dealContentView addSubview:bottomGradient];
+//    UIImage *bottomGradientImage = [UIImage imageNamed:@"bottomPictureGradient"];
+//    UIImageView *bottomGradient = [[UIImageView alloc] initWithImage:bottomGradientImage];
+//    bottomGradient.size = CGSizeMake(self.view.width, 80);
+//    bottomGradient.bottom = self.dealContentView.height;
+//    [self.dealContentView addSubview:bottomGradient];
     
 //    self.retakePictureButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    UIImage *retakePicture = [UIImage imageNamed:@"retakePicture"];
@@ -265,32 +281,44 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
 //    self.descriptionLabel.numberOfLines = 2;
 //    [self.descriptionBackground addSubview:self.descriptionLabel];
     
-    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
+    self.composeMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 165)];
     self.composeMessageContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 127)];
     self.composeMessageContentView.backgroundColor = [UIColor whiteColor];
 //    [self.composeMessageContentView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.composeMessageView addSubview:self.composeMessageContentView];
     
-    self.composeMessageTitleLabel = [[UILabel alloc] init];
-    self.composeMessageTitleLabel.height = 40;
-    self.composeMessageTitleLabel.x = 21;
-    self.composeMessageTitleLabel.width = self.composeMessageContentView.width - self.composeMessageTitleLabel.x;
-    self.composeMessageTitleLabel.text = @"Message to friends:";
-    self.composeMessageTitleLabel.textColor = [[ThemeManager sharedTheme] brownColor];
-    self.composeMessageTitleLabel.font = [ThemeManager regularFontOfSize:1.3*11];
-    [self.composeMessageContentView addSubview:self.composeMessageTitleLabel];
+    UIImageView *composeMessageIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"composeMessageIcon"]];
+    composeMessageIcon.centerX = self.view.width/2;
+    composeMessageIcon.y = 30;
+    [self.composeMessageView addSubview:composeMessageIcon];
+    
+    UILabel *composeHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 30)];
+    composeHeadingLabel.centerX = self.view.width/2;
+    composeHeadingLabel.text = @"MESSAGE TO FRIENDS";
+    composeHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    composeHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.composeMessageView addSubview:composeHeadingLabel];
+    
+//    self.composeMessageTitleLabel = [[UILabel alloc] init];
+//    self.composeMessageTitleLabel.height = 40;
+//    self.composeMessageTitleLabel.x = 21;
+//    self.composeMessageTitleLabel.width = self.composeMessageContentView.width - self.composeMessageTitleLabel.x;
+//    self.composeMessageTitleLabel.text = @"Message to friends:";
+//    self.composeMessageTitleLabel.textColor = [[ThemeManager sharedTheme] brownColor];
+//    self.composeMessageTitleLabel.font = [ThemeManager regularFontOfSize:1.3*11];
+//    [self.composeMessageContentView addSubview:self.composeMessageTitleLabel];
     
     UIView *divider = [[UIView alloc] init];
     divider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
     divider.width = self.composeMessageContentView.width;
     divider.height = 0.5;
-    divider.y = 40;
+    divider.y = 90;
     [self.composeMessageView addSubview:divider];
     
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.composeMessageContentView.width;
     self.composeMessageTextView.height = 77;
-    self.composeMessageTextView.bottom = self.composeMessageContentView.height;
+    self.composeMessageTextView.y = 95;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
     self.composeMessageTextView.font = [ThemeManager regularFontOfSize:1.3*11];
 //    self.composeMessageTextView.textColor = [UIColor blackColor];
@@ -322,23 +350,35 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.dateLabel.font = self.dateTitleLabel.font;
     [self.dateContentView addSubview:self.dateLabel];
     
-    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 44)];
+    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 70)];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteFriendsButton.size = CGSizeMake(250, 35);
+    self.inviteFriendsButton.size = CGSizeMake(self.view.width, 35);
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
-    self.inviteFriendsButton.centerY = self.inviteFriendsView.height/2.0;
-    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    self.inviteFriendsButton.y = 0;
+    self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.inviteFriendsButton setTitle:@"SELECT FRIENDS" forState:UIControlStateNormal];
-    UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
-    [self.inviteFriendsButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
-    self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
-    self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
-    self.inviteFriendsButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+    //UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
+    //[self.inviteFriendsButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
+    //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+    //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
+    self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.inviteFriendsView addSubview:self.inviteFriendsButton];
+    
+    UIButton *skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    skipButton.size = CGSizeMake(self.view.width, 35);
+    skipButton.centerX = self.view.width/2.0;
+    skipButton.y = 35;
+    skipButton.backgroundColor = [UIColor whiteColor];
+    [skipButton setTitle:@"OR, FLY SOLO. GET THIS DEAL" forState:UIControlStateNormal];
+    skipButton.titleLabel.font = [ThemeManager lightFontOfSize:13];
+    [skipButton setTitleColor:[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] forState:UIControlStateNormal];
+    [skipButton setTitleColor:[[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteFriendsView addSubview:skipButton];
 }
 
 - (void)preloadWithDealID:(NSNumber *)dealID
@@ -382,7 +422,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
       //NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:ImageURL]];
       //self.imageView.image = [UIImage imageWithData:imageData];
 
-    [self.imageView sd_setImageWithURL:deal.venue.imageURL];
+    //[self.imageView sd_setImageWithURL:deal.venue.imageURL];
     //self.venueLabelLineOne.text = deal.venue.name;
 //    self.descriptionLabel.text = deal.dealDescription;
 //    [self.descriptionLabel sizeToFit];
