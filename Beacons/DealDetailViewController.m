@@ -26,6 +26,8 @@
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *dealTime;
 
+@property (strong, nonatomic) UILabel *venueTextLabel;
+
 @end
 
 @implementation DealDetailViewController
@@ -112,6 +114,8 @@
     
     if (self.deal != nil) {
         
+        bool hasVenueDescription = ![self.deal.venue.placeDescription isEqual: @""];
+        
         UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
         dealIcon.centerX = self.view.width/2;
         dealIcon.y = 180;
@@ -131,39 +135,49 @@
         dealTextLabel.numberOfLines = 0;
         [mainScroll addSubview:dealTextLabel];
         
-        UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
-        venueIcon.centerX = self.view.width/2;
-        venueIcon.y = 260;
-        [mainScroll addSubview:venueIcon];
+        if (hasVenueDescription) {
         
-        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, self.view.width, 30)];
-        venueHeadingLabel.centerX = self.view.width/2;
-        venueHeadingLabel.text = @"THE VENUE";
-        venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:venueHeadingLabel];
+            UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
+            venueIcon.centerX = self.view.width/2;
+            venueIcon.y = 260;
+            [mainScroll addSubview:venueIcon];
+            
+            UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, self.view.width, 30)];
+            venueHeadingLabel.centerX = self.view.width/2;
+            venueHeadingLabel.text = @"THE VENUE";
+            venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
+            [mainScroll addSubview:venueHeadingLabel];
+            
+            NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+            CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
+            CGRect venueDescriptionHeight = [self.deal.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
+            
+            self.venueTextLabel = [[UILabel alloc] init];
+            self.venueTextLabel.x = 0;
+            self.venueTextLabel.width = self.view.width - 50;
+            self.venueTextLabel.y = 305;
+            self.venueTextLabel.height = venueDescriptionHeight.size.height;
+            self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
+            self.venueTextLabel.centerX = self.view.width/2;
+            self.venueTextLabel.numberOfLines = 0;
+            self.venueTextLabel.textAlignment = NSTextAlignmentCenter;
+            [mainScroll addSubview:self.venueTextLabel];
         
-        UILabel *venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, self.view.width - 50, 60)];
-        venueTextLabel.centerX = self.view.width/2;
-        venueTextLabel.font = [ThemeManager lightFontOfSize:13];
-        venueTextLabel.centerX = self.view.width/2;
-        venueTextLabel.numberOfLines = 0;
-        venueTextLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:venueTextLabel];
+        }
         
         UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
         docIcon.centerX = self.view.width/2;
-        docIcon.y = venueTextLabel.y + venueTextLabel.size.height + 10;
         [mainScroll addSubview:docIcon];
         
-        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 30, self.view.width, 30)];
+        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
         docHeadingLabel.centerX = self.view.width/2;
         docHeadingLabel.text = @"HOW THIS WORKS";
         docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         docHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [mainScroll addSubview:docHeadingLabel];
         
-        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 50, self.view.width, 60)];
+        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 60)];
         docTextLabel.centerX = self.view.width/2;
         docTextLabel.font = [ThemeManager lightFontOfSize:13];
         docTextLabel.width = self.view.width - 50;
@@ -171,6 +185,16 @@
         docTextLabel.numberOfLines = 0;
         docTextLabel.textAlignment = NSTextAlignmentCenter;
         [mainScroll addSubview:docTextLabel];
+        
+        if (hasVenueDescription) {
+            docIcon.y = self.venueTextLabel.y + self.venueTextLabel.size.height + 15;
+            docHeadingLabel.y = docIcon.y + 20;
+            docTextLabel.y = docIcon.y + 40;
+        } else {
+            docIcon.y = dealTextLabel.y + dealTextLabel.size.height + 10;
+            docHeadingLabel.y = docIcon.y + 20;
+            docTextLabel.y = docIcon.y + 40;
+        }
         
         UIImageView *directionsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"directionsIcon"]];
         directionsIcon.centerX = self.view.width/2;
@@ -244,6 +268,8 @@
             getDirections.font = [ThemeManager lightFontOfSize:13];
             [addressContainer addSubview:getDirections];
             
+            mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 60);
+            
             [mainScroll addSubview:mapImageView];
         }];
         
@@ -265,7 +291,7 @@
         self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
         self.dealTime.text = [self.deal.dealStartString uppercaseString];
         dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@", [self.deal.itemName lowercaseString], self.deal.itemPrice];
-        venueTextLabel.text = self.deal.venue.placeDescription;
+        self.venueTextLabel.text = self.deal.venue.placeDescription;
         docTextLabel.text = @"Just tap 'Get This Deal', pay for your drink, and present the voucher to your server. You will only be charged once the voucher is redeemed";
         
         [self.view addSubview:mainScroll];
@@ -273,6 +299,8 @@
         [self.view addSubview:self.getDealButton];
         
     } else {
+        
+        bool hasHappyHourVenueDescription = ![self.happyHour.venue.placeDescription isEqual: @""];
         
         UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
         dealIcon.centerX = self.view.width/2;
@@ -288,9 +316,9 @@
         
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-        CGRect r = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
+        CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
         
-        UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 230, self.view.width - 50, r.size.height)];
+        UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 230, self.view.width - 50, happyHourDescriptionHeight.size.height)];
         dealTextLabel.centerX = self.view.width/2;
         dealTextLabel.font = [ThemeManager lightFontOfSize:13];
         dealTextLabel.textAlignment = NSTextAlignmentCenter;
@@ -298,59 +326,50 @@
         
         [mainScroll addSubview:dealTextLabel];
         
-        UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
-        venueIcon.centerX = self.view.width/2;
-        venueIcon.y = 260;
-        [mainScroll addSubview:venueIcon];
-        
-        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, self.view.width, 30)];
-        venueHeadingLabel.centerX = self.view.width/2;
-        venueHeadingLabel.text = @"THE VENUE";
-        venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:venueHeadingLabel];
-        
-        UILabel *venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, self.view.width - 50, 60)];
-        venueTextLabel.centerX = self.view.width/2;
-        venueTextLabel.font = [ThemeManager lightFontOfSize:13];
-        venueTextLabel.centerX = self.view.width/2;
-        venueTextLabel.numberOfLines = 0;
-        venueTextLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:venueTextLabel];
-        
-        UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
-        docIcon.centerX = self.view.width/2;
-        docIcon.y = venueTextLabel.y + venueTextLabel.size.height + 10;
-        [mainScroll addSubview:docIcon];
-        
-        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 30, self.view.width, 30)];
-        docHeadingLabel.centerX = self.view.width/2;
-        docHeadingLabel.text = @"HOW THIS WORKS";
-        docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        docHeadingLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:docHeadingLabel];
-        
-        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueTextLabel.y + venueTextLabel.size.height + 50, self.view.width, 60)];
-        docTextLabel.centerX = self.view.width/2;
-        docTextLabel.font = [ThemeManager lightFontOfSize:13];
-        docTextLabel.width = self.view.width - 50;
-        docTextLabel.centerX = self.view.width/2;
-        docTextLabel.numberOfLines = 0;
-        docTextLabel.textAlignment = NSTextAlignmentCenter;
-        [mainScroll addSubview:docTextLabel];
-        
         UIImageView *directionsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"directionsIcon"]];
         directionsIcon.centerX = self.view.width/2;
-        directionsIcon.y = docTextLabel.y + docTextLabel.size.height + 10;
+        directionsIcon.y = 0;
         [mainScroll addSubview:directionsIcon];
         
         UILabel *directionHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
-        directionHeadingLabel.y = docTextLabel.y + docTextLabel.size.height + 30;
+        directionHeadingLabel.y = 0;
         directionHeadingLabel.centerX = self.view.width/2;
         directionHeadingLabel.text = @"DIRECTIONS";
         directionHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         directionHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [mainScroll addSubview:directionHeadingLabel];
+        
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.happyHour.venue.name];
+        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+        [self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
+        self.distanceLabel.text = [self stringForDistance:self.happyHour.venue.distance];
+        self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
+        dealTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
+        
+        if (hasHappyHourVenueDescription) {
+            UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
+            venueIcon.centerX = self.view.width/2;
+            venueIcon.y = 230 + happyHourDescriptionHeight.size.height + 10;
+            [mainScroll addSubview:venueIcon];
+            
+            UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 20, self.view.width, 30)];
+            venueHeadingLabel.centerX = self.view.width/2;
+            venueHeadingLabel.text = @"THE VENUE";
+            venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
+            [mainScroll addSubview:venueHeadingLabel];
+            
+            self.venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 40, self.view.width - 50, 30)];
+            self.venueTextLabel.centerX = self.view.width/2;
+            self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
+            self.venueTextLabel.centerX = self.view.width/2;
+            self.venueTextLabel.numberOfLines = 0;
+            self.venueTextLabel.textAlignment = NSTextAlignmentCenter;
+            [mainScroll addSubview:self.venueTextLabel];
+            
+            self.venueTextLabel.text = self.happyHour.venue.placeDescription;
+        }
         
         MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
         CLLocationCoordinate2D center = self.happyHour.venue.coordinate;
@@ -364,7 +383,7 @@
         [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
             //mapSnapshotImage = mapSnap.image;
             //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
-            UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, docTextLabel.y + docTextLabel.size.height + 70, self.view.width, 200)];
+            UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 200)];
             [mapImageView setImage:mapSnap.image];
             //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
             //CALayer *imageLayer = mapImageView.layer;
@@ -411,17 +430,18 @@
             getDirections.font = [ThemeManager lightFontOfSize:13];
             [addressContainer addSubview:getDirections];
             
+            if (hasHappyHourVenueDescription) {
+                directionsIcon.y = self.venueTextLabel.y + self.venueTextLabel.height + 5;
+            } else {
+                directionsIcon.y = dealTextLabel.y + dealTextLabel.height + 5;
+            }
+            directionHeadingLabel.y = directionsIcon.y + directionsIcon.height;
+            mapImageView.y = directionHeadingLabel.y + directionHeadingLabel.height;
+            
             [mainScroll addSubview:mapImageView];
+
+            mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 20);
         }];
-        
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.happyHour.venue.name];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        [self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
-        self.distanceLabel.text = [self stringForDistance:self.happyHour.venue.distance];
-        self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
-        dealTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
-        venueTextLabel.text = self.happyHour.venue.placeDescription;
         
         [self.view addSubview:mainScroll];
     }
