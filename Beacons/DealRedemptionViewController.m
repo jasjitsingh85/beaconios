@@ -26,8 +26,8 @@
 //    REDEEMED
 //} VoucherStates;
 
-@property (strong, nonatomic) DashedBorderButton *redeemButton;
-@property (strong, nonatomic) UIButton *feedbackButton;
+@property (strong, nonatomic) UIButton *redeemButton;
+//@property (strong, nonatomic) UIButton *feedbackButton;
 @property (strong, nonatomic) UILabel *countdownLabel;
 @property (strong, nonatomic) UILabel *voucherTitle;
 @property (strong, nonatomic) UILabel *itemName;
@@ -66,15 +66,59 @@
 //    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCountdown) userInfo:nil repeats:YES];
     
     self.headerIcon = [[UIImageView alloc] init];
+    self.headerIcon.height = 30;
+    self.headerIcon.width = 30;
     self.headerIcon.centerX = self.view.width/2;
+    self.headerIcon.y = 10;
+    [self.tableView addSubview:self.headerIcon];
     
-    self.redeemButton = [DashedBorderButton buttonWithType:UIButtonTypeCustom];
-    self.redeemButton.layer.cornerRadius = 6;
-    self.redeemButton.border.lineWidth = 4;
-    self.redeemButton.border.strokeColor = [UIColor colorWithRed:138/255. green:136/255. blue:136/255. alpha:1].CGColor;
-    self.redeemButton.border.fillColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1].CGColor;
-    self.redeemButton.border.lineDashPattern = @[@10, @10];
-    self.redeemButton.size = CGSizeMake(280, 185);
+    self.headerTitle = [[UILabel alloc] init];
+    self.headerTitle.height = 30;
+    self.headerTitle.width = self.tableView.width;
+    self.headerTitle.textAlignment = NSTextAlignmentCenter;
+    //self.headerTitle.centerX = self.tableView.width/2;
+    self.headerTitle.font = [ThemeManager boldFontOfSize:11];
+    self.headerTitle.y = 35;
+    [self.tableView addSubview:self.headerTitle];
+    
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.width - 50, 50)];
+    self.headerExplanationText.centerX = self.view.width/2;
+    self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
+    self.headerExplanationText.textAlignment = NSTextAlignmentCenter;
+    self.headerExplanationText.numberOfLines = 2;
+    [self.tableView addSubview:self.headerExplanationText];
+    
+    UIImageView *inviteFriendsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupIcon"]];
+//    self.headerIcon.height = 30;
+//    self.headerIcon.width = 30;
+    inviteFriendsIcon.centerX = self.view.width/2;
+    inviteFriendsIcon.y = 270;
+    [self.tableView addSubview:inviteFriendsIcon];
+    
+    UILabel *inviteFriendsTitle = [[UILabel alloc] init];
+    inviteFriendsTitle.height = 30;
+    inviteFriendsTitle.width = self.tableView.width;
+    inviteFriendsTitle.textAlignment = NSTextAlignmentCenter;
+    //self.headerTitle.centerX = self.tableView.width/2;
+    inviteFriendsTitle.font = [ThemeManager boldFontOfSize:11];
+    inviteFriendsTitle.y = 290;
+    inviteFriendsTitle.text = @"INVITE MORE FRIENDS HERE?";
+    [self.tableView addSubview:inviteFriendsTitle];
+    
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.width - 50, 50)];
+    self.headerExplanationText.centerX = self.view.width/2;
+    self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
+    self.headerExplanationText.textAlignment = NSTextAlignmentCenter;
+    self.headerExplanationText.numberOfLines = 2;
+    [self.tableView addSubview:self.headerExplanationText];
+    
+    self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //self.redeemButton.layer.cornerRadius = 6;
+    //self.redeemButton.border.lineWidth = 4;
+    //self.redeemButton.border.strokeColor = [UIColor colorWithRed:138/255. green:136/255. blue:136/255. alpha:1].CGColor;
+    //self.redeemButton.border.fillColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1].CGColor;
+    //self.redeemButton.border.lineDashPattern = @[@10, @10];
+    self.redeemButton.size = CGSizeMake(self.view.width, 303);
     [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.voucherTitle = [[UILabel alloc] init];
@@ -107,21 +151,21 @@
     self.serverMessage.font = [ThemeManager boldFontOfSize:14];
     [self.redeemButton addSubview:self.serverMessage];
     
-    self.feedbackButton = [[UIButton alloc] init];
-    self.feedbackButton.size = CGSizeMake(self.view.width, 34);
-    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
-    self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
-    self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
-    self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
-    footerView.backgroundColor = [UIColor whiteColor];
-    self.feedbackButton.bottom = 264;
-    self.feedbackButton.centerX = footerView.width/2.0;
-    [self.tableView addSubview:self.feedbackButton];
-    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.feedbackButton = [[UIButton alloc] init];
+//    self.feedbackButton.size = CGSizeMake(self.view.width, 34);
+//    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+//    self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
+//    self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
+//    self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
+//    footerView.backgroundColor = [UIColor whiteColor];
+//    self.feedbackButton.bottom = 264;
+//    self.feedbackButton.centerX = footerView.width/2.0;
+//    [self.tableView addSubview:self.feedbackButton];
+//    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.redeemButton.centerX = footerView.width/2.0;
-    self.redeemButton.bottom = 205;
+    //self.redeemButton.centerX = footerView.width/2.0;
+    self.redeemButton.y = 30;
     [self.tableView addSubview:self.redeemButton];
     //[self.tableView addSubview:footerView];
     //self.tableView.tableFooterView = footerView;
@@ -142,20 +186,20 @@
         self.redeemButton.size = CGSizeMake(280, 42);
         [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-        self.feedbackButton = [[UIButton alloc] init];
-        self.feedbackButton.size = CGSizeMake(self.view.width, 34);
-        self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
-        self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
-        self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
-        self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//        self.feedbackButton = [[UIButton alloc] init];
+//        self.feedbackButton.size = CGSizeMake(self.view.width, 34);
+//        self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+//        self.feedbackButton.backgroundColor = [UIColor unnormalizedColorWithRed:48 green:48 blue:48 alpha:255];
+//        self.feedbackButton.titleLabel.textColor = [UIColor whiteColor];
+//        self.feedbackButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 110)];
         footerView.backgroundColor = [UIColor whiteColor];
-        self.feedbackButton.bottom = footerView.height + 10;
-        [footerView addSubview:self.feedbackButton];
-        self.feedbackButton.centerX = footerView.width/2.0;
+//        self.feedbackButton.bottom = footerView.height + 10;
+//        [footerView addSubview:self.feedbackButton];
+//        self.feedbackButton.centerX = footerView.width/2.0;
         self.redeemButton.centerX = footerView.width/2.0;
         self.redeemButton.bottom = footerView.height - 40;
-        [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        //[self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [footerView addSubview:self.redeemButton];
         self.tableView.tableFooterView = footerView;
     
@@ -220,6 +264,15 @@
     [self updateFeedbackButtonAppearance];
     [self.tableView reloadData];
 
+}
+
+- (void)updateDealType
+{
+    if (self.deal.inAppPayment) {
+        [self loadPaymentDeal];
+    } else {
+        [self loadCouponDeal];
+    }
 }
 
 - (void)feedbackButtonTouched:(id)sender
@@ -320,13 +373,13 @@
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
         [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Had a problem? " attributes:dict1]];
         [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Tap here." attributes:dict2]];
-        [self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
     }
     else {
         NSLog(@"Submitted");
         NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
         [attString appendAttributedString:[[NSAttributedString alloc] initWithString:@"Feedback submitted" attributes:dict1]];
-        [self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
+        //[self.feedbackButton setAttributedTitle:attString forState:UIControlStateNormal];
     }
     
 }
@@ -380,17 +433,21 @@
 //                venueNameText = @"";
 //                serverMessageText = @"";
             } else if (!self.dealStatus.paymentAuthorization) {
-                if ([self.delegate isUserCreator]) {
-                    voucherTitleText = @"TAP HERE TO";
-                    itemNameText = @"OPEN TAB";
-                    venueNameText = @"TAP HASN'T BEEN OPENED";
-                    serverMessageText = @"VOUCHER IS INACTIVE";
-                } else {
-                    voucherTitleText = @"VOUCHER";
-                    itemNameText = @"INACTIVE";
-                    venueNameText = @"HOST HAS NOT OPENED TAB";
-                    serverMessageText = @"VOUCHER CANNOT BE USED";
-                }
+//                if ([self.delegate isUserCreator]) {
+//                    voucherTitleText = @"TAP HERE TO";
+//                    itemNameText = @"OPEN TAB";
+//                    venueNameText = @"TAP HASN'T BEEN OPENED";
+//                    serverMessageText = @"VOUCHER IS INACTIVE";
+//                } else {
+                    [self.headerIcon setImage:[UIImage imageNamed:@"creditCardIcon"]];
+                    self.headerTitle.text = @"ALMOST THERE!";
+                    self.headerExplanationText.text = @"All we need now is a credit card on file. You're only charged when voucher is redeemed";
+                    [self.redeemButton setImage:[UIImage imageNamed:@"inactiveVoucher"] forState:UIControlStateNormal];
+//                    voucherTitleText = @"WORKING";
+//                    itemNameText = @"INACTIVE";
+//                    venueNameText = @"HOST HAS NOT OPENED TAB";
+//                    serverMessageText = @"VOUCHER CANNOT BE USED";
+                //}
             }
             else {
                 voucherTitleText = @"";
@@ -404,12 +461,12 @@
         self.venueName.textColor = color;
         self.serverMessage.textColor = color;
         
-        self.redeemButton.border.strokeColor = color.CGColor;
+        //self.redeemButton.border.strokeColor = color.CGColor;
         self.voucherTitle.text = voucherTitleText;
         self.itemName.text = itemNameText;
         self.venueName.text = venueNameText;
         self.serverMessage.text = serverMessageText;
-        self.redeemButton.border.fillColor = backgroundColor.CGColor;
+        //self.redeemButton.border.fillColor = backgroundColor.CGColor;
         
     } else {
         UIColor *inactiveColor = [UIColor colorWithWhite:205/255.0 alpha:1.0];
@@ -430,7 +487,7 @@
                 title = @"Show Staff to Redeem";
             }
         }
-        self.redeemButton.border.strokeColor = color.CGColor;
+        //self.redeemButton.border.strokeColor = color.CGColor;
         [self.redeemButton setTitleColor:color forState:UIControlStateNormal];
     }
     [self.redeemButton setTitle:title forState:UIControlStateNormal];

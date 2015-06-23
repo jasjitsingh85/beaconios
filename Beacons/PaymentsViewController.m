@@ -48,7 +48,7 @@
         dropInViewController.summaryDescription = @"You'll only be charged when your drink is redeemed";
         //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
         //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
-        dropInViewController.callToActionText = @"Open Tab";
+        dropInViewController.callToActionText = @"SUBMIT";
         dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
         
         // The way you present your BTDropInViewController instance is up to you.

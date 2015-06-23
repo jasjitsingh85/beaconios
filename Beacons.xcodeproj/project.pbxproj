@@ -98,6 +98,8 @@
 		41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD062C1B38F0A800F7DD08 /* composeMessageIcon@2x.png */; };
 		41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */; };
 		41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */; };
+		41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */; };
+		41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -399,6 +401,8 @@
 		41FD062C1B38F0A800F7DD08 /* composeMessageIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "composeMessageIcon@2x.png"; sourceTree = "<group>"; };
 		41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeIcon@2x.png"; sourceTree = "<group>"; };
 		41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tapDivider@2x.png"; sourceTree = "<group>"; };
+		41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "creditCardIcon@2x.png"; sourceTree = "<group>"; };
+		41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveVoucher@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1121,6 +1125,7 @@
 				41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */,
 				41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */,
 				41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */,
+				41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */,
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
@@ -1136,6 +1141,7 @@
 				41F144141B27C3460010BCF1 /* redPin@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
+				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
 				4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */,
@@ -1337,6 +1343,7 @@
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
 				41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */,
+				41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
@@ -1378,6 +1385,7 @@
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
 				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
 				41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */,
+				41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */,
 				41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */,
