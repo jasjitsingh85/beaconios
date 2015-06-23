@@ -21,7 +21,7 @@
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
 #import "NavigationBarTitleLabel.h"
-#import "RewardsViewController.h"
+//#import "RewardsViewController.h"
 
 @interface FindFriendsViewController () <UISearchBarDelegate>
 
@@ -44,7 +44,7 @@
 @property (readonly) NSInteger findFriendSectionRecents;
 @property (readonly) NSInteger findFriendSectionSuggested;
 @property (readonly) NSInteger findFriendSectionContacts;
-@property (nonatomic, strong) RewardsViewController *rewardsViewController;
+//@property (nonatomic, strong) RewardsViewController *rewardsViewController;
 
 @end
 
@@ -100,49 +100,67 @@
 {
     [super viewDidLoad];
     
-    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
-    [self addChildViewController:self.rewardsViewController];
-    [self.rewardsViewController updateRewardsScore];
+//    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+//    [self addChildViewController:self.rewardsViewController];
+//    [self.rewardsViewController updateRewardsScore];
 
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.tableView];
-    self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+//    //weird hack for black search bar issue
+//    self.searchBar.backgroundImage = [UIImage new];
+//    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+//    self.searchBar.delegate = self;
+//    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+//    self.searchBar.translucent = NO;
+//    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+//    [self.view addSubview:self.searchBar];
+    
+    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width * .75, 25)];
+    self.navigationItem.titleView = searchBarContainer;
+    
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width * .65, 25)];
     //weird hack for black search bar issue
     self.searchBar.backgroundImage = [UIImage new];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     self.searchBar.delegate = self;
-    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
     self.searchBar.translucent = NO;
-    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    [self.view addSubview:self.searchBar];
+    self.searchBar.layer.cornerRadius = 12;
+    self.searchBar.layer.borderWidth = 1.0;
+    self.searchBar.x = 0;
+    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    [searchBarContainer addSubview:self.searchBar];
+    //[self.view addSubview:self.searchBar];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
-    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 61, self.view.width, 61)];
+    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 35, self.view.width, 35)];
     inviteButtonBackground.backgroundColor = [UIColor whiteColor];
     inviteButtonBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:inviteButtonBackground];
     self.inviteButton = [[UIButton alloc] init];
-    self.inviteButton.size = CGSizeMake(249, 35);
+    self.inviteButton.size = CGSizeMake(self.view.width, 35);
     self.inviteButton.centerX = inviteButtonBackground.width/2.0;
     self.inviteButton.centerY = inviteButtonBackground.height/2.0;
-    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    self.inviteButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+    self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.inviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.inviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.inviteButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [inviteButtonBackground addSubview:self.inviteButton];
     [self updateInviteButtonText:nil];
-    UIEdgeInsets insets = self.tableView.contentInset;
-    insets.bottom = self.inviteButton.frame.size.height;
-    self.tableView.contentInset = insets;
+    //UIEdgeInsets insets = self.tableView.contentInset;
+    //insets.bottom = self.inviteButton.frame.size.height;
+    //self.tableView.contentInset = insets;
     self.inviteButtonShown = YES;
     
     self.tableView.rowHeight = 40;
@@ -161,17 +179,17 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    CGRect frame = CGRectMake(0, 0, 400, 44);
-    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
-    navTitleLabel.backgroundColor = [UIColor clearColor];
-    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
-    navTitleLabel.textAlignment = NSTextAlignmentCenter;
-    navTitleLabel.textColor = [UIColor whiteColor];
-    navTitleLabel.text = @"SELECT FRIENDS";
-    self.navigationItem.titleView = navTitleLabel;
-    if (self.deal) {
-        [self updateNavTitleForDeal:self.deal];
-    }
+//    CGRect frame = CGRectMake(0, 0, 400, 44);
+//    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
+//    navTitleLabel.backgroundColor = [UIColor clearColor];
+//    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
+//    navTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    navTitleLabel.textColor = [UIColor whiteColor];
+//    navTitleLabel.text = @"SELECT FRIENDS";
+//    self.navigationItem.titleView = navTitleLabel;
+//    if (self.deal) {
+//        [self updateNavTitleForDeal:self.deal];
+//    }
 //    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
 //    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
@@ -204,30 +222,30 @@
 {
     [self view];
     _deal = deal;
-    [self updateNavTitleForDeal:deal];
+    //[self updateNavTitleForDeal:deal];
     [self updateInviteButtonTextForDeal:nil];
 }
 
-- (void)updateNavTitleForDeal:(Deal *)deal
-{
-    CGRect frame = CGRectMake(0, 0, 400, 44);
-    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
-    navTitleLabel.backgroundColor = [UIColor clearColor];
-    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
-    navTitleLabel.textAlignment = NSTextAlignmentCenter;
-    navTitleLabel.textColor = [UIColor whiteColor];
-    NSString *navTitle = [[NSString alloc] init];
-    if (deal.inviteRequirement.integerValue <= 1) {
-        navTitle = [NSString stringWithFormat:@"SELECT FRIENDS"];
-    } else {
-        navTitle = [NSString stringWithFormat:@"SELECT %@ FRIENDS", deal.inviteRequirement];
-    }
-    navTitleLabel.text = navTitle;
-    self.navigationItem.titleView = navTitleLabel;
-    
-    
-//    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"SELECT %@ FRIENDS!", deal.inviteRequirement]];
-}
+//- (void)updateNavTitleForDeal:(Deal *)deal
+//{
+//    CGRect frame = CGRectMake(0, 0, 400, 44);
+//    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
+//    navTitleLabel.backgroundColor = [UIColor clearColor];
+//    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
+//    navTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    navTitleLabel.textColor = [UIColor whiteColor];
+//    NSString *navTitle = [[NSString alloc] init];
+//    if (deal.inviteRequirement.integerValue <= 1) {
+//        navTitle = [NSString stringWithFormat:@"SELECT FRIENDS"];
+//    } else {
+//        navTitle = [NSString stringWithFormat:@"SELECT %@ FRIENDS", deal.inviteRequirement];
+//    }
+//    navTitleLabel.text = navTitle;
+//    self.navigationItem.titleView = navTitleLabel;
+//    
+//    
+////    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"SELECT %@ FRIENDS!", deal.inviteRequirement]];
+//}
 
 - (void)populateContacts
 {
@@ -359,16 +377,16 @@
         }
     }
     [self.inviteButton setTitle:inviteButtonText forState:UIControlStateNormal];
-    self.inviteButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
+    self.inviteButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
 }
 
 - (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
 {
     [self.inviteButton setTitle:@"TEXT FRIENDS" forState:UIControlStateNormal];
     
-    UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
-    [self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
-    self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+    //UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
+    //[self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
+    //self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     
 }
 
@@ -429,36 +447,36 @@
     }
     CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
-    view.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(59, 0, 150, height)];
+    view.backgroundColor = [UIColor whiteColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, height)];
     title.adjustsFontSizeToFitWidth = YES;
     title.backgroundColor = [UIColor clearColor];
-    title.font = [ThemeManager boldFontOfSize:14.0];
-    title.textColor = [UIColor whiteColor];
+    title.font = [ThemeManager boldFontOfSize:11.0];
+    title.textColor = [UIColor unnormalizedColorWithRed:240 green:110 blue:97 alpha:255];
     [view addSubview:title];
     title.text = [self tableView:tableView titleForHeaderInSection:section];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGRect buttonFrame = CGRectZero;
-    buttonFrame.size = CGSizeMake(height, height);
-    buttonFrame.origin.x = 15 + (30 - buttonFrame.size.width)/2.0;
-    buttonFrame.origin.y = 0.5*(height - buttonFrame.size.height);
-    button.frame = buttonFrame;
-    [view addSubview:button];
-    [button setImage:[UIImage imageNamed:@"addFriendWhite"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"addFriendSelected"] forState:UIControlStateSelected];
-    [button addTarget:self action:@selector(selectAllButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    CGRect buttonFrame = CGRectZero;
+//    buttonFrame.size = CGSizeMake(height, height);
+//    buttonFrame.origin.x = self.view.width - 60;
+//    buttonFrame.origin.y = 0.5*(height - buttonFrame.size.height);
+//    button.frame = buttonFrame;
+//    [view addSubview:button];
+//    [button setImage:[UIImage imageNamed:@"addFriendNormal"] forState:UIControlStateNormal];
+//    [button setImage:[UIImage imageNamed:@"addFriendSelected"] forState:UIControlStateSelected];
+//    [button addTarget:self action:@selector(selectAllButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *contactCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.width - 32, height)];
-    contactCountLabel.textAlignment = NSTextAlignmentRight;
-    contactCountLabel.font = [ThemeManager lightFontOfSize:1.3*8];
-    contactCountLabel.textColor = [UIColor whiteColor];
-    NSInteger contactCount = [self tableView:tableView  numberOfRowsInExpandedSection:section];
-    NSString *contactPlural = contactCount == 1 ? @"Contact" : @"Contacts";
-    contactCountLabel.text = [NSString stringWithFormat:@"%d %@", contactCount, contactPlural];
-    [view addSubview:contactCountLabel];
+    //UILabel *contactCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.width - 32, height)];
+    //contactCountLabel.textAlignment = NSTextAlignmentRight;
+    //contactCountLabel.font = [ThemeManager lightFontOfSize:1.3*8];
+    //contactCountLabel.textColor = [UIColor whiteColor];
+    //NSInteger contactCount = [self tableView:tableView  numberOfRowsInExpandedSection:section];
+    //NSString *contactPlural = contactCount == 1 ? @"Contact" : @"Contacts";
+    //contactCountLabel.text = [NSString stringWithFormat:@"%d %@", contactCount, contactPlural];
+    //[view addSubview:contactCountLabel];
     
     [self.tableViewHeaderPool setValue:view forKey:key];
-    [self setSelectAllButton:button forSection:section];
+    //[self setSelectAllButton:button forSection:section];
     view.tag = section;
     UITapGestureRecognizer *headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTapped:)];
     [view addGestureRecognizer:headerTap];
@@ -648,7 +666,7 @@
         UILabel *nameLabel = [[UILabel alloc] init];
         CGRect frame = CGRectZero;
         frame.size = CGSizeMake(160, tableView.rowHeight);
-        frame.origin.x = 60;
+        frame.origin.x = 15;
         frame.origin.y = 0.5*(cell.contentView.frame.size.height - frame.size.height);
         nameLabel.frame = frame;
         nameLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
@@ -662,7 +680,7 @@
         UIImageView *addFriendImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addFriendNormal"]];
         frame = addFriendImageView.frame;
         frame.size = CGSizeMake(30, 30);
-        frame.origin.x = 15;
+        frame.origin.x = self.view.width - 60;
         frame.origin.y = 0.5*(cell.contentView.frame.size.height - frame.size.height);
         addFriendImageView.frame = frame;
         addFriendImageView.contentMode = UIViewContentModeCenter;
@@ -697,11 +715,14 @@
     BOOL contactInactive = [self.inactiveContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     BOOL contactSelected = [self.selectedContactDictionary.allKeys containsObject:normalizedPhoneNumber];
     addFriendImageView.image = contactSelected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
-    addFriendImageView.transform = contactSelected ? selectedTransform : CGAffineTransformIdentity;
+    cell.backgroundColor = contactSelected ? [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.1]:[UIColor clearColor];
+    //addFriendImageView.transform = contactSelected ? selectedTransform : CGAffineTransformIdentity;
+    //addFriendImageView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.1];
     if (contactInactive) {
         nameLabel.textColor = [UIColor lightGrayColor];
         addFriendImageView.image = [UIImage imageNamed:@"addFriendInactive"];
         addFriendImageView.transform = CGAffineTransformIdentity;
+        cell.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.1];
     }
     else {
         nameLabel.textColor = [UIColor blackColor];
@@ -757,17 +778,18 @@
 - (void)animateSelectingContactInCell:(UITableViewCell *)cell selected:(BOOL)selected completion:(void(^) ())completion
 {
     UIImage *image = selected ? [UIImage imageNamed:@"addFriendSelected"] : [UIImage imageNamed:@"addFriendNormal"];
+    cell.backgroundColor = selected ? [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.1]:[UIColor clearColor];
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     addFriendImageView.image = image;
-    CGFloat damping = selected ? 0.25 : 0.5;
-    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
-        addFriendImageView.transform = selected ? selectedTransform : CGAffineTransformIdentity;
-        [cell layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if (completion) {
-            completion();
-        }
-    }];
+//    CGFloat damping = selected ? 0.25 : 0.5;
+//    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
+//        addFriendImageView.transform = selected ? selectedTransform : CGAffineTransformIdentity;
+//        [cell layoutIfNeeded];
+//    } completion:^(BOOL finished) {
+//        if (completion) {
+//            completion();
+//        }
+//    }];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -823,7 +845,7 @@
     if (!self.isVisible) {
         return;
     }
-    [self.searchBar setShowsCancelButton:YES animated:YES];
+    //[self.searchBar setShowsCancelButton:YES animated:YES];
     self.inSearchMode = YES;
 }
 
