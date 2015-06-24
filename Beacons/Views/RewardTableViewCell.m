@@ -269,6 +269,20 @@
         lockButton.centerX = self.venuePreviewView.size.width/2;
         lockButton.centerY = self.venuePreviewView.size.height/2;
         [self.venuePreviewView addSubview:lockButton];
+        
+        UIImageView *largeGoldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
+        largeGoldCoin.x = (self.venuePreviewView.width/2)- 30;
+        largeGoldCoin.y = self.venuePreviewView.height/2 + 25;
+        [self.venuePreviewView addSubview:largeGoldCoin];
+        
+        UILabel *rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(self.venuePreviewView.width/2 - 3, self.venuePreviewView.height/2 + 14, 70, 40)];
+        rewardScore.text = [NSString stringWithFormat: @"x %@", self.deal.itemPointCost];
+        rewardScore.font = [ThemeManager boldFontOfSize:18];
+        rewardScore.textAlignment = NSTextAlignmentLeft;
+        rewardScore.textColor = [UIColor whiteColor];
+        [self.venuePreviewView addSubview:rewardScore];
+        
+        
     }
     
 }
