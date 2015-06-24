@@ -278,10 +278,10 @@
         self.getDealButton.centerX = self.view.width/2.0;
         self.getDealButton.y = self.view.height - 40;
         self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-        [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
-        self.getDealButton.titleLabel.font = [ThemeManager mediumFontOfSize:17];
         [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+        [self.getDealButton setTitle:@"LETS GO" forState:UIControlStateNormal];
+        self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
         [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];

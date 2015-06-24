@@ -1138,7 +1138,7 @@ typedef enum dealTypeStates
             
             self.descriptionLabel.width = descriptionLabelWidth + 10;
         } else {
-            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
+            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", [deal.itemName uppercaseString]];
             CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
             
             CGFloat descriptionLabelWidth;

@@ -60,13 +60,12 @@
 //    [self.backgroundGradient setImage:gradientImage];
 //    [self.venueImageView addSubview:self.backgroundGradient];
     
-    CGFloat originForVenuePreview = 0;
-    self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(originForVenuePreview, 0, self.contentView.frame.size.width, 110)];
-    //self.backgroundView = [[UIView alloc] initWithFrame:self.venuePreviewView.bounds];
+    self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 110)];
+    self.backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
     //self.backgroundView.backgroundColor = [UIColor whiteColor];
     self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.venuePreviewView addSubview:self.backgroundView];
+    [self.venueImageView addSubview:self.backgroundView];
     
     UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.contentView.size.width, 60)];
     UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
@@ -186,7 +185,7 @@
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
         [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
         [self.redeemRewardButton setTitle:[NSString stringWithFormat:@"%@", self.deal.itemPointCost] forState:UIControlStateNormal];
-        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE",[self.deal.itemName uppercaseString]];
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@",[self.deal.itemName uppercaseString]];
         float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
                                                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                                             attributes:@{ NSFontAttributeName:self.descriptionLabel.font }
@@ -261,12 +260,12 @@
     
     if (deal.locked) {
         UIView *lockedOverlay = [[UIView alloc] initWithFrame:self.venuePreviewView.frame];
-        lockedOverlay.height = 104;
-        lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+        lockedOverlay.height = self.venueImageView.height;
+        lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
         [self.venuePreviewView addSubview:lockedOverlay];
         
         UIImageView *lockButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-        lockButton.size = CGSizeMake(50, 40);
+        lockButton.size = CGSizeMake(40, 40);
         lockButton.centerX = self.venuePreviewView.size.width/2;
         lockButton.centerY = self.venuePreviewView.size.height/2;
         [self.venuePreviewView addSubview:lockButton];

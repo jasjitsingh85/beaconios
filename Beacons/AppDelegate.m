@@ -206,7 +206,7 @@
     UIFont *font1SmallerBold = [ThemeManager boldFontOfSize:14];
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"Cancel";
-    backButton.tintColor = white;
+    backButton.tintColor = [[ThemeManager sharedTheme] redColor];
     
     // Customize the Mave invite page
     MaveSDK *mave = [MaveSDK sharedInstance];
@@ -215,8 +215,8 @@
     mave.displayOptions.statusBarStyle = UIStatusBarStyleDefault;
     mave.displayOptions.navigationBarTitleCopy = @"FREE DRINKS";
     mave.displayOptions.navigationBarTitleFont = font1Bold;
-    mave.displayOptions.navigationBarTitleTextColor = white;
-    mave.displayOptions.navigationBarBackgroundColor = [UIColor unnormalizedColorWithRed:219 green:55 blue:38 alpha:255];
+    mave.displayOptions.navigationBarTitleTextColor = [[ThemeManager sharedTheme] redColor];
+    mave.displayOptions.navigationBarBackgroundColor = [UIColor whiteColor];
     
     // Set the cancel button if displaying the page modally, or the
     // back and forward buttons if pushing onto a navigation stack.

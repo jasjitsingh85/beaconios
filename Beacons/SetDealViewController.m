@@ -105,6 +105,10 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
+    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+    
     self.dealDescriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 120)];
     //self.dealContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.dealDescriptionView.width, 243)];
     [self.dealDescriptionView addSubview:self.dealContentView];
@@ -366,9 +370,9 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     self.dateLabel.font = [ThemeManager lightFontOfSize:15];
     [self.dateView addSubview:self.dateLabel];
     
-    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 70)];
+    self.inviteFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 70)];
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.inviteFriendsButton.size = CGSizeMake(self.view.width, 35);
+    self.inviteFriendsButton.size = CGSizeMake(self.view.width, 40);
     self.inviteFriendsButton.centerX = self.inviteFriendsView.width/2.0;
     self.inviteFriendsButton.y = 0;
     self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
@@ -379,22 +383,22 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
     self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.inviteFriendsView addSubview:self.inviteFriendsButton];
     
-    UIButton *skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    skipButton.size = CGSizeMake(self.view.width, 35);
-    skipButton.centerX = self.view.width/2.0;
-    skipButton.y = 35;
-    skipButton.backgroundColor = [UIColor whiteColor];
-    [skipButton setTitle:@"OR, FLY SOLO. GET THIS DEAL" forState:UIControlStateNormal];
-    skipButton.titleLabel.font = [ThemeManager lightFontOfSize:13];
-    [skipButton setTitleColor:[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] forState:UIControlStateNormal];
-    [skipButton setTitleColor:[[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.inviteFriendsView addSubview:skipButton];
+//    UIButton *skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    skipButton.size = CGSizeMake(self.view.width, 35);
+//    skipButton.centerX = self.view.width/2.0;
+//    skipButton.y = 35;
+//    skipButton.backgroundColor = [UIColor whiteColor];
+//    [skipButton setTitle:@"OR, FLY SOLO. GET THIS DEAL" forState:UIControlStateNormal];
+//    skipButton.titleLabel.font = [ThemeManager lightFontOfSize:13];
+//    [skipButton setTitleColor:[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] forState:UIControlStateNormal];
+//    [skipButton setTitleColor:[[UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.inviteFriendsView addSubview:skipButton];
 }
 
 - (void)preloadWithDealID:(NSNumber *)dealID

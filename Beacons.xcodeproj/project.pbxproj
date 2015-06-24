@@ -106,6 +106,7 @@
 		41FD063F1B3A21A600F7DD08 /* drinkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD063E1B3A21A600F7DD08 /* drinkIcon@2x.png */; };
 		41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */; };
 		41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */; };
+		41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -416,6 +417,7 @@
 		41FD063E1B3A21A600F7DD08 /* drinkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinkIcon@2x.png"; sourceTree = "<group>"; };
 		41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redoSearchContainer@2x.png"; sourceTree = "<group>"; };
 		41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeDrinks@2x.png"; sourceTree = "<group>"; };
+		41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "largeGoldCoin@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1162,6 +1164,7 @@
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
+				41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */,
 				41FD063C1B3A1EF800F7DD08 /* redeemedIcon@2x.png */,
 				4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */,
 				415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */,
@@ -1471,6 +1474,7 @@
 				96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */,
 				96D1D561199B2D06007216F3 /* whiteChevron@2x.png in Resources */,
 				41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */,
+				41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */,
 				96C7FE9D1897294100A79CC3 /* redGradientBackground@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,

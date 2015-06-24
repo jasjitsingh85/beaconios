@@ -143,12 +143,12 @@
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
-    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 35, self.view.width, 35)];
+    UIView *inviteButtonBackground = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 40, self.view.width, 40)];
     inviteButtonBackground.backgroundColor = [UIColor whiteColor];
     inviteButtonBackground.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:inviteButtonBackground];
     self.inviteButton = [[UIButton alloc] init];
-    self.inviteButton.size = CGSizeMake(self.view.width, 35);
+    self.inviteButton.size = CGSizeMake(self.view.width, 40);
     self.inviteButton.centerX = inviteButtonBackground.width/2.0;
     self.inviteButton.centerY = inviteButtonBackground.height/2.0;
     self.inviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
