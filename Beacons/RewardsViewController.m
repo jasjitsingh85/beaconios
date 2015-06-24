@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) NSString *rewards_score;
 @property (nonatomic, strong) UINavigationItem *navItem;
-@property (nonatomic, strong) UIButton *rewards_score_nav_item;
+@property (nonatomic, strong) UIView *rewards_score_nav_item;
 @property (nonatomic, strong) RewardExplanationPopupView *rewardExplanationPopupView;
 @property (nonatomic, strong) RewardsStoreViewController *rewardsStoreViewController;
 @property (nonatomic, strong) UIBarButtonItem *cancelButtonItem;
@@ -31,10 +31,14 @@
 {
     self = [super init];
     self.navItem = navItem;
-    self.rewardExplanationPopupView = [[RewardExplanationPopupView alloc] init];
-    self.rewardsStoreViewController = [[RewardsStoreViewController alloc] init];
+//    self.rewardExplanationPopupView = [[RewardExplanationPopupView alloc] init];
+//    self.rewardsStoreViewController = [[RewardsStoreViewController alloc] init];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rewardsStoreViewController];
-    self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(modalDoneButtonTouched:)];
+    self.rewards_score_nav_item = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
+    self.rewards_score_nav_item.hidden = YES;
+    //        self.rewards_score_nav_item = [UIButton navButtonWithTitle:[NSString stringWithFormat:@"%@", rewards_score]];
+    [self.rewards_score_nav_item setFrame:CGRectMake(-50, 0, 58, 20)];
+//    self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(modalDoneButtonTouched:)];
     if (!self) {
         return nil;
     } else {
@@ -46,28 +50,28 @@
 {
     [[APIClient sharedClient] getRewardsScore:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *rewards_score = responseObject[@"total_rewards"];
-//        self.rewards_score_nav_item = [UIButton navButtonWithTitle:[NSString stringWithFormat:@"%@", rewards_score]];
-        self.rewards_score_nav_item = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.rewards_score_nav_item setFrame:CGRectMake(0, 0, 58, 20)];
-        [self.rewards_score_nav_item setBackgroundImage:[UIImage imageNamed:@"goldCoin"] forState:UIControlStateNormal];
-        [self.rewards_score_nav_item setImageEdgeInsets:UIEdgeInsetsMake(0.0, 0, 15.0, 0.0)];
-        [self.rewards_score_nav_item setTitle:[NSString stringWithFormat:@"%@", rewards_score] forState:UIControlStateNormal];
-        if ([self.rewards_score_nav_item.titleLabel.text length] == 1) {
-            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -3, 0, 0.0)];
-        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 2) {
-            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -11, 0, 0.0)];
-        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 3) {
-            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0.0)];
-        } else if ([self.rewards_score_nav_item.titleLabel.text length] == 4) {
-            [self.rewards_score_nav_item setTitleEdgeInsets:UIEdgeInsetsMake(0, -28, 0, 0.0)];
-        }
-        [self.rewards_score_nav_item setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.rewards_score_nav_item addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [self.rewards_score_nav_item.titleLabel setFont:[ThemeManager boldFontOfSize:15]];
-        self.navItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rewards_score_nav_item];
+        UIImageView *goldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
+        [self.rewards_score_nav_item addSubview:goldCoin];
+        UILabel *rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(23, 0, 60, 20)];
+        rewardScore.font = [ThemeManager lightFontOfSize:16];
+        rewardScore.text = [NSString stringWithFormat:@"x %@", rewards_score];
+        [self.rewards_score_nav_item addSubview:rewardScore];
+        //[self.rewards_score_nav_item setTitle:[NSString stringWithFormat:@"%@", rewards_score] forState:UIControlStateNormal];
+        //[self.rewards_score_nav_item.titleLabel setFont:[ThemeManager boldFontOfSize:15]];
+        self.navItem.titleView = self.rewards_score_nav_item;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //self.rewards_score_nav_item = [UIButton navButtonWithTitle:@"ERROR"];
     }];
+}
+
+- (void) hideRewardsScore
+{
+    self.rewards_score_nav_item.hidden = YES;
+}
+
+- (void) showRewardsScore
+{
+    self.rewards_score_nav_item.hidden = NO;
 }
 
 -(void)rewardsButtonTouched:(id)sender

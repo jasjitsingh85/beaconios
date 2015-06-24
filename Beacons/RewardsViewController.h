@@ -10,5 +10,8 @@
 
 -(id) initWithNavigationItem:(UINavigationItem *)navItem;
 -(void) updateRewardsScore;
+- (void) hideRewardsScore;
+- (void) showRewardsScore;
+
 
 @end
