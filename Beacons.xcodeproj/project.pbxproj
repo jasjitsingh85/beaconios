@@ -44,6 +44,7 @@
 		410FC89D1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */; };
 		410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */; };
 		410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */; };
+		410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */; };
 		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
@@ -340,6 +341,7 @@
 		410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNavBlack@2x.png"; sourceTree = "<group>"; };
 		410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotspotLogoNavRed.png; sourceTree = "<group>"; };
 		410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotDrinkIcons@2x.png"; sourceTree = "<group>"; };
+		410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsStoreViewController.h; sourceTree = "<group>"; };
 		41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsStoreViewController.m; sourceTree = "<group>"; };
@@ -1207,6 +1209,7 @@
 				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
 				410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */,
 				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
+				410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */,
 				410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */,
 				4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */,
 				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
@@ -1522,6 +1525,7 @@
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
+				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
 				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

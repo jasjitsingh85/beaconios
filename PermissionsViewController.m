@@ -25,6 +25,7 @@ typedef enum {
 @property (strong, nonatomic) UIButton *confirmButton;
 @property (strong, nonatomic) UIButton *skipButton;
 @property (strong, nonatomic) UIImageView *hotbotImageView;
+@property (strong, nonatomic) UIImageView *headerIcon;
 @property (strong, nonatomic) UIView *permissionTextContainer;
 @property (assign, nonatomic) ViewMode viewMode;
 
@@ -36,9 +37,9 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:242/255. green:99/255. blue:80/255. alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:231/255. green:231/255. blue:231/255. alpha:1];
     
-    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNavBlack"]];
     CGRect logoFrame = logoImageView.frame;
     logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
     logoFrame.origin.y = 30;
@@ -46,46 +47,56 @@ typedef enum {
     [self.view addSubview:logoImageView];
     
     self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.size.width, 200)];
-    self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
+    //self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.permissionTextContainer];
+    
+    
+    self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupIcon"]];
+    self.headerIcon.size = CGSizeMake(30, 30);
+    self.headerIcon.y = 120;
+    self.headerIcon.centerX = self.view.width/2;
+    [self.view addSubview:self.headerIcon];
     
     self.titleLabel = [[UILabel alloc] init];
     CGRect titleLabelFrame;
-    titleLabelFrame.size = CGSizeMake(300, 23);
-    titleLabelFrame.origin.x = 25;
+    titleLabelFrame.size = CGSizeMake(self.view.width, 23);
+    titleLabelFrame.origin.x = 0;
     titleLabelFrame.origin.y = 53;
     self.titleLabel.frame = titleLabelFrame;
-    self.titleLabel.font = [ThemeManager boldFontOfSize:20];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.font = [ThemeManager boldFontOfSize:16];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.titleLabel.textColor = [UIColor blackColor];
     [self.permissionTextContainer addSubview:self.titleLabel];
     
     self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.confirmButton setTitle:@"OK" forState:UIControlStateNormal];
-    self.confirmButton.backgroundColor = [UIColor blackColor];
+    self.confirmButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor]
+    ;
     UIColor *confirmButtonColor = [UIColor whiteColor];
     [self.confirmButton setTitleColor:[confirmButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.confirmButton setTitleColor:confirmButtonColor forState:UIControlStateNormal];
     self.confirmButton.layer.cornerRadius = 4;
     CGRect confirmButtonFrame;
-    confirmButtonFrame.size  = CGSizeMake(242, 35);
+    confirmButtonFrame.size  = CGSizeMake(240, 40);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 360;
+    confirmButtonFrame.origin.y = 260;
     self.confirmButton.frame = confirmButtonFrame;
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.confirmButton];
     
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
-    [self.skipButton setTitleColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:.75] forState:UIControlStateNormal];
-    self.skipButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.5];
-//    self.skipButton.layer.cornerRadius = self.confirmButton.layer.cornerRadius;
-//    self.skipButton.layer.borderColor = [UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0].CGColor;
-//    self.skipButton.layer.borderWidth = 2;
-//    self.skipButton.layer.cornerRadius = 4;
-    CGRect skipButtonFrame = CGRectMake(self.confirmButton.frame.origin.x + self.confirmButton.frame.size.width/4, self.confirmButton.frame.origin.y, self.confirmButton.frame.size.width/2, self.confirmButton.frame.size.height - 5);
+    [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0] forState:UIControlStateNormal];
+    self.skipButton.backgroundColor = [UIColor clearColor];
+    self.skipButton.layer.cornerRadius = self.confirmButton.layer.cornerRadius;
+    self.skipButton.layer.borderColor = [UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0].CGColor;
+    self.skipButton.layer.borderWidth = 2;
+    //self.skipButton.layer.cornerRadius = 4;
+    CGRect skipButtonFrame = CGRectMake(self.confirmButton.frame.origin.x + self.confirmButton.frame.size.width/4, self.confirmButton.frame.origin.y, self.confirmButton.frame.size.width/2, self.confirmButton.frame.size.height - 10);
     skipButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
     self.skipButton.frame = skipButtonFrame;
+    self.skipButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
     [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.skipButton];
     
@@ -111,13 +122,13 @@ typedef enum {
         label.text = strings[i];
         CGRect labelFrame;
         labelFrame.size = CGSizeMake(self.view.width - 50, 100);
-        labelFrame.origin.x = self.titleLabel.frame.origin.x;
+        labelFrame.origin.x = 25;
         labelFrame.origin.y = 153 + 50*i;
         label.frame = labelFrame;
         label.numberOfLines = 0;
-        label.textAlignment = NSTextAlignmentLeft;
+        label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor blackColor];
-        label.font = [ThemeManager lightFontOfSize:20];
+        label.font = [ThemeManager lightFontOfSize:18];
         [subtitleLabels addObject:label];
     }
     return subtitleLabels;
@@ -127,8 +138,9 @@ typedef enum {
 {
     self.viewMode = ViewModeContact;
     self.titleLabel.text = @"Sync Contacts";
+    [self.headerIcon setImage: [UIImage imageNamed:@"groupIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To unlock local deals by texting your friends"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"To text friends to join you and earn free drinks"]];
     [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
@@ -137,6 +149,7 @@ typedef enum {
 {
     self.viewMode = ViewModePush;
     self.titleLabel.text = @"Enable Notifications";
+    [self.headerIcon setImage: [UIImage imageNamed:@"pushIcon"]];
     [self removeSubtitleLabels];
     self.subtitles = [self subtitleLabelsForStrings:@[@"To get deal notifications in real-time"]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
