@@ -497,12 +497,13 @@ typedef enum dealTypeStates
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
-                self.mapCenter = staticLocation.coordinate;
+                //self.mapCenter = staticLocation.coordinate;
+                self.mapCenter = location.coordinate;
                 [self updateMapCoordinates];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
