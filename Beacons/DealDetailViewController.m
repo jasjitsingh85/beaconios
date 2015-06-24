@@ -177,7 +177,7 @@
         docHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [mainScroll addSubview:docHeadingLabel];
         
-        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 60)];
+        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 80)];
         docTextLabel.centerX = self.view.width/2;
         docTextLabel.font = [ThemeManager lightFontOfSize:13];
         docTextLabel.width = self.view.width - 50;
@@ -292,7 +292,7 @@
         self.dealTime.text = [self.deal.dealStartString uppercaseString];
         dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@", [self.deal.itemName lowercaseString], self.deal.itemPrice];
         self.venueTextLabel.text = self.deal.venue.placeDescription;
-        docTextLabel.text = @"Just tap 'Get This Deal', pay for your drink, and present the voucher to your server. You will only be charged once the voucher is redeemed";
+        docTextLabel.text = @"Save money by buying your first drink through Hotspot. Tap 'LETS GO', add payment, and present your voucher to the server. You’re only charged after you receive your drink.";
         
         [self.view addSubview:mainScroll];
         

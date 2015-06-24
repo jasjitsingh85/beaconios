@@ -45,10 +45,10 @@
         // This is where you might want to customize your Drop in. (See below.)
         //
         dropInViewController.summaryTitle = [NSString stringWithFormat:@"$%@ for %@", deal.itemPrice, deal.itemName];
-        dropInViewController.summaryDescription = @"You'll only be charged when your drink is redeemed";
+        dropInViewController.summaryDescription = @"You won't be charged until your voucher is redeemed and you’ve received your drink";
         //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
         //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
-        dropInViewController.callToActionText = @"SUBMIT";
+        dropInViewController.callToActionText = @"SAVE";
         dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
         
         // The way you present your BTDropInViewController instance is up to you.
@@ -58,9 +58,9 @@
                                                                                                                   action:@selector(userDidCancelPayment)];
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
-        navigationController.navigationBar.topItem.title = @"ONE TIME SETUP";
+        navigationController.navigationBar.topItem.title = @"One Time Setup";
         navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [[ThemeManager sharedTheme] redColor], NSFontAttributeName : [ThemeManager lightFontOfSize:18]};
+        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
         navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
         [self presentViewController:navigationController
                            animated:YES
