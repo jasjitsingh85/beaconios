@@ -56,7 +56,9 @@
 //@property (strong, nonatomic) UILabel *invitedLabel;
 //@property (strong, nonatomic) UIButton *joinButton;
 //@property (strong, nonatomic) UIButton *inviteButton;
-//@property (strong, nonatomic) UIButton *directionsButton;
+@property (strong, nonatomic) UIButton *feedbackButton;
+@property (strong, nonatomic) UILabel *descriptionLabelLineOne;
+@property (strong, nonatomic) UILabel *descriptionLabelLineTwo;
 //@property (strong, nonatomic) UIButton *editButton;
 //@property (strong, nonatomic) UIView *addPictureView;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
@@ -104,30 +106,69 @@
     [self addChildViewController:self.voucherRedemptionViewController];
     [self.view addSubview:self.voucherRedemptionViewController.view];
     self.voucherRedemptionViewController.view.frame = self.view.bounds;
-    self.voucherRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.voucherRedemptionViewController.view.y = 90;
+    //self.voucherRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self.rewardsViewController updateRewardsScore];
+//    [self.rewardsViewController updateRewardsScore];
     
-    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
-    //self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
-    //[self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
+    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 146)];
+    //    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
+    [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
     [self.view addSubview:self.descriptionView];
-    //self.fullDescriptionViewShown = YES;
+    self.fullDescriptionViewShown = YES;
     
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.descriptionView.frame.size.width, 240)];
-//    self.imageView.image = [UIImage imageNamed:@"mapPlaceholder"];
-//    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-//    imageTap.numberOfTapsRequired = 1;
-//    [self.imageView addGestureRecognizer:imageTap];
-//    self.imageView.userInteractionEnabled = YES;
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.descriptionView.frame.size.width, 146)];
+    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+    //self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
+    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+    imageTap.numberOfTapsRequired = 1;
+    [self.imageView addGestureRecognizer:imageTap];
+    self.imageView.userInteractionEnabled = YES;
     [self.descriptionView addSubview:self.imageView];
     
-    UIView *backgroundView = [[UIView alloc] initWithFrame:self.descriptionView.bounds];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:self.imageView.bounds];
     backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.descriptionView addSubview:backgroundView];
     
+    self.feedbackButton = [[UIButton alloc] init];
+    self.feedbackButton.size = CGSizeMake(90, 25);
+    //button.backgroundColor = [UIColor clearColor];
+    self.feedbackButton.layer.cornerRadius = 2;
+    self.feedbackButton.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    self.feedbackButton.layer.borderWidth = 1.0;
+    [self.feedbackButton setTitle:@"REPORT ISSUE" forState:UIControlStateNormal];
+    [self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.feedbackButton];
+    
     [self.voucherRedemptionViewController setDeal:self.voucher.deal andVoucher:self.voucher];
+    
+    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(10, 50 + 64, self.descriptionView.width, 30)];
+    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:28];
+    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+    self.descriptionLabelLineOne.numberOfLines = 1;
+    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionView addSubview:self.descriptionLabelLineOne];
+    
+    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(10, 79 + 64, self.descriptionView.width, 46)];
+    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
+    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
+    self.descriptionLabelLineTwo.numberOfLines = 1;
+    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
+    
+    NSMutableDictionary *dealTitle = [self parseStringIntoTwoLines:self.voucher.deal.venue.name];
+    self.descriptionLabelLineOne.text = [[dealTitle objectForKey:@"firstLine"] uppercaseString];
+    self.descriptionLabelLineTwo.text = [[dealTitle objectForKey:@"secondLine"] uppercaseString];
+    //NSString *venueString = [NSString stringWithFormat:@"@ %@", [self.voucher.deal.venue.name uppercaseString]];
     
     [self refreshVoucherData];
     
@@ -142,8 +183,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
-    [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
+//    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
+//    [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:titleImage]];
     
 }
 

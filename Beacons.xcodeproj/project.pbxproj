@@ -39,6 +39,11 @@
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
+		410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8981B3B3BF20097EA26 /* editMessageBackground@2x.png */; };
+		410FC89B1B3B3E4D0097EA26 /* bottomDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */; };
+		410FC89D1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */; };
+		410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */; };
+		410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */; };
 		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
@@ -330,6 +335,11 @@
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
 		4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanation@2x.png"; sourceTree = "<group>"; };
+		410FC8981B3B3BF20097EA26 /* editMessageBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editMessageBackground@2x.png"; sourceTree = "<group>"; };
+		410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomDivider@2x.png"; sourceTree = "<group>"; };
+		410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNavBlack@2x.png"; sourceTree = "<group>"; };
+		410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotspotLogoNavRed.png; sourceTree = "<group>"; };
+		410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotDrinkIcons@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsStoreViewController.h; sourceTree = "<group>"; };
 		41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsStoreViewController.m; sourceTree = "<group>"; };
@@ -1188,11 +1198,16 @@
 				9625822518E9FEA500677D92 /* addFriendWhite@2x.png */,
 				41E6B3EF1AF0B78B00D34EAF /* addFriendWhite@2x.png */,
 				41ED34D31AC9C52F00A77A92 /* retakePicture@2x.png */,
+				410FC8981B3B3BF20097EA26 /* editMessageBackground@2x.png */,
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
+				410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */,
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
+				410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */,
 				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
+				410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */,
 				96C7FEA1189737DA00A79CC3 /* beer@2x.png */,
+				410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */,
 				4148E9CB1B083F8F0050D3E3 /* storeIntroCell.png */,
 				96C7FE981897294100A79CC3 /* blueGradientBackground@2x.png */,
 				96A9872C17E6633A007D77B8 /* cameraLarge@2x.png */,
@@ -1370,12 +1385,15 @@
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
+				410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */,
 				41E6B3F01AF0B78B00D34EAF /* addFriendWhite@2x.png in Resources */,
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
+				410FC89D1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png in Resources */,
 				41ED34D41AC9C52F00A77A92 /* retakePicture@2x.png in Resources */,
 				415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
+				410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
@@ -1411,6 +1429,7 @@
 				41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */,
 				41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */,
 				41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */,
+				410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */,
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
@@ -1474,6 +1493,7 @@
 				96ED6371181DEBF5001B7933 /* Icon-72.png in Resources */,
 				96D1D561199B2D06007216F3 /* whiteChevron@2x.png in Resources */,
 				41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */,
+				410FC89B1B3B3E4D0097EA26 /* bottomDivider@2x.png in Resources */,
 				41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */,
 				96C7FE9D1897294100A79CC3 /* redGradientBackground@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,

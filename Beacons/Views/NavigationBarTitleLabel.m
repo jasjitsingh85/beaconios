@@ -20,7 +20,7 @@
     
     self.frame = CGRectMake(0, 0, 200, 64);
     self.text = title;
-    self.font = [[ThemeManager sharedTheme] navigationBarTitleAndTextAttributes][NSFontAttributeName];
+    self.font = [ThemeManager lightFontOfSize:17];
     self.textColor = [[ThemeManager sharedTheme] navigationBarTitleAndTextAttributes][NSForegroundColorAttributeName];
     self.textAlignment = NSTextAlignmentCenter;
     return self;

@@ -47,7 +47,7 @@ typedef enum {
 {
     [super viewDidLoad];
 	
-    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNavBlack"]];
     CGRect logoFrame = logoImageView.frame;
     logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
     logoFrame.origin.y = 30;
@@ -58,15 +58,15 @@ typedef enum {
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
     self.view.userInteractionEnabled = YES;
-    self.view.backgroundColor = [UIColor colorWithRed:242/255. green:99/255. blue:80/255. alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:231/255. green:231/255. blue:231/255. alpha:1];
     NSArray *registerFormTitles = @[@"NAME:", @"EMAIL:", @"PHONE:"];
     NSArray *registerFormPlaceholders = @[@"Alex Hawke", @"alex.hawke@gmail.com", @"(555) 123-4567"];
     
-    self.formContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 75, self.view.width, 160)];
+    self.formContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 120)];
     self.formContainer.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.formContainer];
     
-    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 30*registerFormTitles.count) formTitles:registerFormTitles formPlaceholders:registerFormPlaceholders];
+    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 10, self.view.width, 30*registerFormTitles.count) formTitles:registerFormTitles formPlaceholders:registerFormPlaceholders];
     self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
     self.registerFormView.layer.cornerRadius = 4;
@@ -81,7 +81,7 @@ typedef enum {
     
     NSArray *signInFormTitles = @[@"PHONE:"];
     NSArray *signInFormPlaceholders = @[@"(555) 123-4567"];
-    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 30*signInFormTitles.count) formTitles:signInFormTitles formPlaceholders:signInFormPlaceholders];
+    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 175, self.view.width, 30*signInFormTitles.count) formTitles:signInFormTitles formPlaceholders:signInFormPlaceholders];
     self.signInFormView.delegate = self;
     self.signInFormView.backgroundColor = [UIColor whiteColor];
     self.signInFormView.layer.cornerRadius = 4;
@@ -93,8 +93,8 @@ typedef enum {
     signInPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     NSArray *activationFormTitles = @[@"CODE:"];
-    NSArray *activationFormPlaceholders = @[@"----"];
-    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 36*activationFormTitles.count) formTitles:activationFormTitles formPlaceholders:activationFormPlaceholders];
+    NSArray *activationFormPlaceholders = @[@" "];
+    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 175, self.view.width, 36*activationFormTitles.count) formTitles:activationFormTitles formPlaceholders:activationFormPlaceholders];
     self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
@@ -108,13 +108,13 @@ typedef enum {
     
     self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.confirmButton setTitle:@"Register" forState:UIControlStateNormal];
-    self.confirmButton.backgroundColor = [UIColor blackColor];
+    self.confirmButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     UIColor *confirmButtonColor = [UIColor whiteColor];
     [self.confirmButton setTitleColor:[confirmButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.confirmButton setTitleColor:confirmButtonColor forState:UIControlStateNormal];
     self.confirmButton.layer.cornerRadius = 4;
     CGRect confirmButtonFrame;
-    confirmButtonFrame.size  = CGSizeMake(243, 35);
+    confirmButtonFrame.size  = CGSizeMake(240, 40);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
     confirmButtonFrame.origin.y = 265;
     self.confirmButton.frame = confirmButtonFrame;
@@ -141,7 +141,7 @@ typedef enum {
     CGRect helpButtonFrame;
     helpButtonFrame.size = CGSizeMake(30, 30);
     helpButtonFrame.origin.x = self.view.frame.size.width - helpButtonFrame.size.width;
-    helpButtonFrame.origin.y = 0;
+    helpButtonFrame.origin.y = 25;
     self.helpButton.frame = helpButtonFrame;
     [self.helpButton addTarget:self action:@selector(helpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.helpButton];
@@ -152,7 +152,12 @@ typedef enum {
 //    self.hotbotImageView.frame = hotbotFrame;
 //    [self.view addSubview:self.hotbotImageView];
     
-    self.hotbotCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 90, 220, 20)];
+    UIImageView *hotspotDrinkIcons = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotDrinkIcons"]];
+    hotspotDrinkIcons.centerX = self.view.width/2;
+    hotspotDrinkIcons.y = 75;
+    [self.view addSubview:hotspotDrinkIcons];
+    
+    self.hotbotCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 20)];
     self.hotbotCommentLabel.textColor = [UIColor blackColor];
     [self.view addSubview:self.hotbotCommentLabel];
     
@@ -275,7 +280,7 @@ typedef enum {
     
     [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     NSRange range = [attributedTitle.string rangeOfString:@"Register here!"];
-    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} range:range];
+    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [[ThemeManager sharedTheme] lightBlueColor]} range:range];
     self.signInFormView.alpha = 1;
     self.signInFormView.transform = CGAffineTransformMakeTranslation(-CGRectGetMaxX(self.signInFormView.frame) - 20, 0);
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
@@ -302,9 +307,9 @@ typedef enum {
     }
     self.viewMode = ViewModeRegister;
     [self.confirmButton setTitle:@"Register" forState:UIControlStateNormal];
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Already registered? Login here!" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Already registered? Login here!" attributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     NSRange range = [attributedTitle.string rangeOfString:@"Login here!"];
-    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} range:range];
+    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [[ThemeManager sharedTheme] lightBlueColor]} range:range];
     [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     
     self.registerFormView.alpha = 1;
@@ -317,9 +322,10 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"WELCOME TO HOTSPOT" attributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:13]}];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"WELCOME TO HOTSPOT" attributes:@{NSFontAttributeName : [ThemeManager boldFontOfSize:11]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"WELCOME!"]];
     self.hotbotCommentLabel.attributedText = attributedText;
+    self.hotbotCommentLabel.textAlignment = NSTextAlignmentCenter;
     self.hotbotCommentLabel.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
         self.hotbotCommentLabel.alpha = 1;
@@ -337,7 +343,7 @@ typedef enum {
     
     [self.confirmButton setTitle:@"Activate" forState:UIControlStateNormal];
     
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Back" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Back" attributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     self.activationFormView.alpha = 1;
     self.activationFormView.transform = CGAffineTransformMakeTranslation(-CGRectGetMaxX(self.activationFormView.frame) - 20, 0);

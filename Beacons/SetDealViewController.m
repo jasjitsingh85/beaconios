@@ -121,7 +121,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     UILabel *groupHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 30)];
     groupHeadingLabel.centerX = self.view.width/2;
-    groupHeadingLabel.text = @"BETTER WITH FRIENDS";
+    groupHeadingLabel.text = @"GET FRIENDS TOGETHER";
     groupHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     groupHeadingLabel.textAlignment = NSTextAlignmentCenter;
     [self.dealDescriptionView addSubview:groupHeadingLabel];
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     groupTextLabel.font = [ThemeManager lightFontOfSize:13];
     groupTextLabel.textAlignment = NSTextAlignmentCenter;
     groupTextLabel.numberOfLines = 2;
-    groupTextLabel.text = @"Share the fun - get free drinks when you invite friends to join you out.";
+    groupTextLabel.text = @"Edit a message, pick a time, and select friends to text through Hotspot. This is optional.";
     [self.dealDescriptionView addSubview:groupTextLabel];
     
 //    self.imageView = [[UIImageView alloc] init];
@@ -319,25 +319,36 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     topDivider.y = 65;
     [self.composeMessageView addSubview:topDivider];
     
+//    UIImageView *editMessageBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"editMessageBackground"]];
+//    editMessageBackground.height = 100;
+//    [self.composeMessageView addSubview:editMessageBackground];
+    
+    UIImageView *bottomDivider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomDivider"]];
+    //topDivider.backgroundColor = [UIColor colorWithWhite:229/255.0 alpha:1.0];
+    //    bottomDivider.width = self.composeMessageContentView.width;
+    //    bottomDivider.height = 12;
+    bottomDivider.y = 185;
+    [self.composeMessageView addSubview:bottomDivider];
+    
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.composeMessageContentView.width;
-    self.composeMessageTextView.height = 77;
-    self.composeMessageTextView.y = 80;
+    self.composeMessageTextView.height = 90;
+    self.composeMessageTextView.y = 90;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
     self.composeMessageTextView.textAlignment = NSTextAlignmentCenter;
-    self.composeMessageTextView.font = [ThemeManager lightFontOfSize:15];
+    self.composeMessageTextView.font = [ThemeManager lightFontOfSize:17];
 //    self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.delegate = self;
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
-    [self.composeMessageContentView addSubview:self.composeMessageTextView];
+    [self.composeMessageView addSubview:self.composeMessageTextView];
     
-    UIView *bottomDivider = [[UIView alloc] init];
-    bottomDivider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
-    bottomDivider.width = self.composeMessageContentView.width;
-    bottomDivider.height = 0.5;
-    bottomDivider.y = 165;
-    [self.composeMessageView addSubview:bottomDivider];
+//    UIView *bottomDivider = [[UIView alloc] init];
+//    bottomDivider.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
+//    bottomDivider.width = self.composeMessageContentView.width;
+//    bottomDivider.height = 0.5;
+//    bottomDivider.y = 165;
+//    [self.composeMessageView addSubview:bottomDivider];
     
     self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 135)];
     //self.dateContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 100)];
@@ -347,13 +358,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     UIImageView *timeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeIcon"]];
     timeIcon.centerX = self.view.width/2;
-    timeIcon.y = 15;
+    timeIcon.y = 40;
     [self.dateView addSubview:timeIcon];
     
     self.dateTitleLabel = [[UILabel alloc] init];
     self.dateTitleLabel.height = 50;
     self.dateTitleLabel.x = 0;
-    self.dateTitleLabel.y = 25;
+    self.dateTitleLabel.y = 50;
     self.dateTitleLabel.width = self.view.width;
     self.dateTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.dateTitleLabel.font = [ThemeManager boldFontOfSize:12];
@@ -363,7 +374,7 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     
     self.dateLabel = [[UILabel alloc] init];
     self.dateLabel.height = 50;
-    self.dateLabel.y = 65;
+    self.dateLabel.y = 95;
     self.dateLabel.x = 79;
     self.dateLabel.width = self.view.width;
     self.dateLabel.textColor = [UIColor blackColor];
@@ -558,27 +569,27 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     findFriendsViewController.deal = self.deal;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
-    [self showExplanationPopup];
+    //[self showExplanationPopup];
 }
 
-- (void)showExplanationPopup
-{
-    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
-    NSString *address = self.deal.venue.name;
-    NSString *inviteText = self.composeMessageTextView.text;
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
-    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
-    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
-    explanationPopupView.attributedInviteText = attributedText;
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealExplanation]) {
-        jadispatch_after_delay(0.7, dispatch_get_main_queue(), ^{
-            [explanationPopupView show];
-        });
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownDealExplanation];
-    }
-}
+//- (void)showExplanationPopup
+//{
+//    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
+//    NSString *address = self.deal.venue.name;
+//    NSString *inviteText = self.composeMessageTextView.text;
+//    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
+//    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
+//    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
+//    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:1.3*8] range:NSMakeRange(0, inviteText.length)];
+//    explanationPopupView.attributedInviteText = attributedText;
+//    
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownDealExplanation]) {
+//        jadispatch_after_delay(0.7, dispatch_get_main_queue(), ^{
+//            [explanationPopupView show];
+//        });
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownDealExplanation];
+//    }
+//}
 
 - (void)resetDate
 {

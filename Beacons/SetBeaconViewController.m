@@ -453,25 +453,25 @@
     findFriendsViewController.delegate = self;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     
-    [self showExplanationPopup];
+    //[self showExplanationPopup];
 }
 
-- (void)showExplanationPopup
-{
-    NSString *timeString = self.date.fullFormattedDate;
-    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
-    NSString *address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
-    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@", [User loggedInUser].firstName, self.descriptionTextView.text, timeString, address];
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
-    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
-    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
-    explanationPopupView.attributedInviteText = attributedText;
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotExplanation]) {
-        [explanationPopupView show];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotExplanation];
-    }
-}
+//- (void)showExplanationPopup
+//{
+//    NSString *timeString = self.date.fullFormattedDate;
+//    ExplanationPopupView *explanationPopupView = [[ExplanationPopupView alloc] init];
+//    NSString *address = [self.locationLabel.text isEqualToString:@"Current Location"] ? self.currentLocationAddress : self.locationLabel.text;
+//    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@", [User loggedInUser].firstName, self.descriptionTextView.text, timeString, address];
+//    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:inviteText];
+//    [attributedText addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:[inviteText rangeOfString:address]];
+//    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:[inviteText rangeOfString:address]];
+//    explanationPopupView.attributedInviteText = attributedText;
+//    
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotExplanation]) {
+//        [explanationPopupView show];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotExplanation];
+//    }
+//}
 
 - (void)updateBeacon
 {

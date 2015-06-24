@@ -26,7 +26,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"SETTINGS"];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Settings"];
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     

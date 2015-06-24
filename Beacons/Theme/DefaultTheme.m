@@ -174,7 +174,7 @@
 - (NSDictionary *)navigationBarTitleAndTextAttributes
 {
     return @{
-             NSForegroundColorAttributeName: [UIColor whiteColor],
+             NSForegroundColorAttributeName: [UIColor blackColor],
              NSShadowAttributeName:[[NSShadow alloc] init],
              NSFontAttributeName: [ThemeManager titleFontOfSize:20]
              };

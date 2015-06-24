@@ -96,9 +96,9 @@
 //        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
 //        self.dealRedemptionViewController.delegate = self;
         //[self initVenmoWebviewController];
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
-            [self initPaymentsViewControllerAndSetDeal];
-        }
+        //if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
+        [self initPaymentsViewControllerAndSetDeal];
+        //}
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -115,17 +115,17 @@
 //    self.venmoWebviewController = [[WebViewController alloc] initWithTitle:@"Venmo" andURL:venmoURL];
 //}
 
-- (void) showPaymentsExplanationPopup
-{
-    if (self.beacon.deal.inAppPayment && [self isUserCreator]) {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]) {
-            PaymentExplanationPopupView *paymentExplanationPopupView = [[PaymentExplanationPopupView alloc] init];
-            paymentExplanationPopupView.beaconProfileViewController = self;
-            [paymentExplanationPopupView show];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownPaymentExplanation];
-        }
-    }
-}
+//- (void) showPaymentsExplanationPopup
+//{
+//    if (self.beacon.deal.inAppPayment && [self isUserCreator]) {
+//        if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]) {
+//            PaymentExplanationPopupView *paymentExplanationPopupView = [[PaymentExplanationPopupView alloc] init];
+//            paymentExplanationPopupView.beaconProfileViewController = self;
+//            [paymentExplanationPopupView show];
+//            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownPaymentExplanation];
+//        }
+//    }
+//}
 
 - (void) initPaymentsViewControllerAndSetDeal//: //(Deal *)deal {
 {
