@@ -108,7 +108,7 @@
     [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *dealsIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dealsIcon"]];
-    dealsIcon.frame = CGRectMake(20, 16, 20, 18);
+    dealsIcon.frame = CGRectMake(20, 12, 30, 30);
     dealsIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.dealsButton addSubview:dealsIcon];
     [self.dealsContainer addSubview:self.tableView];
@@ -123,27 +123,28 @@
 //    [groupContainer addSubview:groupLabel];
 //    [self.menuViewContainer addSubview:groupContainer];
     
-    self.groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
-    [self.menuViewContainer addSubview:self.groupContainer];
-    self.groupsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.groupsButton setTitle:@"GROUPS" forState:UIControlStateNormal];
-    self.groupsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
-    self.groupsButton.titleLabel.textColor = [UIColor whiteColor];
-    [self.groupsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.groupsButton setFrame:CGRectMake(0, 0, self.groupContainer.size.width, 50)];
-    self.groupsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    self.groupsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
-    [self.groupsButton addTarget:self action:@selector(groupButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
+//    [self.menuViewContainer addSubview:self.groupContainer];
+//    self.groupsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.groupsButton setTitle:@"GROUPS" forState:UIControlStateNormal];
+//    self.groupsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
+//    self.groupsButton.titleLabel.textColor = [UIColor whiteColor];
+//    [self.groupsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//    [self.groupsButton setFrame:CGRectMake(0, 0, self.groupContainer.size.width, 50)];
+//    self.groupsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    self.groupsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+//    [self.groupsButton addTarget:self action:@selector(groupButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIImageView *groupsIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"groupsIcon"]];
+//    groupsIcon.frame = CGRectMake(21, 16, 20, 18);
+//    groupsIcon.contentMode=UIViewContentModeScaleAspectFill;
+//    [self.groupsButton addSubview:groupsIcon];
+//    
+//    [self.groupContainer addSubview:self.groupsButton];
     
-    UIImageView *groupsIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"groupsIcon"]];
-    groupsIcon.frame = CGRectMake(21, 16, 20, 18);
-    groupsIcon.contentMode=UIViewContentModeScaleAspectFill;
-    [self.groupsButton addSubview:groupsIcon];
-    
-    [self.groupContainer addSubview:self.groupsButton];
-    
-    self.shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.groupContainer.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
+    self.shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.shareContainer];
+    
     self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.inviteFriendsButton setTitle:@"FREE DRINKS" forState:UIControlStateNormal];
     [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
@@ -154,8 +155,8 @@
     self.inviteFriendsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"singleGoldCoin"]];
-    shareIcon.frame = CGRectMake(21, 16, 20, 18);
+    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"freeDrinks"]];
+    shareIcon.frame = CGRectMake(16, 8, 30, 30);
     shareIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.inviteFriendsButton addSubview:shareIcon];
     
@@ -174,7 +175,7 @@
     [self.settingsButton addTarget:self action:@selector(settingsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *settingsIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"settingsIcon"]];
-    settingsIcon.frame = CGRectMake(22, 16, 20, 18);
+    settingsIcon.frame = CGRectMake(17, 10, 30, 30);
     settingsIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.settingsButton addSubview:settingsIcon];
     
@@ -528,8 +529,8 @@
     int itemCount = (int)[self.beacons count] + (int)[self.vouchers count];
     self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * itemCount);
     self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
-    self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
-    self.shareContainer.frame = CGRectMake(0, self.groupContainer.origin.y + self.groupContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+    //self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.shareContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
     self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 }

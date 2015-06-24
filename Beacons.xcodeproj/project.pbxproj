@@ -104,6 +104,8 @@
 		41FD063B1B3A15B400F7DD08 /* fingerprintIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD063A1B3A15B400F7DD08 /* fingerprintIcon@2x.png */; };
 		41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD063C1B3A1EF800F7DD08 /* redeemedIcon@2x.png */; };
 		41FD063F1B3A21A600F7DD08 /* drinkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD063E1B3A21A600F7DD08 /* drinkIcon@2x.png */; };
+		41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */; };
+		41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -412,6 +414,8 @@
 		41FD063A1B3A15B400F7DD08 /* fingerprintIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fingerprintIcon@2x.png"; sourceTree = "<group>"; };
 		41FD063C1B3A1EF800F7DD08 /* redeemedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redeemedIcon@2x.png"; sourceTree = "<group>"; };
 		41FD063E1B3A21A600F7DD08 /* drinkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinkIcon@2x.png"; sourceTree = "<group>"; };
+		41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redoSearchContainer@2x.png"; sourceTree = "<group>"; };
+		41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeDrinks@2x.png"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -1135,6 +1139,7 @@
 				41E6B3E91AEE33D800D34EAF /* addFriends@2x.png */,
 				41FD062E1B3902A000F7DD08 /* timeIcon@2x.png */,
 				41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */,
+				41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */,
 				41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */,
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
@@ -1146,6 +1151,7 @@
 				4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */,
 				415929701AFD8E37002BBCD0 /* mapMarker@2x.png */,
 				4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */,
+				41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */,
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
 				41F144131B27C3460010BCF1 /* greyPin@2x.png */,
 				41F144141B27C3460010BCF1 /* redPin@2x.png */,
@@ -1394,6 +1400,7 @@
 				41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
+				41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */,
 				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
@@ -1415,6 +1422,7 @@
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
+				41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
 				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,

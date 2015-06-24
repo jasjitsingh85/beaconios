@@ -251,15 +251,17 @@ typedef enum dealTypeStates
     [self.mapView addGestureRecognizer:panRec];
     
     self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, -55, self.view.width, 55)];
-    self.redoSearchContainer.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1.0];
+    self.redoSearchContainer.centerX = self.view.width/2;
+    self.redoSearchContainer.backgroundColor = [UIColor clearColor];
     [self.mapView addSubview:self.redoSearchContainer];
     
     self.redoSearchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.redoSearchButton.size = CGSizeMake(250, 35);
+    self.redoSearchButton.size = CGSizeMake(self.view.width, 75);
     self.redoSearchButton.centerX = self.redoSearchContainer.width/2.0;
     self.redoSearchButton.centerY = self.redoSearchContainer.height/2.0;
-    self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    [self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
+    [self.redoSearchButton setImage:[UIImage imageNamed:@"redoSearchContainer"] forState:UIControlStateNormal];
+    //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
     //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
     self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
