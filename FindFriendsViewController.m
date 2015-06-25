@@ -170,41 +170,16 @@
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    CGRect frame = CGRectMake(0, 0, 400, 44);
-//    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
-//    navTitleLabel.backgroundColor = [UIColor clearColor];
-//    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
-//    navTitleLabel.textAlignment = NSTextAlignmentCenter;
-//    navTitleLabel.textColor = [UIColor whiteColor];
-//    navTitleLabel.text = @"SELECT FRIENDS";
-//    self.navigationItem.titleView = navTitleLabel;
-//    if (self.deal) {
-//        [self updateNavTitleForDeal:self.deal];
-//    }
-//    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
-//    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        self.onlyContacts = YES;
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
-                self.onlyContacts = YES;
                 [self populateContacts];
                 [[ContactManager sharedManager] syncContacts];
             } else {
-                self.onlyContacts = YES;
                 [self populateContacts];
             }
         });
@@ -230,8 +205,34 @@
         });
     }
     else {
+        self.onlyContacts = YES;
         [self populateContacts];
     }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+//    CGRect frame = CGRectMake(0, 0, 400, 44);
+//    UILabel *navTitleLabel = [[UILabel alloc] initWithFrame:frame];
+//    navTitleLabel.backgroundColor = [UIColor clearColor];
+//    navTitleLabel.font = [ThemeManager mediumFontOfSize:17.0];
+//    navTitleLabel.textAlignment = NSTextAlignmentCenter;
+//    navTitleLabel.textColor = [UIColor whiteColor];
+//    navTitleLabel.text = @"SELECT FRIENDS";
+//    self.navigationItem.titleView = navTitleLabel;
+//    if (self.deal) {
+//        [self updateNavTitleForDeal:self.deal];
+//    }
+//    UIButton *groupsButton = [UIButton navButtonWithTitle:@"Groups"];
+//    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
+    
 }
 
 - (void)groupsButtonTouched:(id)sender
@@ -451,8 +452,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
-    return height;
+    if (!self.onlyContacts) {
+        CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
+        return height;
+    } else {
+        return 0;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -591,23 +596,19 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *title = @"";
-    if (!self.onlyContacts) {
-        Group *group = [self groupForSection:section];
-        if (group) {
-            title = group.name;
-        } else  if (section == self.findFriendSectionAllUsers) {
-            title = @"Friends on Hotspot";
-        }
-        else  if (section == self.findFriendSectionRecents) {
-            title = @"Recents";
-        }
-        else if (section == self.findFriendSectionSuggested) {
-            title = @"Suggested";
-        }
-        else if (section == self.findFriendSectionContacts) {
-            title = @"Contacts";
-        }
-    } else {
+    Group *group = [self groupForSection:section];
+    if (group) {
+        title = group.name;
+    } else  if (section == self.findFriendSectionAllUsers) {
+        title = @"Friends on Hotspot";
+    }
+    else  if (section == self.findFriendSectionRecents) {
+        title = @"Recents";
+    }
+    else if (section == self.findFriendSectionSuggested) {
+        title = @"Suggested";
+    }
+    else if (section == self.findFriendSectionContacts) {
         title = @"Contacts";
     }
     
@@ -616,11 +617,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (!self.onlyContacts) {
-       return 4 + self.groups.count;
-    } else {
-        return 1;
-    }
+    return 4 + self.groups.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -729,17 +726,18 @@
         contact = group.contacts[indexPath.row];
     }
     if (!contact) {
-    if (indexPath.section == self.findFriendSectionRecents) {
-        contact = self.recentsList[indexPath.row];
-    } else if (indexPath.section == self.findFriendSectionAllUsers) {
-        contact = self.usersInContactsList[indexPath.row];
-    }
-    else if (indexPath.section == self.findFriendSectionSuggested) {
-        contact = self.suggestedList[indexPath.row];
-    }
-    else if (indexPath.section == self.findFriendSectionContacts) {
-        contact = self.nonSuggestedList[indexPath.row];
-    }
+        if (indexPath.section == self.findFriendSectionRecents) {
+            contact = self.recentsList[indexPath.row];
+        } else if (indexPath.section == self.findFriendSectionAllUsers) {
+            contact = self.usersInContactsList[indexPath.row];
+        }
+        else if (indexPath.section == self.findFriendSectionSuggested) {
+            contact = self.suggestedList[indexPath.row];
+        }
+        else if (indexPath.section == self.findFriendSectionContacts) {
+            contact = self.nonSuggestedList[indexPath.row];
+        }
+
     }
     nameLabel.text = contact.fullName;
     normalizedPhoneNumber = contact.normalizedPhoneNumber;

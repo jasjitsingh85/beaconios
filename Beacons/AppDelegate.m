@@ -288,11 +288,11 @@
     
     // The client-side share page (the fallback if the normal
     // invite page can't be displayed)
-    mave.displayOptions.sharePageBackgroundColor = lightGray;
-    mave.displayOptions.sharePageIconColor = green;
-    mave.displayOptions.sharePageIconFont = [UIFont systemFontOfSize:12];
-    mave.displayOptions.sharePageIconTextColor = gray;
-    mave.displayOptions.sharePageExplanationFont = [UIFont systemFontOfSize:16];
+    mave.displayOptions.sharePageBackgroundColor = [UIColor whiteColor];
+    mave.displayOptions.sharePageIconColor = [[ThemeManager sharedTheme] lightBlueColor];
+    mave.displayOptions.sharePageIconFont = [ThemeManager lightFontOfSize:12];
+    mave.displayOptions.sharePageIconTextColor = [UIColor blackColor];
+    mave.displayOptions.sharePageExplanationFont = [ThemeManager lightFontOfSize:16];
     mave.displayOptions.sharePageExplanationTextColor = black;
 }
 
