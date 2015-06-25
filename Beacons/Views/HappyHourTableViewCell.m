@@ -51,6 +51,11 @@
     self.backgroundImageView.clipsToBounds = YES;
     [self.backgroundCellView addSubview:self.backgroundImageView];
     
+    UIView *backgroundView = [[UIView alloc] initWithFrame:self.backgroundImageView.bounds];
+    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    //self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [self.backgroundCellView addSubview:backgroundView];
+    
     UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.contentView.size.width, 60)];
     UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
     [backgroundGradient setImage:gradientImage];
@@ -150,7 +155,6 @@
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
     self.venueDetailLabel.text = self.happyHour.happyHourDescription;
-    //[self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
     self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", @"HAPPY HOUR"];
 //    float descriptionLabelWidth = [self.descriptionLabel.text boundingRectWithSize:self.descriptionLabel.frame.size
 //                                                                           options:NSStringDrawingUsesLineFragmentOrigin

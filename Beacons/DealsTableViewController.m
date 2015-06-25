@@ -257,7 +257,7 @@ typedef enum dealTypeStates
     [panRec setDelegate:self];
     [self.mapView addGestureRecognizer:panRec];
     
-    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, -55, self.view.width, 55)];
+    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.mapView.height, self.view.width, 55)];
     self.redoSearchContainer.centerX = self.view.width/2;
     self.redoSearchContainer.backgroundColor = [UIColor clearColor];
     [self.mapView addSubview:self.redoSearchContainer];
@@ -1127,7 +1127,7 @@ typedef enum dealTypeStates
     
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
-        frame.origin.y = 0;
+        frame.origin.y = self.mapView.height - 55;
         self.redoSearchContainer.frame = frame; // move to new location
     }];
 }
@@ -1142,7 +1142,7 @@ typedef enum dealTypeStates
     
     [UIView animateWithDuration:0.35 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
-        frame.origin.y = -55;
+        frame.origin.y = self.mapView.height;
         self.redoSearchContainer.frame = frame; // move to new location
     }];
 }
