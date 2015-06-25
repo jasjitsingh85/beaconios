@@ -66,9 +66,9 @@
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:28];
     self.venueLabelLineOne.textColor = [UIColor whiteColor];
     self.venueLabelLineOne.width = self.view.width - 20;
-    self.venueLabelLineOne.x = 10;
+    self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 50;
+    self.venueLabelLineOne.y = 60;
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
@@ -79,7 +79,7 @@
     self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
     self.venueLabelLineTwo.textColor = [UIColor whiteColor];
     self.venueLabelLineTwo.width = self.view.width - 20;
-    self.venueLabelLineTwo.x = 10;
+    self.venueLabelLineTwo.x = 5;
     self.venueLabelLineTwo.height = 46;
     self.venueLabelLineTwo.y = 79;
     //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
@@ -94,7 +94,7 @@
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.width = 200;
     self.dealTime.height = 20;
-    self.dealTime.x = 13;
+    self.dealTime.x = 8;
     self.dealTime.y=135;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
@@ -107,7 +107,7 @@
     //self.distanceLabel.clipsToBounds = YES;
     self.distanceLabel.textAlignment = NSTextAlignmentRight;
     self.distanceLabel.y = 135;
-    self.distanceLabel.x = self.view.width - 80;
+    self.distanceLabel.x = self.view.width - 75;
     self.distanceLabel.textColor = [UIColor whiteColor];
     [self.venueImageView addSubview:self.distanceLabel];
 

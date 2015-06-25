@@ -14,7 +14,7 @@
 
 - (void)initPaymentsViewControllerAndSetDeal;
 - (void) inviteMoreFriends;
--(BOOL) isUserCreator;
+//-(BOOL) isUserCreator;
 
 @end
 
