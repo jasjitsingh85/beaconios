@@ -88,6 +88,13 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UILabel *distanceLabel;
 
+@property (strong, nonatomic) UIView *lockedOverlay;
+@property (strong, nonatomic) UIImageView *lockButton;
+@property (strong, nonatomic) UIImageView *largeGoldCoin;
+@property (strong, nonatomic) UILabel *rewardScore;
+@property (strong, nonatomic) UILabel *priceLabel;
+@property (strong, nonatomic) UIView *priceContainer;
+
 @end
 
 @implementation DealsTableViewController
@@ -350,6 +357,43 @@ typedef enum dealTypeStates
     self.distanceLabel.textColor = [UIColor whiteColor];
     [self.venueView addSubview:self.distanceLabel];
     //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    
+    self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 117, 80, 20)];
+    self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, -5, 50, 30)];
+    [self.priceContainer addSubview:self.priceLabel];
+    
+    self.priceLabel.font = [ThemeManager lightFontOfSize:14];
+    self.priceLabel.textColor = [UIColor whiteColor];
+    
+    UIImageView *goldCoin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"goldCoin"]];
+    goldCoin.x = 8;
+    goldCoin.y = 3;
+    
+    [self.priceContainer addSubview:goldCoin];
+    [self.priceContainer addSubview:self.priceLabel];
+    [self.venueView addSubview:self.priceContainer];
+    
+    self.lockedOverlay = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
+    //self.lockedOverlay.height = self.selectedDealInMap.height;
+    self.lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    [self.venueView addSubview:self.lockedOverlay];
+    
+    self.lockButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+    self.lockButton.size = CGSizeMake(40, 40);
+    self.lockButton.centerX = self.selectedDealInMap.size.width/2;
+    self.lockButton.centerY = self.selectedDealInMap.size.height/2;
+    [self.venueView addSubview:self.lockButton];
+    
+    self.largeGoldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
+    self.largeGoldCoin.x = (self.selectedDealInMap.width/2)- 30;
+    self.largeGoldCoin.y = self.selectedDealInMap.height/2 + 25;
+    [self.venueView addSubview:self.largeGoldCoin];
+    
+    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedDealInMap.width/2 - 3, self.selectedDealInMap.height/2 + 14, 70, 40)];
+    self.rewardScore.font = [ThemeManager boldFontOfSize:18];
+    self.rewardScore.textAlignment = NSTextAlignmentLeft;
+    self.rewardScore.textColor = [UIColor whiteColor];
+    [self.venueView addSubview:self.rewardScore];
     
     //[self.venueScroll addSubview:self.venueDetailView];
     
@@ -1154,6 +1198,11 @@ typedef enum dealTypeStates
             self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
             CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
             
+            self.priceContainer.hidden = YES;
+            self.lockedOverlay.hidden = YES;
+            self.lockButton.hidden = YES;
+            self.largeGoldCoin.hidden = YES;
+            self.rewardScore.hidden = YES;
             CGFloat descriptionLabelWidth;
             if (textSize.width < self.view.width * .6) {
                 descriptionLabelWidth = textSize.width;
@@ -1165,6 +1214,7 @@ typedef enum dealTypeStates
             
             self.descriptionLabel.width = descriptionLabelWidth + 10;
         } else {
+            self.priceContainer.hidden = NO;
             self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", [deal.itemName uppercaseString]];
             CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
             
@@ -1180,6 +1230,21 @@ typedef enum dealTypeStates
             self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
             
             self.descriptionLabel.width = descriptionLabelWidth + 10;
+            
+            self.priceLabel.text = [NSString stringWithFormat: @"x %@", deal.itemPointCost];
+            
+            if (!deal.locked) {
+                self.lockedOverlay.hidden = YES;
+                self.lockButton.hidden = YES;
+                self.largeGoldCoin.hidden = YES;
+                self.rewardScore.hidden = YES;
+            } else {
+                self.lockedOverlay.hidden = NO;
+                self.lockButton.hidden = NO;
+                self.largeGoldCoin.hidden = NO;
+                self.rewardScore.hidden = NO;
+                self.rewardScore.text = [NSString stringWithFormat: @"x %@", deal.itemPointCost];
+            }
         }
         
     } else if (self.dealType == HAPPY_HOUR) {
@@ -1194,6 +1259,11 @@ typedef enum dealTypeStates
         CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
         
         CGFloat descriptionLabelWidth;
+        self.priceContainer.hidden = YES;
+        self.lockedOverlay.hidden = YES;
+        self.lockButton.hidden = YES;
+        self.largeGoldCoin.hidden = YES;
+        self.rewardScore.hidden = YES;
         if (textSize.width < self.view.width * .6) {
             descriptionLabelWidth = textSize.width;
         } else {

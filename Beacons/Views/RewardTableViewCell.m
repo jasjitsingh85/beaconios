@@ -281,8 +281,6 @@
         rewardScore.textAlignment = NSTextAlignmentLeft;
         rewardScore.textColor = [UIColor whiteColor];
         [self.venuePreviewView addSubview:rewardScore];
-        
-        
     }
     
 }
