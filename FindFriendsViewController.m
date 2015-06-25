@@ -124,7 +124,7 @@
     UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width * .75, 25)];
     self.navigationItem.titleView = searchBarContainer;
     
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width * .65, 25)];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width * .6, 25)];
     //weird hack for black search bar issue
     self.searchBar.backgroundImage = [UIImage new];
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
@@ -781,6 +781,11 @@
     cell.backgroundColor = selected ? [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.1]:[UIColor clearColor];
     UIImageView *addFriendImageView = (UIImageView *)[cell.contentView viewWithTag:TAG_CHECK_IMAGE];
     addFriendImageView.image = image;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, .25 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self exitSearchMode];
+    });
+
 //    CGFloat damping = selected ? 0.25 : 0.5;
 //    [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:damping initialSpringVelocity:0.5 options:0 animations:^{
 //        addFriendImageView.transform = selected ? selectedTransform : CGAffineTransformIdentity;

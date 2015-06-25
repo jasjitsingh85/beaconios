@@ -977,6 +977,11 @@ typedef enum dealTypeStates
 
 - (void)toggleMapViewDeal:(id)sender
 {
+    [self toggleMapViewDealWithoutTouch];
+}
+
+- (void) toggleMapViewDealWithoutTouch
+{
     if (self.isMapViewDealShowing) {
         [UIView animateWithDuration:.5f animations:^{
             CGRect theFrame = self.mapView.frame;
@@ -999,6 +1004,13 @@ typedef enum dealTypeStates
         }];
     }
     self.isMapViewDealShowing = !self.isMapViewDealShowing;
+}
+
+- (void) minimizeMapViewDeal
+{
+    if (self.isMapViewDealShowing) {
+        [self toggleMapViewDealWithoutTouch];
+    }
 }
 
 - (void)toggleMapView:(id)sender
@@ -1085,6 +1097,7 @@ typedef enum dealTypeStates
         self.selectedDeals = self.happyHours;
         [self reloadTableViewAfterDealToggle];
         [self reloadAnnotations];
+        [self minimizeMapViewDeal];
     }];
 }
 
@@ -1098,6 +1111,7 @@ typedef enum dealTypeStates
         self.selectedDeals = self.hotspots;
         [self reloadTableViewAfterDealToggle];
         [self reloadAnnotations];
+        [self minimizeMapViewDeal];
     }];
 }
 
@@ -1111,6 +1125,7 @@ typedef enum dealTypeStates
         self.selectedDeals = self.rewards;
         [self reloadTableViewAfterDealToggle];
         [self reloadAnnotations];
+        [self minimizeMapViewDeal];
     }];
 }
 
