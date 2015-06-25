@@ -51,9 +51,9 @@
     [self.view addSubview:self.permissionTextContainer];
     
     
-    self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupIcon"]];
+    self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pushIcon"]];
     self.headerIcon.size = CGSizeMake(30, 30);
-    self.headerIcon.y = 120;
+    self.headerIcon.y = 110;
     self.headerIcon.centerX = self.view.width/2;
     [self.view addSubview:self.headerIcon];
     
