@@ -609,9 +609,17 @@ typedef enum dealTypeStates
         }
     
         self.hotspots = deals;
-        self.selectedDeals = deals;
         self.happyHours = happyHours;
         self.rewards = rewards;
+        
+        if (self.dealType == HOTSPOT) {
+            self.selectedDeals = self.hotspots;
+        } else if (self.dealType == HAPPY_HOUR) {
+            self.selectedDeals = self.happyHours;
+        } else if (self.dealType == REWARD) {
+            self.selectedDeals = self.rewards;
+        }
+        
         
         [self reloadAnnotations];
         
