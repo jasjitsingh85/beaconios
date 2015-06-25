@@ -102,11 +102,11 @@ typedef enum dealTypeStates
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNav"];
-    //self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+//    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNavBlack"];
+//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
-    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
-    self.navigationItem.titleView = searchBarContainer;
+//    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
+//    self.navigationItem.titleView = searchBarContainer;
     
 //    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
 //    //weird hack for black search bar issue
@@ -439,14 +439,14 @@ typedef enum dealTypeStates
 {
     if (!_enableLocationView) {
         _enableLocationView = [[UIView alloc] init];
-        _enableLocationView.size = CGSizeMake(self.tableView.width, 175);
+        _enableLocationView.size = CGSizeMake(self.tableView.width, 220);
         _enableLocationView.backgroundColor = [UIColor whiteColor];
         [_enableLocationView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
         
         self.enableLocationLabel = [[UILabel alloc] init];
-        self.enableLocationLabel.size = CGSizeMake(250, 200);
-        self.enableLocationLabel.font = [ThemeManager regularFontOfSize:14.];
-        self.enableLocationLabel.textColor = [UIColor colorWithWhite:102/255.0 alpha:1.0];
+        self.enableLocationLabel.size = CGSizeMake(250, 220);
+        self.enableLocationLabel.font = [ThemeManager lightFontOfSize:16.];
+        self.enableLocationLabel.textColor = [UIColor blackColor];
         self.enableLocationLabel.numberOfLines = 6;
         self.enableLocationView.hidden = YES;
         self.enableLocationLabel.textAlignment = NSTextAlignmentCenter;
@@ -456,20 +456,21 @@ typedef enum dealTypeStates
         self.enableLocationLabel.centerX = self.enableLocationView.width/2.0;
         self.enableLocationLabel.bottom = self.enableLocationView.height - 30;
         UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.enableLocationView.height)];
-        footerView.backgroundColor = [[ThemeManager sharedTheme] boneWhiteColor];
+        footerView.backgroundColor = [UIColor whiteColor];
         [footerView addSubview:self.enableLocationLabel];
         [self.enableLocationView addSubview:footerView];
         
         if (&UIApplicationOpenSettingsURLString != NULL) {
             self.enableLocationButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.enableLocationButton.size = CGSizeMake(200, 35);
+            self.enableLocationButton.size = CGSizeMake(200, 40);
             self.enableLocationButton.centerX = self.enableLocationView.width/2.0;
             self.enableLocationButton.bottom = self.enableLocationView.height - 20;
+            self.enableLocationButton.layer.cornerRadius = 4;
             self.enableLocationButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-            [self.enableLocationButton setTitle:@"Go to Hotspot Settings" forState:UIControlStateNormal];
+            [self.enableLocationButton setTitle:@"GO TO HOTSPOT SETTINGS" forState:UIControlStateNormal];
             self.enableLocationButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.enableLocationButton.frame.size.width - ( 50.), 0., 0.);
             self.enableLocationButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., 0.);
-            self.enableLocationButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+            self.enableLocationButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
             [self.enableLocationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [self.enableLocationButton addTarget:self action:@selector(appSettingsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -534,6 +535,9 @@ typedef enum dealTypeStates
 
 - (void)reloadDeals
 {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
+    }
     self.loadingDeals = YES;
     [self hideEnableLocationView];
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
@@ -557,10 +561,14 @@ typedef enum dealTypeStates
             self.loadingDeals = NO;
             [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         }];
+//    } else if([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+//        self.loadingDeals = NO;
+//        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+//        [self showEnableLocationView];
     } else {
-        [self showEnableLocationView];
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [self showEnableLocationView];
     }
     
 }
@@ -1290,7 +1298,9 @@ typedef enum dealTypeStates
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
         happyHour = self.selectedDeals[self.selectedDealIndex];
-        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+        dealViewController.happyHour = happyHour;
+        [self.navigationController pushViewController:dealViewController animated:YES];
     } else if (self.dealType == REWARD) {
         Deal *deal = self.selectedDeals[self.selectedDealIndex];
         if (!deal.locked) {

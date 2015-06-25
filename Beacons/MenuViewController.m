@@ -98,7 +98,7 @@
     self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
     [self.menuViewContainer addSubview:self.dealsContainer];
     self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.dealsButton setTitle:@"HOTSPOTS" forState:UIControlStateNormal];
+    [self.dealsButton setTitle:@"HOME" forState:UIControlStateNormal];
     self.dealsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.dealsButton.titleLabel.textColor = [UIColor whiteColor];
     [self.dealsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];

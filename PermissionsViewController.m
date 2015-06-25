@@ -13,10 +13,10 @@
 #import "NotificationManager.h"
 #import "AppDelegate.h"
 
-typedef enum {
-    ViewModeContact=0,
-    ViewModePush,
-} ViewMode;
+//typedef enum {
+//    ViewModeContact=0,
+//    ViewModePush,
+//} ViewMode;
 
 @interface PermissionsViewController ()
 
@@ -27,7 +27,7 @@ typedef enum {
 @property (strong, nonatomic) UIImageView *hotbotImageView;
 @property (strong, nonatomic) UIImageView *headerIcon;
 @property (strong, nonatomic) UIView *permissionTextContainer;
-@property (assign, nonatomic) ViewMode viewMode;
+//@property (assign, nonatomic) ViewMode viewMode;
 
 @end
 
@@ -106,7 +106,7 @@ typedef enum {
 //    self.hotbotImageView.transform = CGAffineTransformTranslate(self.hotbotImageView.transform, 0, 20);
 //    [self.view addSubview:self.hotbotImageView];
     
-    [self enterContactsMode];
+    [self enterPushNotificationMode];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -134,20 +134,20 @@ typedef enum {
     return subtitleLabels;
 }
 
-- (void)enterContactsMode
-{
-    self.viewMode = ViewModeContact;
-    self.titleLabel.text = @"Sync Contacts";
-    [self.headerIcon setImage: [UIImage imageNamed:@"groupIcon"]];
-    [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To text friends to join you and earn free drinks"]];
-    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
-    [self animateInSubtitles:nil];
-}
+//- (void)enterContactsMode
+//{
+//    self.viewMode = ViewModeContact;
+//    self.titleLabel.text = @"Sync Contacts";
+//    [self.headerIcon setImage: [UIImage imageNamed:@"groupIcon"]];
+//    [self removeSubtitleLabels];
+//    self.subtitles = [self subtitleLabelsForStrings:@[@"To text friends to join you and earn free drinks"]];
+//    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+//    [self animateInSubtitles:nil];
+//}
 
 - (void)enterPushNotificationMode
 {
-    self.viewMode = ViewModePush;
+    //self.viewMode = ViewModePush;
     self.titleLabel.text = @"Enable Notifications";
     [self.headerIcon setImage: [UIImage imageNamed:@"pushIcon"]];
     [self removeSubtitleLabels];
@@ -202,47 +202,47 @@ typedef enum {
 
 - (void)confirmButtonTouched:(id)sender
 {
-    if (self.viewMode == ViewModeContact) {
-        [[ContactManager sharedManager] requestContactPermissions:^{
-            jadispatch_main_qeue(^{
-                [self enterPushNotificationMode];
-            });
-        } failure:^(NSError *error) {
-            jadispatch_main_qeue(^{
-                [self enterPushNotificationMode];
-            });
-        }];
-    }
-    else if (self.viewMode == ViewModePush) {
+//    if (self.viewMode == ViewModeContact) {
+////        [[ContactManager sharedManager] requestContactPermissions:^{
+////            jadispatch_main_qeue(^{
+////                [self enterPushNotificationMode];
+////            });
+////        } failure:^(NSError *error) {
+////            jadispatch_main_qeue(^{
+////                [self enterPushNotificationMode];
+////            });
+////        }];
+//    }
+//    else if (self.viewMode == ViewModePush) {
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
             [self finishPermissions];
         } failure:^(NSError *error) {
             [self finishPermissions];
         }];
-    }
+//    }
 }
 
 - (void)skipButtonTouched:(id)sender
 {
-    if (self.viewMode == ViewModeContact) {
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
-        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
-            [[ContactManager sharedManager] requestContactPermissions:^{
-                jadispatch_main_qeue(^{
-                    [self enterPushNotificationMode];
-                });
-            } failure:^(NSError *error) {
-                jadispatch_main_qeue(^{
-                    [self enterPushNotificationMode];
-                });
-            }];
-        }];
-        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
-            [self enterPushNotificationMode];
-        }];
-        [alertView show];
-    }
-    else if (self.viewMode == ViewModePush) {
+//    if (self.viewMode == ViewModeContact) {
+//        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
+//        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
+//            [[ContactManager sharedManager] requestContactPermissions:^{
+//                jadispatch_main_qeue(^{
+//                    [self enterPushNotificationMode];
+//                });
+//            } failure:^(NSError *error) {
+//                jadispatch_main_qeue(^{
+//                    [self enterPushNotificationMode];
+//                });
+//            }];
+//        }];
+//        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
+//            [self enterPushNotificationMode];
+//        }];
+//        [alertView show];
+//    }
+//    else if (self.viewMode == ViewModePush) {
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
         [alertView bk_addButtonWithTitle:@"Enable Push" handler:^{
             [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
@@ -255,7 +255,7 @@ typedef enum {
             [self finishPermissions];
         }];
         [alertView show];
-    }
+ //   }
 }
 
 - (void)finishPermissions

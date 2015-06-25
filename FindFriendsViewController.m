@@ -39,6 +39,7 @@
 @property (strong, nonatomic) UIButton *inviteButton;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
+@property (assign, nonatomic) BOOL onlyContacts;
 @property (strong, nonatomic) NSArray *groups;
 @property (readonly) NSInteger findFriendSectionAllUsers;
 @property (readonly) NSInteger findFriendSectionRecents;
@@ -194,18 +195,39 @@
 //    [groupsButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:groupsButton];
     
-    NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
-    if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
-        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-        NSBlockOperation *populateOperation = [NSBlockOperation blockOperationWithBlock:^{
-            //total hack. wait for url operation completion block to finish before populating contacts
-            jadispatch_after_delay(1, dispatch_get_main_queue(), ^{
-                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            if (granted) {
+                self.onlyContacts = YES;
                 [self populateContacts];
-            });
-        }];
-        [populateOperation addDependency:updateFriendsOperation];
-        [[NSOperationQueue mainQueue] addOperation:populateOperation];
+                [[ContactManager sharedManager] syncContacts];
+            } else {
+                self.onlyContacts = YES;
+                [self populateContacts];
+            }
+        });
+    } else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        self.onlyContacts = NO;
+        jadispatch_main_qeue(^{
+            NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
+            if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
+                [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+                NSBlockOperation *populateOperation = [NSBlockOperation blockOperationWithBlock:^{
+                    //total hack. wait for url operation completion block to finish before populating contacts
+                    jadispatch_after_delay(1, dispatch_get_main_queue(), ^{
+                        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                        [self populateContacts];
+                    });
+                }];
+                [populateOperation addDependency:updateFriendsOperation];
+                [[NSOperationQueue mainQueue] addOperation:populateOperation];
+            }
+            else {
+                [self populateContacts];
+            }
+        });
     }
     else {
         [self populateContacts];
@@ -569,27 +591,36 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *title = @"";
-    Group *group = [self groupForSection:section];
-    if (group) {
-        title = group.name;
-    } else  if (section == self.findFriendSectionAllUsers) {
-        title = @"Friends on Hotspot";
-    }
-    else  if (section == self.findFriendSectionRecents) {
-        title = @"Recents";
-    }
-    else if (section == self.findFriendSectionSuggested) {
-        title = @"Suggested";
-    }
-    else if (section == self.findFriendSectionContacts) {
+    if (!self.onlyContacts) {
+        Group *group = [self groupForSection:section];
+        if (group) {
+            title = group.name;
+        } else  if (section == self.findFriendSectionAllUsers) {
+            title = @"Friends on Hotspot";
+        }
+        else  if (section == self.findFriendSectionRecents) {
+            title = @"Recents";
+        }
+        else if (section == self.findFriendSectionSuggested) {
+            title = @"Suggested";
+        }
+        else if (section == self.findFriendSectionContacts) {
+            title = @"Contacts";
+        }
+    } else {
         title = @"Contacts";
     }
+    
     return title;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4 + self.groups.count;
+    if (!self.onlyContacts) {
+       return 4 + self.groups.count;
+    } else {
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

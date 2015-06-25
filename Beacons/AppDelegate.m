@@ -128,7 +128,9 @@
     else {
         self.window.rootViewController = self.sideNavigationViewController;
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
-        [[ContactManager sharedManager] syncContacts];
+        if ([ContactManager sharedManager].authorizationStatus == kABAuthorizationStatusAuthorized) {
+            [[ContactManager sharedManager] syncContacts];
+        }
         [CrashManager setupForUser];
     }
     //see if launched from local notification
@@ -305,7 +307,7 @@
     if (hasActivated) {
         ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
         if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-            self.window.rootViewController = [[PermissionsViewController alloc] init];
+            //self.window.rootViewController = [[PermissionsViewController alloc] init];
         }
         else if (contactAuthStatus == kABAuthorizationStatusDenied) {
             [self contactAuthorizationStatusDenied];
@@ -408,7 +410,7 @@
 - (void)didFinishPermissions
 {
     self.window.rootViewController = self.sideNavigationViewController;
-    [[ContactManager sharedManager] syncContacts];
+    //[[ContactManager sharedManager] syncContacts];
     [[LocationTracker sharedTracker] requestLocationPermission];
 }
 
