@@ -166,7 +166,7 @@
     
     [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
     self.headerTitle.text = @"GET THINGS STARTED!";
-    self.headerExplanationText.text = @"All we need now is a credit card on file. You're only charged when voucher is redeemed";
+    self.headerExplanationText.text = @"Have your server tap the voucher below to receive your drink. You’re only charged once it’s redeemed.";
     [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
     [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
 }

@@ -147,7 +147,7 @@
     
     [self.voucherRedemptionViewController setDeal:self.voucher.deal andVoucher:self.voucher];
     
-    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(10, 50 + 64, self.descriptionView.width, 30)];
+    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 55 + 64, self.descriptionView.width, 30)];
     //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:28];
     self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
@@ -156,7 +156,7 @@
     self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
     [self.descriptionView addSubview:self.descriptionLabelLineOne];
     
-    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(10, 79 + 64, self.descriptionView.width, 46)];
+    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 79 + 64, self.descriptionView.width, 46)];
     //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
     self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
