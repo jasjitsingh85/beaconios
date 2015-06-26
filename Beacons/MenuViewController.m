@@ -95,7 +95,7 @@
 //
 //    [self.menuViewContainer addSubview:dealsContainer];
     
-    self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
+    self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
     [self.menuViewContainer addSubview:self.dealsContainer];
     self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.dealsButton setTitle:@"HOME" forState:UIControlStateNormal];
@@ -528,9 +528,9 @@
 {
     int itemCount = (int)[self.beacons count] + (int)[self.vouchers count];
     self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * itemCount);
-    self.dealsContainer.frame = CGRectMake(0, 50, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
+    self.dealsContainer.frame = CGRectMake(0, 20, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
     //self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
-    self.shareContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.shareContainer.frame = CGRectMake(0, 70 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
     self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 }

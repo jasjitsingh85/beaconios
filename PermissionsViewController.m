@@ -121,9 +121,9 @@
         UILabel *label = [[UILabel alloc] init];
         label.text = strings[i];
         CGRect labelFrame;
-        labelFrame.size = CGSizeMake(self.view.width - 50, 100);
-        labelFrame.origin.x = 25;
-        labelFrame.origin.y = 153 + 50*i;
+        labelFrame.size = CGSizeMake(self.view.width - 100, 100);
+        labelFrame.origin.x = 50;
+        labelFrame.origin.y = 158 + 50*i;
         label.frame = labelFrame;
         label.numberOfLines = 0;
         label.textAlignment = NSTextAlignmentCenter;

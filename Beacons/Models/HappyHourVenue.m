@@ -21,7 +21,10 @@
     NSNumber *longitude = dictionary[@"longitude"];
     self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
     self.address = dictionary[@"street_address"];
-    self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@", dictionary[@"image_url"]];
+    if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
+         self.imageURL = [NSURL URLWithString:imageUrl];
+    }
     self.placeDescription = dictionary[@"place_description"];
     
     return self;

@@ -152,7 +152,7 @@
     
     [self.window makeKeyAndVisible];
     UIView *backgroundWindowView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    backgroundWindowView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"menu_background"]];
+    backgroundWindowView.backgroundColor = [UIColor whiteColor];
     [self.window addSubview:backgroundWindowView];
     [self.window sendSubviewToBack:backgroundWindowView];
     

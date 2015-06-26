@@ -49,6 +49,7 @@
 {
 //    self.registerViewController.view.alpha = 0;
     self.registerViewController.view.transform = CGAffineTransformMakeTranslation(self.registerViewController.view.frame.size.width, 0);
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [self transitionFromViewController:self.walkthroughViewController toViewController:self.registerViewController duration:0.25 options:0 animations:^{
         self.registerViewController.view.transform = CGAffineTransformIdentity;
         self.walkthroughViewController.view.transform = CGAffineTransformMakeTranslation(-self.walkthroughViewController.view.frame.size.width, 0);
