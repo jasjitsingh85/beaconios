@@ -766,7 +766,7 @@ typedef enum dealTypeStates
 
 - (void)reloadTableView
 {
-    if (self.selectedDeals && self.selectedDeals.count){
+    if (self.hotspots.count > 0 || self.happyHours.count > 0){
         [self hideEmptyDealsView];
     }
     else {
@@ -1052,6 +1052,8 @@ typedef enum dealTypeStates
             self.selectedDealInMap.y = self.view.height - 70;
             
             self.mapTapped.enabled = NO;
+            
+            [self hideRedoSearchContainer];
         }];
     } else {
         [UIView animateWithDuration:.5f animations:^{
