@@ -56,6 +56,7 @@
 @property (nonatomic, strong) NSDate *date;
 @property (strong, nonatomic) UITextView *composeMessageTextView;
 @property (assign, nonatomic) BOOL modifiedMessage;
+@property (assign, nonatomic) BOOL showSendMessage;
 @property (assign, nonatomic) int keyboardHeight;
 @property (assign, nonatomic) CGFloat animationDuration;
 
@@ -173,7 +174,9 @@
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
-    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 120, self.view.width, 120)];
+    self.showSendMessage = NO;
+    
+    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
     self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sendMessageContainer];
@@ -525,7 +528,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 100;
+        return 80;
     } else {
         CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
         return height;
@@ -582,10 +585,11 @@
         [view addGestureRecognizer:headerTap];
         return view;
     } else {
-        CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
+        //CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 80)];
         self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, view.height)];
         self.prompt.centerX = self.view.width/2;
+        self.prompt.y = 10;
         self.prompt.font = [ThemeManager lightFontOfSize:16];
         self.prompt.textColor = [UIColor blackColor];
         self.prompt.numberOfLines = 2;
@@ -672,6 +676,11 @@
     if (contactInactive) {
         return;
     }
+    
+    if (self.selectedContactDictionary.count == 0) {
+        [self showSendMessageContainer:YES];
+    }
+    
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
 //    [self updateInviteButtonText:contact];
 }
@@ -679,6 +688,10 @@
 - (void)unselectContact:(Contact *)contact
 {
     [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
+    
+    if (self.selectedContactDictionary.count == 0) {
+        [self showSendMessageContainer:NO];
+    }
 //    [self updateInviteButtonText:nil];
 }
 
@@ -1009,16 +1022,10 @@
     if (!self.isVisible) {
         return;
     }
-    //[self.searchBar setShowsCancelButton:YES animated:YES];
-    
-//    if (self.sendMessageContainer.frame.origin.y >= 0)
-//    {
+
+    if (self.showSendMessage) {
         [self setViewMovedUp:YES];
-//    }
-//    else if (self.sendMessageContainer.frame.origin.y < 0)
-//    {
-//        [self setViewMovedUp:NO];
-//    }
+    }
     
     self.inSearchMode = YES;
 }
@@ -1029,15 +1036,10 @@
         return;
     }
     
-//    if (self.sendMessageContainer.frame.origin.y >= 0)
-//    {
-//        [self setViewMovedUp:YES];
-//    }
-//    else if (self.sendMessageContainer.frame.origin.y < 0)
-//    {
+    if (self.showSendMessage) {
         [self setViewMovedUp:NO];
-//    }
-    
+    }
+        
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 
@@ -1092,6 +1094,31 @@
     [UIView commitAnimations];
 }
 
+-(void)showSendMessageContainer:(BOOL)show
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:.3]; // if you want to slide up the view
+    
+    CGRect rect = self.sendMessageContainer.frame;
+    if (show)
+    {
+        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+        rect.origin.y -= self.sendMessageContainer.height;
+        //        rect.size.height += kOFFSET_FOR_KEYBOARD;
+    }
+    else
+    {
+        // revert back to the normal state.
+        rect.origin.y += self.sendMessageContainer.height;
+        //        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+    }
+    self.sendMessageContainer.frame = rect;
+    
+    [UIView commitAnimations];
+    
+    self.showSendMessage = !self.showSendMessage;
+}
 
 
 
