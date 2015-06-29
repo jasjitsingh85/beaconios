@@ -14,9 +14,13 @@
 #import <MapKit/MapKit.h>
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
-#import "SetDealViewController.h"
+#import "FindFriendsViewController.h"
+#import "AnalyticsManager.h"
+#import "APIClient.h"
+#import "AppDelegate.h"
+#import "LoadingIndictor.h"
 
-@interface DealDetailViewController ()
+@interface DealDetailViewController () <FindFriendsViewControllerDelegate>
 
 @property (strong, nonatomic) UIButton *getDealButton;
 @property (strong, nonatomic) UIImageView *venueImageView;
@@ -508,11 +512,46 @@
     [actionSheet showInView:self.view];
 }
 
+#pragma mark - Find Friends Delegate
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
+{
+    NSLog(@"CONTACTS:%@", contacts);
+    //if (contacts.count >= self.deal.inviteRequirement.integerValue) {
+    [self setBeaconOnServerWithInvitedContacts:contacts andMessage:message andDate:date];
+        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
+    //}
+//    else {
+//        NSString *message = [NSString stringWithFormat:@"Just select %d more friends to unlock this deal", self.deal.inviteRequirement.integerValue - contacts.count];
+//        [[[UIAlertView alloc] initWithTitle:@"You're Almost There..." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }
+}
+
+- (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *view = appDelegate.window.rootViewController.view;
+    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:message time:date imageUrl:@"" success:^(Beacon *beacon) {
+        [loadingIndicator hide:YES];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+    } failure:^(NSError *error) {
+        [loadingIndicator hide:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
+}
+
 - (void) getDealButtonTouched:(id)sender
 {
-    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-    dealViewController.deal = self.deal;
-    [self.navigationController pushViewController:dealViewController animated:YES];
+//    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+//    dealViewController.deal = self.deal;
+//    [self.navigationController pushViewController:dealViewController animated:YES];
+    
+    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+    findFriendsViewController.delegate = self;
+    findFriendsViewController.deal = self.deal;
+    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
 }
 
 @end

@@ -12,7 +12,7 @@
 @class FindFriendsViewController, Deal;
 @protocol FindFriendsViewControllerDelegate <NSObject>
 
-- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts;
+- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date;
 
 @end
 

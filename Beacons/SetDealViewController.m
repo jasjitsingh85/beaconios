@@ -331,12 +331,13 @@ typedef NS_ENUM(NSUInteger, DealSection)  {
     [self.composeMessageView addSubview:bottomDivider];
     
     self.composeMessageTextView = [[UITextView alloc] init];
-    self.composeMessageTextView.width = self.composeMessageContentView.width;
-    self.composeMessageTextView.height = 90;
-    self.composeMessageTextView.y = 90;
+    self.composeMessageTextView.width = self.view.width - 150;
+    self.composeMessageTextView.height = 70;
+    self.composeMessageTextView.x = 0;
+    self.composeMessageTextView.y = 0;
     self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 19, 8, 19);
     self.composeMessageTextView.textAlignment = NSTextAlignmentCenter;
-    self.composeMessageTextView.font = [ThemeManager lightFontOfSize:17];
+    self.composeMessageTextView.font = [UIFont systemFontOfSize:14];
 //    self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.textColor = [UIColor blackColor];
     self.composeMessageTextView.delegate = self;
