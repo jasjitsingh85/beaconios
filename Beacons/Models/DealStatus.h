@@ -11,6 +11,7 @@
 @class User, Contact, Deal, Venue;
 @interface DealStatus : NSObject
 
+@property (strong, nonatomic) NSNumber *dealStatusID;
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) Contact *contact;
 @property (strong, nonatomic) Deal *deal;

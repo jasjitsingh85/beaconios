@@ -315,7 +315,7 @@
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
         } else {
-            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this deal?" message:@"Only staff should redeem deal"];
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this voucher?" message:@"Only staff should redeem voucher"];
             [alertView bk_addButtonWithTitle:@"Yes" handler:^{
                 [self redeemDeal];
             }];

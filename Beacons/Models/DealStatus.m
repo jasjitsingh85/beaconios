@@ -21,6 +21,7 @@
         return nil;
     }
     
+    self.dealStatusID = dictionary[@"id"];
     self.dealStatus = dictionary[@"deal_status"];
     self.bonusStatus = dictionary[@"bonus_status"];
     

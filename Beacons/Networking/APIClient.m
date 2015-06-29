@@ -352,6 +352,24 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"rewards/" parameters:parameters success:success failure:failure];
 }
 
+- (void)getRewardsItems:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"reward/item/" parameters:parameters success:success failure:failure];
+}
+
+- (void)addRewardItem:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] postPath:@"reward/item/" parameters:parameters success:success failure:failure];
+}
+
+- (void)redeemRewardItem: (NSNumber *)dealStatusID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"deal_status_id" : dealStatusID };
+    [[APIClient sharedClient] putPath:@"reward/item/" parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {
