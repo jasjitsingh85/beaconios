@@ -55,15 +55,16 @@
 @property (readonly) NSInteger findFriendSectionContacts;
 @property (nonatomic, strong) NSDate *date;
 @property (strong, nonatomic) UITextView *composeMessageTextView;
+@property (strong, nonatomic) UILabel *messageCount;
 @property (assign, nonatomic) BOOL modifiedMessage;
-@property (assign, nonatomic) BOOL showSendMessage;
+@property (assign, nonatomic) BOOL isSendMessageShowing;
+@property (assign, nonatomic) BOOL isKeyboardShowing;
 @property (assign, nonatomic) int keyboardHeight;
 @property (assign, nonatomic) CGFloat animationDuration;
 
 @end
 
 #define selectedTransform CGAffineTransformMakeScale(1.35, 1.35)
-#define kOFFSET_FOR_KEYBOARD 256.0
 
 @implementation FindFriendsViewController
 
@@ -174,7 +175,8 @@
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
     self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     
-    self.showSendMessage = NO;
+    self.isSendMessageShowing = NO;
+    self.isKeyboardShowing = NO;
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
@@ -194,6 +196,14 @@
     [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.sendMessageContainer addSubview:self.sendMessage];
     
+    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 15)];
+    self.messageCount.font = [ThemeManager regularFontOfSize:13];
+    self.messageCount.textAlignment = NSTextAlignmentCenter;
+    self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
+//    self.messageCount.text = @"1 Individual SMS";
+    self.messageCount.centerX = self.view.width/2;
+    [self.sendMessageContainer addSubview:self.messageCount];
+    
     CALayer *upperBorder = [CALayer layer];
     upperBorder.backgroundColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
     upperBorder.frame = CGRectMake(0, 0, self.view.width, 0.25f);
@@ -201,13 +211,13 @@
     
     self.composeMessageTextView = [[UITextView alloc] init];
     self.composeMessageTextView.width = self.view.width - 75;
-    self.composeMessageTextView.height = 90;
+    self.composeMessageTextView.height = 85;
     self.composeMessageTextView.x = 10;
     self.composeMessageTextView.y = 10;
     self.composeMessageTextView.layer.cornerRadius = 6;
     self.composeMessageTextView.layer.borderWidth = .25f;
     self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
-    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
+    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
     self.composeMessageTextView.textAlignment = NSTextAlignmentLeft;
     self.composeMessageTextView.font = [UIFont systemFontOfSize:15];
     //    self.composeMessageTextView.textColor = [UIColor blackColor];
@@ -594,7 +604,7 @@
         self.prompt.textColor = [UIColor blackColor];
         self.prompt.numberOfLines = 2;
         self.prompt.textAlignment = NSTextAlignmentCenter;
-        self.prompt.text = [NSString stringWithFormat:@"Select friends to join you at %@ at 3:00PM", self.deal.venue.name];
+        self.prompt.text = [NSString stringWithFormat:@"Select friends to join you at %@ at %@", self.deal.venue.name, self.date.formattedTime];
         [view addSubview:self.prompt];
         return view;
     }
@@ -677,21 +687,23 @@
         return;
     }
     
-    if (self.selectedContactDictionary.count == 0) {
-        [self showSendMessageContainer:YES];
-    }
-    
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
 //    [self updateInviteButtonText:contact];
+    [self updateMessageCount];
+}
+
+- (void) updateMessageCount
+{
+    self.messageCount.text = [NSString stringWithFormat:@"%lu Individual SMS", (unsigned long)self.selectedContactDictionary.count];
+    [self updateSendMessagePosition];
 }
 
 - (void)unselectContact:(Contact *)contact
 {
     [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
     
-    if (self.selectedContactDictionary.count == 0) {
-        [self showSendMessageContainer:NO];
-    }
+    [self updateMessageCount];
+    
 //    [self updateInviteButtonText:nil];
 }
 
@@ -1022,10 +1034,10 @@
     if (!self.isVisible) {
         return;
     }
+    
+    self.isKeyboardShowing = YES;
 
-    if (self.showSendMessage) {
-        [self setViewMovedUp:YES];
-    }
+    [self updateSendMessagePosition];
     
     self.inSearchMode = YES;
 }
@@ -1036,10 +1048,10 @@
         return;
     }
     
-    if (self.showSendMessage) {
-        [self setViewMovedUp:NO];
-    }
-        
+    self.isKeyboardShowing = NO;
+    
+    [self updateSendMessagePosition];
+    
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
 
@@ -1070,55 +1082,77 @@
     }];
 }
 
--(void)setViewMovedUp:(BOOL)movedUp
+- (void) updateSendMessagePosition
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:self.animationDuration]; // if you want to slide up the view
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:.3]; // if you want to slide up the view
     
-    CGRect rect = self.sendMessageContainer.frame;
-    if (movedUp)
-    {
-        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
-        // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        rect.origin.y -= self.keyboardHeight;
-//        rect.size.height += kOFFSET_FOR_KEYBOARD;
-    }
-    else
-    {
-        // revert back to the normal state.
-        rect.origin.y += self.keyboardHeight;
-//        rect.size.height -= kOFFSET_FOR_KEYBOARD;
-    }
-    self.sendMessageContainer.frame = rect;
-    
-    [UIView commitAnimations];
+        CGRect rect = self.sendMessageContainer.frame;
+        if (self.isKeyboardShowing) {
+            if (self.selectedContactDictionary.count > 0) {
+                rect.origin.y = self.view.height - self.keyboardHeight - 120;
+            } else {
+                rect.origin.y = self.view.height - self.keyboardHeight;
+            }
+        } else {
+            if (self.selectedContactDictionary.count > 0) {
+                rect.origin.y = self.view.height - 120;
+            } else {
+                rect.origin.y = self.view.height;
+            }
+        }
+        self.sendMessageContainer.frame = rect;
+        
+        [UIView commitAnimations];
 }
 
--(void)showSendMessageContainer:(BOOL)show
-{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:.3]; // if you want to slide up the view
-    
-    CGRect rect = self.sendMessageContainer.frame;
-    if (show)
-    {
-        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
-        // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        rect.origin.y -= self.sendMessageContainer.height;
-        //        rect.size.height += kOFFSET_FOR_KEYBOARD;
-    }
-    else
-    {
-        // revert back to the normal state.
-        rect.origin.y += self.sendMessageContainer.height;
-        //        rect.size.height -= kOFFSET_FOR_KEYBOARD;
-    }
-    self.sendMessageContainer.frame = rect;
-    
-    [UIView commitAnimations];
-    
-    self.showSendMessage = !self.showSendMessage;
-}
+//-(void)setViewMovedUp:(BOOL)movedUp
+//{
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:self.animationDuration]; // if you want to slide up the view
+//    
+//    CGRect rect = self.sendMessageContainer.frame;
+//    if (movedUp)
+//    {
+//        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+//        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+//        rect.origin.y = self.view.height;
+////        rect.size.height += kOFFSET_FOR_KEYBOARD;
+//    } else {
+//        // revert back to the normal state.
+//        rect.origin.y = self.view.height - 120;
+////        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+//    }
+//    self.sendMessageContainer.frame = rect;
+//    
+//    [UIView commitAnimations];
+//}
+//
+//-(void)showSendMessageContainer:(BOOL)show
+//{
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:.3]; // if you want to slide up the view
+//    
+//    CGRect rect = self.sendMessageContainer.frame;
+//    if (show)
+//    {
+//        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+//        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+//        rect.origin.y -= self.sendMessageContainer.height;
+//        //        rect.size.height += kOFFSET_FOR_KEYBOARD;
+//    }
+//    else
+//    {
+//        // revert back to the normal state.
+//        rect.origin.y += self.sendMessageContainer.height;
+//        //        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+//    }
+//    self.sendMessageContainer.frame = rect;
+//    
+//    [UIView commitAnimations];
+//    
+//    //self.showSendMessage = show;
+//}
 
 
 
