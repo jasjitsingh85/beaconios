@@ -51,7 +51,7 @@ typedef enum dealTypeStates
 
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) UIView *enableLocationView;
-@property (strong, nonatomic) UIView *dealTypeToggleContainer;
+//@property (strong, nonatomic) UIView *dealTypeToggleContainer;
 @property (strong, nonatomic) UIView *viewContainer;
 @property (strong, nonatomic) UIView *mapViewContainer;
 @property (strong, nonatomic) NSDate *lastUpdatedDeals;
@@ -88,12 +88,14 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UILabel *distanceLabel;
 
-@property (strong, nonatomic) UIView *lockedOverlay;
-@property (strong, nonatomic) UIImageView *lockButton;
-@property (strong, nonatomic) UIImageView *largeGoldCoin;
+//@property (strong, nonatomic) UIView *lockedOverlay;
+//@property (strong, nonatomic) UIImageView *lockButton;
+//@property (strong, nonatomic) UIImageView *largeGoldCoin;
 @property (strong, nonatomic) UILabel *rewardScore;
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UIView *priceContainer;
+
+@property (strong, nonatomic) UISegmentedControl *navBarTabs;
 
 @end
 
@@ -122,7 +124,27 @@ typedef enum dealTypeStates
 //    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
 //    [searchBarContainer addSubview:self.searchBar];
 //    //[self.view addSubview:self.searchBar];
-
+    
+    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"HOTSPOTS", @"HAPPY HOURS"]];
+    [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
+    self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
+    [self.navBarTabs setWidth:80 forSegmentAtIndex:0];
+    [self.navBarTabs setWidth:80 forSegmentAtIndex:1];
+    self.navBarTabs.selectedSegmentIndex = 0;
+    [self.navBarTabs addTarget:self
+                         action:@selector(navBarTabTapped:)
+               forControlEvents:UIControlEventValueChanged];
+    [self.navBarTabs setImage:[UIImage imageNamed:@"hotspotSliderLabel"] forSegmentAtIndex:0];
+    //[self.navBarTabs setBackgroundImage:[UIImage imageNamed:@"navTabBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[self.navBarTabs setDividerImage:[UIImage imageNamed:@"blank"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //    self.navBarTabs.layer.borderColor = [UIColor blackColor].CGColor;
+//    self.navBarTabs.layer.borderWidth = .5;
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:[ThemeManager regularFontOfSize:9]
+                                                           forKey:NSFontAttributeName];
+    [self.navBarTabs setTitleTextAttributes:attributes
+                                    forState:UIControlStateNormal];
+    [self.navBarTabs setFrame:CGRectMake(0, 0, 170, 25)];
+    self.navigationItem.titleView = self.navBarTabs;
     
     self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
@@ -139,71 +161,71 @@ typedef enum dealTypeStates
     //[self addChildViewController:self.rewardsViewController];
     //[self.rewardsViewController updateRewardsScore];
     
-    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 70, [[UIScreen mainScreen] bounds].size.width, 70);
-    self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
-    self.dealTypeToggleContainer.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.dealTypeToggleContainer];
+//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 70, [[UIScreen mainScreen] bounds].size.width, 70);
+//    self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
+//    self.dealTypeToggleContainer.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:self.dealTypeToggleContainer];
     
-    UIView *topBorder = [[UIView alloc] init];
-    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255];
-    topBorder.frame = CGRectMake(0, 0, self.view.width, 1.0);
-    [self.dealTypeToggleContainer addSubview:topBorder];
+//    UIView *topBorder = [[UIView alloc] init];
+//    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255];
+//    topBorder.frame = CGRectMake(0, 0, self.view.width, 1.0);
+//    [self.dealTypeToggleContainer addSubview:topBorder];
     
-    UIImageView *sliderTrack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider"]];
-    sliderTrack.centerX = self.view.width/2;
-    sliderTrack.y = 39;
-    [self.dealTypeToggleContainer addSubview:sliderTrack];
+//    UIImageView *sliderTrack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider"]];
+//    sliderTrack.centerX = self.view.width/2;
+//    sliderTrack.y = 39;
+//    [self.dealTypeToggleContainer addSubview:sliderTrack];
     
-    self.sliderThumb = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [self.sliderThumb setImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
-    self.sliderThumb.y = 30;
-//    self.sliderThumb.x = 30;
-    self.sliderThumb.centerX = self.view.width/2;
-    [self.dealTypeToggleContainer addSubview:self.sliderThumb];
+//    self.sliderThumb = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+//    [self.sliderThumb setImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+//    self.sliderThumb.y = 30;
+////    self.sliderThumb.x = 30;
+//    self.sliderThumb.centerX = self.view.width/2;
+//    [self.dealTypeToggleContainer addSubview:self.sliderThumb];
     
-    UIImageView *hotspotSliderLabel = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotSliderLabel"]];
-    //hotspotSliderImage.size = CGSizeMake(30, 100);
-    hotspotSliderLabel.height = 25;
-    hotspotSliderLabel.width = 73;
-    hotspotSliderLabel.centerX = self.view.width/2;
-    hotspotSliderLabel.y = 5;
-    [self.dealTypeToggleContainer addSubview:hotspotSliderLabel];
+//    UIImageView *hotspotSliderLabel = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotSliderLabel"]];
+//    //hotspotSliderImage.size = CGSizeMake(30, 100);
+//    hotspotSliderLabel.height = 25;
+//    hotspotSliderLabel.width = 73;
+//    hotspotSliderLabel.centerX = self.view.width/2;
+//    hotspotSliderLabel.y = 5;
+//    [self.dealTypeToggleContainer addSubview:hotspotSliderLabel];
     
-    UILabel *happyHourLabel = [[UILabel alloc] initWithFrame:CGRectMake(11, 10, 70, 20)];
-    happyHourLabel.text = @"HAPPY HOURS";
-    happyHourLabel.font = [ThemeManager lightFontOfSize:9];
-    happyHourLabel.textAlignment = NSTextAlignmentCenter;
-    [self.dealTypeToggleContainer addSubview:happyHourLabel];
-    
-    UILabel *rewardsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 78, 10, 70, 20)];
-    rewardsLabel.text = @"REWARDS";
-    rewardsLabel.font = [ThemeManager lightFontOfSize:9];
-    rewardsLabel.textAlignment = NSTextAlignmentCenter;
-    [self.dealTypeToggleContainer addSubview:rewardsLabel];
-    
-    UIButton *happyHourButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    happyHourButton.size = CGSizeMake(70, 70);
-    happyHourButton.x = 10;
-    happyHourButton.y = 0;
-    //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-    [happyHourButton addTarget:self action:@selector(happyHourButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealTypeToggleContainer addSubview:happyHourButton];
-    
-    UIButton *hotspotButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    hotspotButton.size = CGSizeMake(70, 70);
-    hotspotButton.centerX = self.view.width/2;
-    hotspotButton.y = 0;
-    //hotspotButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-    [hotspotButton addTarget:self action:@selector(hotspotButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealTypeToggleContainer addSubview:hotspotButton];
-    
-    UIButton *rewardsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rewardsButton.size = CGSizeMake(70, 70);
-    rewardsButton.x = self.view.width - 80;
-    rewardsButton.y = 0;
-    //rewardsButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-    [rewardsButton addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dealTypeToggleContainer addSubview:rewardsButton];
+//    UILabel *happyHourLabel = [[UILabel alloc] initWithFrame:CGRectMake(11, 10, 70, 20)];
+//    happyHourLabel.text = @"HAPPY HOURS";
+//    happyHourLabel.font = [ThemeManager lightFontOfSize:9];
+//    happyHourLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.dealTypeToggleContainer addSubview:happyHourLabel];
+//    
+//    UILabel *rewardsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 78, 10, 70, 20)];
+//    rewardsLabel.text = @"REWARDS";
+//    rewardsLabel.font = [ThemeManager lightFontOfSize:9];
+//    rewardsLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.dealTypeToggleContainer addSubview:rewardsLabel];
+//    
+//    UIButton *happyHourButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    happyHourButton.size = CGSizeMake(70, 70);
+//    happyHourButton.x = 10;
+//    happyHourButton.y = 0;
+//    //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+//    [happyHourButton addTarget:self action:@selector(happyHourButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealTypeToggleContainer addSubview:happyHourButton];
+//    
+//    UIButton *hotspotButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    hotspotButton.size = CGSizeMake(70, 70);
+//    hotspotButton.centerX = self.view.width/2;
+//    hotspotButton.y = 0;
+//    //hotspotButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+//    [hotspotButton addTarget:self action:@selector(hotspotButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealTypeToggleContainer addSubview:hotspotButton];
+//    
+//    UIButton *rewardsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    rewardsButton.size = CGSizeMake(70, 70);
+//    rewardsButton.x = self.view.width - 80;
+//    rewardsButton.y = 0;
+//    //rewardsButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+//    [rewardsButton addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.dealTypeToggleContainer addSubview:rewardsButton];
     
     self.tableView = [[UITableView alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -374,27 +396,27 @@ typedef enum dealTypeStates
     [self.priceContainer addSubview:self.priceLabel];
     [self.venueView addSubview:self.priceContainer];
     
-    self.lockedOverlay = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
-    //self.lockedOverlay.height = self.selectedDealInMap.height;
-    self.lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-    [self.venueView addSubview:self.lockedOverlay];
+//    self.lockedOverlay = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
+//    //self.lockedOverlay.height = self.selectedDealInMap.height;
+//    self.lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+//    [self.venueView addSubview:self.lockedOverlay];
+//    
+//    self.lockButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+//    self.lockButton.size = CGSizeMake(40, 40);
+//    self.lockButton.centerX = self.selectedDealInMap.size.width/2;
+//    self.lockButton.centerY = self.selectedDealInMap.size.height/2;
+//    [self.venueView addSubview:self.lockButton];
+//    
+//    self.largeGoldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
+//    self.largeGoldCoin.x = (self.selectedDealInMap.width/2)- 30;
+//    self.largeGoldCoin.y = self.selectedDealInMap.height/2 + 25;
+//    [self.venueView addSubview:self.largeGoldCoin];
     
-    self.lockButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-    self.lockButton.size = CGSizeMake(40, 40);
-    self.lockButton.centerX = self.selectedDealInMap.size.width/2;
-    self.lockButton.centerY = self.selectedDealInMap.size.height/2;
-    [self.venueView addSubview:self.lockButton];
-    
-    self.largeGoldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
-    self.largeGoldCoin.x = (self.selectedDealInMap.width/2)- 30;
-    self.largeGoldCoin.y = self.selectedDealInMap.height/2 + 25;
-    [self.venueView addSubview:self.largeGoldCoin];
-    
-    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedDealInMap.width/2 - 3, self.selectedDealInMap.height/2 + 14, 70, 40)];
-    self.rewardScore.font = [ThemeManager boldFontOfSize:18];
-    self.rewardScore.textAlignment = NSTextAlignmentLeft;
-    self.rewardScore.textColor = [UIColor whiteColor];
-    [self.venueView addSubview:self.rewardScore];
+//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedDealInMap.width/2 - 3, self.selectedDealInMap.height/2 + 14, 70, 40)];
+//    self.rewardScore.font = [ThemeManager boldFontOfSize:18];
+//    self.rewardScore.textAlignment = NSTextAlignmentLeft;
+//    self.rewardScore.textColor = [UIColor whiteColor];
+//    [self.venueView addSubview:self.rewardScore];
     
     //[self.venueScroll addSubview:self.venueDetailView];
     
@@ -1196,7 +1218,7 @@ typedef enum dealTypeStates
 {
     self.selectedDealIndex = [view.annotation.title intValue];
     
-    if (self.dealType == HOTSPOT || self.dealType == REWARD) {
+    if (self.dealType == HOTSPOT) {
         Deal *deal = self.selectedDeals[self.selectedDealIndex];
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
@@ -1209,11 +1231,6 @@ typedef enum dealTypeStates
             self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
             CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
             
-            self.priceContainer.hidden = YES;
-            self.lockedOverlay.hidden = YES;
-            self.lockButton.hidden = YES;
-            self.largeGoldCoin.hidden = YES;
-            self.rewardScore.hidden = YES;
             CGFloat descriptionLabelWidth;
             if (textSize.width < self.view.width * .6) {
                 descriptionLabelWidth = textSize.width;
@@ -1224,40 +1241,7 @@ typedef enum dealTypeStates
             self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
             
             self.descriptionLabel.width = descriptionLabelWidth + 10;
-        } else {
-            self.priceContainer.hidden = NO;
-            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", [deal.itemName uppercaseString]];
-            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-            
-            CGFloat descriptionLabelWidth;
-            if (textSize.width < self.view.width * .6) {
-                descriptionLabelWidth = textSize.width;
-            } else {
-                descriptionLabelWidth = self.view.width * .6;
-            }
-            
-            self.dealTime.text = @"";
-            
-            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-            
-            self.descriptionLabel.width = descriptionLabelWidth + 10;
-            
-            self.priceLabel.text = [NSString stringWithFormat: @"x %@", deal.itemPointCost];
-            
-            if (!deal.locked) {
-                self.lockedOverlay.hidden = YES;
-                self.lockButton.hidden = YES;
-                self.largeGoldCoin.hidden = YES;
-                self.rewardScore.hidden = YES;
-            } else {
-                self.lockedOverlay.hidden = NO;
-                self.lockButton.hidden = NO;
-                self.largeGoldCoin.hidden = NO;
-                self.rewardScore.hidden = NO;
-                self.rewardScore.text = [NSString stringWithFormat: @"x %@", deal.itemPointCost];
-            }
         }
-        
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *deal = self.selectedDeals[self.selectedDealIndex];
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
@@ -1270,11 +1254,6 @@ typedef enum dealTypeStates
         CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
         
         CGFloat descriptionLabelWidth;
-        self.priceContainer.hidden = YES;
-        self.lockedOverlay.hidden = YES;
-        self.lockButton.hidden = YES;
-        self.largeGoldCoin.hidden = YES;
-        self.rewardScore.hidden = YES;
         if (textSize.width < self.view.width * .6) {
             descriptionLabelWidth = textSize.width;
         } else {
@@ -1357,6 +1336,15 @@ typedef enum dealTypeStates
     }
     
     return firstAndSecondLine;
+}
+
+-(void)navBarTabTapped:(id)sender
+{
+    if (self.navBarTabs.selectedSegmentIndex == 0) {
+        [self hotspotButtonTouched:nil];
+    } else {
+        [self happyHourButtonTouched:nil];
+    }
 }
 
 @end

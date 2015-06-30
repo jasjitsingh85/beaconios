@@ -179,7 +179,7 @@
     if (showMenuButton) {
         viewController.navigationItem.hidesBackButton = NO;
         viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.menuButton];
-        [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneDragRevealEnabled:NO forDirection:MSDynamicsDrawerDirectionLeft];
+        [[AppDelegate sharedAppDelegate].sideNavigationViewController setPaneDragRevealEnabled:YES forDirection:MSDynamicsDrawerDirectionLeft];
     }
     else {
         viewController.navigationItem.hidesBackButton = YES;

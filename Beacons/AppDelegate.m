@@ -398,7 +398,7 @@
         MAVEUserData *referringUser = referringData.referringUser;
         NSString *referringUserPhone = referringData.currentUser.phone;
         if (referringUser) {
-            [[APIClient sharedClient] earnFriendInvitationReward:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[APIClient sharedClient] addRewardItem:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"Successful referral");
             } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
                 NSLog(@"Failure for referral");

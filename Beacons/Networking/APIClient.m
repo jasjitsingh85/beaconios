@@ -346,10 +346,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
 }
 
-- (void)earnFriendInvitationReward:(NSString *)referringUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+- (void)addRewardItem:(NSString *)referringUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
     NSDictionary *parameters = @{ @"referring_user" : referringUserPhoneNumber };
-    [[APIClient sharedClient] postPath:@"rewards/" parameters:parameters success:success failure:failure];
+    [[APIClient sharedClient] postPath:@"reward/item/" parameters:parameters success:success failure:failure];
 }
 
 - (void)getRewardsItems:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
@@ -358,11 +358,11 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] getPath:@"reward/item/" parameters:parameters success:success failure:failure];
 }
 
-- (void)addRewardItem:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-{
-    NSDictionary *parameters = @{};
-    [[APIClient sharedClient] postPath:@"reward/item/" parameters:parameters success:success failure:failure];
-}
+//- (void)addRewardItem:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+//{
+//    NSDictionary *parameters = @{};
+//    [[APIClient sharedClient] postPath:@"reward/item/" parameters:parameters success:success failure:failure];
+//}
 
 - (void)redeemRewardItem: (NSNumber *)dealStatusID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
