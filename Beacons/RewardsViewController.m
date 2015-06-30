@@ -10,16 +10,16 @@
 #import "RewardsViewController.h"
 #import "APIClient.h"
 #import "UIButton+HSNavButton.h"
-#import "RewardExplanationPopupView.h"
-#import "RewardsStoreViewController.h"
+//#import "RewardExplanationPopupView.h"
+//#import "RewardsStoreViewController.h"
 
 @interface RewardsViewController()
 
 @property (nonatomic, strong) NSString *rewards_score;
 @property (nonatomic, strong) UINavigationItem *navItem;
 @property (nonatomic, strong) UIView *rewards_score_nav_item;
-@property (nonatomic, strong) RewardExplanationPopupView *rewardExplanationPopupView;
-@property (nonatomic, strong) RewardsStoreViewController *rewardsStoreViewController;
+//@property (nonatomic, strong) RewardExplanationPopupView *rewardExplanationPopupView;
+//@property (nonatomic, strong) RewardsStoreViewController *rewardsStoreViewController;
 @property (nonatomic, strong) UIBarButtonItem *cancelButtonItem;
 @property (nonatomic, strong) UINavigationController *navigationController;
 
@@ -33,7 +33,7 @@
     self.navItem = navItem;
 //    self.rewardExplanationPopupView = [[RewardExplanationPopupView alloc] init];
 //    self.rewardsStoreViewController = [[RewardsStoreViewController alloc] init];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rewardsStoreViewController];
+ //   self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.rewardsStoreViewController];
     self.rewards_score_nav_item = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
     self.rewards_score_nav_item.hidden = YES;
     //        self.rewards_score_nav_item = [UIButton navButtonWithTitle:[NSString stringWithFormat:@"%@", rewards_score]];

@@ -145,6 +145,7 @@
         NSArray *results = [self.dealStatuses filteredArrayUsingPredicate:predicate];
         dealStatus = [results firstObject];
     }
+    
     return dealStatus;
 }
 

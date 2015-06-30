@@ -18,7 +18,7 @@
 #import "UIView+BounceAnimation.h"
 //#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
-#import "SetDealViewController.h"
+//#import "SetDealViewController.h"
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "RewardTableViewCell.h"
@@ -29,7 +29,7 @@
 #import "Venue.h"
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
-#import "RewardsViewController.h"
+//#import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
@@ -45,7 +45,7 @@
 @property (assign, nonatomic) BOOL locationEnabled;
 //@property (assign, nonatomic) BOOL groupDeal;
 @property (strong, nonatomic) NSArray *allDeals;
-@property (strong, nonatomic) RewardsViewController *rewardsViewController;
+//@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 
 @end
 
@@ -63,8 +63,8 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
     
-    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
-    [self.rewardsViewController updateRewardsScore];
+//    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+//    [self.rewardsViewController updateRewardsScore];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
@@ -83,7 +83,7 @@
         [self reloadDeals];
     }
     
-    [self.rewardsViewController updateRewardsScore];
+    //[self.rewardsViewController updateRewardsScore];
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }

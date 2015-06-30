@@ -96,8 +96,10 @@
 //        self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
 //        self.dealRedemptionViewController.delegate = self;
         //[self initVenmoWebviewController];
-        //if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation]){
-        [self initPaymentsViewControllerAndSetDeal];
+        //if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation])
+        if (!self.beacon.userDealStatus.paymentAuthorization) {
+            [self initPaymentsViewControllerAndSetDeal];
+        }
         //}
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];

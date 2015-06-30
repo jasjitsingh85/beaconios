@@ -24,7 +24,7 @@
 #import "Venue.h"
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
-#import "RewardsViewController.h"
+//#import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -69,7 +69,7 @@ typedef enum dealTypeStates
 @property (assign, nonatomic) BOOL isMapViewActive;
 @property (assign, nonatomic) BOOL isMapViewDealShowing;
 //@property (strong, nonatomic) Deal *dealInView;
-@property (strong, nonatomic) RewardsViewController *rewardsViewController;
+//@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 //@property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
@@ -135,9 +135,9 @@ typedef enum dealTypeStates
     
     self.initialRadius = 1.6;
     
-    self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
+    //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     //[self addChildViewController:self.rewardsViewController];
-    [self.rewardsViewController updateRewardsScore];
+    //[self.rewardsViewController updateRewardsScore];
     
     CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 70, [[UIScreen mainScreen] bounds].size.width, 70);
     self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
@@ -430,7 +430,7 @@ typedef enum dealTypeStates
         [self reloadDeals];
     }
 
-    [self.rewardsViewController updateRewardsScore];
+//    [self.rewardsViewController updateRewardsScore];
 //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
@@ -781,13 +781,13 @@ typedef enum dealTypeStates
     NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
     NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
     if (self.dealType == REWARD) {
-        [self.rewardsViewController showRewardsScore];
+        //[self.rewardsViewController showRewardsScore];
         [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
     } else if (self.dealType == HAPPY_HOUR) {
-        [self.rewardsViewController hideRewardsScore];
+        //[self.rewardsViewController hideRewardsScore];
         [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
     } else if (self.dealType == HOTSPOT) {
-        [self.rewardsViewController hideRewardsScore];
+        //[self.rewardsViewController hideRewardsScore];
         if (self.previousDealType == HAPPY_HOUR) {
             [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
         } else {

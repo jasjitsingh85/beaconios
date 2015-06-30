@@ -16,7 +16,7 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Venue.h"
 #import <QuartzCore/QuartzCore.h>
-#import "SetDealViewController.h"
+//#import "SetDealViewController.h"
 #import "CenterNavigationController.h"
 
 @interface DealTableViewEventCell()

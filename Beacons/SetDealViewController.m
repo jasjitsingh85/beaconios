@@ -23,7 +23,7 @@
 //#import <AVFoundation/AVFoundation.h>
 #import "UIImage+Resize.h"
 #import "UIView+UIImage.h"
-#import "RewardsViewController.h"
+//#import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
 
 typedef NS_ENUM(NSUInteger, DealSection)  {

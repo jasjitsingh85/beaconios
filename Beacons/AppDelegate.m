@@ -15,7 +15,7 @@
 #import "CenterNavigationController.h"
 #import "MenuViewController.h"
 #import "DealsTableViewController.h"
-#import "SetDealViewController.h"
+//#import "SetDealViewController.h"
 #import "APIClient.h"
 #import "Theme.h"
 #import "User.h"
@@ -35,7 +35,7 @@
 #import "RandomObjectManager.h"
 #import "Deal.h"
 #import <Braintree/Braintree.h>
-#import "VoucherViewController.h"
+//#import "VoucherViewController.h"
 #import <MaveSDK.h>
 
 @interface AppDelegate()
@@ -492,14 +492,14 @@
     [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
 }
 
-- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher
-{
-    VoucherViewController *voucherViewController = [[VoucherViewController alloc] init];
-    voucherViewController.voucher = voucher;
-    voucherViewController.openToDealView = YES;
-    [voucherViewController refreshVoucherData];
-    [self.centerNavigationController setSelectedViewController:voucherViewController animated:YES];
-}
+//- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher
+//{
+//    VoucherViewController *voucherViewController = [[VoucherViewController alloc] init];
+//    voucherViewController.voucher = voucher;
+//    voucherViewController.openToDealView = YES;
+//    [voucherViewController refreshVoucherData];
+//    [self.centerNavigationController setSelectedViewController:voucherViewController animated:YES];
+//}
 
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID
 {
@@ -507,19 +507,19 @@
     [self.setBeaconViewController preloadWithRecommendation:recommendationID];
 }
 
-- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated
-{
-    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-    dealViewController.deal = deal;
-    [self.centerNavigationController setSelectedViewController:dealViewController animated:animated];
-}
+//- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated
+//{
+//    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
+//    dealViewController.deal = deal;
+//    [self.centerNavigationController setSelectedViewController:dealViewController animated:animated];
+//}
 
-- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID
-{
-    SetDealViewController *dealDetailViewController = [[SetDealViewController alloc] init];
-    [self.centerNavigationController setSelectedViewController:dealDetailViewController];
-    [dealDetailViewController preloadWithDealID:dealID];
-}
+//- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID
+//{
+//    SetDealViewController *dealDetailViewController = [[SetDealViewController alloc] init];
+//    [self.centerNavigationController setSelectedViewController:dealDetailViewController];
+//    [dealDetailViewController preloadWithDealID:dealID];
+//}
 
 #pragma mark - Location
 - (void)receivedDidEnterRegionNotification:(NSNotification *)notification
