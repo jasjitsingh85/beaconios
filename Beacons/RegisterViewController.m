@@ -60,7 +60,7 @@ typedef enum {
     self.view.userInteractionEnabled = YES;
     self.view.backgroundColor = [UIColor colorWithRed:231/255. green:231/255. blue:231/255. alpha:1];
     NSArray *registerFormTitles = @[@"NAME:", @"EMAIL:", @"PHONE:"];
-    NSArray *registerFormPlaceholders = @[@"Alex Hawke", @"alex.hawke@gmail.com", @"(555) 123-4567"];
+    NSArray *registerFormPlaceholders = @[@" ", @" ", @" "];
     
     self.formContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 120)];
     self.formContainer.backgroundColor = [UIColor whiteColor];

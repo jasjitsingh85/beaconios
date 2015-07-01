@@ -68,6 +68,41 @@
    // }];
 }
 
+- (void)openPaymentModalFromSideNav
+{
+    
+    // Create and retain a `Braintree` instance with the client token
+    //[Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
+    self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
+    // Create a BTDropInViewController
+    //        self.braintree = braintree;
+    BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
+    // This is where you might want to customize your Drop in. (See below.)
+    //
+//    dropInViewController.summaryTitle = ;
+//    dropInViewController.summaryDescription = @"You won't be charged until your voucher is redeemed and you’ve received your drink";
+//    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
+//    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
+    dropInViewController.callToActionText = @"SAVE";
+    dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
+    
+    // The way you present your BTDropInViewController instance is up to you.
+    // In this example, we wrap it in a new, modally presented navigation controller:
+    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                          target:self
+                                                                                                          action:@selector(userDidCancelPayment)];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
+    navigationController.navigationBar.topItem.title = @"Payment";
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+    navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
+    // }];
+}
+
 - (void)userDidCancelPayment {
     [self dismissViewControllerAnimated:YES completion:nil];
 }

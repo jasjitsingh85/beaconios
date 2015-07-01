@@ -54,6 +54,10 @@
     
     self.deal = [[Deal alloc] initWithDictionary:dictionary[@"deal"]];
     
+    NSLog(@"PAYMENT AUTHORIZATION: %@", payment_authorization);
+    NSLog(@"PAYMENT AUTHORIZATION Boolean: %d", self.paymentAuthorization);
+    NSLog(@"DEAL: %@", self.deal.venue.name);
+    
     return self;
 }
 

@@ -30,6 +30,7 @@
     self.additionalInfo = dictionary[@"additional_info"];
     self.dealType = dictionary[@"deal_type"];
     self.itemPointCost = dictionary[@"item_point_cost"];
+    self.itemMarketPrice = dictionary[@"item_market_price"];
     NSNumber *bonusRequirement = dictionary[@"bonus_invite_requirement"];
     if (!isEmpty(bonusRequirement)) {
         self.bonusRequirement = bonusRequirement;

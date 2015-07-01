@@ -177,12 +177,16 @@
     
     self.descriptionLabel.width = descriptionLabelWidth + 5;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    self.distanceLabel.text = [self stringForDistance:happyHour.venue.distance];
+    //self.distanceLabel.text = [self stringForDistance:happyHour.venue.distance];
     self.venueDetailDealFirstLineLabel.text = self.happyHour.happyHourDescription;
     //self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
     //self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
+    //self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
+    
+    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+//    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.happyHour.happyHourStartString uppercaseString], emDash, [self stringForDistance:happyHour.venue.distance]];
 //    if ([self.dealTime.text isEqualToString:@"NOW"]) {
 //        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
 //    }

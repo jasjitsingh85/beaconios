@@ -19,7 +19,7 @@
 
 @interface DealTableViewCell()
 
-@property (strong, nonatomic) UIView *backgroundView;
+@property (strong, nonatomic) UIView *backgroundDealView;
 
 @end
 
@@ -40,20 +40,20 @@
     self.venueImageView.clipsToBounds = YES;
     [self.contentView addSubview:self.venueImageView];
     
-    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
-    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
-    [self.backgroundGradient setImage:gradientImage];
-    [self.venueImageView addSubview:self.backgroundGradient];
-    
 //    self.venueScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
 //    self.venueScroll.pagingEnabled = YES;
 //    self.venueScroll.showsHorizontalScrollIndicator = NO;
 
     self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
-    self.backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
-    self.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    self.backgroundDealView = [[UIView alloc] initWithFrame:self.venuePreviewView.bounds];
+    self.backgroundDealView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     //self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.venueImageView addSubview:self.backgroundView];
+    [self.venueImageView addSubview:self.backgroundDealView];
+    
+    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
+    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+    [self.backgroundGradient setImage:gradientImage];
+    [self.venueImageView addSubview:self.backgroundGradient];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
@@ -92,6 +92,18 @@
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
     [self.venuePreviewView addSubview:self.dealTime];
+    
+    self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 89, 40, 26)];
+    self.priceLabel.textColor = [UIColor whiteColor];
+    self.priceLabel.textAlignment = NSTextAlignmentLeft;
+    self.priceLabel.font = [ThemeManager boldFontOfSize:18];
+    [self.venuePreviewView addSubview:self.priceLabel];
+    
+    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 89, 40, 26)];
+    self.marketPriceLabel.textColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    self.marketPriceLabel.textAlignment = NSTextAlignmentLeft;
+    self.marketPriceLabel.font = [ThemeManager boldFontOfSize:14];
+    [self.venuePreviewView addSubview:self.marketPriceLabel];
     
     //    self.venueDescriptionBackground = [[UIView alloc] init];
     //    self.venueDescriptionBackground.backgroundColor = [UIColor whiteColor];
@@ -238,7 +250,7 @@
 //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", [deal.itemName uppercaseString]];
     CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
     
     CGFloat descriptionLabelWidth;
@@ -257,12 +269,23 @@
     
     self.descriptionLabel.width = descriptionLabelWidth + 10;
     //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
 //    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
 //    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
 //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    self.dealTime.text = [self.deal.dealStartString uppercaseString];
+    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
+    self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
+    
+    NSDictionary* attributes = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                 };
+    
+    NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+    self.marketPriceLabel.attributedText = attrText;
+    
 //    if ([self.dealTime.text isEqualToString:@"NOW"]) {
 //        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
 //    }

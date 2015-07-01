@@ -22,5 +22,6 @@
 
 - (id) initWithClientToken: (NSString *)clientToken ;
 - (void) openPaymentModalWithDeal: (Deal *)deal;
+- (void) openPaymentModalFromSideNav;
 
 @end

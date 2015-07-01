@@ -97,9 +97,6 @@
 //        self.dealRedemptionViewController.delegate = self;
         //[self initVenmoWebviewController];
         //if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownPaymentExplanation])
-        if (!self.beacon.userDealStatus.paymentAuthorization) {
-            [self initPaymentsViewControllerAndSetDeal];
-        }
         //}
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
@@ -463,6 +460,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    if (!self.beacon.userDealStatus.paymentAuthorization) {
+        [self initPaymentsViewControllerAndSetDeal];
+    }
 //    [self updateInviteListInsets];
 //    [self updateChatDesiredInsets];
 //    [self updateDealRedemptionInsets];
@@ -636,6 +637,7 @@
             }
         } failure:nil];
     }
+
 }
 
 

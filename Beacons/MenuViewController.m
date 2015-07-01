@@ -25,6 +25,8 @@
 #import "GroupsViewController.h"
 #import "Theme.h"
 #import "VoucherTableViewCell.h"
+#import "APIClient.h"
+#import "PaymentsViewController.h"
 #import <MaveSDK.h>
 
 
@@ -35,16 +37,19 @@
 @property (strong, nonatomic) UIView *groupContainer;
 @property (strong, nonatomic) UIView *shareContainer;
 @property (strong, nonatomic) UIView *settingContainer;
+@property (strong, nonatomic) UIView *paymentContainer;
 //@property (strong, nonatomic) UIView *buttonContainerView;
 @property (strong, nonatomic) UIView *customHeaderView;
 @property (strong, nonatomic) UIButton *dealsButton;
 @property (strong, nonatomic) UIButton *settingsButton;
 @property (strong, nonatomic) UIButton *groupsButton;
+@property (strong, nonatomic) UIButton *paymentButton;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) NSDictionary *daySeparatedBeacons;
 @property (strong, nonatomic) NSArray *vouchers;
 @property (strong, nonatomic) NSArray *beacons;
+@property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 
 @end
 
@@ -95,7 +100,7 @@
 //
 //    [self.menuViewContainer addSubview:dealsContainer];
     
-    self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
+    self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
     [self.menuViewContainer addSubview:self.dealsContainer];
     self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.dealsButton setTitle:@"HOME" forState:UIControlStateNormal];
@@ -161,8 +166,27 @@
     [self.inviteFriendsButton addSubview:shareIcon];
     
     [self.shareContainer addSubview:self.inviteFriendsButton];
+
+    self.paymentContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.shareContainer.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.paymentContainer];
+    self.paymentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.paymentButton setTitle:@"PAYMENT" forState:UIControlStateNormal];
+    self.paymentButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
+    self.paymentButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.paymentButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    [self.paymentButton setFrame:CGRectMake(0, 0, self.menuViewContainer.size.width, 50)];
+    self.paymentButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.paymentButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+    [self.paymentButton addTarget:self action:@selector(paymentButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.settingContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.shareContainer.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
+    UIImageView *paymentIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"creditCardSideNav"]];
+    paymentIcon.frame = CGRectMake(17, 10, 30, 30);
+    paymentIcon.contentMode=UIViewContentModeScaleAspectFill;
+    [self.paymentButton addSubview:paymentIcon];
+    
+    [self.paymentContainer addSubview:self.paymentButton];
+    
+    self.settingContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.paymentContainer.y + self.paymentContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.settingContainer];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.settingsButton setTitle:@"SETTINGS" forState:UIControlStateNormal];
@@ -188,6 +212,21 @@
     [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers)) options:0 context:NULL];
     [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingRewards)) options:0 context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardsUpdated:) name:kNotificationRewardsUpdated object:nil];
+    
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *clientToken = responseObject[@"client_token"];
+        self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        //self.paymentsViewController.beaconProfileViewController = self;
+        //self.paymentsViewController.beaconID = self.beacon.beaconID;
+        [self addChildViewController:self.paymentsViewController];
+        //[self.view addSubview:self.paymentsViewController.view];
+        self.paymentsViewController.view.frame = self.view.bounds;
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -212,6 +251,8 @@
             [self isUpdatingRewardsChanged];
         }
     }
+    
+    [self updateNavigationItems];
 }
 
 - (void)isUpdatingBeaconsChanged
@@ -403,6 +444,11 @@
     
 }
 
+- (void)paymentButtonTouched:(id)sender
+{
+    [self.paymentsViewController openPaymentModalFromSideNav];
+}
+
 - (void)groupButtonTouched:(id)sender
 {
     GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
@@ -531,7 +577,8 @@
     self.dealsContainer.frame = CGRectMake(0, 20, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
     //self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
     self.shareContainer.frame = CGRectMake(0, 70 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
-    self.settingContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.paymentContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.settingContainer.frame = CGRectMake(0, self.paymentContainer.origin.y + self.paymentContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 }
 
