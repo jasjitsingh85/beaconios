@@ -146,9 +146,9 @@ typedef enum dealTypeStates
     [self.navBarTabs setFrame:CGRectMake(0, 0, 170, 25)];
     self.navigationItem.titleView = self.navBarTabs;
     
-    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
-    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
+//    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
+//    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
@@ -233,7 +233,7 @@ typedef enum dealTypeStates
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 70, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -241,12 +241,12 @@ typedef enum dealTypeStates
     
     [self checkToLaunchInvitationModal];
     
-    self.mapViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height - 70)];
+    self.mapViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height)];
     self.mapViewContainer.hidden = YES;
     [self.viewContainer addSubview:self.mapViewContainer];
     
     //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
-    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 70 - 64)];
+    self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 64)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
     self.mapTapped = [[UITapGestureRecognizer alloc]
@@ -267,7 +267,7 @@ typedef enum dealTypeStates
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
-    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 70, self.view.width, 146)];
+    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 146)];
     self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
     UITapGestureRecognizer *selectedDealTapped = [[UITapGestureRecognizer alloc]
                       initWithTarget:self action:@selector(tappedOnSelectedDealInMap:)];
@@ -421,6 +421,21 @@ typedef enum dealTypeStates
     //[self.venueScroll addSubview:self.venueDetailView];
     
     [self.selectedDealInMap addSubview:self.venueView];
+    
+    self.mapListToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mapListToggleButton.size = CGSizeMake(70, 70);
+    self.mapListToggleButton.x = self.view.width - 80;
+    self.mapListToggleButton.y = self.view.height - 80;
+    [self.mapListToggleButton setImage:[UIImage imageNamed:@"mapToggleButton"] forState:UIControlStateNormal];
+    //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
+    //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+    //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
+    //self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+    [self.mapListToggleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.mapListToggleButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.mapListToggleButton];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
@@ -1071,7 +1086,7 @@ typedef enum dealTypeStates
             theFrame.size.height += 146;
             self.mapView.frame = theFrame;
             
-            self.selectedDealInMap.y = self.view.height - 70;
+            self.selectedDealInMap.y = self.view.height;
             
             self.mapTapped.enabled = NO;
             
@@ -1083,9 +1098,11 @@ typedef enum dealTypeStates
             theFrame.size.height -= 146;
             self.mapView.frame = theFrame;
             
-            self.selectedDealInMap.y = self.view.height - 70 - 146;
+            self.selectedDealInMap.y = self.view.height - 146;
+        
             
             self.mapTapped.enabled = YES;
+            
         }];
     }
     self.isMapViewDealShowing = !self.isMapViewDealShowing;
@@ -1122,9 +1139,9 @@ typedef enum dealTypeStates
                         if (finished) {
                             self.isMapViewActive = !self.isMapViewActive;
                             if (self.isMapViewActive) {
-                                [self.mapListToggleButton setTitle:@"LIST" forState:UIControlStateNormal];
+                                [self.mapListToggleButton setImage:[UIImage imageNamed:@"listToggleButton"] forState:UIControlStateNormal];
                             } else {
-                                [self.mapListToggleButton setTitle:@"MAP" forState:UIControlStateNormal];
+                                [self.mapListToggleButton setImage:[UIImage imageNamed:@"mapToggleButton"] forState:UIControlStateNormal];
                             }
                         }
                     }];

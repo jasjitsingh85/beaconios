@@ -68,6 +68,8 @@
 		4158AE551B433CD80034BA4A /* navTabBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE541B433CD80034BA4A /* navTabBackground@2x.png */; };
 		4158AE571B433F690034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE561B433F690034BA4A /* hotspotSelectedInNavTab@2x.png */; };
 		4158AE591B4342300034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE581B4342300034BA4A /* hotspotSelectedInNavTab@2x.png */; };
+		4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE5A1B4389900034BA4A /* listToggleButton@2x.png */; };
+		4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE5B1B4389900034BA4A /* mapToggleButton@2x.png */; };
 		415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415929701AFD8E37002BBCD0 /* mapMarker@2x.png */; };
 		41639ADC1B3CB27300E56734 /* fifthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */; };
 		41639ADD1B3CB27300E56734 /* fourthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */; };
@@ -374,6 +376,8 @@
 		4158AE541B433CD80034BA4A /* navTabBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navTabBackground@2x.png"; sourceTree = "<group>"; };
 		4158AE561B433F690034BA4A /* hotspotSelectedInNavTab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotSelectedInNavTab@2x.png"; sourceTree = "<group>"; };
 		4158AE581B4342300034BA4A /* hotspotSelectedInNavTab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotSelectedInNavTab@2x.png"; sourceTree = "<group>"; };
+		4158AE5A1B4389900034BA4A /* listToggleButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "listToggleButton@2x.png"; sourceTree = "<group>"; };
+		4158AE5B1B4389900034BA4A /* mapToggleButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapToggleButton@2x.png"; sourceTree = "<group>"; };
 		415929701AFD8E37002BBCD0 /* mapMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapMarker@2x.png"; sourceTree = "<group>"; };
 		41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fifthGradientBackground@2x.png"; sourceTree = "<group>"; };
 		41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fourthGradientBackground@2x.png"; sourceTree = "<group>"; };
@@ -1239,6 +1243,8 @@
 				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
 				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
+				4158AE5A1B4389900034BA4A /* listToggleButton@2x.png */,
+				4158AE5B1B4389900034BA4A /* mapToggleButton@2x.png */,
 				96C7FEA61898158200A79CC3 /* iphoneVector@2x.png */,
 				96CE79EC199D2999002574B8 /* iphoneWalkthrough2@2x.png */,
 				4158AE4D1B3CCE8C0034BA4A /* iphoneWalkthroughLastSlide@2x.png */,
@@ -1504,6 +1510,7 @@
 				410FC89B1B3B3E4D0097EA26 /* bottomDivider@2x.png in Resources */,
 				41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
+				4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */,
@@ -1514,6 +1521,7 @@
 				4158AE591B4342300034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
+				4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
