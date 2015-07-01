@@ -146,6 +146,8 @@ typedef enum dealTypeStates
     [self.navBarTabs setFrame:CGRectMake(0, 0, 170, 25)];
     self.navigationItem.titleView = self.navBarTabs;
     
+    
+    
 //    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
 //    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
@@ -156,6 +158,7 @@ typedef enum dealTypeStates
     self.dealType = HOTSPOT;
     
     self.initialRadius = 1.6;
+    
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     //[self addChildViewController:self.rewardsViewController];
@@ -437,9 +440,43 @@ typedef enum dealTypeStates
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mapListToggleButton];
     
+    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    //rewardItemView.backgroundColor = [UIColor blackColor];
+    
+    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
+    drinkIcon.size = CGSizeMake(36, 27);
+    drinkIcon.x = 20;
+    drinkIcon.y = 5;
+    [rewardItemView addSubview:drinkIcon];
+    
+    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
+    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
+    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
+    [rewardItemView addSubview:self.rewardScore];
+    
+    UITapGestureRecognizer *singleFingerTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(showDrinkModal:)];
+    
+    [rewardItemView addGestureRecognizer:singleFingerTap];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
 
+}
+
+- (void) showDrinkModal:(id)sender
+{
+    [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+        // Code to present Mave's view controller from yours, e.g:
+        //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+        [self presentViewController:inviteController animated:YES completion:nil];
+    } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+        // Code to transition back to your view controller after Mave's
+        // is dismissed (sent invites or cancelled), e.g:
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    } inviteContext:@"Menu"];
 }
 
 - (void) checkToLaunchInvitationModal
@@ -467,10 +504,22 @@ typedef enum dealTypeStates
         [self reloadDeals];
     }
 
+    [self updateRewardItems];
+    
 //    [self.rewardsViewController updateRewardsScore];
 //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
+}
+
+- (void)updateRewardItems
+{
+    [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *numberOfRewardItems = responseObject[@"number_of_reward_items"];
+        self.rewardScore.text = [NSString stringWithFormat:@"%@x", numberOfRewardItems];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        self.rewardScore.text = @"0x";
+    }];
 }
 
 - (UIView *)enableLocationView
