@@ -17,6 +17,9 @@
 @interface CenterNavigationController ()
 
 @property (readonly) MSDynamicsDrawerDirection openDirection;
+@property (nonatomic, strong) UIView *menuButtonNotifications;
+@property (nonatomic, strong) UIImageView *menuButtonBackground;
+@property (nonatomic, strong) UILabel *notificationCount;
 
 @end
 
@@ -31,6 +34,24 @@
     self.menuButton.size = CGSizeMake(25, 25);
     [self menuButtonDefaultMode];
     [self.menuButton addTarget:self action:@selector(menuButtonTouched:) forControlEvents:UIControlEventTouchDown];
+    
+    self.menuButtonNotifications = [[UIView alloc] initWithFrame:CGRectMake(-10, -5, 50, 40)];
+    
+    self.menuButtonBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menuButtonWithNotification"]];
+    self.menuButtonBackground.y = 10;
+    self.menuButtonBackground.x = 10;
+    [self.menuButtonNotifications addSubview:self.menuButtonBackground];
+    
+    self.notificationCount = [[UILabel alloc] initWithFrame:CGRectMake(22.5, 14.25, 15, 15)];
+    self.notificationCount.textAlignment = NSTextAlignmentCenter;
+    self.notificationCount.textColor = [UIColor whiteColor];
+    self.notificationCount.font = [ThemeManager boldFontOfSize:10];
+    [self.menuButtonNotifications addSubview:self.notificationCount];
+    
+    UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonTouched:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [self.menuButtonNotifications addGestureRecognizer:singleTap];
+    
     
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(beacons)) options:0 context:NULL];
     [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers)) options:0 context:NULL];
@@ -120,6 +141,7 @@
 
 - (void)menuButtonDefaultMode
 {
+    [self.menuButtonNotifications removeFromSuperview];
     [self.menuButton setImage:[UIImage imageNamed:@"menuButton"] forState:UIControlStateNormal];
     [self.menuButton setTitle:nil forState:UIControlStateNormal];
     self.menuButton.backgroundColor = [UIColor clearColor];
@@ -131,12 +153,15 @@
 
 - (void)menuButtonCountMode:(NSInteger)beaconCount
 {
+    
     [self.menuButton setImage:nil forState:UIControlStateNormal];
     [self.menuButton setTitle:@(beaconCount).stringValue forState:UIControlStateSelected];
-    [self.menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    self.menuButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.menuButton.layer.cornerRadius = 9;
+    //[self.menuButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    //self.menuButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    //self.menuButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //self.menuButton.layer.cornerRadius = 9;
+    self.notificationCount.text = @(beaconCount).stringValue;
+    [self.menuButton addSubview:self.menuButtonNotifications];
     self.menuButton.selected = YES;
 }
 
