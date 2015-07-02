@@ -24,6 +24,7 @@
 #import "NavigationBarTitleLabel.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
+#import "DatePickerModalView.h"
 //#import "RewardsViewController.h"
 
 @interface FindFriendsViewController () <UISearchBarDelegate, UITextViewDelegate>
@@ -62,6 +63,11 @@
 @property (assign, nonatomic) BOOL isKeyboardShowing;
 @property (assign, nonatomic) int keyboardHeight;
 @property (assign, nonatomic) CGFloat animationDuration;
+
+@property (strong, nonatomic) UIView *dateView;
+@property (strong, nonatomic) UIView *dateContentView;
+@property (strong, nonatomic) UILabel *dateTitleLabel;
+@property (strong, nonatomic) UILabel *dateLabel;
 
 @end
 
@@ -193,25 +199,23 @@
     self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.view addSubview:self.skipButton];
     
-    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
+    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 170)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
     self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sendMessageContainer];
     self.sendMessage = [[UIButton alloc] init];
     self.sendMessage.size = CGSizeMake(65, 40);
     self.sendMessage.x = self.view.width - 65;
-    self.sendMessage.centerY = self.sendMessageContainer.height/2.0;
+    self.sendMessage.y = 65;
     self.sendMessage.backgroundColor = [UIColor clearColor];
     self.sendMessage.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.sendMessage.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [self.sendMessage setTitleColor:[[UIColor alloc] initWithRed:43.0/255 green:202.0/255
-                                                             blue:125.0/255 alpha:1.0] forState:UIControlStateNormal];
-    [self.sendMessage setTitleColor:[[UIColor alloc] initWithRed:43.0/255 green:202.0/255
-                                                             blue:125.0/255 alpha:.5] forState:UIControlStateSelected];
+    [self.sendMessage setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    [self.sendMessage setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
     [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.sendMessageContainer addSubview:self.sendMessage];
     
-    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 15)];
+    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.view.width, 15)];
     self.messageCount.font = [ThemeManager regularFontOfSize:13];
     self.messageCount.textAlignment = NSTextAlignmentCenter;
     self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
@@ -228,7 +232,7 @@
     self.composeMessageTextView.width = self.view.width - 75;
     self.composeMessageTextView.height = 85;
     self.composeMessageTextView.x = 10;
-    self.composeMessageTextView.y = 10;
+    self.composeMessageTextView.y = 60;
     self.composeMessageTextView.layer.cornerRadius = 6;
     self.composeMessageTextView.layer.borderWidth = .25f;
     self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
@@ -240,6 +244,27 @@
     self.composeMessageTextView.delegate = self;
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.sendMessageContainer addSubview:self.composeMessageTextView];
+    
+    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
+    UITapGestureRecognizer *dateViewTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(dateViewTap:)];
+    [self.dateView addGestureRecognizer:dateViewTap];
+    [self.sendMessageContainer addSubview:self.dateView];
+    
+    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 100, 30)];
+    self.dateTitleLabel.text = @"Choose Time:";
+    self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
+    self.dateTitleLabel.textColor = [UIColor blackColor];
+    [self.sendMessageContainer addSubview:self.dateTitleLabel];
+    
+    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.width - 65, 30)];
+    self.dateLabel.font = [ThemeManager regularFontOfSize:14];
+    self.dateLabel.textAlignment = NSTextAlignmentRight;
+    self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    [self.sendMessageContainer addSubview:self.dateLabel];
+    
+    [self resetDate];
     
 //    [self updateInviteButtonText:nil];
     //UIEdgeInsets insets = self.tableView.contentInset;
@@ -554,7 +579,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 100;
+        return 105;
     } else {
         CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
         return height;
@@ -612,21 +637,28 @@
         return view;
     } else {
         //CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 105)];
         
         UIImageView *promptIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beerGlasses"]];
         promptIcon.centerX = view.width/2;
-        promptIcon.y = 15;
+        promptIcon.y = 10;
         [view addSubview:promptIcon];
         
-        self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, view.height)];
+        UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, view.width, 15)];
+        promptHeading.textAlignment = NSTextAlignmentCenter;
+        promptHeading.text = [[NSString stringWithFormat:@"TEXT FRIENDS TO MEET YOU"] uppercaseString];
+        promptHeading.font = [ThemeManager boldFontOfSize:12];
+        
+        [view addSubview:promptHeading];
+        
+        self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
         self.prompt.centerX = self.view.width/2;
-        self.prompt.y = 10;
-        self.prompt.font = [ThemeManager lightFontOfSize:16];
+        self.prompt.y = 55;
+        self.prompt.font = [ThemeManager lightFontOfSize:12];
         self.prompt.textColor = [UIColor blackColor];
         self.prompt.numberOfLines = 2;
         self.prompt.textAlignment = NSTextAlignmentCenter;
-        self.prompt.text = [NSString stringWithFormat:@"Select friends to join you at %@ at %@", self.deal.venue.name, self.date.formattedTime];
+        self.prompt.text = [NSString stringWithFormat:@"Select friends to meet up. If they’re new to Hotspot, both your drinks are free!"];
         
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.backgroundColor = [UIColor unnormalizedColorWithRed:178 green:178 blue:178 alpha:255].CGColor;
@@ -1065,8 +1097,8 @@
     else {
         self.date = now;
     }
-    //self.dateLabel.text = @"Now (tap here to change)";
-    //[self.tableView reloadData];
+    self.dateLabel.text = @"Now (tap to change)";
+    [self.tableView reloadData];
 }
 
 #pragma mark - Keyboard
@@ -1135,13 +1167,13 @@
         CGRect rect = self.sendMessageContainer.frame;
         if (self.isKeyboardShowing) {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - self.keyboardHeight - 120;
+                rect.origin.y = self.view.height - self.keyboardHeight - 170;
             } else {
                 rect.origin.y = self.view.height - self.keyboardHeight;
             }
         } else {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - 120;
+                rect.origin.y = self.view.height - 170;
             } else {
                 rect.origin.y = self.view.height;
             }
@@ -1205,6 +1237,28 @@
 //    //self.showSendMessage = show;
 //}
 
+- (void)showDatePicker
+{
+    DatePickerModalView *datePicker = [[DatePickerModalView alloc] init];
+    datePicker.datePicker.date = [NSDate date];
+    datePicker.datePicker.minuteInterval = 15;
+    [datePicker.datePicker addTarget:self action:@selector(datePickerUpdated:) forControlEvents:UIControlEventValueChanged];
+    [datePicker show];
+}
+
+- (void)datePickerUpdated:(UIDatePicker *)datePicker
+{
+    self.date = datePicker.date;
+    self.dateLabel.text = self.date.fullFormattedDate;
+    if (!self.modifiedMessage) {
+        self.composeMessageTextView.text = [self defaultInviteMessageForDeal:self.deal];
+    }
+}
+
+- (void)dateViewTap:(id)sender
+{
+    [self showDatePicker];
+}
 
 
 @end
