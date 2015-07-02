@@ -1060,6 +1060,10 @@ typedef enum dealTypeStates
 
 - (void) redoSearchButtonTouched:(id)sender
 {
+    if (self.isMapViewDealShowing) {
+        [self toggleMapViewDealWithoutTouch];
+    }
+    
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     self.mapCenter = [self.mapView centerCoordinate];
     NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
