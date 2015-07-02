@@ -42,6 +42,7 @@
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIView *sendMessageContainer;
 @property (strong, nonatomic) UIButton *sendMessage;
+@property (strong, nonatomic) UIButton *skipButton;
 @property (strong, nonatomic) UILabel *prompt;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
@@ -138,9 +139,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
-    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+//    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
+//    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
     
     [self resetDate];
     
@@ -177,6 +178,20 @@
     
     self.isSendMessageShowing = NO;
     self.isKeyboardShowing = NO;
+    
+    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.skipButton.width = self.view.width;
+    self.skipButton.height = 35;
+    self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.skipButton.y = self.view.height - 35;
+    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
+    
+    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self.view addSubview:self.skipButton];
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
@@ -276,6 +291,7 @@
         self.onlyContacts = YES;
         [self populateContacts];
     }
+    
 }
 
 - (void)dealloc
@@ -538,7 +554,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 80;
+        return 100;
     } else {
         CGFloat height = self.inSearchMode ? 0 : tableView.rowHeight;
         return height;
@@ -596,7 +612,13 @@
         return view;
     } else {
         //CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 80)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
+        
+        UIImageView *promptIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beerGlasses"]];
+        promptIcon.centerX = view.width/2;
+        promptIcon.y = 15;
+        [view addSubview:promptIcon];
+        
         self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, view.height)];
         self.prompt.centerX = self.view.width/2;
         self.prompt.y = 10;
@@ -605,10 +627,15 @@
         self.prompt.numberOfLines = 2;
         self.prompt.textAlignment = NSTextAlignmentCenter;
         self.prompt.text = [NSString stringWithFormat:@"Select friends to join you at %@ at %@", self.deal.venue.name, self.date.formattedTime];
+        
+        CALayer *bottomBorder = [CALayer layer];
+        bottomBorder.backgroundColor = [UIColor unnormalizedColorWithRed:178 green:178 blue:178 alpha:255].CGColor;
+        bottomBorder.frame = CGRectMake(0, view.height - 3, view.width, 1.f);
+        
         [view addSubview:self.prompt];
+        [view.layer addSublayer:bottomBorder];
         return view;
     }
-
 }
 
 - (void)setSelectAllButton:(UIButton *)button forSection:(NSInteger)section
@@ -686,10 +713,20 @@
     if (contactInactive) {
         return;
     }
+    if (self.selectedContactDictionary.count == 0) {
+        [UIView animateWithDuration:0.3 animations:^{  // animate the following:
+            CGRect rect = self.skipButton.frame;
+            rect.origin.y = self.view.height;
+            self.skipButton.frame = rect;
+        } completion:^(BOOL finished){
+            [self updateMessageCount];
+        }];
+    } else {
+        [self updateMessageCount];
+    }
     
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
 //    [self updateInviteButtonText:contact];
-    [self updateMessageCount];
 }
 
 - (void) updateMessageCount
@@ -702,9 +739,18 @@
 {
     [self.selectedContactDictionary removeObjectForKey:contact.normalizedPhoneNumber];
     
-    [self updateMessageCount];
+    if (self.selectedContactDictionary.count == 0) {
+        [self updateMessageCount];
+        [UIView animateWithDuration:0.2 delay:.5 options:UIViewAnimationOptionCurveEaseOut animations:^{  // animate the following:
+            CGRect rect = self.skipButton.frame;
+            rect.origin.y = self.view.height - 35;
+            self.skipButton.frame = rect;
+        } completion:^(BOOL finished) {
+            NSLog(@"Skip Button Added");
+        }];
     
 //    [self updateInviteButtonText:nil];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -1084,9 +1130,8 @@
 
 - (void) updateSendMessagePosition
 {
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:.3]; // if you want to slide up the view
     
+    [UIView animateWithDuration:0.3 animations:^{  // animate the following:
         CGRect rect = self.sendMessageContainer.frame;
         if (self.isKeyboardShowing) {
             if (self.selectedContactDictionary.count > 0) {
@@ -1102,8 +1147,14 @@
             }
         }
         self.sendMessageContainer.frame = rect;
-        
-        [UIView commitAnimations];
+    }];
+//    
+//        [UIView beginAnimations:nil context:NULL];
+//        [UIView setAnimationDuration:.3]; // if you want to slide up the view
+//    
+//
+//        
+//        [UIView commitAnimations];
 }
 
 //-(void)setViewMovedUp:(BOOL)movedUp
