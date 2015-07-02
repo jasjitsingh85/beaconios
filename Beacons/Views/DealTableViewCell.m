@@ -93,16 +93,16 @@
     self.dealTime.numberOfLines = 0;
     [self.venuePreviewView addSubview:self.dealTime];
     
-    self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 89, 40, 26)];
-    self.priceLabel.textColor = [UIColor whiteColor];
-    self.priceLabel.textAlignment = NSTextAlignmentLeft;
-    self.priceLabel.font = [ThemeManager boldFontOfSize:18];
-    [self.venuePreviewView addSubview:self.priceLabel];
+//    self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 89, 40, 26)];
+//    self.priceLabel.textColor = [UIColor whiteColor];
+//    self.priceLabel.textAlignment = NSTextAlignmentLeft;
+//    self.priceLabel.font = [ThemeManager boldFontOfSize:18];
+//    [self.venuePreviewView addSubview:self.priceLabel];
     
-    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 89, 40, 26)];
-    self.marketPriceLabel.textColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
-    self.marketPriceLabel.textAlignment = NSTextAlignmentLeft;
-    self.marketPriceLabel.font = [ThemeManager boldFontOfSize:14];
+    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 90, 40, 26)];
+    self.marketPriceLabel.textColor = [UIColor whiteColor];
+    self.marketPriceLabel.textAlignment = NSTextAlignmentCenter;
+    self.marketPriceLabel.font = [ThemeManager regularFontOfSize:12];
     [self.venuePreviewView addSubview:self.marketPriceLabel];
     
     //    self.venueDescriptionBackground = [[UIView alloc] init];
@@ -250,7 +250,7 @@
 //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@", [deal.itemName uppercaseString]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR        $%@", [deal.itemName uppercaseString], deal.itemPrice];
     CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
     
     CGFloat descriptionLabelWidth;
@@ -275,7 +275,7 @@
     //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
 //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
     NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+//    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
     self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
     self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
     
@@ -285,6 +285,8 @@
     
     NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
     self.marketPriceLabel.attributedText = attrText;
+    
+    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
     
 //    if ([self.dealTime.text isEqualToString:@"NOW"]) {
 //        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
