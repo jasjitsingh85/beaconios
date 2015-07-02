@@ -87,6 +87,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UILabel *distanceLabel;
+@property (strong, nonatomic) UILabel *marketPriceLabel;
 
 //@property (strong, nonatomic) UIView *lockedOverlay;
 //@property (strong, nonatomic) UIImageView *lockButton;
@@ -372,17 +373,17 @@ typedef enum dealTypeStates
     self.dealTime.numberOfLines = 0;
     [self.venueView addSubview:self.dealTime];
     
-    self.distanceLabel = [[UILabel alloc] init];
-    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
-    self.distanceLabel.size = CGSizeMake(67, 20);
-    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-    //self.distanceLabel.clipsToBounds = YES;
-    self.distanceLabel.textAlignment = NSTextAlignmentRight;
-    self.distanceLabel.y = 117;
-    self.distanceLabel.x = self.view.width - 77;
-    self.distanceLabel.textColor = [UIColor whiteColor];
-    [self.venueView addSubview:self.distanceLabel];
-    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
+//    self.distanceLabel = [[UILabel alloc] init];
+//    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
+//    self.distanceLabel.size = CGSizeMake(67, 20);
+//    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
+//    //self.distanceLabel.clipsToBounds = YES;
+//    self.distanceLabel.textAlignment = NSTextAlignmentRight;
+//    self.distanceLabel.y = 117;
+//    self.distanceLabel.x = self.view.width - 77;
+//    self.distanceLabel.textColor = [UIColor whiteColor];
+//    [self.venueView addSubview:self.distanceLabel];
+//    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
     
     self.priceContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 117, 80, 20)];
     self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, -5, 50, 30)];
@@ -391,11 +392,13 @@ typedef enum dealTypeStates
     self.priceLabel.font = [ThemeManager lightFontOfSize:14];
     self.priceLabel.textColor = [UIColor whiteColor];
     
-    UIImageView *goldCoin = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"goldCoin"]];
-    goldCoin.x = 8;
-    goldCoin.y = 3;
+    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 90, 40, 26)];
+    self.marketPriceLabel.textColor = [UIColor whiteColor];
+    self.marketPriceLabel.textAlignment = NSTextAlignmentCenter;
+    self.marketPriceLabel.font = [ThemeManager regularFontOfSize:12];
     
-    [self.priceContainer addSubview:goldCoin];
+    [self.venueImageView addSubview:self.marketPriceLabel];
+
     [self.priceContainer addSubview:self.priceLabel];
     [self.venueView addSubview:self.priceContainer];
     
@@ -1284,18 +1287,31 @@ typedef enum dealTypeStates
 {
     self.selectedDealIndex = [view.annotation.title intValue];
     
+    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
+    
     if (self.dealType == HOTSPOT) {
         Deal *deal = self.selectedDeals[self.selectedDealIndex];
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
         [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
-        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-        self.dealTime.text = [deal.dealStartString uppercaseString];
+//        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+        //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
         
         if (self.dealType == HOTSPOT) {
             self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
             CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+            
+            self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemMarketPrice];
+            
+            NSDictionary* attributes = @{
+                                         NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                         };
+            
+            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+            self.marketPriceLabel.attributedText = attrText;
             
             CGFloat descriptionLabelWidth;
             if (textSize.width < self.view.width * .6) {

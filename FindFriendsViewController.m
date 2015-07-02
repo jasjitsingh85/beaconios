@@ -374,6 +374,14 @@
     return text;
 }
 
+- (void) setTextMoreFriends:(BOOL)textMoreFriends
+{
+    if (textMoreFriends) {
+        self.skipButton.hidden = YES;
+    } else {
+        self.skipButton.hidden = NO;
+    }
+}
 
 //- (void)updateNavTitleForDeal:(Deal *)deal
 //{
@@ -1141,7 +1149,7 @@
     }
     else {
         NSArray *noContact = [[NSArray alloc] init];
-        [self setBeaconOnServerWithInvitedContacts:noContact andMessage:@"Solo Redemption" andDate:self.date];
+        [self setBeaconOnServerWithInvitedContacts:noContact andMessage:@" " andDate:self.date];
     }
 }
 

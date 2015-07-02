@@ -24,5 +24,6 @@
 @property (strong, nonatomic) NSArray *selectedContacts;
 @property (strong, nonatomic) NSArray *inactiveContacts;
 @property (strong, nonatomic) Deal *deal;
+@property (assign, nonatomic) BOOL textMoreFriends;
 
 @end

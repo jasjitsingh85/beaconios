@@ -856,6 +856,8 @@
         }
     }
     findFriendsViewController.inactiveContacts = inactives;
+    findFriendsViewController.deal = self.beacon.deal;
+    findFriendsViewController.textMoreFriends = YES;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
@@ -1065,7 +1067,7 @@
         return;
     }
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon withMessage:message success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self refreshBeaconData];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         

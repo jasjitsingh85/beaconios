@@ -182,7 +182,7 @@ static dispatch_once_t onceToken;
     [[APIClient sharedClient] postPath:@"follow/" parameters:parameters success:success failure:failure];
 }
 
-- (void)inviteMoreContacts:(NSArray *)contacts toBeacon:(Beacon *)beacon success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+- (void)inviteMoreContacts:(NSArray *)contacts toBeacon:(Beacon *)beacon withMessage:(NSString *)message success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSMutableArray *invites = [NSMutableArray new];
@@ -190,7 +190,8 @@ static dispatch_once_t onceToken;
         [invites addObject:contact.serializedString];
     }
     NSDictionary *paramaters = @{@"beacon" : beacon.beaconID,
-                                 @"invite_list" : invites};
+                                 @"invite_list" : invites,
+                                 @"message": message};
     
     [[APIClient sharedClient] postPath:@"invite/" parameters:paramaters success:success failure:failure];
 }

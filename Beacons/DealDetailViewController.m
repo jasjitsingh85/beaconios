@@ -550,6 +550,7 @@
     FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
     findFriendsViewController.delegate = self;
     findFriendsViewController.deal = self.deal;
+    findFriendsViewController.textMoreFriends = NO;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
 }
