@@ -118,23 +118,40 @@
 }
 
 - (void)postNonceToServer:(NSString *)paymentMethodNonce {
-    [[APIClient sharedClient] postPurchase:paymentMethodNonce forBeaconWithID:self.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
-        NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
-        NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
-        BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
-        if (dismiss_payment_modal) {
-            if (!self.onlyAddPayment) {
+    if (self.onlyAddPayment) {
+        [[APIClient sharedClient] postPaymentNonce:paymentMethodNonce success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
+            NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
+            BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
+            if (dismiss_payment_modal) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    //[self.beaconProfileViewController refreshDeal];
+            } else {
+                [self showCardDeclined];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [self showCardDeclined];
+            NSLog(@"Failure");
+        }];
+    } else {
+        [[APIClient sharedClient] postPurchase:paymentMethodNonce forBeaconWithID:self.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
+            NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
+            BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
+            if (dismiss_payment_modal) {
                 [self dismissViewControllerAnimated:YES completion:nil];
                 [self.beaconProfileViewController refreshDeal];
+            } else {
+                [self showCardDeclined];
             }
-        } else {
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [self showCardDeclined];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self showCardDeclined];
-        NSLog(@"Failure");
-    }];
+            NSLog(@"Failure");
+        }];
+    }
+    
 }
 
 - (void) showCardDeclined

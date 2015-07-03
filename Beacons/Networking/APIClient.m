@@ -318,6 +318,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 
+- (void)postPaymentNonce: (NSString *)paymentNonce success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce };
+    [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
 - (void)checkIfPaymentOnFile:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
     NSDictionary *parameters = @{ @"beacon_id" : beaconID };

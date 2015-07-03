@@ -139,17 +139,19 @@
         //[self.view addSubview:self.paymentsViewController.view];
         self.paymentsViewController.view.frame = self.view.bounds;
         
-        [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
-            if ([rewardItemsString intValue] > 0) {
+        if (self.beacon.deal.rewardEligibility) {
+            [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
+                if ([rewardItemsString intValue] > 0) {
+                    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                    [self promptToUseRewardItems];
+                } else {
+                    [self checkPaymentsOnFile];
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                [self promptToUseRewardItems];
-            } else {
-                [self checkPaymentsOnFile];
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        }];
+            }];
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
@@ -687,15 +689,25 @@
 
 - (void)promptToUseRewardItems
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Do you want to use your free drink here?"];
-    [actionSheet bk_addButtonWithTitle:@"Sure" handler:^{
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Do you want to use your free drink here?"];
+//    [actionSheet bk_addButtonWithTitle:@"Sure" handler:^{
+//        [self redeemRewardItem];
+//    }];
+//    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:^{
+//        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+//        [self checkPaymentsOnFile];
+//    }];
+//    [actionSheet showInView:self.view];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Drink?" message:@"Do you want to use your free drink here?"];
+    [alertView bk_addButtonWithTitle:@"Sure" handler:^{
         [self redeemRewardItem];
     }];
-    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:^{
+    [alertView bk_setCancelButtonWithTitle:@"Not Now" handler:^{
         [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
         [self checkPaymentsOnFile];
     }];
-    [actionSheet showInView:self.view];
+    [alertView show];
 }
 
 - (void)redeemRewardItem
