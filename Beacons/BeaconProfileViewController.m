@@ -141,10 +141,9 @@
         //[self.view addSubview:self.paymentsViewController.view];
         self.paymentsViewController.view.frame = self.view.bounds;
         
-        if (self.beacon.deal.rewardEligibility) {
-            [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
-                if ([rewardItemsString intValue] > 0) {
+                if ([rewardItemsString intValue] > 0 && self.beacon.deal.rewardEligibility) {
                     [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                     [self promptToUseRewardItems];
                 } else {
@@ -153,7 +152,6 @@
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
             }];
-        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
