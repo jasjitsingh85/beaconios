@@ -12,6 +12,12 @@
 
 @class BeaconProfileViewController;
 
+@protocol RegistrationViewControllerDelegate <NSObject>
+
+- (void)finishPermissions;
+
+@end
+
 @interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate> {
     BeaconProfileViewController *_beaconProfileViewController;
 }
@@ -20,6 +26,8 @@
 @property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) BeaconProfileViewController *beaconProfileViewController;
 @property (nonatomic, assign) BOOL onlyAddPayment;
+@property (nonatomic, assign) BOOL inRegFlow;
+@property (assign) id <RegistrationViewControllerDelegate> delegate;
 
 - (id) initWithClientToken: (NSString *)clientToken ;
 - (void) openPaymentModalWithDeal: (Deal *)deal;

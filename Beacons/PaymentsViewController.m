@@ -22,11 +22,12 @@
 @implementation PaymentsViewController
 
 @synthesize beaconProfileViewController = _beaconProfileViewController;
-
+@synthesize delegate;
 
 - (id) initWithClientToken: (NSString *)clientToken  {
     self = [super init];
     self.clientToken = clientToken;
+    self.inRegFlow = NO;
     if (!self) {
         return nil;
     } else {
@@ -125,8 +126,10 @@
             NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (dismiss_payment_modal) {
+                    if (self.inRegFlow) {
+                        [self.delegate finishPermissions];
+                    }
                     [self dismissViewControllerAnimated:YES completion:nil];
-                    //[self.beaconProfileViewController refreshDeal];
             } else {
                 [self showCardDeclined];
             }

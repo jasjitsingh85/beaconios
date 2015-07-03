@@ -12,13 +12,14 @@
 #import "ContactManager.h"
 #import "NotificationManager.h"
 #import "AppDelegate.h"
+#import "PaymentsViewController.h"
 
-//typedef enum {
-//    ViewModeContact=0,
-//    ViewModePush,
-//} ViewMode;
+typedef enum {
+    ViewModePush=0,
+    ViewModePayment,
+} ViewMode;
 
-@interface PermissionsViewController ()
+@interface PermissionsViewController () <RegistrationViewControllerDelegate>
 
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) NSArray *subtitles;
@@ -27,7 +28,8 @@
 @property (strong, nonatomic) UIImageView *hotbotImageView;
 @property (strong, nonatomic) UIImageView *headerIcon;
 @property (strong, nonatomic) UIView *permissionTextContainer;
-//@property (assign, nonatomic) ViewMode viewMode;
+@property (assign, nonatomic) ViewMode viewMode;
+@property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 
 @end
 
@@ -45,6 +47,21 @@
     logoFrame.origin.y = 30;
     logoImageView.frame = logoFrame;
     [self.view addSubview:logoImageView];
+    
+    [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *clientToken = responseObject[@"client_token"];
+        self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        self.paymentsViewController.onlyAddPayment = YES;
+        //self.paymentsViewController.beaconProfileViewController = self;
+        //self.paymentsViewController.beaconID = self.beacon.beaconID;
+        [self addChildViewController:self.paymentsViewController];
+        //[self.view addSubview:self.paymentsViewController.view];
+        self.paymentsViewController.view.frame = self.view.bounds;
+        self.paymentsViewController.delegate = self;
+        self.paymentsViewController.inRegFlow = YES;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+    }];
     
     self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.size.width, 200)];
     //self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
@@ -121,9 +138,13 @@
         UILabel *label = [[UILabel alloc] init];
         label.text = strings[i];
         CGRect labelFrame;
-        labelFrame.size = CGSizeMake(self.view.width - 100, 100);
-        labelFrame.origin.x = 50;
-        labelFrame.origin.y = 158 + 50*i;
+        labelFrame.size = CGSizeMake(self.view.width - 50, 100);
+        labelFrame.origin.x = 25;
+        if (self.viewMode == ViewModePush) {
+            labelFrame.origin.y = 158 + 50*i;
+        } else {
+            labelFrame.origin.y = 178 + 50*i;
+        }
         label.frame = labelFrame;
         label.numberOfLines = 0;
         label.textAlignment = NSTextAlignmentCenter;
@@ -134,24 +155,27 @@
     return subtitleLabels;
 }
 
-//- (void)enterContactsMode
-//{
-//    self.viewMode = ViewModeContact;
-//    self.titleLabel.text = @"Sync Contacts";
-//    [self.headerIcon setImage: [UIImage imageNamed:@"groupIcon"]];
-//    [self removeSubtitleLabels];
-//    self.subtitles = [self subtitleLabelsForStrings:@[@"To text friends to join you and earn free drinks"]];
-//    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
-//    [self animateInSubtitles:nil];
-//}
+- (void)enterPaymentsMode
+{
+    self.viewMode = ViewModePayment;
+    self.titleLabel.text = @"Link Payment";
+    [self.headerIcon setImage: [UIImage imageNamed:@"creditCardIcon"]];
+    [self removeSubtitleLabels];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot partners with local venues, saving you time and money when you buy drinks through the app."]];
+    [self.confirmButton setTitle:@"Link Payment" forState:UIControlStateNormal];
+    [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
+    self.confirmButton.y = 300;
+    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
+    [self animateInSubtitles:nil];
+}
 
 - (void)enterPushNotificationMode
 {
-    //self.viewMode = ViewModePush;
+    self.viewMode = ViewModePush;
     self.titleLabel.text = @"Enable Notifications";
     [self.headerIcon setImage: [UIImage imageNamed:@"pushIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To get deal notifications in real-time"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"To get messages from your friends and deal notifications in real-time"]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
@@ -202,29 +226,22 @@
 
 - (void)confirmButtonTouched:(id)sender
 {
-//    if (self.viewMode == ViewModeContact) {
-////        [[ContactManager sharedManager] requestContactPermissions:^{
-////            jadispatch_main_qeue(^{
-////                [self enterPushNotificationMode];
-////            });
-////        } failure:^(NSError *error) {
-////            jadispatch_main_qeue(^{
-////                [self enterPushNotificationMode];
-////            });
-////        }];
-//    }
-//    else if (self.viewMode == ViewModePush) {
+    if (self.viewMode == ViewModePayment) {
+        [self.paymentsViewController openPaymentModalToAddPayment];
+    }
+    else if (self.viewMode == ViewModePush) {
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
-            [self finishPermissions];
+            [self enterPaymentsMode];
         } failure:^(NSError *error) {
-            [self finishPermissions];
+            [self enterPaymentsMode];
         }];
-//    }
+    }
 }
 
 - (void)skipButtonTouched:(id)sender
 {
-//    if (self.viewMode == ViewModeContact) {
+    if (self.viewMode == ViewModePayment) {
+        [self finishPermissions];
 //        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
 //        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
 //            [[ContactManager sharedManager] requestContactPermissions:^{
@@ -241,8 +258,8 @@
 //            [self enterPushNotificationMode];
 //        }];
 //        [alertView show];
-//    }
-//    else if (self.viewMode == ViewModePush) {
+    }
+    else if (self.viewMode == ViewModePush) {
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
         [alertView bk_addButtonWithTitle:@"Enable Push" handler:^{
             [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
@@ -255,7 +272,7 @@
             [self finishPermissions];
         }];
         [alertView show];
- //   }
+    }
 }
 
 - (void)finishPermissions
