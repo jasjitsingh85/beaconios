@@ -39,8 +39,9 @@
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "FreeDrinksExplanationPopupView.h"
 
-@interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
 typedef enum dealTypeStates
 {
@@ -471,15 +472,22 @@ typedef enum dealTypeStates
 
 - (void) showDrinkModal:(id)sender
 {
-    [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
-        // Code to present Mave's view controller from yours, e.g:
-        //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
-        [self presentViewController:inviteController animated:YES completion:nil];
-    } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
-        // Code to transition back to your view controller after Mave's
-        // is dismissed (sent invites or cancelled), e.g:
-        [controller dismissViewControllerAnimated:YES completion:nil];
-    } inviteContext:@"Menu"];
+    FreeDrinksExplanationPopupView *modal = [[FreeDrinksExplanationPopupView alloc] init];
+    modal.delegate = self;
+    [modal show];
+}
+
+- (void)launchInviteFriends
+{
+        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+            // Code to present Mave's view controller from yours, e.g:
+            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+            [self presentViewController:inviteController animated:YES completion:nil];
+        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+            // Code to transition back to your view controller after Mave's
+            // is dismissed (sent invites or cancelled), e.g:
+            [controller dismissViewControllerAnimated:YES completion:nil];
+        } inviteContext:@"Menu"];
 }
 
 - (void) checkToLaunchInvitationModal

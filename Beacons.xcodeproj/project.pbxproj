@@ -74,6 +74,8 @@
 		4158AE611B43BBC20034BA4A /* menuButtonWithNotification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */; };
 		4158AE631B44A5460034BA4A /* creditCardSideNav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE621B44A5460034BA4A /* creditCardSideNav@2x.png */; };
 		4158AE651B44D1450034BA4A /* beerGlasses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE641B44D1450034BA4A /* beerGlasses@2x.png */; };
+		4158AE671B46481C0034BA4A /* inviteFriendsModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE661B46481C0034BA4A /* inviteFriendsModalBackground@2x.png */; };
+		4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE691B46488F0034BA4A /* FreeDrinksExplanationPopupView.m */; };
 		415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415929701AFD8E37002BBCD0 /* mapMarker@2x.png */; };
 		41639ADC1B3CB27300E56734 /* fifthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */; };
 		41639ADD1B3CB27300E56734 /* fourthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */; };
@@ -386,6 +388,9 @@
 		4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuButtonWithNotification@2x.png"; sourceTree = "<group>"; };
 		4158AE621B44A5460034BA4A /* creditCardSideNav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "creditCardSideNav@2x.png"; sourceTree = "<group>"; };
 		4158AE641B44D1450034BA4A /* beerGlasses@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beerGlasses@2x.png"; sourceTree = "<group>"; };
+		4158AE661B46481C0034BA4A /* inviteFriendsModalBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inviteFriendsModalBackground@2x.png"; sourceTree = "<group>"; };
+		4158AE681B4648780034BA4A /* FreeDrinksExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreeDrinksExplanationPopupView.h; sourceTree = "<group>"; };
+		4158AE691B46488F0034BA4A /* FreeDrinksExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreeDrinksExplanationPopupView.m; sourceTree = "<group>"; };
 		415929701AFD8E37002BBCD0 /* mapMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapMarker@2x.png"; sourceTree = "<group>"; };
 		41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fifthGradientBackground@2x.png"; sourceTree = "<group>"; };
 		41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fourthGradientBackground@2x.png"; sourceTree = "<group>"; };
@@ -806,6 +811,8 @@
 				96C904BD18CF54AD0020820A /* MapSnapshotImageView.m */,
 				96C904C218CF5EAC0020820A /* BeaconMapSnapshotImageView.h */,
 				96C904C318CF5EAC0020820A /* BeaconMapSnapshotImageView.m */,
+				4158AE691B46488F0034BA4A /* FreeDrinksExplanationPopupView.m */,
+				4158AE681B4648780034BA4A /* FreeDrinksExplanationPopupView.h */,
 				41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */,
 				41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */,
 				410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */,
@@ -1201,6 +1208,7 @@
 				415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */,
 				415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */,
 				96DB2DFA19538D82005E1F93 /* happyHoursIcon@2x.png */,
+				4158AE661B46481C0034BA4A /* inviteFriendsModalBackground@2x.png */,
 				96CBCD091807BC1200D62462 /* addFriendDark@2x.png */,
 				41FD062C1B38F0A800F7DD08 /* composeMessageIcon@2x.png */,
 				96727DE41800C08500E75EE9 /* addFriendInactive@2x.png */,
@@ -1423,6 +1431,7 @@
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
+				4158AE671B46481C0034BA4A /* inviteFriendsModalBackground@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				41639ADF1B3CB27300E56734 /* secondGradientBackground@2x.png in Resources */,
 				963B7622189C305A006C6845 /* handPhone@2x.png in Resources */,
@@ -1677,6 +1686,7 @@
 				9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */,
 				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
+				4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */,
 				4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
 				41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */,

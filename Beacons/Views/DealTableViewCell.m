@@ -250,15 +250,15 @@
 //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR        $%@", [deal.itemName uppercaseString], deal.itemPrice];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR       $%@", [deal.itemName uppercaseString], deal.itemPrice];
     CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
     
     CGFloat descriptionLabelWidth;
-    if (textSize.width < self.contentView.width * .6) {
+    //if (textSize.width < self.contentView.width * .6) {
         descriptionLabelWidth = textSize.width;
-    } else {
-        descriptionLabelWidth = self.contentView.width * .6;
-    }
+//    } else {
+//        descriptionLabelWidth = self.contentView.width * .6;
+//    }
     
 //    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
 //                                                                           options:NSStringDrawingUsesLineFragmentOrigin

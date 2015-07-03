@@ -313,16 +313,16 @@
         
         UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.width, 30)];
         dealHeadingLabel.centerX = self.view.width/2;
-        dealHeadingLabel.text = @"THE DEAL";
+        dealHeadingLabel.text = @"HAPPY HOUR DEAL";
         dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [mainScroll addSubview:dealHeadingLabel];
         
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-        CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
+        CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
         
-        UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 230, self.view.width - 50, happyHourDescriptionHeight.size.height)];
+        UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 225, self.view.width - 50, happyHourDescriptionHeight.size.height)];
         dealTextLabel.centerX = self.view.width/2;
         dealTextLabel.font = [ThemeManager lightFontOfSize:13];
         dealTextLabel.textAlignment = NSTextAlignmentCenter;
