@@ -78,6 +78,7 @@
 		4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE691B46488F0034BA4A /* FreeDrinksExplanationPopupView.m */; };
 		4158AE6C1B46EF960034BA4A /* contactFriendsModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE6B1B46EF960034BA4A /* contactFriendsModalBackground@2x.png */; };
 		4158AE6E1B46F0620034BA4A /* ContactExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE6D1B46F0620034BA4A /* ContactExplanationPopupView.m */; };
+		4158AE751B4714D30034BA4A /* DealView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE741B4714D30034BA4A /* DealView.m */; };
 		415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415929701AFD8E37002BBCD0 /* mapMarker@2x.png */; };
 		41639ADC1B3CB27300E56734 /* fifthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */; };
 		41639ADD1B3CB27300E56734 /* fourthGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */; };
@@ -396,6 +397,8 @@
 		4158AE6B1B46EF960034BA4A /* contactFriendsModalBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contactFriendsModalBackground@2x.png"; sourceTree = "<group>"; };
 		4158AE6D1B46F0620034BA4A /* ContactExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactExplanationPopupView.m; sourceTree = "<group>"; };
 		4158AE6F1B46F06E0034BA4A /* ContactExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactExplanationPopupView.h; sourceTree = "<group>"; };
+		4158AE731B4714740034BA4A /* DealView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DealView.h; sourceTree = "<group>"; };
+		4158AE741B4714D30034BA4A /* DealView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealView.m; sourceTree = "<group>"; };
 		415929701AFD8E37002BBCD0 /* mapMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapMarker@2x.png"; sourceTree = "<group>"; };
 		41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fifthGradientBackground@2x.png"; sourceTree = "<group>"; };
 		41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fourthGradientBackground@2x.png"; sourceTree = "<group>"; };
@@ -810,6 +813,8 @@
 				964263AE181CE75D0015375C /* NavigationBarTitleLabel.m */,
 				9671F66618BD5603007DF715 /* BeaconTableViewCell.h */,
 				9671F66718BD5603007DF715 /* BeaconTableViewCell.m */,
+				4158AE731B4714740034BA4A /* DealView.h */,
+				4158AE741B4714D30034BA4A /* DealView.m */,
 				4148E9C81B047F9E0050D3E3 /* VoucherTableViewCell.h */,
 				4148E9C91B047FBE0050D3E3 /* VoucherTableViewCell.m */,
 				96C904BC18CF54AD0020820A /* MapSnapshotImageView.h */,
@@ -1654,6 +1659,7 @@
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */,
 				41F144121B24F4380010BCF1 /* HappyHourTableViewCell.m in Sources */,
+				4158AE751B4714D30034BA4A /* DealView.m in Sources */,
 				41F1440C1B24D6E40010BCF1 /* HappyHour.m in Sources */,
 				96C904C418CF5EAC0020820A /* BeaconMapSnapshotImageView.m in Sources */,
 				1F52638D175C496900DD26E1 /* LocationTracker.m in Sources */,

@@ -33,7 +33,7 @@
     UIButton *secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
     CGRect buttonFrame;
     buttonFrame.size = CGSizeMake(self.view.frame.size.width, 50);
-    buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height);
+    buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
     secretButton.frame = buttonFrame;
     secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [secretButton setTitle:@"Made with \U0000E022 by Indians" forState:UIControlStateNormal];
@@ -47,14 +47,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (!section) {
-        return 1;
-    }
+//    if (!section) {
+//        return 1;
+//    }
     return 4;
 }
 
@@ -66,10 +66,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+//    if (indexPath.section == 0) {
+//        cell.textLabel.text = @"Groups";
+//    }
+//    else
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"Groups";
-    }
-    else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Privacy";
         }
@@ -91,10 +92,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        [self groupsSelected];
-    }
-    else if (indexPath.section == 1) {
+//    if (indexPath.section == 0) {
+//        [self groupsSelected];
+//    }
+        if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             [self privacySelected];
         }
@@ -110,11 +111,11 @@
     }
 }
 
-- (void)groupsSelected
-{
-    GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
-    [self.navigationController pushViewController:groupsViewController animated:YES];
-}
+//- (void)groupsSelected
+//{
+//    GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
+//    [self.navigationController pushViewController:groupsViewController animated:YES];
+//}
 
 - (void)termsSelected
 {

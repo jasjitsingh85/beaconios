@@ -94,7 +94,7 @@
                                                                                                           action:@selector(userDidCancelPayment)];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
-    navigationController.navigationBar.topItem.title = @"Payment";
+    navigationController.navigationBar.topItem.title = @"Add Payment";
     navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
     navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];

@@ -47,6 +47,7 @@
 //#import "PaymentExplanationPopupView.h"
 //#import "RewardsViewController.h"
 #import "DealStatus.h"
+#import "DealView.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, SetBeaconViewControllerDelegate, DealRedemptionViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -78,6 +79,7 @@
 @property (assign, nonatomic) BOOL keyboardShown;
 @property (assign, nonatomic) BOOL promptShowing;
 @property (assign, nonatomic) BOOL dealMode;
+@property (strong, nonatomic) DealView *dealView;
 
 @end
 
@@ -202,12 +204,16 @@
     [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.feedbackButton];
     
+    self.dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 146)];
+    [self.view addSubview:self.dealView];
+    
     self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
     self.dealRedemptionViewController.delegate = self;
     [self addChildViewController:self.dealRedemptionViewController];
     [self.view addSubview:self.dealRedemptionViewController.view];
     self.dealRedemptionViewController.view.frame = self.view.bounds;
-    self.dealRedemptionViewController.view.y = 166;
+    self.dealRedemptionViewController.view.height = self.view.frame.size.height + 20;
+    self.dealRedemptionViewController.view.y = 230;
     self.dealRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
 //    [self addChildViewController:self.beaconChatViewController];
@@ -227,28 +233,28 @@
 //    self.inviteListViewController.view.backgroundColor = [UIColor whiteColor];
 //    
 //    [self.rewardsViewController updateRewardsScore];
-    
-    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 146)];
-//    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
-    [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
-    [self.view addSubview:self.descriptionView];
-    self.fullDescriptionViewShown = YES;
-    
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.descriptionView.frame.size.width, 146)];
-    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.imageView.clipsToBounds = YES;
-    //self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
-    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
-    imageTap.numberOfTapsRequired = 1;
-    [self.imageView addGestureRecognizer:imageTap];
-    self.imageView.userInteractionEnabled = YES;
-    [self.descriptionView addSubview:self.imageView];
-    
-    UIView *backgroundView = [[UIView alloc] initWithFrame:self.imageView.bounds];
-    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.descriptionView addSubview:backgroundView];
+//    
+//    self.descriptionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 146)];
+////    self.descriptionView.backgroundColor = [UIColor colorWithRed:119/255.0 green:182/255.0 blue:199/255.0 alpha:1.0];
+//    [self.descriptionView setShadowWithColor:[UIColor whiteColor] opacity:0.7 radius:5.0 offset:CGSizeMake(0, 10) shouldDrawPath:YES];
+//    [self.view addSubview:self.descriptionView];
+//    self.fullDescriptionViewShown = YES;
+//    
+//    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, self.descriptionView.frame.size.width, 146)];
+//    self.imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.imageView.clipsToBounds = YES;
+//    //self.imageView.placeholder = [UIImage imageNamed:@"mapPlaceholder"];
+//    UITapGestureRecognizer *imageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTapped:)];
+//    imageTap.numberOfTapsRequired = 1;
+//    [self.imageView addGestureRecognizer:imageTap];
+//    self.imageView.userInteractionEnabled = YES;
+//    [self.descriptionView addSubview:self.imageView];
+//    
+//    UIView *backgroundView = [[UIView alloc] initWithFrame:self.imageView.bounds];
+//    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+//    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    [self.descriptionView addSubview:backgroundView];
     
 //    self.enableVenmoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 80)];
 //    //self.enableVenmoView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.8];
@@ -320,44 +326,44 @@
     //    verticalDivider.backgroundColor = [UIColor whiteColor];
     //    [self.descriptionView addSubview:verticalDivider];
     
-    
-    self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
-    CGRect backgroundGradientFrame = self.imageViewGradient.frame;
-    backgroundGradientFrame.origin.y = self.imageView.frame.size.height - backgroundGradientFrame.size.height;
-    self.imageViewGradient.frame = backgroundGradientFrame;
-    [self.imageView addSubview:self.imageViewGradient];
-    
-//    UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
-//    backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-//    UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
-//    backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
-//    backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    [self.imageView addSubview:backgroundViewBlack];
-//    [self.imageView addSubview:backgroundViewOrange];
-    
-//    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
-//    self.timeLabel.font = [ThemeManager boldFontOfSize:22];
-//    self.timeLabel.textColor = [UIColor whiteColor];
-//    [self.descriptionView addSubview:self.timeLabel];
 //    
-    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 55 + 64, self.descriptionView.width, 30)];
-//    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:28];
-    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
-    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
-    self.descriptionLabelLineOne.numberOfLines = 1;
-    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
-    [self.descriptionView addSubview:self.descriptionLabelLineOne];
-    
-    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 79 + 64, self.descriptionView.width, 46)];
-    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
-    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
-    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
-    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
-    self.descriptionLabelLineTwo.numberOfLines = 1;
-    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
+//    self.imageViewGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"backgroundGradient"]];
+//    CGRect backgroundGradientFrame = self.imageViewGradient.frame;
+//    backgroundGradientFrame.origin.y = self.imageView.frame.size.height - backgroundGradientFrame.size.height;
+//    self.imageViewGradient.frame = backgroundGradientFrame;
+//    [self.imageView addSubview:self.imageViewGradient];
+//    
+////    UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:self.imageView.bounds];
+////    backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+////    UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:self.imageView.bounds];
+////    backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
+////    backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+////    backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+////    [self.imageView addSubview:backgroundViewBlack];
+////    [self.imageView addSubview:backgroundViewOrange];
+//    
+////    self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 113, self.descriptionView.size.width, 23)];
+////    self.timeLabel.font = [ThemeManager boldFontOfSize:22];
+////    self.timeLabel.textColor = [UIColor whiteColor];
+////    [self.descriptionView addSubview:self.timeLabel];
+////    
+//    self.descriptionLabelLineOne = [[UILabel alloc] initWithFrame:CGRectMake(5, 55 + 64, self.descriptionView.width, 30)];
+////    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+//    self.descriptionLabelLineOne.font = [ThemeManager boldFontOfSize:28];
+//    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+//    self.descriptionLabelLineOne.textColor = [UIColor whiteColor];
+//    self.descriptionLabelLineOne.numberOfLines = 1;
+//    self.descriptionLabelLineOne.textAlignment = NSTextAlignmentLeft;
+//    [self.descriptionView addSubview:self.descriptionLabelLineOne];
+//    
+//    self.descriptionLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(5, 79 + 64, self.descriptionView.width, 46)];
+//    //    self.descriptionLabelLineOne.adjustsFontSizeToFitWidth = YES;
+//    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
+//    self.descriptionLabelLineTwo.font = [ThemeManager boldFontOfSize:46];
+//    self.descriptionLabelLineTwo.textColor = [UIColor whiteColor];
+//    self.descriptionLabelLineTwo.numberOfLines = 1;
+//    self.descriptionLabelLineTwo.textAlignment = NSTextAlignmentLeft;
+//    [self.descriptionView addSubview:self.descriptionLabelLineTwo];
 //
 //    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 83, self.descriptionView.width, 30)];
 //    self.locationLabel.font = [ThemeManager boldFontOfSize:30];
@@ -582,18 +588,21 @@
 {
     [self view];
     _beacon = beacon;
+    
+    self.dealView.deal = self.beacon.deal;
+    
     //self.beaconChatViewController.beacon = beacon;
     self.timeLabel.text = beacon.time.formattedTime;
-    NSMutableDictionary *dealTitle = [self parseStringIntoTwoLines:self.beacon.deal.venue.name];
-    self.descriptionLabelLineOne.text = [[dealTitle objectForKey:@"firstLine"] uppercaseString];
-    self.descriptionLabelLineTwo.text = [[dealTitle objectForKey:@"secondLine"] uppercaseString];
-    NSString *venueString = [NSString stringWithFormat:@"@ %@", [beacon.deal.venue.name uppercaseString]];
-    if (beacon.address) {
-        self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:venueString
-                                                                            attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
-    } else {
-        self.locationLabel.text = venueString;
-    }
+//    NSMutableDictionary *dealTitle = [self parseStringIntoTwoLines:self.beacon.deal.venue.name];
+//    self.descriptionLabelLineOne.text = [[dealTitle objectForKey:@"firstLine"] uppercaseString];
+//    self.descriptionLabelLineTwo.text = [[dealTitle objectForKey:@"secondLine"] uppercaseString];
+//    NSString *venueString = [NSString stringWithFormat:@"@ %@", [beacon.deal.venue.name uppercaseString]];
+//    if (beacon.address) {
+//        self.locationLabel.attributedText = [[NSAttributedString alloc] initWithString:venueString
+//                                                                            attributes:@{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
+//    } else {
+//        self.locationLabel.text = venueString;
+//    }
     if (self.locationLabel.text) {
 //        self.directionsButton.hidden = NO;
 //        CGRect directionsButtonFrame = self.directionsButton.frame;

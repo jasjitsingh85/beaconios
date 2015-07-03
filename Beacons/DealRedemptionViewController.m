@@ -56,7 +56,7 @@
     self.headerIcon.height = 30;
     self.headerIcon.width = 30;
     self.headerIcon.centerX = self.view.width/2;
-    self.headerIcon.y = 0;
+    self.headerIcon.y = 10;
     [self.tableView addSubview:self.headerIcon];
     
     self.headerTitle = [[UILabel alloc] init];
@@ -65,10 +65,10 @@
     self.headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     self.headerTitle.font = [ThemeManager boldFontOfSize:11];
-    self.headerTitle.y = 25;
+    self.headerTitle.y = 35;
     [self.tableView addSubview:self.headerTitle];
     
-    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 50, 50)];
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, self.view.width - 50, 50)];
     self.headerExplanationText.centerX = self.view.width/2;
     self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
     self.headerExplanationText.textAlignment = NSTextAlignmentCenter;
