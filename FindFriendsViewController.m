@@ -199,14 +199,14 @@
     self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.view addSubview:self.skipButton];
     
-    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 170)];
+    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 160)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
     self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sendMessageContainer];
     self.sendMessage = [[UIButton alloc] init];
     self.sendMessage.size = CGSizeMake(65, 40);
     self.sendMessage.x = self.view.width - 65;
-    self.sendMessage.y = 65;
+    self.sendMessage.y = 105;
     self.sendMessage.backgroundColor = [UIColor clearColor];
     self.sendMessage.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.sendMessage.titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -215,7 +215,7 @@
     [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.sendMessageContainer addSubview:self.sendMessage];
     
-    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.view.width, 15)];
+    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 15)];
     self.messageCount.font = [ThemeManager regularFontOfSize:13];
     self.messageCount.textAlignment = NSTextAlignmentCenter;
     self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
@@ -232,7 +232,7 @@
     self.composeMessageTextView.width = self.view.width - 75;
     self.composeMessageTextView.height = 85;
     self.composeMessageTextView.x = 10;
-    self.composeMessageTextView.y = 60;
+    self.composeMessageTextView.y = 50;
     self.composeMessageTextView.layer.cornerRadius = 6;
     self.composeMessageTextView.layer.borderWidth = .25f;
     self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
@@ -245,20 +245,20 @@
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.sendMessageContainer addSubview:self.composeMessageTextView];
     
-    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
+    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
     UITapGestureRecognizer *dateViewTap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(dateViewTap:)];
     [self.dateView addGestureRecognizer:dateViewTap];
     [self.sendMessageContainer addSubview:self.dateView];
     
-    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 15, 100, 30)];
+    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
     self.dateTitleLabel.text = @"Choose Time:";
     self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
     self.dateTitleLabel.textColor = [UIColor blackColor];
     [self.sendMessageContainer addSubview:self.dateTitleLabel];
     
-    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.width - 65, 30)];
+    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.width - 65, 30)];
     self.dateLabel.font = [ThemeManager regularFontOfSize:14];
     self.dateLabel.textAlignment = NSTextAlignmentRight;
     self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
@@ -1175,13 +1175,13 @@
         CGRect rect = self.sendMessageContainer.frame;
         if (self.isKeyboardShowing) {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - self.keyboardHeight - 170;
+                rect.origin.y = self.view.height - self.keyboardHeight - 160;
             } else {
                 rect.origin.y = self.view.height - self.keyboardHeight;
             }
         } else {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - 170;
+                rect.origin.y = self.view.height - 160;
             } else {
                 rect.origin.y = self.view.height;
             }

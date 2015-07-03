@@ -19,9 +19,10 @@
 @property (nonatomic, strong) Braintree *braintree;
 @property (nonatomic, strong) NSNumber *beaconID;
 @property (nonatomic, strong) BeaconProfileViewController *beaconProfileViewController;
+@property (nonatomic, assign) BOOL onlyAddPayment;
 
 - (id) initWithClientToken: (NSString *)clientToken ;
 - (void) openPaymentModalWithDeal: (Deal *)deal;
-- (void) openPaymentModalFromSideNav;
+- (void) openPaymentModalToAddPayment;
 
 @end

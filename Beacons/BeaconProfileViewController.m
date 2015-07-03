@@ -133,6 +133,7 @@
         NSString *clientToken = responseObject[@"client_token"];
         self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
         self.paymentsViewController.beaconProfileViewController = self;
+        self.paymentsViewController.onlyAddPayment = NO;
         self.paymentsViewController.beaconID = self.beacon.beaconID;
         [self addChildViewController:self.paymentsViewController];
         //[self.view addSubview:self.paymentsViewController.view];

@@ -68,7 +68,7 @@
    // }];
 }
 
-- (void)openPaymentModalFromSideNav
+- (void)openPaymentModalToAddPayment
 {
     
     // Create and retain a `Braintree` instance with the client token
@@ -124,8 +124,10 @@
         NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (dismiss_payment_modal) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.beaconProfileViewController refreshDeal];
+            if (!self.onlyAddPayment) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.beaconProfileViewController refreshDeal];
+            }
         } else {
             [self showCardDeclined];
         }

@@ -217,6 +217,7 @@
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
         self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        self.paymentsViewController.onlyAddPayment = YES;
         //self.paymentsViewController.beaconProfileViewController = self;
         //self.paymentsViewController.beaconID = self.beacon.beaconID;
         [self addChildViewController:self.paymentsViewController];
@@ -446,7 +447,7 @@
 
 - (void)paymentButtonTouched:(id)sender
 {
-    [self.paymentsViewController openPaymentModalFromSideNav];
+    [self.paymentsViewController openPaymentModalToAddPayment];
 }
 
 - (void)groupButtonTouched:(id)sender
