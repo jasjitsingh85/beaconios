@@ -633,31 +633,32 @@
     if (hasData) {
         [[APIClient sharedClient] markBeaconAsSeen:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
             BOOL showPrompt = [responseObject[@"show_prompt"] boolValue];
-            if (showPrompt && !beacon.isUserBeacon && !self.promptShowing) {
-                jadispatch_main_qeue(^{
-                    [self promptForGoing];
-                });
-            }
+            NSLog(@"%@", showPrompt);
+//            if (showPrompt && !beacon.isUserBeacon && !self.promptShowing) {
+//                jadispatch_main_qeue(^{
+//                    [self promptForGoing];
+//                });
+//            }
         } failure:nil];
     }
 
 }
 
-
-- (void)promptForGoing
-{
-    self.promptShowing = YES;
-    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@ \n\nAre you coming?", self.beacon.creator.firstName, self.beacon.beaconDescription, self.beacon.time.fullFormattedDate, self.beacon.address];
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"RSVP" message:inviteText];
-    [alertView bk_addButtonWithTitle:@"More info" handler:^{
-        self.promptShowing = NO;
-    }];
-    [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
-        self.promptShowing = NO;
-        [self join:nil];
-    }];
-    [alertView show];
-}
+//
+//- (void)promptForGoing
+//{
+//    self.promptShowing = YES;
+//    NSString *inviteText = [NSString stringWithFormat:@"%@: %@ \n%@ @ %@ \n\nAre you coming?", self.beacon.creator.firstName, self.beacon.beaconDescription, self.beacon.time.fullFormattedDate, self.beacon.address];
+//    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"RSVP" message:inviteText];
+//    [alertView bk_addButtonWithTitle:@"More info" handler:^{
+//        self.promptShowing = NO;
+//    }];
+//    [alertView bk_setCancelButtonWithTitle:@"Yes" handler:^{
+//        self.promptShowing = NO;
+//        [self join:nil];
+//    }];
+//    [alertView show];
+//}
 
 - (void)promptForCheckIn
 {

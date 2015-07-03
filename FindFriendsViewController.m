@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+Resize.h"
 #import "GroupsViewController.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "UIButton+HSNavButton.h"
 #import "Contact.h"
 #import "Theme.h"
@@ -25,9 +26,10 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "DatePickerModalView.h"
+#import "ContactExplanationPopupView.h"
 //#import "RewardsViewController.h"
 
-@interface FindFriendsViewController () <UISearchBarDelegate, UITextViewDelegate>
+@interface FindFriendsViewController () <UISearchBarDelegate, UITextViewDelegate, ContactExplanationViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray *usersInContactsList;
 //@property (strong, nonatomic) NSArray *recentsList;
@@ -280,17 +282,12 @@
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
         self.onlyContacts = YES;
-        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-            if (granted) {
-                [self populateContacts];
-                [[ContactManager sharedManager] syncContacts];
-            } else {
-                [self populateContacts];
-            }
-        });
+        ContactExplanationPopupView *contactModal = [[ContactExplanationPopupView alloc] init];
+        contactModal.delegate = self;
+        [contactModal show];
     } else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
         self.onlyContacts = NO;
         jadispatch_main_qeue(^{
@@ -312,11 +309,21 @@
             }
         });
     }
-    else {
-        self.onlyContacts = YES;
-        [self populateContacts];
-    }
     
+}
+
+- (void)requestContactPermissions
+{
+//    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            [self populateContacts];
+            [[ContactManager sharedManager] syncContacts];
+        } else {
+            [self populateContacts];
+        }
+    });
 }
 
 - (void)dealloc
@@ -357,6 +364,11 @@
     //[self updateNavTitleForDeal:deal];
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
     [self updateInviteButtonTextForDeal:nil];
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        [self skipButtonTouchedFromContactModal];
+    }
 }
 
 - (BOOL)customMessageExceedsMaxLength:(NSString *)customMessage
@@ -1268,5 +1280,24 @@
     [self showDatePicker];
 }
 
+- (void)skipButtonTouchedFromContactModal
+{
+    if (![self.deal isAvailableAtDate:self.date]) {
+        
+        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
+        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+        [alertView show];
+        
+//        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+//        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    else {
+        NSArray *noContact = [[NSArray alloc] init];
+        [self setBeaconOnServerWithInvitedContacts:noContact andMessage:@" " andDate:self.date];
+    }
+}
 
 @end

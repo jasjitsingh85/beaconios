@@ -276,7 +276,7 @@ typedef enum {
     
     self.viewMode = ViewModeSignIn;
     [self.confirmButton setTitle:@"Sign In" forState:UIControlStateNormal];
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Not a user? Register here!" attributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Not a user? Register here!" attributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     
     [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     NSRange range = [attributedTitle.string rangeOfString:@"Register here!"];

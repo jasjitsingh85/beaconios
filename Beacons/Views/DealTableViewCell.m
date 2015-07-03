@@ -86,7 +86,7 @@
     [self.venuePreviewView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager lightFontOfSize:14];
+    self.dealTime.font = [ThemeManager regularFontOfSize:14];
     self.dealTime.textColor = [UIColor whiteColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;

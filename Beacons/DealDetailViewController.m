@@ -93,7 +93,7 @@
     [self.venueImageView addSubview:self.venueLabelLineTwo];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager lightFontOfSize:16];
+    self.dealTime.font = [ThemeManager regularFontOfSize:16];
     self.dealTime.textColor = [UIColor whiteColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.width = 200;

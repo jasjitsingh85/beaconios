@@ -363,7 +363,7 @@ typedef enum dealTypeStates
     [self.venueView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager lightFontOfSize:14];
+    self.dealTime.font = [ThemeManager regularFontOfSize:14];
     self.dealTime.textColor = [UIColor whiteColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.width = 200;
