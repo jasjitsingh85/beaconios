@@ -638,18 +638,18 @@
 //        self.imageViewGradient.hidden = NO;
 //    }
     //let server know that user has seen this hotspot
-    BOOL hasData = beacon.beaconDescription != nil;
-    if (hasData) {
-        [[APIClient sharedClient] markBeaconAsSeen:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            BOOL showPrompt = [responseObject[@"show_prompt"] boolValue];
-            NSLog(@"%@", showPrompt);
-//            if (showPrompt && !beacon.isUserBeacon && !self.promptShowing) {
-//                jadispatch_main_qeue(^{
-//                    [self promptForGoing];
-//                });
-//            }
-        } failure:nil];
-    }
+//    BOOL hasData = beacon.beaconDescription != nil;
+//    if (hasData) {
+//        [[APIClient sharedClient] markBeaconAsSeen:beacon success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            BOOL showPrompt = [responseObject[@"show_prompt"] boolValue];
+//            NSLog(@"%@", showPrompt);
+////            if (showPrompt && !beacon.isUserBeacon && !self.promptShowing) {
+////                jadispatch_main_qeue(^{
+////                    [self promptForGoing];
+////                });
+////            }
+//        } failure:nil];
+//    }
 
 }
 

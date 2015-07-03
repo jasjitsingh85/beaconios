@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "LoadingIndictor.h"
 #import "DealView.h"
+#import "HappyHourView.h"
 
 @interface DealDetailViewController () <FindFriendsViewControllerDelegate>
 
@@ -230,31 +231,39 @@
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
     dealIcon.centerX = self.view.width/2;
-    dealIcon.y = 180;
+    dealIcon.y = 165;
     [self.mainScroll addSubview:dealIcon];
     
-    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, self.view.width, 30)];
+    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 185, self.view.width, 30)];
     dealHeadingLabel.centerX = self.view.width/2;
     dealHeadingLabel.text = @"THE DEAL";
     dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
     [self.mainScroll addSubview:dealHeadingLabel];
     
-    UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, self.view.width - 50, 30)];
+    UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 210, self.view.width - 50, 60)];
     dealTextLabel.centerX = self.view.width/2;
     dealTextLabel.font = [ThemeManager lightFontOfSize:13];
     dealTextLabel.textAlignment = NSTextAlignmentCenter;
     dealTextLabel.numberOfLines = 0;
+    dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+    
+    CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
+    CGRect dealTextHeight = [dealTextLabel.text boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13.5]} context:context];
+
+    
+    dealTextLabel.height = dealTextHeight.size.height;
     [self.mainScroll addSubview:dealTextLabel];
     
     if (hasVenueDescription) {
         
         UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
         venueIcon.centerX = self.view.width/2;
-        venueIcon.y = 260;
+        venueIcon.y = dealTextLabel.y + dealTextLabel.height + 10;
         [self.mainScroll addSubview:venueIcon];
         
-        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, self.view.width, 30)];
+        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 20, self.view.width, 30)];
         venueHeadingLabel.centerX = self.view.width/2;
         venueHeadingLabel.text = @"THE VENUE";
         venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
@@ -268,7 +277,7 @@
         self.venueTextLabel = [[UILabel alloc] init];
         self.venueTextLabel.x = 0;
         self.venueTextLabel.width = self.view.width - 50;
-        self.venueTextLabel.y = 305;
+        self.venueTextLabel.y = venueHeadingLabel.y + 25;
         self.venueTextLabel.height = venueDescriptionHeight.size.height;
         self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
         self.venueTextLabel.centerX = self.view.width/2;
@@ -402,7 +411,6 @@
     //[self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     //self.dealTime.text = [self.deal.dealStartString uppercaseString];
-    dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
     self.venueTextLabel.text = self.deal.venue.placeDescription;
     docTextLabel.text = @"Save money by buying your first drink through Hotspot. Tap 'LETS GO', add payment, and present your voucher to the server. You’re only charged after you receive your drink.";
     
@@ -414,6 +422,10 @@
 - (void) setHappyHour:(HappyHour *)happyHour
 {
     _happyHour = happyHour;
+    
+    HappyHourView *happyHourView = [[HappyHourView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
+    happyHourView.happyHour = self.happyHour;
+    [self.mainScroll addSubview:happyHourView];
     
     bool hasHappyHourVenueDescription = ![self.happyHour.venue.placeDescription isEqual: @""];
     
