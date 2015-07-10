@@ -1253,6 +1253,7 @@
     [[APIClient sharedClient] feedbackDeal:self.beacon.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *feedbackStatus = responseObject[@"feedback_status"];
         self.beacon.userDealStatus.feedback = [feedbackStatus boolValue];
+        [[[UIAlertView alloc] initWithTitle:@"Sorry!" message:@"Someone from Hotspot will be in touch very soon to resolve the issue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [self updateFeedbackButtonAppearance];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:nil];

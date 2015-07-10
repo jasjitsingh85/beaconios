@@ -28,6 +28,7 @@
 #import "APIClient.h"
 #import "PaymentsViewController.h"
 #import <MaveSDK.h>
+#import "AppInviteViewController.h"
 
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -433,15 +434,25 @@
 
 - (void)inviteFriendsButtonTouched:(id)sender
 {
-    [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
-        // Code to present Mave's view controller from yours, e.g:
-        //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
-        [self presentViewController:inviteController animated:YES completion:nil];
-    } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
-        // Code to transition back to your view controller after Mave's
-        // is dismissed (sent invites or cancelled), e.g:
-        [controller dismissViewControllerAnimated:YES completion:nil];
-    } inviteContext:@"Menu"];
+    
+    AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
+    UINavigationController *navigationController =
+    [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+    navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+    [self presentViewController:navigationController animated:YES completion:nil];
+//    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+    
+//    [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+//        // Code to present Mave's view controller from yours, e.g:
+//        //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+//        [self presentViewController:inviteController animated:YES completion:nil];
+//    } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+//        // Code to transition back to your view controller after Mave's
+//        // is dismissed (sent invites or cancelled), e.g:
+//        [controller dismissViewControllerAnimated:YES completion:nil];
+//    } inviteContext:@"Menu"];
     
 }
 
@@ -564,11 +575,13 @@
         Beacon *beacon = self.beacons[indexPath.row];
         [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
-        Voucher *voucher = self.vouchers[indexPath.row - [self.beacons count]];
-        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToVoucherViewWithVoucher:voucher];
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
+//    else {
+//        Voucher *voucher = self.vouchers[indexPath.row - [self.beacons count]];
+//        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToVoucherViewWithVoucher:voucher];
+//        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    }
 }
 
 - (void)updateNavigationItems

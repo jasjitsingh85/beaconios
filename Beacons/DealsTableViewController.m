@@ -28,7 +28,7 @@
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <MaveSDK.h>
+//#import <MaveSDK.h>
 #import <MapKit/MapKit.h>
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
@@ -40,6 +40,7 @@
 #import "RewardManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FreeDrinksExplanationPopupView.h"
+#import "AppInviteViewController.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -479,15 +480,23 @@ typedef enum dealTypeStates
 
 - (void)launchInviteFriends
 {
-        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
-            // Code to present Mave's view controller from yours, e.g:
-            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
-            [self presentViewController:inviteController animated:YES completion:nil];
-        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
-            // Code to transition back to your view controller after Mave's
-            // is dismissed (sent invites or cancelled), e.g:
-            [controller dismissViewControllerAnimated:YES completion:nil];
-        } inviteContext:@"Menu"];
+//        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+//            // Code to present Mave's view controller from yours, e.g:
+//            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+//            [self presentViewController:inviteController animated:YES completion:nil];
+//        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+//            // Code to transition back to your view controller after Mave's
+//            // is dismissed (sent invites or cancelled), e.g:
+//            [controller dismissViewControllerAnimated:YES completion:nil];
+//        } inviteContext:@"Menu"];
+    
+    AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
+    UINavigationController *navigationController =
+    [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+    navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void) checkToLaunchInvitationModal
@@ -496,15 +505,17 @@ typedef enum dealTypeStates
     NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
     
     if ((launchCount + 1) % 3 == 0) {
-        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
-            // Code to present Mave's view controller from yours, e.g:
-            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
-            [self presentViewController:inviteController animated:YES completion:nil];
-        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
-            // Code to transition back to your view controller after Mave's
-            // is dismissed (sent invites or cancelled), e.g:
-            [controller dismissViewControllerAnimated:YES completion:nil];
-        } inviteContext:@"Popup"];
+        [self launchInviteFriends];
+        
+//        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+//            // Code to present Mave's view controller from yours, e.g:
+//            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+//            [self presentViewController:inviteController animated:YES completion:nil];
+//        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+//            // Code to transition back to your view controller after Mave's
+//            // is dismissed (sent invites or cancelled), e.g:
+//            [controller dismissViewControllerAnimated:YES completion:nil];
+//        } inviteContext:@"Popup"];
     }
 }
 
@@ -643,10 +654,10 @@ typedef enum dealTypeStates
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
                 //self.mapCenter = staticLocation.coordinate;
                 self.mapCenter = location.coordinate;

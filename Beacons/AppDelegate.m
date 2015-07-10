@@ -36,7 +36,7 @@
 #import "Deal.h"
 #import <Braintree/Braintree.h>
 //#import "VoucherViewController.h"
-#import <MaveSDK.h>
+//#import <MaveSDK.h>
 
 @interface AppDelegate()
 
@@ -161,8 +161,8 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
     
-    [MaveSDK setupSharedInstanceWithApplicationID:kMaveApplicationID];
-    [self initializeMave];
+    //[MaveSDK setupSharedInstanceWithApplicationID:kMaveApplicationID];
+    //[self initializeMave];
     
     [self incrementAndSaveLaunchCount];
     
@@ -176,125 +176,125 @@
     [[NSUserDefaults standardUserDefaults] setInteger:launchCount  forKey:@"launchCount"];
 }
 
-- (void) initializeMave
-{
-    [self initMaveUser];
-    [self customizeMaveInvitePage];
-}
+//- (void) initializeMave
+//{
+//    [self initMaveUser];
+//    [self customizeMaveInvitePage];
+//}
+//
+//- (void) initMaveUser
+//{
+//    MaveSDK *mave = [MaveSDK sharedInstance];
+//    User *user = [User loggedInUser];
+//    NSString *userID = [NSString stringWithFormat:@"%@", user.userID];
+//    MAVEUserData *userData = [[MAVEUserData alloc] initWithUserID:userID
+//                                                        firstName:user.firstName
+//                                                        lastName:user.lastName];
+//    [mave identifyUser:userData];
+//}
 
-- (void) initMaveUser
-{
-    MaveSDK *mave = [MaveSDK sharedInstance];
-    User *user = [User loggedInUser];
-    NSString *userID = [NSString stringWithFormat:@"%@", user.userID];
-    MAVEUserData *userData = [[MAVEUserData alloc] initWithUserID:userID
-                                                        firstName:user.firstName
-                                                        lastName:user.lastName];
-    [mave identifyUser:userData];
-}
+//- (void)customizeMaveInvitePage {
+//    // Set some variables for our app's common fonts and colors
+//    UIColor *green = [[UIColor alloc] initWithRed:43.0/255 green:202.0/255
+//                                             blue:125.0/255 alpha:1.0];
+//    UIColor *clear = [UIColor clearColor];
+//    UIColor *white = [UIColor whiteColor];
+//    UIColor *black = [[UIColor alloc] initWithWhite:0.15 alpha: 1.0];
+//    UIColor *gray = [[UIColor alloc] initWithWhite:0.50 alpha: 1.0];
+//    UIColor *lightGray = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
+//    UIFont *font1 = [ThemeManager lightFontOfSize:17];
+//    UIFont *font1Bold = [ThemeManager mediumFontOfSize:17];
+//    UIFont *font1Smaller = [ThemeManager regularFontOfSize:14];
+//    UIFont *font1SmallerBold = [ThemeManager boldFontOfSize:14];
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+//    backButton.title = @"Cancel";
+//    backButton.tintColor = [[ThemeManager sharedTheme] redColor];
 
-- (void)customizeMaveInvitePage {
-    // Set some variables for our app's common fonts and colors
-    UIColor *green = [[UIColor alloc] initWithRed:43.0/255 green:202.0/255
-                                             blue:125.0/255 alpha:1.0];
-    UIColor *clear = [UIColor clearColor];
-    UIColor *white = [UIColor whiteColor];
-    UIColor *black = [[UIColor alloc] initWithWhite:0.15 alpha: 1.0];
-    UIColor *gray = [[UIColor alloc] initWithWhite:0.50 alpha: 1.0];
-    UIColor *lightGray = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
-    UIFont *font1 = [ThemeManager lightFontOfSize:17];
-    UIFont *font1Bold = [ThemeManager mediumFontOfSize:17];
-    UIFont *font1Smaller = [ThemeManager regularFontOfSize:14];
-    UIFont *font1SmallerBold = [ThemeManager boldFontOfSize:14];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"Cancel";
-    backButton.tintColor = [[ThemeManager sharedTheme] redColor];
-    
-    // Customize the Mave invite page
-    MaveSDK *mave = [MaveSDK sharedInstance];
-    
-    // Navigation bar options
-    mave.displayOptions.statusBarStyle = UIStatusBarStyleDefault;
-    mave.displayOptions.navigationBarTitleCopy = @"FREE DRINKS";
-    mave.displayOptions.navigationBarTitleFont = font1Bold;
-    mave.displayOptions.navigationBarTitleTextColor = [[ThemeManager sharedTheme] redColor];
-    mave.displayOptions.navigationBarBackgroundColor = [UIColor whiteColor];
-    
-    // Set the cancel button if displaying the page modally, or the
-    // back and forward buttons if pushing onto a navigation stack.
-    // (note the button target & actions are ignored, we call your
-    // dismiss/back/forward blocks instead)
-    mave.displayOptions.navigationBarCancelButton = backButton;
-    // mave.displayOptions.navigationBarBackButton = ...
-    // mave.displayOptions.navigationBarForwardButton = ...
-    
-    // Above table content - invite page v1 specific
-    //  - "invite explanation" text, an optional explanation of how
-    //     your app's referral program works
-    //  - optional share icons on the invite page
-    mave.displayOptions.inviteExplanationFont = font1;
-    mave.displayOptions.inviteExplanationTextColor = black;
-    mave.displayOptions.inviteExplanationCellBackgroundColor = white;
-    mave.displayOptions.inviteExplanationShareButtonsColor = gray;
-    mave.displayOptions.inviteExplanationShareButtonsFont = [UIFont systemFontOfSize:10];
-    mave.displayOptions.inviteExplanationShareButtonsBackgroundColor = lightGray;
-    
-    // Above table content - invite page v2 specific
-    //  - invite message (user-customizable text that will be sent
-    //    in the invite)
-    mave.displayOptions.topViewMessageFont = font1Smaller;
-    mave.displayOptions.topViewMessageTextColor = black;
-    mave.displayOptions.topViewMessageLabelFont = font1Smaller;
-    mave.displayOptions.topViewMessageLabelTextColor = gray;
-    mave.displayOptions.topViewBackgroundColor = lightGray;
-    
-    // Search bar options
-    mave.displayOptions.searchBarFont = font1;
-    mave.displayOptions.searchBarPlaceholderTextColor = gray;
-    mave.displayOptions.searchBarSearchTextColor = black;
-    mave.displayOptions.searchBarBackgroundColor = white;
-    mave.displayOptions.searchBarTopBorderColor = clear;
-    
-    // Contacts table options
-    mave.displayOptions.contactNameFont = font1;
-    mave.displayOptions.contactNameTextColor = black;
-    mave.displayOptions.contactDetailsFont = font1Smaller;
-    mave.displayOptions.contactDetailsTextColor = gray;
-    mave.displayOptions.contactSeparatorColor = lightGray;
-    mave.displayOptions.contactCellBackgroundColor = white;
-    // checkmarks for selecting multiple is for invite page v1
-    mave.displayOptions.contactCheckmarkColor = green;
-    // inline send button on invite page v2
-    mave.displayOptions.contactInlineSendButtonFont = [UIFont systemFontOfSize:16];
-    mave.displayOptions.contactInlineSendButtonTextColor = green;
-    mave.displayOptions.contactInlineSendButtonDisabledTextColor = gray;
-    
-    // Contacts table section header & index options
-    mave.displayOptions.contactSectionHeaderFont = font1Smaller;
-    mave.displayOptions.contactSectionHeaderTextColor = black;
-    mave.displayOptions.contactSectionHeaderBackgroundColor = lightGray;
-    mave.displayOptions.contactSectionIndexColor = black;
-    mave.displayOptions.contactSectionIndexBackgroundColor = clear;
-    
-    // Message and Send section options for invite page v1
-    mave.displayOptions.messageFieldFont = [UIFont systemFontOfSize:16];
-    mave.displayOptions.messageFieldTextColor = black;
-    mave.displayOptions.messageFieldBackgroundColor = white;
-    mave.displayOptions.sendButtonCopy = @"Send";
-    mave.displayOptions.sendButtonFont = font1Bold;
-    mave.displayOptions.sendButtonTextColor = green;
-    mave.displayOptions.bottomViewBorderColor = gray;
-    mave.displayOptions.bottomViewBackgroundColor = lightGray;
-    
-    // The client-side share page (the fallback if the normal
-    // invite page can't be displayed)
-    mave.displayOptions.sharePageBackgroundColor = [UIColor whiteColor];
-    mave.displayOptions.sharePageIconColor = [[ThemeManager sharedTheme] lightBlueColor];
-    mave.displayOptions.sharePageIconFont = [ThemeManager lightFontOfSize:12];
-    mave.displayOptions.sharePageIconTextColor = [UIColor blackColor];
-    mave.displayOptions.sharePageExplanationFont = [ThemeManager lightFontOfSize:16];
-    mave.displayOptions.sharePageExplanationTextColor = black;
-}
+//    // Customize the Mave invite page
+//    MaveSDK *mave = [MaveSDK sharedInstance];
+//    
+//    // Navigation bar options
+//    mave.displayOptions.statusBarStyle = UIStatusBarStyleDefault;
+//    mave.displayOptions.navigationBarTitleCopy = @"FREE DRINKS";
+//    mave.displayOptions.navigationBarTitleFont = font1Bold;
+//    mave.displayOptions.navigationBarTitleTextColor = [[ThemeManager sharedTheme] redColor];
+//    mave.displayOptions.navigationBarBackgroundColor = [UIColor whiteColor];
+//    
+//    // Set the cancel button if displaying the page modally, or the
+//    // back and forward buttons if pushing onto a navigation stack.
+//    // (note the button target & actions are ignored, we call your
+//    // dismiss/back/forward blocks instead)
+//    mave.displayOptions.navigationBarCancelButton = backButton;
+//    // mave.displayOptions.navigationBarBackButton = ...
+//    // mave.displayOptions.navigationBarForwardButton = ...
+//    
+//    // Above table content - invite page v1 specific
+//    //  - "invite explanation" text, an optional explanation of how
+//    //     your app's referral program works
+//    //  - optional share icons on the invite page
+//    mave.displayOptions.inviteExplanationFont = font1;
+//    mave.displayOptions.inviteExplanationTextColor = black;
+//    mave.displayOptions.inviteExplanationCellBackgroundColor = white;
+//    mave.displayOptions.inviteExplanationShareButtonsColor = gray;
+//    mave.displayOptions.inviteExplanationShareButtonsFont = [UIFont systemFontOfSize:10];
+//    mave.displayOptions.inviteExplanationShareButtonsBackgroundColor = lightGray;
+//    
+//    // Above table content - invite page v2 specific
+//    //  - invite message (user-customizable text that will be sent
+//    //    in the invite)
+//    mave.displayOptions.topViewMessageFont = font1Smaller;
+//    mave.displayOptions.topViewMessageTextColor = black;
+//    mave.displayOptions.topViewMessageLabelFont = font1Smaller;
+//    mave.displayOptions.topViewMessageLabelTextColor = gray;
+//    mave.displayOptions.topViewBackgroundColor = lightGray;
+//    
+//    // Search bar options
+//    mave.displayOptions.searchBarFont = font1;
+//    mave.displayOptions.searchBarPlaceholderTextColor = gray;
+//    mave.displayOptions.searchBarSearchTextColor = black;
+//    mave.displayOptions.searchBarBackgroundColor = white;
+//    mave.displayOptions.searchBarTopBorderColor = clear;
+//    
+//    // Contacts table options
+//    mave.displayOptions.contactNameFont = font1;
+//    mave.displayOptions.contactNameTextColor = black;
+//    mave.displayOptions.contactDetailsFont = font1Smaller;
+//    mave.displayOptions.contactDetailsTextColor = gray;
+//    mave.displayOptions.contactSeparatorColor = lightGray;
+//    mave.displayOptions.contactCellBackgroundColor = white;
+//    // checkmarks for selecting multiple is for invite page v1
+//    mave.displayOptions.contactCheckmarkColor = green;
+//    // inline send button on invite page v2
+//    mave.displayOptions.contactInlineSendButtonFont = [UIFont systemFontOfSize:16];
+//    mave.displayOptions.contactInlineSendButtonTextColor = green;
+//    mave.displayOptions.contactInlineSendButtonDisabledTextColor = gray;
+//    
+//    // Contacts table section header & index options
+//    mave.displayOptions.contactSectionHeaderFont = font1Smaller;
+//    mave.displayOptions.contactSectionHeaderTextColor = black;
+//    mave.displayOptions.contactSectionHeaderBackgroundColor = lightGray;
+//    mave.displayOptions.contactSectionIndexColor = black;
+//    mave.displayOptions.contactSectionIndexBackgroundColor = clear;
+//    
+//    // Message and Send section options for invite page v1
+//    mave.displayOptions.messageFieldFont = [UIFont systemFontOfSize:16];
+//    mave.displayOptions.messageFieldTextColor = black;
+//    mave.displayOptions.messageFieldBackgroundColor = white;
+//    mave.displayOptions.sendButtonCopy = @"Send";
+//    mave.displayOptions.sendButtonFont = font1Bold;
+//    mave.displayOptions.sendButtonTextColor = green;
+//    mave.displayOptions.bottomViewBorderColor = gray;
+//    mave.displayOptions.bottomViewBackgroundColor = lightGray;
+//    
+//    // The client-side share page (the fallback if the normal
+//    // invite page can't be displayed)
+//    mave.displayOptions.sharePageBackgroundColor = [UIColor whiteColor];
+//    mave.displayOptions.sharePageIconColor = [[ThemeManager sharedTheme] lightBlueColor];
+//    mave.displayOptions.sharePageIconFont = [ThemeManager lightFontOfSize:12];
+//    mave.displayOptions.sharePageIconTextColor = [UIColor blackColor];
+//    mave.displayOptions.sharePageExplanationFont = [ThemeManager lightFontOfSize:16];
+//    mave.displayOptions.sharePageExplanationTextColor = black;
+//}
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -394,17 +394,17 @@
     [CrashManager setupForUser];
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
     
-    [[MaveSDK sharedInstance] getReferringData:^(MAVEReferringData *referringData) {
-        MAVEUserData *referringUser = referringData.referringUser;
-        NSString *referringUserPhone = referringData.currentUser.phone;
-        if (referringUser) {
-            [[APIClient sharedClient] addRewardItem:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Successful referral");
-            } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
-                NSLog(@"Failure for referral");
-            }];
-         }
-    }];
+//    [[MaveSDK sharedInstance] getReferringData:^(MAVEReferringData *referringData) {
+//        MAVEUserData *referringUser = referringData.referringUser;
+//        NSString *referringUserPhone = referringData.currentUser.phone;
+//        if (referringUser) {
+//            [[APIClient sharedClient] addRewardItem:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSLog(@"Successful referral");
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
+//                NSLog(@"Failure for referral");
+//            }];
+//         }
+//    }];
 }
 
 - (void)didFinishPermissions

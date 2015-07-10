@@ -39,6 +39,7 @@
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
+		410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D194F1B4B815C002C5F0F /* AppInviteViewController.m */; };
 		410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8981B3B3BF20097EA26 /* editMessageBackground@2x.png */; };
 		410FC89B1B3B3E4D0097EA26 /* bottomDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */; };
 		410FC89D1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */; };
@@ -349,6 +350,8 @@
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
 		4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanation@2x.png"; sourceTree = "<group>"; };
+		410D194E1B4B814B002C5F0F /* AppInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInviteViewController.h; sourceTree = SOURCE_ROOT; };
+		410D194F1B4B815C002C5F0F /* AppInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInviteViewController.m; sourceTree = SOURCE_ROOT; };
 		410FC8981B3B3BF20097EA26 /* editMessageBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editMessageBackground@2x.png"; sourceTree = "<group>"; };
 		410FC89A1B3B3E4D0097EA26 /* bottomDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomDivider@2x.png"; sourceTree = "<group>"; };
 		410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotLogoNavBlack@2x.png"; sourceTree = "<group>"; };
@@ -1092,6 +1095,8 @@
 		96585A19199D3A9700A6E02A /* Invite */ = {
 			isa = PBXGroup;
 			children = (
+				410D194E1B4B814B002C5F0F /* AppInviteViewController.h */,
+				410D194F1B4B815C002C5F0F /* AppInviteViewController.m */,
 				1F465C261764FB7600F35A8B /* FindFriendsViewController.h */,
 				1F465C271764FB7600F35A8B /* FindFriendsViewController.m */,
 			);
@@ -1698,6 +1703,7 @@
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
+				410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */,
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,

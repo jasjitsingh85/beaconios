@@ -40,7 +40,7 @@ Deal;
 - (void)contactAuthorizationStatusDenied;
 - (void)setSelectedViewControllerToHome;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
-- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher;
+//- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
 - (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated;

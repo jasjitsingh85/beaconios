@@ -161,7 +161,7 @@ typedef enum {
     self.titleLabel.text = @"Link Payment";
     [self.headerIcon setImage: [UIImage imageNamed:@"creditCardIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot partners with local venues, saving you time and money when you buy drinks through the app."]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspots buys drinks wholesale from bars, giving you huge discounts and a quick checkout when you buy through the app."]];
     [self.confirmButton setTitle:@"Link Payment" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
     self.confirmButton.y = 300;
@@ -175,7 +175,7 @@ typedef enum {
     self.titleLabel.text = @"Enable Notifications";
     [self.headerIcon setImage: [UIImage imageNamed:@"pushIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To get messages from your friends and deal notifications in real-time"]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"To receive invites in real-time. Your privacy is important - we don't spam you or your friends."]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }

@@ -412,7 +412,7 @@
     //self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     //self.dealTime.text = [self.deal.dealStartString uppercaseString];
     self.venueTextLabel.text = self.deal.venue.placeDescription;
-    docTextLabel.text = @"Save money by buying your first drink through Hotspot. Tap 'LETS GO', add payment, and present your voucher to the server. You’re only charged after you receive your drink.";
+    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'LETS GO' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
     
     [self.view addSubview:self.mainScroll];
     

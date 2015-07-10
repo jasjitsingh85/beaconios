@@ -23,6 +23,7 @@
 @property (strong, nonatomic) UILabel *descriptionLabel;
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UILabel *marketPriceLabel;
+@property (strong, nonatomic) UILabel *itemPriceLabel;
 //@property (strong, nonatomic) UIView *venueDescriptionBackground;
 //@property (strong, nonatomic) UILabel *venueDescriptionLabel;
 //@property (strong, nonatomic) UILabel *venueDetailDealHeadingLabel;

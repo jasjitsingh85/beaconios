@@ -294,6 +294,14 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     }];
 }
 
+- (void)inviteFriendsToApp:(NSArray *)contacts customMessage:(NSString *)customMessage success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"invite_list"] = [self paramArrayForContacts:contacts];
+    parameters[@"custom_message"] = customMessage;
+    [[APIClient sharedClient] postPath:@"invite-friends-to-app/" parameters:parameters success:success failure:failure];
+}
+
 - (void)redeemDeal:(Deal *)deal success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{@"deal_id" : deal.dealID};

@@ -315,8 +315,9 @@
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
         } else {
-            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Redeem this voucher?" message:@"Only staff should redeem voucher"];
-            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
+            NSString *message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@ for a %@. They are paying through the Hotspot app, so don’t charge them for this drink.", self.deal.itemPrice, self.deal.itemName];
+            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
+            [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
                 [self redeemDeal];
             }];
             [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
@@ -386,7 +387,7 @@
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
         self.headerTitle.text = @"YOU'RE ALL SET!";
-        self.headerExplanationText.text = @"Have your server tap the voucher below to receive your drink. You’re only charged once it’s redeemed.";
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You haven't been charged yet. Have your server tap the voucher below to redeem your $%@ %@", self.deal.itemPrice, self.deal.itemName];
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
     } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
