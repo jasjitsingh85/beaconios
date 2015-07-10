@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *foursquareID;
 @property (strong, nonatomic) NSString *yelpID;
 @property (strong, nonatomic) NSURL *yelpRating;
+@property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSString *placeDescription;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;

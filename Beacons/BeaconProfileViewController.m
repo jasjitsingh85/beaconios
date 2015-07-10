@@ -707,7 +707,7 @@
 //    }];
 //    [actionSheet showInView:self.view];
     
-    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Drink?" message:@"Do you want to use your free drink here?"];
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Free Drink?" message:@"Do you want to use your free drink here?"];
     [alertView bk_addButtonWithTitle:@"Sure" handler:^{
         [self redeemRewardItem];
     }];

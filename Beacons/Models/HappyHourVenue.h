@@ -18,6 +18,7 @@
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 @property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) NSString *yelpID;
+@property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSURL *yelpRating;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

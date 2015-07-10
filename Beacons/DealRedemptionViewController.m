@@ -65,7 +65,7 @@
     self.headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     self.headerTitle.font = [ThemeManager boldFontOfSize:11];
-    self.headerTitle.y = 25;
+    self.headerTitle.y = 30;
     [self.tableView addSubview:self.headerTitle];
     
     self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 50, 50)];
@@ -268,6 +268,7 @@
     self.beacon = beacon;
     self.deal = beacon.deal;
     self.dealStatus = beacon.userDealStatus;
+    NSLog(@"DEAL STATUS: %@", self.dealStatus.dealStatus);
     //[self loadPaymentDeal];
     [self updateRedeemButtonAppearance];
     //[self updateFeedbackButtonAppearance];
@@ -354,6 +355,7 @@
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self refreshBeaconDataInDeal];
         NSString *dealStatus = responseObject[@"deal_status"];
+        //NSLog(@"DealStatus: %@", dealStatus);
         self.dealStatus.dealStatus = dealStatus;
         [self updateRedeemButtonAppearance];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
@@ -394,13 +396,13 @@
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
         voucherTitleText = @"VOUCHER FOR:";
-        itemNameText = [NSString stringWithFormat:@"ONE %@", [self.deal.itemName uppercaseString]];
+        itemNameText = [NSString stringWithFormat:@"PAID $%@ FOR %@", self.deal.itemPrice, [self.deal.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"REDEEMED";
         accentColor = [UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255];
         [self.headerIcon setImage:[UIImage imageNamed:@"drinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        self.headerExplanationText.text = @"Text more friends to keep earning free drinks. And don’t forget to tip!";
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Text more friends to meet you to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
 

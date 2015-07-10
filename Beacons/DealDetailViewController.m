@@ -277,10 +277,17 @@
             yelpReview.centerX = self.view.width/2;
             [yelpReview sd_setImageWithURL:self.deal.venue.yelpRating];
             
-            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByYelp"]];
-            poweredByYelp.y = 5;
-            poweredByYelp.x = self.view.width - 98;
+            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
+            poweredByYelp.y = 4;
+            poweredByYelp.x = self.view.width - 48;
             [yelpContainer addSubview:poweredByYelp];
+            
+            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 5, 67, 15)];
+            yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
+            yelpReviewCount.textAlignment = NSTextAlignmentRight;
+            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.deal.venue.yelpReviewCount];
+            [yelpContainer addSubview:yelpReviewCount];
             
             [yelpContainer addSubview:yelpReview];
         } else {
@@ -511,10 +518,17 @@
             yelpReview.centerX = self.view.width/2;
             [yelpReview sd_setImageWithURL:self.happyHour.venue.yelpRating];
             
-            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByYelp"]];
-            poweredByYelp.y = 5;
-            poweredByYelp.x = self.view.width - 98;
+            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
+            poweredByYelp.y = 4;
+            poweredByYelp.x = self.view.width - 48;
             [yelpContainer addSubview:poweredByYelp];
+            
+            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 5, 67, 15)];
+            yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
+            yelpReviewCount.textAlignment = NSTextAlignmentRight;
+            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.happyHour.venue.yelpReviewCount];
+            [yelpContainer addSubview:yelpReviewCount];
             
             [yelpContainer addSubview:yelpReview];
         } else {
