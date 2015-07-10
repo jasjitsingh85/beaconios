@@ -270,6 +270,23 @@
         venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [self.mainScroll addSubview:venueHeadingLabel];
         
+        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
+        [self.mainScroll addSubview:yelpContainer];
+        if (![self.deal.venue.yelpRating isEmpty]) {
+            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
+            yelpReview.centerX = self.view.width/2;
+            [yelpReview sd_setImageWithURL:self.deal.venue.yelpRating];
+            
+            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByYelp"]];
+            poweredByYelp.y = 5;
+            poweredByYelp.x = self.view.width - 98;
+            [yelpContainer addSubview:poweredByYelp];
+            
+            [yelpContainer addSubview:yelpReview];
+        } else {
+            yelpContainer.height = 0;
+        }
+        
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
         CGRect venueDescriptionHeight = [self.deal.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
@@ -277,7 +294,7 @@
         self.venueTextLabel = [[UILabel alloc] init];
         self.venueTextLabel.x = 0;
         self.venueTextLabel.width = self.view.width - 50;
-        self.venueTextLabel.y = venueHeadingLabel.y + 25;
+        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 25;
         self.venueTextLabel.height = venueDescriptionHeight.size.height;
         self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
         self.venueTextLabel.centerX = self.view.width/2;
@@ -487,11 +504,28 @@
         venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
         [self.mainScroll addSubview:venueHeadingLabel];
         
+        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 20, self.view.width, 25)];
+        [self.mainScroll addSubview:yelpContainer];
+        if (![self.happyHour.venue.yelpRating isEmpty]) {
+            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
+            yelpReview.centerX = self.view.width/2;
+            [yelpReview sd_setImageWithURL:self.happyHour.venue.yelpRating];
+            
+            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"poweredByYelp"]];
+            poweredByYelp.y = 5;
+            poweredByYelp.x = self.view.width - 98;
+            [yelpContainer addSubview:poweredByYelp];
+            
+            [yelpContainer addSubview:yelpReview];
+        } else {
+            yelpContainer.height = 0;
+        }
+        
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
         CGRect happyHourVenueHeight = [self.happyHour.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
         
-        self.venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 40, self.view.width - 50, happyHourVenueHeight.size.height)];
+        self.venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + yelpContainer.height + 40, self.view.width - 50, happyHourVenueHeight.size.height)];
         self.venueTextLabel.centerX = self.view.width/2;
         self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
         self.venueTextLabel.centerX = self.view.width/2;

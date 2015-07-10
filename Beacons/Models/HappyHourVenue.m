@@ -26,6 +26,8 @@
          self.imageURL = [NSURL URLWithString:imageUrl];
     }
     self.placeDescription = dictionary[@"place_description"];
+    self.yelpID = @"test";
+    self.yelpRating = [NSURL URLWithString:@"http://s3-media2.fl.yelpcdn.com/assets/2/www/img/ccf2b76faa2c/ico/stars/v1/stars_large_4.png"];
     
     return self;
 }

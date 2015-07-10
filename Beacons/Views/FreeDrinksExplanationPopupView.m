@@ -87,7 +87,7 @@
     launchInviteButton.size = CGSizeMake(240.25, 35);
     launchInviteButton.centerX = (self.width/2.0) - .75;
     launchInviteButton.y = 396;
-    [launchInviteButton setTitle:@"SURE! INVITE FRIENDS" forState:UIControlStateNormal];
+    [launchInviteButton setTitle:@"INVITE FRIENDS" forState:UIControlStateNormal];
     [launchInviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     launchInviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     [launchInviteButton addTarget:self action:@selector(dismissAndOpenInviteView) forControlEvents:UIControlEventTouchUpInside];
