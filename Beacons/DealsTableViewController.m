@@ -936,19 +936,20 @@ typedef enum dealTypeStates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.selectedDeals.count;
-
+    if (self.dealType == HOTSPOT) {
+        return self.selectedDeals.count + 1;
+    } else {
+        return self.selectedDeals.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    return 151;
-//    if (indexPath.row < self.hotspots.count) {
-//        return 151;
-//    } else {
-//        return 113;
-//    }
+    if (self.dealType == HOTSPOT && indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]){
+        return 0;
+    } else {
+        return 151;   
+    }
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
@@ -961,11 +962,13 @@ typedef enum dealTypeStates
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.dealType == HOTSPOT) {
-        Deal *deal;
-        deal = self.selectedDeals[indexPath.row];
-        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.deal = deal;
-        [self.navigationController pushViewController:dealViewController animated:YES];
+        if (indexPath.row != 0) {
+            Deal *deal;
+            deal = self.selectedDeals[indexPath.row - 1];
+            DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+            dealViewController.deal = deal;
+            [self.navigationController pushViewController:dealViewController animated:YES];
+        }
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
         happyHour = self.selectedDeals[indexPath.row];
@@ -996,28 +999,100 @@ typedef enum dealTypeStates
     }
 }
 
+- (UITableViewCell *)topExplanationTile
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
+    headerIcon.y = 0;
+    headerIcon.centerX = cell.contentView.width/2;
+    [cell.contentView addSubview:headerIcon];
+    
+    UILabel *tileHeading = [[UILabel alloc] init];
+    tileHeading.width = 150;
+    tileHeading.height = 30;
+    tileHeading.centerX = cell.contentView.width/2;
+    tileHeading.y = 25;
+    tileHeading.textAlignment = NSTextAlignmentCenter;
+    tileHeading.textColor = [UIColor blackColor];
+    tileHeading.text = @"WHAT IS A HOTSPOT?";
+    tileHeading.font = [ThemeManager boldFontOfSize:12];
+    [cell.contentView addSubview:tileHeading];
+    
+    UILabel *tileTextBody = [[UILabel alloc] init];
+    tileTextBody.width = cell.contentView.width - 50;
+    tileTextBody.height = 70;
+    tileTextBody.centerX = cell.contentView.width/2;
+    tileTextBody.y = 45;
+    tileTextBody.numberOfLines = 4;
+    tileTextBody.textAlignment = NSTextAlignmentCenter;
+    tileTextBody.textColor = [UIColor blackColor];
+    tileTextBody.text = @"We buy drinks wholesale from bars, giving you exclusive specials. Draft beers, cocktails and shots for as little as $1. You can use Hotspots any time and you never have to wait for the check.";
+    tileTextBody.font = [ThemeManager lightFontOfSize:12];
+    [cell.contentView addSubview:tileTextBody];
+    
+    //    if (self.deal.inAppPayment){
+    ////        cell.indentationLevel = 1;
+    ////        cell.indentationWidth = 5;
+    ////        cell.backgroundColor = [UIColor whiteColor];
+    ////        cell.textLabel.text = @"HERE'S THE DEAL:";
+    ////        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
+    ////        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    ////        cell.detailTextLabel.y = 45;
+    ////        cell.detailTextLabel.text = self.deal.dealDescription;
+    ////        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
+    ////        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
+    ////        cell.detailTextLabel.numberOfLines = 0;
+    //    } else {
+    //        cell.indentationLevel = 1;
+    //        cell.indentationWidth = 5;
+    //        cell.backgroundColor = [UIColor whiteColor];
+    //        cell.textLabel.text = @"HERE'S THE DEAL:";
+    //        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
+    //        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    //        cell.detailTextLabel.y = 45;
+    //        cell.detailTextLabel.text = self.deal.dealDescription;
+    //        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
+    //        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
+    //        cell.detailTextLabel.numberOfLines = 0;
+    //    }
+    
+    return cell;
+}
+
+- (void)seenHotspotTile
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if (self.dealType == HOTSPOT) {
-        Deal *deal;
-        deal = self.hotspots[indexPath.row];
-        
-        NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
-        DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
-        
-        if (!dealCell) {
-            dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
-            dealCell.backgroundColor = [UIColor clearColor];
-            dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0) {
+            return [self topExplanationTile];
+        } else {
+            Deal *deal;
+            deal = self.hotspots[indexPath.row - 1];
+            
+            NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
+            DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
+            
+            if (!dealCell) {
+                dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
+                dealCell.backgroundColor = [UIColor clearColor];
+                dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+            [recognizer setNumberOfTapsRequired:1];
+            [dealCell.contentView addGestureRecognizer:recognizer];
+            
+            dealCell.deal = deal;
+            return dealCell;
         }
-        
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-        [recognizer setNumberOfTapsRequired:1];
-        [dealCell.contentView addGestureRecognizer:recognizer];
-        
-        dealCell.deal = deal;
-        return dealCell;
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
         happyHour = self.happyHours[indexPath.row];
