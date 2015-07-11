@@ -48,7 +48,7 @@
     UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
     drinkIcon.size = CGSizeMake(30, 30);
     drinkIcon.centerX = self.width/2;
-    drinkIcon.y = 237;
+    drinkIcon.y = 257;
     [self.imageView addSubview:drinkIcon];
     
     UILabel *headerTitle = [[UILabel alloc] init];
@@ -57,30 +57,30 @@
     headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
-    headerTitle.y = 260;
-    headerTitle.text = @"WANT A FREE DRINK?";
+    headerTitle.y = 280;
+    headerTitle.text = @"GET FREE DRINKS.";
     [self.imageView addSubview:headerTitle];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 270, self.width - 110, 80)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 295, self.width - 110, 80)];
     textLabel.centerX = self.width/2;
     textLabel.font = [ThemeManager lightFontOfSize:12];
     textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.numberOfLines = 4;
-    textLabel.text = @"Get free drinks for you and your friends when they join Hotspot. Support the app by sharing the love!";
+    textLabel.text = @"Send friends a free drink, and you’ll get one too. Redeem free drinks when you set a Hotspot. Free drinks are eligible for any drink that costs $5 or less.";
     [self.imageView addSubview:textLabel];
     
-    UILabel *textLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 325, self.width - 110, 80)];
-    textLabelLineTwo.centerX = self.width/2;
-    textLabelLineTwo.font = [ThemeManager lightFontOfSize:12];
-    textLabelLineTwo.textAlignment = NSTextAlignmentCenter;
-    textLabelLineTwo.numberOfLines = 1;
-    textLabelLineTwo.text = @"Redeem drinks once you set a Hotspot";
-    [self.imageView addSubview:textLabelLineTwo];
+//    UILabel *textLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 325, self.width - 110, 80)];
+//    textLabelLineTwo.centerX = self.width/2;
+//    textLabelLineTwo.font = [ThemeManager lightFontOfSize:12];
+//    textLabelLineTwo.textAlignment = NSTextAlignmentCenter;
+//    textLabelLineTwo.numberOfLines = 2;
+//    textLabelLineTwo.text = @"Redeem free drinks when you set a Hotspot. Free drinks are eligible for any drink that costs $5 or less.";
+//    [self.imageView addSubview:textLabelLineTwo];
     
-    NSRange range = NSMakeRange(0, 6);
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:textLabelLineTwo.text];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
-    textLabelLineTwo.attributedText = attributedText;
+//    NSRange range = NSMakeRange(0, 6);
+//    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:textLabelLineTwo.text];
+//    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+//    textLabelLineTwo.attributedText = attributedText;
     
     UIButton *launchInviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     launchInviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
