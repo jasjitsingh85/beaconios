@@ -677,10 +677,10 @@ typedef enum dealTypeStates
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
                 //self.mapCenter = staticLocation.coordinate;
                 self.mapCenter = location.coordinate;
@@ -936,7 +936,9 @@ typedef enum dealTypeStates
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.dealType == HOTSPOT) {
+    if (self.dealType == HOTSPOT && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+        return self.selectedDeals.count + 1;
+    } else if (self.dealType == HAPPY_HOUR && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
         return self.selectedDeals.count + 1;
     } else {
         return self.selectedDeals.count;
@@ -947,9 +949,29 @@ typedef enum dealTypeStates
 {
     if (self.dealType == HOTSPOT && indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]){
         return 0;
+    } else if (self.dealType == HAPPY_HOUR && indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
+        return 0;
     } else {
         return 151;   
     }
+}
+
+-(void)hotspotGotItButtonTouched:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
+    [self.tableView reloadData];
+//    [self.tableView beginUpdates];
+//    [self.tableView endUpdates];
+    
+}
+
+-(void)happyHourGotItButtonTouched:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
+    [self.tableView reloadData];
+    //    [self.tableView beginUpdates];
+    //    [self.tableView endUpdates];
+    
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
@@ -999,66 +1021,105 @@ typedef enum dealTypeStates
     }
 }
 
-- (UITableViewCell *)topExplanationTile
+- (UITableViewCell *)topHappyHourExplanationTile
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
-    headerIcon.y = 0;
-    headerIcon.centerX = cell.contentView.width/2;
-    [cell.contentView addSubview:headerIcon];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
+        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
+        headerIcon.y = 5;
+        headerIcon.centerX = cell.contentView.width/2;
+        [cell.contentView addSubview:headerIcon];
+        
+        UILabel *tileHeading = [[UILabel alloc] init];
+        tileHeading.width = 250;
+        tileHeading.height = 30;
+        tileHeading.centerX = cell.contentView.width/2;
+        tileHeading.y = 30;
+        tileHeading.textAlignment = NSTextAlignmentCenter;
+        tileHeading.textColor = [UIColor blackColor];
+        tileHeading.text = @"HAPPY HOURS ON HOTSPOT";
+        tileHeading.font = [ThemeManager boldFontOfSize:12];
+        [cell.contentView addSubview:tileHeading];
+        
+        UILabel *tileTextBody = [[UILabel alloc] init];
+        tileTextBody.width = cell.contentView.width - 45;
+        tileTextBody.height = 70;
+        tileTextBody.centerX = cell.contentView.width/2;
+        tileTextBody.y = 50;
+        tileTextBody.numberOfLines = 4;
+        tileTextBody.textAlignment = NSTextAlignmentCenter;
+        tileTextBody.textColor = [UIColor blackColor];
+        tileTextBody.text = @"We’ve got the most comprehensive, up-to-date list of Happy Hours near you. Check out Hotspots to save even more with exclusive specials that are available even when happy hour isn’t";
+        tileTextBody.font = [ThemeManager lightFontOfSize:12];
+        [cell.contentView addSubview:tileTextBody];
+        
+        UIButton *gotItButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [gotItButton setTitle:@"Got It" forState:UIControlStateNormal];
+        gotItButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+        [gotItButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor]  forState:UIControlStateNormal];
+        //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
+        gotItButton.size = CGSizeMake(60, 40);
+        gotItButton.centerX = cell.contentView.width/2;
+        gotItButton.y = 110;
+        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+        [gotItButton addTarget:self action:@selector(happyHourGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:gotItButton];
+    }
     
-    UILabel *tileHeading = [[UILabel alloc] init];
-    tileHeading.width = 150;
-    tileHeading.height = 30;
-    tileHeading.centerX = cell.contentView.width/2;
-    tileHeading.y = 25;
-    tileHeading.textAlignment = NSTextAlignmentCenter;
-    tileHeading.textColor = [UIColor blackColor];
-    tileHeading.text = @"WHAT IS A HOTSPOT?";
-    tileHeading.font = [ThemeManager boldFontOfSize:12];
-    [cell.contentView addSubview:tileHeading];
+    return cell;
+}
+
+- (UITableViewCell *)topHotspotExplanationTile
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     
-    UILabel *tileTextBody = [[UILabel alloc] init];
-    tileTextBody.width = cell.contentView.width - 50;
-    tileTextBody.height = 70;
-    tileTextBody.centerX = cell.contentView.width/2;
-    tileTextBody.y = 45;
-    tileTextBody.numberOfLines = 4;
-    tileTextBody.textAlignment = NSTextAlignmentCenter;
-    tileTextBody.textColor = [UIColor blackColor];
-    tileTextBody.text = @"We buy drinks wholesale from bars, giving you exclusive specials. Draft beers, cocktails and shots for as little as $1. You can use Hotspots any time and you never have to wait for the check.";
-    tileTextBody.font = [ThemeManager lightFontOfSize:12];
-    [cell.contentView addSubview:tileTextBody];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    //    if (self.deal.inAppPayment){
-    ////        cell.indentationLevel = 1;
-    ////        cell.indentationWidth = 5;
-    ////        cell.backgroundColor = [UIColor whiteColor];
-    ////        cell.textLabel.text = @"HERE'S THE DEAL:";
-    ////        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
-    ////        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    ////        cell.detailTextLabel.y = 45;
-    ////        cell.detailTextLabel.text = self.deal.dealDescription;
-    ////        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
-    ////        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
-    ////        cell.detailTextLabel.numberOfLines = 0;
-    //    } else {
-    //        cell.indentationLevel = 1;
-    //        cell.indentationWidth = 5;
-    //        cell.backgroundColor = [UIColor whiteColor];
-    //        cell.textLabel.text = @"HERE'S THE DEAL:";
-    //        cell.textLabel.font = [ThemeManager boldFontOfSize:16];
-    //        cell.textLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    //        cell.detailTextLabel.y = 45;
-    //        cell.detailTextLabel.text = self.deal.dealDescription;
-    //        cell.detailTextLabel.font = [ThemeManager lightFontOfSize:16];
-    //        cell.detailTextLabel.textColor = [UIColor unnormalizedColorWithRed:56 green:56 blue:56 alpha:255];
-    //        cell.detailTextLabel.numberOfLines = 0;
-    //    }
-    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
+        headerIcon.y = 5;
+        headerIcon.centerX = cell.contentView.width/2;
+        [cell.contentView addSubview:headerIcon];
+        
+        UILabel *tileHeading = [[UILabel alloc] init];
+        tileHeading.width = 150;
+        tileHeading.height = 30;
+        tileHeading.centerX = cell.contentView.width/2;
+        tileHeading.y = 30;
+        tileHeading.textAlignment = NSTextAlignmentCenter;
+        tileHeading.textColor = [UIColor blackColor];
+        tileHeading.text = @"WHAT IS A HOTSPOT?";
+        tileHeading.font = [ThemeManager boldFontOfSize:12];
+        [cell.contentView addSubview:tileHeading];
+        
+        UILabel *tileTextBody = [[UILabel alloc] init];
+        tileTextBody.width = cell.contentView.width - 45;
+        tileTextBody.height = 70;
+        tileTextBody.centerX = cell.contentView.width/2;
+        tileTextBody.y = 50;
+        tileTextBody.numberOfLines = 4;
+        tileTextBody.textAlignment = NSTextAlignmentCenter;
+        tileTextBody.textColor = [UIColor blackColor];
+        tileTextBody.text = @"We buy drinks wholesale from bars, giving you access to exclusive, anytime drink specials. Get craft beers, cocktails, or shots for as little as $1, and never wait for the check when you pay with Hotspot.";
+        tileTextBody.font = [ThemeManager lightFontOfSize:12];
+        [cell.contentView addSubview:tileTextBody];
+        
+        UIButton *gotItButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [gotItButton setTitle:@"Got It" forState:UIControlStateNormal];
+        gotItButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+        [gotItButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor]  forState:UIControlStateNormal];
+        //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
+        gotItButton.size = CGSizeMake(60, 40);
+        gotItButton.centerX = cell.contentView.width/2;
+        gotItButton.y = 110;
+        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+        [gotItButton addTarget:self action:@selector(hotspotGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:gotItButton];
+    }
+
     return cell;
 }
 
@@ -1067,12 +1128,17 @@ typedef enum dealTypeStates
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
 }
 
+- (void)seenHappyHourTile
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if (self.dealType == HOTSPOT) {
         if (indexPath.row == 0) {
-            return [self topExplanationTile];
+            return [self topHotspotExplanationTile];
         } else {
             Deal *deal;
             deal = self.hotspots[indexPath.row - 1];
@@ -1094,32 +1160,36 @@ typedef enum dealTypeStates
             return dealCell;
         }
     } else if (self.dealType == HAPPY_HOUR) {
-        HappyHour *happyHour;
-        happyHour = self.happyHours[indexPath.row];
-        
-        NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
-        HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];
-        
-        if (!happyHourCell) {
-            happyHourCell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HappyHourCellIdentifier];
-            happyHourCell.backgroundColor = [UIColor clearColor];
-            happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-        [recognizer setNumberOfTapsRequired:1];
-        [happyHourCell.contentView addGestureRecognizer:recognizer];
-        
-        happyHourCell.happyHour = happyHour;
-        if (indexPath.row % 2 == 0) {
-            happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.05];
-            //happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+        if (indexPath.row == 0) {
+            return [self topHappyHourExplanationTile];
         } else {
-            //happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.15];
-            happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+            HappyHour *happyHour;
+            happyHour = self.happyHours[indexPath.row];
+            
+            NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
+            HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];
+            
+            if (!happyHourCell) {
+                happyHourCell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HappyHourCellIdentifier];
+                happyHourCell.backgroundColor = [UIColor clearColor];
+                happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+            
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+            [recognizer setNumberOfTapsRequired:1];
+            [happyHourCell.contentView addGestureRecognizer:recognizer];
+            
+            happyHourCell.happyHour = happyHour;
+            if (indexPath.row % 2 == 0) {
+                happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.05];
+                //happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+            } else {
+                //happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.15];
+                happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
+            }
+            
+            return happyHourCell;
         }
-
-        return happyHourCell;
     } else if (self.dealType == REWARD) {
         Deal *deal;
         NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
