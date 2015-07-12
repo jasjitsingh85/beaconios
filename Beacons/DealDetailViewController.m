@@ -246,8 +246,8 @@
     dealTextLabel.font = [ThemeManager lightFontOfSize:13];
     dealTextLabel.textAlignment = NSTextAlignmentCenter;
     dealTextLabel.numberOfLines = 0;
-    if ([[self.deal.itemName lowercaseString] hasPrefix:@"a"] || [[self.deal.itemName lowercaseString] hasPrefix:@"e"] || [[self.deal.itemName lowercaseString] hasPrefix:@"i"]|| [[self.deal.itemName lowercaseString] hasPrefix:@"o"]|| [[self.deal.itemName lowercaseString] hasPrefix:@"u"]) {
-        dealTextLabel.text = [NSString stringWithFormat:@"You get an %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+    if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
+        dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
     } else {
         dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
     }
