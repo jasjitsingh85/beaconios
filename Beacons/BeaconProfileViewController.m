@@ -48,6 +48,7 @@
 //#import "RewardsViewController.h"
 #import "DealStatus.h"
 #import "DealView.h"
+#import "NeedHelpExplanationPopupView.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, SetBeaconViewControllerDelegate, DealRedemptionViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -196,7 +197,7 @@
     self.feedbackButton.layer.cornerRadius = 2;
     self.feedbackButton.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
     self.feedbackButton.layer.borderWidth = 1.0;
-    [self.feedbackButton setTitle:@"REPORT ISSUE" forState:UIControlStateNormal];
+    [self.feedbackButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
     [self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
     [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -1244,7 +1245,12 @@
 
 - (void) feedbackButtonTouched:(id)sender
 {
-    [self feedbackDeal];
+    
+    NeedHelpExplanationPopupView *modal = [[NeedHelpExplanationPopupView alloc] init];
+    modal.beacon = self.beacon;
+    [modal show];
+    
+//    [self feedbackDeal];
 }
 
 - (void)feedbackDeal
