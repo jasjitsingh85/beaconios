@@ -215,6 +215,10 @@
     self.dealRedemptionViewController.view.y = 230;
     self.dealRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
+    if (!self.beacon.userDealStatus.paymentAuthorization) {
+        [self initPaymentsViewControllerAndSetDeal];
+    }
+    
 //    [self addChildViewController:self.beaconChatViewController];
 //    [self.view addSubview:self.beaconChatViewController.view];
 //    self.beaconChatViewController.view.frame = self.view.bounds;
@@ -468,10 +472,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (!self.beacon.userDealStatus.paymentAuthorization) {
-        [self initPaymentsViewControllerAndSetDeal];
-    }
+
 //    [self updateInviteListInsets];
 //    [self updateChatDesiredInsets];
 //    [self updateDealRedemptionInsets];

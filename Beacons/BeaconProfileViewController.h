@@ -18,7 +18,9 @@
 - (void)refreshBeaconData;
 - (void)promptForCheckIn;
 - (void)initPaymentsViewControllerAndSetDeal;
+- (void)redeemRewardItem;
 - (void) inviteMoreFriends;
 - (void)refreshDeal;
+- (void) checkPaymentsOnFile;
 
 @end

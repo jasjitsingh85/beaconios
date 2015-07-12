@@ -13,7 +13,9 @@
 @protocol DealRedemptionViewControllerDelegate <NSObject>
 
 - (void)initPaymentsViewControllerAndSetDeal;
+- (void) redeemRewardItem;
 - (void) inviteMoreFriends;
+- (void) checkPaymentsOnFile;
 //-(BOOL) isUserCreator;
 
 @end

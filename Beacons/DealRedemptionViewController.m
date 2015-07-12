@@ -326,27 +326,18 @@
             return;
         }
     } else {
-        //if ([self.delegate isUserCreator]) {
-            [self.delegate initPaymentsViewControllerAndSetDeal];
-        //} else {
-        //    [[[UIAlertView alloc] initWithTitle:@"Voucher Inactive" message:@"The host hasn't opened a tab" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        //    return;
-        //}
+        [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
+            if ([rewardItemsString intValue] > 0 && self.beacon.deal.rewardEligibility) {
+                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                [self promptToUseRewardItems];
+            } else {
+                [self.delegate initPaymentsViewControllerAndSetDeal];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        }];
     }
-//            NSString *message;
-//        NSString *title = @"Sorry";
-//        if ([self dealUpcoming]) {
-//            message = @"This voucher isn't available yet.";
-//        }
-//        else {
-//            message = @"This voucher has expired.";
-//        }
-//        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:message];
-//        [alertView bk_setCancelButtonWithTitle:@"OK" handler:nil];
-//        [alertView show];
-//        }
-        
-//    }
 }
 
 - (void)redeemDeal
@@ -515,6 +506,18 @@
 //    }
     
     return cell;
+}
+
+- (void)promptToUseRewardItems
+{    
+    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Free Drink?" message:@"Do you want to pay for your drink or use one of your free drinks?"];
+    [alertView bk_addButtonWithTitle:@"Use Free Drink" handler:^{
+        [self.delegate redeemRewardItem];
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Pay for Drink" handler:^{
+        [self.delegate checkPaymentsOnFile];
+    }];
+    [alertView show];
 }
 
 -(void)refreshBeaconDataInDeal
