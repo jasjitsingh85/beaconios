@@ -108,6 +108,33 @@
     return self;
 }
 
+- (void) setNumberOfRewardItems:(NSString *)numberOfRewardItems
+{
+    UILabel *numberOfFreeDrinksHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 130, self.width - 100, 80)];
+    numberOfFreeDrinksHeading.centerX = self.width/2;
+    numberOfFreeDrinksHeading.font = [ThemeManager boldFontOfSize:15];
+    numberOfFreeDrinksHeading.textColor = [UIColor whiteColor];
+    numberOfFreeDrinksHeading.textAlignment = NSTextAlignmentCenter;
+    numberOfFreeDrinksHeading.numberOfLines = 1;
+    [self.imageView addSubview:numberOfFreeDrinksHeading];
+    
+    if ([numberOfRewardItems intValue] == 1) {
+        numberOfFreeDrinksHeading.text = @"YOU HAVE        FREE DRINK";
+    } else {
+        numberOfFreeDrinksHeading.text = @"YOU HAVE        FREE DRINKS";
+    }
+    
+    UILabel *numberOfFreeDrinks = [[UILabel alloc] initWithFrame:CGRectMake(127, 127, 40, 80)];
+//    numberOfFreeDrinks.centerX = self.width/2;
+    numberOfFreeDrinks.font = [ThemeManager boldFontOfSize:24];
+    numberOfFreeDrinks.textColor = [UIColor whiteColor];
+    numberOfFreeDrinks.textAlignment = NSTextAlignmentCenter;
+    numberOfFreeDrinks.numberOfLines = 1;
+    numberOfFreeDrinks.text = [NSString stringWithFormat:@"%@", numberOfRewardItems];
+    [self.imageView addSubview:numberOfFreeDrinks];
+    
+}
+
 - (void)show
 {
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];

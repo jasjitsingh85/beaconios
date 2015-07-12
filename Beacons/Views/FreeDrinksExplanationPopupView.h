@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) NSAttributedString *attributedInviteText;
 @property (strong, nonatomic) UIButton *doneButton;
+@property (strong, nonatomic) NSString *numberOfRewardItems;
 @property (assign) id <FreeDrinksExplanationViewControllerDelegate> delegate;
 
 - (void)show;

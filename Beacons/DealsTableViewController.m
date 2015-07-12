@@ -91,6 +91,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *marketPriceLabel;
+@property (strong, nonatomic) NSString *numberOfRewardItems;
 
 //@property (strong, nonatomic) UIView *lockedOverlay;
 //@property (strong, nonatomic) UIImageView *lockButton;
@@ -476,6 +477,7 @@ typedef enum dealTypeStates
 {
     FreeDrinksExplanationPopupView *modal = [[FreeDrinksExplanationPopupView alloc] init];
     modal.delegate = self;
+    modal.numberOfRewardItems = self.numberOfRewardItems;
     [modal show];
 }
 
@@ -560,8 +562,8 @@ typedef enum dealTypeStates
 - (void)updateRewardItems
 {
     [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *numberOfRewardItems = responseObject[@"number_of_reward_items"];
-        self.rewardScore.text = [NSString stringWithFormat:@"%@x", numberOfRewardItems];
+        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
+        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         self.rewardScore.text = @"0x";
     }];
