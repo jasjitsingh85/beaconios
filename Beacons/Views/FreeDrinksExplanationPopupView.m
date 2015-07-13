@@ -58,7 +58,7 @@
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
     headerTitle.y = 280;
-    headerTitle.text = @"GET FREE DRINKS.";
+    headerTitle.text = @"GET FREE DRINKS";
     [self.imageView addSubview:headerTitle];
     
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 295, self.width - 110, 80)];

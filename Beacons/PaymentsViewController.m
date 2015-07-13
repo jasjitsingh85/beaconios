@@ -85,6 +85,8 @@
 //    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
 //    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"SAVE";
+    dropInViewController.summaryTitle = @"Save Time and Money";
+    dropInViewController.summaryDescription = @"Save time at the bar by adding payment before you go out. You’re only charged after you’ve redeemed your drink.";
     dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
     
     // The way you present your BTDropInViewController instance is up to you.
@@ -94,7 +96,7 @@
                                                                                                           action:@selector(userDidCancelPayment)];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
-    navigationController.navigationBar.topItem.title = @"Add Payment";
+    navigationController.navigationBar.topItem.title = @"One Time Setup";
     navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
     navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
