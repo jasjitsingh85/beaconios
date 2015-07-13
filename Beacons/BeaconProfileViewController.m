@@ -80,6 +80,7 @@
 @property (assign, nonatomic) BOOL keyboardShown;
 @property (assign, nonatomic) BOOL promptShowing;
 @property (assign, nonatomic) BOOL dealMode;
+@property (assign, nonatomic) BOOL hasCheckedPayment;
 @property (strong, nonatomic) DealView *dealView;
 
 @end
@@ -215,9 +216,7 @@
     self.dealRedemptionViewController.view.y = 230;
     self.dealRedemptionViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    if (!self.beacon.userDealStatus.paymentAuthorization) {
-        [self initPaymentsViewControllerAndSetDeal];
-    }
+    self.hasCheckedPayment = NO;
     
 //    [self addChildViewController:self.beaconChatViewController];
 //    [self.view addSubview:self.beaconChatViewController.view];
@@ -651,6 +650,12 @@
 //        } failure:nil];
 //    }
 
+    NSLog(@"AUTH Boolean: %d", self.beacon.userDealStatus.paymentAuthorization);
+    if (!self.beacon.userDealStatus.paymentAuthorization && !self.hasCheckedPayment) {
+        [self initPaymentsViewControllerAndSetDeal];
+        self.hasCheckedPayment = YES;
+    }
+    
 }
 
 //

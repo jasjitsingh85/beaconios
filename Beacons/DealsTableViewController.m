@@ -995,7 +995,7 @@ typedef enum dealTypeStates
         }
     } else if (self.dealType == HAPPY_HOUR) {
         HappyHour *happyHour;
-        happyHour = self.selectedDeals[indexPath.row];
+        happyHour = self.selectedDeals[indexPath.row - 1];
 //        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
         dealViewController.happyHour = happyHour;
@@ -1166,7 +1166,7 @@ typedef enum dealTypeStates
             return [self topHappyHourExplanationTile];
         } else {
             HappyHour *happyHour;
-            happyHour = self.happyHours[indexPath.row];
+            happyHour = self.happyHours[indexPath.row - 1];
             
             NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
             HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];

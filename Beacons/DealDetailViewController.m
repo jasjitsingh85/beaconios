@@ -276,6 +276,7 @@
         
         UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
         [self.mainScroll addSubview:yelpContainer];
+        NSLog(@"yelpRating: %@", self.deal.venue.yelpRating);
         if (![self.deal.venue.yelpRating isEmpty]) {
             UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
             yelpReview.centerX = self.view.width/2;

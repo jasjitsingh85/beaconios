@@ -386,7 +386,7 @@
     } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
-        voucherTitleText = @"VOUCHER FOR:";
+        voucherTitleText = @"VOUCHER REDEEMED";
         itemNameText = [NSString stringWithFormat:@"PAID $%@ FOR %@", self.deal.itemPrice, [self.deal.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"REDEEMED";
@@ -514,9 +514,10 @@
     [alertView bk_addButtonWithTitle:@"Use Free Drink" handler:^{
         [self.delegate redeemRewardItem];
     }];
-    [alertView bk_setCancelButtonWithTitle:@"Pay for Drink" handler:^{
+    [alertView bk_addButtonWithTitle:@"Pay for Drink" handler:^{
         [self.delegate checkPaymentsOnFile];
     }];
+    [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [alertView show];
 }
 
