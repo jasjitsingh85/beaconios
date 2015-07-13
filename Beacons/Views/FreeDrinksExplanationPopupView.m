@@ -66,7 +66,7 @@
     textLabel.font = [ThemeManager lightFontOfSize:12];
     textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.numberOfLines = 4;
-    textLabel.text = @"Send friends a free drink, and you’ll get one too. Redeem free drinks when you set a Hotspot. Free drinks are eligible for any drink that costs $5 or less.";
+    textLabel.text = @"Send friends a free drink, and you’ll get one too. Set a Hotspot to redeem your free drinks (for any drink $5 or less)";
     [self.imageView addSubview:textLabel];
     
 //    UILabel *textLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 325, self.width - 110, 80)];
