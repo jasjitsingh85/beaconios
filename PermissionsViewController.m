@@ -161,7 +161,7 @@ typedef enum {
     self.titleLabel.text = @"Link Payment";
     [self.headerIcon setImage: [UIImage imageNamed:@"creditCardIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspots buys drinks wholesale from bars, giving you huge discounts and a quick checkout when you buy through the app."]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot buys drinks wholesale from bars, giving you huge discounts and a quick checkout when you buy through the app."]];
     [self.confirmButton setTitle:@"Link Payment" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
     self.confirmButton.y = 300;
