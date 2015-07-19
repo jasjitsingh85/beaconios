@@ -40,6 +40,9 @@
 		41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */; };
 		41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F681B52EACA00252158 /* needHelpModalBackground@2x.png */; };
 		41030F6B1B52EB7B00252158 /* helpSign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F6A1B52EB7B00252158 /* helpSign@2x.png */; };
+		41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F6C1B5C27EF00252158 /* homeIcon@2x.png */; };
+		41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F6E1B5C326B00252158 /* promoCode@2x.png */; };
+		41030F721B5C34EB00252158 /* PromoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41030F711B5C34EB00252158 /* PromoViewController.m */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -357,6 +360,10 @@
 		41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedHelpExplanationPopupView.m; sourceTree = "<group>"; };
 		41030F681B52EACA00252158 /* needHelpModalBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "needHelpModalBackground@2x.png"; sourceTree = "<group>"; };
 		41030F6A1B52EB7B00252158 /* helpSign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helpSign@2x.png"; sourceTree = "<group>"; };
+		41030F6C1B5C27EF00252158 /* homeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeIcon@2x.png"; sourceTree = "<group>"; };
+		41030F6E1B5C326B00252158 /* promoCode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "promoCode@2x.png"; sourceTree = "<group>"; };
+		41030F701B5C34DE00252158 /* PromoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromoViewController.h; sourceTree = "<group>"; };
+		41030F711B5C34EB00252158 /* PromoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromoViewController.m; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1136,6 +1143,8 @@
 				96D52D241838415300496923 /* SecretSettingsViewController.xib */,
 				1FE443EB177ABCAE00469634 /* SettingsViewController.h */,
 				1FE443EC177ABCAE00469634 /* SettingsViewController.m */,
+				41030F701B5C34DE00252158 /* PromoViewController.h */,
+				41030F711B5C34EB00252158 /* PromoViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1228,6 +1237,7 @@
 				4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */,
 				415929701AFD8E37002BBCD0 /* mapMarker@2x.png */,
 				4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */,
+				41030F6E1B5C326B00252158 /* promoCode@2x.png */,
 				41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */,
 				410D19511B4F85BB002C5F0F /* poweredByYelp@2x.png */,
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
@@ -1235,6 +1245,7 @@
 				41F144141B27C3460010BCF1 /* redPin@2x.png */,
 				41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
+				41030F6C1B5C27EF00252158 /* homeIcon@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
 				41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */,
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
@@ -1553,6 +1564,7 @@
 				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,
 				96C7FEA2189737DA00A79CC3 /* martini@2x.png in Resources */,
 				41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */,
+				41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				41338FD619FA38CA0022211C /* marker@2x.png in Resources */,
 				41FD06271B377C6700F7DD08 /* documentIcon@2x.png in Resources */,
@@ -1594,6 +1606,7 @@
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
 				4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */,
 				4158AE611B43BBC20034BA4A /* menuButtonWithNotification@2x.png in Resources */,
+				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
@@ -1727,6 +1740,7 @@
 				96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */,
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
+				41030F721B5C34EB00252158 /* PromoViewController.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
 				410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */,
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,

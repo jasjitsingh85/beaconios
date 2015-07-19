@@ -380,7 +380,7 @@
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
         self.headerTitle.text = @"YOU'RE ALL SET!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You haven't been charged yet. Have your server tap the voucher below to redeem your $%@ %@", self.deal.itemPrice, self.deal.itemName];
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You haven't been charged yet. Have your server tap the voucher below to redeem your $%@ %@", self.deal.itemPrice, [self.deal.itemName lowercaseString]];
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
     } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {

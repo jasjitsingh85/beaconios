@@ -22,6 +22,7 @@
 #import "RewardManager.h"
 #import "BeaconProfileViewController.h"
 #import "SettingsViewController.h"
+#import "PromoViewController.h"
 #import "GroupsViewController.h"
 #import "Theme.h"
 #import "VoucherTableViewCell.h"
@@ -38,15 +39,19 @@
 @property (strong, nonatomic) UIView *dealsContainer;
 @property (strong, nonatomic) UIView *groupContainer;
 @property (strong, nonatomic) UIView *shareContainer;
+@property (strong, nonatomic) UIView *homeContainer;
 @property (strong, nonatomic) UIView *settingContainer;
 @property (strong, nonatomic) UIView *paymentContainer;
+@property (strong, nonatomic) UIView *promoContainer;
 //@property (strong, nonatomic) UIView *buttonContainerView;
 @property (strong, nonatomic) UIView *customHeaderView;
-@property (strong, nonatomic) UIButton *dealsButton;
+@property (strong, nonatomic) UILabel *dealsLabel;
 @property (strong, nonatomic) UIButton *settingsButton;
+@property (strong, nonatomic) UIButton *promoButton;
 @property (strong, nonatomic) UIButton *groupsButton;
 @property (strong, nonatomic) UIButton *paymentButton;
 @property (strong, nonatomic) UIButton *inviteFriendsButton;
+@property (strong, nonatomic) UIButton *homeButton;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) NSDictionary *daySeparatedBeacons;
 @property (strong, nonatomic) NSArray *vouchers;
@@ -76,7 +81,7 @@
     tableViewFrame.size.height = self.view.frame.size.height;
     self.menuViewContainer = [[UIView alloc] initWithFrame:tableViewFrame];
     self.menuViewContainer.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    self.menuViewContainer.backgroundColor = [UIColor unnormalizedColorWithRed:30 green:30 blue:30 alpha:255];
+    self.menuViewContainer.backgroundColor = [UIColor unnormalizedColorWithRed:51 green:40 blue:65 alpha:255];
 //    [self.tableViewContainer setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.view addSubview:self.menuViewContainer];
     
@@ -102,24 +107,45 @@
 //
 //    [self.menuViewContainer addSubview:dealsContainer];
     
+    
+    self.homeContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.homeContainer];
+    
+    self.homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.homeButton setTitle:@"HOME" forState:UIControlStateNormal];
+    [self.homeButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.homeButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
+    self.homeButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.homeButton setFrame:CGRectMake(0, 0, self.view.size.width, 50)];
+    self.homeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.homeButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+    [self.homeButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *homeIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homeIcon"]];
+    homeIcon.frame = CGRectMake(20, 12, 27, 27);
+    homeIcon.contentMode=UIViewContentModeScaleAspectFill;
+    [self.homeButton addSubview:homeIcon];
+    
+    [self.homeContainer addSubview:self.homeButton];
+    
     self.dealsContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 20, self.tableView.frame.size.width, 50 + self.tableView.size.height)];
     [self.menuViewContainer addSubview:self.dealsContainer];
-    self.dealsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.dealsButton setTitle:@"HOME" forState:UIControlStateNormal];
-    self.dealsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
-    self.dealsButton.titleLabel.textColor = [UIColor whiteColor];
-    [self.dealsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.dealsButton setFrame:CGRectMake(0, 0, self.dealsContainer.size.width, 50)];
-    self.dealsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    self.dealsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
-    [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.dealsLabel = [[UILabel alloc] init];
+    self.dealsLabel.text = @"HOTSPOTS";
+    self.dealsLabel.font = [ThemeManager boldFontOfSize:18];
+    self.dealsLabel.textColor = [UIColor whiteColor];
+    self.dealsLabel.frame =  CGRectMake(60, 0, self.dealsContainer.size.width, 50);
+    self.dealsLabel.textAlignment = NSTextAlignmentLeft;
+//    self.dealsLabel. = UIEdgeInsetsMake(0, 60, 0, 0);
+//    [self.dealsButton addTarget:self action:@selector(dealsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *dealsIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dealsIcon"]];
     dealsIcon.frame = CGRectMake(20, 12, 30, 30);
     dealsIcon.contentMode=UIViewContentModeScaleAspectFill;
-    [self.dealsButton addSubview:dealsIcon];
+    [self.dealsContainer addSubview:dealsIcon];
+    
     [self.dealsContainer addSubview:self.tableView];
-    [self.dealsContainer addSubview:self.dealsButton];
+    [self.dealsContainer addSubview:self.dealsLabel];
     
 //    UIView *groupContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + dealsContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
 //    UILabel *groupLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, groupContainer.size.width, 50)];
@@ -166,8 +192,26 @@
     shareIcon.frame = CGRectMake(16, 8, 30, 30);
     shareIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.inviteFriendsButton addSubview:shareIcon];
-    
     [self.shareContainer addSubview:self.inviteFriendsButton];
+    
+    self.promoContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
+    [self.menuViewContainer addSubview:self.promoContainer];
+    
+    self.promoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.promoButton setTitle:@"PROMOTIONS" forState:UIControlStateNormal];
+    [self.promoButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.promoButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
+    self.promoButton.titleLabel.textColor = [UIColor whiteColor];
+    [self.promoButton setFrame:CGRectMake(0, 0, self.shareContainer.size.width, 50)];
+    self.promoButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.promoButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+    [self.promoButton addTarget:self action:@selector(promoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *promoIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"promoCode"]];
+    promoIcon.frame = CGRectMake(16, 12, 30, 30);
+    promoIcon.contentMode=UIViewContentModeScaleAspectFill;
+    [self.promoButton addSubview:promoIcon];
+    [self.promoContainer addSubview:self.promoButton];
 
     self.paymentContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.shareContainer.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.paymentContainer];
@@ -433,6 +477,12 @@
     [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:settingsViewController animated:YES];
 }
 
+- (void)promoButtonTouched:(id)sender
+{
+    PromoViewController *promoViewController = [[PromoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:promoViewController animated:YES];
+}
+
 - (void)inviteFriendsButtonTouched:(id)sender
 {
     
@@ -592,10 +642,17 @@
 {
     int itemCount = (int)[self.beacons count] + (int)[self.vouchers count];
     self.tableView.frame = CGRectMake(0, 50, self.view.width, 50 * itemCount);
-    self.dealsContainer.frame = CGRectMake(0, 20, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
-    //self.groupContainer.frame = CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
-    self.shareContainer.frame = CGRectMake(0, 70 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
-    self.paymentContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+    if (itemCount == 0) {
+        self.dealsContainer.height = 0;
+        self.dealsContainer.hidden = YES;
+        self.tableView.height = 0;
+    } else {
+        self.dealsContainer.hidden = NO;
+        self.dealsContainer.frame = CGRectMake(0, 70, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
+    }
+    self.shareContainer.frame = CGRectMake(0, 70 + (50 * itemCount) + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.promoContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
+    self.paymentContainer.frame = CGRectMake(0, self.promoContainer.origin.y + self.promoContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     self.settingContainer.frame = CGRectMake(0, self.paymentContainer.origin.y + self.paymentContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 }

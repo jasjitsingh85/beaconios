@@ -28,7 +28,7 @@
     }
     
     self.backgroundColor = [UIColor clearColor];
-    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 48)];
+    self.thumbnailContainerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 50)];
 //    CGRect thumbnailFrame = CGRectZero;
 //    thumbnailFrame.size = CGSizeMake(64, 64);
 //    thumbnailFrame.origin.x = 16;
@@ -40,8 +40,8 @@
 //    self.thumbnailContainerView.layer.borderWidth = 1.5;
 //    self.thumbnailContainerView.backgroundColor = [UIColor darkGrayColor];
 //    [self.thumbnailContainerView setShadowWithColor:[UIColor blackColor] opacity:1 radius:2 offset:CGSizeMake(0, 2) shouldDrawPath:YES];
-    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.size.width, 48)];
-    backgroundView.backgroundColor = [UIColor unnormalizedColorWithRed:41 green:41 blue:41 alpha:255];
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.size.width, 50)];
+    backgroundView.backgroundColor = [UIColor unnormalizedColorWithRed:33 green:26 blue:42 alpha:255];
     [self.contentView addSubview:backgroundView];
     [self.contentView addSubview:self.thumbnailContainerView];
     
@@ -77,6 +77,10 @@
 //    self.inviteLabel.font = self.timeLabel.font;
 //    self.inviteLabel.text = @"1 here, 0 invited";
 //    [self.contentView addSubview:self.inviteLabel];
+    
+    UIView *greenBar = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 4, 50)];
+    greenBar.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:255 blue:118 alpha:255];
+    [self.contentView addSubview:greenBar];
     
     return self;
 }
@@ -120,7 +124,7 @@
 ////        self.thumbnailImageView.frame = self.thumbnailContainerView.bounds;
 ////        self.thumbnailImageView.layer.cornerRadius = self.thumbnailContainerView.layer.cornerRadius;
 ////    }
-    NSString *firstLine = [NSString stringWithFormat:@"%@: %@ @ %@", beacon.creator.firstName, [beacon.deal.dealDescriptionShort uppercaseString], [beacon.deal.venue.name uppercaseString]];
+    NSString *firstLine = [NSString stringWithFormat:@"VOUCHER FOR %@", [beacon.deal.itemName uppercaseString]];
 //    if (beacon.address && beacon.address.length) {
 //        titleText = [titleText stringByAppendingString:[NSString stringWithFormat:@" @ %@", beacon.address]];
 //    }
@@ -139,7 +143,7 @@
         going += beaconStatus.beaconStatusOption == BeaconStatusOptionGoing;
         here += beaconStatus.beaconStatusOption == BeaconStatusOptionHere;
     }
-    NSString *secondLine = [NSString stringWithFormat:@"%@, %d GOING / %d INVITED", [self.beacon.time formattedTime].uppercaseString, going + here, invited];
+    NSString *secondLine = [NSString stringWithFormat:@"%@ @ %@", [self.beacon.time formattedTime].uppercaseString, [self.beacon.deal.venue.name uppercaseString]];
     self.secondLine.text = secondLine;
 //    self.inviteLabel.text = [NSString stringWithFormat:@"%d going, %d invited", going + here, invited];
 }
