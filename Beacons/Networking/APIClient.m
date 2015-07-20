@@ -385,6 +385,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] putPath:@"reward/item/" parameters:parameters success:success failure:failure];
 }
 
+- (void)addPromoCode: (NSString *)promoCode success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"promo_code" : promoCode };
+    [[APIClient sharedClient] postPath:@"promo/" parameters:parameters success:success failure:failure];
+}
+
 #pragma mark - Private
 - (NSString *)stringForContact:(Contact *)contact
 {

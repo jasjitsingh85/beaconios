@@ -17,10 +17,13 @@
 #import "User.h"
 #import "GroupsViewController.h"
 #import "FormView.h"
+#import "APIClient.h"
+#import "LoadingIndictor.h"
 
 @interface PromoViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) UITextField *promoTextField;
+@property (strong, nonatomic) UILabel *promoMessage;
 
 @end
 
@@ -35,8 +38,15 @@
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     
     UIButton *applyButton = [UIButton navButtonWithTitle:@"APPLY"];
-    [applyButton addTarget:self action:@selector(groupsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [applyButton addTarget:self action:@selector(applyPromoCode:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:applyButton];
+    
+    self.promoMessage = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, self.view.width - 50, 50)];
+    self.promoMessage.numberOfLines = 0;
+    self.promoMessage.centerX = self.view.width/2;
+    self.promoMessage.textAlignment = NSTextAlignmentCenter;
+    self.promoMessage.font = [ThemeManager lightFontOfSize:14];
+    [self.view addSubview:self.promoMessage];
     
 //    UIButton *secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    CGRect buttonFrame;
@@ -196,5 +206,18 @@
 //        [self.navigationController pushViewController:[[SecretSettingsViewController alloc] init] animated:YES];
 //    }
 //}
+
+- (void) applyPromoCode:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] addPromoCode:self.promoTextField.text success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *message = responseObject[@"message"];
+        self.promoMessage.text = message;
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
 
 @end

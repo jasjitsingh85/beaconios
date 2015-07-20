@@ -192,7 +192,6 @@
 #pragma mark - Find Friends Delegate
 - (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
 {
-    NSLog(@"CONTACTS:%@", contacts);
     //if (contacts.count >= self.deal.inviteRequirement.integerValue) {
     [self setBeaconOnServerWithInvitedContacts:contacts andMessage:message andDate:date];
         [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
@@ -446,6 +445,8 @@
     [self.view addSubview:self.mainScroll];
     
     [self.view addSubview:self.getDealButton];
+    
+    [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
 
 - (void) setHappyHour:(HappyHour *)happyHour
