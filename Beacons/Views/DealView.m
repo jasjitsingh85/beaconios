@@ -185,7 +185,7 @@
     //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
     NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
     //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
+    self.dealTime.text = [NSString stringWithFormat:@"%@", [self.deal.dealStartString uppercaseString]];
 //    self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
 //    
 //    NSDictionary* attributes = @{
