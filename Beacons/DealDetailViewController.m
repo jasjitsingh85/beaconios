@@ -429,7 +429,7 @@
     self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.getDealButton setTitle:@"LETS GO" forState:UIControlStateNormal];
+    [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
     self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -440,7 +440,7 @@
     //self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     //self.dealTime.text = [self.deal.dealStartString uppercaseString];
     self.venueTextLabel.text = self.deal.venue.placeDescription;
-    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'LETS GO' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'GET THIS DEAL' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
     
     [self.view addSubview:self.mainScroll];
     

@@ -189,16 +189,16 @@
     
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.skipButton.width = self.view.width;
-    self.skipButton.height = 35;
+    self.skipButton.height = 40;
     self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    self.skipButton.y = self.view.height - 35;
+    self.skipButton.y = self.view.height - 40;
     [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
     
     [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
     [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.view addSubview:self.skipButton];
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 160)];
@@ -795,7 +795,7 @@
         [self updateMessageCount];
         [UIView animateWithDuration:0.2 delay:.5 options:UIViewAnimationOptionCurveEaseOut animations:^{  // animate the following:
             CGRect rect = self.skipButton.frame;
-            rect.origin.y = self.view.height - 35;
+            rect.origin.y = self.view.height - 40;
             self.skipButton.frame = rect;
         } completion:^(BOOL finished) {
             NSLog(@"Skip Button Added");
