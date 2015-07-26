@@ -30,17 +30,17 @@
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     
-    UIButton *secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGRect buttonFrame;
-    buttonFrame.size = CGSizeMake(self.view.frame.size.width, 50);
-    buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
-    secretButton.frame = buttonFrame;
-    secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [secretButton setTitle:@"Made with \U0000E022 by Indians" forState:UIControlStateNormal];
-    secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
-    [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
-    [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [self.view addSubview:secretButton];
+//    UIButton *secretButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    CGRect buttonFrame;
+//    buttonFrame.size = CGSizeMake(self.view.frame.size.width, 50);
+//    buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
+//    secretButton.frame = buttonFrame;
+//    secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+//    [secretButton setTitle:@"Made with \U0000E022 by Indians" forState:UIControlStateNormal];
+//    secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
+//    [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
+//    [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+//    [self.view addSubview:secretButton];
 }
 
 #pragma mark - Table view data source
