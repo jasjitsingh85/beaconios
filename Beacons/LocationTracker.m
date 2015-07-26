@@ -62,19 +62,19 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (BOOL)authorized
 {
-    return [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
+    return [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse;
 }
 
-- (void)startMonitoringBeaconRegions
-{
-//    iBEACON
-//    step 1
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"66278782-119A-4BED-B12D-5BD38BB1DDD7"];
-    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"hotspot"];
-//    beaconRegion.notifyEntryStateOnDisplay = YES;
-    [self.locationManager startMonitoringForRegion:beaconRegion];
-    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
-}
+//- (void)startMonitoringBeaconRegions
+//{
+////    iBEACON
+////    step 1
+//    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"66278782-119A-4BED-B12D-5BD38BB1DDD7"];
+//    CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"hotspot"];
+////    beaconRegion.notifyEntryStateOnDisplay = YES;
+//    [self.locationManager startMonitoringForRegion:beaconRegion];
+//    [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+//}
 
 - (void)startTrackingIfAuthorized
 {
@@ -90,8 +90,8 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (void)requestLocationPermission
 {
-    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-        [self.locationManager requestAlwaysAuthorization];
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
     }
     [self.locationManager startUpdatingLocation];
 }
@@ -100,7 +100,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 {
     self.fetchLocationSuccessBlock = success;
     self.fetchLocationFailureBlock = failure;
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self failedToFetchLocation];
     }
     else {
@@ -164,29 +164,29 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     [self.locationManager startMonitoringForRegion:region];
 }
 
-- (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier
-{
-    if (!self.authorized) {
-        return;
-    }
-    NSSet *regions = [self.locationManager.monitoredRegions filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"identifier = %@", regionIdentifier]];
-    CLRegion *region = [regions anyObject];
-    if (region) {
-        [self.locationManager stopMonitoringForRegion:region];
-    }
-}
+//- (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier
+//{
+//    if (!self.authorized) {
+//        return;
+//    }
+//    NSSet *regions = [self.locationManager.monitoredRegions filteredSetUsingPredicate:[NSPredicate predicateWithFormat:@"identifier = %@", regionIdentifier]];
+//    CLRegion *region = [regions anyObject];
+//    if (region) {
+//        [self.locationManager stopMonitoringForRegion:region];
+//    }
+//}
 
-- (void)stopMonitoringAllRegionsAroundHotspots
-{
-    if (!self.authorized) {
-        return;
-    }
-    for (CLRegion *region in self.locationManager.monitoredRegions) {
-        if ([region isKindOfClass:[CLCircularRegion class]]) {
-            [self.locationManager stopMonitoringForRegion:region];
-        }
-    }
-}
+//- (void)stopMonitoringAllRegionsAroundHotspots
+//{
+//    if (!self.authorized) {
+//        return;
+//    }
+//    for (CLRegion *region in self.locationManager.monitoredRegions) {
+//        if ([region isKindOfClass:[CLCircularRegion class]]) {
+//            [self.locationManager stopMonitoringForRegion:region];
+//        }
+//    }
+//}
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
@@ -201,28 +201,28 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
-{
-}
+//- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+//{
+//}
 
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    //    iBEACON
-    //    step 2
-//    called when you first connect to beacon
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        self.fetchingiBeacon = YES;
-        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
-        //beaconRegion.notifyEntryStateOnDisplay = YES;
-        [self.locationManager startRangingBeaconsInRegion:beaconRegion];
-    }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidEnterRegionNotification object:self userInfo:@{@"region" : region}];
-}
+//- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+//{
+//    //    iBEACON
+//    //    step 2
+////    called when you first connect to beacon
+//    if ([region isKindOfClass:[CLBeaconRegion class]]) {
+//        self.fetchingiBeacon = YES;
+//        CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
+//        //beaconRegion.notifyEntryStateOnDisplay = YES;
+//        [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+//    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kDidEnterRegionNotification object:self userInfo:@{@"region" : region}];
+//}
 
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidExitRegionNotification object:self userInfo:@{@"region" : region}];
-}
+//- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+//{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kDidExitRegionNotification object:self userInfo:@{@"region" : region}];
+//}
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
@@ -245,9 +245,9 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     else if (status == kCLAuthorizationStatusRestricted) {
      
     }
-    else if (status == kCLAuthorizationStatusAuthorized) {
+    else if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self startTrackingIfAuthorized];
-        [self startMonitoringBeaconRegions];
+//        [self startMonitoringBeaconRegions];
     }
 }
 

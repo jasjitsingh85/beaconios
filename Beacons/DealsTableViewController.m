@@ -669,15 +669,16 @@ typedef enum dealTypeStates
 
 - (void)reloadDeals
 {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
-    }
+//    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+//        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
+//    }
     self.loadingDeals = YES;
     [self hideEnableLocationView];
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
+            NSLog(@"LOCATION: %@",location);
             //REMOVE THIS LINE AFTER DEMO
             //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO

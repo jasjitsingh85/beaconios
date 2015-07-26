@@ -62,8 +62,8 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This enables you to set Hotspots and send deals to your friends</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This enables you to see Hotspots in your area</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SugarPie.ttf</string>

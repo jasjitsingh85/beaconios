@@ -146,9 +146,9 @@
     
     //initialize location tracker
     [LocationTracker sharedTracker];
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
-    }
+//    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+//        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
+//    }
     
     [self.window makeKeyAndVisible];
     UIView *backgroundWindowView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -318,7 +318,7 @@
             }
         }
     }
-    if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+    if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [[LocationTracker sharedTracker] requestLocationPermission];
     }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];

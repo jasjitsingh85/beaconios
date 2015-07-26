@@ -87,10 +87,10 @@
 - (void)setBeacons:(NSArray *)beacons
 {
     _beacons = beacons;
-    [[LocationTracker sharedTracker] stopMonitoringAllRegionsAroundHotspots];
+//    [[LocationTracker sharedTracker] stopMonitoringAllRegionsAroundHotspots];
     for (Beacon *beacon in beacons) {
         CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
-        [[LocationTracker sharedTracker] monitorRegion:region];
+//        [[LocationTracker sharedTracker] monitorRegion:region];
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self archiveBeacons];
@@ -205,8 +205,8 @@
     CLLocation *location = [LocationTracker sharedTracker].currentLocation;
     [[APIClient sharedClient] postBeacon:beacon userLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [beacon updateWithData:responseObject[@"beacon"]];
-        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
-        [[LocationTracker sharedTracker] monitorRegion:region];
+//        CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:beacon.coordinate radius:100 identifier:beacon.beaconID.stringValue];
+//        [[LocationTracker sharedTracker] monitorRegion:region];
         if (success) {
             success();
         }
