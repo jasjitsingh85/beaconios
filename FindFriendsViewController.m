@@ -65,6 +65,7 @@
 @property (assign, nonatomic) BOOL isKeyboardShowing;
 @property (assign, nonatomic) int keyboardHeight;
 @property (assign, nonatomic) CGFloat animationDuration;
+@property (strong, nonatomic) UIImageView *skipButtonContainer;
 
 @property (strong, nonatomic) UIView *dateView;
 @property (strong, nonatomic) UIView *dateContentView;
@@ -188,10 +189,12 @@
     self.isKeyboardShowing = NO;
     
     self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.skipButton.width = self.view.width;
-    self.skipButton.height = 40;
+    self.skipButton.width = self.view.width - 50;
+    self.skipButton.height = 35;
+    self.skipButton.centerX = self.view.width/2;
     self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    self.skipButton.y = self.view.height - 40;
+    self.skipButton.y = 73;
+    self.skipButton.layer.cornerRadius = 4;
     [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
     
     [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -199,7 +202,16 @@
     [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    [self.view addSubview:self.skipButton];
+    
+    
+    self.skipButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
+    self.skipButtonContainer.height = 120;
+    self.skipButtonContainer.y = self.view.height - 120;
+    self.skipButtonContainer.userInteractionEnabled = YES;
+    
+    [self.skipButtonContainer addSubview:self.skipButton];
+    
+    [self.view addSubview:self.skipButtonContainer];
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 160)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
@@ -389,9 +401,9 @@
 - (void) setTextMoreFriends:(BOOL)textMoreFriends
 {
     if (textMoreFriends) {
-        self.skipButton.hidden = YES;
+        self.skipButtonContainer.hidden = YES;
     } else {
-        self.skipButton.hidden = NO;
+        self.skipButtonContainer.hidden = NO;
     }
 }
 

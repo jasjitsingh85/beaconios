@@ -27,6 +27,7 @@
 @property (strong, nonatomic) UIButton *getDealButton;
 @property (strong, nonatomic) UIImageView *venueImageView;
 @property (strong, nonatomic) UIImageView *backgroundGradient;
+@property (strong, nonatomic) UIImageView *getDealButtonContainer;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
@@ -417,21 +418,34 @@
         getDirections.font = [ThemeManager lightFontOfSize:13];
         [addressContainer addSubview:getDirections];
         
-        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 60);
+        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 90);
         
         [self.mainScroll addSubview:mapImageView];
     }];
     
+    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
+    self.getDealButtonContainer.height = 120;
+    self.getDealButtonContainer.y = self.view.height - 120;
+    self.getDealButtonContainer.userInteractionEnabled = YES;
+    
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width, 40);
+    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
     self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = self.view.height - 40;
+    self.getDealButton.y = 73;
+    self.getDealButton.layer.cornerRadius = 4;
     self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
     self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+//    UILabel *dealButtonSubtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 77, self.view.width, 15)];
+//    dealButtonSubtitle.text = @"(You won't be charged yet)";
+//    dealButtonSubtitle.centerX = self.view.width/2;
+//    dealButtonSubtitle.textAlignment = NSTextAlignmentCenter;
+//    dealButtonSubtitle.font = [ThemeManager lightFontOfSize:12];
+//    [self.getDealButtonContainer addSubview:dealButtonSubtitle];
     
     //NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
     //self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
@@ -444,7 +458,11 @@
     
     [self.view addSubview:self.mainScroll];
     
-    [self.view addSubview:self.getDealButton];
+    //[self.view addSubview:self.getDealButton];
+    
+    [self.view addSubview:self.getDealButtonContainer];
+    
+    [self.getDealButtonContainer addSubview:self.getDealButton];
     
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
@@ -625,7 +643,7 @@
         
         [self.mainScroll addSubview:mapImageView];
         
-        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 20);
+        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 50);
     }];
     
     [self.view addSubview:self.mainScroll];

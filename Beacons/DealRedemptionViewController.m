@@ -92,7 +92,7 @@
 //    inviteFriendsTitle.text = @"TEXT FRIENDS TO MEET HERE?";
 //    [self.tableView addSubview:inviteFriendsTitle];
     
-    UILabel *inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 260, self.view.width - 50, 50)];
+    UILabel *inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width - 50, 50)];
     inviteFriendsExplanation.centerX = self.view.width/2;
     inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
     inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
@@ -150,15 +150,17 @@
     [self.redeemButton addSubview:self.serverMessage];
     
     self.inviteFriendsButton = [[UIButton alloc] init];
-    self.inviteFriendsButton.size = CGSizeMake(self.view.width, 40);
+    self.inviteFriendsButton.size = CGSizeMake(self.view.width - 50, 35);
+    self.inviteFriendsButton.centerX = self.view.width/2;
     self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
+    self.inviteFriendsButton.layer.cornerRadius = 4;
     self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
     self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
     footerView.backgroundColor = [UIColor whiteColor];
     [self.inviteFriendsButton setTitle:@"TEXT MORE FRIENDS" forState:UIControlStateNormal];
-    self.inviteFriendsButton.y = 300;
+    self.inviteFriendsButton.y = 295;
     [self.tableView addSubview:self.inviteFriendsButton];
     [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     

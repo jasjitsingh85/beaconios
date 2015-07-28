@@ -55,6 +55,7 @@
 		410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */; };
 		410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */; };
 		410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */; };
+		4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */; };
 		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
@@ -378,6 +379,7 @@
 		410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotspotLogoNavRed.png; sourceTree = "<group>"; };
 		410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotDrinkIcons@2x.png"; sourceTree = "<group>"; };
 		410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushIcon@2x.png"; sourceTree = "<group>"; };
+		4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonBackground@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsStoreViewController.h; sourceTree = "<group>"; };
 		41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsStoreViewController.m; sourceTree = "<group>"; };
@@ -1246,6 +1248,7 @@
 				41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
 				41030F6C1B5C27EF00252158 /* homeIcon@2x.png */,
+				4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
 				41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */,
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
@@ -1555,6 +1558,7 @@
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				41E23A861B33AEFB00676254 /* thumb@2x.png in Resources */,
 				4158AE4E1B3CCE8C0034BA4A /* iphoneWalkthroughLastSlide@2x.png in Resources */,
+				4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				96C7FEA4189737DA00A79CC3 /* whisky@2x.png in Resources */,
 				966652531978AE1E00EE85F8 /* dealExplanation@2x.png in Resources */,
