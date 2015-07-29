@@ -1477,6 +1477,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
+        [self showRewardContainer];
     } completion:^(BOOL finished) {
         self.previousDealType = self.dealType;
         self.dealType = HAPPY_HOUR;
@@ -1491,6 +1492,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
+        [self hideRewardContainer];
     } completion:^(BOOL finished) {
         self.previousDealType = self.dealType;
         self.dealType = HOTSPOT;
