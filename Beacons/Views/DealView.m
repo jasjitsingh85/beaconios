@@ -140,7 +140,13 @@
     self.marketPriceLabel.x = descriptionLabelWidth + 3;
     CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
     
-    self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
+    if (deal.isRewardItem) {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    } else {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+    }
     CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
     self.itemPriceLabel.width = itemPriceTextSize.width;
     self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;

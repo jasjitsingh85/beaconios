@@ -54,6 +54,9 @@
     NSString *rewardEligibility = dictionary[@"reward_eligibility"];
     self.rewardEligibility = [rewardEligibility boolValue];
     
+    NSString *isRewardItem = dictionary[@"is_reward_item"];
+    self.isRewardItem = [isRewardItem boolValue];
+    
     if (self.inAppPayment) {
         self.dealDescriptionShort = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];
         self.dealDescription = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];

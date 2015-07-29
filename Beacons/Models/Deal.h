@@ -32,6 +32,7 @@
 @property (assign, nonatomic) BOOL inAppPayment;
 @property (assign, nonatomic) BOOL locked;
 @property (assign, nonatomic) BOOL rewardEligibility;
+@property (assign, nonatomic) BOOL isRewardItem;
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;

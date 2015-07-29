@@ -229,6 +229,23 @@
     dealView.deal = self.deal;
     [self.mainScroll addSubview:dealView];
     
+    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
+    self.getDealButtonContainer.height = 120;
+    self.getDealButtonContainer.y = self.view.height - 120;
+    self.getDealButtonContainer.userInteractionEnabled = YES;
+    
+    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
+    self.getDealButton.centerX = self.view.width/2.0;
+    self.getDealButton.y = 73;
+    self.getDealButton.layer.cornerRadius = 4;
+    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
+    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
     dealIcon.centerX = self.view.width/2;
     dealIcon.y = 165;
@@ -246,11 +263,19 @@
     dealTextLabel.font = [ThemeManager lightFontOfSize:13];
     dealTextLabel.textAlignment = NSTextAlignmentCenter;
     dealTextLabel.numberOfLines = 0;
-    if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
-        dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+    
+    if (deal.isRewardItem) {
+        [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
+        dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for free. %@", [self.deal.itemName lowercaseString], self.deal.additionalInfo];
     } else {
-        dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+        [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
+        if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
+            dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+        } else {
+            dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+        }
     }
+    
     NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
     
     CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
@@ -423,23 +448,6 @@
         [self.mainScroll addSubview:mapImageView];
     }];
     
-    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
-    self.getDealButtonContainer.height = 120;
-    self.getDealButtonContainer.y = self.view.height - 120;
-    self.getDealButtonContainer.userInteractionEnabled = YES;
-    
-    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
-    self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = 73;
-    self.getDealButton.layer.cornerRadius = 4;
-    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
-    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
-    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
 //    UILabel *dealButtonSubtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 77, self.view.width, 15)];
 //    dealButtonSubtitle.text = @"(You won't be charged yet)";
 //    dealButtonSubtitle.centerX = self.view.width/2;
@@ -454,7 +462,12 @@
     //self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     //self.dealTime.text = [self.deal.dealStartString uppercaseString];
     self.venueTextLabel.text = self.deal.venue.placeDescription;
-    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'GET THIS DEAL' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+    
+    if (deal.isRewardItem) {
+        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive your drink, just show this voucher to the server.", self.deal.venue.name];
+    } else {
+        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'GET THIS DEAL' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+    }
     
     [self.view addSubview:self.mainScroll];
     

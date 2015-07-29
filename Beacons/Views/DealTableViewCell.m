@@ -74,7 +74,6 @@
     [self.venuePreviewView addSubview:self.venueLabelLineTwo];
     
     self.descriptionLabel = [[UILabel alloc] init];
-    self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
     //self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 26;
     self.descriptionLabel.x = 0;
@@ -254,7 +253,6 @@
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     }
-    
 //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
     [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
@@ -281,7 +279,13 @@
     self.marketPriceLabel.x = descriptionLabelWidth + 3;
     CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
     
-    self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
+    if (self.deal.isRewardItem) {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    } else {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+    }
     CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
     self.itemPriceLabel.width = itemPriceTextSize.width;
     self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;

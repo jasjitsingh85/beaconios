@@ -71,6 +71,7 @@ typedef enum dealTypeStates
 @property (assign, nonatomic) BOOL locationEnabled;
 @property (assign, nonatomic) BOOL isMapViewActive;
 @property (assign, nonatomic) BOOL isMapViewDealShowing;
+@property (assign, nonatomic) BOOL hasRewardItem;
 //@property (strong, nonatomic) Deal *dealInView;
 //@property (strong, nonatomic) RewardsViewController *rewardsViewController;
 //@property (assign, nonatomic) NSInteger *currentTopRow;
@@ -163,6 +164,7 @@ typedef enum dealTypeStates
     self.dealType = HOTSPOT;
     
     self.initialRadius = 1.6;
+    self.hasRewardItem = NO;
     
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
@@ -470,6 +472,8 @@ typedef enum dealTypeStates
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
+    
+//    [self updateRewardItems];
 
 }
 
@@ -551,7 +555,7 @@ typedef enum dealTypeStates
         [self reloadDeals];
     }
 
-    [self updateRewardItems];
+//    [self updateRewardItems];
     
 //    [self.rewardsViewController updateRewardsScore];
 //    self.groupDeal = YES;
@@ -559,15 +563,21 @@ typedef enum dealTypeStates
     [[AnalyticsManager sharedManager] viewedDealTable];
 }
 
-- (void)updateRewardItems
-{
-    [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
-        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        self.rewardScore.text = @"0x";
-    }];
-}
+//- (void)updateRewardItems
+//{
+//    [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
+//        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
+//        if (self.numberOfRewardItems > 0) {
+//            self.hasRewardItem = YES;
+//        } else  {
+//            self.hasRewardItem = NO;
+//        }
+//        [self reloadDeals];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        self.rewardScore.text = @"0x";
+//    }];
+//}
 
 - (UIView *)enableLocationView
 {
@@ -678,12 +688,11 @@ typedef enum dealTypeStates
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
-            NSLog(@"LOCATION: %@",location);
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
                 //self.mapCenter = staticLocation.coordinate;
                 self.mapCenter = location.coordinate;
@@ -746,15 +755,9 @@ typedef enum dealTypeStates
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius withCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getDealsNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSMutableArray *events = [[NSMutableArray alloc] init];
         NSMutableArray *deals = [[NSMutableArray alloc] init];
         NSMutableArray *happyHours = [[NSMutableArray alloc] init];
-        NSMutableArray *rewards = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-//        for (NSDictionary *eventJSON in responseObject[@"events"]) {
-//            Deal *event = [[Deal alloc] initWithDictionary:eventJSON];
-//            [events addObject:event];
-//        }
         [self.mapView removeAnnotations:[self.mapView annotations]];
         
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
@@ -780,42 +783,25 @@ typedef enum dealTypeStates
             [happyHours addObject:happyHour];
         }
         
-        for (NSDictionary *dealJSON in responseObject[@"unlocked_rewards"]) {
-            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
-            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
-            deal.locked = NO;
-            deal.venue.distance = [location distanceFromLocation:dealLocation];
-            [rewards addObject:deal];
+        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
+        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
+        if (self.numberOfRewardItems > 0) {
+            self.hasRewardItem = YES;
+        } else  {
+            self.hasRewardItem = NO;
         }
-        for (NSDictionary *dealJSON in responseObject[@"locked_rewards"]) {
-            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
-            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
-            deal.locked = YES;
-            deal.venue.distance = [location distanceFromLocation:dealLocation];
-            [rewards addObject:deal];
-        }
-    
+        
         self.hotspots = deals;
         self.happyHours = happyHours;
-        self.rewards = rewards;
         
         if (self.dealType == HOTSPOT) {
             self.selectedDeals = self.hotspots;
         } else if (self.dealType == HAPPY_HOUR) {
             self.selectedDeals = self.happyHours;
-        } else if (self.dealType == REWARD) {
-            self.selectedDeals = self.rewards;
         }
         
         
         [self reloadAnnotations];
-        
-//        NSPredicate *predicate;
-//        predicate = [NSPredicate predicateWithFormat:@"groupDeal = NO"];
-//        NSLog(@"%lu", (unsigned long)[[self.allDeals filteredArrayUsingPredicate:predicate] count]);
-//        if ([[self.allDeals filteredArrayUsingPredicate:predicate] count] > 0) {
-//            self.dealTypeToggle.hidden = NO;
-//        };
         
         [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
@@ -1153,6 +1139,7 @@ typedef enum dealTypeStates
                 dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
                 dealCell.backgroundColor = [UIColor clearColor];
                 dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
+//                dealCell.hasRewardItem = self.hasRewardItem;
             }
             
             UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];

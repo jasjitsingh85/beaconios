@@ -35,6 +35,7 @@
 //@property (strong, nonatomic) UIView *venueDetailView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
+//@property (nonatomic, assign) BOOL hasRewardItem;
 
 @property (strong, nonatomic) Deal *deal;
 
