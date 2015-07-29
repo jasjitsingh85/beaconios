@@ -1536,26 +1536,34 @@ typedef enum dealTypeStates
         self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
         
         if (self.dealType == HOTSPOT) {
-            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
-            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
             
-            self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemMarketPrice];
-            
-            NSDictionary* attributes = @{
-                                         NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
-                                         };
-            
-            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
-            self.marketPriceLabel.attributedText = attrText;
-            
-            CGFloat descriptionLabelWidth;
-            if (textSize.width < self.view.width * .6) {
-                descriptionLabelWidth = textSize.width;
+            if (deal.isRewardItem) {
+                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
+                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
             } else {
-                descriptionLabelWidth = self.view.width * .6;
+                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
             }
             
-            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+            
+//            self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemMarketPrice];
+            
+//            NSDictionary* attributes = @{
+//                                         NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+//                                         };
+//            
+//            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+//            self.marketPriceLabel.attributedText = attrText;
+            
+            CGFloat descriptionLabelWidth;
+//            if (textSize.width < self.view.width * .6) {
+            descriptionLabelWidth = textSize.width;
+//            } else {
+//                descriptionLabelWidth = self.view.width * .6;
+//            }
+            
+//            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
             
             self.descriptionLabel.width = descriptionLabelWidth + 10;
         }
