@@ -650,7 +650,13 @@
         self.dealsContainer.hidden = NO;
         self.dealsContainer.frame = CGRectMake(0, 70, self.tableView.frame.size.width, 50 + self.tableView.frame.size.height);
     }
-    self.shareContainer.frame = CGRectMake(0, 70 + (50 * itemCount) + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50);
+
+    if (itemCount == 0) {
+        self.shareContainer.frame = CGRectMake(0, 70 + (50 * itemCount), self.menuViewContainer.frame.size.width, 50);
+    } else {
+        self.shareContainer.frame = CGRectMake(0, 120 + (50 * itemCount), self.menuViewContainer.frame.size.width, 50);
+    }
+    
     self.promoContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     self.paymentContainer.frame = CGRectMake(0, self.promoContainer.origin.y + self.promoContainer.size.height, self.menuViewContainer.frame.size.width, 50);
     self.settingContainer.frame = CGRectMake(0, self.paymentContainer.origin.y + self.paymentContainer.size.height, self.menuViewContainer.frame.size.width, 50);

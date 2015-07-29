@@ -376,7 +376,7 @@
         color = activeColor;
         backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
         voucherTitleText = @"VOUCHER FOR:";
-        itemNameText = [NSString stringWithFormat:@"ONE %@", [self.deal.itemName uppercaseString]];
+        itemNameText = [NSString stringWithFormat:@"%@", [self.deal.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;

@@ -678,7 +678,7 @@
         
         UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, view.width, 15)];
         promptHeading.textAlignment = NSTextAlignmentCenter;
-        promptHeading.text = [[NSString stringWithFormat:@"TEXT FRIENDS TO MEET YOU"] uppercaseString];
+        promptHeading.text = [[NSString stringWithFormat:@"TEXT FRIENDS TO MEET UP"] uppercaseString];
         promptHeading.font = [ThemeManager boldFontOfSize:12];
         
         [view addSubview:promptHeading];
@@ -690,7 +690,7 @@
         self.prompt.textColor = [UIColor blackColor];
         self.prompt.numberOfLines = 2;
         self.prompt.textAlignment = NSTextAlignmentCenter;
-        self.prompt.text = [NSString stringWithFormat:@"Select friends to meet up. If they’re new to Hotspot, both your drinks are free!"];
+        self.prompt.text = [NSString stringWithFormat:@"Select friends and we'll send them your message. If they're new to Hotspot, both your drinks are free!"];
         
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.backgroundColor = [UIColor unnormalizedColorWithRed:178 green:178 blue:178 alpha:255].CGColor;
