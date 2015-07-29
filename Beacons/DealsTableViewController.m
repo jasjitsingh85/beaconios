@@ -437,6 +437,7 @@ typedef enum dealTypeStates
     
     self.rewardExplanationContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 50, self.view.width, 50)];
     self.rewardExplanationContainer.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    self.rewardExplanationContainer.hidden = YES;
     [self.view addSubview:self.rewardExplanationContainer];
     
     self.rewardItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 7, self.view.width, 20)];
@@ -805,7 +806,7 @@ typedef enum dealTypeStates
         
         self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
-        if (self.numberOfRewardItems > 0) {
+        if ([self.numberOfRewardItems integerValue] > 0) {
             self.hasRewardItem = YES;
         } else  {
             self.hasRewardItem = NO;
@@ -1157,7 +1158,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.rewardExplanationContainer.frame;
-        frame.origin.y = frame.origin.y - 60;
+        frame.origin.y = frame.origin.y + 60;
         self.rewardExplanationContainer.frame = frame; // move to new location
     }];
 }
@@ -1166,7 +1167,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.rewardExplanationContainer.frame;
-        frame.origin.y = frame.origin.y + 60;
+        frame.origin.y = frame.origin.y - 60;
         self.rewardExplanationContainer.frame = frame; // move to new location
     }];
 }
@@ -1412,11 +1413,11 @@ typedef enum dealTypeStates
                         if (!self.isMapViewActive) {
                             [self.tableView setHidden:YES];
                             [self.mapViewContainer setHidden:NO];
-                            [self showRewardContainer];
+                            [self hideRewardContainer];
                         } else {
                             [self.tableView setHidden:NO];
                             [self.mapViewContainer setHidden:YES];
-                            [self hideRewardContainer];
+                            [self showRewardContainer];
                         }
                         
                     } completion:^(BOOL finished) {
@@ -1477,7 +1478,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
-        [self showRewardContainer];
+        [self hideRewardContainer];
     } completion:^(BOOL finished) {
         self.previousDealType = self.dealType;
         self.dealType = HAPPY_HOUR;
@@ -1492,7 +1493,7 @@ typedef enum dealTypeStates
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
-        [self hideRewardContainer];
+        [self showRewardContainer];
     } completion:^(BOOL finished) {
         self.previousDealType = self.dealType;
         self.dealType = HOTSPOT;
