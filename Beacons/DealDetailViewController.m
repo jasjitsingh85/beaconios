@@ -126,6 +126,7 @@
 //    } else {
 //    
 //    }
+    
 }
 //
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
@@ -464,7 +465,7 @@
     self.venueTextLabel.text = self.deal.venue.placeDescription;
     
     if (deal.isRewardItem) {
-        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive your drink, just show this voucher to the server.", self.deal.venue.name];
+        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.deal.venue.name];
     } else {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'GET THIS DEAL' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
     }

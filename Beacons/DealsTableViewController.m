@@ -101,6 +101,9 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UIView *priceContainer;
 
+@property (strong, nonatomic) UIView *rewardExplanationContainer;
+@property (strong, nonatomic) UILabel *rewardItemLabel;
+
 @property (strong, nonatomic) UISegmentedControl *navBarTabs;
 
 @end
@@ -432,6 +435,23 @@ typedef enum dealTypeStates
     
     //[self.venueScroll addSubview:self.venueDetailView];
     
+    self.rewardExplanationContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 50, self.view.width, 50)];
+    self.rewardExplanationContainer.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    [self.view addSubview:self.rewardExplanationContainer];
+    
+    self.rewardItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 7, self.view.width, 20)];
+    self.rewardItemLabel.font = [ThemeManager regularFontOfSize:16];
+    self.rewardItemLabel.textColor = [UIColor whiteColor];
+    self.rewardItemLabel.textAlignment = NSTextAlignmentCenter;
+    [self.rewardExplanationContainer addSubview:self.rewardItemLabel];
+    
+    UILabel *rewardItemLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width, 20)];
+    rewardItemLabelLineTwo.font = [ThemeManager lightFontOfSize:13];
+    rewardItemLabelLineTwo.textColor = [UIColor whiteColor];
+    rewardItemLabelLineTwo.textAlignment = NSTextAlignmentCenter;
+    rewardItemLabelLineTwo.text = @"Tap on a venue to get your voucher";
+    [self.rewardExplanationContainer addSubview:rewardItemLabelLineTwo];
+
     [self.selectedDealInMap addSubview:self.venueView];
     
     self.mapListToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -791,6 +811,17 @@ typedef enum dealTypeStates
             self.hasRewardItem = NO;
         }
         
+        if (self.hasRewardItem) {
+            self.rewardExplanationContainer.hidden = NO;
+            if ([self.numberOfRewardItems intValue] == 1) {
+                self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drink", self.numberOfRewardItems];
+            } else {
+                self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drinks", self.numberOfRewardItems];
+            }
+        } else {
+            self.rewardExplanationContainer.hidden = YES;
+        }
+        
         self.hotspots = deals;
         self.happyHours = happyHours;
         
@@ -1122,6 +1153,24 @@ typedef enum dealTypeStates
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
 }
 
+- (void) hideRewardContainer
+{
+    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
+        CGRect frame = self.rewardExplanationContainer.frame;
+        frame.origin.y = frame.origin.y - 60;
+        self.rewardExplanationContainer.frame = frame; // move to new location
+    }];
+}
+
+- (void) showRewardContainer
+{
+    [UIView animateWithDuration:0.5 animations:^{  // animate the following:
+        CGRect frame = self.rewardExplanationContainer.frame;
+        frame.origin.y = frame.origin.y + 60;
+        self.rewardExplanationContainer.frame = frame; // move to new location
+    }];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -1363,9 +1412,11 @@ typedef enum dealTypeStates
                         if (!self.isMapViewActive) {
                             [self.tableView setHidden:YES];
                             [self.mapViewContainer setHidden:NO];
+                            [self showRewardContainer];
                         } else {
                             [self.tableView setHidden:NO];
                             [self.mapViewContainer setHidden:YES];
+                            [self hideRewardContainer];
                         }
                         
                     } completion:^(BOOL finished) {
