@@ -27,9 +27,12 @@
 #import "AppDelegate.h"
 #import "DatePickerModalView.h"
 #import "ContactExplanationPopupView.h"
+#import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 //#import "RewardsViewController.h"
 
-@interface AppInviteViewController () <UISearchBarDelegate, UITextViewDelegate, ContactExplanationViewControllerDelegate>
+@interface AppInviteViewController () <UISearchBarDelegate, UITextViewDelegate, ContactExplanationViewControllerDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 //@property (strong, nonatomic) NSArray *usersInContactsList;
 //@property (strong, nonatomic) NSArray *recentsList;
@@ -49,7 +52,7 @@
 @property (strong, nonatomic) UILabel *prompt;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
-@property (assign, nonatomic) BOOL onlyContacts;
+//@property (assign, nonatomic) BOOL onlyContacts;
 //@property (strong, nonatomic) NSArray *groups;
 @property (readonly) NSInteger promptContainer;
 @property (readonly) NSInteger searchBarContainer;
@@ -65,6 +68,11 @@
 @property (assign, nonatomic) BOOL isKeyboardShowing;
 @property (assign, nonatomic) int keyboardHeight;
 @property (assign, nonatomic) CGFloat animationDuration;
+@property (strong, nonatomic) UILabel *promoCode;
+@property (strong, nonatomic) MFMailComposeViewController *emailModal;
+@property (strong, nonatomic) MFMessageComposeViewController *smsModal;
+@property (strong, nonatomic) UIButton *emailButton;
+@property (strong, nonatomic) UIButton *smsButton;
 
 //@property (strong, nonatomic) UIView *dateView;
 //@property (strong, nonatomic) UIView *dateContentView;
@@ -140,6 +148,37 @@
 //    self.scrollViewContainer.contentSize = CGSizeMake(self.view.width, 2000);
 //    [self.view addSubview:self.scrollViewContainer];
     
+    self.navigationItem.title = @"Free Drinks";
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [self loadAuthorizedContactView];
+    } else if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        [self requestContactPermissions];
+    } else {
+        [self loadUnauthorizedContactView];
+    }
+}
+
+- (void)requestContactPermissions
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            [self populateContacts];
+            [[ContactManager sharedManager] syncContacts];
+        } else {
+            [self loadUnauthorizedContactView];
+        }
+    });
+}
+
+- (void) loadAuthorizedContactView
+{
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.tableView];
@@ -147,25 +186,21 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.navigationItem.title = @"Free Drinks";
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
-    
-//    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
-//    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+    //    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
+    //    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
     
     [self resetDate];
     
-//    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
-//    //weird hack for black search bar issue
-//    self.searchBar.backgroundImage = [UIImage new];
-//    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-//    self.searchBar.delegate = self;
-//    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-//    self.searchBar.translucent = NO;
-//    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-//    [self.view addSubview:self.searchBar];
+    //    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+    //    //weird hack for black search bar issue
+    //    self.searchBar.backgroundImage = [UIImage new];
+    //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    //    self.searchBar.delegate = self;
+    //    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    //    self.searchBar.translucent = NO;
+    //    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    //    [self.view addSubview:self.searchBar];
     
     UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 40)];
     searchBarContainer.backgroundColor = [UIColor whiteColor];
@@ -182,7 +217,7 @@
     self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
     //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
     [searchBarContainer addSubview:self.searchBar];
-//    self.navigationItem.titleView = searchBarContainer;
+    //    self.navigationItem.titleView = searchBarContainer;
     [self.view addSubview:searchBarContainer];
     
     self.tableView.backgroundColor = [UIColor whiteColor];
@@ -192,19 +227,19 @@
     self.isSendMessageShowing = NO;
     self.isKeyboardShowing = NO;
     
-//    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.skipButton.width = self.view.width;
-//    self.skipButton.height = 35;
-//    self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-//    self.skipButton.y = self.view.height - 35;
-//    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
-//    
-//    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
-//    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-//    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-//    [self.view addSubview:self.skipButton];
+    //    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    self.skipButton.width = self.view.width;
+    //    self.skipButton.height = 35;
+    //    self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    //    self.skipButton.y = self.view.height - 35;
+    //    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
+    //
+    //    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //    [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+    //    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    //    [self.view addSubview:self.skipButton];
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
@@ -227,7 +262,7 @@
     self.messageCount.font = [ThemeManager regularFontOfSize:13];
     self.messageCount.textAlignment = NSTextAlignmentCenter;
     self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
-//    self.messageCount.text = @"1 Individual SMS";
+    //    self.messageCount.text = @"1 Individual SMS";
     self.messageCount.centerX = self.view.width/2;
     [self.sendMessageContainer addSubview:self.messageCount];
     
@@ -254,28 +289,28 @@
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.sendMessageContainer addSubview:self.composeMessageTextView];
     
-//    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
-//    UITapGestureRecognizer *dateViewTap =
-//    [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                            action:@selector(dateViewTap:)];
-//    [self.dateView addGestureRecognizer:dateViewTap];
-//    [self.sendMessageContainer addSubview:self.dateView];
-//    
-//    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
-//    self.dateTitleLabel.text = @"Choose Time:";
-//    self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
-//    self.dateTitleLabel.textColor = [UIColor blackColor];
-//    [self.sendMessageContainer addSubview:self.dateTitleLabel];
-//    
-//    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.width - 65, 30)];
-//    self.dateLabel.font = [ThemeManager regularFontOfSize:14];
-//    self.dateLabel.textAlignment = NSTextAlignmentRight;
-//    self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
-//    [self.sendMessageContainer addSubview:self.dateLabel];
+    //    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
+    //    UITapGestureRecognizer *dateViewTap =
+    //    [[UITapGestureRecognizer alloc] initWithTarget:self
+    //                                            action:@selector(dateViewTap:)];
+    //    [self.dateView addGestureRecognizer:dateViewTap];
+    //    [self.sendMessageContainer addSubview:self.dateView];
+    //
+    //    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
+    //    self.dateTitleLabel.text = @"Choose Time:";
+    //    self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
+    //    self.dateTitleLabel.textColor = [UIColor blackColor];
+    //    [self.sendMessageContainer addSubview:self.dateTitleLabel];
+    //
+    //    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.width - 65, 30)];
+    //    self.dateLabel.font = [ThemeManager regularFontOfSize:14];
+    //    self.dateLabel.textAlignment = NSTextAlignmentRight;
+    //    self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    //    [self.sendMessageContainer addSubview:self.dateLabel];
     
     [self resetDate];
     
-//    [self updateInviteButtonText:nil];
+    //    [self updateInviteButtonText:nil];
     //UIEdgeInsets insets = self.tableView.contentInset;
     //insets.bottom = self.inviteButton.frame.size.height;
     //self.tableView.contentInset = insets;
@@ -288,50 +323,142 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
     
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-        self.onlyContacts = YES;
-        ContactExplanationPopupView *contactModal = [[ContactExplanationPopupView alloc] init];
-        contactModal.delegate = self;
-        [contactModal show];
-    } else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
-        self.onlyContacts = NO;
-        jadispatch_main_qeue(^{
-            NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
-            if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
-                [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-                NSBlockOperation *populateOperation = [NSBlockOperation blockOperationWithBlock:^{
-                    //total hack. wait for url operation completion block to finish before populating contacts
-                    jadispatch_after_delay(1, dispatch_get_main_queue(), ^{
-                        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                        [self populateContacts];
-                    });
-                }];
-                [populateOperation addDependency:updateFriendsOperation];
-                [[NSOperationQueue mainQueue] addOperation:populateOperation];
-            }
-            else {
-                [self populateContacts];
-            }
-        });
-    }
-    
-}
-
-- (void)requestContactPermissions
-{
-//    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-        if (granted) {
-            [self populateContacts];
-            [[ContactManager sharedManager] syncContacts];
-        } else {
+    //        ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    //    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    //            self.onlyContacts = NO;
+    jadispatch_main_qeue(^{
+        NSOperation *updateFriendsOperation = [ContactManager sharedManager].updateFriendsOperation;
+        if (updateFriendsOperation && !updateFriendsOperation.isFinished) {
+            [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+            NSBlockOperation *populateOperation = [NSBlockOperation blockOperationWithBlock:^{
+                //total hack. wait for url operation completion block to finish before populating contacts
+                jadispatch_after_delay(1, dispatch_get_main_queue(), ^{
+                    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                    [self populateContacts];
+                });
+            }];
+            [populateOperation addDependency:updateFriendsOperation];
+            [[NSOperationQueue mainQueue] addOperation:populateOperation];
+        }
+        else {
             [self populateContacts];
         }
     });
 }
+
+- (void) loadUnauthorizedContactView
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 105)];
+    
+    UIImageView *promptIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beerGlasses"]];
+    promptIcon.centerX = view.width/2;
+    promptIcon.y = 30;
+    [view addSubview:promptIcon];
+    
+    UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, view.width, 15)];
+    promptHeading.textAlignment = NSTextAlignmentCenter;
+    promptHeading.text = [[NSString stringWithFormat:@"GIVE A DRINK. GET A DRINK."] uppercaseString];
+    promptHeading.font = [ThemeManager boldFontOfSize:12];
+    
+    [view addSubview:promptHeading];
+    
+    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
+    self.prompt.centerX = self.view.width/2;
+    self.prompt.y = 75;
+    self.prompt.font = [ThemeManager lightFontOfSize:12];
+    self.prompt.textColor = [UIColor blackColor];
+    self.prompt.numberOfLines = 2;
+    self.prompt.textAlignment = NSTextAlignmentCenter;
+    self.prompt.text = [NSString stringWithFormat:@"Send frinds a free drink and you'll get one too. Just have them use the promo code below:"];
+    
+//    UILabel *promoCodePrompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
+//    promoCodePrompt.centerX = self.view.width/2;
+//    promoCodePrompt.y = 105;
+//    promoCodePrompt.font = [ThemeManager lightFontOfSize:12];
+//    promoCodePrompt.textColor = [UIColor blackColor];
+//    promoCodePrompt.numberOfLines = 2;
+//    promoCodePrompt.textAlignment = NSTextAlignmentCenter;
+//    promoCodePrompt.text = [NSString stringWithFormat:@"Send your promo code:"];
+//    [view addSubview:promoCodePrompt];
+    
+    self.promoCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, view.width, 25)];
+    self.promoCode.textAlignment = NSTextAlignmentCenter;
+    self.promoCode.y = 140;
+    self.promoCode.textColor = [[ThemeManager sharedTheme] redColor];
+    self.promoCode.font = [ThemeManager boldFontOfSize:24];
+    [view addSubview:self.promoCode];
+    
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.backgroundColor = [UIColor unnormalizedColorWithRed:178 green:178 blue:178 alpha:255].CGColor;
+    bottomBorder.frame = CGRectMake(0, view.height - 3, view.width, 1.f);
+    
+    [view addSubview:self.prompt];
+    
+    [self.view addSubview:view];
+    
+    self.emailButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.emailButton.size = CGSizeMake(120, 35);
+    self.emailButton.centerX = self.view.width/4.0 * 3;
+    self.emailButton.y = self.view.height - 60;
+    self.emailButton.layer.cornerRadius = 4;
+    self.emailButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.emailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.emailButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    [self.emailButton setTitle:@"EMAIL INVITE" forState:UIControlStateNormal];
+    self.emailButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
+    [self.emailButton addTarget:self action:@selector(emailButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.smsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.smsButton.size = CGSizeMake(120, 35);
+    self.smsButton.centerX = self.view.width/4.0;
+    [self.smsButton setTitle:@"TEXT INVITE" forState:UIControlStateNormal];
+    self.smsButton.y = self.view.height - 60;
+    self.smsButton.layer.cornerRadius = 4;
+    self.smsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.smsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.smsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    self.smsButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
+    [self.smsButton addTarget:self action:@selector(smsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:self.emailButton];
+    [self.view addSubview:self.smsButton];
+    
+    [[APIClient sharedClient] getPromo:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *promoCode = responseObject[@"promo_code"];
+        NSString *emailSubject = responseObject[@"email_subject"];
+        NSString *emailBody = responseObject[@"email_body"];
+        NSString *smsMessage = responseObject[@"sms_message"];
+        
+        self.promoCode.text = promoCode;
+        
+        self.emailModal = [[MFMailComposeViewController alloc] init];
+        self.emailModal.mailComposeDelegate = self;
+        [self.emailModal setSubject:emailSubject];
+        [self.emailModal setMessageBody:emailBody isHTML:NO];
+//        [mail setToRecipients:@[@"testingEmail@example.com"]];
+        
+        self.smsModal = [[MFMessageComposeViewController alloc] init];
+        self.smsModal.messageComposeDelegate = self;
+        //picker.recipients = [NSArray arrayWithObjects:@"1234", @"2345", nil];
+        self.smsModal.body = smsMessage;
+        
+    } failure:nil];
+}
+
+//- (void)requestContactPermissions
+//{
+////    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+//    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+//    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+//        if (granted) {
+//            [self populateContacts];
+//            [[ContactManager sharedManager] syncContacts];
+//        } else {
+//            [self populateContacts];
+//        }
+//    });
+//}
 
 - (void)dealloc
 {
@@ -1312,6 +1439,19 @@
         NSArray *noContact = [[NSArray alloc] init];
         [self setBeaconOnServerWithInvitedContacts:noContact andMessage:@" " andDate:self.date];
     }
+}
+
+- (void)smsButtonTouched:(id)sender
+{
+    NSLog(@"WORKING");
+    [self presentViewController:self.smsModal animated:YES completion:nil];
+}
+
+- (void)emailButtonTouched:(id)sender
+{
+    NSLog(@"WORKING");
+    [self presentViewController:self.emailModal animated:YES completion:NULL];
+    
 }
 
 @end

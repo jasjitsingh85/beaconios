@@ -49,6 +49,7 @@ static dispatch_once_t onceToken;
         self.userID = [userData valueForKeyPath:@"user.id"];
         self.phoneNumber = userData[@"phone_number"];
         self.rewardScore = userData[@"reward_score"];
+        self.promoCode = userData[@"promo_code"];
         NSString *avatarString = userData[@"avatar_url"];
         if (avatarString) {
             self.avatarURL = [NSURL URLWithString:avatarString];

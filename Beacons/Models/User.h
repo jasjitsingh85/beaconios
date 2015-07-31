@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) NSString *rewardScore;
+@property (strong, nonatomic) NSString *promoCode;
 @property (strong, nonatomic) NSURL *avatarURL;
 
 /*you can not set the normalized number directly.

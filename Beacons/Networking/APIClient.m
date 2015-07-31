@@ -241,14 +241,14 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [self getPath:@"deal/detail/" parameters:parameters success:success failure:failure];
 }
 
-- (void)postRegionStateWithDealID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-{
-//    we only do this for entering regions with iBeacon for now but this can change later
-    NSDictionary *parameters = @{@"deal_id" : dealID,
-                                 @"region_type" : @"IBeacon",
-                                 @"region_state" : @"Enter"};
-    [self postPath:@"region_state/" parameters:parameters success:success failure:failure];
-}
+//- (void)postRegionStateWithDealID:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+//{
+////    we only do this for entering regions with iBeacon for now but this can change later
+//    NSDictionary *parameters = @{@"deal_id" : dealID,
+//                                 @"region_type" : @"IBeacon",
+//                                 @"region_state" : @"Enter"};
+//    [self postPath:@"region_state/" parameters:parameters success:success failure:failure];
+//}
 
 
 - (void)getDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
@@ -406,6 +406,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
         [array addObject:contactString];
     }
     return array;
+}
+
+- (void)getPromo:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"promo/" parameters:parameters success:success failure:failure];
 }
 
 @end

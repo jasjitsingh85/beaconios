@@ -25,8 +25,8 @@
 - (void)updateBeacon:(Beacon *)beacon success:(void (^)(Beacon *updatedBeacon))success failure:(void (^)(NSError *error))failure;
 - (void)cancelBeacon:(Beacon *)beacon success:(void (^)())success failure:(void (^)(NSError *error))failure;
 
-- (void)receivedDidEnterRegionNotification:(NSNotification *)notification;
-- (void)receivedDidExitRegionNotification:(NSNotification *)notification;
+//- (void)receivedDidEnterRegionNotification:(NSNotification *)notification;
+//- (void)receivedDidExitRegionNotification:(NSNotification *)notification;
 
 - (void)shouldUpdateLocationSuccess:(void (^)())success failure:(void (^)(NSError *error))failure;
 - (void)archiveBeacons;

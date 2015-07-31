@@ -233,18 +233,18 @@
     }];
 }
 
-- (void)receivedDidEnterRegionNotification:(NSNotification *)notification
-{
-    DDLogInfo(@"received did enter region notification");
-#if DEBUG
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"Debugging. Entered region";
-#endif
-    
-    CLRegion *region = notification.userInfo[@"region"];
-    NSNumber *beaconID = @(region.identifier.integerValue);
-    [self didArriveAtBeaconWithID:beaconID];
-}
+//- (void)receivedDidEnterRegionNotification:(NSNotification *)notification
+//{
+//    DDLogInfo(@"received did enter region notification");
+//#if DEBUG
+//    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//    localNotification.alertBody = @"Debugging. Entered region";
+//#endif
+//    
+//    CLRegion *region = notification.userInfo[@"region"];
+//    NSNumber *beaconID = @(region.identifier.integerValue);
+//    [self didArriveAtBeaconWithID:beaconID];
+//}
 
 - (void)didArriveAtBeaconWithID:(NSNumber *)beaconID
 {
@@ -258,14 +258,14 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
 }
 
-- (void)receivedDidExitRegionNotification:(NSNotification *)notification
-{
-#if DEBUG
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = @"Debugging. Exited region";
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-#endif
-}
+//- (void)receivedDidExitRegionNotification:(NSNotification *)notification
+//{
+//#if DEBUG
+//    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//    localNotification.alertBody = @"Debugging. Exited region";
+//    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//#endif
+//}
 
 - (void)shouldUpdateLocationSuccess:(void (^)())success failure:(void (^)(NSError *error))failure
 {

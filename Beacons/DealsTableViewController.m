@@ -169,6 +169,19 @@ typedef enum dealTypeStates
     self.initialRadius = 1.6;
     self.hasRewardItem = NO;
     
+//    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+//    picker.messageComposeDelegate = self;
+//    //picker.recipients = [NSArray arrayWithObjects:@"1234", @"2345", nil];
+//    picker.body = @"TEST";
+//    [self presentViewController:picker animated:YES completion:nil];
+
+//    MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+//    mail.mailComposeDelegate = self;
+//    [mail setSubject:@"Sample Subject"];
+//    [mail setMessageBody:@"Here is some main text in the email!" isHTML:NO];
+//    [mail setToRecipients:@[@"testingEmail@example.com"]];
+//    
+//    [self presentViewController:mail animated:YES completion:NULL];
     
     //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
     //[self addChildViewController:self.rewardsViewController];
@@ -440,6 +453,11 @@ typedef enum dealTypeStates
     self.rewardExplanationContainer.hidden = YES;
     [self.view addSubview:self.rewardExplanationContainer];
     
+    UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(showDrinkModal:)];
+    
+    [self.rewardExplanationContainer addGestureRecognizer:singleFingerTap];
+    
     self.rewardItemLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 7, self.view.width, 20)];
     self.rewardItemLabel.font = [ThemeManager regularFontOfSize:16];
     self.rewardItemLabel.textColor = [UIColor whiteColor];
@@ -470,27 +488,27 @@ typedef enum dealTypeStates
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mapListToggleButton];
     
-    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-    //rewardItemView.backgroundColor = [UIColor blackColor];
+//    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+//    //rewardItemView.backgroundColor = [UIColor blackColor];
+//    
+//    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
+//    drinkIcon.size = CGSizeMake(36, 27);
+//    drinkIcon.x = 20;
+//    drinkIcon.y = 5;
+//    [rewardItemView addSubview:drinkIcon];
+//    
+//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
+//    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
+//    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
+//    [rewardItemView addSubview:self.rewardScore];
+//    
+//    UITapGestureRecognizer *singleFingerTap =
+//    [[UITapGestureRecognizer alloc] initWithTarget:self
+//                                            action:@selector(showDrinkModal:)];
+//    
+//    [rewardItemView addGestureRecognizer:singleFingerTap];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
-    drinkIcon.size = CGSizeMake(36, 27);
-    drinkIcon.x = 20;
-    drinkIcon.y = 5;
-    [rewardItemView addSubview:drinkIcon];
-    
-    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
-    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
-    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
-    [rewardItemView addSubview:self.rewardScore];
-    
-    UITapGestureRecognizer *singleFingerTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(showDrinkModal:)];
-    
-    [rewardItemView addGestureRecognizer:singleFingerTap];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     
@@ -808,18 +826,14 @@ typedef enum dealTypeStates
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
         if ([self.numberOfRewardItems integerValue] > 0) {
             self.hasRewardItem = YES;
-        } else  {
-            self.hasRewardItem = NO;
-        }
-        
-        if (self.hasRewardItem) {
             self.rewardExplanationContainer.hidden = NO;
             if ([self.numberOfRewardItems intValue] == 1) {
                 self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drink", self.numberOfRewardItems];
             } else {
                 self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drinks", self.numberOfRewardItems];
             }
-        } else {
+        } else  {
+            self.hasRewardItem = NO;
             self.rewardExplanationContainer.hidden = YES;
         }
         
