@@ -263,13 +263,13 @@ typedef enum {
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
         [alertView bk_addButtonWithTitle:@"Enable Push" handler:^{
             [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
-                [self finishPermissions];
+                [self enterPaymentsMode];
             } failure:^(NSError *error) {
-                [self finishPermissions];
+                [self enterPaymentsMode];;
             }];
         }];
         [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
-            [self finishPermissions];
+            [self enterPaymentsMode];
         }];
         [alertView show];
     }
