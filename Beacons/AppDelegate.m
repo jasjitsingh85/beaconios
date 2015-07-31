@@ -36,7 +36,7 @@
 #import "Deal.h"
 #import <Braintree/Braintree.h>
 //#import "VoucherViewController.h"
-#import <MaveSDK.h>
+//#import <MaveSDK.h>
 
 @interface AppDelegate()
 
@@ -394,17 +394,17 @@
     [CrashManager setupForUser];
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
     
-    [[MaveSDK sharedInstance] getReferringData:^(MAVEReferringData *referringData) {
-        MAVEUserData *referringUser = referringData.referringUser;
-        NSString *referringUserPhone = referringData.currentUser.phone;
-        if (referringUser) {
-            [[APIClient sharedClient] addRewardItem:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"Successful referral");
-            } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
-                NSLog(@"Failure for referral");
-            }];
-         }
-    }];
+//    [[MaveSDK sharedInstance] getReferringData:^(MAVEReferringData *referringData) {
+//        MAVEUserData *referringUser = referringData.referringUser;
+//        NSString *referringUserPhone = referringData.currentUser.phone;
+//        if (referringUser) {
+//            [[APIClient sharedClient] addRewardItem:referringUserPhone success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSLog(@"Successful referral");
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *responseObject) {
+//                NSLog(@"Failure for referral");
+//            }];
+//         }
+//    }];
 }
 
 - (void)didFinishPermissions

@@ -158,7 +158,15 @@
     if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
         [self loadAuthorizedContactView];
     } else if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-        [self requestContactPermissions];
+        NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you earn free drinks when you invite friends or text them to meet up through Hotspot"];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Sync Contacts?" message:message];
+        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
+            [self requestContactPermissions];
+        }];
+        [alertView bk_setCancelButtonWithTitle:@"Maybe Later" handler:^ {
+            [self loadUnauthorizedContactView];
+        }];
+        [alertView show];
     } else {
         [self loadUnauthorizedContactView];
     }
@@ -169,7 +177,7 @@
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
     ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
         if (granted) {
-            [self populateContacts];
+            [self loadAuthorizedContactView];
             [[ContactManager sharedManager] syncContacts];
         } else {
             [self loadUnauthorizedContactView];
@@ -362,14 +370,14 @@
     
     [view addSubview:promptHeading];
     
-    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
+    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 60)];
     self.prompt.centerX = self.view.width/2;
-    self.prompt.y = 75;
+    self.prompt.y = 70;
     self.prompt.font = [ThemeManager lightFontOfSize:12];
     self.prompt.textColor = [UIColor blackColor];
-    self.prompt.numberOfLines = 2;
+    self.prompt.numberOfLines = 3;
     self.prompt.textAlignment = NSTextAlignmentCenter;
-    self.prompt.text = [NSString stringWithFormat:@"Send frinds a free drink and you'll get one too. Just have them use the promo code below:"];
+    self.prompt.text = [NSString stringWithFormat:@"Invite friends to join Hotspot, and you’ll both receive a free drink when they register. Just have them use the promo code below."];
     
 //    UILabel *promoCodePrompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
 //    promoCodePrompt.centerX = self.view.width/2;
@@ -398,19 +406,19 @@
     
     self.emailButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.emailButton.size = CGSizeMake(120, 35);
-    self.emailButton.centerX = self.view.width/4.0 * 3;
+    self.emailButton.centerX = (self.view.width/4.0 * 3) - 10;
     self.emailButton.y = self.view.height - 60;
     self.emailButton.layer.cornerRadius = 4;
     self.emailButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.emailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.emailButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.emailButton setTitle:@"EMAIL INVITE" forState:UIControlStateNormal];
-    self.emailButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
+    self.emailButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     [self.emailButton addTarget:self action:@selector(emailButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.smsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.smsButton.size = CGSizeMake(120, 35);
-    self.smsButton.centerX = self.view.width/4.0;
+    self.smsButton.centerX = (self.view.width/4.0) + 10;
     [self.smsButton setTitle:@"TEXT INVITE" forState:UIControlStateNormal];
     self.smsButton.y = self.view.height - 60;
     self.smsButton.layer.cornerRadius = 4;
@@ -418,7 +426,7 @@
     [self.smsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.smsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
-    self.smsButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
+    self.smsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     [self.smsButton addTarget:self action:@selector(smsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.emailButton];
@@ -1443,13 +1451,11 @@
 
 - (void)smsButtonTouched:(id)sender
 {
-    NSLog(@"WORKING");
     [self presentViewController:self.smsModal animated:YES completion:nil];
 }
 
 - (void)emailButtonTouched:(id)sender
 {
-    NSLog(@"WORKING");
     [self presentViewController:self.emailModal animated:YES completion:NULL];
     
 }

@@ -74,7 +74,7 @@ extern NSString * const kHappyHoursAppURLIdentifier;
 extern NSString * const kVenmoAppURLIdentifier;
 
 extern NSString * const kAppID;
-extern NSString * const kMaveApplicationID;
+//extern NSString * const kMaveApplicationID;
 
 //urls
 extern NSString * const kTermsURL;

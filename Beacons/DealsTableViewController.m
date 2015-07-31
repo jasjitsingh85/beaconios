@@ -29,7 +29,7 @@
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <MaveSDK.h>
+//#import <MaveSDK.h>
 #import <MapKit/MapKit.h>
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
@@ -488,27 +488,27 @@ typedef enum dealTypeStates
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mapListToggleButton];
     
-//    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-//    //rewardItemView.backgroundColor = [UIColor blackColor];
-//    
-//    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
-//    drinkIcon.size = CGSizeMake(36, 27);
-//    drinkIcon.x = 20;
-//    drinkIcon.y = 5;
-//    [rewardItemView addSubview:drinkIcon];
-//    
-//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
-//    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
-//    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
-//    [rewardItemView addSubview:self.rewardScore];
-//    
-//    UITapGestureRecognizer *singleFingerTap =
-//    [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                            action:@selector(showDrinkModal:)];
-//    
-//    [rewardItemView addGestureRecognizer:singleFingerTap];
+    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+    //rewardItemView.backgroundColor = [UIColor blackColor];
     
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
+    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
+    drinkIcon.size = CGSizeMake(36, 27);
+    drinkIcon.x = 20;
+    drinkIcon.y = 5;
+    [rewardItemView addSubview:drinkIcon];
+    
+    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
+    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
+    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
+    [rewardItemView addSubview:self.rewardScore];
+    
+    UITapGestureRecognizer *singleFingerTapOnNav =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(showDrinkModal:)];
+    
+    [rewardItemView addGestureRecognizer:singleFingerTapOnNav];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     
@@ -536,8 +536,8 @@ typedef enum dealTypeStates
 //            [controller dismissViewControllerAnimated:YES completion:nil];
 //        } inviteContext:@"Menu"];
     
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+//    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+//    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
         AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
         UINavigationController *navigationController =
         [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
@@ -545,18 +545,18 @@ typedef enum dealTypeStates
         navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
         navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
         [self presentViewController:navigationController animated:YES completion:nil];
-        //    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
-    } else {
-        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
-            // Code to present Mave's view controller from yours, e.g:
-            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
-            [self presentViewController:inviteController animated:YES completion:nil];
-        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
-            // Code to transition back to your view controller after Mave's
-            // is dismissed (sent invites or cancelled), e.g:
-            [controller dismissViewControllerAnimated:YES completion:nil];
-        } inviteContext:@"Menu"];
-    }
+//        //    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+//    } else {
+//        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {
+//            // Code to present Mave's view controller from yours, e.g:
+//            //[[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:inviteController animated:YES];
+//            [self presentViewController:inviteController animated:YES completion:nil];
+//        } dismissBlock:^(UIViewController *controller, NSUInteger numberOfInvitesSent) {
+//            // Code to transition back to your view controller after Mave's
+//            // is dismissed (sent invites or cancelled), e.g:
+//            [controller dismissViewControllerAnimated:YES completion:nil];
+//        } inviteContext:@"Menu"];
+//    }
     
 //    AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
 //    UINavigationController *navigationController =
@@ -798,6 +798,7 @@ typedef enum dealTypeStates
         NSMutableArray *happyHours = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         [self.mapView removeAnnotations:[self.mapView annotations]];
+        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
         
         for (NSDictionary *dealJSON in responseObject[@"deals"]) {
             Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
@@ -822,9 +823,10 @@ typedef enum dealTypeStates
             [happyHours addObject:happyHour];
         }
         
-        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
+        NSLog(@"Reward Items: %@", self.numberOfRewardItems);
         if ([self.numberOfRewardItems integerValue] > 0) {
+            NSLog(@"WORKINGH");
             self.hasRewardItem = YES;
             self.rewardExplanationContainer.hidden = NO;
             if ([self.numberOfRewardItems intValue] == 1) {
