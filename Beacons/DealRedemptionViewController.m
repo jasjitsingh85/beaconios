@@ -18,6 +18,7 @@
 #import "BeaconManager.h"
 #import "FindFriendsViewController.h"
 #import "BeaconStatus.h"
+#import "ContactManager.h"
 
 @interface DealRedemptionViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) UIImageView *headerIcon;
 @property (strong, nonatomic) UILabel *headerTitle;
 @property (strong, nonatomic) UILabel *headerExplanationText;
+@property (strong, nonatomic) UILabel *inviteFriendsExplanation;
 //@property (strong, nonatomic) UILabel *timeLeftLabel;
 
 @end
@@ -92,13 +94,13 @@
 //    inviteFriendsTitle.text = @"TEXT FRIENDS TO MEET HERE?";
 //    [self.tableView addSubview:inviteFriendsTitle];
     
-    UILabel *inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width - 50, 50)];
-    inviteFriendsExplanation.centerX = self.view.width/2;
-    inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
-    inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
-    inviteFriendsExplanation.text = @"Tap below to text more friends to meet you here.";
-    inviteFriendsExplanation.numberOfLines = 1;
-    [self.tableView addSubview:inviteFriendsExplanation];
+    self.inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width - 50, 50)];
+    self.inviteFriendsExplanation.centerX = self.view.width/2;
+    self.inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
+    self.inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
+    self.inviteFriendsExplanation.text = @"Tap below to text more friends to meet you here.";
+    self.inviteFriendsExplanation.numberOfLines = 1;
+    [self.tableView addSubview:self.inviteFriendsExplanation];
     
     self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.redeemButton.y = 100; // +25
@@ -168,6 +170,16 @@
     [self.tableView addSubview:self.redeemButton];
     //[self.tableView addSubview:footerView];
     //self.tableView.tableFooterView = footerView;
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        self.inviteFriendsButton.hidden = NO;
+        self.inviteFriendsExplanation.hidden = NO;
+    } else {
+        self.inviteFriendsButton.hidden = YES;
+        self.inviteFriendsExplanation.hidden = YES;
+    }
+    
 }
 //
 //- (void) loadPaymentDeal
