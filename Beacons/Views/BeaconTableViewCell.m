@@ -143,7 +143,8 @@
         going += beaconStatus.beaconStatusOption == BeaconStatusOptionGoing;
         here += beaconStatus.beaconStatusOption == BeaconStatusOptionHere;
     }
-    NSString *secondLine = [NSString stringWithFormat:@"%@ @ %@", [self.beacon.time formattedTime].uppercaseString, [self.beacon.deal.venue.name uppercaseString]];
+//    NSString *secondLine = [NSString stringWithFormat:@"%@ @ %@", [self.beacon.time formattedTime].uppercaseString, [self.beacon.deal.venue.name uppercaseString]];
+    NSString *secondLine = [NSString stringWithFormat:@"@ %@", [self.beacon.deal.venue.name uppercaseString]];
     self.secondLine.text = secondLine;
 //    self.inviteLabel.text = [NSString stringWithFormat:@"%d going, %d invited", going + here, invited];
 }

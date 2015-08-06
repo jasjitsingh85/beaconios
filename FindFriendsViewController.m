@@ -1111,9 +1111,22 @@
 
 - (void)inviteButtonTouched:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
-        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
-   }
+    if (![self.deal isAvailableAtDate:self.date]) {
+        
+        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
+        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+        [alertView show];
+        
+        //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
+            [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
+        }
+    }
 }
 
 - (void)resetDate

@@ -37,6 +37,7 @@
     
     self.menuButtonNotifications = [[UIView alloc] initWithFrame:CGRectMake(-10, -5, 50, 40)];
     
+//    self.menuButtonBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menuButtonWithNotification"]];
     self.menuButtonBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menuButtonWithNotification"]];
     self.menuButtonBackground.y = 10;
     self.menuButtonBackground.x = 10;
@@ -124,7 +125,8 @@
             self.menuButton.alpha = 0;
         } completion:^(BOOL finished) {
             if (isSelected) {
-                [self menuButtonCountMode:beaconCount];
+                [self menuButtonDefaultMode];
+                //[self menuButtonCountMode:beaconCount];
             }
             else {
                 [self menuButtonDefaultMode];

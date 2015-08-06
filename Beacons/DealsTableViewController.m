@@ -572,7 +572,7 @@ typedef enum dealTypeStates
     
     NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
     
-    if ((launchCount + 1) % 3 == 0) {
+    if ((launchCount) % 3 == 0) {
         [self launchInviteFriends];
         
 //        [[MaveSDK sharedInstance] presentInvitePageModallyWithBlock:^(UIViewController *inviteController) {

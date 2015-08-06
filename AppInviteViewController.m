@@ -159,7 +159,7 @@
         [self loadAuthorizedContactView];
     } else if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
         NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you earn free drinks when you invite friends or text them to meet up through Hotspot"];
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Sync Contacts?" message:message];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Want Free Drinks?" message:message];
         [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
             [self requestContactPermissions];
         }];
