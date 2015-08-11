@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UILabel *marketPriceLabel;
 @property (strong, nonatomic) UILabel *itemPriceLabel;
+@property (strong, nonatomic) UIButton *favoriteButton;
 //@property (strong, nonatomic) UIView *venueDescriptionBackground;
 //@property (strong, nonatomic) UILabel *venueDescriptionLabel;
 //@property (strong, nonatomic) UILabel *venueDetailDealHeadingLabel;
@@ -35,6 +36,7 @@
 //@property (strong, nonatomic) UIView *venueDetailView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
+@property (assign, nonatomic) BOOL isFavorited;
 //@property (nonatomic, assign) BOOL hasRewardItem;
 
 @property (strong, nonatomic) Deal *deal;

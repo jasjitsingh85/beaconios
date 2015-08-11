@@ -414,4 +414,16 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] getPath:@"promo/" parameters:parameters success:success failure:failure];
 }
 
+- (void)toggleFavorite: (NSNumber *)dealPlaceID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"deal_place_id" : dealPlaceID };
+    [[APIClient sharedClient] postPath:@"favorite-feed/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getFavoriteFeed:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"favorite-feed/" parameters:parameters success:success failure:failure];
+}
+
 @end

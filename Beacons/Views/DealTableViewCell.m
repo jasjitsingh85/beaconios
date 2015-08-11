@@ -16,6 +16,7 @@
 #import "Venue.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DealHours.h"
+#import "APIClient.h"
 
 @interface DealTableViewCell()
 
@@ -191,6 +192,21 @@
     //self.distanceLabel.backgroundColor = [UIColor whiteColor];
     
     //[self.venueScroll addSubview:self.venueDetailView];
+    
+    self.favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.favoriteButton.size = CGSizeMake(50, 50);
+    self.favoriteButton.x = self.contentView.width - 50;
+    self.favoriteButton.y = 0;
+    [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
+    //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
+    //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+    //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
+    //    self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
+    //    [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //    [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.favoriteButton addTarget:self action:@selector(favoriteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.venuePreviewView addSubview:self.favoriteButton];
     
     
 //    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 1, self.contentView.frame.size.height);
@@ -419,6 +435,27 @@
     }
     
     return firstAndSecondLine;
+}
+
+- (void)favoriteButtonTouched:(id)sender
+{
+    
+    self.isFavorited = !self.isFavorited;
+    [self updateFavoriteButton];
+    
+    [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.isFavorited = [responseObject[@"is_favorited"] boolValue];
+        [self updateFavoriteButton];
+    } failure:nil];
+}
+
+- (void) updateFavoriteButton
+{
+    if (self.isFavorited) {
+        [self.favoriteButton setImage:[UIImage imageNamed:@"selectedFavorite"] forState:UIControlStateNormal];
+    } else {
+        [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
+    }
 }
 
 @end

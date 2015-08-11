@@ -154,100 +154,13 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
-        [self loadAuthorizedContactView];
-    } else if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-        NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you earn free drinks when you invite friends or text them to meet up through Hotspot"];
-        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Want Free Drinks?" message:message];
-        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
-            [self requestContactPermissions];
-        }];
-        [alertView bk_setCancelButtonWithTitle:@"Maybe Later" handler:^ {
-            [self loadUnauthorizedContactView];
-        }];
-        [alertView show];
-    } else {
-        [self loadUnauthorizedContactView];
-    }
-}
-
-- (void)requestContactPermissions
-{
-    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
-        if (granted) {
-            [self loadAuthorizedContactView];
-            [[ContactManager sharedManager] syncContacts];
-        } else {
-            [self loadUnauthorizedContactView];
-        }
-    });
-}
-
-- (void) loadAuthorizedContactView
-{
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.tableView];
     self.tableView.contentInset = UIEdgeInsetsMake(40, 0, 0, 0);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    //    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
-    //    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
-    
-    [self resetDate];
-    
-    //    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
-    //    //weird hack for black search bar issue
-    //    self.searchBar.backgroundImage = [UIImage new];
-    //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    //    self.searchBar.delegate = self;
-    //    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-    //    self.searchBar.translucent = NO;
-    //    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    //    [self.view addSubview:self.searchBar];
-    
-    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 40)];
-    searchBarContainer.backgroundColor = [UIColor whiteColor];
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 10, self.view.width * .8, 25)];
-    //weird hack for black search bar issue
-    self.searchBar.backgroundImage = [UIImage new];
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    self.searchBar.delegate = self;
-    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
-    self.searchBar.translucent = NO;
-    self.searchBar.layer.cornerRadius = 12;
-    self.searchBar.layer.borderWidth = 1.0;
-    self.searchBar.centerX = self.view.width/2;
-    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
-    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    [searchBarContainer addSubview:self.searchBar];
-    //    self.navigationItem.titleView = searchBarContainer;
-    [self.view addSubview:searchBarContainer];
-    
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
-    self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
-    
-    self.isSendMessageShowing = NO;
-    self.isKeyboardShowing = NO;
-    
-    //    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    self.skipButton.width = self.view.width;
-    //    self.skipButton.height = 35;
-    //    self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    //    self.skipButton.y = self.view.height - 35;
-    //    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
-    //
-    //    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
-    //    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    //    self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    //    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-    //    [self.view addSubview:self.skipButton];
+    self.tableView.hidden = YES;
     
     self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
@@ -296,6 +209,98 @@
     self.composeMessageTextView.text = @"Join me on Hotspot so we can both get a free (alcoholic) drink. http://GetHotspotApp.com";
     self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
     [self.sendMessageContainer addSubview:self.composeMessageTextView];
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [self loadAuthorizedContactView];
+    } else if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you earn free drinks when you invite friends or text them to meet up through Hotspot"];
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Want Free Drinks?" message:message];
+        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
+            [self requestContactPermissions];
+        }];
+        [alertView bk_setCancelButtonWithTitle:@"Maybe Later" handler:^ {
+            [self loadUnauthorizedContactView];
+        }];
+        [alertView show];
+    } else {
+        [self loadUnauthorizedContactView];
+    }
+}
+
+- (void)requestContactPermissions
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            [self loadAuthorizedContactView];
+//            [[ContactManager sharedManager] syncContacts];
+        } else {
+            [self loadUnauthorizedContactView];
+        }
+    });
+}
+
+- (void) loadAuthorizedContactView
+{
+    
+    //    UIButton *skipButton = [UIButton navButtonWithTitle:@"SKIP"];
+    //    [skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:skipButton];
+    
+    [self resetDate];
+    
+    //    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+    //    //weird hack for black search bar issue
+    //    self.searchBar.backgroundImage = [UIImage new];
+    //    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    //    self.searchBar.delegate = self;
+    //    self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    //    self.searchBar.translucent = NO;
+    //    self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    //    [self.view addSubview:self.searchBar];
+    
+    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 40)];
+    searchBarContainer.backgroundColor = [UIColor whiteColor];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 10, self.view.width * .8, 25)];
+    //weird hack for black search bar issue
+    self.searchBar.backgroundImage = [UIImage new];
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    self.searchBar.delegate = self;
+    //self.searchBar.barTintColor = [[ThemeManager sharedTheme] redColor];
+    self.searchBar.translucent = NO;
+    self.searchBar.layer.cornerRadius = 12;
+    self.searchBar.layer.borderWidth = 1.0;
+    self.searchBar.centerX = self.view.width/2;
+    self.searchBar.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
+    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
+    [searchBarContainer addSubview:self.searchBar];
+    //    self.navigationItem.titleView = searchBarContainer;
+    [self.view addSubview:searchBarContainer];
+    
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+    self.tableView.sectionIndexColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    
+    self.isSendMessageShowing = NO;
+    self.isKeyboardShowing = NO;
+    
+    self.tableView.hidden = NO;
+    
+    //    self.skipButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    self.skipButton.width = self.view.width;
+    //    self.skipButton.height = 35;
+    //    self.skipButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    //    self.skipButton.y = self.view.height - 35;
+    //    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
+    //
+    //    [self.skipButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //    [self.skipButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+    //    [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.skipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    self.skipButton.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    //    [self.view addSubview:self.skipButton];
+    
     
     //    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
     //    UITapGestureRecognizer *dateViewTap =
@@ -761,10 +766,10 @@
         if ([self.tableViewHeaderPool valueForKey:key]) {
             return [self.tableViewHeaderPool valueForKey:key];
         }
-        CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, height)];
+//        CGFloat height = [self tableView:tableView heightForHeaderInSection:section];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 40)];
         view.backgroundColor = [UIColor whiteColor];
-        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, height)];
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 150, 40)];
         title.adjustsFontSizeToFitWidth = YES;
         title.backgroundColor = [UIColor clearColor];
         title.font = [ThemeManager boldFontOfSize:11.0];

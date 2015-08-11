@@ -488,27 +488,27 @@ typedef enum dealTypeStates
     [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mapListToggleButton];
     
-    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
-    //rewardItemView.backgroundColor = [UIColor blackColor];
+//    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
+//    //rewardItemView.backgroundColor = [UIColor blackColor];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"freeDrinkNavIcon"]];
-    drinkIcon.size = CGSizeMake(36, 27);
-    drinkIcon.x = 20;
-    drinkIcon.y = 5;
-    [rewardItemView addSubview:drinkIcon];
+    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newsfeedIcon"]];
+//    drinkIcon.size = CGSizeMake(20, 20);
+//    drinkIcon.x = 20;
+//    drinkIcon.y = 5;
+//    [rewardItemView addSubview:drinkIcon];
     
-    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
-    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
-    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
-    [rewardItemView addSubview:self.rewardScore];
+//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
+//    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
+//    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
+//    [rewardItemView addSubview:self.rewardScore];
     
     UITapGestureRecognizer *singleFingerTapOnNav =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(showDrinkModal:)];
     
-    [rewardItemView addGestureRecognizer:singleFingerTapOnNav];
+    [drinkIcon addGestureRecognizer:singleFingerTapOnNav];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rewardItemView];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:drinkIcon];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     
@@ -826,7 +826,6 @@ typedef enum dealTypeStates
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
         NSLog(@"Reward Items: %@", self.numberOfRewardItems);
         if ([self.numberOfRewardItems integerValue] > 0) {
-            NSLog(@"WORKINGH");
             self.hasRewardItem = YES;
             self.rewardExplanationContainer.hidden = NO;
             if ([self.numberOfRewardItems intValue] == 1) {

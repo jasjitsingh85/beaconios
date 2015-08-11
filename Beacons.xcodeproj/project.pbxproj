@@ -56,6 +56,11 @@
 		410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */; };
 		410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */; };
 		4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */; };
+		41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CB21B7998D900F4CA17 /* trayIcon@2x.png */; };
+		41148CB51B79BE9C00F4CA17 /* greyHamburger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */; };
+		41148CB81B7A2A9A00F4CA17 /* unselectedFavorite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CB61B7A2A9A00F4CA17 /* unselectedFavorite@2x.png */; };
+		41148CB91B7A2A9A00F4CA17 /* selectedFavorite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CB71B7A2A9A00F4CA17 /* selectedFavorite@2x.png */; };
+		41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41246CB81B03044F00EFB8F0 /* RewardsStoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */; };
 		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
@@ -380,6 +385,11 @@
 		410FC8A01B3B57600097EA26 /* hotspotDrinkIcons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotDrinkIcons@2x.png"; sourceTree = "<group>"; };
 		410FC8A21B3B65D60097EA26 /* pushIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushIcon@2x.png"; sourceTree = "<group>"; };
 		4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonBackground@2x.png"; sourceTree = "<group>"; };
+		41148CB21B7998D900F4CA17 /* trayIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trayIcon@2x.png"; sourceTree = "<group>"; };
+		41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyHamburger@2x.png"; sourceTree = "<group>"; };
+		41148CB61B7A2A9A00F4CA17 /* unselectedFavorite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselectedFavorite@2x.png"; sourceTree = "<group>"; };
+		41148CB71B7A2A9A00F4CA17 /* selectedFavorite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectedFavorite@2x.png"; sourceTree = "<group>"; };
+		41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsfeedIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41246CB61B03044000EFB8F0 /* RewardsStoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsStoreViewController.h; sourceTree = "<group>"; };
 		41246CB71B03044F00EFB8F0 /* RewardsStoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsStoreViewController.m; sourceTree = "<group>"; };
@@ -1232,6 +1242,7 @@
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
+				41148CB21B7998D900F4CA17 /* trayIcon@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */,
 				41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */,
@@ -1240,6 +1251,7 @@
 				415929701AFD8E37002BBCD0 /* mapMarker@2x.png */,
 				4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */,
 				41030F6E1B5C326B00252158 /* promoCode@2x.png */,
+				41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */,
 				41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */,
 				410D19511B4F85BB002C5F0F /* poweredByYelp@2x.png */,
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
@@ -1247,6 +1259,8 @@
 				41F144141B27C3460010BCF1 /* redPin@2x.png */,
 				41FD06381B39EF7500F7DD08 /* redeemedVoucher@2x.png */,
 				96D1D55C199AFEC0007216F3 /* noDealsPlaceholder@2x.png */,
+				41148CB61B7A2A9A00F4CA17 /* unselectedFavorite@2x.png */,
+				41148CB71B7A2A9A00F4CA17 /* selectedFavorite@2x.png */,
 				41030F6C1B5C27EF00252158 /* homeIcon@2x.png */,
 				4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
@@ -1334,6 +1348,7 @@
 				9690F2C717FFE5980010EFA3 /* menuButton@2x.png */,
 				96CBCCE01805066700D62462 /* menuHome@2x.png */,
 				41639AD71B3CB27200E56734 /* fifthGradientBackground@2x.png */,
+				41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */,
 				41639AD81B3CB27200E56734 /* fourthGradientBackground@2x.png */,
 				41639AD91B3CB27200E56734 /* thirdGradientBackground@2x.png */,
 				41639ADA1B3CB27200E56734 /* secondGradientBackground@2x.png */,
@@ -1495,6 +1510,7 @@
 				963B7622189C305A006C6845 /* handPhone@2x.png in Resources */,
 				96CE79EF199D2A01002574B8 /* iphoneWalkthrough4@2x.png in Resources */,
 				41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */,
+				41148CB51B79BE9C00F4CA17 /* greyHamburger@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
 				41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */,
 				9671D03418273C0F00D03D66 /* lock@2x.png in Resources */,
@@ -1514,6 +1530,7 @@
 				41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
+				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
 				41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */,
 				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
@@ -1550,8 +1567,10 @@
 				96D1D55D199AFEC0007216F3 /* noDealsPlaceholder@2x.png in Resources */,
 				969BE31C18D1FF3600E2714A /* iMessageChatBubble@2x.png in Resources */,
 				9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */,
+				41148CB91B7A2A9A00F4CA17 /* selectedFavorite@2x.png in Resources */,
 				41ED34CE1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png in Resources */,
 				96C7FEA71898158200A79CC3 /* iphoneVector@2x.png in Resources */,
+				41148CB81B7A2A9A00F4CA17 /* unselectedFavorite@2x.png in Resources */,
 				4158AE571B433F690034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */,
 				96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */,
 				41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */,
@@ -1606,6 +1625,7 @@
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
 				4158AE591B4342300034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */,
+				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
 				4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */,

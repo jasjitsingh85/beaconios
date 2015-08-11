@@ -11,6 +11,7 @@
 
 @interface Venue : NSObject
 
+@property (strong, nonatomic) NSNumber *venueID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *address;
 @property (assign, nonatomic) CLLocationDistance distance;

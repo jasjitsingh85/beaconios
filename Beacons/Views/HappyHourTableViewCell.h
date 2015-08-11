@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HappyHour.h"
+#import "Venue.h"
 #import <MapKit/MapKit.h>
 
 @interface HappyHourTableViewCell : UITableViewCell
@@ -33,6 +34,8 @@
 @property (strong, nonatomic) UIView *backgroundCellView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
+@property (strong, nonatomic) UIButton *favoriteButton;
+@property (assign, nonatomic) BOOL isFavorited;
 
 @property (strong, nonatomic) HappyHour *happyHour;
 

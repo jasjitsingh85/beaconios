@@ -144,7 +144,7 @@
 - (void)menuButtonDefaultMode
 {
     [self.menuButtonNotifications removeFromSuperview];
-    [self.menuButton setImage:[UIImage imageNamed:@"menuButton"] forState:UIControlStateNormal];
+    [self.menuButton setImage:[UIImage imageNamed:@"greyHamburger"] forState:UIControlStateNormal];
     [self.menuButton setTitle:nil forState:UIControlStateNormal];
     self.menuButton.backgroundColor = [UIColor clearColor];
     self.menuButton.layer.cornerRadius = 0;

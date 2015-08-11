@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "HappyHour.h"
-#import "HappyHourVenue.h"
+#import "Venue.h"
 #import "NSDate+FormattedDate.h"
 #import <math.h>
 
@@ -25,7 +25,7 @@
     self.happyHourDescription = dictionary[@"description"];
     self.start = dictionary[@"start"];
     self.end = dictionary[@"end"];
-    self.venue = [[HappyHourVenue alloc] initWithDictionary:dictionary[@"place"]];
+    self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
 
     return self;
 }

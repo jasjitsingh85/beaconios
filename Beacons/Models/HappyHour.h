@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HappyHourVenue.h"
+#import "Venue.h"
 
-@class HappyHourVenue;
+@class Venue;
 @interface HappyHour : NSObject
 
 @property (strong, nonatomic) NSNumber *ID;
 @property (strong, nonatomic) NSString *happyHourDescription;
 @property (strong, nonatomic) NSNumber *start;
 @property (strong, nonatomic) NSNumber *end;
-@property (strong, nonatomic) HappyHourVenue *venue;
+@property (strong, nonatomic) Venue *venue;
 
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

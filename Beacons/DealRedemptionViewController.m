@@ -70,7 +70,7 @@
     self.headerTitle.y = 30;
     [self.tableView addSubview:self.headerTitle];
     
-    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 50, 50)];
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 45, 50)];
     self.headerExplanationText.centerX = self.view.width/2;
     self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
     self.headerExplanationText.textAlignment = NSTextAlignmentCenter;
@@ -393,8 +393,9 @@
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
-        self.headerTitle.text = @"YOU'RE ALL SET!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You haven't been charged yet. Have your server tap the voucher below to redeem your $%@ %@", self.deal.itemPrice, [self.deal.itemName lowercaseString]];
+        self.headerTitle.text = @"SHOW VOUCHER TO SERVER";
+        self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.deal.itemPrice];
+
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
     } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {

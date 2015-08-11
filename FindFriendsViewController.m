@@ -22,6 +22,7 @@
 #import "Utilities.h"
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
+#import "AnalyticsManager.h"
 #import "NavigationBarTitleLabel.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
@@ -1199,6 +1200,7 @@
         [loadingIndicator hide:YES];
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
     } failure:^(NSError *error) {
         [loadingIndicator hide:YES];
         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

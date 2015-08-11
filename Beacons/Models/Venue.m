@@ -34,19 +34,25 @@
     if (!self) {
         return nil;
     }
+    self.venueID = dictionary[@"id"];
     self.name = dictionary[@"name"];
     NSNumber *latitude = dictionary[@"latitude"];
     NSNumber *longitude = dictionary[@"longitude"];
     self.coordinate = CLLocationCoordinate2DMake(latitude.floatValue, longitude.floatValue);
     self.address = dictionary[@"street_address"];
-    self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@", dictionary[@"image_url"]];
+    if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
+        self.imageURL = [NSURL URLWithString:imageUrl];
+    }
     self.foursquareID = dictionary[@"foursquare_id"];
     self.placeDescription = dictionary[@"place_description"];
     self.yelpID = dictionary[@"yelp_id"];
     
     self.yelpReviewCount = dictionary[@"yelp_review_count"];
     NSString *yelpRatingImage = dictionary[@"yelp_rating_image_url"];
-    self.yelpRating = [NSURL URLWithString:yelpRatingImage];
+    if (![yelpRatingImage isEqual:[NSNull null]]){
+        self.yelpRating = [NSURL URLWithString:yelpRatingImage];
+    }
     return self;
 }
 
