@@ -43,6 +43,8 @@
 		41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F6C1B5C27EF00252158 /* homeIcon@2x.png */; };
 		41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F6E1B5C326B00252158 /* promoCode@2x.png */; };
 		41030F721B5C34EB00252158 /* PromoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41030F711B5C34EB00252158 /* PromoViewController.m */; };
+		4105DA931B7AEF1A0006B888 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA921B7AEF1A0006B888 /* FeedTableViewController.m */; };
+		4105DA961B7AEFBE0006B888 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA951B7AEFBE0006B888 /* FeedItem.m */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -370,6 +372,10 @@
 		41030F6E1B5C326B00252158 /* promoCode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "promoCode@2x.png"; sourceTree = "<group>"; };
 		41030F701B5C34DE00252158 /* PromoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromoViewController.h; sourceTree = "<group>"; };
 		41030F711B5C34EB00252158 /* PromoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromoViewController.m; sourceTree = "<group>"; };
+		4105DA911B7AEF080006B888 /* FeedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedTableViewController.h; sourceTree = "<group>"; };
+		4105DA921B7AEF1A0006B888 /* FeedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedTableViewController.m; sourceTree = "<group>"; };
+		4105DA941B7AEFA30006B888 /* FeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItem.h; sourceTree = "<group>"; };
+		4105DA951B7AEFBE0006B888 /* FeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -899,6 +905,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		4105DA901B7AEEEF0006B888 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				4105DA911B7AEF080006B888 /* FeedTableViewController.h */,
+				4105DA921B7AEF1A0006B888 /* FeedTableViewController.m */,
+			);
+			name = Feed;
+			sourceTree = "<group>";
+		};
 		413B7B181AD44EE500EB5385 /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -926,6 +941,8 @@
 				1F465C211763F97D00F35A8B /* Venue.h */,
 				1F465C221763F97D00F35A8B /* Venue.m */,
 				1F465C29176510EB00F35A8B /* Contact.h */,
+				4105DA941B7AEFA30006B888 /* FeedItem.h */,
+				4105DA951B7AEFBE0006B888 /* FeedItem.m */,
 				1F465C2A176510EB00F35A8B /* Contact.m */,
 				96A9873317E6A6C6007D77B8 /* BeaconImage.h */,
 				96A9873417E6A6C6007D77B8 /* BeaconImage.m */,
@@ -1067,6 +1084,7 @@
 		96585A15199D3A6000A6E02A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4105DA901B7AEEEF0006B888 /* Feed */,
 				413B7B181AD44EE500EB5385 /* Payments */,
 				96585A14199D39CD00A6E02A /* Deals */,
 				96585A1C199D3AF700A6E02A /* Beacons */,
@@ -1702,6 +1720,7 @@
 				4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
 				96C7FE951897270200A79CC3 /* IntroWalkthroughViewController.m in Sources */,
+				4105DA961B7AEFBE0006B888 /* FeedItem.m in Sources */,
 				961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
@@ -1765,6 +1784,7 @@
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,
 				1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */,
 				41030F721B5C34EB00252158 /* PromoViewController.m in Sources */,
+				4105DA931B7AEF1A0006B888 /* FeedTableViewController.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
 				410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */,
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,

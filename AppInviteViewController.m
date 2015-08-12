@@ -912,6 +912,7 @@
 //    if (contactInactive) {
 //        return;
 //    }
+
     
     [self.selectedContactDictionary setObject:contact forKey:contact.normalizedPhoneNumber];
     
@@ -933,6 +934,7 @@
 
 - (void) updateMessageCount
 {
+    
     self.messageCount.text = [NSString stringWithFormat:@"%lu Individual SMS", (unsigned long)self.selectedContactDictionary.count];
     [self updateSendMessagePosition];
 }
@@ -1252,7 +1254,10 @@
 //    if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
 //        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
 //    }
+    
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] inviteFriendsToApp:self.selectedContactDictionary.allValues customMessage:self.composeMessageTextView.text success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self dismissViewControllerAnimated:YES completion:nil];
     } failure:nil];
     

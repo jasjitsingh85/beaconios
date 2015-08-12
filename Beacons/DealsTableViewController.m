@@ -42,6 +42,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FreeDrinksExplanationPopupView.h"
 #import "AppInviteViewController.h"
+#import "FeedTableViewController.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -93,6 +94,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *marketPriceLabel;
 @property (strong, nonatomic) NSString *numberOfRewardItems;
+@property (strong, nonatomic) FeedTableViewController *feedTableViewController;
 
 //@property (strong, nonatomic) UIView *lockedOverlay;
 //@property (strong, nonatomic) UIImageView *lockButton;
@@ -133,6 +135,8 @@ typedef enum dealTypeStates
 //    //self.searchBar.searchBarStyle = UISearchBarStyleProminent;
 //    [searchBarContainer addSubview:self.searchBar];
 //    //[self.view addSubview:self.searchBar];
+    
+    self.feedTableViewController = [[FeedTableViewController alloc] init];
     
     self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"HOTSPOTS", @"HAPPY HOURS"]];
     [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
@@ -491,7 +495,7 @@ typedef enum dealTypeStates
 //    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
 //    //rewardItemView.backgroundColor = [UIColor blackColor];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newsfeedIcon"]];
+    UIImageView *newsfeedIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newsfeedIcon"]];
 //    drinkIcon.size = CGSizeMake(20, 20);
 //    drinkIcon.x = 20;
 //    drinkIcon.y = 5;
@@ -504,11 +508,11 @@ typedef enum dealTypeStates
     
     UITapGestureRecognizer *singleFingerTapOnNav =
     [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(showDrinkModal:)];
+                                            action:@selector(pushFavoriteFeed:)];
     
-    [drinkIcon addGestureRecognizer:singleFingerTapOnNav];
+    [newsfeedIcon addGestureRecognizer:singleFingerTapOnNav];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:drinkIcon];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedIcon];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     
@@ -1008,6 +1012,11 @@ typedef enum dealTypeStates
     //    [self.tableView beginUpdates];
     //    [self.tableView endUpdates];
     
+}
+
+- (void)pushFavoriteFeed:(id)sender
+{
+    [self.navigationController pushViewController:self.feedTableViewController animated:YES];
 }
 
 -(void)tappedOnCell:(UITapGestureRecognizer *)sender
