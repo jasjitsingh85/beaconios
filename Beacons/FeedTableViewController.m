@@ -77,9 +77,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    if ([feedItem.source isEqualToString:@"hotspot"]) {
-        cell.feedItem = feedItem;
-    }
+    cell.feedItem = feedItem;
+    
     return cell;
 }
 
@@ -89,7 +88,14 @@
     if ([feedItem.source isEqualToString:@"hotspot"]) {
         return 70;
     } else {
-        return 100;
+        CGFloat cellHeight;
+        CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
+                                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                                  attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]}
+                                                                     context:nil];
+        
+        cellHeight = messageBodyRect.size.height + 70;
+        return cellHeight;
     }
 }
 

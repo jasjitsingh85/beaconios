@@ -46,6 +46,8 @@
 		4105DA931B7AEF1A0006B888 /* FeedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA921B7AEF1A0006B888 /* FeedTableViewController.m */; };
 		4105DA961B7AEFBE0006B888 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA951B7AEFBE0006B888 /* FeedItem.m */; };
 		4105DA991B7BC1FE0006B888 /* FeedItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */; };
+		4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */; };
+		4105DA9D1B7D7DF10006B888 /* twitterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -379,6 +381,8 @@
 		4105DA951B7AEFBE0006B888 /* FeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItem.m; sourceTree = "<group>"; };
 		4105DA971B7BC1E90006B888 /* FeedItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedItemTableViewCell.h; sourceTree = "<group>"; };
 		4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItemTableViewCell.m; sourceTree = "<group>"; };
+		4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebookIcon@2x.png"; sourceTree = "<group>"; };
+		4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitterIcon@2x.png"; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1272,6 +1276,8 @@
 				41F144051B10E9C10010BCF1 /* navBarUpdated@2x.png */,
 				4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */,
 				415929701AFD8E37002BBCD0 /* mapMarker@2x.png */,
+				4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */,
+				4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */,
 				4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */,
 				41030F6E1B5C326B00252158 /* promoCode@2x.png */,
 				41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */,
@@ -1551,6 +1557,7 @@
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
 				4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */,
 				41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */,
+				4105DA9D1B7D7DF10006B888 /* twitterIcon@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
@@ -1671,6 +1678,7 @@
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
+				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
 				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,
 			);

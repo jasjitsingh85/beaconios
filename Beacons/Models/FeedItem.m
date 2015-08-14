@@ -28,7 +28,7 @@
         self.imageURL = [NSURL URLWithString:imageUrl];
     }
     self.name = dictionary[@"name"];
-
+    
     return self;
 }
 
