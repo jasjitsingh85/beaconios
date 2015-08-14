@@ -16,8 +16,6 @@
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) NSMutableArray *feed;
-
 @end
 
 @implementation FeedTableViewController
@@ -39,26 +37,35 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    [self loadNewsfeed];
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+//    [self loadNewsfeed];
     
     
 }
 
--(void)loadNewsfeed
+-(void) setFeed:(NSMutableArray *)feed
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.feed = [[NSMutableArray alloc] init];
-        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
-            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
-            [self.feed addObject:feedItem];
-        }
-        [self.tableView reloadData];
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Favorite Feed Failed");
-    }];
+    _feed = feed;
+    
+    [self.tableView reloadData];
+    //[LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 }
+
+//-(void)loadNewsfeed
+//{
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+//    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        self.feed = [[NSMutableArray alloc] init];
+//        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+//            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+//            [self.feed addObject:feedItem];
+//        }
+//        [self.tableView reloadData];
+//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Favorite Feed Failed");
+//    }];
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -68,6 +75,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FeedItem *feedItem = self.feed[indexPath.row];
+    NSLog(@"IMAGE: %@", feedItem.image);
     NSString *identifier = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
     FeedItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
@@ -89,12 +97,19 @@
         return 70;
     } else {
         CGFloat cellHeight;
+        CGFloat imageHeight;
         CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]}
                                                                      context:nil];
         
-        cellHeight = messageBodyRect.size.height + 70;
+        if (feedItem.image) {
+            imageHeight = feedItem.image.size.height;
+
+        } else {
+            imageHeight = 0;
+        }
+        cellHeight = messageBodyRect.size.height + imageHeight + 70;
         return cellHeight;
     }
 }

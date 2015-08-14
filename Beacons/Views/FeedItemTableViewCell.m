@@ -20,7 +20,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface FeedItemTableViewCell()
+@interface FeedItemTableViewCell() <SDWebImageManagerDelegate>
 
 @property (strong, nonatomic) UIView *cellView;
 @property (strong, nonatomic) UILabel *message;
@@ -28,6 +28,7 @@
 @property (strong, nonatomic) UILabel *date;
 @property (strong, nonatomic) UIImageView *thumbnail;
 @property (strong, nonatomic) UIImageView *socialIcon;
+@property (strong, nonatomic) UIImageView *socialImageView;
 
 @end
 
@@ -56,6 +57,9 @@
     self.thumbnail.frame = CGRectMake(15, 15, 30, 30);
     [self.cellView addSubview:self.thumbnail];
     
+    self.socialImageView = [[UIImageView alloc] init];
+    [self.cellView addSubview:self.socialImageView];
+    
     self.socialIcon = [[UIImageView alloc] init];
     [self.cellView addSubview:self.socialIcon];
     
@@ -68,6 +72,8 @@
     
     self.cellView.frame = CGRectMake(10, 10, self.width - 20, self.height - 10);
     self.cellView.backgroundColor = [UIColor whiteColor];
+    
+    //self.image.size = CGSizeMake(220, 220);
     
 }
 
@@ -139,7 +145,7 @@
         self.message.attributedText = attrMessage;
         
         self.messageBody.text = self.feedItem.message;
-    
+
         
     } else if ([feedItem.source isEqualToString:@"facebook"]) {
         
@@ -161,6 +167,31 @@
         self.messageBody.text = self.feedItem.message;
     }
     
+    if (feedItem.image) {
+        
+//        CGFloat height = feedItem.image.size.height;
+//        CGFloat width = feedItem.image.size.width;
+//        if (MAX(height, width) < 290){
+//            self.socialImageView.height = height;
+//        } else {
+//            self.socialImageView.height = 290;
+//        }
+        [self.socialImageView setImage:feedItem.image];
+        self.socialImageView.width = feedItem.image.size.width;
+        self.socialImageView.height = feedItem.image.size.height;
+        self.socialImageView.y = self.messageBody.height + 40;
+        self.socialImageView.centerX = (self.width - 20)/2.0;
+    }
+    
+//    if (self.feedItem.imageURL) {
+//        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//        [manager downloadImageWithURL:self.feedItem.imageURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+//            NSLog(@"WORKING");
+//            self.image.x = 10;
+//            self.image.y = self.messageBody.height + 50;
+//            [self.image sd_setImageWithURL:self.feedItem.imageURL];
+//        }];
+//    }
 }
 
 -(NSRange)getAttributedTextRange: (NSString *)fullString
@@ -171,5 +202,8 @@
 //    NSUInteger firstCharacterPosition = range.location;
 //    NSUInteger lastCharacterPosition = range.location + range.length;
 }
+
+
+
 
 @end

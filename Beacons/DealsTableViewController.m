@@ -42,6 +42,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FreeDrinksExplanationPopupView.h"
 #import "AppInviteViewController.h"
+#import "FeedItem.h"
 #import "FeedTableViewController.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
@@ -108,6 +109,8 @@ typedef enum dealTypeStates
 
 @property (strong, nonatomic) UISegmentedControl *navBarTabs;
 
+@property (strong, nonatomic) NSMutableArray *feed;
+
 @end
 
 @implementation DealsTableViewController
@@ -164,6 +167,8 @@ typedef enum dealTypeStates
 //    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
 //    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
+    
+    [self getFavoriteFeed];
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
@@ -569,6 +574,20 @@ typedef enum dealTypeStates
 //    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
 //    navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
 //    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void) getFavoriteFeed
+{
+    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.feed = [[NSMutableArray alloc] init];
+        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+            [self.feed addObject:feedItem];
+        }
+        self.feedTableViewController.feed = self.feed;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Favorite Feed Failed");
+    }];
 }
 
 - (void) checkToLaunchInvitationModal
@@ -1016,6 +1035,7 @@ typedef enum dealTypeStates
 
 - (void)pushFavoriteFeed:(id)sender
 {
+    self.feedTableViewController.feed = self.feed;
     [self.navigationController pushViewController:self.feedTableViewController animated:YES];
 }
 

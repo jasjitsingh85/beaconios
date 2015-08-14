@@ -24,8 +24,11 @@
     self.message = dictionary[@"message"];
     self.thumbnailURL = dictionary[@"thumbnail"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@", dictionary[@"image_url"]];
+    self.isImageDownloaded = NO;
     if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
         self.imageURL = [NSURL URLWithString:imageUrl];
+        [self getImage];
+        
     }
     self.name = dictionary[@"name"];
     
@@ -69,6 +72,41 @@
     
     NSString *timeLeft = [NSString stringWithFormat:@" %ld %ld:%02ld", (long)days, (long)hours, (long)minutes];
     return timeLeft;
+}
+
+- (void)getImage
+{
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:self.imageURL options:(0) progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        self.image = [self scaleImage:image scaledToMaxWidth:280 maxHeight:280];
+        self.isImageDownloaded = YES;
+    }];
+}
+
+- (UIImage *)scaleImage:(UIImage *)image scaledToMaxWidth:(CGFloat)width maxHeight:(CGFloat)height {
+    CGFloat oldWidth = image.size.width;
+    CGFloat oldHeight = image.size.height;
+    
+    CGFloat scaleFactor = (oldWidth > oldHeight) ? width / oldWidth : height / oldHeight;
+    
+    CGFloat newHeight = oldHeight * scaleFactor;
+    CGFloat newWidth = oldWidth * scaleFactor;
+    CGSize newSize = CGSizeMake(newWidth, newHeight);
+    
+    return [self imageWithImage:image scaledToSize:newSize];
+}
+
+- (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)size {
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        UIGraphicsBeginImageContextWithOptions(size, NO, [[UIScreen mainScreen] scale]);
+    } else {
+        UIGraphicsBeginImageContext(size);
+    }
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 @end

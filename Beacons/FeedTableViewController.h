@@ -11,6 +11,7 @@
 @interface FeedTableViewController : UIViewController
 
 @property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSMutableArray *feed;
 
 @end
 
