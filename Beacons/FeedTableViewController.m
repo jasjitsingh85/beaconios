@@ -110,6 +110,7 @@
     if (self.feed.count > 0) {
         FeedItem *feedItem = self.feed[0];
         [[NSUserDefaults standardUserDefaults] setObject:feedItem.dateCreated forKey:kFeedUpdateNotification];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRemoveNewsfeedNotification object:self userInfo:nil];
     }
 }
 

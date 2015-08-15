@@ -118,6 +118,8 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UIImageView *hotspotNavBarIcon;
 @property (strong, nonatomic) UIImageView *happyHourNavBarIcon;
 
+@property (strong, nonatomic) UIImageView *notificationIcon;
+
 @end
 
 @implementation DealsTableViewController
@@ -238,89 +240,6 @@ typedef enum dealTypeStates
     self.initialRadius = 1.6;
     self.hasRewardItem = NO;
     
-//    MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
-//    picker.messageComposeDelegate = self;
-//    //picker.recipients = [NSArray arrayWithObjects:@"1234", @"2345", nil];
-//    picker.body = @"TEST";
-//    [self presentViewController:picker animated:YES completion:nil];
-
-//    MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-//    mail.mailComposeDelegate = self;
-//    [mail setSubject:@"Sample Subject"];
-//    [mail setMessageBody:@"Here is some main text in the email!" isHTML:NO];
-//    [mail setToRecipients:@[@"testingEmail@example.com"]];
-//    
-//    [self presentViewController:mail animated:YES completion:NULL];
-    
-    //self.rewardsViewController = [[RewardsViewController alloc] initWithNavigationItem:self.navigationItem];
-    //[self addChildViewController:self.rewardsViewController];
-    //[self.rewardsViewController updateRewardsScore];
-    
-//    CGRect frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 70, [[UIScreen mainScreen] bounds].size.width, 70);
-//    self.dealTypeToggleContainer = [[UIView alloc] initWithFrame:frame];
-//    self.dealTypeToggleContainer.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:self.dealTypeToggleContainer];
-    
-//    UIView *topBorder = [[UIView alloc] init];
-//    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255];
-//    topBorder.frame = CGRectMake(0, 0, self.view.width, 1.0);
-//    [self.dealTypeToggleContainer addSubview:topBorder];
-    
-//    UIImageView *sliderTrack = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slider"]];
-//    sliderTrack.centerX = self.view.width/2;
-//    sliderTrack.y = 39;
-//    [self.dealTypeToggleContainer addSubview:sliderTrack];
-    
-//    self.sliderThumb = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-//    [self.sliderThumb setImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
-//    self.sliderThumb.y = 30;
-////    self.sliderThumb.x = 30;
-//    self.sliderThumb.centerX = self.view.width/2;
-//    [self.dealTypeToggleContainer addSubview:self.sliderThumb];
-    
-//    UIImageView *hotspotSliderLabel = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotSliderLabel"]];
-//    //hotspotSliderImage.size = CGSizeMake(30, 100);
-//    hotspotSliderLabel.height = 25;
-//    hotspotSliderLabel.width = 73;
-//    hotspotSliderLabel.centerX = self.view.width/2;
-//    hotspotSliderLabel.y = 5;
-//    [self.dealTypeToggleContainer addSubview:hotspotSliderLabel];
-    
-//    UILabel *happyHourLabel = [[UILabel alloc] initWithFrame:CGRectMake(11, 10, 70, 20)];
-//    happyHourLabel.text = @"HAPPY HOURS";
-//    happyHourLabel.font = [ThemeManager lightFontOfSize:9];
-//    happyHourLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.dealTypeToggleContainer addSubview:happyHourLabel];
-//    
-//    UILabel *rewardsLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 78, 10, 70, 20)];
-//    rewardsLabel.text = @"REWARDS";
-//    rewardsLabel.font = [ThemeManager lightFontOfSize:9];
-//    rewardsLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.dealTypeToggleContainer addSubview:rewardsLabel];
-//    
-//    UIButton *happyHourButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    happyHourButton.size = CGSizeMake(70, 70);
-//    happyHourButton.x = 10;
-//    happyHourButton.y = 0;
-//    //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-//    [happyHourButton addTarget:self action:@selector(happyHourButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.dealTypeToggleContainer addSubview:happyHourButton];
-//    
-//    UIButton *hotspotButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    hotspotButton.size = CGSizeMake(70, 70);
-//    hotspotButton.centerX = self.view.width/2;
-//    hotspotButton.y = 0;
-//    //hotspotButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-//    [hotspotButton addTarget:self action:@selector(hotspotButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.dealTypeToggleContainer addSubview:hotspotButton];
-//    
-//    UIButton *rewardsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    rewardsButton.size = CGSizeMake(70, 70);
-//    rewardsButton.x = self.view.width - 80;
-//    rewardsButton.y = 0;
-//    //rewardsButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-//    [rewardsButton addTarget:self action:@selector(rewardsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.dealTypeToggleContainer addSubview:rewardsButton];
     
     self.tableView = [[UITableView alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -493,30 +412,6 @@ typedef enum dealTypeStates
     [self.priceContainer addSubview:self.priceLabel];
     [self.venueView addSubview:self.priceContainer];
     
-//    self.lockedOverlay = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
-//    //self.lockedOverlay.height = self.selectedDealInMap.height;
-//    self.lockedOverlay.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-//    [self.venueView addSubview:self.lockedOverlay];
-//    
-//    self.lockButton = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-//    self.lockButton.size = CGSizeMake(40, 40);
-//    self.lockButton.centerX = self.selectedDealInMap.size.width/2;
-//    self.lockButton.centerY = self.selectedDealInMap.size.height/2;
-//    [self.venueView addSubview:self.lockButton];
-//    
-//    self.largeGoldCoin = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"largeGoldCoin"]];
-//    self.largeGoldCoin.x = (self.selectedDealInMap.width/2)- 30;
-//    self.largeGoldCoin.y = self.selectedDealInMap.height/2 + 25;
-//    [self.venueView addSubview:self.largeGoldCoin];
-    
-//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(self.selectedDealInMap.width/2 - 3, self.selectedDealInMap.height/2 + 14, 70, 40)];
-//    self.rewardScore.font = [ThemeManager boldFontOfSize:18];
-//    self.rewardScore.textAlignment = NSTextAlignmentLeft;
-//    self.rewardScore.textColor = [UIColor whiteColor];
-//    [self.venueView addSubview:self.rewardScore];
-    
-    //[self.venueScroll addSubview:self.venueDetailView];
-    
     self.rewardExplanationContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 50, self.view.width, 50)];
     self.rewardExplanationContainer.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
     self.rewardExplanationContainer.hidden = YES;
@@ -560,27 +455,41 @@ typedef enum dealTypeStates
 //    UIView *rewardItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 40)];
 //    //rewardItemView.backgroundColor = [UIColor blackColor];
     
-    UIImageView *newsfeedIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newsfeedIcon"]];
-//    drinkIcon.size = CGSizeMake(20, 20);
-//    drinkIcon.x = 20;
-//    drinkIcon.y = 5;
-//    [rewardItemView addSubview:drinkIcon];
+    UIView *newsfeedNavContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    //newsfeedNavContainer.backgroundColor = [UIColor blackColor];
     
-//    self.rewardScore = [[UILabel alloc] initWithFrame:CGRectMake(27, 15, 20, 20)];
-//    self.rewardScore.font = [ThemeManager regularFontOfSize:11];
-//    self.rewardScore.textColor = [[ThemeManager sharedTheme] redColor];
-//    [rewardItemView addSubview:self.rewardScore];
+    UIImageView *newsfeedIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newsfeedIcon"]];
+    newsfeedIcon.x = 20;
+    newsfeedIcon.y = 10;
+    
+    self.notificationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notification"]];
+    self.notificationIcon.y = 19;
+    self.notificationIcon.x = 32;
     
     UITapGestureRecognizer *singleFingerTapOnNav =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(pushFavoriteFeed:)];
     
-    [newsfeedIcon addGestureRecognizer:singleFingerTapOnNav];
+    [newsfeedNavContainer addGestureRecognizer:singleFingerTapOnNav];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedIcon];
+    [newsfeedNavContainer addSubview:newsfeedIcon];
+    
+    self.notificationIcon.hidden = YES;
+    [newsfeedNavContainer addSubview:self.notificationIcon];
+    
+    CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    pulseAnimation.duration = .5;
+    pulseAnimation.toValue = [NSNumber numberWithFloat:1.1];
+    pulseAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    pulseAnimation.autoreverses = YES;
+    pulseAnimation.repeatCount = FLT_MAX;
+    [self.notificationIcon.layer addAnimation:pulseAnimation forKey:nil];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedNavContainer];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFeed:) name:kFeedUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
 //    [self updateRewardItems];
 
 }
@@ -638,7 +547,6 @@ typedef enum dealTypeStates
 
 - (void) getFavoriteFeed
 {
-    NSLog(@"GET FAV FEED");
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.feed removeAllObjects];
         for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
@@ -657,24 +565,26 @@ typedef enum dealTypeStates
     if (self.feed.count > 0) {
         NSDate *lastFeedItem = [[NSUserDefaults standardUserDefaults] objectForKey:kFeedUpdateNotification];
         
+        NSLog(@"%@", lastFeedItem);
+        
         FeedItem *feedItem = self.feed[0];
         NSDate *latestFeedItem = feedItem.dateCreated;
         if ([latestFeedItem compare:lastFeedItem] == NSOrderedDescending) {
             [self addNewsfeedNotification];
         } else {
-            [self removeNewsfeedNotification];
+            [self removeNewsfeedNotification:nil];
         }
     }
 }
 
 -(void) addNewsfeedNotification
 {
-    NSLog(@"ADDED NEWSFEED NOTIFICATION");
+    self.notificationIcon.hidden = NO;
 }
 
--(void)removeNewsfeedNotification
+-(void)removeNewsfeedNotification:(NSNotification *)notification
 {
-    NSLog(@"REMOVED NEWSFEED NOTIFICATION");
+    self.notificationIcon.hidden = YES;
 }
 
 - (void) checkToLaunchInvitationModal
