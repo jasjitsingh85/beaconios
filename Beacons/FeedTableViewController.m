@@ -51,7 +51,7 @@
     
     self.view.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewsfeed:) name:kFeedUpdateNotification object:nil];
 }
 
 -(void) setFeed:(NSMutableArray *)feed
@@ -74,23 +74,22 @@
 //    [self.tableView addSubview:self.refreshControl];
 }
 
-//-(void)loadNewsfeed:(id)sender
-//{
-////    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-//    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        self.feed = [[NSMutableArray alloc] init];
-//        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
-//            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
-//            [self.feed addObject:feedItem];
-//        }
-//        [self.tableView reloadData];
-//        [self.refreshControl endRefreshing];
-////        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Favorite Feed Failed");
-//        [self.refreshControl endRefreshing];
-//    }];
-//}
+-(void)loadNewsfeed:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.feed = [[NSMutableArray alloc] init];
+        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+            [self.feed addObject:feedItem];
+        }
+        [self.tableView reloadData];
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Favorite Feed Failed");
+        [self.refreshControl endRefreshing];
+    }];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

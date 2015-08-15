@@ -45,6 +45,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kNotificationRewardsUpdated @"notificationRewardsUpdated"
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 #define kDealsUpdatedNotification @"dealsUpdatedNotification"
+#define kFeedUpdateNotification @"feedUpdateNotification"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"

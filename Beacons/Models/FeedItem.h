@@ -19,6 +19,7 @@
 @property (assign, nonatomic) BOOL isImageDownloaded;
 @property (strong, nonatomic) NSURL *imageURL;
 @property (strong, nonatomic) NSURL *thumbnailURL;
+@property (strong, nonatomic) NSNumber *dealPlaceID;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)dateString;

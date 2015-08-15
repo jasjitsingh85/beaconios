@@ -1,4 +1,4 @@
-//
+ //
 //  FeedItem.m
 //  Beacons
 //
@@ -31,6 +31,9 @@
         
     }
     self.name = dictionary[@"name"];
+    
+    NSString *dealPlaceString = dictionary[@"deal_place_id"];
+    self.dealPlaceID = [NSNumber numberWithInteger: [dealPlaceString integerValue]];
     
     return self;
 }

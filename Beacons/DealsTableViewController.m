@@ -839,6 +839,11 @@ typedef enum dealTypeStates
     
 }
 
+-(void)refreshFeed:(id)sender
+{
+    [self getFavoriteFeed];
+}
+
 //- (void) updateDealInMap
 //{
 //    if (self.hotspots.count > 0){

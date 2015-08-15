@@ -19,6 +19,9 @@
 #import "Venue.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "APIClient.h"
 
 @interface FeedItemTableViewCell() <SDWebImageManagerDelegate>
 
@@ -153,6 +156,7 @@
         self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.unfollowButton.size = CGSizeMake(25, 25);
         [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+        [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.cellView addSubview:self.unfollowButton];
         
     } else if ([feedItem.source isEqualToString:@"facebook"]) {
@@ -177,6 +181,7 @@
         self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.unfollowButton.size = CGSizeMake(25, 25);
         [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+        [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.cellView addSubview:self.unfollowButton];
     }
     
@@ -191,13 +196,29 @@
     
 }
 
+-(void)unfollowButtonTouched:(id)sender
+{
+    NSString *title = [NSString stringWithFormat:@"Unfollow %@?", self.feedItem.name];
+    NSString *body = [NSString stringWithFormat:@"Would you like to unfollow %@?", self.feedItem.name];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:body];
+    [alertView bk_addButtonWithTitle:@"Unfollow" handler:^{
+        [[APIClient sharedClient] toggleFavorite:self.feedItem.dealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Unfollow Failed");
+        }];
+        NSLog(@"DEAL PLACE ID: %@", self.feedItem.dealPlaceID);
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^{
+        
+    }];
+    [alertView show];
+}
+
 -(NSRange)getAttributedTextRange: (NSString *)fullString
 {
     NSRange range = [fullString rangeOfString:self.feedItem.name];
-    
     return range;
-//    NSUInteger firstCharacterPosition = range.location;
-//    NSUInteger lastCharacterPosition = range.location + range.length;
 }
 
 
