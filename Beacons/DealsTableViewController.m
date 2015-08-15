@@ -111,6 +111,13 @@ typedef enum dealTypeStates
 
 @property (strong, nonatomic) NSMutableArray *feed;
 
+@property (strong, nonatomic) UIView *hotspotTab;
+@property (strong, nonatomic) UIView *happyHourTab;
+@property (strong, nonatomic) UILabel *hotspotNavBarLabel;
+@property (strong, nonatomic) UILabel *happyHourNavBarLabel;
+@property (strong, nonatomic) UIImageView *hotspotNavBarIcon;
+@property (strong, nonatomic) UIImageView *happyHourNavBarIcon;
+
 @end
 
 @implementation DealsTableViewController
@@ -141,28 +148,80 @@ typedef enum dealTypeStates
     
     self.feedTableViewController = [[FeedTableViewController alloc] init];
     
-    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"HOTSPOTS", @"HAPPY HOURS"]];
+    self.hotspotTab = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 101, 25)];
+    self.happyHourTab = [[UIView alloc] initWithFrame:CGRectMake(-2, 0, 102, 25)];
+
+    UIBezierPath *hotspotMaskPath = [UIBezierPath bezierPathWithRoundedRect:self.hotspotTab.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(4.0, 4.0)];
+    
+    CAShapeLayer *hotspotMaskLayer = [[CAShapeLayer alloc] init];
+    hotspotMaskLayer.frame = self.view.bounds;
+    hotspotMaskLayer.path  = hotspotMaskPath.CGPath;
+    self.hotspotTab.layer.mask = hotspotMaskLayer;
+    
+    UIBezierPath *happyHourMaskPath = [UIBezierPath bezierPathWithRoundedRect:self.happyHourTab.bounds byRoundingCorners:(UIRectCornerTopRight | UIRectCornerBottomRight) cornerRadii:CGSizeMake(4.0, 4.0)];
+    
+    CAShapeLayer *happyHourMaskLayer = [[CAShapeLayer alloc] init];
+    happyHourMaskLayer.frame = self.view.bounds;
+    happyHourMaskLayer.path  = happyHourMaskPath.CGPath;
+    self.happyHourTab.layer.mask = happyHourMaskLayer;
+    
+    
+    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"", @""]];
     [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
-    self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
-    [self.navBarTabs setWidth:80 forSegmentAtIndex:0];
-    [self.navBarTabs setWidth:80 forSegmentAtIndex:1];
+    //self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
+    self.navBarTabs.tintColor = [UIColor unnormalizedColorWithRed:153 green:153 blue:153 alpha:255];
+    [self.navBarTabs setWidth:100 forSegmentAtIndex:0];
+    [self.navBarTabs setWidth:100 forSegmentAtIndex:1];
     self.navBarTabs.selectedSegmentIndex = 0;
     [self.navBarTabs addTarget:self
                          action:@selector(navBarTabTapped:)
                forControlEvents:UIControlEventValueChanged];
-    [self.navBarTabs setImage:[UIImage imageNamed:@"hotspotSliderLabel"] forSegmentAtIndex:0];
+//    [self.navBarTabs setImage:[UIImage imageNamed:@"hotspotSliderLabel"] forSegmentAtIndex:0];
     //[self.navBarTabs setBackgroundImage:[UIImage imageNamed:@"navTabBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    //[self.navBarTabs setDividerImage:[UIImage imageNamed:@"blank"] forLeftSegmentState:UIControlStateSelected rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     //    self.navBarTabs.layer.borderColor = [UIColor blackColor].CGColor;
 //    self.navBarTabs.layer.borderWidth = .5;
     NSDictionary *attributes = [NSDictionary dictionaryWithObject:[ThemeManager regularFontOfSize:9]
                                                            forKey:NSFontAttributeName];
     [self.navBarTabs setTitleTextAttributes:attributes
                                     forState:UIControlStateNormal];
-    [self.navBarTabs setFrame:CGRectMake(0, 0, 170, 25)];
+    [self.navBarTabs setFrame:CGRectMake(0, 0, 200, 25)];
     self.navigationItem.titleView = self.navBarTabs;
     
     
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, self.navBarTabs.frame.size.height - 10), NO, 0.0);
+    UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self.navBarTabs setDividerImage:blank
+                    forLeftSegmentState:UIControlStateNormal
+                      rightSegmentState:UIControlStateNormal
+                             barMetrics:UIBarMetricsDefault];
+    
+    [[[self.navBarTabs subviews] objectAtIndex:0] addSubview:self.hotspotTab];
+    [[[self.navBarTabs subviews] objectAtIndex:1] addSubview:self.happyHourTab];
+
+    self.hotspotNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(33, 2.5, 60, 20)];
+    self.hotspotNavBarLabel.text = @"HOTSPOTS";
+    self.hotspotNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
+    [self.hotspotTab addSubview:self.hotspotNavBarLabel];
+    
+    self.happyHourNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(13, 2.5, 70, 20)];
+    self.happyHourNavBarLabel.text = @"HAPPY HOURS";
+    self.happyHourNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
+    [self.happyHourTab addSubview:self.happyHourNavBarLabel];
+    
+    self.hotspotNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
+    self.hotspotNavBarIcon.x = 18;
+    self.hotspotNavBarIcon.y = 6.5;
+    [self.hotspotTab addSubview:self.hotspotNavBarIcon];
+    
+    self.happyHourNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
+    self.happyHourNavBarIcon.x = 80;
+    self.happyHourNavBarIcon.y = 5;
+    [self.happyHourTab addSubview:self.happyHourNavBarIcon];
+    
+    [self makeHotspotTabActive];
     
 //    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
 //    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
@@ -1707,12 +1766,38 @@ typedef enum dealTypeStates
     return firstAndSecondLine;
 }
 
+-(void) makeHotspotTabActive
+{
+    self.hotspotTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    self.happyHourTab.backgroundColor = [UIColor clearColor];
+    
+    self.hotspotNavBarLabel.textColor = [UIColor whiteColor];
+    self.happyHourNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    
+    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
+    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
+}
+
+-(void) makeHappyHourTabActive
+{
+    self.happyHourTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
+    self.hotspotTab.backgroundColor = [UIColor clearColor];
+    
+    self.happyHourNavBarLabel.textColor = [UIColor whiteColor];
+    self.hotspotNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    
+    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarPopsicle"]];
+    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarClock"]];
+}
+
 -(void)navBarTabTapped:(id)sender
 {
     if (self.navBarTabs.selectedSegmentIndex == 0) {
         [self hotspotButtonTouched:nil];
+        [self makeHotspotTabActive];
     } else {
         [self happyHourButtonTouched:nil];
+        [self makeHappyHourTabActive];
     }
 }
 

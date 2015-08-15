@@ -48,6 +48,10 @@
 		4105DA991B7BC1FE0006B888 /* FeedItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */; };
 		4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */; };
 		4105DA9D1B7D7DF10006B888 /* twitterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */; };
+		4105DAA11B7F0F010006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9E1B7F0F010006B888 /* inactiveNavbarClock@2x.png */; };
+		4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */; };
+		4105DAA31B7F0F010006B888 /* activeNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */; };
+		4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -383,6 +387,10 @@
 		4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedItemTableViewCell.m; sourceTree = "<group>"; };
 		4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebookIcon@2x.png"; sourceTree = "<group>"; };
 		4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitterIcon@2x.png"; sourceTree = "<group>"; };
+		4105DA9E1B7F0F010006B888 /* inactiveNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarPopsicle@2x.png"; sourceTree = "<group>"; };
+		4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarPopsicle@2x.png"; sourceTree = "<group>"; };
+		4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1351,6 +1359,10 @@
 				9671D02C1825739100D03D66 /* helpButton@2x.png */,
 				964638B118A45D5A007D6962 /* hotbotSmile@2x.png */,
 				41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */,
+				4105DA9E1B7F0F010006B888 /* inactiveNavbarClock@2x.png */,
+				4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */,
+				4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */,
+				4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */,
 				9671F66918BD688C007DF715 /* hotbotSmileCircle@2x.png */,
 				41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */,
 				41ED34CB1AC8D73F00A77A92 /* toggleCamera@2x.png */,
@@ -1579,6 +1591,7 @@
 				41ED34D71AC9F91400A77A92 /* Default-568h@2x.png in Resources */,
 				4158AE551B433CD80034BA4A /* navTabBackground@2x.png in Resources */,
 				964638B218A45D5A007D6962 /* hotbotSmile@2x.png in Resources */,
+				4105DAA31B7F0F010006B888 /* activeNavbarPopsicle@2x.png in Resources */,
 				96CBCCF91805107500D62462 /* chatBubbleRedRight@2x.png in Resources */,
 				4148E9CC1B083F8F0050D3E3 /* storeIntroCell.png in Resources */,
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
@@ -1586,6 +1599,7 @@
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
 				41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */,
+				4105DAA11B7F0F010006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
 				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
@@ -1627,6 +1641,7 @@
 				41639ADC1B3CB27300E56734 /* fifthGradientBackground@2x.png in Resources */,
 				41639AE01B3CB27300E56734 /* firstGradientBackground@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
+				4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */,
 				41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */,
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
 				41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */,
@@ -1648,6 +1663,7 @@
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
+				4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */,
 				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
