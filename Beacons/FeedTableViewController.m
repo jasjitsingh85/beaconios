@@ -81,7 +81,7 @@
     
     [self.tableView reloadData];
     
-    if (self.feed > 0 && self.isRefreshing == NO) {
+    if (self.feed.count > 0 && self.isRefreshing == NO) {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }
     
