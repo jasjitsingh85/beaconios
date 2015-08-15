@@ -565,11 +565,9 @@ typedef enum dealTypeStates
     if (self.feed.count > 0) {
         NSDate *lastFeedItem = [[NSUserDefaults standardUserDefaults] objectForKey:kFeedUpdateNotification];
         
-        NSLog(@"%@", lastFeedItem);
-        
         FeedItem *feedItem = self.feed[0];
         NSDate *latestFeedItem = feedItem.dateCreated;
-        if ([latestFeedItem compare:lastFeedItem] == NSOrderedDescending) {
+        if ([latestFeedItem compare:lastFeedItem] == NSOrderedDescending || lastFeedItem == NULL) {
             [self addNewsfeedNotification];
         } else {
             [self removeNewsfeedNotification:nil];
