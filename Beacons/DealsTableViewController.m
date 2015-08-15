@@ -1339,30 +1339,32 @@ typedef enum dealTypeStates
             
             return happyHourCell;
         }
-    } else if (self.dealType == REWARD) {
-        Deal *deal;
-        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-        RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
-        if (!cell) {
-            cell = [[RewardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            cell.backgroundColor = [UIColor clearColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-        [recognizer setNumberOfTapsRequired:1];
-        [cell.contentView addGestureRecognizer:recognizer];
-        
-//        if (indexPath.row == 0) {
-//            cell.deal = nil;
-//        } else {
-            deal = self.selectedDeals[indexPath.row];
-            cell.deal = deal;
-//        }
-        
-        return cell;
     }
+    
+//    else if (self.dealType == REWARD) {
+//        Deal *deal;
+//        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
+//        RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        
+//        if (!cell) {
+//            cell = [[RewardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//            cell.backgroundColor = [UIColor clearColor];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        }
+//        
+//        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+//        [recognizer setNumberOfTapsRequired:1];
+//        [cell.contentView addGestureRecognizer:recognizer];
+//        
+////        if (indexPath.row == 0) {
+////            cell.deal = nil;
+////        } else {
+//            deal = self.selectedDeals[indexPath.row];
+//            cell.deal = deal;
+////        }
+//        
+//        return cell;
+//    }
 }
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1613,19 +1615,19 @@ typedef enum dealTypeStates
     }];
 }
 
-- (void) rewardsButtonTouched:(id)sender
-{
-    [UIView animateWithDuration:0.35f animations:^{
-        self.sliderThumb.frame = CGRectMake(self.view.width - 55, 30, 30, 30);
-    } completion:^(BOOL finished) {
-        self.previousDealType = self.dealType;
-        self.dealType = REWARD;
-        self.selectedDeals = self.rewards;
-        [self reloadTableViewAfterDealToggle];
-        [self reloadAnnotations];
-        [self minimizeMapViewDeal];
-    }];
-}
+//- (void) rewardsButtonTouched:(id)sender
+//{
+//    [UIView animateWithDuration:0.35f animations:^{
+//        self.sliderThumb.frame = CGRectMake(self.view.width - 55, 30, 30, 30);
+//    } completion:^(BOOL finished) {
+//        self.previousDealType = self.dealType;
+//        self.dealType = REWARD;
+//        self.selectedDeals = self.rewards;
+//        [self reloadTableViewAfterDealToggle];
+//        [self reloadAnnotations];
+//        [self minimizeMapViewDeal];
+//    }];
+//}
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {

@@ -33,8 +33,10 @@
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UIScrollView *mainScroll;
+@property (strong, nonatomic) UIButton *followButton;
 
 @property (strong, nonatomic) UILabel *venueTextLabel;
+@property (assign, nonatomic) BOOL isFollowed;
 
 @end
 
@@ -126,6 +128,22 @@
 //    } else {
 //    
 //    }
+    
+//    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.followButton.size = CGSizeMake(65, 20);
+//    self.followButton.x = 0;
+//    self.followButton.y = 0;
+//    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+//    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+//    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+//    self.followButton.backgroundColor = [UIColor clearColor];
+//    self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+//    self.followButton.layer.cornerRadius = 4;
+//    self.followButton.layer.borderColor = [[[ThemeManager sharedTheme] redColor] CGColor];
+//    self.followButton.layer.borderWidth = 1.0;
+//    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
     
 }
 //
@@ -479,6 +497,12 @@
     
     [self.getDealButtonContainer addSubview:self.getDealButton];
     
+    if (self.deal.isFollowed) {
+        [self makeFollowButtonActive];
+    } else {
+        [self makeFollowButtonInactive];
+    }
+    
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
 
@@ -676,6 +700,49 @@
     findFriendsViewController.textMoreFriends = NO;
     [self.navigationController pushViewController:findFriendsViewController animated:YES];
     [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+}
+
+- (void)followButtonTouched:(id)sender
+{
+    
+    self.isFollowed = !self.isFollowed;
+    [self updateFavoriteButton];
+    
+    [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.isFollowed = [responseObject[@"is_favorited"] boolValue];
+        [self updateFavoriteButton];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    } failure:nil];
+}
+
+- (void) makeFollowButtonActive
+{
+    [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+    self.followButton.size = CGSizeMake(85, 20);
+//    self.followButton.x = self.contentView.width - 95;
+    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.followButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
+}
+
+- (void) makeFollowButtonInactive
+{
+    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    self.followButton.size = CGSizeMake(65, 20);
+//    self.followButton.x = self.contentView.width - 85;
+    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.followButton.backgroundColor = [UIColor clearColor];
+}
+
+
+- (void) updateFavoriteButton
+{
+    if (self.isFollowed) {
+        [self makeFollowButtonActive];
+    } else {
+        [self makeFollowButtonInactive];
+    }
 }
 
 @end

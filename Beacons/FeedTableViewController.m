@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (assign, nonatomic) BOOL isRefreshing;
+@property (assign, nonatomic) BOOL isViewShowing;
 
 @end
 
@@ -42,6 +43,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewsfeed:) name:kFeedUpdateNotification object:nil];
     
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    
+    self.isViewShowing = NO;
     
     if (!self) {
         return nil;
@@ -76,7 +79,33 @@
     if (self.feed != nil && self.isRefreshing == NO) {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }
+    
+    if (self.isViewShowing && !self.isRefreshing) {
+        [self markViewAsSeen];
+    }
+}
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    self.isViewShowing = YES;
+    if (!self.isRefreshing) {
+        [self markViewAsSeen];
+    }
+}
+
+-(void) viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        self.isViewShowing = NO;
+    }
+    [super viewWillDisappear:animated];
+}
+
+-(void)markViewAsSeen
+{
+    if (self.feed != nil && self.feed.count > 0) {
+        FeedItem *feedItem = self.feed[0];
+        [[NSUserDefaults standardUserDefaults] setObject:feedItem.dateCreated forKey:kFeedUpdateNotification];
+    }
 }
 
 -(void)loadNewsfeed:(NSNotification *)notification
@@ -86,7 +115,6 @@
 
 -(void)makeFeedRequest
 {
-    
     self.isRefreshing = YES;
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -98,6 +126,9 @@
             [self.feed addObject:feedItem];
         }
         [self.tableView reloadData];
+        if (self.isViewShowing) {
+            [self markViewAsSeen];
+        }
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
@@ -118,6 +149,7 @@
             [self.feed addObject:feedItem];
         }
         [self.tableView reloadData];
+        [self markViewAsSeen];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
         [self.refreshControl endRefreshing];

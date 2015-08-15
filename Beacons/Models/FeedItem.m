@@ -46,6 +46,11 @@
     NSInteger hours = floor((interval - days*60*60*24)/(60.0*60.0));
     NSInteger minutes = floor((interval - days*60*60*24 - hours*60*60)/60.0);
     
+//    NSLog(@"DATE CREATED: %@", self.dateCreated);
+//    NSLog(@"Days: %ld", (long)days);
+//    NSLog(@"Hours: %ld", (long)hours);
+//    NSLog(@"Min: %ld", (long)minutes);
+    
     if (days == 0 && hours == 0 && minutes < 15) {
         return @"Now";
     } else if (days == 0 && hours == 0 && minutes >= 15 && minutes < 60) {
@@ -57,10 +62,10 @@
     } else if (days == 0 && hours == 1 && minutes <= 30) {
         NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
-    } else if (days == 0 && hours > 2 && minutes <= 30) {
+    } else if (days == 0 && hours >= 2 && minutes <= 30) {
         NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
-    }  else if (days == 0 && hours > 1 && hours <= 23 && minutes >= 30) {
+    }  else if (days == 0 && hours > 1 && hours <= 23 && minutes > 30) {
         hours = hours + 1;
         NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
