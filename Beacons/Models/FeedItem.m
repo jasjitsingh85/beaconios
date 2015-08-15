@@ -49,29 +49,31 @@
         NSString *dateString = [NSString stringWithFormat:@"%ld min", (long)minutes];
         return dateString;
     } else if (days == 0 && hours == 1 && minutes <= 30) {
-        NSString *dateString = [NSString stringWithFormat:@"%ld hour", (long)hours];
+        NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
     } else if (days == 0 && hours == 1 && minutes <= 30) {
-        NSString *dateString = [NSString stringWithFormat:@"%ld hour", (long)hours];
+        NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
     } else if (days == 0 && hours > 2 && minutes <= 30) {
-        NSString *dateString = [NSString stringWithFormat:@"%ld hours", (long)hours];
+        NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
     }  else if (days == 0 && hours > 1 && hours <= 23 && minutes >= 30) {
         hours = hours + 1;
-        NSString *dateString = [NSString stringWithFormat:@"%ld hours", (long)hours];
+        NSString *dateString = [NSString stringWithFormat:@"%ld hr", (long)hours];
         return dateString;
     } else if (days == 1) {
-        return @"Yesterday";
+        return @"1 day";
     } else if (days > 1) {
         NSString *dateString = [NSString stringWithFormat:@"%ld days", (long)days];
         return dateString;
+    } else {
+        return @"";
     }
 //    NSInteger seconds = interval - 60*60*hours - 60*minutes;
     
-    
-    NSString *timeLeft = [NSString stringWithFormat:@" %ld %ld:%02ld", (long)days, (long)hours, (long)minutes];
-    return timeLeft;
+//    
+//    NSString *timeLeft = [NSString stringWithFormat:@" %ld %ld:%02ld", (long)days, (long)hours, (long)minutes];
+//    return timeLeft;
 }
 
 - (void)getImage

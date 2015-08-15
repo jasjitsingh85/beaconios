@@ -52,6 +52,7 @@
 		4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */; };
 		4105DAA31B7F0F010006B888 /* activeNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */; };
 		4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */; };
+		4105DAA71B7F9F270006B888 /* crossOutButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -391,6 +392,7 @@
 		4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarPopsicle@2x.png"; sourceTree = "<group>"; };
 		4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarPopsicle@2x.png"; sourceTree = "<group>"; };
 		4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crossOutButton@2x.png"; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1290,6 +1292,7 @@
 				41030F6E1B5C326B00252158 /* promoCode@2x.png */,
 				41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */,
 				41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */,
+				4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */,
 				410D19511B4F85BB002C5F0F /* poweredByYelp@2x.png */,
 				41E6B3EB1AEE345100D34EAF /* addFriends@2x.png */,
 				41F144131B27C3460010BCF1 /* greyPin@2x.png */,
@@ -1634,6 +1637,7 @@
 				41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
 				41338FD619FA38CA0022211C /* marker@2x.png in Resources */,
+				4105DAA71B7F9F270006B888 /* crossOutButton@2x.png in Resources */,
 				41FD06271B377C6700F7DD08 /* documentIcon@2x.png in Resources */,
 				96ED6373181DEBF5001B7933 /* Icon@2x.png in Resources */,
 				4158AE651B44D1450034BA4A /* beerGlasses@2x.png in Resources */,

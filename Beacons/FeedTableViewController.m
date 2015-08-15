@@ -16,15 +16,14 @@
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation FeedTableViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+- (id) initWithLoadingIndicator  {
+    self = [super init];
     
     self.tableView = [[UITableView alloc] init];
     self.tableView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
@@ -37,8 +36,20 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-//    [self loadNewsfeed];
+    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    
+    if (!self) {
+        return nil;
+    } else {
+        return self;
+    }
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
     
     
 }
@@ -48,12 +59,24 @@
     _feed = feed;
     
     [self.tableView reloadData];
-    //[LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    
+    if (self.feed != nil) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    }
+    
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//    self.refreshControl.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+//    self.refreshControl.tintColor = [UIColor blackColor];
+//    [self.refreshControl addTarget:self
+//                            action:@selector(loadNewsfeed:)
+//                  forControlEvents:UIControlEventValueChanged];
+//    
+//    [self.tableView addSubview:self.refreshControl];
 }
 
-//-(void)loadNewsfeed
+//-(void)loadNewsfeed:(id)sender
 //{
-//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+////    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
 //    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
 //        self.feed = [[NSMutableArray alloc] init];
 //        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
@@ -61,9 +84,11 @@
 //            [self.feed addObject:feedItem];
 //        }
 //        [self.tableView reloadData];
-//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+//        [self.refreshControl endRefreshing];
+////        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
 //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //        NSLog(@"Favorite Feed Failed");
+//        [self.refreshControl endRefreshing];
 //    }];
 //}
 

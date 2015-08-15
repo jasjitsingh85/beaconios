@@ -146,7 +146,8 @@ typedef enum dealTypeStates
 //    [searchBarContainer addSubview:self.searchBar];
 //    //[self.view addSubview:self.searchBar];
     
-    self.feedTableViewController = [[FeedTableViewController alloc] init];
+    self.feedTableViewController = [[FeedTableViewController alloc] initWithLoadingIndicator];
+    self.feed = nil;
     
     self.hotspotTab = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 101, 25)];
     self.happyHourTab = [[UIView alloc] initWithFrame:CGRectMake(-2, 0, 102, 25)];

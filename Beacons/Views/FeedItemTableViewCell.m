@@ -29,6 +29,7 @@
 @property (strong, nonatomic) UIImageView *thumbnail;
 @property (strong, nonatomic) UIImageView *socialIcon;
 @property (strong, nonatomic) UIImageView *socialImageView;
+@property (strong, nonatomic) UIButton *unfollowButton;
 
 @end
 
@@ -72,6 +73,9 @@
     
     self.cellView.frame = CGRectMake(10, 10, self.width - 20, self.height - 10);
     self.cellView.backgroundColor = [UIColor whiteColor];
+    
+    self.unfollowButton.x = self.cellView.width - 25;
+    self.unfollowButton.y = 0;
     
     //self.image.size = CGSizeMake(220, 220);
     
@@ -146,6 +150,10 @@
         
         self.messageBody.text = self.feedItem.message;
 
+        self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.unfollowButton.size = CGSizeMake(25, 25);
+        [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+        [self.cellView addSubview:self.unfollowButton];
         
     } else if ([feedItem.source isEqualToString:@"facebook"]) {
         
@@ -165,6 +173,11 @@
         self.message.attributedText = attrMessage;
         
         self.messageBody.text = self.feedItem.message;
+        
+        self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.unfollowButton.size = CGSizeMake(25, 25);
+        [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+        [self.cellView addSubview:self.unfollowButton];
     }
     
     if (feedItem.image) {
