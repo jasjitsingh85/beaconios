@@ -40,9 +40,9 @@
     
     self.isRefreshing = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewsfeed:) name:kFeedUpdateNotification object:nil];
-    
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingIndicator:) name:kFeedUpdateNotification object:nil];
     
     self.isViewShowing = NO;
     
@@ -51,6 +51,11 @@
     } else {
         return self;
     }
+}
+
+-(void) showLoadingIndicator:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
 }
 
 - (void)viewDidLoad
@@ -76,7 +81,7 @@
     
     [self.tableView reloadData];
     
-    if (self.feed != nil && self.isRefreshing == NO) {
+    if (self.feed > 0 && self.isRefreshing == NO) {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     }
     
@@ -102,22 +107,23 @@
 
 -(void)markViewAsSeen
 {
-    if (self.feed != nil && self.feed.count > 0) {
+    if (self.feed.count > 0) {
         FeedItem *feedItem = self.feed[0];
         [[NSUserDefaults standardUserDefaults] setObject:feedItem.dateCreated forKey:kFeedUpdateNotification];
     }
 }
 
--(void)loadNewsfeed:(NSNotification *)notification
-{
-    [self makeFeedRequest];
-}
+//-(void)loadNewsfeed:(NSNotification *)notification
+//{
+//    [self makeFeedRequest];
+//}
 
 -(void)makeFeedRequest
 {
     self.isRefreshing = YES;
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.feed removeAllObjects];
         [self.refreshControl endRefreshing];
         self.isRefreshing = NO;
         self.feed = [[NSMutableArray alloc] init];
@@ -164,7 +170,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FeedItem *feedItem = self.feed[indexPath.row];
-    NSLog(@"IMAGE: %@", feedItem.image);
     NSString *identifier = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
     FeedItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     

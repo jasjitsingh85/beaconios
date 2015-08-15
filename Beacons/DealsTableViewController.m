@@ -147,7 +147,7 @@ typedef enum dealTypeStates
 //    //[self.view addSubview:self.searchBar];
     
     self.feedTableViewController = [[FeedTableViewController alloc] initWithLoadingIndicator];
-    self.feed = nil;
+    self.feed = [[NSMutableArray alloc] init];
     
     self.hotspotTab = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 101, 25)];
     self.happyHourTab = [[UIView alloc] initWithFrame:CGRectMake(-2, 0, 102, 25)];
@@ -228,7 +228,7 @@ typedef enum dealTypeStates
 //    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
     
-    [self getFavoriteFeed];
+//    [self getFavoriteFeed];
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
@@ -580,7 +580,7 @@ typedef enum dealTypeStates
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedIcon];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFeed:) name:kFeedUpdateNotification object:nil];
 //    [self updateRewardItems];
 
 }
@@ -638,16 +638,43 @@ typedef enum dealTypeStates
 
 - (void) getFavoriteFeed
 {
+    NSLog(@"GET FAV FEED");
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.feed = [[NSMutableArray alloc] init];
+        [self.feed removeAllObjects];
         for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
             FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
             [self.feed addObject:feedItem];
         }
         self.feedTableViewController.feed = self.feed;
+        [self checkNewsfeedNotification];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
     }];
+}
+
+-(void)checkNewsfeedNotification
+{
+    if (self.feed.count > 0) {
+        NSDate *lastFeedItem = [[NSUserDefaults standardUserDefaults] objectForKey:kFeedUpdateNotification];
+        
+        FeedItem *feedItem = self.feed[0];
+        NSDate *latestFeedItem = feedItem.dateCreated;
+        if ([latestFeedItem compare:lastFeedItem] == NSOrderedDescending) {
+            [self addNewsfeedNotification];
+        } else {
+            [self removeNewsfeedNotification];
+        }
+    }
+}
+
+-(void) addNewsfeedNotification
+{
+    NSLog(@"ADDED NEWSFEED NOTIFICATION");
+}
+
+-(void)removeNewsfeedNotification
+{
+    NSLog(@"REMOVED NEWSFEED NOTIFICATION");
 }
 
 - (void) checkToLaunchInvitationModal
@@ -676,6 +703,8 @@ typedef enum dealTypeStates
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
     }
+    
+    [self getFavoriteFeed];
 
 //    [self updateRewardItems];
     
@@ -839,7 +868,7 @@ typedef enum dealTypeStates
     
 }
 
--(void)refreshFeed:(id)sender
+-(void)refreshFeed:(NSNotification *)notification
 {
     [self getFavoriteFeed];
 }
