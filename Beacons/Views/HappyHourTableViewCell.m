@@ -111,11 +111,23 @@
     self.distanceLabel.textColor = [UIColor whiteColor];
     [self.backgroundCellView addSubview:self.distanceLabel];
     
-    self.favoriteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.favoriteButton.size = CGSizeMake(50, 50);
-    self.favoriteButton.x = self.contentView.width - 50;
-    self.favoriteButton.y = 0;
-    [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
+    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.x = self.contentView.width - 85;
+    self.followButton.y = 20;
+    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.followButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+    self.followButton.backgroundColor = [UIColor clearColor];
+    self.followButton.titleLabel.textColor = [UIColor whiteColor];
+    self.followButton.layer.cornerRadius = 4;
+    self.followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.followButton.layer.borderWidth = 2.0;
+    //    self.followButton.layer.borderColor = (__bridge CGColorRef)([UIColor whiteColor]);
+    //    self.followButton.layer.borderWidth = 2;
+    //    self.followButton.layer.cornerRadius = 4;
+    //    [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
     //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
     //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
     //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
@@ -123,8 +135,8 @@
     //    self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
     //    [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //    [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [self.favoriteButton addTarget:self action:@selector(favoriteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.backgroundCellView addSubview:self.favoriteButton];
+    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.backgroundCellView addSubview:self.followButton];
     
     return self;
 }
@@ -315,21 +327,31 @@
 - (void)favoriteButtonTouched:(id)sender
 {
     
-    self.isFavorited = !self.isFavorited;
+    self.isFollowed = !self.isFollowed;
     [self updateFavoriteButton];
     
     [[APIClient sharedClient] toggleFavorite:self.happyHour.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.isFavorited = [responseObject[@"is_favorited"] boolValue];
+        self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
     } failure:nil];
 }
 
 - (void) updateFavoriteButton
 {
-    if (self.isFavorited) {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"selectedFavorite"] forState:UIControlStateNormal];
+    if (self.isFollowed) {
+        [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+        self.followButton.size = CGSizeMake(85, 20);
+        self.followButton.x = self.contentView.width - 95;
+        [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+        [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.followButton.backgroundColor = [UIColor whiteColor];
     } else {
-        [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
+        [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        self.followButton.size = CGSizeMake(65, 20);
+        self.followButton.x = self.contentView.width - 85;
+        [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.followButton.backgroundColor = [UIColor clearColor];
     }
 }
 

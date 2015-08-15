@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSNumber *start;
 @property (strong, nonatomic) NSNumber *end;
 @property (strong, nonatomic) Venue *venue;
+@property (assign, nonatomic) BOOL isFollowed;
 
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

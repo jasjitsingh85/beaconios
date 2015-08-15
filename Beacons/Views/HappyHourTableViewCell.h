@@ -34,8 +34,8 @@
 @property (strong, nonatomic) UIView *backgroundCellView;
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
-@property (strong, nonatomic) UIButton *favoriteButton;
-@property (assign, nonatomic) BOOL isFavorited;
+@property (assign, nonatomic) BOOL isFollowed;
+@property (strong, nonatomic) UIButton *followButton;
 
 @property (strong, nonatomic) HappyHour *happyHour;
 

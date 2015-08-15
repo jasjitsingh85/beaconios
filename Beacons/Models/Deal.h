@@ -33,6 +33,7 @@
 @property (assign, nonatomic) BOOL locked;
 @property (assign, nonatomic) BOOL rewardEligibility;
 @property (assign, nonatomic) BOOL isRewardItem;
+@property (assign, nonatomic) BOOL isFollowed;
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;

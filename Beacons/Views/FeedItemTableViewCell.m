@@ -168,14 +168,7 @@
     }
     
     if (feedItem.image) {
-        
-//        CGFloat height = feedItem.image.size.height;
-//        CGFloat width = feedItem.image.size.width;
-//        if (MAX(height, width) < 290){
-//            self.socialImageView.height = height;
-//        } else {
-//            self.socialImageView.height = 290;
-//        }
+
         [self.socialImageView setImage:feedItem.image];
         self.socialImageView.width = feedItem.image.size.width;
         self.socialImageView.height = feedItem.image.size.height;
@@ -183,15 +176,6 @@
         self.socialImageView.centerX = (self.width - 20)/2.0;
     }
     
-//    if (self.feedItem.imageURL) {
-//        SDWebImageManager *manager = [SDWebImageManager sharedManager];
-//        [manager downloadImageWithURL:self.feedItem.imageURL options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-//            NSLog(@"WORKING");
-//            self.image.x = 10;
-//            self.image.y = self.messageBody.height + 50;
-//            [self.image sd_setImageWithURL:self.feedItem.imageURL];
-//        }];
-//    }
 }
 
 -(NSRange)getAttributedTextRange: (NSString *)fullString

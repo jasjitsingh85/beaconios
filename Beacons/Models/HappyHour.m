@@ -26,6 +26,9 @@
     self.start = dictionary[@"start"];
     self.end = dictionary[@"end"];
     self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
+    
+    NSString *isFollowed = dictionary[@"is_followed"];
+    self.isFollowed = [isFollowed boolValue];
 
     return self;
 }
