@@ -54,6 +54,10 @@
 		4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */; };
 		4105DAA71B7F9F270006B888 /* crossOutButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */; };
 		4105DAA91B7FFD710006B888 /* notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA81B7FFD700006B888 /* notification@2x.png */; };
+		4105DAAC1B8008800006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAA1B8008800006B888 /* inactiveNavbarClock@2x.png */; };
+		4105DAAD1B8008800006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */; };
+		4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */; };
+		4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -395,6 +399,10 @@
 		4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
 		4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crossOutButton@2x.png"; sourceTree = "<group>"; };
 		4105DAA81B7FFD700006B888 /* notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notification@2x.png"; sourceTree = "<group>"; };
+		4105DAAA1B8008800006B888 /* inactiveNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarClock@2x.png"; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1282,6 +1290,8 @@
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
+				4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */,
+				4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */,
 				41148CB21B7998D900F4CA17 /* trayIcon@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */,
@@ -1342,6 +1352,8 @@
 				962FD0201820D28900E74268 /* annotationShadowLarge@2x.png */,
 				962FD01E1820D0A400E74268 /* annotationShadowSmall@2x.png */,
 				410FC89E1B3B4FAA0097EA26 /* hotspotLogoNavRed.png */,
+				4105DAAA1B8008800006B888 /* inactiveNavbarClock@2x.png */,
+				4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */,
 				1F36E85517A6170F00D12CB8 /* backArrow@2x.png */,
 				410FC89C1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png */,
 				96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */,
@@ -1576,9 +1588,11 @@
 				4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */,
 				41FD06261B377C6700F7DD08 /* directionsIcon@2x.png in Resources */,
 				4105DA9D1B7D7DF10006B888 /* twitterIcon@2x.png in Resources */,
+				4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
+				4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */,
 				41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */,
 				96CE79EB199D2324002574B8 /* iphoneWalkthrough3@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
@@ -1653,6 +1667,7 @@
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
 				41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */,
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
+				4105DAAD1B8008800006B888 /* activeNavbarClock@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
 				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
 				41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */,
@@ -1700,6 +1715,7 @@
 				41639ADE1B3CB27300E56734 /* thirdGradientBackground@2x.png in Resources */,
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
+				4105DAAC1B8008800006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,

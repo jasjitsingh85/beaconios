@@ -473,8 +473,8 @@
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
     self.followButton.size = CGSizeMake(85, 20);
     self.followButton.x = self.contentView.width - 95;
-    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     self.followButton.backgroundColor = [UIColor whiteColor];
 }
 
