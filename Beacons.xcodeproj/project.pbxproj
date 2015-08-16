@@ -58,6 +58,7 @@
 		4105DAAD1B8008800006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */; };
 		4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */; };
 		4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */; };
+		4105DAB31B8053370006B888 /* bigGroupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */; };
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
@@ -403,6 +404,7 @@
 		4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
 		4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
 		4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarClock@2x.png"; sourceTree = "<group>"; };
+		4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigGroupIcon@2x.png"; sourceTree = "<group>"; };
 		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
@@ -1286,6 +1288,7 @@
 				41FD06301B390A9D00F7DD08 /* tapDivider@2x.png */,
 				41030F631B51B0F200252158 /* hotspotIcon@2x.png */,
 				41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */,
+				4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */,
 				41FD06341B39C09800F7DD08 /* inactiveVoucher@2x.png */,
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
@@ -1582,6 +1585,7 @@
 				4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
+				4105DAB31B8053370006B888 /* bigGroupIcon@2x.png in Resources */,
 				96727DE51800C08500E75EE9 /* addFriendInactive@2x.png in Resources */,
 				41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */,
 				96CBCCE21805066700D62462 /* menuInvite@2x.png in Resources */,
