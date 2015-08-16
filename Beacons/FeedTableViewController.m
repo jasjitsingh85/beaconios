@@ -169,9 +169,9 @@
             FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
             [self.feed addObject:feedItem];
         }
-        [self showProperView];
         [self.tableView reloadData];
         [self markViewAsSeen];
+        [self showProperView];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
         [self.refreshControl endRefreshing];
