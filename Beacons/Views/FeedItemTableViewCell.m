@@ -94,19 +94,19 @@
     self.message.numberOfLines = 0;
     self.message.textAlignment = NSTextAlignmentLeft;
     self.message.height = 15;
-    self.message.font = [ThemeManager lightFontOfSize:12];
+    self.message.font = [ThemeManager lightFontOfSize:11];
     
     self.messageBody.x = 60;
     self.messageBody.y = 35;
     self.messageBody.width = 220;
     self.messageBody.numberOfLines = 0;
     self.messageBody.textAlignment = NSTextAlignmentLeft;
-    self.messageBody.font = [ThemeManager lightFontOfSize:12];
+    self.messageBody.font = [ThemeManager lightFontOfSize:11];
     
-    self.date.x = self.width - 80;
+    self.date.x = self.width - 78;
     self.date.y = (self.height)/2.0;
     self.date.width = 50;
-    self.date.y = 24;
+    self.date.y = 22;
     self.date.numberOfLines = 1;
     self.date.textAlignment = NSTextAlignmentRight;
     self.date.height = 15;
@@ -130,7 +130,7 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:self.feedItem.message];
         NSRange attrStringRange = [self getAttributedTextRange:self.feedItem.message];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
         
         self.message.text = feedItem.message;
         self.message.attributedText = attrMessage;
@@ -140,12 +140,12 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:feedTitleString];
         NSRange attrStringRange = [self getAttributedTextRange:feedTitleString];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
         
-        self.socialIcon.y = 24;
-        self.socialIcon.x = self.message.x + [attrMessage size].width - 1;
-        self.socialIcon.height = 12;
-        self.socialIcon.width = 50;
+        self.socialIcon.y = 25;
+        self.socialIcon.x = self.message.x + [attrMessage size].width - 3;
+        self.socialIcon.height = 10;
+        self.socialIcon.width = 42;
         [self.socialIcon setImage:[UIImage imageNamed:@"twitterIcon"]];
         
         self.message.text = feedTitleString;
@@ -165,12 +165,12 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:feedTitleString];
         NSRange attrStringRange = [self getAttributedTextRange:feedTitleString];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
         
-        self.socialIcon.y = 24;
-        self.socialIcon.x = self.message.x + [attrMessage size].width - 1;
-        self.socialIcon.height = 12;
-        self.socialIcon.width = 50;
+        self.socialIcon.y = 25;
+        self.socialIcon.x = self.message.x + [attrMessage size].width - 3;
+        self.socialIcon.height = 10;
+        self.socialIcon.width = 42;
         [self.socialIcon setImage:[UIImage imageNamed:@"facebookIcon"]];
         
         self.message.text = feedTitleString;

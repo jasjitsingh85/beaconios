@@ -195,7 +195,7 @@
         CGFloat imageHeight;
         CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]}
+                                                                  attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
                                                                      context:nil];
         
         if (feedItem.image) {
