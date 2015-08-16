@@ -39,6 +39,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    self.feed = [[NSMutableArray alloc] init];
+    
     self.isRefreshing = NO;
     
     [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
@@ -84,12 +86,21 @@
     
     [self.tableView reloadData];
     
-    if (self.feed.count > 0 && self.isRefreshing == NO) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    }
+    [self showProperView];
     
     if (self.isViewShowing && !self.isRefreshing) {
         [self markViewAsSeen];
+    }
+}
+
+-(void)showProperView
+{
+    if (self.feed.count > 0 && self.isRefreshing == NO) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+        self.tableView.hidden = NO;
+    } else {
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+        self.tableView.hidden = YES;
     }
 }
 
@@ -122,30 +133,30 @@
 //    [self makeFeedRequest];
 //}
 
--(void)makeFeedRequest
-{
-    self.isRefreshing = YES;
-    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.feed removeAllObjects];
-        [self.refreshControl endRefreshing];
-        self.isRefreshing = NO;
-        self.feed = [[NSMutableArray alloc] init];
-        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
-            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
-            [self.feed addObject:feedItem];
-        }
-        [self.tableView reloadData];
-        if (self.isViewShowing) {
-            [self markViewAsSeen];
-        }
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Favorite Feed Failed");
-        [self.refreshControl endRefreshing];
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    }];
-}
+//-(void)makeFeedRequest
+//{
+//    self.isRefreshing = YES;
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+//    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self.feed removeAllObjects];
+//        [self.refreshControl endRefreshing];
+//        self.isRefreshing = NO;
+//        self.feed = [[NSMutableArray alloc] init];
+//        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+//            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+//            [self.feed addObject:feedItem];
+//        }
+//        [self.tableView reloadData];
+//        if (self.isViewShowing) {
+//            [self markViewAsSeen];
+//        }
+//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Favorite Feed Failed");
+//        [self.refreshControl endRefreshing];
+//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+//    }];
+//}
 
 -(void)pullToRefresh:(id)sender
 {
@@ -153,11 +164,12 @@
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.refreshControl endRefreshing];
         self.isRefreshing = NO;
-        self.feed = [[NSMutableArray alloc] init];
+        [self.feed removeAllObjects];
         for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
             FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
             [self.feed addObject:feedItem];
         }
+        [self showProperView];
         [self.tableView reloadData];
         [self markViewAsSeen];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
