@@ -711,7 +711,7 @@
     [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedBackgroundUpdateNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
     } failure:nil];
 }
 

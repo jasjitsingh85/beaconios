@@ -208,7 +208,7 @@
     UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:body];
     [alertView bk_addButtonWithTitle:@"Unfollow" handler:^{
         [[APIClient sharedClient] toggleFavorite:self.feedItem.dealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kFeedBackgroundUpdateNotification object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Unfollow Failed");
         }];

@@ -458,8 +458,8 @@
 - (void)followButtonTouched:(id)sender
 {
     
-    self.isFollowed = !self.isFollowed;
-    [self updateFavoriteButton];
+//    self.isFollowed = !self.isFollowed;
+//    [self updateFavoriteButton];
     
     [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
