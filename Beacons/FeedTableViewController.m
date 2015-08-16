@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (assign, nonatomic) BOOL isRefreshing;
 @property (assign, nonatomic) BOOL isViewShowing;
+@property (strong, nonatomic) UIView *emptyFeedView;
 
 @end
 
@@ -67,7 +68,18 @@
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
-    self.view.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+    self.emptyFeedView = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.emptyFeedView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+    [self.view addSubview:self.emptyFeedView];
+    
+    UIImageView *lockIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+    lockIcon.width = 40;
+    lockIcon.height = 40;
+    lockIcon.centerX = self.view.width/2.0;
+    lockIcon.y = 100;
+    [self.emptyFeedView addSubview:lockIcon];
+    
+    self.emptyFeedView.hidden = YES;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
@@ -98,9 +110,11 @@
     if (self.feed.count > 0 && self.isRefreshing == NO) {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
         self.tableView.hidden = NO;
+        self.emptyFeedView.hidden = YES;
     } else {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
         self.tableView.hidden = YES;
+        self.emptyFeedView.hidden = NO;
     }
 }
 
