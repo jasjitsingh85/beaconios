@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *feed;
+@property (assign, nonatomic) BOOL isRefreshing;
 
 - (id) initWithLoadingIndicator;
 

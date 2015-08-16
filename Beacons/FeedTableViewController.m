@@ -18,9 +18,9 @@
 //<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
-@property (assign, nonatomic) BOOL isRefreshing;
 @property (assign, nonatomic) BOOL isViewShowing;
 @property (strong, nonatomic) UIView *emptyFeedView;
+@property (assign, nonatomic) BOOL pullToRefresh;
 
 @end
 
@@ -35,18 +35,22 @@
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
-    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.showsVerticalScrollIndicator = YES;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    self.pullToRefresh = NO;
+    
     self.feed = [[NSMutableArray alloc] init];
     
-    self.isRefreshing = NO;
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+//
+//    self.isRefreshing = YES;
     
-    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingIndicator:) name:kFeedUpdateNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingIndicator:) name:kFeedUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedStartedRefreshing:) name:kFeedStartRefreshNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedFinishedRefreshing:) name:kFeedFinishRefreshNotification object:nil];
     
     self.isViewShowing = NO;
     
@@ -57,29 +61,30 @@
     }
 }
 
--(void) showLoadingIndicator:(id)sender
+-(void)feedStartedRefreshing:(NSNotification *)notification
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    if (!self.pullToRefresh) {
+        [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    }
+    self.isRefreshing = YES;
 }
+
+-(void)feedFinishedRefreshing:(NSNotification *)notification
+{
+    [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    [self.refreshControl endRefreshing];
+    self.isRefreshing = NO;
+    self.pullToRefresh = NO;
+}
+
+//-(void) showLoadingIndicator:(id)sender
+//{
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
-    
-    self.emptyFeedView = [[UIView alloc] initWithFrame:self.view.bounds];
-    self.emptyFeedView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
-    [self.view addSubview:self.emptyFeedView];
-    
-    UIImageView *lockIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-    lockIcon.width = 40;
-    lockIcon.height = 40;
-    lockIcon.centerX = self.view.width/2.0;
-    lockIcon.y = 100;
-    [self.emptyFeedView addSubview:lockIcon];
-    
-    self.emptyFeedView.hidden = YES;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
@@ -90,6 +95,21 @@
     
     [self.tableView addSubview:self.refreshControl];
     
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
+    
+//    self.emptyFeedView = [[UIView alloc] initWithFrame:self.view.bounds];
+//    self.emptyFeedView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+//    self.emptyFeedView.hidden = YES;
+//    
+//    UIImageView *lockIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
+//    lockIcon.width = 40;
+//    lockIcon.height = 40;
+//    lockIcon.centerX = self.view.width/2.0;
+//    lockIcon.y = 100;
+//    [self.emptyFeedView addSubview:lockIcon];
+//    
+//    [self.view addSubview:self.emptyFeedView];
+    
 }
 
 -(void) setFeed:(NSMutableArray *)feed
@@ -98,25 +118,27 @@
     
     [self.tableView reloadData];
     
-    [self showProperView];
+    if (!self.isRefreshing) {
+        //[self showProperView];
+        [self.tableView reloadData];
+//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    }
     
     if (self.isViewShowing && !self.isRefreshing) {
         [self markViewAsSeen];
     }
 }
 
--(void)showProperView
-{
-    if (self.feed.count > 0 && self.isRefreshing == NO) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-        self.tableView.hidden = NO;
-        self.emptyFeedView.hidden = YES;
-    } else {
-        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-        self.tableView.hidden = YES;
-        self.emptyFeedView.hidden = NO;
-    }
-}
+//-(void)showProperView
+//{
+//    if (self.feed.count > 0) {
+//        self.tableView.hidden = NO;
+//        self.emptyFeedView.hidden = YES;
+//    } else {
+//        self.tableView.hidden = YES;
+//        self.emptyFeedView.hidden = NO;
+//    }
+//}
 
 - (void) viewDidAppear:(BOOL)animated
 {
@@ -174,22 +196,23 @@
 
 -(void)pullToRefresh:(id)sender
 {
-    self.isRefreshing = YES;
-    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self.refreshControl endRefreshing];
-        self.isRefreshing = NO;
-        [self.feed removeAllObjects];
-        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
-            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
-            [self.feed addObject:feedItem];
-        }
-        [self.tableView reloadData];
-        [self markViewAsSeen];
-        [self showProperView];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Favorite Feed Failed");
-        [self.refreshControl endRefreshing];
-    }];
+    self.pullToRefresh = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    
+//    [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self.refreshControl endRefreshing];
+//        self.isRefreshing = NO;
+//        [self.feed removeAllObjects];
+//        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+//            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+//            [self.feed addObject:feedItem];
+//        }
+//        [self markViewAsSeen];
+//        [self showProperView];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Favorite Feed Failed");
+//        [self.refreshControl endRefreshing];
+//    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

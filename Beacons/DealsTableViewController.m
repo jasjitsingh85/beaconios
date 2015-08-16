@@ -487,6 +487,8 @@ typedef enum dealTypeStates
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedNavContainer];
     
+    [self getFavoriteFeed];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFeed:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
@@ -547,13 +549,16 @@ typedef enum dealTypeStates
 
 - (void) getFavoriteFeed
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedStartRefreshNotification object:self userInfo:nil];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.feed removeAllObjects];
         for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
             FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
             [self.feed addObject:feedItem];
         }
+        //self.feedTableViewController.isRefreshing = NO;
         self.feedTableViewController.feed = self.feed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         [self checkNewsfeedNotification];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
@@ -611,8 +616,6 @@ typedef enum dealTypeStates
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
     }
-    
-    [self getFavoriteFeed];
 
 //    [self updateRewardItems];
     
