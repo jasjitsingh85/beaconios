@@ -228,25 +228,31 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FeedItem *feedItem = self.feed[indexPath.row];
-    if ([feedItem.source isEqualToString:@"hotspot"]) {
-        return 70;
-    } else {
-        CGFloat cellHeight;
-        CGFloat imageHeight;
-        CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
-                                                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                                                  attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
-                                                                     context:nil];
-        
-        if (feedItem.image) {
-            imageHeight = feedItem.image.size.height;
+    CGFloat cellHeight;
+    CGFloat imageHeight;
+    
+    CGRect messageRect = [feedItem.message boundingRectWithSize:CGSizeMake(190, 0)
+                                                            options:NSStringDrawingUsesLineFragmentOrigin
+                                                         attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
+                                                            context:nil];
+    
+    CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
+                                                                 options:NSStringDrawingUsesLineFragmentOrigin
+                                                              attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
+                                                                 context:nil];
+    
+    if (feedItem.image) {
+        imageHeight = feedItem.image.size.height;
 
-        } else {
-            imageHeight = 0;
-        }
-        cellHeight = messageBodyRect.size.height + imageHeight + 70;
-        return cellHeight;
+    } else {
+        imageHeight = 0;
     }
-}
+    if ([feedItem.source isEqualToString:@"hotspot"]) {
+        cellHeight = messageRect.size.height + imageHeight + 60;
+    } else {
+        cellHeight = messageBodyRect.size.height + imageHeight + 70;
+    }
+    return cellHeight;
+    }
 
 @end

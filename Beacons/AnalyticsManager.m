@@ -167,6 +167,12 @@
     [self sendEvent:@"set_deal" withProperties:properties];
 }
 
+- (void)openNewsfeedWithNumberOfFollowItems:(NSInteger)numFollowItems
+{
+    NSDictionary *properties = @{@"num_follow_items": @(numFollowItems)};
+    [self sendEvent:@"open_newsfeed" withProperties:properties];
+}
+
 //- (void)postRegionState:(BOOL)success notified:(BOOL)notified
 //{
 //    NSDictionary *properties = @{@"success" : @(success), @"notified" : @(notified)};

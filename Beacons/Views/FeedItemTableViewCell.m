@@ -121,6 +121,11 @@
     
     self.date.text = feedItem.dateString;
     
+    CGRect messageRect = [self.feedItem.message boundingRectWithSize:CGSizeMake(self.message.width, 0)
+                                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                                          attributes:@{NSFontAttributeName:self.message.font}
+                                                             context:nil];
+    
     CGRect messageBodyRect = [self.feedItem.message boundingRectWithSize:CGSizeMake(self.messageBody.width, 0)
                                   options:NSStringDrawingUsesLineFragmentOrigin
                                attributes:@{NSFontAttributeName:self.messageBody.font}
@@ -138,6 +143,7 @@
         NSRange attrStringRange = [self getAttributedTextRange:self.feedItem.message];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
         [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
+        self.message.height = messageRect.size.height + 5;
         self.message.text = feedItem.message;
         self.message.attributedText = attrMessage;
         self.unfollowButton.hidden = YES;
