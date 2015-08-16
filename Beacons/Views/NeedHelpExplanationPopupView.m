@@ -83,7 +83,7 @@
     callButton.size = CGSizeMake(230, 25);
     callButton.centerX = self.width/2.0;
     callButton.y = 305;
-    [callButton setTitle:@"203.936.7101" forState:UIControlStateNormal];
+    [callButton setTitle:@"(425) 202-6228" forState:UIControlStateNormal];
     [callButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
     callButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [callButton addTarget:self action:@selector(callSupport) forControlEvents:UIControlEventTouchUpInside];

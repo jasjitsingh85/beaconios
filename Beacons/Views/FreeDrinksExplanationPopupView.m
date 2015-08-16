@@ -58,8 +58,18 @@
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
     headerTitle.y = 280;
-    headerTitle.text = @"REDEEM BY SELECTING A VENUE";
+    headerTitle.text = @"EARN FREE DRINKS";
     [self.imageView addSubview:headerTitle];
+    
+    UILabel *headerSubtitle = [[UILabel alloc] init];
+    headerSubtitle.height = 30;
+    headerSubtitle.width = self.width;
+    headerSubtitle.textColor = [UIColor whiteColor];
+    headerSubtitle.textAlignment = NSTextAlignmentCenter;
+    headerSubtitle.font = [ThemeManager boldFontOfSize:13];
+    headerSubtitle.y = 165;
+    headerSubtitle.text = @"REDEEM BY SELECTING A VENUE";
+    [self.imageView addSubview:headerSubtitle];
     
     UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 295, self.width - 110, 80)];
     textLabel.centerX = self.width/2;
@@ -110,7 +120,7 @@
 
 - (void) setNumberOfRewardItems:(NSString *)numberOfRewardItems
 {
-    UILabel *numberOfFreeDrinksHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 130, self.width - 100, 80)];
+    UILabel *numberOfFreeDrinksHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 120, self.width - 100, 80)];
     numberOfFreeDrinksHeading.centerX = self.width/2;
     numberOfFreeDrinksHeading.font = [ThemeManager boldFontOfSize:15];
     numberOfFreeDrinksHeading.textColor = [UIColor whiteColor];
@@ -124,7 +134,7 @@
         numberOfFreeDrinksHeading.text = @"YOU HAVE        FREE DRINKS";
     }
     
-    UILabel *numberOfFreeDrinks = [[UILabel alloc] initWithFrame:CGRectMake(127, 127, 40, 80)];
+    UILabel *numberOfFreeDrinks = [[UILabel alloc] initWithFrame:CGRectMake(127, 117, 40, 80)];
 //    numberOfFreeDrinks.centerX = self.width/2;
     numberOfFreeDrinks.font = [ThemeManager boldFontOfSize:24];
     numberOfFreeDrinks.textColor = [UIColor whiteColor];
