@@ -129,21 +129,21 @@
 //    
 //    }
     
-//    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.followButton.size = CGSizeMake(65, 20);
-//    self.followButton.x = 0;
-//    self.followButton.y = 0;
-//    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-//    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-//    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-//    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
-//    self.followButton.backgroundColor = [UIColor clearColor];
-//    self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
-//    self.followButton.layer.cornerRadius = 4;
-//    self.followButton.layer.borderColor = [[[ThemeManager sharedTheme] redColor] CGColor];
-//    self.followButton.layer.borderWidth = 1.0;
-//    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
+    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.x = 0;
+    self.followButton.y = 0;
+    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+    self.followButton.backgroundColor = [UIColor clearColor];
+    self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    self.followButton.layer.cornerRadius = 4;
+    self.followButton.layer.borderColor = [[[ThemeManager sharedTheme] redColor] CGColor];
+    self.followButton.layer.borderWidth = 1.0;
+    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
     
 }
 //
@@ -711,7 +711,7 @@
     [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedBackgroundUpdateNotification object:self];
     } failure:nil];
 }
 
