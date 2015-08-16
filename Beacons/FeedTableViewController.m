@@ -12,6 +12,7 @@
 #import "APIClient.h"
 #import "FeedItem.h"
 #import "FeedItemTableViewCell.h"
+#import "NavigationBarTitleLabel.h"
 
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
@@ -61,6 +62,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
     self.view.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
     
