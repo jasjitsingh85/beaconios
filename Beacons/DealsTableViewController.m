@@ -479,7 +479,7 @@ typedef enum dealTypeStates
     
     CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     pulseAnimation.duration = .5;
-    pulseAnimation.toValue = [NSNumber numberWithFloat:1.1];
+    pulseAnimation.toValue = [NSNumber numberWithFloat:1.2];
     pulseAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     pulseAnimation.autoreverses = YES;
     pulseAnimation.repeatCount = FLT_MAX;
@@ -491,6 +491,7 @@ typedef enum dealTypeStates
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFeed:) name:kFeedUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedBackgroundUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
 //    [self updateRewardItems];
 
@@ -752,10 +753,10 @@ typedef enum dealTypeStates
     if (locationTracker.authorized) {
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-//            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            //[self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
                 //self.mapCenter = staticLocation.coordinate;
                 self.mapCenter = location.coordinate;
@@ -782,7 +783,15 @@ typedef enum dealTypeStates
 
 -(void)refreshFeed:(NSNotification *)notification
 {
+    
     [self getFavoriteFeed];
+}
+
+-(void)backgroundRefreshFeed:(NSNotification *)notification
+{
+    
+    [self getFavoriteFeed];
+    [self reloadDeals];
 }
 
 //- (void) updateDealInMap

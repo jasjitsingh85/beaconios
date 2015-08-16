@@ -150,11 +150,11 @@
     
     [self.tableView reloadData];
     
-    if (!self.isRefreshing) {
-        //[self showProperView];
-        [self.tableView reloadData];
-//        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-    }
+//    if (!self.isRefreshing) {
+//        //[self showProperView];
+//        //[self.tableView reloadData];
+////        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+//    }
     
     if (self.isViewShowing && !self.isRefreshing) {
         [self markViewAsSeen];

@@ -147,6 +147,7 @@
         self.message.text = feedItem.message;
         self.message.attributedText = attrMessage;
         self.unfollowButton.hidden = YES;
+        [self.socialIcon setImage:nil];
     } else if ([feedItem.source isEqualToString:@"twitter"]) {
         
         NSString *feedTitleString = [NSString stringWithFormat:@"%@ via ", self.feedItem.name];
@@ -189,12 +190,13 @@
     }
     
     if (feedItem.image) {
-
         [self.socialImageView setImage:feedItem.image];
         self.socialImageView.width = feedItem.image.size.width;
         self.socialImageView.height = feedItem.image.size.height;
         self.socialImageView.y = self.messageBody.height + 40;
         self.socialImageView.centerX = (self.width - 20)/2.0;
+    } else {
+        [self.socialImageView setImage:nil];
     }
     
 }
@@ -206,7 +208,7 @@
     UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:title message:body];
     [alertView bk_addButtonWithTitle:@"Unfollow" handler:^{
         [[APIClient sharedClient] toggleFavorite:self.feedItem.dealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFeedBackgroundUpdateNotification object:self];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"Unfollow Failed");
         }];
