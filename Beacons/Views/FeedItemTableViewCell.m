@@ -67,6 +67,13 @@
     self.socialIcon = [[UIImageView alloc] init];
     [self.cellView addSubview:self.socialIcon];
     
+    self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.unfollowButton.size = CGSizeMake(25, 25);
+    [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+    [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.unfollowButton.hidden = YES;
+    [self.cellView addSubview:self.unfollowButton];
+    
     return self;
 }
 
@@ -131,9 +138,9 @@
         NSRange attrStringRange = [self getAttributedTextRange:self.feedItem.message];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
         [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
-        
         self.message.text = feedItem.message;
         self.message.attributedText = attrMessage;
+        self.unfollowButton.hidden = YES;
     } else if ([feedItem.source isEqualToString:@"twitter"]) {
         
         NSString *feedTitleString = [NSString stringWithFormat:@"%@ via ", self.feedItem.name];
@@ -152,13 +159,7 @@
         self.message.attributedText = attrMessage;
         
         self.messageBody.text = self.feedItem.message;
-
-        self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.unfollowButton.size = CGSizeMake(25, 25);
-        [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
-        [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [self.cellView addSubview:self.unfollowButton];
-        
+        self.unfollowButton.hidden = NO;
     } else if ([feedItem.source isEqualToString:@"facebook"]) {
         
         NSString *feedTitleString = [NSString stringWithFormat:@"%@ via ", self.feedItem.name];
@@ -178,11 +179,7 @@
         
         self.messageBody.text = self.feedItem.message;
         
-        self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.unfollowButton.size = CGSizeMake(25, 25);
-        [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
-        [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [self.cellView addSubview:self.unfollowButton];
+        self.unfollowButton.hidden = NO;
     }
     
     if (feedItem.image) {
