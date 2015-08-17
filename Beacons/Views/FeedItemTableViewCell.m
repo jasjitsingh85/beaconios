@@ -148,6 +148,7 @@
         self.message.attributedText = attrMessage;
         self.unfollowButton.hidden = YES;
         [self.socialIcon setImage:nil];
+        self.messageBody.text = nil;
     } else if ([feedItem.source isEqualToString:@"twitter"]) {
         
         NSString *feedTitleString = [NSString stringWithFormat:@"%@ via ", self.feedItem.name];

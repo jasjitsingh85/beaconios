@@ -1947,7 +1947,7 @@
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1960,7 +1960,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5c8a6c0-041a-446c-81e3-d9b8bda3cba0";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2038,7 +2038,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2062,8 +2062,8 @@
 			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
 				CURRENT_PROJECT_VERSION = 65;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2075,8 +2075,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e5c8a6c0-041a-446c-81e3-d9b8bda3cba0";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "e5c8a6c0-041a-446c-81e3-d9b8bda3cba0";
+				PROVISIONING_PROFILE = "87777d05-d79a-4d29-8e7e-3cc9ccb25019";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "87777d05-d79a-4d29-8e7e-3cc9ccb25019";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
