@@ -686,6 +686,12 @@
     }];
     
     [self.view addSubview:self.mainScroll];
+    
+    if (self.happyHour.isFollowed) {
+        [self makeFollowButtonActive];
+    } else {
+        [self makeFollowButtonInactive];
+    }
 }
 
 - (void) getDealButtonTouched:(id)sender
@@ -708,7 +714,14 @@
     self.isFollowed = !self.isFollowed;
     [self updateFavoriteButton];
     
-    [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSNumber *venueID = [[NSNumber alloc] init];
+    if (self.deal != nil) {
+        venueID = self.deal.venue.venueID;
+    } else  {
+        venueID = self.happyHour.venue.venueID;
+    }
+    
+    [[APIClient sharedClient] toggleFavorite:venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
         [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];

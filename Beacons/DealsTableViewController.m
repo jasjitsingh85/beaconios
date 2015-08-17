@@ -491,7 +491,6 @@ typedef enum dealTypeStates
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedUpdateNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedBackgroundUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
 //    [self updateRewardItems];
 
@@ -828,78 +827,6 @@ typedef enum dealTypeStates
     CLLocationCoordinate2D centerCoor = [self.mapView centerCoordinate];
     return centerCoor;
 }
-
-//-(void)backgroundRefreshDeals
-//{
-//    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
-//    [[APIClient sharedClient] getDealsNearCoordinate:self.mapCenter withRadius:radiusString success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSMutableArray *deals = [[NSMutableArray alloc] init];
-//        NSMutableArray *happyHours = [[NSMutableArray alloc] init];
-//        CLLocation *location = [[CLLocation alloc] initWithLatitude:self.mapCenter.latitude longitude:self.mapCenter.longitude];
-////        [self.mapView removeAnnotations:[self.mapView annotations]];
-////        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
-//        
-//        for (NSDictionary *dealJSON in responseObject[@"deals"]) {
-//            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
-//            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
-//            //            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
-//            deal.venue.distance = [location distanceFromLocation:dealLocation];
-//            //            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-//            //            [annotation setCoordinate:dealLocation2D];
-//            //            annotation.title = @"hotspotPin";
-//            //            [self.mapView addAnnotation:annotation];
-//            [deals addObject:deal];
-//        }
-//        
-//        for (NSDictionary *happyHourJSON in responseObject[@"happy_hours"]) {
-//            HappyHour *happyHour = [[HappyHour alloc] initWithDictionary:happyHourJSON];
-//            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:happyHour.venue.coordinate.latitude longitude:happyHour.venue.coordinate.longitude];
-//            happyHour.venue.distance = [location distanceFromLocation:dealLocation];
-//            //            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
-//            //            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-//            //            [annotation setCoordinate:dealLocation2D];
-//            //            [self.mapView addAnnotation:annotation];
-//            [happyHours addObject:happyHour];
-//        }
-//        
-////        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
-////        NSLog(@"Reward Items: %@", self.numberOfRewardItems);
-////        if ([self.numberOfRewardItems integerValue] > 0) {
-////            self.hasRewardItem = YES;
-////            self.rewardExplanationContainer.hidden = NO;
-////            if ([self.numberOfRewardItems intValue] == 1) {
-////                self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drink", self.numberOfRewardItems];
-////            } else {
-////                self.rewardItemLabel.text = [NSString stringWithFormat:@"You have %@ free drinks", self.numberOfRewardItems];
-////            }
-////        } else  {
-////            self.hasRewardItem = NO;
-////            self.rewardExplanationContainer.hidden = YES;
-////        }
-//        
-//        self.hotspots = deals;
-//        self.happyHours = happyHours;
-//        
-//        if (self.dealType == HOTSPOT) {
-//            self.selectedDeals = self.hotspots;
-//        } else if (self.dealType == HAPPY_HOUR) {
-//            self.selectedDeals = self.happyHours;
-//        }
-//        
-//        
-//        //[self reloadAnnotations];
-//        
-//        //[self reloadTableView];
-//        self.lastUpdatedDeals = [NSDate date];
-//        if (completion) {
-//            completion();
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        if (completion) {
-//            completion();
-//        }
-//    }];
-//}
 
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius withCompletion:(void (^)())completion
 {

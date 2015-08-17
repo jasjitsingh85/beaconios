@@ -261,6 +261,12 @@
     //[self.venuePreviewView addSubview:self.distanceLabel];
     // }];
     
+    if (self.happyHour.isFollowed) {
+        [self makeFollowButtonActive];
+    } else {
+        [self makeFollowButtonInactive];
+    }
+    
 }
 
 - (NSString *)stringForDistance:(CLLocationDistance)distance
