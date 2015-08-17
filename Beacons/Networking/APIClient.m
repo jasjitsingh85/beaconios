@@ -426,4 +426,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] getPath:@"favorite-feed/" parameters:parameters success:success failure:failure];
 }
 
+- (void)storeLastFollowView: (NSNumber *)timestamp success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"timestamp" : timestamp };
+    [[APIClient sharedClient] putPath:@"favorite-feed/" parameters:parameters success:success failure:failure];
+}
+
 @end

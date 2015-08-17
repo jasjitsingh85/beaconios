@@ -557,9 +557,9 @@ typedef enum dealTypeStates
             [self.feed addObject:feedItem];
         }
         //self.feedTableViewController.isRefreshing = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         self.feedTableViewController.feed = self.feed;
         [[AnalyticsManager sharedManager] openNewsfeedWithNumberOfFollowItems:self.feed.count];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         [self checkNewsfeedNotification];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");

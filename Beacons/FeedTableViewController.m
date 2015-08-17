@@ -76,11 +76,6 @@
     self.isRefreshing = NO;
     self.pullToRefresh = NO;
     
-    if (self.feed.count > 0) {
-        self.emptyFeedView.hidden = YES;
-    } else {
-        self.emptyFeedView.hidden = NO;
-    }
 }
 
 //-(void) showLoadingIndicator:(id)sender
@@ -158,6 +153,11 @@
     
     if (self.isViewShowing && !self.isRefreshing) {
         [self markViewAsSeen];
+        if (self.feed.count > 0) {
+            self.emptyFeedView.hidden = YES;
+        } else {
+            self.emptyFeedView.hidden = NO;
+        }
     }
 }
 
@@ -191,9 +191,10 @@
 {
     if (self.feed.count > 0) {
         FeedItem *feedItem = self.feed[0];
-        NSNumber *timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
         [[NSUserDefaults standardUserDefaults] setObject:feedItem.dateCreated forKey:kFeedUpdateNotification];
         [[NSNotificationCenter defaultCenter] postNotificationName:kRemoveNewsfeedNotification object:self userInfo:nil];
+        NSNumber *timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
+        [[APIClient sharedClient] storeLastFollowView:timestamp success:nil failure:nil];
     }
 }
 
