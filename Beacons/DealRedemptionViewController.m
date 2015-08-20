@@ -394,7 +394,11 @@
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
         self.headerTitle.text = @"SHOW VOUCHER TO SERVER";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.deal.itemPrice];
+        if (self.dealStatus.isRewardAuthorization) {
+            self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. Hotspot will cover this round!"];
+        } else {
+            self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.deal.itemPrice];
+        }
 
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];

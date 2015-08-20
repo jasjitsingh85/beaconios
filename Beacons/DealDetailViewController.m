@@ -130,7 +130,7 @@
 //    }
     
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.size = CGSizeMake(65, 25);
     self.followButton.x = 0;
     self.followButton.y = 0;
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
@@ -493,9 +493,10 @@
     
     //[self.view addSubview:self.getDealButton];
     
+    [self.getDealButtonContainer addSubview:self.getDealButton];
     [self.view addSubview:self.getDealButtonContainer];
     
-    [self.getDealButtonContainer addSubview:self.getDealButton];
+
     
     if (self.deal.isFollowed) {
         [self makeFollowButtonActive];
@@ -731,7 +732,7 @@
 - (void) makeFollowButtonActive
 {
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(85, 20);
+    self.followButton.size = CGSizeMake(85, 25);
 //    self.followButton.x = self.contentView.width - 95;
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -741,7 +742,7 @@
 - (void) makeFollowButtonInactive
 {
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.size = CGSizeMake(65, 25);
 //    self.followButton.x = self.contentView.width - 85;
     [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];

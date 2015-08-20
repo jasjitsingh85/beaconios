@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "DealView.h"
+#import "Deal.h"
+#import "Beacon.h"
+#import "DealStatus.h"
 #import "Venue.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -105,6 +108,106 @@
     [self.venueImageView addSubview:self.itemPriceLabel];
     
     return self;
+}
+
+- (void) setBeacon:(Beacon *)beacon
+{
+    _beacon = beacon;
+    
+    self.deal = self.beacon.deal;
+    
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
+    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    //self.venueLabelLineOne.text = [deal.itemName uppercaseString];
+    //self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
+    
+    //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
+    [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
+    //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
+    
+    NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
+    self.marketPriceLabel.text = marketPriceString;
+    
+    NSDictionary* attributes = @{
+                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                 };
+    
+    NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+    self.marketPriceLabel.attributedText = attrText;
+    
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [self.deal.itemName uppercaseString]];
+    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+    
+    CGFloat descriptionLabelWidth;
+    //if (textSize.width < self.contentView.width * .6) {
+    descriptionLabelWidth = textSize.width;
+    self.marketPriceLabel.x = descriptionLabelWidth + 3;
+    CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
+    
+    if (self.deal.isRewardItem || self.beacon.userDealStatus.isRewardAuthorization) {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    } else {
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+    }
+    CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
+    self.itemPriceLabel.width = itemPriceTextSize.width;
+    self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
+    
+    
+    //    } else {
+    //        descriptionLabelWidth = self.contentView.width * .6;
+    //    }
+    
+    //    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
+    //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+    //                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
+    //                                                                           context:nil].size.width;
+    
+    //self.dealTime.x = descriptionLabelWidth + 15;
+    
+    self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
+    
+    //    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR       $%@", [deal.itemName uppercaseString], deal.itemPrice];
+    //    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+    //
+    //    CGFloat descriptionLabelWidth;
+    //    //if (textSize.width < self.contentView.width * .6) {
+    //    descriptionLabelWidth = textSize.width;
+    //    } else {
+    //        descriptionLabelWidth = self.contentView.width * .6;
+    //    }
+    
+    //    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
+    //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+    //                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
+    //                                                                           context:nil].size.width;
+    
+    //self.dealTime.x = descriptionLabelWidth + 15;
+    
+    //    self.descriptionLabel.width = descriptionLabelWidth + 10;
+    //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    //    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
+    //    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
+    //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
+    //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
+    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+    self.dealTime.text = [NSString stringWithFormat:@"%@", [self.deal.dealStartString uppercaseString]];
+    //    self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
+    //
+    //    NSDictionary* attributes = @{
+    //                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+    //                                 };
+    //
+    //    NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+    //    self.marketPriceLabel.attributedText = attrText;
+    //
+    //    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
+    
 }
 
 - (void) setDeal:(Deal *)deal

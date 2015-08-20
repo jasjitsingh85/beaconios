@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSDate *endDate;
 @property (assign, nonatomic) BOOL feedback;
 @property (assign, nonatomic) BOOL paymentAuthorization;
+@property (assign, nonatomic) BOOL isRewardAuthorization;
 @property (strong, nonatomic) NSURL *imageURL;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

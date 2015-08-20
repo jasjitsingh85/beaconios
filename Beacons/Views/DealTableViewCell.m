@@ -194,7 +194,7 @@
     //[self.venueScroll addSubview:self.venueDetailView];
     
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.size = CGSizeMake(65, 25);
     self.followButton.x = self.contentView.width - 85;
     self.followButton.y = 20;
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
@@ -471,7 +471,7 @@
 - (void) makeFollowButtonActive
 {
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(85, 20);
+    self.followButton.size = CGSizeMake(85, 25);
     self.followButton.x = self.contentView.width - 95;
     [self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -481,7 +481,7 @@
 - (void) makeFollowButtonInactive
 {
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(65, 20);
+    self.followButton.size = CGSizeMake(65, 25);
     self.followButton.x = self.contentView.width - 85;
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];

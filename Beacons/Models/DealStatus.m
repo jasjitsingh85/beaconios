@@ -48,6 +48,11 @@
         self.paymentAuthorization = NO;
     } else {
         self.paymentAuthorization = YES;
+        if ([payment_authorization isEqualToString:@"REWARD"]) {
+            self.isRewardAuthorization = YES;
+        } else {
+            self.isRewardAuthorization = NO;
+        }
     }
 
     //self.imageURL = [NSURL URLWithString:dictionary[@"conditional_image_url"]];

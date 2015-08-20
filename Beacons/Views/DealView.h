@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Deal.h"
 
-@class Deal;
+@class Deal, Beacon;
 @interface DealView : UIView
 
 @property (strong, nonatomic) UIImageView *venueImageView;
@@ -28,5 +28,6 @@
 //@property (strong, nonatomic) MKMapView *mapView;
 //@property (strong, nonatomic) MKMapSnapshotter *mapSnapshot;
 @property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) Beacon *beacon;
 
 @end

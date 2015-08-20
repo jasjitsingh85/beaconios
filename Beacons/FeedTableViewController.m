@@ -13,6 +13,8 @@
 #import "FeedItem.h"
 #import "FeedItemTableViewCell.h"
 #import "NavigationBarTitleLabel.h"
+#import "ContactManager.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
@@ -21,6 +23,8 @@
 @property (assign, nonatomic) BOOL isViewShowing;
 @property (strong, nonatomic) UIView *emptyFeedView;
 @property (assign, nonatomic) BOOL pullToRefresh;
+@property (strong, nonatomic) UIImageView *syncContactsButtonContainer;
+@property (strong, nonatomic) UIButton *syncContactsButton;
 
 @end
 
@@ -39,6 +43,8 @@
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+    
+    [self.view addSubview:self.syncContactsButtonContainer];
     
     self.pullToRefresh = NO;
     
@@ -124,19 +130,56 @@
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
-//    self.emptyFeedView = [[UIView alloc] initWithFrame:self.view.bounds];
-//    self.emptyFeedView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
-//    self.emptyFeedView.hidden = YES;
-//    
-//    UIImageView *lockIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];
-//    lockIcon.width = 40;
-//    lockIcon.height = 40;
-//    lockIcon.centerX = self.view.width/2.0;
-//    lockIcon.y = 100;
-//    [self.emptyFeedView addSubview:lockIcon];
-//    
-//    [self.view addSubview:self.emptyFeedView];
+    self.syncContactsButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
+    self.syncContactsButtonContainer.height = 120;
+    self.syncContactsButtonContainer.y = self.view.height - 120;
+    self.syncContactsButtonContainer.userInteractionEnabled = YES;
     
+    self.syncContactsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.syncContactsButton.size = CGSizeMake(self.view.width - 50, 35);
+    self.syncContactsButton.centerX = self.view.width/2.0;
+    self.syncContactsButton.y = 73;
+    self.syncContactsButton.layer.cornerRadius = 4;
+    self.syncContactsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.syncContactsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.syncContactsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.syncContactsButton setTitle:@"ADD FRIENDS" forState:UIControlStateNormal];
+
+    [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        self.syncContactsButtonContainer.hidden = NO;
+    } else {
+        self.syncContactsButtonContainer.hidden = YES;
+    }
+    
+}
+
+-(void) addFriendsButtonTouched:(id)sender
+{
+    NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you see what your friends are up to on Hotspot"];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Add Friends?" message:message];
+    [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
+        [self requestContactPermissions];
+    }];
+    [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
+    }];
+    [alertView show];
+}
+
+- (void)requestContactPermissions
+{
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            [[ContactManager sharedManager] syncContacts];
+        }
+        self.syncContactsButtonContainer.hidden = YES;
+    });
 }
 
 -(void) setFeed:(NSMutableArray *)feed
@@ -144,12 +187,6 @@
     _feed = feed;
     
     [self.tableView reloadData];
-    
-//    if (!self.isRefreshing) {
-//        //[self showProperView];
-//        //[self.tableView reloadData];
-////        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
-//    }
     
     if (self.isViewShowing && !self.isRefreshing) {
         [self markViewAsSeen];
@@ -172,11 +209,16 @@
 //    }
 //}
 
-- (void) viewDidAppear:(BOOL)animated
+- (void) viewWillAppear:(BOOL)animated
 {
     self.isViewShowing = YES;
     if (!self.isRefreshing) {
         [self markViewAsSeen];
+        if (self.feed.count > 0) {
+            self.emptyFeedView.hidden = YES;
+        } else {
+            self.emptyFeedView.hidden = NO;
+        }
     }
 }
 

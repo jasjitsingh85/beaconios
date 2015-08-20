@@ -588,7 +588,8 @@
     [self view];
     _beacon = beacon;
     
-    self.dealView.deal = self.beacon.deal;
+    
+    self.dealView.beacon = self.beacon;
     
     //self.beaconChatViewController.beacon = beacon;
     self.timeLabel.text = beacon.time.formattedTime;
