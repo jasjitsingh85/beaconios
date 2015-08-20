@@ -107,25 +107,25 @@
     self.emptyFeedView.hidden = YES;
     [self.tableView addSubview:self.emptyFeedView];
     
-    UIImageView *groupIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bigGroupIcon"]];
+    UIImageView *groupIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"emptyNewsfeedIcon"]];
     groupIcon.width = 35;
     groupIcon.height = 35;
     groupIcon.centerX = self.view.width/2.0;
     groupIcon.y = 100;
     [self.emptyFeedView addSubview:groupIcon];
     
-    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.view.width, 20)];
+    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 145, self.view.width, 20)];
     header.textAlignment = NSTextAlignmentCenter;
     header.font = [ThemeManager boldFontOfSize:18];
-    header.text = @"NOTHING TO REPORT";
+    header.text = @"FOLLOW PLACES";
     [self.emptyFeedView addSubview:header];
     
-    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 175, self.view.width - 70, 90)];
+    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.view.width - 70, 90)];
     body.textAlignment = NSTextAlignmentCenter;
-    body.font = [ThemeManager lightFontOfSize:15];
+    body.font = [ThemeManager lightFontOfSize:14];
     body.numberOfLines = 0;
     body.centerX = self.view.width/2.0;
-    body.text = @"With the Hotspot newsfeed you'll see the latest news, offers, and events at your favorite places. Follow more places to see more!";
+    body.text = @"With the Hotspot newsfeed you'll see the latest news, offers, and events at your favorite places. Follow some venues to see what's going on right now!";
     [self.emptyFeedView addSubview:body];
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];

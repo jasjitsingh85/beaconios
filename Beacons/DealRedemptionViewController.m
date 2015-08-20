@@ -330,7 +330,12 @@
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
         } else {
-            NSString *message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@ for a %@. They are paying through the Hotspot app, so don’t charge them for this drink.", self.deal.itemPrice, self.deal.itemName];
+            NSString *message;
+            if (self.dealStatus.isRewardAuthorization) {
+                message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and Hotspot will be charged $%@ for a %@. Don’t charge the customer for this drink.", self.deal.itemPrice, self.deal.itemName];
+            } else {
+                message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@ for a %@. They are paying through the Hotspot app, so don’t charge them for this drink.", self.deal.itemPrice, self.deal.itemName];
+            }
             UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
             [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
                 [self redeemDeal];

@@ -147,7 +147,8 @@
                 NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
                 if ([rewardItemsString intValue] > 0 && self.beacon.deal.rewardEligibility) {
                     [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                    [self promptToUseRewardItems];
+                    [self redeemRewardItem];
+//                    [self promptToUseRewardItems];
                 } else {
                     [self checkPaymentsOnFile];
                 }
@@ -703,28 +704,28 @@
     [[AnalyticsManager sharedManager] setBeaconStatus:@"going" forSelf:YES];
 }
 
-- (void)promptToUseRewardItems
-{
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Do you want to use your free drink here?"];
-//    [actionSheet bk_addButtonWithTitle:@"Sure" handler:^{
+//- (void)promptToUseRewardItems
+//{
+////    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Do you want to use your free drink here?"];
+////    [actionSheet bk_addButtonWithTitle:@"Sure" handler:^{
+////        [self redeemRewardItem];
+////    }];
+////    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:^{
+////        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+////        [self checkPaymentsOnFile];
+////    }];
+////    [actionSheet showInView:self.view];
+//    
+//    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Free Drink?" message:@"Do you want to use your free drink here?"];
+//    [alertView bk_addButtonWithTitle:@"Sure" handler:^{
 //        [self redeemRewardItem];
 //    }];
-//    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:^{
+//    [alertView bk_setCancelButtonWithTitle:@"Not Now" handler:^{
 //        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
 //        [self checkPaymentsOnFile];
 //    }];
-//    [actionSheet showInView:self.view];
-    
-    UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Redeem Free Drink?" message:@"Do you want to use your free drink here?"];
-    [alertView bk_addButtonWithTitle:@"Sure" handler:^{
-        [self redeemRewardItem];
-    }];
-    [alertView bk_setCancelButtonWithTitle:@"Not Now" handler:^{
-        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-        [self checkPaymentsOnFile];
-    }];
-    [alertView show];
-}
+//    [alertView show];
+//}
 
 - (void)redeemRewardItem
 {
