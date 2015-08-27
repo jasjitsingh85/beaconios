@@ -26,6 +26,7 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "DatePickerModalView.h"
+#import "TextMessageManager.h"
 #import "ContactExplanationPopupView.h"
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
@@ -61,8 +62,8 @@
 @property (readonly) NSInteger findFriendSectionSuggested;
 @property (readonly) NSInteger findFriendSectionContacts;
 @property (nonatomic, strong) NSDate *date;
-@property (strong, nonatomic) UITextView *composeMessageTextView;
-@property (strong, nonatomic) UILabel *messageCount;
+//@property (strong, nonatomic) UITextView *composeMessageTextView;
+//@property (strong, nonatomic) UILabel *messageCount;
 @property (assign, nonatomic) BOOL modifiedMessage;
 @property (assign, nonatomic) BOOL isSendMessageShowing;
 @property (assign, nonatomic) BOOL isKeyboardShowing;
@@ -73,6 +74,7 @@
 @property (strong, nonatomic) MFMessageComposeViewController *smsModal;
 @property (strong, nonatomic) UIButton *emailButton;
 @property (strong, nonatomic) UIButton *smsButton;
+@property (strong, nonatomic) NSString *smsMessage;
 
 //@property (strong, nonatomic) UIView *dateView;
 //@property (strong, nonatomic) UIView *dateContentView;
@@ -162,53 +164,54 @@
     self.tableView.dataSource = self;
     self.tableView.hidden = YES;
     
-    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 120)];
+    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 55)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
     self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sendMessageContainer];
-    self.sendMessage = [[UIButton alloc] init];
-    self.sendMessage.size = CGSizeMake(65, 40);
-    self.sendMessage.x = self.view.width - 65;
-    self.sendMessage.y = 65;
-    [self.sendMessage setTitle:@"Send" forState:UIControlStateNormal];
-    self.sendMessage.backgroundColor = [UIColor clearColor];
-    self.sendMessage.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.sendMessage = [[UIButton alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 50, 35)];
+//    self.sendMessage.size = CGSizeMake(65, 40);
+    self.sendMessage.centerX = self.view.width/2;
+    self.sendMessage.y = 10;
+    self.sendMessage.layer.cornerRadius = 4;
+    [self.sendMessage setTitle:@"SEND INVITATIONS" forState:UIControlStateNormal];
+    self.sendMessage.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.sendMessage.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.sendMessage.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [self.sendMessage setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    [self.sendMessage setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+    [self.sendMessage setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.sendMessage setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
     [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.sendMessageContainer addSubview:self.sendMessage];
     
-    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 15)];
-    self.messageCount.font = [ThemeManager regularFontOfSize:13];
-    self.messageCount.textAlignment = NSTextAlignmentCenter;
-    self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
-    //    self.messageCount.text = @"1 Individual SMS";
-    self.messageCount.centerX = self.view.width/2;
-    [self.sendMessageContainer addSubview:self.messageCount];
-    
+//    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 15)];
+//    self.messageCount.font = [ThemeManager regularFontOfSize:13];
+//    self.messageCount.textAlignment = NSTextAlignmentCenter;
+//    self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
+//    //    self.messageCount.text = @"1 Individual SMS";
+//    self.messageCount.centerX = self.view.width/2;
+//    [self.sendMessageContainer addSubview:self.messageCount];
+//    
     CALayer *upperBorder = [CALayer layer];
     upperBorder.backgroundColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
     upperBorder.frame = CGRectMake(0, 0, self.view.width, 0.25f);
     [self.sendMessageContainer.layer addSublayer:upperBorder];
     
-    self.composeMessageTextView = [[UITextView alloc] init];
-    self.composeMessageTextView.width = self.view.width - 75;
-    self.composeMessageTextView.height = 85;
-    self.composeMessageTextView.x = 10;
-    self.composeMessageTextView.y = 10;
-    self.composeMessageTextView.layer.cornerRadius = 6;
-    self.composeMessageTextView.layer.borderWidth = .25f;
-    self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
-    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    self.composeMessageTextView.textAlignment = NSTextAlignmentLeft;
-    self.composeMessageTextView.font = [UIFont systemFontOfSize:15];
-    //    self.composeMessageTextView.textColor = [UIColor blackColor];
-    self.composeMessageTextView.textColor = [UIColor blackColor];
-    self.composeMessageTextView.delegate = self;
-    self.composeMessageTextView.text = @"Join me on Hotspot so we can both get a free (alcoholic) drink. http://GetHotspotApp.com";
-    self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
-    [self.sendMessageContainer addSubview:self.composeMessageTextView];
+//    self.composeMessageTextView = [[UITextView alloc] init];
+//    self.composeMessageTextView.width = self.view.width - 75;
+//    self.composeMessageTextView.height = 85;
+//    self.composeMessageTextView.x = 10;
+//    self.composeMessageTextView.y = 10;
+//    self.composeMessageTextView.layer.cornerRadius = 6;
+//    self.composeMessageTextView.layer.borderWidth = .25f;
+//    self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
+//    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
+//    self.composeMessageTextView.textAlignment = NSTextAlignmentLeft;
+//    self.composeMessageTextView.font = [UIFont systemFontOfSize:15];
+//    //    self.composeMessageTextView.textColor = [UIColor blackColor];
+//    self.composeMessageTextView.textColor = [UIColor blackColor];
+//    self.composeMessageTextView.delegate = self;
+//    self.composeMessageTextView.text = @"Join me on Hotspot so we can both get a free (alcoholic) drink. http://GetHotspotApp.com";
+//    self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
+//    [self.sendMessageContainer addSubview:self.composeMessageTextView];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
@@ -226,6 +229,27 @@
     } else {
         [self loadUnauthorizedContactView];
     }
+    
+    [[APIClient sharedClient] getPromo:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSString *promoCode = responseObject[@"promo_code"];
+//        NSString *emailSubject = responseObject[@"email_subject"];
+//        NSString *emailBody = responseObject[@"email_body"];
+        NSString *smsMessage = responseObject[@"sms_message"];
+        
+        self.smsMessage = smsMessage;
+//        
+//        self.emailModal = [[MFMailComposeViewController alloc] init];
+//        self.emailModal.mailComposeDelegate = self;
+//        [self.emailModal setSubject:emailSubject];
+//        [self.emailModal setMessageBody:emailBody isHTML:NO];
+//        //        [mail setToRecipients:@[@"testingEmail@example.com"]];
+//        
+//        self.smsModal = [[MFMessageComposeViewController alloc] init];
+//        self.smsModal.messageComposeDelegate = self;
+//        //picker.recipients = [NSArray arrayWithObjects:@"1234", @"2345", nil];
+//        self.smsModal.body = smsMessage;
+        
+    } failure:nil];
 }
 
 - (void)requestContactPermissions
@@ -509,7 +533,7 @@
     [self view];
     _deal = deal;
     //[self updateNavTitleForDeal:deal];
-    self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
+    //self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
     [self updateInviteButtonTextForDeal:nil];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
@@ -935,7 +959,7 @@
 - (void) updateMessageCount
 {
     
-    self.messageCount.text = [NSString stringWithFormat:@"%lu Individual SMS", (unsigned long)self.selectedContactDictionary.count];
+    //self.messageCount.text = [NSString stringWithFormat:@"%lu Individual SMS", (unsigned long)self.selectedContactDictionary.count];
     [self updateSendMessagePosition];
 }
 
@@ -1255,10 +1279,15 @@
 //        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
 //    }
     
+//    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+//    [[APIClient sharedClient] inviteFriendsToApp:self.selectedContactDictionary.allValues customMessage:self.composeMessageTextView.text success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//    } failure:nil];
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    [[APIClient sharedClient] inviteFriendsToApp:self.selectedContactDictionary.allValues customMessage:self.composeMessageTextView.text success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray *selectedContacts = [self.selectedContactDictionary allKeys];
+    [[TextMessageManager sharedManager] presentMessageComposeViewControllerFromViewController:self messageRecipients:selectedContacts withMessage:self.smsMessage success:^(BOOL success) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        [self dismissViewControllerAnimated:YES completion:nil];
     } failure:nil];
     
 }
@@ -1346,13 +1375,13 @@
         CGRect rect = self.sendMessageContainer.frame;
         if (self.isKeyboardShowing) {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - self.keyboardHeight - 120;
+                rect.origin.y = self.view.height - self.keyboardHeight - 55;
             } else {
                 rect.origin.y = self.view.height - self.keyboardHeight;
             }
         } else {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - 120;
+                rect.origin.y = self.view.height - 55;
             } else {
                 rect.origin.y = self.view.height;
             }

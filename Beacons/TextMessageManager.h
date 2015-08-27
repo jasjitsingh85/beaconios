@@ -14,6 +14,6 @@
 
 + (TextMessageManager *)sharedManager;
 
-- (void)presentMessageComposeViewControllerFromViewController:(UIViewController *)viewController messageRecipients:(NSArray *)messageRecipients;
+- (void)presentMessageComposeViewControllerFromViewController:(UIViewController *)viewController messageRecipients:(NSArray *)messageRecipients withMessage:(NSString *)smsMessage success:(void (^)(BOOL success))success failure:(void (^)(NSError *error))failure;
 
 @end

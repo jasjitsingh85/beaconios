@@ -8,11 +8,13 @@
 
 #import "TextMessageManager.h"
 #import "AnalyticsManager.h"
+#import "LoadingIndictor.h"
 
 @interface TextMessageManager()
 
 @property (weak, nonatomic) UIViewController *presentingViewController;
 @property (strong, nonatomic) NSArray *recipients;
+@property (strong, nonatomic) MFMessageComposeViewController *messageViewController;
 
 @end
 
@@ -29,23 +31,27 @@
     return _sharedManager;
 }
 
-- (void)presentMessageComposeViewControllerFromViewController:(UIViewController *)viewController messageRecipients:(NSArray *)messageRecipients
+- (void)presentMessageComposeViewControllerFromViewController:(UIViewController *)viewController messageRecipients:(NSArray *)messageRecipients withMessage:(NSString *)smsMessage success:(void (^)(BOOL success))success failure:(void (^)(NSError *error))failure;
 {
     if (![MFMessageComposeViewController canSendText]) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Device can't send texts" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         return;
     }
     self.presentingViewController = viewController;
-    MFMessageComposeViewController *messageViewController = [MFMessageComposeViewController new];
-    messageViewController.recipients = messageRecipients;
+    self.messageViewController = [MFMessageComposeViewController new];
+    self.messageViewController.recipients = messageRecipients;
+    self.messageViewController.body = smsMessage;
     self.recipients = messageRecipients;
-    messageViewController.messageComposeDelegate = self;
-    [viewController presentViewController:messageViewController animated:YES completion:nil];
+    self.messageViewController.messageComposeDelegate = self;
+    [viewController presentViewController:self.messageViewController animated:YES completion:^{
+        success(YES);
+    }];
 }
 
 #pragma mark - MFMessageViewControllerDelegate
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
+    NSLog(@"MESSAGE RECIPIENTS: %@", self.messageViewController.recipients);
     [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
