@@ -9,6 +9,7 @@
 #import "TextMessageManager.h"
 #import "AnalyticsManager.h"
 #import "LoadingIndictor.h"
+#import "APIClient.h"
 
 @interface TextMessageManager()
 
@@ -53,6 +54,9 @@
 {
     NSLog(@"MESSAGE RECIPIENTS: %@", self.messageViewController.recipients);
     [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [[APIClient sharedClient] postReferredPhoneNumbers:self.messageViewController.recipients success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Recipients Uploaded");
+    } failure:nil];
 }
 
 

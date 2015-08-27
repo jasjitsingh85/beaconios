@@ -432,4 +432,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] putPath:@"favorite-feed/" parameters:parameters success:success failure:failure];
 }
 
+- (void)postReferredPhoneNumbers: (NSArray *)contacts success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"contact_array" : contacts };
+    [[APIClient sharedClient] postPath:@"contact_status/" parameters:parameters success:success failure:failure];
+}
+
 @end
