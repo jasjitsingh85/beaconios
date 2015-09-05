@@ -14,7 +14,7 @@
 #import <MapKit/MapKit.h>
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
-#import "FindFriendsViewController.h"
+//#import "FindFriendsViewController.h"
 #import "AnalyticsManager.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
@@ -22,7 +22,7 @@
 #import "DealView.h"
 #import "HappyHourView.h"
 
-@interface DealDetailViewController () <FindFriendsViewControllerDelegate>
+@interface DealDetailViewController ()
 
 @property (strong, nonatomic) UIButton *getDealButton;
 @property (strong, nonatomic) UIImageView *venueImageView;
@@ -34,9 +34,13 @@
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIButton *followButton;
+@property (strong, nonatomic) UIButton *publicToggleButton;
+@property (strong, nonatomic) UIImageView *publicToggleButtonIcon;
 
 @property (strong, nonatomic) UILabel *venueTextLabel;
 @property (assign, nonatomic) BOOL isFollowed;
+@property (assign, nonatomic) BOOL isPresent;
+@property (assign, nonatomic) BOOL isPublic;
 
 @end
 
@@ -56,78 +60,7 @@
     
     self.mainScroll.contentSize = CGSizeMake(self.view.width, 800);
     
-//    self.venueImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 166)];
-//    self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    self.venueImageView.clipsToBounds = YES;
-//    [self.mainScroll addSubview:self.venueImageView];
-//    
-//    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 105, self.venueImageView.size.width, 60)];
-//    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
-//    [self.backgroundGradient setImage:gradientImage];
-//    [self.venueImageView addSubview:self.backgroundGradient];
-//    
-//    UIView *backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
-//    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-//    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//    [self.venueImageView addSubview:backgroundView];
-//    
-//    self.venueLabelLineOne = [[UILabel alloc] init];
-//    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:28];
-//    self.venueLabelLineOne.textColor = [UIColor whiteColor];
-//    self.venueLabelLineOne.width = self.view.width - 20;
-//    self.venueLabelLineOne.x = 5;
-//    self.venueLabelLineOne.height = 30;
-//    self.venueLabelLineOne.y = 60;
-//    //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
-//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-//    self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
-//    self.venueLabelLineOne.numberOfLines = 1;
-//    [self.venueImageView addSubview:self.venueLabelLineOne];
-//    
-//    self.venueLabelLineTwo = [[UILabel alloc] init];
-//    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:36];
-//    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
-//    self.venueLabelLineTwo.width = self.view.width - 20;
-//    self.venueLabelLineTwo.x = 5;
-//    self.venueLabelLineTwo.height = 46;
-//    self.venueLabelLineTwo.y = 79;
-//    //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
-//    //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-//    self.venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-//    self.venueLabelLineTwo.numberOfLines = 1;
-//    [self.venueImageView addSubview:self.venueLabelLineTwo];
-//    
-//    self.dealTime = [[UILabel alloc] init];
-//    self.dealTime.font = [ThemeManager regularFontOfSize:16];
-//    self.dealTime.textColor = [UIColor whiteColor];
-//    //self.dealTime.adjustsFontSizeToFitWidth = YES;
-//    self.dealTime.width = 200;
-//    self.dealTime.height = 20;
-//    self.dealTime.x = 8;
-//    self.dealTime.y=135;
-//    self.dealTime.textAlignment = NSTextAlignmentLeft;
-//    self.dealTime.numberOfLines = 0;
-//    [self.venueImageView addSubview:self.dealTime];
-//    
-//    self.distanceLabel = [[UILabel alloc] init];
-//    self.distanceLabel.font = [ThemeManager lightFontOfSize:16];
-//    self.distanceLabel.size = CGSizeMake(67, 20);
-//    //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
-//    //self.distanceLabel.clipsToBounds = YES;
-//    self.distanceLabel.textAlignment = NSTextAlignmentRight;
-//    self.distanceLabel.y = 135;
-//    self.distanceLabel.x = self.view.width - 75;
-//    self.distanceLabel.textColor = [UIColor whiteColor];
-//    [self.venueImageView addSubview:self.distanceLabel];
-
-    
-//    if (self.deal != nil) {
-//        
-//        
-//    } else {
-//    
-//    }
+    self.isPublic = YES;
     
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(65, 25);
@@ -146,7 +79,17 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
     
 }
-//
+
+-(void) updateIsUserPresent
+{
+    if (self.deal.venue.distance < 0.1) {
+        self.isPresent = YES;
+    } else {
+        self.isPresent = NO;
+    }
+}
+
+
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
 {
     NSMutableDictionary *firstAndSecondLine = [[NSMutableDictionary alloc] init];
@@ -209,39 +152,41 @@
     [actionSheet showInView:self.view];
 }
 
-#pragma mark - Find Friends Delegate
-- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
-{
-    //if (contacts.count >= self.deal.inviteRequirement.integerValue) {
-    [self setBeaconOnServerWithInvitedContacts:contacts andMessage:message andDate:date];
-        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
-    //}
-//    else {
-//        NSString *message = [NSString stringWithFormat:@"Just select %d more friends to unlock this deal", self.deal.inviteRequirement.integerValue - contacts.count];
-//        [[[UIAlertView alloc] initWithTitle:@"You're Almost There..." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//    }
-}
+//#pragma mark - Find Friends Delegate
+//- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
+//{
+//    //if (contacts.count >= self.deal.inviteRequirement.integerValue) {
+//    [self setBeaconOnServerWithInvitedContacts:contacts andMessage:message andDate:date];
+//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
+//    //}
+////    else {
+////        NSString *message = [NSString stringWithFormat:@"Just select %d more friends to unlock this deal", self.deal.inviteRequirement.integerValue - contacts.count];
+////        [[[UIAlertView alloc] initWithTitle:@"You're Almost There..." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+////    }
+//}
 
-- (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
-{
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    UIView *view = appDelegate.window.rootViewController.view;
-    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:message time:date imageUrl:@"" success:^(Beacon *beacon) {
-        [loadingIndicator hide:YES];
-        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-    } failure:^(NSError *error) {
-        [loadingIndicator hide:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }];
-}
+//- (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
+//{
+//    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+//    UIView *view = appDelegate.window.rootViewController.view;
+//    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+//    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:message time:date imageUrl:@"" success:^(Beacon *beacon) {
+//        [loadingIndicator hide:YES];
+//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
+//        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+//        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+//    } failure:^(NSError *error) {
+//        [loadingIndicator hide:YES];
+//        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }];
+//}
 
 - (void) setDeal:(Deal *)deal
 
 {
     _deal = deal;
+    
+    [self updateIsUserPresent];
     
     bool hasVenueDescription = ![self.deal.venue.placeDescription isEqual: @""];
     
@@ -253,6 +198,28 @@
     self.getDealButtonContainer.height = 120;
     self.getDealButtonContainer.y = self.view.height - 120;
     self.getDealButtonContainer.userInteractionEnabled = YES;
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 1)];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    [self.getDealButtonContainer addSubview:topBorder];
+    
+    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.publicToggleButton.size = CGSizeMake(65, 25);
+    self.publicToggleButton.x = self.view.width - 90;
+    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.publicToggleButton.y = 45;
+    [self.publicToggleButton setTitle:@"Public" forState:UIControlStateNormal];
+    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    self.publicToggleButton.backgroundColor = [UIColor clearColor];
+    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.getDealButtonContainer addSubview:self.publicToggleButton];
+
+    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
+    self.publicToggleButtonIcon.frame = CGRectMake(20, 5, 16, 16);
+    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
     
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
@@ -695,18 +662,44 @@
     }
 }
 
+-(void) publicToggleButtonTouched:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Choose public so friends can see your check-in on their newsfeed. Select private if you just want the deal."];
+    [actionSheet bk_addButtonWithTitle:@"Public" handler:^{
+        
+    }];
+    [actionSheet bk_addButtonWithTitle:@"Private" handler:^{
+
+    }];
+    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet showInView:self.view];
+}
+
 - (void) getDealButtonTouched:(id)sender
 {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    UIView *view = appDelegate.window.rootViewController.view;
+    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+    [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+        [loadingIndicator hide:YES];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
+    } failure:^(NSError *error) {
+        [loadingIndicator hide:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
+//    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+    
 //    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
 //    dealViewController.deal = self.deal;
 //    [self.navigationController pushViewController:dealViewController animated:YES];
     
-    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-    findFriendsViewController.delegate = self;
-    findFriendsViewController.deal = self.deal;
-    findFriendsViewController.textMoreFriends = NO;
-    [self.navigationController pushViewController:findFriendsViewController animated:YES];
-    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
+//    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
+//    findFriendsViewController.delegate = self;
+//    findFriendsViewController.deal = self.deal;
+//    findFriendsViewController.textMoreFriends = NO;
+//    [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
 - (void)followButtonTouched:(id)sender

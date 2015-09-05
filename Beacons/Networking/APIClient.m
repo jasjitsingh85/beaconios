@@ -438,4 +438,25 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"contact_status/" parameters:parameters success:success failure:failure];
 }
 
+- (void)checkInForDeal:(Deal *)deal isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"deal_id"] = deal.dealID;
+    parameters[@"is_deal"] = [NSNumber numberWithBool:YES];
+    parameters[@"is_present"] = [NSNumber numberWithBool:isPresent];
+    parameters[@"is_public"] = [NSNumber numberWithBool:isPublic];
+    [[APIClient sharedClient] postPath:@"check-in/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
+        [[BeaconManager sharedManager] addBeacon:beacon];
+        if (success) {
+            success(beacon);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
 @end

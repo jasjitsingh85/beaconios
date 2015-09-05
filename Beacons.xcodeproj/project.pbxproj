@@ -62,6 +62,8 @@
 		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4108303D1AF7520700BC13D3 /* paymentExplanationWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */; };
 		4108303E1AF7520700BC13D3 /* paymentExplanation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */; };
+		4109B9C11B9B706100C3270E /* privateLock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4109B9BF1B9B706100C3270E /* privateLock@2x.png */; };
+		4109B9C21B9B706100C3270E /* publicGlobe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4109B9C01B9B706100C3270E /* publicGlobe@2x.png */; };
 		410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D194F1B4B815C002C5F0F /* AppInviteViewController.m */; };
 		410D19521B4F85BB002C5F0F /* poweredByYelp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410D19511B4F85BB002C5F0F /* poweredByYelp@2x.png */; };
 		410D19541B5069F5002C5F0F /* yelpLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410D19531B5069F5002C5F0F /* yelpLogo@2x.png */; };
@@ -325,7 +327,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		1F36E85517A6170F00D12CB8 /* backArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backArrow@2x.png"; sourceTree = "<group>"; };
 		1F3EF24617979FD9005240E3 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
 		1F3EF24717979FD9005240E3 /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationManager.m; sourceTree = "<group>"; };
@@ -410,6 +411,8 @@
 		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4108303B1AF7520700BC13D3 /* paymentExplanationWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanationWhite@2x.png"; sourceTree = "<group>"; };
 		4108303C1AF7520700BC13D3 /* paymentExplanation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentExplanation@2x.png"; sourceTree = "<group>"; };
+		4109B9BF1B9B706100C3270E /* privateLock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "privateLock@2x.png"; sourceTree = "<group>"; };
+		4109B9C01B9B706100C3270E /* publicGlobe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "publicGlobe@2x.png"; sourceTree = "<group>"; };
 		410D194E1B4B814B002C5F0F /* AppInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInviteViewController.h; sourceTree = SOURCE_ROOT; };
 		410D194F1B4B815C002C5F0F /* AppInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppInviteViewController.m; sourceTree = SOURCE_ROOT; };
 		410D19511B4F85BB002C5F0F /* poweredByYelp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poweredByYelp@2x.png"; sourceTree = "<group>"; };
@@ -540,6 +543,7 @@
 		41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redoSearchContainer@2x.png"; sourceTree = "<group>"; };
 		41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeDrinks@2x.png"; sourceTree = "<group>"; };
 		41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "largeGoldCoin@2x.png"; sourceTree = "<group>"; };
+		66C23B352142BA151A81D35D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
 		960631EA194625320011E132 /* lock_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lock_open@2x.png"; sourceTree = "<group>"; };
@@ -774,6 +778,8 @@
 		96F14C2217D84AF40093C976 /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
 		96F14C2417D84F0D0093C976 /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
 		96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
+		B62AABC80ACF67672B472679 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		F70FE960EFD55A51A48FCC1D /* Pods.ad hoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods.ad hoc.xcconfig"; path = "Pods/Target Support Files/Pods/Pods.ad hoc.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -938,6 +944,16 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		2E989F637887C004C2EFA7C7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B62AABC80ACF67672B472679 /* Pods.debug.xcconfig */,
+				66C23B352142BA151A81D35D /* Pods.release.xcconfig */,
+				F70FE960EFD55A51A48FCC1D /* Pods.ad hoc.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		4105DA901B7AEEEF0006B888 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,7 +1023,7 @@
 				963399681758512100AF9D89 /* BeaconsTests */,
 				9633993A1758512100AF9D89 /* Frameworks */,
 				963399391758512100AF9D89 /* Products */,
-				1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */,
+				2E989F637887C004C2EFA7C7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1277,6 +1293,8 @@
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
 				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
+				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
+				4109B9C01B9B706100C3270E /* publicGlobe@2x.png */,
 				4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */,
 				4105DAA81B7FFD700006B888 /* notification@2x.png */,
 				41FD06241B377C6700F7DD08 /* venueIcon@2x.png */,
@@ -1559,6 +1577,7 @@
 				96CBCCFE1805107500D62462 /* chatBubbleBlueLeft@2x.png in Resources */,
 				96CBCCFC1805107500D62462 /* chatBubblePurpleLeft@2x.png in Resources */,
 				410FC89D1B3B4F380097EA26 /* hotspotLogoNavBlack@2x.png in Resources */,
+				4109B9C21B9B706100C3270E /* publicGlobe@2x.png in Resources */,
 				4158AE5F1B43A5AD0034BA4A /* freeDrinkNavIcon@2x.png in Resources */,
 				41ED34D41AC9C52F00A77A92 /* retakePicture@2x.png in Resources */,
 				415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */,
@@ -1669,6 +1688,7 @@
 				41639ADC1B3CB27300E56734 /* fifthGradientBackground@2x.png in Resources */,
 				41639AE01B3CB27300E56734 /* firstGradientBackground@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
+				4109B9C11B9B706100C3270E /* privateLock@2x.png in Resources */,
 				4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */,
 				41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */,
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
@@ -1747,7 +1767,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 		};
 		EB6EA8C100714CE79F5A31EF /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1948,7 +1968,7 @@
 		};
 		1F95A998176E56D0003299AD /* Ad Hoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
+			baseConfigurationReference = F70FE960EFD55A51A48FCC1D /* Pods.ad hoc.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2040,7 +2060,7 @@
 		};
 		963399741758512100AF9D89 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
+			baseConfigurationReference = B62AABC80ACF67672B472679 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2063,11 +2083,11 @@
 		};
 		963399751758512100AF9D89 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D52DBDD22844917AFA0C8BB /* Pods.xcconfig */;
+			baseConfigurationReference = 66C23B352142BA151A81D35D /* Pods.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2079,7 +2099,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "87777d05-d79a-4d29-8e7e-3cc9ccb25019";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "87777d05-d79a-4d29-8e7e-3cc9ccb25019";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
