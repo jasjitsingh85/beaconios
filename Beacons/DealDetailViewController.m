@@ -218,7 +218,7 @@
     [self.getDealButtonContainer addSubview:self.publicToggleButton];
 
     self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
-    self.publicToggleButtonIcon.frame = CGRectMake(20, 5, 16, 16);
+    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
     [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
     
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -261,7 +261,11 @@
         [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
         dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for free. %@", [self.deal.itemName lowercaseString], self.deal.additionalInfo];
     } else {
-        [self.getDealButton setTitle:@"GET THIS DEAL" forState:UIControlStateNormal];
+        if (self.isPresent) {
+            [self.getDealButton setTitle:@"CHECK IN HERE" forState:UIControlStateNormal];
+        } else {
+            [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
+        }
         if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
             dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
         } else {
@@ -459,7 +463,11 @@
     if (deal.isRewardItem) {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.deal.venue.name];
     } else {
-        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'GET THIS DEAL' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+        if (self.isPresent) {
+            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+        } else  {
+            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'I'M GOING HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+        }
     }
     
     [self.view addSubview:self.mainScroll];
@@ -670,7 +678,7 @@
 
 -(void) publicToggleButtonTouched:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select friends so your friends know where you’re going. Select only me if you don’t want your friends to see your activity"];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select 'Friends' so your friends know where you’re going. Select 'Only Me' if you don’t want your friends to see your activity."];
     [actionSheet bk_addButtonWithTitle:@"Friends" handler:^{
         self.isPublic = YES;
         [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
