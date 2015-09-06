@@ -208,7 +208,7 @@
     self.publicToggleButton.x = self.view.width - 90;
     self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     self.publicToggleButton.y = 45;
-    [self.publicToggleButton setTitle:@"Public" forState:UIControlStateNormal];
+    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
     [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
     [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
@@ -236,7 +236,7 @@
     UILabel *dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
     dealPrompt.font = [ThemeManager mediumFontOfSize:9];
     dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
-    dealPrompt.text = @"You won't be charged yet";
+    dealPrompt.text = @"Tap below to get voucher";
     [self.getDealButtonContainer addSubview:dealPrompt];
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
@@ -670,15 +670,15 @@
 
 -(void) publicToggleButtonTouched:(id)sender
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Choose public so friends can see your check-in on their newsfeed. Select private if you just want the deal."];
-    [actionSheet bk_addButtonWithTitle:@"Public" handler:^{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select friends so your friends know where you’re going. Select only me if you don’t want your friends to see your activity"];
+    [actionSheet bk_addButtonWithTitle:@"Friends" handler:^{
         self.isPublic = YES;
-        [self.publicToggleButton setTitle:@"Public" forState:UIControlStateNormal];
+        [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
         [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"publicGlobe"]];
     }];
-    [actionSheet bk_addButtonWithTitle:@"Private" handler:^{
+    [actionSheet bk_addButtonWithTitle:@"Only Me" handler:^{
         self.isPublic = NO;
-        [self.publicToggleButton setTitle:@"Private" forState:UIControlStateNormal];
+        [self.publicToggleButton setTitle:@"Only Me" forState:UIControlStateNormal];
         [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"privateLock"]];
     }];
     [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
