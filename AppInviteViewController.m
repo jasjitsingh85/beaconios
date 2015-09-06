@@ -1388,13 +1388,6 @@
         }
         self.sendMessageContainer.frame = rect;
     }];
-//    
-//        [UIView beginAnimations:nil context:NULL];
-//        [UIView setAnimationDuration:.3]; // if you want to slide up the view
-//    
-//
-//        
-//        [UIView commitAnimations];
 }
 
 //-(void)setViewMovedUp:(BOOL)movedUp

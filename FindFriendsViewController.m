@@ -27,6 +27,7 @@
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "DatePickerModalView.h"
+#import "TextMessageManager.h"
 #import "ContactExplanationPopupView.h"
 //#import "RewardsViewController.h"
 
@@ -214,72 +215,91 @@
     
     [self.view addSubview:self.skipButtonContainer];
     
-    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 160)];
+    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 55)];
     self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
     self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self.view addSubview:self.sendMessageContainer];
-    self.sendMessage = [[UIButton alloc] init];
-    self.sendMessage.size = CGSizeMake(65, 40);
-    self.sendMessage.x = self.view.width - 65;
-    self.sendMessage.y = 105;
-    self.sendMessage.backgroundColor = [UIColor clearColor];
-    self.sendMessage.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.sendMessage = [[UIButton alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 50, 35)];
+    //    self.sendMessage.size = CGSizeMake(65, 40);
+    self.sendMessage.centerX = self.view.width/2;
+    self.sendMessage.y = 10;
+    self.sendMessage.layer.cornerRadius = 4;
+    [self.sendMessage setTitle:@"SEND INVITATIONS" forState:UIControlStateNormal];
+    self.sendMessage.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.sendMessage.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.sendMessage.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [self.sendMessage setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    [self.sendMessage setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
-    [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendMessage setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.sendMessage setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+    [self.sendMessage addTarget:self action:@selector(showSMSView:) forControlEvents:UIControlEventTouchUpInside];
     [self.sendMessageContainer addSubview:self.sendMessage];
     
-    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 15)];
-    self.messageCount.font = [ThemeManager regularFontOfSize:13];
-    self.messageCount.textAlignment = NSTextAlignmentCenter;
-    self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
-//    self.messageCount.text = @"1 Individual SMS";
-    self.messageCount.centerX = self.view.width/2;
-    [self.sendMessageContainer addSubview:self.messageCount];
+    
+//    self.sendMessageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 160)];
+//    self.sendMessageContainer.backgroundColor = [[UIColor alloc] initWithWhite:0.96 alpha: 1.0];
+//    self.sendMessageContainer.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+//    [self.view addSubview:self.sendMessageContainer];
+//    self.sendMessage = [[UIButton alloc] init];
+//    self.sendMessage.size = CGSizeMake(65, 40);
+//    self.sendMessage.x = self.view.width - 65;
+//    self.sendMessage.y = 105;
+//    self.sendMessage.backgroundColor = [UIColor clearColor];
+//    self.sendMessage.titleLabel.textAlignment = NSTextAlignmentLeft;
+//    self.sendMessage.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+//    [self.sendMessage setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+//    [self.sendMessage setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+//    [self.sendMessage addTarget:self action:@selector(inviteButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.sendMessageContainer addSubview:self.sendMessage];
+    
+//    self.messageCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 15)];
+//    self.messageCount.font = [ThemeManager regularFontOfSize:13];
+//    self.messageCount.textAlignment = NSTextAlignmentCenter;
+//    self.messageCount.textColor = [[UIColor alloc] initWithWhite:0.65 alpha:1.0];
+////    self.messageCount.text = @"1 Individual SMS";
+//    self.messageCount.centerX = self.view.width/2;
+//    [self.sendMessageContainer addSubview:self.messageCount];
     
     CALayer *upperBorder = [CALayer layer];
     upperBorder.backgroundColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
     upperBorder.frame = CGRectMake(0, 0, self.view.width, 0.25f);
     [self.sendMessageContainer.layer addSublayer:upperBorder];
     
-    self.composeMessageTextView = [[UITextView alloc] init];
-    self.composeMessageTextView.width = self.view.width - 75;
-    self.composeMessageTextView.height = 85;
-    self.composeMessageTextView.x = 10;
-    self.composeMessageTextView.y = 50;
-    self.composeMessageTextView.layer.cornerRadius = 6;
-    self.composeMessageTextView.layer.borderWidth = .25f;
-    self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
-    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    self.composeMessageTextView.textAlignment = NSTextAlignmentLeft;
-    self.composeMessageTextView.font = [UIFont systemFontOfSize:15];
-    //    self.composeMessageTextView.textColor = [UIColor blackColor];
-    self.composeMessageTextView.textColor = [UIColor blackColor];
-    self.composeMessageTextView.delegate = self;
-    self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
-    [self.sendMessageContainer addSubview:self.composeMessageTextView];
+//    self.composeMessageTextView = [[UITextView alloc] init];
+//    self.composeMessageTextView.width = self.view.width - 75;
+//    self.composeMessageTextView.height = 85;
+//    self.composeMessageTextView.x = 10;
+//    self.composeMessageTextView.y = 50;
+//    self.composeMessageTextView.layer.cornerRadius = 6;
+//    self.composeMessageTextView.layer.borderWidth = .25f;
+//    self.composeMessageTextView.layer.borderColor = [[[UIColor alloc] initWithWhite:0.50 alpha: 1.0] CGColor];
+//    self.composeMessageTextView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
+//    self.composeMessageTextView.textAlignment = NSTextAlignmentLeft;
+//    self.composeMessageTextView.font = [UIFont systemFontOfSize:15];
+//    //    self.composeMessageTextView.textColor = [UIColor blackColor];
+//    self.composeMessageTextView.textColor = [UIColor blackColor];
+//    self.composeMessageTextView.delegate = self;
+//    self.composeMessageTextView.returnKeyType = UIReturnKeyDone;
+//    [self.sendMessageContainer addSubview:self.composeMessageTextView];
     
-    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
-    UITapGestureRecognizer *dateViewTap =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(dateViewTap:)];
-    [self.dateView addGestureRecognizer:dateViewTap];
-    [self.sendMessageContainer addSubview:self.dateView];
-    
-    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
-    self.dateTitleLabel.text = @"Choose Time:";
-    self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
-    self.dateTitleLabel.textColor = [UIColor blackColor];
-    [self.sendMessageContainer addSubview:self.dateTitleLabel];
-    
-    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.width - 65, 30)];
-    self.dateLabel.font = [ThemeManager regularFontOfSize:14];
-    self.dateLabel.textAlignment = NSTextAlignmentRight;
-    self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    [self.sendMessageContainer addSubview:self.dateLabel];
-    
-    [self resetDate];
+//    self.dateView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 40)];
+//    UITapGestureRecognizer *dateViewTap =
+//    [[UITapGestureRecognizer alloc] initWithTarget:self
+//                                            action:@selector(dateViewTap:)];
+//    [self.dateView addGestureRecognizer:dateViewTap];
+//    [self.sendMessageContainer addSubview:self.dateView];
+//    
+//    self.dateTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 100, 30)];
+//    self.dateTitleLabel.text = @"Choose Time:";
+//    self.dateTitleLabel.font = [ThemeManager regularFontOfSize:14];
+//    self.dateTitleLabel.textColor = [UIColor blackColor];
+//    [self.sendMessageContainer addSubview:self.dateTitleLabel];
+//    
+//    self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.width - 65, 30)];
+//    self.dateLabel.font = [ThemeManager regularFontOfSize:14];
+//    self.dateLabel.textAlignment = NSTextAlignmentRight;
+//    self.dateLabel.textColor = [[ThemeManager sharedTheme] redColor];
+//    [self.sendMessageContainer addSubview:self.dateLabel];
+//    
+//    [self resetDate];
     
 //    [self updateInviteButtonText:nil];
     //UIEdgeInsets insets = self.tableView.contentInset;
@@ -376,7 +396,7 @@
     _deal = deal;
     //[self updateNavTitleForDeal:deal];
     self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
-    [self updateInviteButtonTextForDeal:nil];
+//    [self updateInviteButtonTextForDeal:nil];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusDenied) {
@@ -562,15 +582,15 @@
 ////    self.sendMessage.titleLabel.font = [ThemeManager boldFontOfSize:15];
 //}
 
-- (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
-{
-    [self.sendMessage setTitle:@"Send" forState:UIControlStateNormal];
-    
-    //UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
-    //[self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
-    //self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
-    
-}
+//- (void)updateInviteButtonTextForDeal:(Contact *)lastSelectedContact
+//{
+//    [self.sendMessage setTitle:@"Send" forState:UIControlStateNormal];
+//    
+//    //UIImage *chevronImage = [UIImage imageNamed:@"whiteChevron"];
+//    //[self.inviteButton setImage:[UIImage imageNamed:@"whiteChevron"] forState:UIControlStateNormal];
+//    //self.inviteButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
+//    
+//}
 
 //#pragma mark - Table view data source
 //- (Group *)groupForSection:(NSInteger)section
@@ -691,7 +711,7 @@
         self.prompt.textColor = [UIColor blackColor];
         self.prompt.numberOfLines = 2;
         self.prompt.textAlignment = NSTextAlignmentCenter;
-        self.prompt.text = [NSString stringWithFormat:@"Select friends and we'll send them your message. If they're new to Hotspot, both your drinks are free!"];
+        self.prompt.text = [NSString stringWithFormat:@"Select friends, tap 'SEND INVITATIONS' and edit a text message to invite your friends to join you."];
         
         CALayer *bottomBorder = [CALayer layer];
         bottomBorder.backgroundColor = [UIColor unnormalizedColorWithRed:178 green:178 blue:178 alpha:255].CGColor;
@@ -1101,34 +1121,44 @@
     return YES;
 }
 
-
-#pragma mark - buttons
-- (void)doneButtonTouched:(id)sender
+-(void)showSMSView:(id)sender
 {
-   if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
-        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
-    }
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    NSString *smsMessage = @"I’m at [venue] getting a/an [$x] [item]--you should come!";
+    NSArray *selectedContacts = [self.selectedContactDictionary allKeys];
+    [[TextMessageManager sharedManager]presentMessageComposeViewControllerFromViewController:self messageRecipients:selectedContacts withMessage:smsMessage success:^(BOOL success) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    } failure:nil];
 }
 
-- (void)inviteButtonTouched:(id)sender
-{
-    if (![self.deal isAvailableAtDate:self.date]) {
-        
-        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
-        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
-        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
-        [alertView show];
-        
-        //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
-        //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    } else {
-        if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
-            [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
-        }
-    }
-}
+
+//#pragma mark - buttons
+//- (void)doneButtonTouched:(id)sender
+//{
+//   if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
+//        [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
+//    }
+//}
+
+//- (void)inviteButtonTouched:(id)sender
+//{
+//    if (![self.deal isAvailableAtDate:self.date]) {
+//        
+//        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+//        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
+//        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
+////            [self.navigationController popToRootViewControllerAnimated:YES];
+//        }];
+//        [alertView show];
+//        
+//        //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+//        //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    } else {
+//        if ([self.delegate respondsToSelector:@selector(findFriendViewController:didPickContacts:andMessage:andDate:)]) {
+//            [self.delegate findFriendViewController:self didPickContacts:self.selectedContactDictionary.allValues andMessage:self.composeMessageTextView.text andDate:self.date];
+//        }
+//    }
+//}
 
 - (void)resetDate
 {
@@ -1214,26 +1244,19 @@
         CGRect rect = self.sendMessageContainer.frame;
         if (self.isKeyboardShowing) {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - self.keyboardHeight - 160;
+                rect.origin.y = self.view.height - self.keyboardHeight - 55;
             } else {
                 rect.origin.y = self.view.height - self.keyboardHeight;
             }
         } else {
             if (self.selectedContactDictionary.count > 0) {
-                rect.origin.y = self.view.height - 160;
+                rect.origin.y = self.view.height - 55;
             } else {
                 rect.origin.y = self.view.height;
             }
         }
         self.sendMessageContainer.frame = rect;
     }];
-//    
-//        [UIView beginAnimations:nil context:NULL];
-//        [UIView setAnimationDuration:.3]; // if you want to slide up the view
-//    
-//
-//        
-//        [UIView commitAnimations];
 }
 
 //-(void)setViewMovedUp:(BOOL)movedUp
