@@ -233,6 +233,12 @@
     self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
     [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
+    UILabel *dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
+    dealPrompt.font = [ThemeManager mediumFontOfSize:9];
+    dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
+    dealPrompt.text = @"You won't be charged yet";
+    [self.getDealButtonContainer addSubview:dealPrompt];
+    
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
     dealIcon.centerX = self.view.width/2;
     dealIcon.y = 165;
@@ -666,10 +672,14 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Choose public so friends can see your check-in on their newsfeed. Select private if you just want the deal."];
     [actionSheet bk_addButtonWithTitle:@"Public" handler:^{
-        
+        self.isPublic = YES;
+        [self.publicToggleButton setTitle:@"Public" forState:UIControlStateNormal];
+        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"publicGlobe"]];
     }];
     [actionSheet bk_addButtonWithTitle:@"Private" handler:^{
-
+        self.isPublic = NO;
+        [self.publicToggleButton setTitle:@"Private" forState:UIControlStateNormal];
+        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"privateLock"]];
     }];
     [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
     [actionSheet showInView:self.view];

@@ -16,6 +16,7 @@
 
 typedef enum {
     ViewModePush=0,
+    ViewModeContact,
     ViewModePayment,
 } ViewMode;
 
@@ -180,6 +181,20 @@ typedef enum {
     [self animateInSubtitles:nil];
 }
 
+- (void)enterContactsMode
+{
+    self.viewMode = ViewModeContact;
+    self.titleLabel.text = @"Sync Contacts";
+    [self.headerIcon setImage: [UIImage imageNamed:@"bigGroupIcon"]];
+    [self removeSubtitleLabels];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"See invitations, check-ins, and messages from friends by syncing your contacts."]];
+    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
+    self.confirmButton.y = 300;
+    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
+    [self animateInSubtitles:nil];
+}
+
 - (void)removeSubtitleLabels
 {
     for (UILabel *label in self.subtitles) {
@@ -231,10 +246,13 @@ typedef enum {
     }
     else if (self.viewMode == ViewModePush) {
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
-            [self enterPaymentsMode];
+            [self enterContactsMode];
         } failure:^(NSError *error) {
-            [self enterPaymentsMode];
+            [self enterContactsMode];
         }];
+    } else if (self.viewMode == ViewModeContact)
+    {
+        [self requestContactPermissions];
     }
 }
 
@@ -242,22 +260,6 @@ typedef enum {
 {
     if (self.viewMode == ViewModePayment) {
         [self finishPermissions];
-//        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you can't set Hotspots and invite friends"];
-//        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
-//            [[ContactManager sharedManager] requestContactPermissions:^{
-//                jadispatch_main_qeue(^{
-//                    [self enterPushNotificationMode];
-//                });
-//            } failure:^(NSError *error) {
-//                jadispatch_main_qeue(^{
-//                    [self enterPushNotificationMode];
-//                });
-//            }];
-//        }];
-//        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
-//            [self enterPushNotificationMode];
-//        }];
-//        [alertView show];
     }
     else if (self.viewMode == ViewModePush) {
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
@@ -272,7 +274,30 @@ typedef enum {
             [self enterPaymentsMode];
         }];
         [alertView show];
+    } else if (self.viewMode == ViewModeContact)
+    {
+        UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without syncing contacts you won't see invitations, check-ins, and messages from friends"];
+        [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
+            [self requestContactPermissions];
+        }];
+        [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
+            [self enterPaymentsMode];
+        }];
+        [alertView show];
     }
+}
+
+-(void)requestContactPermissions
+{
+    [[ContactManager sharedManager] requestContactPermissions:^{
+        jadispatch_main_qeue(^{
+            [self enterPaymentsMode];
+        });
+    } failure:^(NSError *error) {
+        jadispatch_main_qeue(^{
+            [self enterPaymentsMode];
+        });
+    }];
 }
 
 - (void)finishPermissions
