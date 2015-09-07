@@ -10,6 +10,7 @@
 #import "UIImage+Resize.h"
 #import "Beacon.h"
 #import "Deal.h"
+#import "HappyHour.h"
 #import "Contact.h"
 #import "AppDelegate.h"
 #import "BeaconManager.h"
@@ -453,6 +454,20 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+- (void)checkInForHappyHour:(HappyHour *)happyHour isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"deal_id"] = happyHour.ID;
+    parameters[@"is_deal"] = [NSNumber numberWithBool:NO];
+    parameters[@"is_present"] = [NSNumber numberWithBool:isPresent];
+    parameters[@"is_public"] = [NSNumber numberWithBool:isPublic];
+    [[APIClient sharedClient] postPath:@"check-in/" parameters:parameters success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
         }

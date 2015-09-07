@@ -12,7 +12,7 @@
 #import "NSError+ServerErrorMessage.h"
 #import "HTTPStatusCodes.h"
 
-@class Beacon, Contact, Deal;
+@class Beacon, Contact, Deal, HappyHour;
 @interface APIClient : AFHTTPClient
 
 + (APIClient *)sharedClient;
@@ -71,5 +71,6 @@
 - (void)storeLastFollowView: (NSNumber *)timestamp success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)postReferredPhoneNumbers: (NSArray *)contacts success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)checkInForDeal:(Deal *)deal isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure;
+- (void)checkInForHappyHour:(HappyHour *)happyHour isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(NSError *error))failure;
 
 @end

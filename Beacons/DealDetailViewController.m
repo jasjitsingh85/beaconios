@@ -32,6 +32,7 @@
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *dealTime;
+@property (strong, nonatomic) UILabel *dealPrompt;
 @property (strong, nonatomic) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIButton *followButton;
 @property (strong, nonatomic) UIButton *publicToggleButton;
@@ -77,6 +78,50 @@
     self.followButton.layer.borderWidth = 1.0;
     [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
+    
+    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
+    self.getDealButtonContainer.height = 120;
+    self.getDealButtonContainer.y = self.view.height - 120;
+    self.getDealButtonContainer.userInteractionEnabled = YES;
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 1)];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    [self.getDealButtonContainer addSubview:topBorder];
+    
+    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.publicToggleButton.size = CGSizeMake(65, 25);
+    self.publicToggleButton.x = self.view.width - 90;
+    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    self.publicToggleButton.y = 45;
+    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
+    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    self.publicToggleButton.backgroundColor = [UIColor clearColor];
+    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.getDealButtonContainer addSubview:self.publicToggleButton];
+    
+    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
+    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
+    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
+    
+    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
+    self.getDealButton.centerX = self.view.width/2.0;
+    self.getDealButton.y = 73;
+    self.getDealButton.layer.cornerRadius = 4;
+    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
+    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
+    self.dealPrompt.font = [ThemeManager mediumFontOfSize:9];
+    self.dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
+    [self.getDealButtonContainer addSubview:self.dealPrompt];
     
 }
 
@@ -193,51 +238,6 @@
     DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
     dealView.deal = self.deal;
     [self.mainScroll addSubview:dealView];
-    
-    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
-    self.getDealButtonContainer.height = 120;
-    self.getDealButtonContainer.y = self.view.height - 120;
-    self.getDealButtonContainer.userInteractionEnabled = YES;
-    
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 1)];
-    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
-    [self.getDealButtonContainer addSubview:topBorder];
-    
-    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.publicToggleButton.size = CGSizeMake(65, 25);
-    self.publicToggleButton.x = self.view.width - 90;
-    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    self.publicToggleButton.y = 45;
-    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
-    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
-    self.publicToggleButton.backgroundColor = [UIColor clearColor];
-    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.getDealButtonContainer addSubview:self.publicToggleButton];
-
-    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
-    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
-    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
-    
-    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
-    self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = 73;
-    self.getDealButton.layer.cornerRadius = 4;
-    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    
-    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
-    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
-    dealPrompt.font = [ThemeManager mediumFontOfSize:9];
-    dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
-    dealPrompt.text = @"Tap below to get voucher";
-    [self.getDealButtonContainer addSubview:dealPrompt];
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
     dealIcon.centerX = self.view.width/2;
@@ -470,20 +470,20 @@
         }
     }
     
+    self.dealPrompt.text = @"Tap below to get voucher";
+    
     [self.view addSubview:self.mainScroll];
     
     //[self.view addSubview:self.getDealButton];
-    
-    [self.getDealButtonContainer addSubview:self.getDealButton];
-    [self.view addSubview:self.getDealButtonContainer];
-    
-
     
     if (self.deal.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
     }
+    
+    [self.getDealButtonContainer addSubview:self.getDealButton];
+    [self.view addSubview:self.getDealButtonContainer];
     
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
 }
@@ -665,15 +665,28 @@
         [self.mainScroll addSubview:mapImageView];
         
         self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 50);
+
     }];
     
     [self.view addSubview:self.mainScroll];
+    
+    if (self.isPresent) {
+        [self.getDealButton setTitle:@"CHECK IN HERE" forState:UIControlStateNormal];
+    } else {
+        [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
+    }
+    
+    self.dealPrompt.text = @"Tap below to share your activity";
+    
+    [self.getDealButtonContainer addSubview:self.getDealButton];
+    [self.view addSubview:self.getDealButtonContainer];
     
     if (self.happyHour.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
     }
+    
 }
 
 -(void) publicToggleButtonTouched:(id)sender
@@ -698,15 +711,34 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     UIView *view = appDelegate.window.rootViewController.view;
     MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
-        [loadingIndicator hide:YES];
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
-    } failure:^(NSError *error) {
-        [loadingIndicator hide:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }];
+    if (self.deal != nil){
+       [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+            [loadingIndicator hide:YES];
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+            [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:0];
+        } failure:^(NSError *error) {
+            [loadingIndicator hide:YES];
+            [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
+    } else {
+        [[APIClient sharedClient] checkInForHappyHour:self.happyHour isPresent:self.isPresent isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [loadingIndicator hide:YES];
+            self.getDealButton.backgroundColor = [UIColor unnormalizedColorWithRed:162 green:60 blue:233 alpha:255];
+            if (self.isPresent) {
+                [self.getDealButton setTitle:@"CHECKED IN" forState:UIControlStateNormal];
+            } else {
+                [self.getDealButton setTitle:@"GOING" forState:UIControlStateNormal];
+            }
+            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
+        } failure:^(NSError *error) {
+            [loadingIndicator hide:YES];
+            [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }];
+    }
+    
+    
+    
 //    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
     
 //    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
