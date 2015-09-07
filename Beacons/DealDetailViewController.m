@@ -730,7 +730,7 @@
             } else {
                 [self.getDealButton setTitle:@"GOING" forState:UIControlStateNormal];
             }
-            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
+//            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
         } failure:^(NSError *error) {
             [loadingIndicator hide:YES];
             [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
