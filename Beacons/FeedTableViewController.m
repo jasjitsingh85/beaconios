@@ -146,7 +146,7 @@
     
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.syncContactsButton setTitle:@"ADD FRIENDS" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"SEE FRIEND ACTIVITY" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     
@@ -162,7 +162,7 @@
 -(void) addFriendsButtonTouched:(id)sender
 {
     NSString *message = [NSString stringWithFormat:@"Syncing contacts lets you see what your friends are up to on Hotspot"];
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Add Friends?" message:message];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Sync Contacts" message:message];
     [alertView bk_addButtonWithTitle:@"Sync Contacts" handler:^{
         [self requestContactPermissions];
     }];
@@ -174,11 +174,13 @@
 - (void)requestContactPermissions
 {
     ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    self.syncContactsButtonContainer.hidden = YES;
     ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
         if (granted) {
             [[ContactManager sharedManager] syncContacts];
+        } else {
+            self.syncContactsButtonContainer.hidden = NO;
         }
-        self.syncContactsButtonContainer.hidden = YES;
     });
 }
 
