@@ -1124,7 +1124,7 @@
 -(void)showSMSView:(id)sender
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    NSString *smsMessage = @"I’m at [venue] getting a/an [$x] [item]--you should come!";
+    NSString *smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
     NSArray *selectedContacts = [self.selectedContactDictionary allKeys];
     [[TextMessageManager sharedManager]presentMessageComposeViewControllerFromViewController:self messageRecipients:selectedContacts withMessage:smsMessage success:^(BOOL success) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
