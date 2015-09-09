@@ -21,6 +21,7 @@
 #import "LoadingIndictor.h"
 #import "DealView.h"
 #import "HappyHourView.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 
 @interface DealDetailViewController ()
 
@@ -708,33 +709,47 @@
 
 - (void) getDealButtonTouched:(id)sender
 {
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    UIView *view = appDelegate.window.rootViewController.view;
-    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-    if (self.deal != nil){
-       [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
-            [loadingIndicator hide:YES];
-            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-            [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-            [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:0];
-        } failure:^(NSError *error) {
-            [loadingIndicator hide:YES];
-            [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    NSDate *now = [NSDate date];
+    if (![self.deal isAvailableAtDate:now]) {
+
+        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
+        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
+//            [self.navigationController popToRootViewControllerAnimated:YES];
         }];
+        [alertView show];
+
+        //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
+        //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        [[APIClient sharedClient] checkInForHappyHour:self.happyHour isPresent:self.isPresent isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [loadingIndicator hide:YES];
-            self.getDealButton.backgroundColor = [UIColor unnormalizedColorWithRed:162 green:60 blue:233 alpha:255];
-            if (self.isPresent) {
-                [self.getDealButton setTitle:@"CHECKED IN" forState:UIControlStateNormal];
-            } else {
-                [self.getDealButton setTitle:@"GOING" forState:UIControlStateNormal];
-            }
-//            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
-        } failure:^(NSError *error) {
-            [loadingIndicator hide:YES];
-            [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }];
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        UIView *view = appDelegate.window.rootViewController.view;
+        MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+        if (self.deal != nil){
+           [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+                [loadingIndicator hide:YES];
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+                [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:0];
+            } failure:^(NSError *error) {
+                [loadingIndicator hide:YES];
+                [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }];
+        } else {
+            [[APIClient sharedClient] checkInForHappyHour:self.happyHour isPresent:self.isPresent isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [loadingIndicator hide:YES];
+                self.getDealButton.backgroundColor = [UIColor unnormalizedColorWithRed:162 green:60 blue:233 alpha:255];
+                if (self.isPresent) {
+                    [self.getDealButton setTitle:@"CHECKED IN" forState:UIControlStateNormal];
+                } else {
+                    [self.getDealButton setTitle:@"GOING" forState:UIControlStateNormal];
+                }
+    //            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
+            } failure:^(NSError *error) {
+                [loadingIndicator hide:YES];
+                [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }];
+        }
     }
     
     
