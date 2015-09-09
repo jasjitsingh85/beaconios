@@ -363,6 +363,7 @@
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
         [self refreshBeaconDataInDeal];
         NSString *dealStatus = responseObject[@"deal_status"];
         //NSLog(@"DealStatus: %@", dealStatus);
