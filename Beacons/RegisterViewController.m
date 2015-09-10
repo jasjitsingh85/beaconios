@@ -49,7 +49,7 @@ typedef enum {
 	
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNavBlack"]];
     CGRect logoFrame = logoImageView.frame;
-    logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
+    logoFrame.origin.x = 0.50*(self.view.frame.size.width - logoFrame.size.width);
     logoFrame.origin.y = 30;
     logoImageView.frame = logoFrame;
     [self.view addSubview:logoImageView];
@@ -59,14 +59,14 @@ typedef enum {
     [self.view addGestureRecognizer:tap];
     self.view.userInteractionEnabled = YES;
     self.view.backgroundColor = [UIColor colorWithRed:231/255. green:231/255. blue:231/255. alpha:1];
-    NSArray *registerFormTitles = @[@"NAME:", @"EMAIL:", @"PHONE:"];
-    NSArray *registerFormPlaceholders = @[@" ", @" ", @" "];
+    NSArray *registerFormTitles = @[@"NAME:", @"EMAIL:", @"PHONE:", @"PROMO:"];
+    NSArray *registerFormPlaceholders = @[@"John Doe", @"jdoe@gmail.com", @"555-123-4567", @"(optional)"];
     
     self.formContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 120)];
     self.formContainer.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.formContainer];
     
-    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 10, self.view.width, 30*registerFormTitles.count) formTitles:registerFormTitles formPlaceholders:registerFormPlaceholders];
+    self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30*registerFormTitles.count) formTitles:registerFormTitles formPlaceholders:registerFormPlaceholders];
     self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
     self.registerFormView.layer.cornerRadius = 4;
@@ -78,6 +78,8 @@ typedef enum {
     registerEmailTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     UITextField *registerPhoneTextField = [self.registerFormView textFieldAtIndex:2];
     registerPhoneTextField.keyboardType = UIKeyboardTypePhonePad;
+    UITextField *registerPromoCodeTextField = [self.registerFormView textFieldAtIndex:3];
+    registerPromoCodeTextField.keyboardType = UIKeyboardTypeDefault;
     
     NSArray *signInFormTitles = @[@"PHONE:"];
     NSArray *signInFormPlaceholders = @[@"(555) 123-4567"];
@@ -93,7 +95,7 @@ typedef enum {
     signInPhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     
     NSArray *activationFormTitles = @[@"CODE:"];
-    NSArray *activationFormPlaceholders = @[@" "];
+    NSArray *activationFormPlaceholders = @[@"* * * *"];
     self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 175, self.view.width, 36*activationFormTitles.count) formTitles:activationFormTitles formPlaceholders:activationFormPlaceholders];
     self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
@@ -355,7 +357,7 @@ typedef enum {
         
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started! Enter your code." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started! Enter your activation code." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Let's get started!"]];
     self.hotbotCommentLabel.attributedText = attributedText;
     self.hotbotCommentLabel.alpha = 0;
@@ -410,10 +412,12 @@ typedef enum {
     }
     NSString *emailText = [self.registerFormView textFieldAtIndex:1].text;
     NSString *phoneText = [Utilities normalizePhoneNumber:[self.registerFormView textFieldAtIndex:2].text];
+    NSString *promoCodeText = [self.registerFormView textFieldAtIndex:3].text;
     NSDictionary *parameters = @{@"first_name" : firstName,
                                  @"last_name" : lastName,
                                  @"email" : emailText,
-                                 @"phone_number" : phoneText};
+                                 @"phone_number" : phoneText,
+                                 @"promo_code": promoCodeText};
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
                                success:^(AFHTTPRequestOperation *operation, id responseObject) {

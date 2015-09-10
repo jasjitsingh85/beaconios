@@ -710,7 +710,7 @@
 - (void) getDealButtonTouched:(id)sender
 {
     NSDate *now = [NSDate date];
-    if (![self.deal isAvailableAtDate:now]) {
+    if (![self.deal isAvailableAtDate:now] && self.deal != nil) {
 
         NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
         UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
