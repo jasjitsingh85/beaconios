@@ -26,6 +26,11 @@
 @property (strong, nonatomic) UIImageView *syncContactsButtonContainer;
 @property (strong, nonatomic) UIButton *syncContactsButton;
 
+@property (strong, nonatomic) UIImageView *firstRecPicture;
+@property (strong, nonatomic) UILabel *firstRecHeader;
+@property (strong, nonatomic) UILabel *firstRecBody;
+@property (strong, nonatomic) UIButton *firstRecFollowButton;
+
 @end
 
 @implementation FeedTableViewController
@@ -111,22 +116,54 @@
     groupIcon.width = 35;
     groupIcon.height = 35;
     groupIcon.centerX = self.view.width/2.0;
-    groupIcon.y = 100;
+    groupIcon.y = 30;
     [self.emptyFeedView addSubview:groupIcon];
     
-    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 145, self.view.width, 20)];
+    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, self.view.width, 20)];
     header.textAlignment = NSTextAlignmentCenter;
-    header.font = [ThemeManager boldFontOfSize:18];
-    header.text = @"FOLLOW PLACES";
+    header.font = [ThemeManager boldFontOfSize:12];
+    header.text = @"OH SNAP!";
     [self.emptyFeedView addSubview:header];
     
-    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.view.width - 70, 90)];
+    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width - 70, 90)];
     body.textAlignment = NSTextAlignmentCenter;
-    body.font = [ThemeManager lightFontOfSize:14];
+    body.font = [ThemeManager lightFontOfSize:12];
     body.numberOfLines = 0;
     body.centerX = self.view.width/2.0;
-    body.text = @"With the Hotspot newsfeed you'll see the latest news, offers, and events at your favorite places. Follow some venues to see what's going on right now!";
+    body.text = @"With the Hotspot newsfeed you'll see news, offers, and events at your favorite places. Follow some venues to see what's going on right now!";
     [self.emptyFeedView addSubview:body];
+    
+    UILabel *recommendationHeader = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.view.width, 20)];
+    recommendationHeader.textAlignment = NSTextAlignmentCenter;
+    recommendationHeader.font = [ThemeManager boldFontOfSize:12];
+    recommendationHeader.text = @"Get started with some top venues:";
+    [self.emptyFeedView addSubview:recommendationHeader];
+    
+    UIView *firstRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 190, self.view.width-30, 70)];
+    firstRecommendation.backgroundColor = [UIColor whiteColor];
+    [self.emptyFeedView addSubview:firstRecommendation];
+    
+    self.firstRecPicture = [[UIImageView alloc] init];
+    self.firstRecPicture.x = 10;
+    self.firstRecPicture.y = 10;
+    self.firstRecPicture.height = 50;
+    self.firstRecPicture.width = 50;
+    self.firstRecPicture.clipsToBounds = YES;
+    self.firstRecPicture.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.firstRecPicture.contentMode = UIViewContentModeScaleAspectFill;
+    self.firstRecPicture.layer.cornerRadius = 10.0;
+    NSString *urlString = @"https://www.colourbox.com/preview/4409353-different-alcohol-drinks-and-cocktails-on-bar.jpg";
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self.firstRecPicture sd_setImageWithURL:url];
+    [firstRecommendation addSubview:self.firstRecPicture];
+    
+    UIView *secondRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 270, self.view.width-30, 70)];
+    secondRecommendation.backgroundColor = [UIColor whiteColor];
+    [self.emptyFeedView addSubview:secondRecommendation];
+    
+    UIView *thirdRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 350, self.view.width-30, 70)];
+    thirdRecommendation.backgroundColor = [UIColor whiteColor];
+    [self.emptyFeedView addSubview:thirdRecommendation];
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
@@ -146,7 +183,7 @@
     
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.syncContactsButton setTitle:@"SEE FRIEND ACTIVITY" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"SEE FRIENDS ON HOTSPOT" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     

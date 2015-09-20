@@ -48,14 +48,10 @@
 		4105DA991B7BC1FE0006B888 /* FeedItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */; };
 		4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */; };
 		4105DA9D1B7D7DF10006B888 /* twitterIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */; };
-		4105DAA11B7F0F010006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9E1B7F0F010006B888 /* inactiveNavbarClock@2x.png */; };
 		4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DA9F1B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png */; };
 		4105DAA31B7F0F010006B888 /* activeNavbarPopsicle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA01B7F0F010006B888 /* activeNavbarPopsicle@2x.png */; };
-		4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA41B7F17AF0006B888 /* activeNavbarClock@2x.png */; };
 		4105DAA71B7F9F270006B888 /* crossOutButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA61B7F9F270006B888 /* crossOutButton@2x.png */; };
 		4105DAA91B7FFD710006B888 /* notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAA81B7FFD700006B888 /* notification@2x.png */; };
-		4105DAAC1B8008800006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAA1B8008800006B888 /* inactiveNavbarClock@2x.png */; };
-		4105DAAD1B8008800006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAB1B8008800006B888 /* activeNavbarClock@2x.png */; };
 		4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */; };
 		4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */; };
 		4105DAB31B8053370006B888 /* bigGroupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */; };
@@ -102,7 +98,6 @@
 		4158AE4E1B3CCE8C0034BA4A /* iphoneWalkthroughLastSlide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE4D1B3CCE8C0034BA4A /* iphoneWalkthroughLastSlide@2x.png */; };
 		4158AE551B433CD80034BA4A /* navTabBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE541B433CD80034BA4A /* navTabBackground@2x.png */; };
 		4158AE571B433F690034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE561B433F690034BA4A /* hotspotSelectedInNavTab@2x.png */; };
-		4158AE591B4342300034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE581B4342300034BA4A /* hotspotSelectedInNavTab@2x.png */; };
 		4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE5A1B4389900034BA4A /* listToggleButton@2x.png */; };
 		4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE5B1B4389900034BA4A /* mapToggleButton@2x.png */; };
 		4158AE5F1B43A5AD0034BA4A /* freeDrinkNavIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4158AE5E1B43A5AD0034BA4A /* freeDrinkNavIcon@2x.png */; };
@@ -1534,7 +1529,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Jeff Ames";
 				TargetAttributes = {
 					963399371758512100AF9D89 = {
@@ -1645,7 +1640,6 @@
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
 				41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */,
-				4105DAA11B7F0F010006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
 				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,
 				96C7FEA3189737DA00A79CC3 /* fruityDrink@2x.png in Resources */,
@@ -1694,7 +1688,6 @@
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
 				41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */,
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
-				4105DAAD1B8008800006B888 /* activeNavbarClock@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
 				969BE31A18D1FDDD00E2714A /* hotspotExplanation@2x.png in Resources */,
 				41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */,
@@ -1712,14 +1705,12 @@
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
 				4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
-				4105DAA51B7F17AF0006B888 /* activeNavbarClock@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */,
 				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
 				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
-				4158AE591B4342300034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */,
 				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
@@ -1743,7 +1734,6 @@
 				41639ADE1B3CB27300E56734 /* thirdGradientBackground@2x.png in Resources */,
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
-				4105DAAC1B8008800006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
@@ -1951,6 +1941,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jasjit Singh (C6ZFA365GY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Ames (E5Y3J9RGBG)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1983,6 +1974,7 @@
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2006,6 +1998,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jasjit Singh (C6ZFA365GY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2042,6 +2036,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2074,6 +2069,7 @@
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2098,6 +2094,7 @@
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "87777d05-d79a-4d29-8e7e-3cc9ccb25019";

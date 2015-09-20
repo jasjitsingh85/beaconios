@@ -11,11 +11,11 @@
 NSString * const kBaseURLStringDevelopment = @"http://localhost:8000/api/";
 NSString * const kBaseURLStringLAN = @"http://0.0.0.0:8000/api/";
 #ifdef DEBUG
-NSString * const kBaseURLStringProduction = @"http://www.getbeacons.com/api/";
+NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
 #else
 NSString * const kBaseURLStringProduction = @"https://www.getbeacons.com/api/";
 #endif
-NSString * const kBaseURLStringStaging = @"http://hotspotapp-staging.herokuapp.com/api/";
+NSString * const kBaseURLStringStaging = @"https://hotspotapp-staging.herokuapp.com/api/";
 
 NSString * const kDealStatusLocked = @"L";
 NSString * const kDealStatusUnlocked = @"U";
@@ -27,8 +27,8 @@ NSString * const kAppID = @"741683799178892";
 
 NSString * const MIXPANEL_TOKEN = @"5ef90c03d9e72b7e1f460600d47de6ab";
 
-NSString * const kTermsURL = @"http://www.getbeacons.com/terms";
-NSString * const kPrivacyURL = @"http://www.getbeacons.com/privacy";
+NSString * const kTermsURL = @"https://www.getbeacons.com/terms";
+NSString * const kPrivacyURL = @"https://www.getbeacons.com/privacy";
 
 NSString * const kHappyHoursAppURLIdentifier = @"com.hotspot.happyhours";
 NSString * const kVenmoAppURLIdentifier = @"net.kortina.labs.Venmo";

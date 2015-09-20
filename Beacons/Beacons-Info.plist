@@ -25,7 +25,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.hotspot.hotspot</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -53,7 +53,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>105</string>
+	<string>106</string>
 	<key>FacebookAppID</key>
 	<string>741683799178892</string>
 	<key>FacebookDisplayName</key>
