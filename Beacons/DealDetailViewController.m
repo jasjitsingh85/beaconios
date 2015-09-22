@@ -262,11 +262,11 @@
         [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
         dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for free. %@", [self.deal.itemName lowercaseString], self.deal.additionalInfo];
     } else {
-        if (self.isPresent) {
+        //if (self.isPresent) {
             [self.getDealButton setTitle:@"CHECK IN HERE" forState:UIControlStateNormal];
-        } else {
-            [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
-        }
+        //} else {
+          //  [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
+        //}
         if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
             dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
         } else {
@@ -464,11 +464,11 @@
     if (deal.isRewardItem) {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.deal.venue.name];
     } else {
-        if (self.isPresent) {
+       // if (self.isPresent) {
             docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
-        } else  {
-            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'I'M GOING HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
-        }
+        //} else  {
+        //    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'I'M GOING HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+        //}
     }
     
     self.dealPrompt.text = @"Tap below to get voucher";
@@ -673,11 +673,11 @@
     
     [self.view addSubview:self.mainScroll];
     
-    if (self.isPresent) {
+    //if (self.isPresent) {
         [self.getDealButton setTitle:@"CHECK IN HERE" forState:UIControlStateNormal];
-    } else {
-        [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
-    }
+    //} else {
+    //    [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
+    //}
     
     self.dealPrompt.text = @"Tap below to share your activity";
     
