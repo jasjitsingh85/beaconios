@@ -31,6 +31,17 @@
 @property (strong, nonatomic) UILabel *firstRecBody;
 @property (strong, nonatomic) UIButton *firstRecFollowButton;
 
+@property (strong, nonatomic) UIImageView *secondRecPicture;
+@property (strong, nonatomic) UILabel *secondRecHeader;
+@property (strong, nonatomic) UILabel *secondRecBody;
+@property (strong, nonatomic) UIButton *secondRecFollowButton;
+
+@property (strong, nonatomic) UIImageView *thirdRecPicture;
+@property (strong, nonatomic) UILabel *thirdRecHeader;
+@property (strong, nonatomic) UILabel *thirdRecBody;
+@property (strong, nonatomic) UIButton *thirdRecFollowButton;
+@property (assign, nonatomic) BOOL followAdded;
+
 @end
 
 @implementation FeedTableViewController
@@ -72,6 +83,79 @@
     }
 }
 
+-(void)setRecommendations:(NSArray *)recommendations
+{
+    _recommendations = recommendations;
+    
+    self.followAdded = NO;
+    
+    NSString *urlString = recommendations[0][@"image_url"];
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self.firstRecPicture sd_setImageWithURL:url];
+    
+    int firstNumberOfFollowers = [recommendations[0][@"number_of_followers"] intValue];
+    NSString *firstHeaderText;
+    if (firstNumberOfFollowers > 10) {
+        firstHeaderText = [NSString stringWithFormat:@"%@ - %@ Followers", recommendations[0][@"name"], recommendations[0][@"number_of_followers"]];
+    } else {
+        firstHeaderText = [NSString stringWithFormat:@"%@", recommendations[0][@"name"]];
+    }
+    
+    self.firstRecHeader.text = firstHeaderText;
+    self.firstRecBody.text = recommendations[0][@"description"];
+    
+    NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:self.firstRecHeader.text];
+    NSRange attrStringRange = [self.firstRecHeader.text rangeOfString:recommendations[0][@"name"]];
+    [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
+    [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
+    
+    self.firstRecHeader.attributedText = attrMessage;
+    
+    NSString *secondUrlString = recommendations[1][@"image_url"];
+    NSURL *secondUrl = [NSURL URLWithString:secondUrlString];
+    [self.secondRecPicture sd_setImageWithURL:secondUrl];
+    
+    int secondNumberOfFollowers = [recommendations[1][@"number_of_followers"] intValue];
+    NSString *secondHeaderText;
+    if (secondNumberOfFollowers > 10) {
+        secondHeaderText = [NSString stringWithFormat:@"%@ - %@ Followers", recommendations[1][@"name"], recommendations[1][@"number_of_followers"]];
+    } else {
+        secondHeaderText = [NSString stringWithFormat:@"%@", recommendations[1][@"name"]];
+    }
+    
+    self.secondRecHeader.text = secondHeaderText;
+    self.secondRecBody.text = recommendations[1][@"description"];
+    
+    NSMutableAttributedString *secondAttrMessage = [[NSMutableAttributedString alloc] initWithString:self.secondRecHeader.text];
+    NSRange secondAttrStringRange = [self.secondRecHeader.text rangeOfString:recommendations[1][@"name"]];
+    [secondAttrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:secondAttrStringRange];
+    [secondAttrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:secondAttrStringRange];
+    
+    self.secondRecHeader.attributedText = secondAttrMessage;
+    
+    NSString *thirdUrlString = recommendations[2][@"image_url"];
+    NSURL *thirdUrl = [NSURL URLWithString:thirdUrlString];
+    [self.thirdRecPicture sd_setImageWithURL:thirdUrl];
+    
+    int thirdNumberOfFollowers = [recommendations[2][@"number_of_followers"] intValue];
+    NSString *thirdHeaderText;
+    if (thirdNumberOfFollowers > 10) {
+        thirdHeaderText = [NSString stringWithFormat:@"%@ - %@ Followers", recommendations[2][@"name"], recommendations[2][@"number_of_followers"]];
+    } else {
+        thirdHeaderText = [NSString stringWithFormat:@"%@", recommendations[2][@"name"]];
+    }
+    
+    self.thirdRecHeader.text = thirdHeaderText;
+    self.thirdRecBody.text = recommendations[2][@"description"];
+    
+    NSMutableAttributedString *thirdAttrMessage = [[NSMutableAttributedString alloc] initWithString:self.thirdRecHeader.text];
+    NSRange thirdAttrStringRange = [self.thirdRecHeader.text rangeOfString:recommendations[2][@"name"]];
+    [thirdAttrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:thirdAttrStringRange];
+    [thirdAttrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:thirdAttrStringRange];
+    
+    self.thirdRecHeader.attributedText = thirdAttrMessage;
+}
+
 -(void)feedStartedRefreshing:(NSNotification *)notification
 {
     if (!self.pullToRefresh) {
@@ -107,7 +191,7 @@
     
     [self.tableView addSubview:self.refreshControl];
     
-    self.emptyFeedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
+    self.emptyFeedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     self.emptyFeedView.backgroundColor = [UIColor clearColor];
     self.emptyFeedView.hidden = YES;
     [self.tableView addSubview:self.emptyFeedView];
@@ -119,13 +203,13 @@
     groupIcon.y = 30;
     [self.emptyFeedView addSubview:groupIcon];
     
-    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, self.view.width, 20)];
+    UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 20)];
     header.textAlignment = NSTextAlignmentCenter;
     header.font = [ThemeManager boldFontOfSize:12];
     header.text = @"OH SNAP!";
     [self.emptyFeedView addSubview:header];
     
-    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width - 70, 90)];
+    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, self.view.width - 70, 90)];
     body.textAlignment = NSTextAlignmentCenter;
     body.font = [ThemeManager lightFontOfSize:12];
     body.numberOfLines = 0;
@@ -152,18 +236,112 @@
     self.firstRecPicture.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.firstRecPicture.contentMode = UIViewContentModeScaleAspectFill;
     self.firstRecPicture.layer.cornerRadius = 10.0;
-    NSString *urlString = @"https://www.colourbox.com/preview/4409353-different-alcohol-drinks-and-cocktails-on-bar.jpg";
-    NSURL *url = [NSURL URLWithString:urlString];
-    [self.firstRecPicture sd_setImageWithURL:url];
     [firstRecommendation addSubview:self.firstRecPicture];
+    
+    self.firstRecFollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.firstRecFollowButton.size = CGSizeMake(60, 20);
+    self.firstRecFollowButton.x = firstRecommendation.size.width - 65;
+    self.firstRecFollowButton.y = 25;
+    [self.firstRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    [self.firstRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.firstRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.firstRecFollowButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    self.firstRecFollowButton.backgroundColor = [UIColor clearColor];
+    self.firstRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+    self.firstRecFollowButton.layer.cornerRadius = 4;
+    self.firstRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.firstRecFollowButton.layer.borderWidth = 1.0;
+    [self.firstRecFollowButton addTarget:self action:@selector(followFirstRecButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [firstRecommendation addSubview:self.firstRecFollowButton];
+    
+    self.firstRecHeader = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, self.view.width - 175, 20)];
+    self.firstRecHeader.font = [ThemeManager lightFontOfSize:10];
+    [firstRecommendation addSubview:self.firstRecHeader];
+    
+    self.firstRecBody = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, self.view.width - 175, 35)];
+    self.firstRecBody.numberOfLines = 2;
+    self.firstRecBody.font = [ThemeManager lightFontOfSize:10];
+    [firstRecommendation addSubview:self.firstRecBody];
     
     UIView *secondRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 270, self.view.width-30, 70)];
     secondRecommendation.backgroundColor = [UIColor whiteColor];
     [self.emptyFeedView addSubview:secondRecommendation];
     
+    self.secondRecPicture = [[UIImageView alloc] init];
+    self.secondRecPicture.x = 10;
+    self.secondRecPicture.y = 10;
+    self.secondRecPicture.height = 50;
+    self.secondRecPicture.width = 50;
+    self.secondRecPicture.clipsToBounds = YES;
+    self.secondRecPicture.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.secondRecPicture.contentMode = UIViewContentModeScaleAspectFill;
+    self.secondRecPicture.layer.cornerRadius = 10.0;
+    [secondRecommendation addSubview:self.secondRecPicture];
+    
+    self.secondRecFollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.secondRecFollowButton.size = CGSizeMake(60, 20);
+    self.secondRecFollowButton.x = firstRecommendation.size.width - 65;
+    self.secondRecFollowButton.y = 25;
+    [self.secondRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    [self.secondRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.secondRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.secondRecFollowButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    self.secondRecFollowButton.backgroundColor = [UIColor clearColor];
+    self.secondRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+    self.secondRecFollowButton.layer.cornerRadius = 4;
+    self.secondRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.secondRecFollowButton.layer.borderWidth = 1.0;
+    [self.secondRecFollowButton addTarget:self action:@selector(followSecondRecButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [secondRecommendation addSubview:self.secondRecFollowButton];
+    
+    self.secondRecHeader = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, self.view.width - 175, 20)];
+    self.secondRecHeader.font = [ThemeManager lightFontOfSize:10];
+    [secondRecommendation addSubview:self.secondRecHeader];
+    
+    self.secondRecBody = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, self.view.width - 175, 35)];
+    self.secondRecBody.numberOfLines = 2;
+    self.secondRecBody.font = [ThemeManager lightFontOfSize:10];
+    [secondRecommendation addSubview:self.secondRecBody];
+    
     UIView *thirdRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 350, self.view.width-30, 70)];
     thirdRecommendation.backgroundColor = [UIColor whiteColor];
     [self.emptyFeedView addSubview:thirdRecommendation];
+    
+    self.thirdRecPicture = [[UIImageView alloc] init];
+    self.thirdRecPicture.x = 10;
+    self.thirdRecPicture.y = 10;
+    self.thirdRecPicture.height = 50;
+    self.thirdRecPicture.width = 50;
+    self.thirdRecPicture.clipsToBounds = YES;
+    self.thirdRecPicture.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.thirdRecPicture.contentMode = UIViewContentModeScaleAspectFill;
+    self.thirdRecPicture.layer.cornerRadius = 10.0;
+    [thirdRecommendation addSubview:self.thirdRecPicture];
+    
+    self.thirdRecFollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.thirdRecFollowButton.size = CGSizeMake(60, 20);
+    self.thirdRecFollowButton.x = firstRecommendation.size.width - 65;
+    self.thirdRecFollowButton.y = 25;
+    [self.thirdRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+    [self.thirdRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.thirdRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.thirdRecFollowButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    self.thirdRecFollowButton.backgroundColor = [UIColor clearColor];
+    self.thirdRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+    self.thirdRecFollowButton.layer.cornerRadius = 4;
+    self.thirdRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.thirdRecFollowButton.layer.borderWidth = 1.0;
+    [self.thirdRecFollowButton addTarget:self action:@selector(followThirdRecButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [thirdRecommendation addSubview:self.thirdRecFollowButton];
+    
+    self.thirdRecHeader = [[UILabel alloc] initWithFrame:CGRectMake(70, 10, self.view.width - 175, 20)];
+    self.thirdRecHeader.font = [ThemeManager lightFontOfSize:10];
+    [thirdRecommendation addSubview:self.thirdRecHeader];
+    
+    self.thirdRecBody = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, self.view.width - 175, 35)];
+    self.thirdRecBody.numberOfLines = 2;
+    self.thirdRecBody.font = [ThemeManager lightFontOfSize:10];
+    [thirdRecommendation addSubview:self.thirdRecBody];
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
@@ -265,6 +443,12 @@
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         self.isViewShowing = NO;
     }
+    
+    if (self.followAdded)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    }
+    
     [super viewWillDisappear:animated];
 }
 
@@ -336,6 +520,111 @@
         cellHeight = messageBodyRect.size.height + imageHeight + 70;
     }
     return cellHeight;
+}
+
+-(void)followFirstRecButtonTouched:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    NSNumber *firstDealPlaceID = self.recommendations[0][@"deal_place_id"];
+    [[APIClient sharedClient] toggleFavorite:firstDealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        self.followAdded = YES;
+        [self toggleFirstFollowButtonState:[responseObject[@"is_favorited"] boolValue]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
+
+-(void)followSecondRecButtonTouched:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    NSNumber *firstDealPlaceID = self.recommendations[1][@"deal_place_id"];
+    [[APIClient sharedClient] toggleFavorite:firstDealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        self.followAdded = YES;
+        [self toggleSecondFollowButtonState:[responseObject[@"is_favorited"] boolValue]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
+
+-(void)followThirdRecButtonTouched:(id)sender
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    NSNumber *firstDealPlaceID = self.recommendations[2][@"deal_place_id"];
+    [[APIClient sharedClient] toggleFavorite:firstDealPlaceID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        self.followAdded = YES;
+        [self toggleThirdFollowButtonState:[responseObject[@"is_favorited"] boolValue]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+       [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
+
+- (void)toggleFirstFollowButtonState:(BOOL)active
+{
+    if (active) {
+        [self.firstRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+        self.firstRecFollowButton.size = CGSizeMake(65, 20);
+        self.firstRecFollowButton.x = self.view.width - 100;
+        [self.firstRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.firstRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.firstRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.firstRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+    } else {
+        self.firstRecFollowButton.size = CGSizeMake(60, 20);
+        self.firstRecFollowButton.x = self.view.width - 95;
+        [self.firstRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        [self.firstRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.firstRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.firstRecFollowButton.backgroundColor = [UIColor clearColor];
+        self.firstRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+        self.firstRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
     }
+}
+
+- (void)toggleSecondFollowButtonState:(BOOL)active
+{
+    if (active) {
+        [self.secondRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+        self.secondRecFollowButton.size = CGSizeMake(65, 20);
+        self.secondRecFollowButton.x = self.view.width - 100;
+        [self.secondRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.secondRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.secondRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.secondRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+    } else {
+        self.secondRecFollowButton.size = CGSizeMake(60, 20);
+        self.secondRecFollowButton.x = self.view.width - 95;
+        [self.secondRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        [self.secondRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.secondRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.secondRecFollowButton.backgroundColor = [UIColor clearColor];
+        self.secondRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+        self.secondRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    }
+}
+
+- (void)toggleThirdFollowButtonState:(BOOL)active
+{
+    if (active) {
+        [self.thirdRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+        self.thirdRecFollowButton.size = CGSizeMake(65, 20);
+        self.thirdRecFollowButton.x = self.view.width - 100;
+        [self.thirdRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.thirdRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.thirdRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.thirdRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+    } else {
+        self.thirdRecFollowButton.size = CGSizeMake(60, 20);
+        self.thirdRecFollowButton.x = self.view.width - 95;
+        [self.thirdRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        [self.thirdRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.thirdRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.thirdRecFollowButton.backgroundColor = [UIColor clearColor];
+        self.thirdRecFollowButton.titleLabel.textColor = [UIColor blackColor];
+        self.thirdRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
+    }
+}
 
 @end

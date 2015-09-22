@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -472,6 +472,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
             failure(error);
         }
     }];
+}
+
+- (void)getFollowRecommendations:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"recommendation/" parameters:parameters success:success failure:failure];
 }
 
 @end

@@ -564,6 +564,17 @@ typedef enum dealTypeStates
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite Feed Failed");
     }];
+    
+    [self getFollowRecommendations];
+}
+
+-(void)getFollowRecommendations
+{
+    [[APIClient sharedClient] getFollowRecommendations:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.feedTableViewController.recommendations = responseObject[@"recommendations"];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Follow Recommendation Fail");
+    }];
 }
 
 -(void)checkNewsfeedNotification
