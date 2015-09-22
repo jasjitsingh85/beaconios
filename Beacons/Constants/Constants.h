@@ -71,6 +71,9 @@ extern NSString * const kDealStatusLocked;
 extern NSString * const kDealStatusUnlocked;
 extern NSString * const kDealStatusRedeemed;
 
+extern NSString * const kHotspotViewType;
+extern NSString * const kHappyHourViewType;
+
 
 //email
 #define kFeedbackEmailAddress @"info@gethotspotapp.com"

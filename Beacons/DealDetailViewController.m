@@ -487,6 +487,8 @@
     [self.view addSubview:self.getDealButtonContainer];
     
     [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
+    
+    [[APIClient sharedClient] trackView:self.deal.dealID ofType:kHotspotViewType success:nil failure:nil];
 }
 
 - (void) setHappyHour:(HappyHour *)happyHour
@@ -687,6 +689,8 @@
     } else {
         [self makeFollowButtonInactive];
     }
+    
+    [[APIClient sharedClient] trackView:self.happyHour.ID ofType:kHappyHourViewType success:nil failure:nil];
     
 }
 

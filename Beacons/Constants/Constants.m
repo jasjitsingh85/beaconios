@@ -21,6 +21,9 @@ NSString * const kDealStatusLocked = @"L";
 NSString * const kDealStatusUnlocked = @"U";
 NSString * const kDealStatusRedeemed = @"R";
 
+NSString * const kHotspotViewType = @"HT";
+NSString * const kHappyHourViewType = @"HH";
+
 NSString * const kAppID = @"741683799178892";
 //NSString * const kMaveApplicationID = @"136933583358869";
 

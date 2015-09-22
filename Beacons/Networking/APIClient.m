@@ -480,4 +480,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] getPath:@"recommendation/" parameters:parameters success:success failure:failure];
 }
 
+- (void)trackView:(NSNumber *)viewID ofType:(NSString *)viewType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"view_id" : viewID, @"view_type" : viewType };
+    [[APIClient sharedClient] postPath:@"view-tracker/" parameters:parameters success:success failure:failure];
+}
+
 @end
