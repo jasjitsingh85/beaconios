@@ -223,7 +223,7 @@
     recommendationHeader.text = @"Get started with some top venues:";
     [self.emptyFeedView addSubview:recommendationHeader];
     
-    UIView *firstRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 190, self.view.width-30, 70)];
+    UIView *firstRecommendation = [[UIView alloc] initWithFrame:CGRectMake(10, 190, self.view.width-20, 70)];
     firstRecommendation.backgroundColor = [UIColor whiteColor];
     [self.emptyFeedView addSubview:firstRecommendation];
     
@@ -263,7 +263,7 @@
     self.firstRecBody.font = [ThemeManager lightFontOfSize:10];
     [firstRecommendation addSubview:self.firstRecBody];
     
-    UIView *secondRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 270, self.view.width-30, 70)];
+    UIView *secondRecommendation = [[UIView alloc] initWithFrame:CGRectMake(10, 270, self.view.width-20, 70)];
     secondRecommendation.backgroundColor = [UIColor whiteColor];
     [self.emptyFeedView addSubview:secondRecommendation];
     
@@ -303,7 +303,7 @@
     self.secondRecBody.font = [ThemeManager lightFontOfSize:10];
     [secondRecommendation addSubview:self.secondRecBody];
     
-    UIView *thirdRecommendation = [[UIView alloc] initWithFrame:CGRectMake(15, 350, self.view.width-30, 70)];
+    UIView *thirdRecommendation = [[UIView alloc] initWithFrame:CGRectMake(10, 350, self.view.width-20, 70)];
     thirdRecommendation.backgroundColor = [UIColor whiteColor];
     [self.emptyFeedView addSubview:thirdRecommendation];
     
@@ -566,14 +566,14 @@
     if (active) {
         [self.firstRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
         self.firstRecFollowButton.size = CGSizeMake(65, 20);
-        self.firstRecFollowButton.x = self.view.width - 100;
+        self.firstRecFollowButton.x = self.view.width - 90;
         [self.firstRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.firstRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
         self.firstRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
         self.firstRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
     } else {
         self.firstRecFollowButton.size = CGSizeMake(60, 20);
-        self.firstRecFollowButton.x = self.view.width - 95;
+        self.firstRecFollowButton.x = self.view.width - 85;
         [self.firstRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
         [self.firstRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.firstRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -588,14 +588,14 @@
     if (active) {
         [self.secondRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
         self.secondRecFollowButton.size = CGSizeMake(65, 20);
-        self.secondRecFollowButton.x = self.view.width - 100;
+        self.secondRecFollowButton.x = self.view.width - 90;
         [self.secondRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.secondRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
         self.secondRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
         self.secondRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
     } else {
         self.secondRecFollowButton.size = CGSizeMake(60, 20);
-        self.secondRecFollowButton.x = self.view.width - 95;
+        self.secondRecFollowButton.x = self.view.width - 85;
         [self.secondRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
         [self.secondRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.secondRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -610,14 +610,14 @@
     if (active) {
         [self.thirdRecFollowButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
         self.thirdRecFollowButton.size = CGSizeMake(65, 20);
-        self.thirdRecFollowButton.x = self.view.width - 100;
+        self.thirdRecFollowButton.x = self.view.width - 90;
         [self.thirdRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.thirdRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
         self.thirdRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
         self.thirdRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
     } else {
         self.thirdRecFollowButton.size = CGSizeMake(60, 20);
-        self.thirdRecFollowButton.x = self.view.width - 95;
+        self.thirdRecFollowButton.x = self.view.width - 85;
         [self.thirdRecFollowButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
         [self.thirdRecFollowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.thirdRecFollowButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
