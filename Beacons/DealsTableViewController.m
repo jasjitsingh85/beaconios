@@ -552,10 +552,10 @@ typedef enum dealTypeStates
     [[NSNotificationCenter defaultCenter] postNotificationName:kFeedStartRefreshNotification object:self userInfo:nil];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.feed removeAllObjects];
-//        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
-//            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
-//            [self.feed addObject:feedItem];
-//        }
+        for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
+            FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
+            [self.feed addObject:feedItem];
+        }
         //self.feedTableViewController.isRefreshing = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         self.feedTableViewController.feed = self.feed;
