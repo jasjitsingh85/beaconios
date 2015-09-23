@@ -184,12 +184,12 @@ typedef enum {
 - (void)enterContactsMode
 {
     self.viewMode = ViewModeContact;
-    self.titleLabel.text = @"Sync Contacts";
+    self.titleLabel.text = @"Sync Friends";
     [self.headerIcon setImage: [UIImage imageNamed:@"bigGroupIcon"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"See invitations, check-ins, and messages from friends by syncing your contacts."]];
-    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
-    [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"To see check-ins, invitations to meet-up, and messages from friends. We never spam."]];
+    [self.confirmButton setTitle:@"Sync Friends" forState:UIControlStateNormal];
+    [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
     self.confirmButton.y = 300;
     self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
     [self animateInSubtitles:nil];
