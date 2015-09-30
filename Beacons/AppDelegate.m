@@ -47,7 +47,7 @@
 
 @implementation AppDelegate
 
-//@synthesize kochavaTracker;
+@synthesize kochavaTracker;
 
 + (AppDelegate *)sharedAppDelegate
 {
@@ -109,9 +109,10 @@
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     [DDLog addLogger:fileLogger];
     [CrashManager enableCrittercism];
-//    NSDictionary *initDict = [NSDictionary dictionaryWithObjectsAndKeys:
-//                              @"myKochavaAppId", @"kohotspot-deals-with-friends55666e25a8b3b", nil];
-//    kochavaTracker = [[KochavaTracker alloc] initKochavaWithParams:initDict];
+    NSDictionary *initDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @"kohotspot-deals-with-friends55666e25a8b3b", @"kochavaAppId",
+                              @"1", @"enableLogging", nil];
+    kochavaTracker = [[KochavaTracker alloc] initKochavaWithParams:initDict];
     
     
     //update content from server

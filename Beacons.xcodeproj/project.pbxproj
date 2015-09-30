@@ -142,6 +142,11 @@
 		41F144121B24F4380010BCF1 /* HappyHourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */; };
 		41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144131B27C3460010BCF1 /* greyPin@2x.png */; };
 		41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144141B27C3460010BCF1 /* redPin@2x.png */; };
+		41F97BAE1BB5EC19003D1D86 /* libTrackAndAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */; settings = {ASSET_TAGS = (); }; };
+		41F97BB01BB5ECA3003D1D86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */; };
+		41F97BB21BB5ECB3003D1D86 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */; };
+		41F97BB41BB5ECBA003D1D86 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB31BB5ECBA003D1D86 /* iAd.framework */; };
+		41F97BB61BBB170C003D1D86 /* updatedHelpButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */; settings = {ASSET_TAGS = (); }; };
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
@@ -515,6 +520,12 @@
 		41F144111B24F4380010BCF1 /* HappyHourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourTableViewCell.m; sourceTree = "<group>"; };
 		41F144131B27C3460010BCF1 /* greyPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyPin@2x.png"; sourceTree = "<group>"; };
 		41F144141B27C3460010BCF1 /* redPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redPin@2x.png"; sourceTree = "<group>"; };
+		41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTrackAndAd.a; sourceTree = SOURCE_ROOT; };
+		41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackAndAd.h; sourceTree = SOURCE_ROOT; };
+		41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		41F97BB31BB5ECBA003D1D86 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "updatedHelpButton@2x.png"; sourceTree = "<group>"; };
 		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
 		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
@@ -782,6 +793,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41F97BAE1BB5EC19003D1D86 /* libTrackAndAd.a in Frameworks */,
+				41F97BB41BB5ECBA003D1D86 /* iAd.framework in Frameworks */,
+				41F97BB21BB5ECB3003D1D86 /* AdSupport.framework in Frameworks */,
+				41F97BB01BB5ECA3003D1D86 /* SystemConfiguration.framework in Frameworks */,
 				411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */,
 				96727DE71801DA1A00E75EE9 /* CoreImage.framework in Frameworks */,
 				96859CED17EF9FA800C1C467 /* AudioToolbox.framework in Frameworks */,
@@ -1033,6 +1048,9 @@
 		9633993A1758512100AF9D89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41F97BB31BB5ECBA003D1D86 /* iAd.framework */,
+				41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */,
+				41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */,
 				411DF2D01AC61229005B2A75 /* AVFoundation.framework */,
 				96727DE61801DA1A00E75EE9 /* CoreImage.framework */,
 				96859CEC17EF9FA800C1C467 /* AudioToolbox.framework */,
@@ -1053,6 +1071,8 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
+				41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */,
+				41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
 				9615F4E0175BEBA9005CF62D /* Models */,
@@ -1287,6 +1307,7 @@
 			children = (
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
+				41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */,
 				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
 				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
 				4109B9C01B9B706100C3270E /* publicGlobe@2x.png */,
@@ -1707,6 +1728,7 @@
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */,
+				41F97BB61BBB170C003D1D86 /* updatedHelpButton@2x.png in Resources */,
 				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
 				9671F66A18BD688C007DF715 /* hotbotSmileCircle@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
@@ -1973,6 +1995,10 @@
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2068,6 +2094,10 @@
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2093,6 +2123,10 @@
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hotspot.hotspot;
 				PRODUCT_NAME = "$(TARGET_NAME)";

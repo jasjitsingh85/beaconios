@@ -21,8 +21,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.textColor = [UIColor blackColor];
-        self.placeholderTextColor = [UIColor grayColor];
+        self.textColor = [UIColor unnormalizedColorWithRed:68 green:68 blue:68 alpha:255];
+        self.placeholderTextColor = [UIColor unnormalizedColorWithRed:97 green:97 blue:97 alpha:255];
         self.clipsToBounds = YES;
     }
     return self;
@@ -52,13 +52,13 @@
         textFieldFrame.size.height = self.frame.size.height/formPlaceholders.count;
         textFieldFrame.origin.y = i*textFieldFrame.size.height;
         textFieldFrame.origin.x = 85;
-        NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
         InsetTextField *textField = [[InsetTextField alloc] initWithFrame:textFieldFrame];
         [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         textField.delegate = self;
         textField.horizontalInset = 10;
         textField.placeholder = title;
         textField.textColor = self.textColor;
+        textField.backgroundColor = [UIColor unnormalizedColorWithRed:250 green:250 blue:250 alpha:255];
         textField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName: self.placeholderTextColor}];
         [self addSubview:textField];
         [textFields addObject:textField];
@@ -68,7 +68,7 @@
             dividerFrame.size = CGSizeMake(self.frame.size.width, 1);
             dividerFrame.origin.y = CGRectGetMaxY(textField.frame) - dividerFrame.size.height;
             UIView *dividerView = [[UIView alloc] initWithFrame:dividerFrame];
-            //dividerView.backgroundColor = [UIColor lightGrayColor];
+            dividerView.backgroundColor = [UIColor unnormalizedColorWithRed:231 green:231 blue:231 alpha:255];
             [self addSubview:dividerView];
             
             textField.returnKeyType = UIReturnKeyNext;
@@ -89,13 +89,17 @@
         CGRect textFieldFrame = CGRectZero;
         textFieldFrame.size.width = self.frame.size.width;
         textFieldFrame.size.height = self.frame.size.height/formTitles.count;
-        textFieldFrame.origin.y = i*textFieldFrame.size.height;
+        if ([title isEqualToString:@"PROMO"]) {
+            textFieldFrame.origin.y = i*textFieldFrame.size.height - 5;
+        } else {
+            textFieldFrame.origin.y = i*textFieldFrame.size.height;
+        }
         textFieldFrame.origin.x = 25;
-        NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
+//        NSLog(@"frame = %@", NSStringFromCGRect(textFieldFrame));
         UILabel *fieldTitle = [[UILabel alloc] initWithFrame:textFieldFrame];
         fieldTitle.text = title;
-        fieldTitle.textColor = [UIColor blackColor];
-        fieldTitle.font = [ThemeManager boldFontOfSize:16];
+        fieldTitle.textColor = self.textColor;
+        fieldTitle.font = [ThemeManager mediumFontOfSize:14];
         [self addSubview:fieldTitle];
         //[textFields addObject:fieldTitle];
         //add divider between text fields
