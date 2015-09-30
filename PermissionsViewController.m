@@ -44,10 +44,16 @@ typedef enum {
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNavBlack"]];
     CGRect logoFrame = logoImageView.frame;
+    logoFrame.size.width = 90;
+    logoFrame.size.height = 30;
     logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
-    logoFrame.origin.y = 30;
+    logoFrame.origin.y = 50;
     logoImageView.frame = logoFrame;
     [self.view addSubview:logoImageView];
+    
+//    UIView *permissionsBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.width, 400)];
+//    permissionsBackground.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:permissionsBackground];
     
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *clientToken = responseObject[@"client_token"];
@@ -64,27 +70,28 @@ typedef enum {
 
     }];
     
-    self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.size.width, 200)];
-    //self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
+    self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.size.width, 330)];
+    self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
+    self.permissionTextContainer.clipsToBounds = YES;
     [self.view addSubview:self.permissionTextContainer];
     
     
-    self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pushIcon"]];
-    self.headerIcon.size = CGSizeMake(30, 30);
-    self.headerIcon.y = 110;
+    self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contactPermissions"]];
+//    self.headerIcon.size = CGSizeMake(30, 30);
+    self.headerIcon.y = 125;
     self.headerIcon.centerX = self.view.width/2;
-    [self.view addSubview:self.headerIcon];
+    [self.permissionTextContainer addSubview:self.headerIcon];
     
     self.titleLabel = [[UILabel alloc] init];
     CGRect titleLabelFrame;
     titleLabelFrame.size = CGSizeMake(self.view.width, 23);
     titleLabelFrame.origin.x = 0;
-    titleLabelFrame.origin.y = 53;
+    titleLabelFrame.origin.y = 20;
     self.titleLabel.frame = titleLabelFrame;
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    self.titleLabel.font = [ThemeManager regularFontOfSize:18];
     self.titleLabel.adjustsFontSizeToFitWidth = YES;
-    self.titleLabel.textColor = [UIColor blackColor];
+    self.titleLabel.textColor = [UIColor unnormalizedColorWithRed:54 green:54 blue:54 alpha:230];
     [self.permissionTextContainer addSubview:self.titleLabel];
     
     self.confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,7 +105,7 @@ typedef enum {
     CGRect confirmButtonFrame;
     confirmButtonFrame.size  = CGSizeMake(240, 40);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 260;
+    confirmButtonFrame.origin.y = 560;
     self.confirmButton.frame = confirmButtonFrame;
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.confirmButton];
@@ -107,12 +114,12 @@ typedef enum {
     [self.skipButton setTitle:@"Skip" forState:UIControlStateNormal];
     [self.skipButton setTitleColor:[UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0] forState:UIControlStateNormal];
     self.skipButton.backgroundColor = [UIColor clearColor];
-    self.skipButton.layer.cornerRadius = self.confirmButton.layer.cornerRadius;
-    self.skipButton.layer.borderColor = [UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0].CGColor;
-    self.skipButton.layer.borderWidth = 2;
+//    self.skipButton.layer.cornerRadius = self.confirmButton.layer.cornerRadius;
+//    self.skipButton.layer.borderColor = [UIColor colorWithRed:91/255.0 green:91/255.0 blue:91/255.0 alpha:1.0].CGColor;
+//    self.skipButton.layer.borderWidth = 2;
     //self.skipButton.layer.cornerRadius = 4;
     CGRect skipButtonFrame = CGRectMake(self.confirmButton.frame.origin.x + self.confirmButton.frame.size.width/4, self.confirmButton.frame.origin.y, self.confirmButton.frame.size.width/2, self.confirmButton.frame.size.height - 10);
-    skipButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
+    skipButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame) + 15;
     self.skipButton.frame = skipButtonFrame;
     self.skipButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
     [self.skipButton addTarget:self action:@selector(skipButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -124,7 +131,7 @@ typedef enum {
 //    self.hotbotImageView.transform = CGAffineTransformTranslate(self.hotbotImageView.transform, 0, 20);
 //    [self.view addSubview:self.hotbotImageView];
     
-    [self enterPushNotificationMode];
+    [self enterContactsMode];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -139,18 +146,24 @@ typedef enum {
         UILabel *label = [[UILabel alloc] init];
         label.text = strings[i];
         CGRect labelFrame;
-        labelFrame.size = CGSizeMake(self.view.width - 50, 100);
-        labelFrame.origin.x = 25;
         if (self.viewMode == ViewModePush) {
-            labelFrame.origin.y = 158 + 50*i;
+            labelFrame.origin.y = 125 + 50*i;
+            labelFrame.size = CGSizeMake(self.view.width - 100, 100);
+            labelFrame.origin.x = 50;
+        } else if (self.viewMode == ViewModePayment){
+            labelFrame.origin.y = 135 + 50*i;
+            labelFrame.size = CGSizeMake(self.view.width - 50, 100);
+            labelFrame.origin.x = 25;
         } else {
-            labelFrame.origin.y = 178 + 50*i;
+            labelFrame.origin.y = 125 + 50*i;
+            labelFrame.size = CGSizeMake(self.view.width - 100, 100);
+            labelFrame.origin.x = 50;
         }
         label.frame = labelFrame;
         label.numberOfLines = 0;
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor blackColor];
-        label.font = [ThemeManager lightFontOfSize:18];
+        label.textColor = [UIColor unnormalizedColorWithRed:54 green:54 blue:54 alpha:190];
+        label.font = [ThemeManager lightFontOfSize:16];
         [subtitleLabels addObject:label];
     }
     return subtitleLabels;
@@ -159,24 +172,24 @@ typedef enum {
 - (void)enterPaymentsMode
 {
     self.viewMode = ViewModePayment;
-    self.titleLabel.text = @"Link Payment";
-    [self.headerIcon setImage: [UIImage imageNamed:@"creditCardIcon"]];
+    self.titleLabel.text = @"LINK PAYMENT";
+    [self.headerIcon setImage: [UIImage imageNamed:@"paymentPermissions"]];
     [self removeSubtitleLabels];
     self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot buys drinks wholesale from bars, giving you huge discounts and saving you time when you buy through the app."]];
     [self.confirmButton setTitle:@"Link Payment" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
-    self.confirmButton.y = 300;
-    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
+    self.confirmButton.y = 460;
+    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 10;
     [self animateInSubtitles:nil];
 }
 
 - (void)enterPushNotificationMode
 {
     self.viewMode = ViewModePush;
-    self.titleLabel.text = @"Enable Notifications";
-    [self.headerIcon setImage: [UIImage imageNamed:@"pushIcon"]];
+    self.titleLabel.text = @"ENABLE NOTIFICATIONS";
+    [self.headerIcon setImage: [UIImage imageNamed:@"pushPermissions"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To receive invites in real-time. Your privacy is important - we don't spam you or your friends."]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"To receive messages and invitations in real-time. We don't spam you or your friends."]];
     [self.confirmButton setTitle:@"Enable Push" forState:UIControlStateNormal];
     [self animateInSubtitles:nil];
 }
@@ -184,14 +197,14 @@ typedef enum {
 - (void)enterContactsMode
 {
     self.viewMode = ViewModeContact;
-    self.titleLabel.text = @"Sync Friends";
-    [self.headerIcon setImage: [UIImage imageNamed:@"bigGroupIcon"]];
+    self.titleLabel.text = @"SEE FRIENDS";
+    [self.headerIcon setImage: [UIImage imageNamed:@"contactPermissions"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"To see check-ins, invitations to meet-up, and messages from friends. We never spam."]];
-    [self.confirmButton setTitle:@"Sync Friends" forState:UIControlStateNormal];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Sync contacts to see where friends are hanging out and get invitations to meet up."]];
+    [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
-    self.confirmButton.y = 300;
-    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 20;
+    self.confirmButton.y = 460;
+    self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 10;
     [self animateInSubtitles:nil];
 }
 
@@ -246,9 +259,9 @@ typedef enum {
     }
     else if (self.viewMode == ViewModePush) {
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
-            [self enterContactsMode];
+            [self enterPaymentsMode];
         } failure:^(NSError *error) {
-            [self enterContactsMode];
+            [self enterPaymentsMode];
         }];
     } else if (self.viewMode == ViewModeContact)
     {
@@ -265,13 +278,13 @@ typedef enum {
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Are You Sure?" message:@"Without push notifications you may miss invites to your friends' events"];
         [alertView bk_addButtonWithTitle:@"Enable Push" handler:^{
             [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
-                [self enterContactsMode];
+                [self enterPaymentsMode];
             } failure:^(NSError *error) {
-                [self enterContactsMode];;
+                [self enterPaymentsMode];;
             }];
         }];
         [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
-            [self enterContactsMode];
+            [self enterPaymentsMode];
         }];
         [alertView show];
     } else if (self.viewMode == ViewModeContact)
@@ -281,7 +294,7 @@ typedef enum {
             [self requestContactPermissions];
         }];
         [alertView bk_setCancelButtonWithTitle:@"Skip" handler:^{
-            [self enterPaymentsMode];
+            [self enterPushNotificationMode];
         }];
         [alertView show];
     }
@@ -291,11 +304,11 @@ typedef enum {
 {
     [[ContactManager sharedManager] requestContactPermissions:^{
         jadispatch_main_qeue(^{
-            [self enterPaymentsMode];
+            [self enterPushNotificationMode];
         });
     } failure:^(NSError *error) {
         jadispatch_main_qeue(^{
-            [self enterPaymentsMode];
+            [self enterPushNotificationMode];
         });
     }];
 }

@@ -147,6 +147,9 @@
 		41F97BB21BB5ECB3003D1D86 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */; };
 		41F97BB41BB5ECBA003D1D86 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB31BB5ECBA003D1D86 /* iAd.framework */; };
 		41F97BB61BBB170C003D1D86 /* updatedHelpButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */; settings = {ASSET_TAGS = (); }; };
+		41F97BB81BBB9F7F003D1D86 /* contactPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */; settings = {ASSET_TAGS = (); }; };
+		41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */; settings = {ASSET_TAGS = (); }; };
+		41F97BBC1BBC75FF003D1D86 /* paymentPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */; settings = {ASSET_TAGS = (); }; };
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
@@ -526,6 +529,9 @@
 		41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		41F97BB31BB5ECBA003D1D86 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "updatedHelpButton@2x.png"; sourceTree = "<group>"; };
+		41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contactPermissions@2x.png"; sourceTree = "<group>"; };
+		41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushPermissions@2x.png"; sourceTree = "<group>"; };
+		41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentPermissions@2x.png"; sourceTree = "<group>"; };
 		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
 		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
@@ -1358,9 +1364,12 @@
 				4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
 				41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */,
+				41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */,
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				966652521978AE1E00EE85F8 /* dealExplanation@2x.png */,
+				41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */,
+				41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */,
 				41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */,
 				41FD063C1B3A1EF800F7DD08 /* redeemedIcon@2x.png */,
 				4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */,
@@ -1640,9 +1649,11 @@
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
 				4158AE631B44A5460034BA4A /* creditCardSideNav@2x.png in Resources */,
+				41F97BB81BBB9F7F003D1D86 /* contactPermissions@2x.png in Resources */,
 				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
 				41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */,
 				41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */,
+				41F97BBC1BBC75FF003D1D86 /* paymentPermissions@2x.png in Resources */,
 				41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */,
 				410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
@@ -1739,6 +1750,7 @@
 				4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */,
 				4158AE611B43BBC20034BA4A /* menuButtonWithNotification@2x.png in Resources */,
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
+				41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
