@@ -110,8 +110,7 @@
     [DDLog addLogger:fileLogger];
     [CrashManager enableCrittercism];
     NSDictionary *initDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @"kohotspot-deals-with-friends55666e25a8b3b", @"kochavaAppId",
-                              @"1", @"enableLogging", nil];
+                               @"kohotspot-deals-with-friends55666e25a8b3b", @"kochavaAppId", nil];
     kochavaTracker = [[KochavaTracker alloc] initKochavaWithParams:initDict];
     
     
