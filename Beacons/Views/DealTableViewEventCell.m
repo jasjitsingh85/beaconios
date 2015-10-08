@@ -21,7 +21,7 @@
 
 @interface DealTableViewEventCell()
 
-//@property (strong, nonatomic) UIView *backgroundView;
+@property (strong, nonatomic) UILabel *eventHeader;
 
 @end
 
@@ -42,7 +42,11 @@
 
 - (void)setEvents:(NSArray *)events
 {
-    self.eventScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 246)];
+    _events = events;
+    
+    Event *event = self.events[0];
+    
+    self.eventScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 200)];
     self.eventScroll.pagingEnabled = YES;
     self.eventScroll.showsHorizontalScrollIndicator = NO;
     self.eventScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * events.count, self.contentView.frame.size.height);
@@ -53,70 +57,72 @@
     self.pageControl.hidesForSinglePage = NO;
     self.pageControl.numberOfPages = events.count;
     self.pageControl.centerX = self.contentView.width/2;
-    self.pageControl.y = 233;
+    self.pageControl.y = 187;
     //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
     //[self.pageControl sizeToFit];
     [self.contentView addSubview:self.pageControl];
     
+    self.eventHeader = [[UILabel alloc] init];
+    self.eventHeader.textColor = [UIColor whiteColor];
+    self.eventHeader.font = [ThemeManager boldFontOfSize:13];
+    self.eventHeader.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:204];
+    self.eventHeader.textAlignment = NSTextAlignmentCenter;
+    self.eventHeader.width = 140;
+    self.eventHeader.height = 24;
+    self.eventHeader.x = 0;
+    self.eventHeader.y = 25;
+    self.eventHeader.text = event.venue.name;
+    [self.contentView addSubview:self.eventHeader];
+    
+    [self updateDate];
+    
     for (int i = 0; i < events.count; i++) {
-        Deal *deal = events[i];
-        UIView *eventView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 246)];
+        Event *event = events[i];
+        UIView *eventView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 200)];
         [self.eventScroll addSubview:eventView];
         
         UIImageView *eventImageView = [[UIImageView alloc] init];
-        eventImageView.height = 246;
+        eventImageView.height = 200;
         eventImageView.width = eventView.size.width;
         eventImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         eventImageView.contentMode = UIViewContentModeScaleAspectFill;
         eventImageView.clipsToBounds = YES;
-        [eventImageView sd_setImageWithURL:deal.venue.imageURL];
+        [eventImageView sd_setImageWithURL:event.venue.imageURL];
         [eventView addSubview:eventImageView];
         
         UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:eventImageView.bounds];
-        backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-        UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:eventImageView.bounds];
-        backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
+        backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+        //UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:eventImageView.bounds];
+        //backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
         backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        //backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [eventView addSubview:backgroundViewBlack];
-        [eventView addSubview:backgroundViewOrange];
+        //[eventView addSubview:backgroundViewOrange];
         
-        UIView *pageControlBackground = [[UIView alloc] init];
-        pageControlBackground.width = eventView.size.width;
-        pageControlBackground.height = 55;
-        pageControlBackground.x = 0;
-        pageControlBackground.y = 196;
-        pageControlBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-        [eventView addSubview:pageControlBackground];
-        
-        UILabel *eventHeader = [[UILabel alloc] init];
-        eventHeader.text = @"DAILY SPECIALS";
-        eventHeader.textColor = [UIColor whiteColor];
-        eventHeader.font = [ThemeManager boldFontOfSize:13];
-        eventHeader.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
-        eventHeader.textAlignment = NSTextAlignmentCenter;
-        eventHeader.width = 140;
-        eventHeader.height = 24;
-        eventHeader.x = 0;
-        eventHeader.y = 25;
-        [self.contentView addSubview:eventHeader];
-        
-        UILabel *dealInfo = [[UILabel alloc] init];
-        dealInfo.width = eventView.size.width;
-        //        dealInfo.centerX = eventView.width/2;
-        dealInfo.height = 18;
-        dealInfo.y = 201;
-        dealInfo.text = deal.dealDescription;
-        dealInfo.font = [ThemeManager boldFontOfSize:14];
-        //dealInfo.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
-        //dealInfo.size = CGSizeMake(221, 24);
-        dealInfo.centerX = eventView.size.width/2.0;
-        dealInfo.textColor = [UIColor whiteColor];
-        //dealInfo.adjustsFontSizeToFitWidth = YES;
-        dealInfo.textAlignment = NSTextAlignmentCenter;
-        dealInfo.numberOfLines = 1;
-        [eventView addSubview:dealInfo];
+//        UIView *pageControlBackground = [[UIView alloc] init];
+//        pageControlBackground.width = eventView.size.width;
+//        pageControlBackground.height = 45;
+//        pageControlBackground.x = 0;
+//        pageControlBackground.y = 154;
+//        pageControlBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+//        [eventView addSubview:pageControlBackground];
+//        
+//        UILabel *dealInfo = [[UILabel alloc] init];
+//        dealInfo.width = eventView.size.width;
+//        //        dealInfo.centerX = eventView.width/2;
+//        dealInfo.height = 18;
+//        dealInfo.y = 160;
+//        dealInfo.text = event.title;
+//        dealInfo.font = [ThemeManager boldFontOfSize:14];
+//        //dealInfo.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9];
+//        //dealInfo.size = CGSizeMake(221, 24);
+//        dealInfo.centerX = eventView.size.width/2.0;
+//        dealInfo.textColor = [UIColor whiteColor];
+//        //dealInfo.adjustsFontSizeToFitWidth = YES;
+//        dealInfo.textAlignment = NSTextAlignmentCenter;
+//        dealInfo.numberOfLines = 1;
+//        [eventView addSubview:dealInfo];
         
 //        UIView *whiteStrip = [[UIView alloc]init];
 //        whiteStrip.width = eventView.size.width;
@@ -142,76 +148,81 @@
 //        timePlaceTitle.numberOfLines = 0;
 //        [eventView addSubview:timePlaceTitle];
         
-        UILabel *timeTitle =[[UILabel alloc] init];
-        timeTitle.text = deal.hoursAvailableString;
-        timeTitle.font = [ThemeManager boldFontOfSize:22];
-        //NSDictionary *attributes = @{NSFontAttributeName: [timePlaceTitle.font]};
-        timeTitle.width = eventView.size.width - 20;
-        //timePlaceTitle.width = 110;
-        //timePlaceTitle.width = eventView.size.width;
-        timeTitle.x = 5;
-        timeTitle.height = 22;
-        timeTitle.y = 160;
-        //timePlaceTitle.y = 20;
-        timeTitle.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
-        //timePlaceTitle.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
-        //timePlaceTitle.layer.cornerRadius = 10;
-        //timePlaceTitle.clipsToBounds = YES;
-        //timeTitle.adjustsFontSizeToFitWidth = YES;
-        timeTitle.textAlignment = NSTextAlignmentLeft;
-        timeTitle.numberOfLines = 1;
-        [eventView addSubview:timeTitle];
+//        UILabel *timeTitle =[[UILabel alloc] init];
+//        timeTitle.text = @"TEST";
+//        timeTitle.font = [ThemeManager boldFontOfSize:22];
+//        //NSDictionary *attributes = @{NSFontAttributeName: [timePlaceTitle.font]};
+//        timeTitle.width = eventView.size.width - 20;
+//        //timePlaceTitle.width = 110;
+//        //timePlaceTitle.width = eventView.size.width;
+//        timeTitle.x = 5;
+//        timeTitle.height = 22;
+//        timeTitle.y = 160;
+//        //timePlaceTitle.y = 20;
+//        timeTitle.textColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+//        //timePlaceTitle.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1];
+//        //timePlaceTitle.layer.cornerRadius = 10;
+//        //timePlaceTitle.clipsToBounds = YES;
+//        //timeTitle.adjustsFontSizeToFitWidth = YES;
+//        timeTitle.textAlignment = NSTextAlignmentLeft;
+//        timeTitle.numberOfLines = 1;
+//        [eventView addSubview:timeTitle];
         
-        NSMutableDictionary *eventTitle = [self parseStringIntoTwoLines:deal.dealDescriptionShort];
+//        NSMutableDictionary *eventTitle = [self parseStringIntoTwoLines:event.title];
+        
+        UILabel *venueTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 122, self.contentView.width, 30)];
+        venueTitle.text = [NSString stringWithFormat:@"@ %@", [event.venue.name uppercaseString]];
+        venueTitle.font = [ThemeManager lightFontOfSize:20];
+        venueTitle.textColor = [UIColor whiteColor];
+        //eventTitleLineOne.adjustsFontSizeToFitWidth = YES;
+        //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+        venueTitle.textAlignment = NSTextAlignmentCenter;
+        venueTitle.numberOfLines = 1;
+        [eventView addSubview:venueTitle];
         
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
-        eventTitleLineOne.width = eventView.size.width - 20;
-        eventTitleLineOne.x = 5;
-        eventTitleLineOne.height = 30;
+        eventTitleLineOne.width = eventView.size.width - 50;
+        eventTitleLineOne.x = 25;
+        eventTitleLineOne.height = 60;
         eventTitleLineOne.y = 72;
-        eventTitleLineOne.text = [[eventTitle objectForKey:@"firstLine"] uppercaseString];
-        //eventTitleLineOne.text =@"KARAOKE HAPPY";
-        eventTitleLineOne.font = [ThemeManager boldFontOfSize:30];
+        eventTitleLineOne.text = [event.title uppercaseString];
+        eventTitleLineOne.font = [ThemeManager boldFontOfSize:20];
         eventTitleLineOne.textColor = [UIColor whiteColor];
         //eventTitleLineOne.adjustsFontSizeToFitWidth = YES;
 //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-        eventTitleLineOne.textAlignment = NSTextAlignmentLeft;
-        eventTitleLineOne.numberOfLines = 1;
+        eventTitleLineOne.textAlignment = NSTextAlignmentCenter;
+        eventTitleLineOne.numberOfLines = 2;
         [eventView addSubview:eventTitleLineOne];
         
-        UILabel *eventTitleLineTwo = [[UILabel alloc] init];
-        eventTitleLineTwo.width = eventView.size.width-20;
-        eventTitleLineTwo.x = 4;
-        eventTitleLineTwo.height = 46;
-        eventTitleLineTwo.y = 95;
-        //eventTitleLineTwo.text = [@"HOUR" uppercaseString];
-        eventTitleLineTwo.text = [[eventTitle objectForKey:@"secondLine"] uppercaseString];
-        //eventTitle.text =[deal.dealDescriptionShort stringByAppendingString:deal.venue.name];
-        eventTitleLineTwo.font = [ThemeManager boldFontOfSize:46];
-        eventTitleLineTwo.textColor = [UIColor whiteColor];
-        //eventTitleLineTwo.adjustsFontSizeToFitWidth = YES;
-        //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-        eventTitleLineTwo.textAlignment = NSTextAlignmentLeft;
-        eventTitleLineTwo.numberOfLines = 1;
-        //[eventTitleLineTwo sizeToFit];
-        [eventView addSubview:eventTitleLineTwo];
+//        UILabel *eventTitleLineTwo = [[UILabel alloc] init];
+//        eventTitleLineTwo.width = eventView.size.width-20;
+//        eventTitleLineTwo.x = 4;
+//        eventTitleLineTwo.height = 46;
+//        eventTitleLineTwo.y = 95;
+//        //eventTitleLineTwo.text = [@"HOUR" uppercaseString];
+//        eventTitleLineTwo.text = [[eventTitle objectForKey:@"secondLine"] uppercaseString];
+//        //eventTitle.text =[deal.dealDescriptionShort stringByAppendingString:deal.venue.name];
+//        eventTitleLineTwo.font = [ThemeManager boldFontOfSize:34];
+//        eventTitleLineTwo.textColor = [UIColor whiteColor];
+//        //eventTitleLineTwo.adjustsFontSizeToFitWidth = YES;
+//        //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
+//        eventTitleLineTwo.textAlignment = NSTextAlignmentLeft;
+//        eventTitleLineTwo.numberOfLines = 1;
+//        //[eventTitleLineTwo sizeToFit];
+//        [eventView addSubview:eventTitleLineTwo];
         
-        UILabel *venueLine = [[UILabel alloc] init];
-        venueLine.width = eventView.size.width-20;
-        venueLine.x = 5;
-        venueLine.height = 30;
-        venueLine.y = 130;
-        venueLine.text = [NSString stringWithFormat:@"@ %@", [deal.venue.name uppercaseString]];
-        //eventTitleLineTwo.text = [[eventTitle objectForKey:@"secondLine"] uppercaseString];
-        //eventTitle.text =[deal.dealDescriptionShort stringByAppendingString:deal.venue.name];
-        venueLine.font = [ThemeManager boldFontOfSize:30];
-        venueLine.textColor = [UIColor whiteColor];
-        //venueLine.adjustsFontSizeToFitWidth = YES;
-        //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-        venueLine.textAlignment = NSTextAlignmentLeft;
-        venueLine.numberOfLines = 1;
-        [venueLine sizeToFit];
-        [eventView addSubview:venueLine];
+//        UILabel *venueLine = [[UILabel alloc] init];
+//        venueLine.width = eventView.size.width-20;
+//        venueLine.x = 5;
+//        venueLine.height = 30;
+//        venueLine.y = 130;
+//        venueLine.text = [NSString stringWithFormat:@"@ %@", [event.venue.name uppercaseString]];
+//        venueLine.font = [ThemeManager boldFontOfSize:30];
+//        venueLine.textColor = [UIColor whiteColor];
+//        venueLine.textAlignment = NSTextAlignmentLeft;
+//        venueLine.numberOfLines = 1;
+//        [venueLine sizeToFit];
+//        [eventView addSubview:venueLine];
     }
     
 }
@@ -233,6 +244,15 @@
     CGFloat pageWidth = self.eventScroll.frame.size.width;
     int page = floor((self.eventScroll.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     self.pageControl.currentPage = page;
+    [self updateDate];
+}
+
+-(void)updateDate
+{
+    Event *event = self.events[self.pageControl.currentPage];
+    self.eventHeader.text = [event.getDateAsString uppercaseString];
+    CGSize stringBoundingBox = [self.eventHeader.text sizeWithAttributes:@{NSFontAttributeName:self.eventHeader.font}];
+    self.eventHeader.width = stringBoundingBox.width + 20;
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString

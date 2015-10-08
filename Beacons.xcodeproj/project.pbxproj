@@ -122,6 +122,7 @@
 		41BEAC2B1A1DE4750069F932 /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */; };
 		41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74331B017C7300D6EFC1 /* RewardsViewController.m */; };
 		41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */; };
+		41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D716B01BC1CE2D00DF23D2 /* Event.m */; settings = {ASSET_TAGS = (); }; };
 		41E23A841B33A9B100676254 /* slider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A831B33A9B100676254 /* slider@2x.png */; };
 		41E23A861B33AEFB00676254 /* thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A851B33AEFB00676254 /* thumb@2x.png */; };
 		41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */; };
@@ -494,6 +495,8 @@
 		41BF74331B017C7300D6EFC1 /* RewardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsViewController.m; sourceTree = "<group>"; };
 		41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardExplanationPopupView.h; sourceTree = "<group>"; };
 		41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardExplanationPopupView.m; sourceTree = "<group>"; };
+		41D716AF1BC1CE1D00DF23D2 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		41D716B01BC1CE2D00DF23D2 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		41E23A831B33A9B100676254 /* slider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider@2x.png"; sourceTree = "<group>"; };
 		41E23A851B33AEFB00676254 /* thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumb@2x.png"; sourceTree = "<group>"; };
 		41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotSliderLabel@2x.png"; sourceTree = "<group>"; };
@@ -1027,6 +1030,8 @@
 				9651C796193E5A750083A0FE /* DealStatus.m */,
 				96D5EEFA19575D6C00786C27 /* DealHours.h */,
 				96D5EEFB19575D6C00786C27 /* DealHours.m */,
+				41D716AF1BC1CE1D00DF23D2 /* Event.h */,
+				41D716B01BC1CE2D00DF23D2 /* Event.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1825,6 +1830,7 @@
 				4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
 				96C7FE951897270200A79CC3 /* IntroWalkthroughViewController.m in Sources */,
+				41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */,
 				4105DA961B7AEFBE0006B888 /* FeedItem.m in Sources */,
 				961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */,
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,

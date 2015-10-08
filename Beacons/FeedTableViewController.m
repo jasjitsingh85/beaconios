@@ -12,6 +12,7 @@
 #import "APIClient.h"
 #import "FeedItem.h"
 #import "FeedItemTableViewCell.h"
+#import "DealTableViewEventCell.h"
 #import "NavigationBarTitleLabel.h"
 #import "ContactManager.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
@@ -41,6 +42,9 @@
 @property (strong, nonatomic) UILabel *thirdRecBody;
 @property (strong, nonatomic) UIButton *thirdRecFollowButton;
 @property (assign, nonatomic) BOOL followAdded;
+
+@property (strong, nonatomic) DealTableViewEventCell *eventCell;
+@property (strong, nonatomic) UIWebView *webView;
 
 @end
 
@@ -472,53 +476,103 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.feed.count;
+    if (self.events.count > 0) {
+         return self.feed.count + 1;
+    } else {
+        return self.feed.count;
+    }
 }
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        Event *event = self.events[self.eventCell.pageControl.currentPage];
+        [self.webView loadRequest:[NSURLRequest requestWithURL:event.websiteURL]];
+        [self presentViewController:self.webView animated:YES completion:nil];
+    }
+}
+
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//    SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:[request URL]];
+//    webViewController.modalPresentationStyle = UIModalPresentationPageSheet;
+//    webViewController.availableActions = SVWebViewControllerAvailableActionsOpenInSafari | SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink;
+//    [myViewController presentModalViewController:webViewController animated:YES];
+//    return(NO);
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FeedItem *feedItem = self.feed[indexPath.row];
-    NSString *identifier = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
-    FeedItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if (!cell) {
-        cell = [[FeedItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row == 0) {
+        NSString *identifier = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+        self.eventCell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+        if (!self.eventCell) {
+            self.eventCell = [[DealTableViewEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+            self.eventCell.backgroundColor = [UIColor whiteColor];
+            self.eventCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        if (self.events.count > 0)
+        {
+            self.eventCell.events = self.events;
+        } else
+        {
+            self.eventCell.events = @[];
+        }
+        return self.eventCell;
+    } else {
+        FeedItem *feedItem = self.feed[indexPath.row - 1];
+        NSString *identifier = [NSString stringWithFormat:@"%ld", (long)indexPath.row];
+        FeedItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        
+        if (!cell) {
+            cell = [[FeedItemTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+            cell.backgroundColor = [UIColor clearColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        cell.feedItem = feedItem;
+        return cell;
     }
-
-    cell.feedItem = feedItem;
-    
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FeedItem *feedItem = self.feed[indexPath.row];
     CGFloat cellHeight;
-    CGFloat imageHeight;
-    
-    CGRect messageRect = [feedItem.message boundingRectWithSize:CGSizeMake(190, 0)
-                                                            options:NSStringDrawingUsesLineFragmentOrigin
-                                                         attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
-                                                            context:nil];
-    
-    CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
-                                                                 options:NSStringDrawingUsesLineFragmentOrigin
-                                                              attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
-                                                                 context:nil];
-    
-    if (feedItem.image) {
-        imageHeight = feedItem.image.size.height;
+    if (indexPath.row == 0)
+    {
+        if (self.events.count > 0)
+        {
+            cellHeight = 200;
+        } else {
+            cellHeight = 0;
+        }
+    } else {
+        FeedItem *feedItem = self.feed[indexPath.row - 1];
+        CGFloat imageHeight;
+        
+        CGRect messageRect = [feedItem.message boundingRectWithSize:CGSizeMake(190, 0)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                                             attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
+                                                                context:nil];
+        
+        CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
+                                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                                  attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
+                                                                     context:nil];
+        
+        if (feedItem.image) {
+            imageHeight = feedItem.image.size.height;
 
-    } else {
-        imageHeight = 0;
+        } else {
+            imageHeight = 0;
+        }
+        if ([feedItem.source isEqualToString:@"hotspot"]) {
+            cellHeight = messageRect.size.height + imageHeight + 60;
+        } else {
+            cellHeight = messageBodyRect.size.height + imageHeight + 70;
+        }
     }
-    if ([feedItem.source isEqualToString:@"hotspot"]) {
-        cellHeight = messageRect.size.height + imageHeight + 60;
-    } else {
-        cellHeight = messageBodyRect.size.height + imageHeight + 70;
-    }
+    
     return cellHeight;
 }
 

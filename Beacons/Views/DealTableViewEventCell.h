@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Deal.h"
+#import "Event.h"
 #import <MapKit/MapKit.h>
 
 @interface DealTableViewEventCell : UITableViewCell

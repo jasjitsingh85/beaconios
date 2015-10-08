@@ -44,6 +44,7 @@
 #import "AppInviteViewController.h"
 #import "FeedItem.h"
 #import "FeedTableViewController.h"
+#import "Event.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -110,6 +111,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UISegmentedControl *navBarTabs;
 
 @property (strong, nonatomic) NSMutableArray *feed;
+@property (strong, nonatomic) NSMutableArray *events;
 
 @property (strong, nonatomic) UIView *hotspotTab;
 @property (strong, nonatomic) UIView *happyHourTab;
@@ -150,6 +152,7 @@ typedef enum dealTypeStates
     
     self.feedTableViewController = [[FeedTableViewController alloc] initWithLoadingIndicator];
     self.feed = [[NSMutableArray alloc] init];
+    self.events = [[NSMutableArray alloc] init];
     
     self.hotspotTab = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 101, 25)];
     self.happyHourTab = [[UIView alloc] initWithFrame:CGRectMake(-2, 0, 102, 25)];
@@ -552,12 +555,21 @@ typedef enum dealTypeStates
     [[NSNotificationCenter defaultCenter] postNotificationName:kFeedStartRefreshNotification object:self userInfo:nil];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.feed removeAllObjects];
+        [self.events removeAllObjects];
+        
         for (NSDictionary *feedJSON in responseObject[@"favorite_feed"]) {
             FeedItem *feedItem = [[FeedItem alloc] initWithDictionary:feedJSON];
             [self.feed addObject:feedItem];
         }
+        
+        for (NSDictionary *eventJSON in responseObject[@"events"]) {
+            Event *event = [[Event alloc] initWithDictionary:eventJSON];
+            [self.events addObject:event];
+        }
+        
         //self.feedTableViewController.isRefreshing = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
+        self.feedTableViewController.events = self.events;
         self.feedTableViewController.feed = self.feed;
         [[AnalyticsManager sharedManager] openNewsfeedWithNumberOfFollowItems:self.feed.count];
         [self checkNewsfeedNotification];
