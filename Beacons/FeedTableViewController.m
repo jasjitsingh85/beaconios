@@ -16,6 +16,7 @@
 #import "NavigationBarTitleLabel.h"
 #import "ContactManager.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "WebViewController.h"
 
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
@@ -44,7 +45,7 @@
 @property (assign, nonatomic) BOOL followAdded;
 
 @property (strong, nonatomic) DealTableViewEventCell *eventCell;
-@property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) WebViewController *webView;
 
 @end
 
@@ -65,6 +66,8 @@
     [self.view addSubview:self.tableView];
     
     [self.view addSubview:self.syncContactsButtonContainer];
+    
+    self.webView = [[WebViewController alloc] init];
     
     self.pullToRefresh = NO;
     
@@ -486,18 +489,18 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         Event *event = self.events[self.eventCell.pageControl.currentPage];
-        [self.webView loadRequest:[NSURLRequest requestWithURL:event.websiteURL]];
-        [self presentViewController:self.webView animated:YES completion:nil];
+        self.webView.websiteUrl = event.websiteURL;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+        [self presentViewController:navigationController
+                               animated:YES
+                             completion:nil];
     }
 }
-
+//
 //- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 //{
-//    SVModalWebViewController *webViewController = [[SVModalWebViewController alloc] initWithURL:[request URL]];
-//    webViewController.modalPresentationStyle = UIModalPresentationPageSheet;
-//    webViewController.availableActions = SVWebViewControllerAvailableActionsOpenInSafari | SVWebViewControllerAvailableActionsCopyLink | SVWebViewControllerAvailableActionsMailLink;
-//    [myViewController presentModalViewController:webViewController animated:YES];
-//    return(NO);
+//    return NO;
 //}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -511,6 +514,7 @@
             self.eventCell.backgroundColor = [UIColor whiteColor];
             self.eventCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
         if (self.events.count > 0)
         {
             self.eventCell.events = self.events;
@@ -572,7 +576,6 @@
             cellHeight = messageBodyRect.size.height + imageHeight + 70;
         }
     }
-    
     return cellHeight;
 }
 

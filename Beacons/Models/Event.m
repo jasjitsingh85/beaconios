@@ -20,7 +20,12 @@
     }
     
     self.title = dictionary[@"title"];
-    self.websiteURL = dictionary[@"website"];
+    //self.websiteURL = dictionary[@"website"];
+    
+    NSString *websiteURLString = dictionary[@"website"];
+    if (![websiteURLString isEqual:[NSNull null]]){
+        self.websiteURL = [NSURL URLWithString:websiteURLString];
+    }
     
     NSNumber *startTimestamp = dictionary[@"start_time"];
     self.startTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];

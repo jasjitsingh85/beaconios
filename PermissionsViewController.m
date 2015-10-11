@@ -44,10 +44,10 @@ typedef enum {
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNavBlack"]];
     CGRect logoFrame = logoImageView.frame;
-    logoFrame.size.width = 90;
-    logoFrame.size.height = 30;
+    logoFrame.size.width = 75;
+    logoFrame.size.height = 25;
     logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
-    logoFrame.origin.y = 50;
+    logoFrame.origin.y = 40;
     logoImageView.frame = logoFrame;
     [self.view addSubview:logoImageView];
     
@@ -70,7 +70,7 @@ typedef enum {
 
     }];
     
-    self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.size.width, 330)];
+    self.permissionTextContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 75, self.view.size.width, 300)];
     self.permissionTextContainer.backgroundColor = [UIColor whiteColor];
     self.permissionTextContainer.clipsToBounds = YES;
     [self.view addSubview:self.permissionTextContainer];
@@ -78,7 +78,7 @@ typedef enum {
     
     self.headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"contactPermissions"]];
 //    self.headerIcon.size = CGSizeMake(30, 30);
-    self.headerIcon.y = 125;
+    self.headerIcon.y = 110;
     self.headerIcon.centerX = self.view.width/2;
     [self.permissionTextContainer addSubview:self.headerIcon];
     
@@ -105,7 +105,7 @@ typedef enum {
     CGRect confirmButtonFrame;
     confirmButtonFrame.size  = CGSizeMake(240, 40);
     confirmButtonFrame.origin.x = 0.5*(self.view.frame.size.width - confirmButtonFrame.size.width);
-    confirmButtonFrame.origin.y = 560;
+    confirmButtonFrame.origin.y = 500;
     self.confirmButton.frame = confirmButtonFrame;
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.confirmButton];
@@ -147,15 +147,15 @@ typedef enum {
         label.text = strings[i];
         CGRect labelFrame;
         if (self.viewMode == ViewModePush) {
-            labelFrame.origin.y = 125 + 50*i;
+            labelFrame.origin.y = 100 + 50*i;
             labelFrame.size = CGSizeMake(self.view.width - 100, 100);
             labelFrame.origin.x = 50;
         } else if (self.viewMode == ViewModePayment){
-            labelFrame.origin.y = 135 + 50*i;
+            labelFrame.origin.y = 100 + 50*i;
             labelFrame.size = CGSizeMake(self.view.width - 50, 100);
             labelFrame.origin.x = 25;
         } else {
-            labelFrame.origin.y = 125 + 50*i;
+            labelFrame.origin.y = 100 + 50*i;
             labelFrame.size = CGSizeMake(self.view.width - 100, 100);
             labelFrame.origin.x = 50;
         }
@@ -175,10 +175,10 @@ typedef enum {
     self.titleLabel.text = @"LINK PAYMENT";
     [self.headerIcon setImage: [UIImage imageNamed:@"paymentPermissions"]];
     [self removeSubtitleLabels];
-    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot buys drinks wholesale from bars, giving you huge discounts and saving you time when you buy through the app."]];
+    self.subtitles = [self subtitleLabelsForStrings:@[@"Hotspot buys drinks wholesale from bars, saving you time and money when you buy through the app."]];
     [self.confirmButton setTitle:@"Link Payment" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"I'll do it later" forState:UIControlStateNormal];
-    self.confirmButton.y = 460;
+    self.confirmButton.y = 395;
     self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 10;
     [self animateInSubtitles:nil];
 }
@@ -203,7 +203,7 @@ typedef enum {
     self.subtitles = [self subtitleLabelsForStrings:@[@"Sync contacts to see where friends are hanging out and get invitations to meet up."]];
     [self.confirmButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     [self.skipButton setTitle:@"SKIP" forState:UIControlStateNormal];
-    self.confirmButton.y = 460;
+    self.confirmButton.y = 395;
     self.skipButton.y = CGRectGetMaxY(self.confirmButton.frame) + 10;
     [self animateInSubtitles:nil];
 }

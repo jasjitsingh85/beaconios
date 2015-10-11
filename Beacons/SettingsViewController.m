@@ -36,7 +36,7 @@
     buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
     secretButton.frame = buttonFrame;
     secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [secretButton setTitle:@"Made with \U0000E022 in New Haven" forState:UIControlStateNormal];
+    [secretButton setTitle:@"Made with \U0000E022 in Kauai" forState:UIControlStateNormal];
     secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
     [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -120,14 +120,18 @@
 - (void)termsSelected
 {
     NSURL *termsURL = [NSURL URLWithString:kTermsURL];
-    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Terms" andURL:termsURL];
+    WebViewController *webViewController = [[WebViewController alloc] init];
+    webViewController.title = @"Terms";
+    webViewController.websiteUrl = termsURL;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)privacySelected
 {
     NSURL *privacyURL = [NSURL URLWithString:kPrivacyURL];
-    WebViewController *webViewController = [[WebViewController alloc] initWithTitle:@"Privacy" andURL:privacyURL];
+    WebViewController *webViewController = [[WebViewController alloc] init];
+    webViewController.title = @"Privacy";
+    webViewController.websiteUrl = privacyURL;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
