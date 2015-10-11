@@ -68,8 +68,8 @@
     [self.cellView addSubview:self.socialIcon];
     
     self.unfollowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.unfollowButton.size = CGSizeMake(25, 25);
-    [self.unfollowButton setImage:[UIImage imageNamed:@"crossOutButton"] forState:UIControlStateNormal];
+    self.unfollowButton.size = CGSizeMake(30, 30);
+    [self.unfollowButton setImage:[UIImage imageNamed:@"newsfeedUnfollow"] forState:UIControlStateNormal];
     [self.unfollowButton addTarget:self action:@selector(unfollowButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.unfollowButton.hidden = YES;
     [self.cellView addSubview:self.unfollowButton];
@@ -84,8 +84,8 @@
     self.cellView.frame = CGRectMake(10, 10, self.width - 20, self.height - 10);
     self.cellView.backgroundColor = [UIColor whiteColor];
     
-    self.unfollowButton.x = self.cellView.width - 25;
-    self.unfollowButton.y = 0;
+    self.unfollowButton.x = self.cellView.width - 30;
+    //self.unfollowButton.y = 0;
     
     //self.image.size = CGSizeMake(220, 220);
     
@@ -208,6 +208,7 @@
     }
     
     self.thumbnail.centerY = (self.messageBody.y + self.messageBody.height + 15) / 2;
+    self.unfollowButton.centerY = (self.messageBody.y + self.messageBody.height + 20) / 2;
     
 }
 
