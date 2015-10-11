@@ -571,9 +571,9 @@
             imageHeight = 0;
         }
         if ([feedItem.source isEqualToString:@"hotspot"]) {
-            cellHeight = messageRect.size.height + imageHeight + 60;
+            cellHeight = messageRect.size.height + imageHeight + 70;
         } else {
-            cellHeight = messageBodyRect.size.height + imageHeight + 70;
+            cellHeight = messageBodyRect.size.height + imageHeight + 80;
         }
     }
     return cellHeight;

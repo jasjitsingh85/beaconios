@@ -97,25 +97,28 @@
     
     self.message.x = 60;
     self.message.y = 22;
-    self.message.width = 190;
+    self.message.width = 200;
+    self.message.textColor = [UIColor unnormalizedColorWithRed:68 green:68 blue:68 alpha:255];
     self.message.numberOfLines = 0;
-    self.message.textAlignment = NSTextAlignmentLeft;
+    self.message.textAlignment = NSTextAlignmentCenter;
     self.message.height = 15;
     self.message.font = [ThemeManager lightFontOfSize:11];
     
     self.messageBody.x = 60;
     self.messageBody.y = 35;
-    self.messageBody.width = 220;
+    self.messageBody.width = 200;
+    self.messageBody.textColor = [UIColor unnormalizedColorWithRed:68 green:68 blue:68 alpha:255];
     self.messageBody.numberOfLines = 0;
-    self.messageBody.textAlignment = NSTextAlignmentLeft;
+    self.messageBody.textAlignment = NSTextAlignmentCenter;
     self.messageBody.font = [ThemeManager lightFontOfSize:11];
     
-    self.date.x = self.width - 78;
+    self.date.x = 60;
     self.date.y = (self.height)/2.0;
-    self.date.width = 50;
+    self.date.width = 190;
     self.date.y = 22;
+    self.date.textColor = [UIColor unnormalizedColorWithRed:68 green:68 blue:68 alpha:127];
     self.date.numberOfLines = 1;
-    self.date.textAlignment = NSTextAlignmentRight;
+    self.date.textAlignment = NSTextAlignmentCenter;
     self.date.height = 15;
     self.date.font = [ThemeManager lightFontOfSize:9];
     
@@ -132,6 +135,7 @@
                                   context:nil];
     
     self.messageBody.height = messageBodyRect.size.height + 10;
+    self.date.y = self.messageBody.height + self.messageBody.y - 3;
     
     [self.thumbnail sd_setImageWithURL:feedItem.thumbnailURL];
     self.thumbnail.layer.cornerRadius = 15;
@@ -142,8 +146,9 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:self.feedItem.message];
         NSRange attrStringRange = [self getAttributedTextRange:self.feedItem.message];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:11] range:attrStringRange];
         self.message.height = messageRect.size.height + 5;
+        self.date.y = self.message.height + 20;
         self.message.text = feedItem.message;
         self.message.attributedText = attrMessage;
         self.unfollowButton.hidden = YES;
@@ -155,10 +160,11 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:feedTitleString];
         NSRange attrStringRange = [self getAttributedTextRange:feedTitleString];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:11] range:attrStringRange];
         
         self.socialIcon.y = 25;
-        self.socialIcon.x = self.message.x + [attrMessage size].width - 3;
+        self.socialIcon.x = self.message.x + (self.message.width/2) + ([attrMessage size].width / 2) - 23;
+        self.message.x = self.message.x - 23;
         self.socialIcon.height = 10;
         self.socialIcon.width = 42;
         [self.socialIcon setImage:[UIImage imageNamed:@"twitterIcon"]];
@@ -174,10 +180,11 @@
         NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:feedTitleString];
         NSRange attrStringRange = [self getAttributedTextRange:feedTitleString];
         [attrMessage addAttribute:NSForegroundColorAttributeName value:[[ThemeManager sharedTheme] redColor] range:attrStringRange];
-        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:attrStringRange];
+        [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:11] range:attrStringRange];
         
         self.socialIcon.y = 25;
-        self.socialIcon.x = self.message.x + [attrMessage size].width - 3;
+        self.socialIcon.x = self.message.x + (self.message.width/2) + ([attrMessage size].width / 2) - 23;
+        self.message.x = self.message.x - 23;
         self.socialIcon.height = 10;
         self.socialIcon.width = 42;
         [self.socialIcon setImage:[UIImage imageNamed:@"facebookIcon"]];
@@ -194,11 +201,13 @@
         [self.socialImageView setImage:feedItem.image];
         self.socialImageView.width = feedItem.image.size.width;
         self.socialImageView.height = feedItem.image.size.height;
-        self.socialImageView.y = self.messageBody.height + 40;
+        self.socialImageView.y = self.messageBody.height + 50;
         self.socialImageView.centerX = (self.width - 20)/2.0;
     } else {
         [self.socialImageView setImage:nil];
     }
+    
+    self.thumbnail.centerY = (self.messageBody.y + self.messageBody.height + 15) / 2;
     
 }
 
