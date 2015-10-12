@@ -101,12 +101,24 @@
 
 -(void)shareButtonTouched:(id)sender
 {
-    NSMutableArray *sharingItems = [NSMutableArray new];
     
-    [sharingItems addObject:self.websiteUrl];
+    NSString *textToShare = [NSString stringWithFormat:@"Check this out %@", self.websiteUrl];
     
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
-    [self presentViewController:activityController animated:YES completion:nil];
+    NSArray *objectsToShare = @[textToShare, self.websiteUrl];
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToFlickr,
+                                   UIActivityTypePostToVimeo];
+    
+    activityVC.excludedActivityTypes = excludeActivities;
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
