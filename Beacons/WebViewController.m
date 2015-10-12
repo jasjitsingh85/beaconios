@@ -69,12 +69,44 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+    
+    UIButton *dismissButton = [[UIButton alloc] init];
+    dismissButton.size = CGSizeMake(25, 25);
+    //dismissButton.backgroundColor = [UIColor blackColor];
+    //dismissButton.x = -50;
+    [dismissButton setImage:[UIImage imageNamed:@"largeCrossout"] forState:UIControlStateNormal];
+    //button.backgroundColor = [UIColor clearColor];
+    //[self.feedbackButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
+    //[self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    //self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+    [dismissButton addTarget:self action:@selector(dismissModalViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:dismissButton];
+    
+    UIButton *shareButton = [[UIButton alloc] init];
+    shareButton.size = CGSizeMake(45, 40);
+    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [shareButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    shareButton.titleLabel.font = [ThemeManager regularFontOfSize:14];
+    [shareButton addTarget:self action:@selector(shareButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
+    
+    
     //self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.websiteTitle];
 //    if ([self.title isEqualToString:@"Venmo"])
 //    {
 //        [self.navigationController setNavigationBarHidden:YES animated:YES];
 //    }
+}
+
+-(void)shareButtonTouched:(id)sender
+{
+    NSMutableArray *sharingItems = [NSMutableArray new];
+    
+    [sharingItems addObject:self.websiteUrl];
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:sharingItems applicationActivities:nil];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
