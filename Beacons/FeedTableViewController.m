@@ -523,13 +523,10 @@
             self.eventCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        if (self.events.count > 0)
-        {
+        if (self.events.count > 0) {
             self.eventCell.events = self.events;
-        } else
-        {
-            self.eventCell.events = @[];
         }
+        
         return self.eventCell;
     } else {
         FeedItem *feedItem = self.feed[indexPath.row - 1];
