@@ -491,10 +491,18 @@
         Event *event = self.events[self.eventCell.pageControl.currentPage];
         self.webView.websiteUrl = event.websiteURL;
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
-        navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+        //navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
         [self presentViewController:navigationController
                                animated:YES
                              completion:nil];
+    } else {
+        FeedItem *feedItem = self.feed[indexPath.row - 1];
+        self.webView.websiteUrl = feedItem.url;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        //navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
     }
 }
 //

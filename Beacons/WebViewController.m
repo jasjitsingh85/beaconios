@@ -56,9 +56,6 @@
 {
     _websiteUrl = websiteUrl;
     
-    //self.websiteTitle = @"Test";
-    
-//    self.websiteUrl = websiteUrl;
     self.view = self.webView;
     
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:websiteUrl];
@@ -76,10 +73,6 @@
     //dismissButton.backgroundColor = [UIColor blackColor];
     //dismissButton.x = -50;
     [dismissButton setImage:[UIImage imageNamed:@"largeCrossout"] forState:UIControlStateNormal];
-    //button.backgroundColor = [UIColor clearColor];
-    //[self.feedbackButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
-    //[self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    //self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
     [dismissButton addTarget:self action:@selector(dismissModalViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:dismissButton];
     
@@ -91,20 +84,13 @@
     [shareButton addTarget:self action:@selector(shareButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
     
-    
     //self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.websiteTitle];
-//    if ([self.title isEqualToString:@"Venmo"])
-//    {
-//        [self.navigationController setNavigationBarHidden:YES animated:YES];
-//    }
 }
 
 -(void)shareButtonTouched:(id)sender
 {
     
-    NSString *textToShare = [NSString stringWithFormat:@"Check this out %@", self.websiteUrl];
-    
-    NSArray *objectsToShare = @[textToShare, self.websiteUrl];
+    NSArray *objectsToShare = @[self.websiteUrl];
     
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
     

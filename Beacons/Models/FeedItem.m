@@ -28,8 +28,13 @@
     if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
         self.imageURL = [NSURL URLWithString:imageUrl];
         [self getImage];
-        
     }
+    
+    NSString *url = [NSString stringWithFormat:@"%@", dictionary[@"url"]];
+    if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
+        self.url = [NSURL URLWithString:url];
+    }
+    
     self.name = dictionary[@"name"];
     
     NSString *dealPlaceString = dictionary[@"deal_place_id"];
