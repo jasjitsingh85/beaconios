@@ -674,7 +674,7 @@
     [self.view addSubview:self.mainScroll];
     
     //if (self.isPresent) {
-        [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
+        [self.getDealButton setTitle:@"CHECK IN" forState:UIControlStateNormal];
     //} else {
     //    [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
     //}
