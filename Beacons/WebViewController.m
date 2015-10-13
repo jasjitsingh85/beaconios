@@ -8,6 +8,7 @@
 
 #import "WebViewController.h"
 #import "NavigationBarTitleLabel.h"
+#import "LoadingIndictor.h"
 
 @interface WebViewController ()
 
@@ -56,11 +57,12 @@
 {
     _websiteUrl = websiteUrl;
     
+    [self.loadingIndicator startAnimating];
     self.view = self.webView;
-    
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:websiteUrl];
     [self.webView loadRequest:requestObj];
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -116,50 +118,23 @@
 #pragma mark - webview delegate methods
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    [self.webView addSubview:self.loadingIndicator];
-    self.loadingIndicator.center = self.webView.center;
-    [self.loadingIndicator startAnimating];
+//    [self.webView addSubview:self.loadingIndicator];
+//    self.loadingIndicator.center = self.webView.center;
+//    [self.loadingIndicator startAnimating];
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self.loadingIndicator stopAnimating];
-    [self.loadingIndicator removeFromSuperview];
+//    [self.loadingIndicator stopAnimating];
+//    [self.loadingIndicator removeFromSuperview];
+    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-//    NSLog(@"WORKING!");
-//    
-//    NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.websiteUrl];
-//    [self.webView loadRequest:requestObj];
     return YES;
     
-//    if ([self.title isEqualToString:@"Venmo"]) {
-//        NSString *URLString = [[request URL] absoluteString];
-//        if (![[self.url absoluteString] containsString:URLString]) {
-//            [self dismissViewControllerAnimated:YES completion:^{
-//                NSLog(@"%d",[URLString hasPrefix:@"https://www.getbeacons.com/api/venmo_oauth"]);
-//                if ([URLString hasPrefix:@"https://www.getbeacons.com/api/venmo_oauth"]) {
-//                    NSLog(@"HAS PREFIX");
-//                    if ([URLString containsString:@"User+denied+your+application"]) {
-//                        NSLog(@"USER DENIED ACCES");
-//                    } else {
-//                        NSLog(@"USER ACCEPTED ACCESS");
-//                        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSkippedVenmo];
-//                        NSLog(@"Hide Venmo %d", [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSkippedVenmo]);
-//                    }
-//                    NSURLRequest *requestObj = [NSURLRequest requestWithURL:self.url];
-//                    [self.webView loadRequest:requestObj];
-//                    //return YES;
-//                } else if ([URLString hasPrefix:@"https://venmo.com/w/signup"]) {
-//                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://venmo.com/w/signup?from=oauth&client_id=2565"]];
-//                }
-//            }];
-//            return YES;
-//        }
-//    }
-//    return YES;
 }
 
 @end
