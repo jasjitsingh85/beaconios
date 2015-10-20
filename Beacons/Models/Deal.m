@@ -84,15 +84,15 @@
 
 - (NSString *)hoursAvailableString
 {
-    DealHours *hours = [self.hours firstObject];
+//    DealHours *hours = [self.hours firstObject];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *comps = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
     comps.hour = 0;
     comps.minute = 0;
-    comps.second = hours.end;
+    comps.second = self.end;
     NSDate *date = [gregorian dateFromComponents:comps];
     NSString * endString = [date formattedTime];
-    comps.second = hours.start;
+    comps.second = self.start;
     date = [gregorian dateFromComponents:comps];
     NSString *startString = [date formattedTime];
     return [NSString stringWithFormat:@"%@-%@", [self checkString:startString], [self checkString:endString]];
@@ -100,15 +100,15 @@
 
 - (NSString *)endsAtString
 {
-    DealHours *hours = [self.hours firstObject];
+//    DealHours *hours = [self.hours firstObject];
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *comps = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
     comps.hour = 0;
     comps.minute = 0;
-    comps.second = hours.end;
+    comps.second = self.end;
     NSDate *date = [gregorian dateFromComponents:comps];
     NSString * endString = [date formattedTime];
-    comps.second = hours.start;
+//    comps.second = hours.start;
     date = [gregorian dateFromComponents:comps];
     return [NSString stringWithFormat:@"%@", [self checkString:endString]];
 }
@@ -132,40 +132,65 @@
 //    }
 //}
 
+- (DealHours *)getTodayDealHour
+{
+    self.todayDealHour = [self.hours firstObject];
+    for (DealHours *hour in self.hours)
+    {
+        if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
+            self.todayDealHour = hour;
+            return self.todayDealHour;
+        } else if (hour.start > self.nowInSeconds && hour.start < self.todayDealHour.start) {
+            self.todayDealHour = hour;
+        }
+    }
+    return self.todayDealHour;
+}
+
+- (DealHours *)getTomorrowDealHour
+{
+    if (self.todayDealHour.end == 86400) {
+        NSDate *now = [NSDate date];
+        int daysToAdd = 1;
+        NSDate *tomorrow = [now dateByAddingTimeInterval:60 * 60 * 24 * daysToAdd];
+        
+        for (DealHours *hour in self.hours)
+        {
+            if ([hour isAvailableAtDate:tomorrow] && hour.start == 0 && hour.end != 86400)
+            {
+                return hour;
+            }
+        }
+        return nil;
+    } else {
+        return nil;
+    }
+}
+
 - (NSString *)dealStartString
 {
-    DealHours *hours = [self.hours firstObject];
+//    DealHours *hours = [self.hours firstObject];
+    
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
     NSDateComponents *now = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
     
-    now.second = (60*60*now.hour) + (60*now.minute) + now.second;
+    self.nowInSeconds = (60*60*now.hour) + (60*now.minute) + now.second;
     
-    if (now.second > hours.start && now.second < hours.end) {
+    DealHours *todayDealHour = [self getTodayDealHour];
+    DealHours *tomorrowDealHour = [self getTomorrowDealHour];
+    
+    self.start = todayDealHour.start;
+    if (tomorrowDealHour == nil) {
+        self.end = todayDealHour.end;
+    } else {
+        self.end = tomorrowDealHour.end;
+    }
+    
+    if (self.nowInSeconds > self.start && self.nowInSeconds < todayDealHour.end) {
         NSString *endsAtString = [NSString stringWithFormat:@"Ends at %@", [self endsAtString]];
         return endsAtString;
-    } else if (now.second < hours.start) {
-//        //const float roundingValue = 0.5;
-//        CGFloat timeTillDeal = (hours.start - now.second)/(60*60);
-//        timeTillDeal = round(timeTillDeal * 2.0)/2.0;
-//        //int multiplier = floor(timeTillDeal / roundingValue);
-//        NSString *hourString;
-//        if (timeTillDeal == 1) {
-//            hourString = @"hour";
-//        } else {
-//            hourString = @"hours";
-//        }
-//        if (timeTillDeal == 0) {
-//            return @"Now";
-//        } else {
-//            if (timeTillDeal == (int)timeTillDeal) {
-//                NSString *timeTillDealString = [NSString stringWithFormat: @"%i", (int)timeTillDeal];
-//                return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];
-//            } else {
-//                NSString *timeTillDealString = [NSString stringWithFormat: @"%.1f", (timeTillDeal)];
-//                return [NSString stringWithFormat: @"In %@ %@", timeTillDealString, hourString];
-//            }
-//        }
+    } else if (now.second < self.start) {
         return [self hoursAvailableString];
     } else {
         return @"";

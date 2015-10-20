@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class Venue;
+@class Venue, DealHours;
 @interface Deal : NSObject
 
 @property (strong, nonatomic) NSNumber *dealID;
@@ -34,6 +34,10 @@
 @property (assign, nonatomic) BOOL rewardEligibility;
 @property (assign, nonatomic) BOOL isRewardItem;
 @property (assign, nonatomic) BOOL isFollowed;
+@property (assign, nonatomic) long nowInSeconds;
+@property (assign, nonatomic) long start;
+@property (assign, nonatomic) long end;
+@property (strong, nonatomic) DealHours *todayDealHour;
 
 @property (readonly) NSString *hoursAvailableString;
 @property (readonly) NSString *dealStartString;

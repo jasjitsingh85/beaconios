@@ -29,9 +29,9 @@
     NSDateComponents *comps = [gregorian components:NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:date];
     NSInteger weekday = [comps weekday];
     BOOL availableToday = [[self.days substringWithRange:NSMakeRange(weekday, 1)] isEqualToString:@"1"];
-    NSTimeInterval time = comps.second + 60*comps.minute + 60*60*comps.hour;
-    return availableToday && (time <= self.end && time >= self.start);
-
+    //NSTimeInterval time = comps.second + 60*comps.minute + 60*60*comps.hour;
+    //return availableToday && (time <= self.end && time >= self.start);
+    return availableToday;
 }
 
 @end
