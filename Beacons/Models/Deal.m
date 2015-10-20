@@ -117,6 +117,8 @@
 {
     if ([string isEqualToString:@"12:00AM"]) {
         return @"Midnight";
+    } else if ([string isEqualToString:@"12:00PM"]) {
+        return @"Noon";
     } else {
         return string;
     }
