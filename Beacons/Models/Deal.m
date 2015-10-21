@@ -204,7 +204,7 @@
     if (self.nowInSeconds > self.start && self.nowInSeconds < todayDealHour.end) {
         NSString *endsAtString = [NSString stringWithFormat:@"Ends at %@", [self endsAtString]];
         return endsAtString;
-    } else if (now.second < self.start) {
+    } else if (self.nowInSeconds < self.start) {
         return [self hoursAvailableString];
     } else {
         return @"";
