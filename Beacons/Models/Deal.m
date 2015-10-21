@@ -136,7 +136,7 @@
 
 - (DealHours *)getTodayDealHour
 {
-    self.todayDealHour = [self.hours firstObject];
+    //self.todayDealHour = [self.hours firstObject];
     NSDate *now = [NSDate date];
     for (DealHours *hour in self.hours)
     {
