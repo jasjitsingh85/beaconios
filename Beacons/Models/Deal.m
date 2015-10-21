@@ -137,12 +137,13 @@
 - (DealHours *)getTodayDealHour
 {
     self.todayDealHour = [self.hours firstObject];
+    NSDate *now = [NSDate date];
     for (DealHours *hour in self.hours)
     {
-        if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
+        if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start && [hour isAvailableAtDate:now]) {
             self.todayDealHour = hour;
             return self.todayDealHour;
-        } else if (hour.start > self.nowInSeconds && hour.start < self.todayDealHour.start) {
+        } else if (hour.start > self.nowInSeconds && hour.start < self.todayDealHour.start && [hour isAvailableAtDate:now]) {
             self.todayDealHour = hour;
         }
     }
