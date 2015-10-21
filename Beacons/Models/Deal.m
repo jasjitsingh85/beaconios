@@ -154,7 +154,7 @@
         if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
             self.todayDealHour = hour;
             return self.todayDealHour;
-        } else if (hour.start > self.nowInSeconds && hour.start < self.todayDealHour.start) {
+        } else if (hour.start > self.nowInSeconds && hour.start > self.todayDealHour.start) {
             self.todayDealHour = hour;
         }
     }
