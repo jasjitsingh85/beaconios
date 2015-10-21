@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSNumber *inviteRequirement;
 @property (strong, nonatomic) NSNumber *bonusRequirement;
 @property (strong, nonatomic) NSArray *hours;
+@property (strong, nonatomic) NSMutableArray *todayDealHours;
 @property (strong, nonatomic) Venue *venue;
 @property (assign, nonatomic) BOOL groupDeal;
 @property (assign, nonatomic) BOOL inAppPayment;
