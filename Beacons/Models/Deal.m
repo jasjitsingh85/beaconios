@@ -149,16 +149,21 @@
     }
     
     self.todayDealHour = [self.todayDealHours firstObject];
-    long timeDiff = self.todayDealHour.start - self.nowInSeconds;
+    long timeDiff = 100000000;
+    NSLog(@"%@, initialTimeDiff: %ld", self.venue.name, timeDiff);
     for (DealHours *hour in self.todayDealHours)
     {
+        NSLog(@"%@, timeDiff: %f", self.venue.name, (hour.start - self.nowInSeconds));
         if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
             self.todayDealHour = hour;
             return self.todayDealHour;
-        } else if (hour.start > self.nowInSeconds && ((hour.start - self.nowInSeconds) < timeDiff)) {
-            self.todayDealHour = hour;
+        } else if (hour.start > self.nowInSeconds) {
+            if ((hour.start - self.nowInSeconds) < timeDiff){
+                self.todayDealHour = hour;
+            }
         }
     }
+    NSLog(@"%@, %f", self.venue.name, self.todayDealHour.start);
     return self.todayDealHour;
 }
 
