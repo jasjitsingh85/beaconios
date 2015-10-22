@@ -159,6 +159,7 @@
             return self.todayDealHour;
         } else if (hour.start > self.nowInSeconds) {
             if ((hour.start - self.nowInSeconds) < timeDiff){
+                timeDiff = hour.start - self.nowInSeconds;
                 self.todayDealHour = hour;
             }
         }
