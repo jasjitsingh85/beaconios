@@ -150,10 +150,8 @@
     
     self.todayDealHour = [self.todayDealHours firstObject];
     long timeDiff = 100000000;
-    NSLog(@"%@, initialTimeDiff: %ld", self.venue.name, timeDiff);
     for (DealHours *hour in self.todayDealHours)
     {
-        NSLog(@"%@, timeDiff: %f", self.venue.name, (hour.start - self.nowInSeconds));
         if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
             self.todayDealHour = hour;
             return self.todayDealHour;
@@ -164,7 +162,6 @@
             }
         }
     }
-    NSLog(@"%@, %f", self.venue.name, self.todayDealHour.start);
     return self.todayDealHour;
 }
 
@@ -218,5 +215,20 @@
     }
 }
 
+- (BOOL) isAvailableAtDateAndTime:(NSDate *)date
+{
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents *now = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:[NSDate date]];
+    
+    self.nowInSeconds = (60*60*now.hour) + (60*now.minute) + now.second;
+    
+    for (DealHours *hour in self.todayDealHours) {
+        if (self.nowInSeconds < hour.end && self.nowInSeconds > hour.start) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

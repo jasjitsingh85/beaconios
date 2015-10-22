@@ -22,36 +22,35 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
-  - Braintree (3.8.2):
-    - Braintree/API (= 3.8.2)
-    - Braintree/Coinbase (= 3.8.2)
-    - Braintree/Drop-In (= 3.8.2)
-    - Braintree/Payments (= 3.8.2)
-    - Braintree/PayPal (= 3.8.2)
-    - Braintree/UI (= 3.8.2)
-    - Braintree/Venmo (= 3.8.2)
-  - Braintree/API (3.8.2)
-  - Braintree/Coinbase (3.8.2):
+  - Braintree (3.9.6):
+    - Braintree/API (= 3.9.6)
+    - Braintree/Coinbase (= 3.9.6)
+    - Braintree/Drop-In (= 3.9.6)
+    - Braintree/Payments (= 3.9.6)
+    - Braintree/PayPal (= 3.9.6)
+    - Braintree/UI (= 3.9.6)
+    - Braintree/Venmo (= 3.9.6)
+  - Braintree/API (3.9.6)
+  - Braintree/Coinbase (3.9.6):
     - Braintree/API
-    - coinbase-official/OAuth (~> 2.1.1)
-  - Braintree/Drop-In (3.8.2):
+  - Braintree/Drop-In (3.9.6):
     - Braintree/API
     - Braintree/Coinbase
     - Braintree/Payments
     - Braintree/PayPal
     - Braintree/UI
     - Braintree/Venmo
-  - Braintree/Payments (3.8.2):
+  - Braintree/Payments (3.9.6):
     - Braintree/API
     - Braintree/Coinbase
     - Braintree/PayPal
     - Braintree/Venmo
-  - Braintree/PayPal (3.8.2):
+  - Braintree/PayPal (3.9.6):
     - Braintree/API
     - Braintree/UI
-  - Braintree/UI (3.8.2):
+  - Braintree/UI (3.9.6):
     - Braintree/API
-  - Braintree/Venmo (3.8.2):
+  - Braintree/Venmo (3.9.6):
     - Braintree/API
   - BSKeyboardControls (2.2)
   - CCTemplate (0.2.0)
@@ -61,8 +60,7 @@ PODS:
   - CocoaLumberjack/Core (1.6.5.1)
   - CocoaLumberjack/Extensions (1.6.5.1):
     - CocoaLumberjack/Core
-  - coinbase-official/OAuth (2.1.4)
-  - CrittercismSDK (4.3.3)
+  - CrittercismSDK (5.4.0)
   - FBSDKCoreKit (4.1.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.1.0)
@@ -94,6 +92,7 @@ PODS:
   - FormatterKit/UnitOfInformationFormatter (1.4.3)
   - FormatterKit/URLRequestFormatter (1.4.3)
   - Foursquare-iOS-API (2.0)
+  - Kochava (20151019)
   - libPhoneNumber-iOS (0.8.5)
   - MaveSDK (0.6.3):
     - CCTemplate (= 0.2.0)
@@ -119,6 +118,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - FormatterKit
   - Foursquare-iOS-API (~> 2.0)
+  - Kochava
   - MaveSDK
   - MBProgressHUD
   - Mixpanel (~> 2.3.6)
@@ -131,17 +131,17 @@ SPEC CHECKSUMS:
   AHAlertView: 38dcd9e1e3c9c2e5d4da82dfd519d78fea4cad9a
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  Braintree: 080df550178940580e54b4b1acad8beb13839f29
+  Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   CCTemplate: f00efa85dad31e12b8a766b8e8198eb772c71c4f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
-  coinbase-official: 4ad3ac862840657b4184345eb84af8166ab2b04e
-  CrittercismSDK: 6f26c25dacacc71fed8018d7fbb2761578bbb271
+  CrittercismSDK: 6392d3628b4ea043a3d00ef745cf601a5049b394
   FBSDKCoreKit: 469ed167195f860dbd2b4c4bbaa33d2e90598db9
   FBSDKLoginKit: ff6224762732e3698f30942e4544321b8c7a23e6
   FBSDKShareKit: 8002faf0c564ff3625eadd16e506b0b0fbf3adef
   FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c
   Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
+  Kochava: e657d83fdd14b6c7103706cb62bfb529ac6694b5
   libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
   MaveSDK: 20e8a620254bff1f858d7a6586b4ba19ff6a1e22
   MBProgressHUD: 8688c331cb64702283be37ab8d7d329cdd25f251
@@ -150,4 +150,4 @@ SPEC CHECKSUMS:
   SDWebImage: ed3095af2ff88b436426037444979b917f6c5575
   UIView+Positioning: e3bf0946adc9d174b9bac668d4a39ecd850c813f
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

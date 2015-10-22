@@ -46,5 +46,6 @@
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (BOOL)isAvailableAtDate:(NSDate *)date;
+- (BOOL) isAvailableAtDateAndTime:(NSDate *)date;
 
 @end
