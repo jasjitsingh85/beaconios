@@ -223,7 +223,7 @@
     body.font = [ThemeManager lightFontOfSize:12];
     body.numberOfLines = 0;
     body.centerX = self.view.width/2.0;
-    body.text = @"With the Hotspot newsfeed you'll see news, offers, and events at your favorite places. Follow some venues to see what's going on right now!";
+    body.text = @"With Hotspot's newsfeed, you'll see events, updates and specials from your favorite places. Follow venues to see what's going on tonight!";
     [self.emptyFeedView addSubview:body];
     
     UILabel *recommendationHeader = [[UILabel alloc] initWithFrame:CGRectMake(0, 160, self.view.width, 20)];
