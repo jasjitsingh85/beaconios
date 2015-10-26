@@ -813,7 +813,22 @@ typedef enum dealTypeStates
 {
     
     [self getFavoriteFeed];
-    [self reloadDeals];
+    [self reloadDealsInSameLocation];
+}
+
+-(void)reloadDealsInSameLocation
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    self.mapCenter = [self.mapView centerCoordinate];
+    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
+    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
+        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+        self.loadingDeals = NO;
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [self hideRedoSearchContainer];
+        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
+    }];
 }
 
 //- (void) updateDealInMap
@@ -1374,17 +1389,19 @@ typedef enum dealTypeStates
         [self toggleMapViewDealWithoutTouch];
     }
     
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    self.mapCenter = [self.mapView centerCoordinate];
-    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
-    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
-        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
-        self.loadingDeals = NO;
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        [self hideRedoSearchContainer];
-        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
-    }];
+    [self reloadDealsInSameLocation];
+    
+//    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+//    self.mapCenter = [self.mapView centerCoordinate];
+//    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
+//    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
+//        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+//        self.loadingDeals = NO;
+//        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+//        [self hideRedoSearchContainer];
+//        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
+//    }];
     
 //    if (self.deals.count > 0){
 //        self.dealInView = self.deals[0];

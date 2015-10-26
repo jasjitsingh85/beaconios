@@ -47,6 +47,8 @@
 @property (strong, nonatomic) DealTableViewEventCell *eventCell;
 @property (strong, nonatomic) WebViewController *webView;
 
+//@property (strong, nonatomic) UINavigationController *navigationWebviewController;
+
 @end
 
 @implementation FeedTableViewController

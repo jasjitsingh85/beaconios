@@ -57,7 +57,7 @@
 {
     _websiteUrl = websiteUrl;
     
-    [self.loadingIndicator startAnimating];
+    //[self.loadingIndicator startAnimating];
     self.view = self.webView;
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:websiteUrl];
     [self.webView loadRequest:requestObj];
