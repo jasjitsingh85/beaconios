@@ -15,8 +15,11 @@
 #import "DealTableViewEventCell.h"
 #import "NavigationBarTitleLabel.h"
 #import "ContactManager.h"
+#import "SetupNewsfeedPopupView.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "WebViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface FeedTableViewController () <UITableViewDataSource, UITableViewDelegate>
 //<UITableViewDataSource, UITableViewDelegate>
@@ -46,6 +49,7 @@
 
 @property (strong, nonatomic) DealTableViewEventCell *eventCell;
 @property (strong, nonatomic) WebViewController *webView;
+@property (strong, nonatomic) SetupNewsfeedPopupView *modal;
 
 //@property (strong, nonatomic) UINavigationController *navigationWebviewController;
 
@@ -84,6 +88,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedFinishedRefreshing:) name:kFeedFinishRefreshNotification object:nil];
     
     self.isViewShowing = NO;
+    
+    self.modal = [[SetupNewsfeedPopupView alloc] init];
     
     if (!self) {
         return nil;
@@ -370,7 +376,7 @@
     
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.syncContactsButton setTitle:@"SEE FRIENDS ON HOTSPOT" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"SETUP NEWSFEED" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     
@@ -380,7 +386,7 @@
     } else {
         self.syncContactsButtonContainer.hidden = YES;
     }
-    
+
 }
 
 -(void) addFriendsButtonTouched:(id)sender
@@ -446,6 +452,8 @@
             self.emptyFeedView.hidden = NO;
         }
     }
+    
+    [self showSetupModal];
 }
 
 -(void) viewWillDisappear:(BOOL)animated {
@@ -457,6 +465,8 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
     }
+    
+    [self hideSetupModal];
     
     [super viewWillDisappear:animated];
 }
@@ -689,6 +699,16 @@
         self.thirdRecFollowButton.titleLabel.textColor = [UIColor blackColor];
         self.thirdRecFollowButton.layer.borderColor = [[UIColor blackColor] CGColor];
     }
+}
+
+- (void) showSetupModal
+{
+    [self.modal show];
+}
+
+- (void) hideSetupModal
+{
+    [self.modal dismiss];
 }
 
 @end

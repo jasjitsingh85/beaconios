@@ -116,6 +116,7 @@
 		41639ADE1B3CB27300E56734 /* thirdGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639AD91B3CB27200E56734 /* thirdGradientBackground@2x.png */; };
 		41639ADF1B3CB27300E56734 /* secondGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639ADA1B3CB27200E56734 /* secondGradientBackground@2x.png */; };
 		41639AE01B3CB27300E56734 /* firstGradientBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41639ADB1B3CB27200E56734 /* firstGradientBackground@2x.png */; };
+		41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */; settings = {ASSET_TAGS = (); }; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
 		41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */; };
@@ -489,6 +490,8 @@
 		41639AD91B3CB27200E56734 /* thirdGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thirdGradientBackground@2x.png"; sourceTree = "<group>"; };
 		41639ADA1B3CB27200E56734 /* secondGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "secondGradientBackground@2x.png"; sourceTree = "<group>"; };
 		41639ADB1B3CB27200E56734 /* firstGradientBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firstGradientBackground@2x.png"; sourceTree = "<group>"; };
+		41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNewsfeedPopupView.m; sourceTree = "<group>"; };
+		41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNewsfeedPopupView.h; sourceTree = "<group>"; };
 		41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shareIcon@2x.png"; sourceTree = "<group>"; };
@@ -933,6 +936,8 @@
 				4158AE681B4648780034BA4A /* FreeDrinksExplanationPopupView.h */,
 				41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */,
 				41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */,
+				41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */,
+				41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */,
 				41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */,
 				41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */,
 				410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */,
@@ -1845,6 +1850,7 @@
 			files = (
 				963399481758512100AF9D89 /* main.m in Sources */,
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
+				41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */,
 				9671D03118273BE700D03D66 /* LockedViewController.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,

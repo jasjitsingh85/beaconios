@@ -16,12 +16,12 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - Bolts (1.2.0):
-    - Bolts/AppLinks (= 1.2.0)
-    - Bolts/Tasks (= 1.2.0)
-  - Bolts/AppLinks (1.2.0):
+  - Bolts (1.4.0):
+    - Bolts/AppLinks (= 1.4.0)
+    - Bolts/Tasks (= 1.4.0)
+  - Bolts/AppLinks (1.4.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.2.0)
+  - Bolts/Tasks (1.4.0)
   - Braintree (3.9.6):
     - Braintree/API (= 3.9.6)
     - Braintree/Coinbase (= 3.9.6)
@@ -61,18 +61,18 @@ PODS:
   - CocoaLumberjack/Extensions (1.6.5.1):
     - CocoaLumberjack/Core
   - CrittercismSDK (5.4.0)
-  - FBSDKCoreKit (4.1.0):
+  - FBSDKCoreKit (4.7.1):
     - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.1.0)
-    - FBSDKCoreKit/no-arc (= 4.1.0)
-  - FBSDKCoreKit/arc (4.1.0):
+    - FBSDKCoreKit/arc (= 4.7.1)
+    - FBSDKCoreKit/no-arc (= 4.7.1)
+  - FBSDKCoreKit/arc (4.7.1):
     - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.1.0):
+  - FBSDKCoreKit/no-arc (4.7.1):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.1.0):
+  - FBSDKLoginKit (4.7.1):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.1.0):
+  - FBSDKShareKit (4.7.1):
     - FBSDKCoreKit
   - FormatterKit (1.4.3):
     - FormatterKit/AddressFormatter (= 1.4.3)
@@ -130,15 +130,15 @@ SPEC CHECKSUMS:
   AFNetworking: cf8e418e16f0c9c7e5c3150d019a3c679d015018
   AHAlertView: 38dcd9e1e3c9c2e5d4da82dfd519d78fea4cad9a
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   CCTemplate: f00efa85dad31e12b8a766b8e8198eb772c71c4f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
   CrittercismSDK: 6392d3628b4ea043a3d00ef745cf601a5049b394
-  FBSDKCoreKit: 469ed167195f860dbd2b4c4bbaa33d2e90598db9
-  FBSDKLoginKit: ff6224762732e3698f30942e4544321b8c7a23e6
-  FBSDKShareKit: 8002faf0c564ff3625eadd16e506b0b0fbf3adef
+  FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
+  FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  FBSDKShareKit: 213adf63e073f41a346b0e7a689805880dc5150e
   FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c
   Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
   Kochava: e657d83fdd14b6c7103706cb62bfb529ac6694b5
