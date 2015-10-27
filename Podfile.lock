@@ -53,7 +53,6 @@ PODS:
   - Braintree/Venmo (3.9.6):
     - Braintree/API
   - BSKeyboardControls (2.2)
-  - CCTemplate (0.2.0)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core (= 1.6.5.1)
     - CocoaLumberjack/Extensions (= 1.6.5.1)
@@ -93,10 +92,6 @@ PODS:
   - FormatterKit/URLRequestFormatter (1.4.3)
   - Foursquare-iOS-API (2.0)
   - Kochava (20151019)
-  - libPhoneNumber-iOS (0.8.5)
-  - MaveSDK (0.6.3):
-    - CCTemplate (= 0.2.0)
-    - libPhoneNumber-iOS (~> 0.8.3)
   - MBProgressHUD (0.8)
   - Mixpanel (2.3.6)
   - MSDynamicsDrawerViewController (1.0.2)
@@ -119,7 +114,6 @@ DEPENDENCIES:
   - FormatterKit
   - Foursquare-iOS-API (~> 2.0)
   - Kochava
-  - MaveSDK
   - MBProgressHUD
   - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController (~> 1.0.0)
@@ -133,7 +127,6 @@ SPEC CHECKSUMS:
   Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
   Braintree: 74f0bd85743c2227147c361cc2c5c9aefe083ae8
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
-  CCTemplate: f00efa85dad31e12b8a766b8e8198eb772c71c4f
   CocoaLumberjack: 5e26ebef5a48962d1713ae6cb01da30384f3f14e
   CrittercismSDK: 6392d3628b4ea043a3d00ef745cf601a5049b394
   FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
@@ -142,8 +135,6 @@ SPEC CHECKSUMS:
   FormatterKit: 291aab3fe2f921c0ccee0b66a5f1edff97a4ef9c
   Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
   Kochava: e657d83fdd14b6c7103706cb62bfb529ac6694b5
-  libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
-  MaveSDK: 20e8a620254bff1f858d7a6586b4ba19ff6a1e22
   MBProgressHUD: 8688c331cb64702283be37ab8d7d329cdd25f251
   Mixpanel: dc56111f1b327b38e0ae5a805f33f5d0c9e7f7f2
   MSDynamicsDrawerViewController: 7c95dcc55f5558a778294a3983efbcb85e9a9942
