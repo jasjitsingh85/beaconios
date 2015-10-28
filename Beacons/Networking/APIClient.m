@@ -486,4 +486,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"view-tracker/" parameters:parameters success:success failure:failure];
 }
 
+- (void)postFacebookToken:(NSString *)fb_token success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"fb_token" : fb_token };
+    [[APIClient sharedClient] postPath:@"facebook-token/" parameters:parameters success:success failure:failure];
+}
+
 @end

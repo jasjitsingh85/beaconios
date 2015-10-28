@@ -7,7 +7,7 @@
 //
 
 #import "RegistrationFlowViewController.h"
-#import "IntroWalkthroughViewController.h"
+//#import "IntroWalkthroughViewController.h"
 #import "RegisterViewController.h"
 
 @interface RegistrationFlowViewController ()
@@ -20,14 +20,15 @@
 {
     [super viewDidLoad];
     
-    self.walkthroughViewController = [[IntroWalkthroughViewController alloc] init];
-    [self addChildViewController:self.walkthroughViewController];
-    [self.view addSubview:self.walkthroughViewController.view];
+//    self.walkthroughViewController = [[IntroWalkthroughViewController alloc] init];
+//    [self addChildViewController:self.walkthroughViewController];
+//    [self.view addSubview:self.walkthroughViewController.view];
     
     self.registerViewController = [[RegisterViewController alloc] init];
     [self addChildViewController:self.registerViewController];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
-    [self.walkthroughViewController.registerButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
+//    [self.walkthroughViewController.registerButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -45,22 +46,22 @@
     
 }
 
-- (void)transitionToRegisterView
-{
-//    self.registerViewController.view.alpha = 0;
-    self.registerViewController.view.transform = CGAffineTransformMakeTranslation(self.registerViewController.view.frame.size.width, 0);
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    [self transitionFromViewController:self.walkthroughViewController toViewController:self.registerViewController duration:0.25 options:0 animations:^{
-        self.registerViewController.view.transform = CGAffineTransformIdentity;
-        self.walkthroughViewController.view.transform = CGAffineTransformMakeTranslation(-self.walkthroughViewController.view.frame.size.width, 0);
-    } completion:^(BOOL finished) {
-        self.walkthroughViewController.view.transform = CGAffineTransformIdentity;
-    }];
-}
+//- (void)transitionToRegisterView
+//{
+////    self.registerViewController.view.alpha = 0;
+//    self.registerViewController.view.transform = CGAffineTransformMakeTranslation(self.registerViewController.view.frame.size.width, 0);
+    //[[UIApplication sharedApplication] setStatusBarHidden:NO];
+    //[self transitionFromViewController:self.walkthroughViewController toViewController:self.registerViewController duration:0.25 options:0 animations:^{
+//        self.registerViewController.view.transform = CGAffineTransformIdentity;
+//        self.walkthroughViewController.view.transform = CGAffineTransformMakeTranslation(-self.walkthroughViewController.view.frame.size.width, 0);
+//    } completion:^(BOOL finished) {
+//        self.walkthroughViewController.view.transform = CGAffineTransformIdentity;
+//    }];
+//}
 
-- (void)finishedWalkthrough:(IntroWalkthroughViewController *)introWalkthroughViewController
-{
-    [self transitionToRegisterView];
-}
+//- (void)finishedWalkthrough:(IntroWalkthroughViewController *)introWalkthroughViewController
+//{
+//    [self transitionToRegisterView];
+//}
 
 @end

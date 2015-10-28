@@ -12,6 +12,6 @@
 @interface RegistrationFlowViewController : UIViewController
 
 @property (strong, nonatomic) RegisterViewController *registerViewController;
-@property (strong, nonatomic) IntroWalkthroughViewController *walkthroughViewController;
+//@property (strong, nonatomic) IntroWalkthroughViewController *walkthroughViewController;
 
 @end

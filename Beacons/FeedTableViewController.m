@@ -453,7 +453,31 @@
         }
     }
     
-    [self showSetupModal];
+    [self incrementAndSaveNewsfeedLaunchCount];
+}
+
+- (void) incrementAndSaveNewsfeedLaunchCount
+{
+    if (![self hasAcceptedPermissions]) {
+        NSInteger newsfeedLaunchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"newsfeedLaunchCount"];
+        newsfeedLaunchCount++;
+        [[NSUserDefaults standardUserDefaults] setInteger:newsfeedLaunchCount  forKey:@"newsfeedLaunchCount"];
+        
+        if ((newsfeedLaunchCount) % 3 == 1) {
+            [self showSetupModal];
+        }
+    }
+}
+
+-(BOOL) hasAcceptedPermissions
+{
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined) {
+        return YES;
+    } else {
+       return NO;
+    }
+    
 }
 
 -(void) viewWillDisappear:(BOOL)animated {

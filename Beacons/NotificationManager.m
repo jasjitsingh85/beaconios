@@ -170,21 +170,21 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 
 #pragma mark - Local Notification Receiving
 
-- (void)didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
-    if (transitioningToForeground) {
-        NSNumber *beaconID = notification.userInfo[@"beaconID"];
-        NSNumber *dealID = notification.userInfo[@"dealID"];
-            if (beaconID) {
-                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
-            }
-            else if (dealID) {
-                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDealID:dealID];
-            }
-        
-    }
-}
+//- (void)didReceiveLocalNotification:(UILocalNotification *)notification
+//{
+//    BOOL transitioningToForeground = [UIApplication sharedApplication].applicationState == UIApplicationStateInactive;
+//    if (transitioningToForeground) {
+//        NSNumber *beaconID = notification.userInfo[@"beaconID"];
+//        //NSNumber *dealID = notification.userInfo[@"dealID"];
+//            if (beaconID) {
+//                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:YES];
+//            }
+//            else if (dealID) {
+//                [[AppDelegate sharedAppDelegate] setSelectedViewControllerToDealDetailWithDealID:dealID];
+//            }
+//        
+//    }
+//}
 
 
 @end

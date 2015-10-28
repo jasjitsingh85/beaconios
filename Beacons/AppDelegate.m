@@ -24,7 +24,8 @@
 #import "LocationTracker.h"
 #import "NotificationManager.h"
 #import "CrashManager.h"
-#import "RegistrationFlowViewController.h"
+//#import "RegistrationFlowViewController.h"
+#import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
 #import "BeaconProfileViewController.h"
 #import "PermissionsViewController.h"
@@ -38,7 +39,7 @@
 
 @interface AppDelegate()
 
-@property (strong, nonatomic) RegistrationFlowViewController *registerViewController;
+@property (strong, nonatomic) RegisterViewController *registerViewController;
 @property (strong, nonatomic) NSDictionary *tentativeAccountData;
 
 @end
@@ -120,7 +121,7 @@
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
-        self.registerViewController = [[RegistrationFlowViewController alloc] init];
+        self.registerViewController = [[RegisterViewController alloc] init];
         self.window.rootViewController = self.registerViewController;
     }
     else {
@@ -132,12 +133,12 @@
         [CrashManager setupForUser];
     }
     //see if launched from local notification
-    if (launchOptions) {
-        UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
-        if (notification) {
-            [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
-        }
-    }
+//    if (launchOptions) {
+//        UILocalNotification *notification = launchOptions[UIApplicationLaunchOptionsLocalNotificationKey];
+//        if (notification) {
+//            [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
+//        }
+//    }
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidEnterRegionNotification:) name:kDidEnterRegionNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidExitRegionNotification:) name:kDidExitRegionNotification object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedDidRangeBeaconNotification:) name:kDidRangeBeaconNotification object:nil];
@@ -194,20 +195,21 @@
             }
         }
     }
+
     if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [[LocationTracker sharedTracker] requestLocationPermission];
     }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
     [[RewardManager sharedManager] updateActiveVouchers:nil failure:nil];
-    //[FBSettings setDefaultAppID:kAppID];
     [FBSDKAppEvents activateApp];
-    
-    // Hotspot: Deals With Friends (iOS) installs
-    // Google iOS Download tracking snippet
-    // To track downloads of your app, add this snippet to your
-    // application delegate's application:didFinishLaunchingWithOptions: method.
-    
-//    [ACTConversionReporter reportWithConversionID:@"1059446729" label:@"LFWiCJLz2lwQyb-X-QM" value:@"0.00" isRepeatable:NO];
+    if ([FBSDKAccessToken currentAccessToken]) {
+        NSString *accessToken = [[FBSDKAccessToken currentAccessToken] tokenString];
+        [[APIClient sharedClient] postFacebookToken:accessToken success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"access token: %@", accessToken);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Facebook token failure");
+        }];
+    }
 }
 
 - (void)contactAuthorizationStatusDenied
@@ -281,7 +283,7 @@
 
 - (void)logoutOfServer
 {
-    self.registerViewController = [[RegistrationFlowViewController alloc] init];
+    self.registerViewController = [[RegisterViewController alloc] init];
     self.window.rootViewController = self.registerViewController;
     //nil out any view controllers that have user data
     [BeaconManager sharedManager].beacons = nil;
@@ -432,10 +434,10 @@
     [[NotificationManager sharedManager] didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
-}
+//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+//{
+//    [[NotificationManager sharedManager] didReceiveLocalNotification:notification];
+//}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {

@@ -44,7 +44,7 @@ Deal;
 //- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
-- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated;
-- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID;
+//- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated;
+//- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID;
 
 @end

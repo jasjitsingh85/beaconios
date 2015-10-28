@@ -129,20 +129,26 @@
     [self.doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:self.doneButton];
     
+    UIButton *linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    linkFacebookButton.backgroundColor=[UIColor darkGrayColor];
+    linkFacebookButton.frame=CGRectMake(0,200,180,40);
+    linkFacebookButton.centerX = self.imageView.width/2;
     
-    UIButton *myLoginButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    myLoginButton.backgroundColor=[UIColor darkGrayColor];
-    myLoginButton.frame=CGRectMake(0,200,180,40);
-    myLoginButton.centerX = self.imageView.width/2;
-    [myLoginButton setTitle: @"My Login Button" forState: UIControlStateNormal];
+    UIButton *syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    syncContactsButton.backgroundColor=[UIColor darkGrayColor];
+    syncContactsButton.frame=CGRectMake(0,200,180,40);
+    syncContactsButton.centerX = self.imageView.width/2;
     
-    // Handle clicks on the button
-    [myLoginButton
-     addTarget:self
-     action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    // Add the button to the view
-    [self.imageView addSubview:myLoginButton];
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [linkFacebookButton setTitle: @"Facebook Enabled" forState: UIControlStateNormal];
+    } else {
+        [linkFacebookButton setTitle: @"Enable Facebook" forState: UIControlStateNormal];
+        [linkFacebookButton
+         addTarget:self
+         action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
+
+    [self.imageView addSubview:linkFacebookButton];
     
     return self;
 }
@@ -205,7 +211,11 @@
          } else if (result.isCancelled) {
              NSLog(@"Cancelled");
          } else {
-            NSLog(@"access token: %@", result.token.tokenString);
+             [[APIClient sharedClient] postFacebookToken:result.token.tokenString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSLog(@"access token: %@", result.token.tokenString);
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"Facebook token failure");
+             }];
          }
      }];
 }
