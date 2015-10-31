@@ -107,6 +107,7 @@
 		4158AE751B4714D30034BA4A /* DealView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE741B4714D30034BA4A /* DealView.m */; };
 		4158AE781B472F340034BA4A /* HappyHourView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE771B472F340034BA4A /* HappyHourView.m */; };
 		415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415929701AFD8E37002BBCD0 /* mapMarker@2x.png */; };
+		417CE4961BE53C67009D4B9A /* setupNewsfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */; };
 		41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
@@ -458,6 +459,7 @@
 		4158AE761B472F2A0034BA4A /* HappyHourView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyHourView.h; sourceTree = "<group>"; };
 		4158AE771B472F340034BA4A /* HappyHourView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourView.m; sourceTree = "<group>"; };
 		415929701AFD8E37002BBCD0 /* mapMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapMarker@2x.png"; sourceTree = "<group>"; };
+		417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setupNewsfeed@2x.png"; sourceTree = "<group>"; };
 		41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNewsfeedPopupView.m; sourceTree = "<group>"; };
 		41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNewsfeedPopupView.h; sourceTree = "<group>"; };
 		41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealsIcon@2x.png"; sourceTree = "<group>"; };
@@ -1316,6 +1318,7 @@
 				4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */,
 				4105DA9B1B7D7DF10006B888 /* twitterIcon@2x.png */,
 				410D30F01B85760F00E749AA /* emptyNewsfeedIcon@2x.png */,
+				417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */,
 				41030F6E1B5C326B00252158 /* promoCode@2x.png */,
 				41148CB41B79BE9C00F4CA17 /* greyHamburger@2x.png */,
 				41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */,
@@ -1612,6 +1615,7 @@
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
+				417CE4961BE53C67009D4B9A /* setupNewsfeed@2x.png in Resources */,
 				41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
 				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,

@@ -17,6 +17,7 @@
 #import "Venue.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "ContactManager.h"
 
 @interface SetupNewsfeedPopupView()
 
@@ -24,6 +25,8 @@
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UITextView *inviteTextView;
 @property (strong, nonatomic) UIImageView *chatBubble;
+@property (strong, nonatomic) UIButton *syncContactsButton;
+@property (strong, nonatomic) UIButton *linkFacebookButton;
 
 @end
 
@@ -53,7 +56,7 @@
     self.inviteTextView.font = [ThemeManager lightFontOfSize:5.5*1.3];
     [self.chatBubble addSubview:self.inviteTextView];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"helpSign"]];
+    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setupNewsfeed"]];
     drinkIcon.size = CGSizeMake(30, 30);
     drinkIcon.centerX = self.width/2;
     drinkIcon.y = 130;
@@ -65,97 +68,121 @@
     headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
-    headerTitle.y = 150;
-    headerTitle.text = @"SETUP NEWSFEED";
+    headerTitle.y = 160;
+    headerTitle.text = @"NEWSFEED SETUP";
     [self.imageView addSubview:headerTitle];
     
     UILabel *callHeader = [[UILabel alloc] init];
-    callHeader.height = 30;
-    callHeader.width = self.width;
+    callHeader.height = 70;
+    callHeader.width = self.width - 150;
     callHeader.textAlignment = NSTextAlignmentCenter;
+    callHeader.numberOfLines = 0;
     callHeader.centerX = self.width/2;
     callHeader.font = [ThemeManager lightFontOfSize:12];
-    callHeader.y = 280;
-    callHeader.text = @"";
+    callHeader.y = 180;
+    callHeader.text = @"To ensure you see every update from friends and venues, we highly recommend linking facebook and syncing contacts.";
     [self.imageView addSubview:callHeader];
-    
-    UIButton *callButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    //self.doneButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    callButton.backgroundColor = [UIColor whiteColor];
-    callButton.size = CGSizeMake(230, 25);
-    callButton.centerX = self.width/2.0;
-    callButton.y = 305;
-    [callButton setTitle:@"" forState:UIControlStateNormal];
-    [callButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    callButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
-    [callButton addTarget:self action:@selector(callSupport) forControlEvents:UIControlEventTouchUpInside];
-    [self.imageView addSubview:callButton];
-    
-//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:12125551212"]]
-    
-//    UILabel *textLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 325, self.width - 110, 80)];
-//    textLabelLineTwo.centerX = self.width/2;
-//    textLabelLineTwo.font = [ThemeManager lightFontOfSize:12];
-//    textLabelLineTwo.textAlignment = NSTextAlignmentCenter;
-//    textLabelLineTwo.numberOfLines = 2;
-//    textLabelLineTwo.text = @"Redeem free drinks when you set a Hotspot. Free drinks are eligible for any drink that costs $5 or less.";
-//    [self.imageView addSubview:textLabelLineTwo];
-    
-//    NSRange range = NSMakeRange(0, 6);
-//    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:textLabelLineTwo.text];
-//    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
-//    textLabelLineTwo.attributedText = attributedText;
-    
-//    UIButton *launchInviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    launchInviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-//    launchInviteButton.size = CGSizeMake(240.25, 35);
-//    launchInviteButton.centerX = (self.width/2.0) - .75;
-//    launchInviteButton.y = 356;
-//    [launchInviteButton setTitle:@"GOT IT" forState:UIControlStateNormal];
-//    [launchInviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    launchInviteButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-//    [launchInviteButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-//    [self.imageView addSubview:launchInviteButton];
     
     self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     //self.doneButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
     self.doneButton.backgroundColor = [UIColor whiteColor];
     self.doneButton.size = CGSizeMake(230, 25);
     self.doneButton.centerX = self.width/2.0;
-    self.doneButton.y = 395;
+    self.doneButton.y = 390;
     [self.doneButton setTitle:@"I'll do this later" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.doneButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
     [self.doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:self.doneButton];
     
-    UIButton *linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    linkFacebookButton.backgroundColor=[UIColor darkGrayColor];
-    linkFacebookButton.frame=CGRectMake(0,200,180,40);
-    linkFacebookButton.centerX = self.imageView.width/2;
+    self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.linkFacebookButton.size = CGSizeMake(self.width - 50, 35);
+    self.linkFacebookButton.y = 270;
+    self.linkFacebookButton.width = 170;
+    self.linkFacebookButton.height = 35;
+    self.linkFacebookButton.centerX = self.imageView.width/2.0;
+    self.linkFacebookButton.layer.cornerRadius = 4;
+    self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
+    self.linkFacebookButton.layer.borderWidth = 1;
+    self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.linkFacebookButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     
-    UIButton *syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    syncContactsButton.backgroundColor=[UIColor darkGrayColor];
-    syncContactsButton.frame=CGRectMake(0,200,180,40);
-    syncContactsButton.centerX = self.imageView.width/2;
+    self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
+    self.syncContactsButton.layer.cornerRadius = 4;
+    self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
+    self.syncContactsButton.layer.borderWidth = 1;
+    self.syncContactsButton.frame=CGRectMake(0,330,170,35);
+    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.syncContactsButton.centerX = self.imageView.width/2;
     
     if ([FBSDKAccessToken currentAccessToken]) {
-        [linkFacebookButton setTitle: @"Facebook Enabled" forState: UIControlStateNormal];
+        [self changeFacebookButtonToCompletedState];
     } else {
-        [linkFacebookButton setTitle: @"Enable Facebook" forState: UIControlStateNormal];
-        [linkFacebookButton
-         addTarget:self
-         action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self changeFacebookButtonToIncompletedState];
+    }
+    
+    [self.linkFacebookButton
+     addTarget:self
+     action:@selector(facebookButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.syncContactsButton
+     addTarget:self
+     action:@selector(contactButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        [self changeContactButtonToActiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        [self changeContactButtonToInactiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [self changeContactButtonToSelectedState];
     }
 
-    [self.imageView addSubview:linkFacebookButton];
+    [self.imageView addSubview:self.linkFacebookButton];
+    [self.imageView addSubview:self.syncContactsButton];
     
     return self;
 }
 
--(void) callSupport
+-(void) changeFacebookButtonToCompletedState
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:12039367101"]];
+    [self.linkFacebookButton setTitle: @"Facebook Linked" forState: UIControlStateNormal];
+    self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+-(void) changeFacebookButtonToIncompletedState
+{
+    [self.linkFacebookButton setTitle: @"Link Facebook" forState: UIControlStateNormal];
+    self.linkFacebookButton.backgroundColor = [UIColor clearColor];
+    [self.linkFacebookButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+}
+
+-(void) changeContactButtonToActiveState
+{
+    [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    self.syncContactsButton.backgroundColor = [UIColor clearColor];
+    [self.syncContactsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    
+}
+
+-(void) changeContactButtonToSelectedState
+{
+    [self.syncContactsButton setTitle:@"Contacts Synced" forState:UIControlStateNormal];
+    self.syncContactsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.syncContactsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+-(void) changeContactButtonToInactiveState
+{
+    [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    self.syncContactsButton.backgroundColor = [UIColor grayColor];
+    self.syncContactsButton.layer.borderColor = [UIColor grayColor].CGColor;
 }
 
 - (void)show
@@ -199,25 +226,59 @@
     }];
 }
 
--(void)loginButtonClicked
+-(void)facebookButtonClicked
 {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login
-     logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
-     fromViewController:nil
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error) {
-             NSLog(@"Process error");
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-         } else {
-             [[APIClient sharedClient] postFacebookToken:result.token.tokenString success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 NSLog(@"access token: %@", result.token.tokenString);
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"Facebook token failure");
-             }];
-         }
-     }];
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [[[UIAlertView alloc] initWithTitle:@"Facebook Linked" message:@"You've already linked your facebook account to Hotspot" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    } else {
+        FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+        [login
+         logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
+         fromViewController:nil
+         handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+             if (error) {
+                 NSLog(@"Process error");
+             } else if (result.isCancelled) {
+                 NSLog(@"Cancelled");
+             } else {
+                 [[APIClient sharedClient] postFacebookToken:result.token.tokenString success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     NSLog(@"access token: %@", result.token.tokenString);
+                     [self checkPermissionsAndDismissModal];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"Facebook token failure");
+                 }];
+             }
+         }];
+    }
+}
+
+-(void) contactButtonClicked
+{
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            if (granted) {
+                [self changeContactButtonToSelectedState];
+                [self checkPermissionsAndDismissModal];
+            }
+        });
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        [[[UIAlertView alloc] initWithTitle:@"Syncing Contact Permission" message:@"To sync contacts, go to Settings > Hotspot and turn on contact permissions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [[[UIAlertView alloc] initWithTitle:@"Contact Synced" message:@"You've already synced your contacts with Hotspot" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
+-(void) checkPermissionsAndDismissModal
+{
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined)
+    {
+        [self dismiss];
+    }
 }
 
 @end
