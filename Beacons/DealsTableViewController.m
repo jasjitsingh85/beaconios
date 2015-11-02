@@ -489,8 +489,6 @@ typedef enum dealTypeStates
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:newsfeedNavContainer];
     
-    [self getFavoriteFeed];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
@@ -520,7 +518,7 @@ typedef enum dealTypeStates
 
 - (void) getFavoriteFeed
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedStartRefreshNotification object:self userInfo:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedStartRefreshNotification object:self userInfo:nil];
     [[APIClient sharedClient] getFavoriteFeed:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self.feed removeAllObjects];
         [self.events removeAllObjects];
@@ -595,6 +593,8 @@ typedef enum dealTypeStates
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self getFavoriteFeed];
+    
     [super viewWillAppear:animated];
     if (!self.loadingDeals && !self.lastUpdatedDeals) {
         [self reloadDeals];
@@ -607,22 +607,6 @@ typedef enum dealTypeStates
     
     [[AnalyticsManager sharedManager] viewedDealTable];
 }
-
-//- (void)updateRewardItems
-//{
-//    [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
-//        self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
-//        if (self.numberOfRewardItems > 0) {
-//            self.hasRewardItem = YES;
-//        } else  {
-//            self.hasRewardItem = NO;
-//        }
-//        [self reloadDeals];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        self.rewardScore.text = @"0x";
-//    }];
-//}
 
 - (UIView *)enableLocationView
 {
