@@ -375,18 +375,22 @@
     [self.syncContactsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-    [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.syncContactsButton addTarget:self action:@selector(showSetupModal) forControlEvents:UIControlEventTouchUpInside];
     [self.syncContactsButton setTitle:@"SETUP NEWSFEED" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     
+    [self updateSetupNewsfeedButtonContainer];
+}
+
+-(void) updateSetupNewsfeedButtonContainer
+{
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined || ![FBSDKAccessToken currentAccessToken]) {
         self.syncContactsButtonContainer.hidden = NO;
     } else {
         self.syncContactsButtonContainer.hidden = YES;
     }
-
 }
 
 -(void) addFriendsButtonTouched:(id)sender
