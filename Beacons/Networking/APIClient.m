@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -490,6 +490,20 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{ @"fb_token" : fb_token };
     [[APIClient sharedClient] postPath:@"facebook-token/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getPlacesNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters;
+    if (radius != nil) {
+        parameters = @{@"latitude" : @(coordinate.latitude),
+                       @"longitude" : @(coordinate.longitude),
+                       @"radius" : radius };
+    } else {
+        parameters = @{@"latitude" : @(coordinate.latitude),
+                       @"longitude" : @(coordinate.longitude)};
+    }
+    [self getPath:@"places/" parameters:parameters success:success failure:failure];
 }
 
 @end
