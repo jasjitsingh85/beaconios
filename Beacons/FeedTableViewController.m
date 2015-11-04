@@ -86,6 +86,7 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingIndicator:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedStartedRefreshing:) name:kFeedStartRefreshNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedFinishedRefreshing:) name:kFeedFinishRefreshNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishNewsfeedPermissions:) name:kDidFinishNewsfeedPermissions object:nil];
     
     self.isViewShowing = NO;
     
@@ -186,6 +187,11 @@
     self.isRefreshing = NO;
     self.pullToRefresh = NO;
     
+}
+
+-(void)finishNewsfeedPermissions:(NSNotification *)notification
+{
+    self.syncContactsButtonContainer.hidden = YES;
 }
 
 //-(void) showLoadingIndicator:(id)sender
@@ -375,18 +381,22 @@
     [self.syncContactsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
-    [self.syncContactsButton addTarget:self action:@selector(addFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.syncContactsButton addTarget:self action:@selector(showSetupModal) forControlEvents:UIControlEventTouchUpInside];
     [self.syncContactsButton setTitle:@"SETUP NEWSFEED" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     
+    [self updateSetupNewsfeedButtonContainer];
+}
+
+-(void) updateSetupNewsfeedButtonContainer
+{
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined || ![FBSDKAccessToken currentAccessToken]) {
         self.syncContactsButtonContainer.hidden = NO;
     } else {
         self.syncContactsButtonContainer.hidden = YES;
     }
-
 }
 
 -(void) addFriendsButtonTouched:(id)sender

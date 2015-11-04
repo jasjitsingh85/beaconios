@@ -461,10 +461,13 @@
 //    self.isFollowed = !self.isFollowed;
 //    [self updateFavoriteButton];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    self.isFollowed = !self.isFollowed;
+    [self updateFavoriteButton];
+    
     [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
     } failure:nil];
 }
 
