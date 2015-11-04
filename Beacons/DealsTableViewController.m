@@ -107,7 +107,7 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UIView *rewardExplanationContainer;
 @property (strong, nonatomic) UILabel *rewardItemLabel;
 
-@property (strong, nonatomic) UISegmentedControl *navBarTabs;
+//@property (strong, nonatomic) UISegmentedControl *navBarTabs;
 
 @property (strong, nonatomic) NSMutableArray *feed;
 @property (strong, nonatomic) NSMutableArray *events;
@@ -128,8 +128,8 @@ typedef enum dealTypeStates
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    UIImage *titleImage = [UIImage imageNamed:@"hotspotLogoNavBlack"];
-//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
+    UIImage *titleImage = [UIImage imageNamed:@"newHotspotLogo"];
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:titleImage];
     
 //    UIView *searchBarContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 175, 25)];
 //    self.navigationItem.titleView = searchBarContainer;
@@ -171,68 +171,70 @@ typedef enum dealTypeStates
     self.happyHourTab.layer.mask = happyHourMaskLayer;
     
     
-    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"", @""]];
-    [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
-    //self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
-    self.navBarTabs.tintColor = [UIColor unnormalizedColorWithRed:153 green:153 blue:153 alpha:255];
-    [self.navBarTabs setWidth:100 forSegmentAtIndex:0];
-    [self.navBarTabs setWidth:100 forSegmentAtIndex:1];
-    self.navBarTabs.selectedSegmentIndex = 0;
-    [self.navBarTabs addTarget:self
-                         action:@selector(navBarTabTapped:)
-               forControlEvents:UIControlEventValueChanged];
+//    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"", @""]];
+//    [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
+//    //self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
+//    self.navBarTabs.tintColor = [UIColor unnormalizedColorWithRed:153 green:153 blue:153 alpha:255];
+//    [self.navBarTabs setWidth:100 forSegmentAtIndex:0];
+//    [self.navBarTabs setWidth:100 forSegmentAtIndex:1];
+//    self.navBarTabs.selectedSegmentIndex = 0;
+//    [self.navBarTabs addTarget:self
+//                         action:@selector(navBarTabTapped:)
+//               forControlEvents:UIControlEventValueChanged];
 //    [self.navBarTabs setImage:[UIImage imageNamed:@"hotspotSliderLabel"] forSegmentAtIndex:0];
     //[self.navBarTabs setBackgroundImage:[UIImage imageNamed:@"navTabBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     //    self.navBarTabs.layer.borderColor = [UIColor blackColor].CGColor;
 //    self.navBarTabs.layer.borderWidth = .5;
-    NSDictionary *attributes = [NSDictionary dictionaryWithObject:[ThemeManager regularFontOfSize:9]
-                                                           forKey:NSFontAttributeName];
-    [self.navBarTabs setTitleTextAttributes:attributes
-                                    forState:UIControlStateNormal];
-    [self.navBarTabs setFrame:CGRectMake(0, 0, 200, 25)];
-    self.navigationItem.titleView = self.navBarTabs;
-    
-    
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, self.navBarTabs.frame.size.height - 10), NO, 0.0);
-    UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    [self.navBarTabs setDividerImage:blank
-                    forLeftSegmentState:UIControlStateNormal
-                      rightSegmentState:UIControlStateNormal
-                             barMetrics:UIBarMetricsDefault];
-    
-    [[[self.navBarTabs subviews] objectAtIndex:0] addSubview:self.hotspotTab];
-    [[[self.navBarTabs subviews] objectAtIndex:1] addSubview:self.happyHourTab];
+    //NSDictionary *attributes = [NSDictionary dictionaryWithObject:[ThemeManager regularFontOfSize:9]
+     //                                                      forKey:NSFontAttributeName];
+//    [self.navBarTabs setTitleTextAttributes:attributes
+//                                    forState:UIControlStateNormal];
+//    [self.navBarTabs setFrame:CGRectMake(0, 0, 200, 25)];
+//    self.navigationItem.titleView = self.navBarTabs;
+//    
+//    
+//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, self.navBarTabs.frame.size.height - 10), NO, 0.0);
+//    UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    [self.navBarTabs setDividerImage:blank
+//                    forLeftSegmentState:UIControlStateNormal
+//                      rightSegmentState:UIControlStateNormal
+//                             barMetrics:UIBarMetricsDefault];
+//    
+//    [[[self.navBarTabs subviews] objectAtIndex:0] addSubview:self.hotspotTab];
+//    [[[self.navBarTabs subviews] objectAtIndex:1] addSubview:self.happyHourTab];
 
-    self.hotspotNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(33, 2.5, 60, 20)];
-    self.hotspotNavBarLabel.text = @"HOTSPOTS";
-    self.hotspotNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
-    [self.hotspotTab addSubview:self.hotspotNavBarLabel];
-    
-    self.happyHourNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(13, 2.5, 70, 20)];
-    self.happyHourNavBarLabel.text = @"HAPPY HOURS";
-    self.happyHourNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
-    [self.happyHourTab addSubview:self.happyHourNavBarLabel];
-    
-    self.hotspotNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
-    self.hotspotNavBarIcon.x = 18;
-    self.hotspotNavBarIcon.y = 6.5;
-    [self.hotspotTab addSubview:self.hotspotNavBarIcon];
-    
-    self.happyHourNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
-    self.happyHourNavBarIcon.x = 80;
-    self.happyHourNavBarIcon.y = 5;
-    [self.happyHourTab addSubview:self.happyHourNavBarIcon];
-    
-    [self makeHotspotTabActive];
+//    self.hotspotNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(33, 2.5, 60, 20)];
+//    self.hotspotNavBarLabel.text = @"HOTSPOTS";
+//    self.hotspotNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
+//    [self.hotspotTab addSubview:self.hotspotNavBarLabel];
+//    
+//    self.happyHourNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(13, 2.5, 70, 20)];
+//    self.happyHourNavBarLabel.text = @"HAPPY HOURS";
+//    self.happyHourNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
+//    [self.happyHourTab addSubview:self.happyHourNavBarLabel];
+//    
+//    self.hotspotNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
+//    self.hotspotNavBarIcon.x = 18;
+//    self.hotspotNavBarIcon.y = 6.5;
+//    [self.hotspotTab addSubview:self.hotspotNavBarIcon];
+//    
+//    self.happyHourNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
+//    self.happyHourNavBarIcon.x = 80;
+//    self.happyHourNavBarIcon.y = 5;
+//    [self.happyHourTab addSubview:self.happyHourNavBarIcon];
+//    
+//    [self makeHotspotTabActive];
     
 //    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
 //    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
     
 //    [self getFavoriteFeed];
+    
+    [self hotspotButtonTouched];
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
@@ -415,7 +417,8 @@ typedef enum dealTypeStates
     [self.venueView addSubview:self.priceContainer];
     
     self.rewardExplanationContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height - 50, self.view.width, 50)];
-    self.rewardExplanationContainer.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+//    self.rewardExplanationContainer.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    self.rewardExplanationContainer.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     self.rewardExplanationContainer.hidden = YES;
     [self.view addSubview:self.rewardExplanationContainer];
     
@@ -813,33 +816,33 @@ typedef enum dealTypeStates
 {
     [[APIClient sharedClient] getPlacesNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
-        NSMutableArray *deals = [[NSMutableArray alloc] init];
-        NSMutableArray *happyHours = [[NSMutableArray alloc] init];
+        NSMutableArray *venuesWithDeals = [[NSMutableArray alloc] init];
+        NSMutableArray *venuesWithoutDeals = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         [self.mapView removeAnnotations:[self.mapView annotations]];
         self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
         
-        for (NSDictionary *dealJSON in responseObject[@"deals"]) {
-            Deal *deal = [[Deal alloc] initWithDictionary:dealJSON];
-            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:deal.venue.coordinate.latitude longitude:deal.venue.coordinate.longitude];
+        for (NSDictionary *venueJSON in responseObject[@"deals"]) {
+            Venue *venue = [[Venue alloc] initWithDictionary:venueJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
 //            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
-            deal.venue.distance = [location distanceFromLocation:dealLocation];
+            venue.distance = [location distanceFromLocation:dealLocation];
 //            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 //            [annotation setCoordinate:dealLocation2D];
 //            annotation.title = @"hotspotPin";
 //            [self.mapView addAnnotation:annotation];
-            [deals addObject:deal];
+            [venuesWithDeals addObject:venue];
         }
         
-        for (NSDictionary *happyHourJSON in responseObject[@"happy_hours"]) {
-            HappyHour *happyHour = [[HappyHour alloc] initWithDictionary:happyHourJSON];
-            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:happyHour.venue.coordinate.latitude longitude:happyHour.venue.coordinate.longitude];
-            happyHour.venue.distance = [location distanceFromLocation:dealLocation];
+        for (NSDictionary *venueJSON in responseObject[@"non_deals"]) {
+            Venue *venue = [[Venue alloc] initWithDictionary:venueJSON];
+            CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
+            venue.distance = [location distanceFromLocation:dealLocation];
 //            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
 //            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 //            [annotation setCoordinate:dealLocation2D];
 //            [self.mapView addAnnotation:annotation];
-            [happyHours addObject:happyHour];
+            [venuesWithoutDeals addObject:venue];
         }
         
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
@@ -857,15 +860,10 @@ typedef enum dealTypeStates
             self.rewardExplanationContainer.hidden = YES;
         }
         
-        self.hotspots = deals;
-        self.happyHours = happyHours;
+        self.hotspots = venuesWithDeals;
+        self.happyHours = venuesWithoutDeals;
         
-        if (self.dealType == HOTSPOT) {
-            self.selectedDeals = self.hotspots;
-        } else if (self.dealType == HAPPY_HOUR) {
-            self.selectedDeals = self.happyHours;
-        }
-        
+        self.selectedDeals = self.hotspots;
         
         [self reloadAnnotations];
         
@@ -1518,7 +1516,7 @@ typedef enum dealTypeStates
     }];
 }
 
-- (void) happyHourButtonTouched:(id)sender
+- (void) happyHourButtonTouched
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
@@ -1533,7 +1531,7 @@ typedef enum dealTypeStates
     }];
 }
 
-- (void) hotspotButtonTouched:(id)sender
+- (void) hotspotButtonTouched
 {
     [UIView animateWithDuration:0.35f animations:^{
         self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
@@ -1583,7 +1581,8 @@ typedef enum dealTypeStates
             
             if (deal.isRewardItem) {
                 self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
-                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+                self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+                //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
             } else {
                 self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
                 self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
@@ -1707,39 +1706,39 @@ typedef enum dealTypeStates
     return firstAndSecondLine;
 }
 
--(void) makeHotspotTabActive
-{
-    self.hotspotTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    self.happyHourTab.backgroundColor = [UIColor clearColor];
-    
-    self.hotspotNavBarLabel.textColor = [UIColor whiteColor];
-    self.happyHourNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    
-    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
-    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
-}
+//-(void) makeHotspotTabActive
+//{
+//    self.hotspotTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
+//    self.happyHourTab.backgroundColor = [UIColor clearColor];
+//    
+//    self.hotspotNavBarLabel.textColor = [UIColor whiteColor];
+//    self.happyHourNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
+//    
+//    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
+//    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
+//}
 
--(void) makeHappyHourTabActive
-{
-    self.happyHourTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
-    self.hotspotTab.backgroundColor = [UIColor clearColor];
-    
-    self.happyHourNavBarLabel.textColor = [UIColor whiteColor];
-    self.hotspotNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    
-    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarPopsicle"]];
-    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarClock"]];
-}
+//-(void) makeHappyHourTabActive
+//{
+//    self.happyHourTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
+//    self.hotspotTab.backgroundColor = [UIColor clearColor];
+//    
+//    self.happyHourNavBarLabel.textColor = [UIColor whiteColor];
+//    self.hotspotNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
+//    
+//    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarPopsicle"]];
+//    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarClock"]];
+//}
 
--(void)navBarTabTapped:(id)sender
-{
-    if (self.navBarTabs.selectedSegmentIndex == 0) {
-        [self hotspotButtonTouched:nil];
-        [self makeHotspotTabActive];
-    } else {
-        [self happyHourButtonTouched:nil];
-        [self makeHappyHourTabActive];
-    }
-}
+//-(void)navBarTabTapped:(id)sender
+//{
+//    if (self.navBarTabs.selectedSegmentIndex == 0) {
+//        [self hotspotButtonTouched:nil];
+//        [self makeHotspotTabActive];
+//    } else {
+//        [self happyHourButtonTouched:nil];
+//        [self makeHappyHourTabActive];
+//    }
+//}
 
 @end

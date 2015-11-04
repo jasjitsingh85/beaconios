@@ -147,7 +147,7 @@
     
     if (self.deal.isRewardItem || self.beacon.userDealStatus.isRewardAuthorization) {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
-        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     } else {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
         self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
@@ -245,7 +245,7 @@
     
     if (deal.isRewardItem) {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
-        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     } else {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
         self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];

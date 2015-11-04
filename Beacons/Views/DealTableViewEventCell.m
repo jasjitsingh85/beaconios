@@ -69,7 +69,8 @@
     self.eventHeader = [[UILabel alloc] init];
     self.eventHeader.textColor = [UIColor whiteColor];
     self.eventHeader.font = [ThemeManager boldFontOfSize:13];
-    self.eventHeader.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:204];
+//    self.eventHeader.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:204];
+    self.eventHeader.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     self.eventHeader.textAlignment = NSTextAlignmentCenter;
     self.eventHeader.width = 140;
     self.eventHeader.height = 24;

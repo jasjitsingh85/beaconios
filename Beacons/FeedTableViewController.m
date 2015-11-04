@@ -676,9 +676,9 @@
         self.firstRecFollowButton.size = CGSizeMake(65, 20);
         self.firstRecFollowButton.x = self.view.width - 90;
         [self.firstRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.firstRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-        self.firstRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-        self.firstRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+        [self.firstRecFollowButton setTitleColor:[[[ThemeManager sharedTheme] greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.firstRecFollowButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+        self.firstRecFollowButton.layer.borderColor = [[ThemeManager sharedTheme] greenColor].CGColor;
     } else {
         self.firstRecFollowButton.size = CGSizeMake(60, 20);
         self.firstRecFollowButton.x = self.view.width - 85;
@@ -698,9 +698,9 @@
         self.secondRecFollowButton.size = CGSizeMake(65, 20);
         self.secondRecFollowButton.x = self.view.width - 90;
         [self.secondRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.secondRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-        self.secondRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-        self.secondRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+        [self.secondRecFollowButton setTitleColor:[[[ThemeManager sharedTheme] greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.secondRecFollowButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+        self.secondRecFollowButton.layer.borderColor = [[ThemeManager sharedTheme] greenColor].CGColor;
     } else {
         self.secondRecFollowButton.size = CGSizeMake(60, 20);
         self.secondRecFollowButton.x = self.view.width - 85;
@@ -720,9 +720,9 @@
         self.thirdRecFollowButton.size = CGSizeMake(65, 20);
         self.thirdRecFollowButton.x = self.view.width - 90;
         [self.thirdRecFollowButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.thirdRecFollowButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-        self.thirdRecFollowButton.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-        self.thirdRecFollowButton.layer.borderColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255].CGColor;
+        [self.thirdRecFollowButton setTitleColor:[[[ThemeManager sharedTheme] greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.thirdRecFollowButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+        self.thirdRecFollowButton.layer.borderColor = [[ThemeManager sharedTheme] greenColor].CGColor;
     } else {
         self.thirdRecFollowButton.size = CGSizeMake(60, 20);
         self.thirdRecFollowButton.x = self.view.width - 85;

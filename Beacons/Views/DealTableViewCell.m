@@ -315,7 +315,8 @@
     
     if (self.deal.isRewardItem) {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
-        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     } else {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
         self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
@@ -476,8 +477,10 @@
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
     self.followButton.size = CGSizeMake(85, 25);
     self.followButton.x = self.contentView.width - 95;
-    [self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    //[self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
+    //[self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.followButton setTitleColor:[[ThemeManager sharedTheme] greenColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     self.followButton.backgroundColor = [UIColor whiteColor];
 }
 

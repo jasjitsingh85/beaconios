@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+@class Deal;
 @interface Venue : NSObject
 
 @property (strong, nonatomic) NSNumber *venueID;
@@ -22,8 +23,11 @@
 @property (strong, nonatomic) NSURL *yelpRating;
 @property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSString *placeDescription;
+@property (strong, nonatomic) Deal *deal;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;
 - (id)initWithDealPlaceDictionary:(NSDictionary *)dictionary;
+- (id)initWithDictionary:(NSDictionary *)dictionary;
+
 
 @end

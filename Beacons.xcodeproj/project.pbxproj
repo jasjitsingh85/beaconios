@@ -108,6 +108,7 @@
 		4158AE781B472F340034BA4A /* HappyHourView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4158AE771B472F340034BA4A /* HappyHourView.m */; };
 		415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415929701AFD8E37002BBCD0 /* mapMarker@2x.png */; };
 		41593DB71BE97F6C00711E57 /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41593DB61BE97F6C00711E57 /* checkmark@2x.png */; };
+		41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */; };
 		417CE4961BE53C67009D4B9A /* setupNewsfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */; };
 		41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
@@ -461,6 +462,7 @@
 		4158AE771B472F340034BA4A /* HappyHourView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourView.m; sourceTree = "<group>"; };
 		415929701AFD8E37002BBCD0 /* mapMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapMarker@2x.png"; sourceTree = "<group>"; };
 		41593DB61BE97F6C00711E57 /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
+		41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHotspotLogo@2x.png"; sourceTree = "<group>"; };
 		417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setupNewsfeed@2x.png"; sourceTree = "<group>"; };
 		41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNewsfeedPopupView.m; sourceTree = "<group>"; };
 		41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNewsfeedPopupView.h; sourceTree = "<group>"; };
@@ -1289,6 +1291,7 @@
 				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
 				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
 				41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */,
+				41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */,
 				4109B9C01B9B706100C3270E /* publicGlobe@2x.png */,
 				4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */,
 				4105DAA81B7FFD700006B888 /* notification@2x.png */,
@@ -1547,6 +1550,7 @@
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
 				41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
+				41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */,
 				41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */,
 				41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
