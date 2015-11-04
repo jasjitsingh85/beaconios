@@ -18,6 +18,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "ContactManager.h"
+#import "NotificationManager.h"
 
 @interface SetupNewsfeedPopupView()
 
@@ -134,12 +135,6 @@
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     self.syncContactsButton.centerX = self.imageView.width/2;
     
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [self changeFacebookButtonToCompletedState];
-    } else {
-        [self changeFacebookButtonToIncompletedState];
-    }
-    
     [self.linkFacebookButton
      addTarget:self
      action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
@@ -151,24 +146,6 @@
     [self.syncContactsButton
      addTarget:self
      action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-    
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-        [self changeContactButtonToActiveState];
-    }
-    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
-        [self changeContactButtonToInactiveState];
-    }
-    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
-        [self changeContactButtonToSelectedState];
-    }
-    
-    if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-    {
-        [self changePushButtonToSelectedState];
-    } else {
-        [self changePushButtonToActiveState];
-    }
 
     [self.imageView addSubview:self.linkFacebookButton];
     [self.imageView addSubview:self.enablePushButton];
@@ -245,6 +222,31 @@
 
 - (void)show
 {
+    
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self changeFacebookButtonToCompletedState];
+    } else {
+        [self changeFacebookButtonToIncompletedState];
+    }
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        [self changeContactButtonToActiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        [self changeContactButtonToInactiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [self changeContactButtonToSelectedState];
+    }
+    
+    if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+    {
+        [self changePushButtonToSelectedState];
+    } else {
+        [self changePushButtonToActiveState];
+    }
+    
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];
     self.backgroundView.alpha = 0;
@@ -301,8 +303,10 @@
              } else {
                  [[APIClient sharedClient] postFacebookToken:result.token.tokenString success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      NSLog(@"access token: %@", result.token.tokenString);
+                     [self changeFacebookButtonToCompletedState];
                      [self checkPermissionsAndDismissModal];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [self changeFacebookButtonToIncompletedState];
                      NSLog(@"Facebook token failure");
                  }];
              }
@@ -312,18 +316,36 @@
 
 -(void) pushButtonTouched
 {
-    //TODO when push button is touched
+    if (![[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
+        [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
+            [self changePushButtonToSelectedState];
+        } failure:^(NSError *error) {
+            NSLog(@"ERROR: %@", error);
+            [self changePushButtonToActiveState];
+        }];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Enabling Push Permissions" message:@"To enable push, go to Settings > Hotspot and turn on push permissions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 -(void) contactButtonTouched
 {
+    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+        [LoadingIndictor showLoadingIndicatorInView:self animated:YES];
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
+                NSLog(@"Granted Contact Permissions");
                 [self changeContactButtonToSelectedState];
                 [self checkPermissionsAndDismissModal];
+                [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
+            } else {
+                [self changeContactButtonToInactiveState];
+                [self checkPermissionsAndDismissModal];
+                [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
             }
         });
     }
@@ -337,8 +359,6 @@
 
 -(void) checkPermissionsAndDismissModal
 {
-    //TODO Check push as well before dismissing
-    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined && [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
     {
