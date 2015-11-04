@@ -741,7 +741,7 @@
 
 - (void) hideSetupModal
 {
-    [self.modal dismiss];
+    [self.modal dismissSetupModal];
 }
 
 @end

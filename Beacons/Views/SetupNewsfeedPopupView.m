@@ -94,7 +94,7 @@
     [self.doneButton setTitle:@"I'll do this later" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.doneButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
-    [self.doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.doneButton addTarget:self action:@selector(dismissSetupModal) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:self.doneButton];
     
     self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -222,7 +222,8 @@
 
 - (void)show
 {
-    
+    NSLog(@"FACEOOK PERMISSIONS: %@", [FBSDKAccessToken currentAccessToken]);
+ 
     if ([FBSDKAccessToken currentAccessToken]) {
         [self changeFacebookButtonToCompletedState];
     } else {
@@ -273,7 +274,7 @@
     }];
 }
 
-- (void)dismiss
+- (void)dismissSetupModal
 {
     [UIView animateWithDuration:0.5 animations:^{
         self.backgroundView.alpha = 0;
@@ -296,6 +297,7 @@
          logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
          fromViewController:nil
          handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            [self show];
              if (error) {
                  NSLog(@"Process error");
              } else if (result.isCancelled) {
@@ -319,9 +321,11 @@
     if (![[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
         [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
             [self changePushButtonToSelectedState];
+            [self checkPermissionsAndDismissModal];
         } failure:^(NSError *error) {
             NSLog(@"ERROR: %@", error);
             [self changePushButtonToActiveState];
+            [self checkPermissionsAndDismissModal];
         }];
     }
     else {
@@ -363,7 +367,7 @@
     if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined && [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishNewsfeedPermissions object:self];
-        [self dismiss];
+        [self dismissSetupModal];
     }
 }
 
