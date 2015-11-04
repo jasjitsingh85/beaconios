@@ -391,11 +391,10 @@
 
 -(void) updateSetupNewsfeedButtonContainer
 {
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined || ![FBSDKAccessToken currentAccessToken]) {
-        self.syncContactsButtonContainer.hidden = NO;
-    } else {
+    if ([self hasAcceptedPermissions]) {
         self.syncContactsButtonContainer.hidden = YES;
+    } else {
+        self.syncContactsButtonContainer.hidden = NO;
     }
 }
 
@@ -482,7 +481,7 @@
 -(BOOL) hasAcceptedPermissions
 {
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined) {
+    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined && [[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
         return YES;
     } else {
        return NO;

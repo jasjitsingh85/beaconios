@@ -163,8 +163,12 @@
         [self changeContactButtonToSelectedState];
     }
     
-    //TODO Add push check to get button state right
-    [self changePushButtonToActiveState];
+    if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+    {
+        [self changePushButtonToSelectedState];
+    } else {
+        [self changePushButtonToActiveState];
+    }
 
     [self.imageView addSubview:self.linkFacebookButton];
     [self.imageView addSubview:self.enablePushButton];
@@ -231,13 +235,13 @@
     [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
--(void) changePushButtonToInactiveState
-{
-    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
-    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
-    self.enablePushButton.backgroundColor = [UIColor grayColor];
-    self.enablePushButton.layer.borderColor = [UIColor grayColor].CGColor;
-}
+//-(void) changePushButtonToInactiveState
+//{
+//    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
+//    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
+//    self.enablePushButton.backgroundColor = [UIColor grayColor];
+//    self.enablePushButton.layer.borderColor = [UIColor grayColor].CGColor;
+//}
 
 - (void)show
 {
@@ -336,7 +340,7 @@
     //TODO Check push as well before dismissing
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined)
+    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined && [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishNewsfeedPermissions object:self];
         [self dismiss];
