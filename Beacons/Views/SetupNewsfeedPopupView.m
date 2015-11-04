@@ -299,7 +299,8 @@
          handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             [self show];
              if (error) {
-                 NSLog(@"Process error");
+                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"There was an error linking Facebook" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                 NSLog(@"error: %@", error);
              } else if (result.isCancelled) {
                  NSLog(@"Cancelled");
              } else {
@@ -345,13 +346,12 @@
                 NSLog(@"Granted Contact Permissions");
                 [self changeContactButtonToSelectedState];
                 [self checkPermissionsAndDismissModal];
-                [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
             } else {
                 [self changeContactButtonToInactiveState];
                 [self checkPermissionsAndDismissModal];
-                [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
             }
         });
+        [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
     }
     else if (contactAuthStatus == kABAuthorizationStatusDenied) {
         [[[UIAlertView alloc] initWithTitle:@"Syncing Contact Permission" message:@"To sync contacts, go to Settings > Hotspot and turn on contact permissions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
