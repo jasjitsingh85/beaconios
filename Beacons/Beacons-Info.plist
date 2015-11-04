@@ -88,7 +88,7 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Hotspot syncs contacts from your address book to Hotspot servers to help you connect with other Hotspot users</string>
+	<string>Hotspot syncs contacts from your address book to Hotspot servers to help you connect with other Hotspot users.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This enables you to see Hotspots in your area</string>
 	<key>UIAppFonts</key>
