@@ -51,6 +51,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kRemoveNewsfeedNotification @"removeNewsfeedNotification"
 #define kFeedStartRefreshNotification @"feedStartRefreshNotification"
 #define kFeedFinishRefreshNotification @"feedFinishRefreshNotification"
+#define kDidFinishNewsfeedPermissions @"didFinishNewsfeedPermissions"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"

@@ -86,6 +86,7 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLoadingIndicator:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedStartedRefreshing:) name:kFeedStartRefreshNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(feedFinishedRefreshing:) name:kFeedFinishRefreshNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishNewsfeedPermissions:) name:kDidFinishNewsfeedPermissions object:nil];
     
     self.isViewShowing = NO;
     
@@ -186,6 +187,11 @@
     self.isRefreshing = NO;
     self.pullToRefresh = NO;
     
+}
+
+-(void)finishNewsfeedPermissions:(NSNotification *)notification
+{
+    self.syncContactsButtonContainer.hidden = YES;
 }
 
 //-(void) showLoadingIndicator:(id)sender

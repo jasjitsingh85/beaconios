@@ -27,6 +27,7 @@
 @property (strong, nonatomic) UIImageView *chatBubble;
 @property (strong, nonatomic) UIButton *syncContactsButton;
 @property (strong, nonatomic) UIButton *linkFacebookButton;
+@property (strong, nonatomic) UIButton *enablePushButton;
 
 @end
 
@@ -59,7 +60,7 @@
     UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setupNewsfeed"]];
     drinkIcon.size = CGSizeMake(30, 30);
     drinkIcon.centerX = self.width/2;
-    drinkIcon.y = 130;
+    drinkIcon.y = 125;
     [self.imageView addSubview:drinkIcon];
     
     UILabel *headerTitle = [[UILabel alloc] init];
@@ -68,19 +69,19 @@
     headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
-    headerTitle.y = 160;
+    headerTitle.y = 155;
     headerTitle.text = @"NEWSFEED SETUP";
     [self.imageView addSubview:headerTitle];
     
     UILabel *callHeader = [[UILabel alloc] init];
     callHeader.height = 70;
-    callHeader.width = self.width - 150;
+    callHeader.width = self.width - 130;
     callHeader.textAlignment = NSTextAlignmentCenter;
     callHeader.numberOfLines = 0;
     callHeader.centerX = self.width/2;
-    callHeader.font = [ThemeManager lightFontOfSize:12];
-    callHeader.y = 180;
-    callHeader.text = @"To ensure you see every update from friends and venues, we highly recommend linking facebook and syncing contacts.";
+    callHeader.font = [ThemeManager lightFontOfSize:11];
+    callHeader.y = 175;
+    callHeader.text = @"To ensure you see every update from friends and venues, we highly recommend linking facebook, enabling push, and syncing contacts.";
     [self.imageView addSubview:callHeader];
     
     self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -97,9 +98,9 @@
     
     self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.linkFacebookButton.size = CGSizeMake(self.width - 50, 35);
-    self.linkFacebookButton.y = 270;
+    self.linkFacebookButton.y = 255;
     self.linkFacebookButton.width = 170;
-    self.linkFacebookButton.height = 35;
+    self.linkFacebookButton.height = 30;
     self.linkFacebookButton.centerX = self.imageView.width/2.0;
     self.linkFacebookButton.layer.cornerRadius = 4;
     self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
@@ -107,15 +108,30 @@
     self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    self.linkFacebookButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.linkFacebookButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
+    
+    self.enablePushButton=[UIButton buttonWithType:UIButtonTypeCustom];
+    self.enablePushButton.size = CGSizeMake(self.width - 50, 35);
+    self.enablePushButton.y = 300;
+    self.enablePushButton.width = 170;
+    self.enablePushButton.height = 30;
+    self.enablePushButton.centerX = self.imageView.width/2.0;
+    self.enablePushButton.layer.cornerRadius = 4;
+    self.enablePushButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
+    self.enablePushButton.layer.borderWidth = 1;
+    self.enablePushButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.enablePushButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.enablePushButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     
     self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
     self.syncContactsButton.layer.cornerRadius = 4;
     self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
     self.syncContactsButton.layer.borderWidth = 1;
-    self.syncContactsButton.frame=CGRectMake(0,330,170,35);
-    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
+    self.syncContactsButton.frame=CGRectMake(0,345,170,30);
+    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     self.syncContactsButton.centerX = self.imageView.width/2;
     
     if ([FBSDKAccessToken currentAccessToken]) {
@@ -126,11 +142,15 @@
     
     [self.linkFacebookButton
      addTarget:self
-     action:@selector(facebookButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+     action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.enablePushButton
+     addTarget:self
+     action:@selector(pushButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     
     [self.syncContactsButton
      addTarget:self
-     action:@selector(contactButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+     action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
@@ -142,8 +162,12 @@
     else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
         [self changeContactButtonToSelectedState];
     }
+    
+    //TODO Add push check to get button state right
+    [self changePushButtonToActiveState];
 
     [self.imageView addSubview:self.linkFacebookButton];
+    [self.imageView addSubview:self.enablePushButton];
     [self.imageView addSubview:self.syncContactsButton];
     
     return self;
@@ -151,7 +175,8 @@
 
 -(void) changeFacebookButtonToCompletedState
 {
-    [self.linkFacebookButton setTitle: @"Facebook Linked" forState: UIControlStateNormal];
+    [self.linkFacebookButton setTitle: @"  Facebook Linked" forState: UIControlStateNormal];
+    [self.linkFacebookButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
     self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
@@ -159,6 +184,7 @@
 -(void) changeFacebookButtonToIncompletedState
 {
     [self.linkFacebookButton setTitle: @"Link Facebook" forState: UIControlStateNormal];
+    [self.linkFacebookButton setImage:nil forState:UIControlStateNormal];
     self.linkFacebookButton.backgroundColor = [UIColor clearColor];
     [self.linkFacebookButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
 }
@@ -167,13 +193,15 @@
 {
     [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [UIColor clearColor];
+    [self.syncContactsButton setImage:nil forState:UIControlStateNormal];
     [self.syncContactsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
     
 }
 
 -(void) changeContactButtonToSelectedState
 {
-    [self.syncContactsButton setTitle:@"Contacts Synced" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"  Contacts Synced" forState:UIControlStateNormal];
+    [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.syncContactsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
@@ -181,8 +209,34 @@
 -(void) changeContactButtonToInactiveState
 {
     [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    [self.syncContactsButton setImage:nil forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [UIColor grayColor];
     self.syncContactsButton.layer.borderColor = [UIColor grayColor].CGColor;
+}
+
+-(void) changePushButtonToActiveState
+{
+    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
+    self.enablePushButton.backgroundColor = [UIColor clearColor];
+    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
+    [self.enablePushButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    
+}
+
+-(void) changePushButtonToSelectedState
+{
+    [self.enablePushButton setTitle:@"  Push Enabled" forState:UIControlStateNormal];
+    [self.enablePushButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
+    self.enablePushButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+
+-(void) changePushButtonToInactiveState
+{
+    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
+    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
+    self.enablePushButton.backgroundColor = [UIColor grayColor];
+    self.enablePushButton.layer.borderColor = [UIColor grayColor].CGColor;
 }
 
 - (void)show
@@ -226,7 +280,7 @@
     }];
 }
 
--(void)facebookButtonClicked
+-(void)facebookButtonTouched
 {
     if ([FBSDKAccessToken currentAccessToken]) {
         [[[UIAlertView alloc] initWithTitle:@"Facebook Linked" message:@"You've already linked your facebook account to Hotspot" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -252,7 +306,12 @@
     }
 }
 
--(void) contactButtonClicked
+-(void) pushButtonTouched
+{
+    //TODO when push button is touched
+}
+
+-(void) contactButtonTouched
 {
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
@@ -274,9 +333,12 @@
 
 -(void) checkPermissionsAndDismissModal
 {
+    //TODO Check push as well before dismissing
+    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined)
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishNewsfeedPermissions object:self];
         [self dismiss];
     }
 }
