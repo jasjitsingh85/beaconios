@@ -53,7 +53,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>125</string>
+	<string>129</string>
 	<key>FacebookAppID</key>
 	<string>741683799178892</string>
 	<key>FacebookDisplayName</key>
@@ -66,19 +66,19 @@
 		<string>com.paypal.ppclient.touch.v1</string>
 		<string>com.paypal.ppclient.touch.v2</string>
 		<string>org-appextension-feature-password-management</string>
-        <string>fbapi</string>
-        <string>fbapi20130214</string>
-        <string>fbapi20130410</string>
-        <string>fbapi20130702</string>
-        <string>fbapi20131010</string>
-        <string>fbapi20131219</string>
-        <string>fbapi20140410</string>
-        <string>fbapi20140116</string>
-        <string>fbapi20150313</string>
-        <string>fbapi20150629</string>
-        <string>fbauth</string>
-        <string>fbauth2</string>
-        <string>fb-messenger-api20140430</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbauth</string>
+		<string>fbauth2</string>
+		<string>fb-messenger-api20140430</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -88,7 +88,7 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>Syncing contacts will enable you to see friends on Hotspot and get invitations to meet up</string>
+	<string>Hotspot syncs contacts from your address book to Hotspot servers to help you connect with other Hotspot users.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This enables you to see Hotspots in your area</string>
 	<key>UIAppFonts</key>

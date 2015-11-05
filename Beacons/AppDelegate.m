@@ -126,7 +126,10 @@
     }
     else {
         self.window.rootViewController = self.sideNavigationViewController;
-        [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
+        if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+        {
+            [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:nil failure:nil];
+        }
         if ([ContactManager sharedManager].authorizationStatus == kABAuthorizationStatusAuthorized) {
             [[ContactManager sharedManager] syncContacts];
         }
@@ -425,8 +428,11 @@
 #pragma mark - Notifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"My token is: %@", deviceToken);
-    [[NotificationManager sharedManager] didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+    {
+        NSLog(@"My token is: %@", deviceToken);
+        [[NotificationManager sharedManager] didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

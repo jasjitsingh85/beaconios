@@ -18,6 +18,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "ContactManager.h"
+#import "NotificationManager.h"
 
 @interface SetupNewsfeedPopupView()
 
@@ -93,7 +94,7 @@
     [self.doneButton setTitle:@"I'll do this later" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.doneButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
-    [self.doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.doneButton addTarget:self action:@selector(dismissSetupModal) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:self.doneButton];
     
     self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -134,12 +135,6 @@
     self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     self.syncContactsButton.centerX = self.imageView.width/2;
     
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [self changeFacebookButtonToCompletedState];
-    } else {
-        [self changeFacebookButtonToIncompletedState];
-    }
-    
     [self.linkFacebookButton
      addTarget:self
      action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
@@ -151,20 +146,6 @@
     [self.syncContactsButton
      addTarget:self
      action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-    
-    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
-        [self changeContactButtonToActiveState];
-    }
-    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
-        [self changeContactButtonToInactiveState];
-    }
-    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
-        [self changeContactButtonToSelectedState];
-    }
-    
-    //TODO Add push check to get button state right
-    [self changePushButtonToActiveState];
 
     [self.imageView addSubview:self.linkFacebookButton];
     [self.imageView addSubview:self.enablePushButton];
@@ -231,16 +212,42 @@
     [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
--(void) changePushButtonToInactiveState
-{
-    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
-    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
-    self.enablePushButton.backgroundColor = [UIColor grayColor];
-    self.enablePushButton.layer.borderColor = [UIColor grayColor].CGColor;
-}
+//-(void) changePushButtonToInactiveState
+//{
+//    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
+//    [self.enablePushButton setImage:nil forState:UIControlStateNormal];
+//    self.enablePushButton.backgroundColor = [UIColor grayColor];
+//    self.enablePushButton.layer.borderColor = [UIColor grayColor].CGColor;
+//}
 
 - (void)show
 {
+    NSLog(@"FACEOOK PERMISSIONS: %@", [FBSDKAccessToken currentAccessToken]);
+ 
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self changeFacebookButtonToCompletedState];
+    } else {
+        [self changeFacebookButtonToIncompletedState];
+    }
+    
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
+        [self changeContactButtonToActiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusDenied) {
+        [self changeContactButtonToInactiveState];
+    }
+    else if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+        [self changeContactButtonToSelectedState];
+    }
+    
+    if ([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+    {
+        [self changePushButtonToSelectedState];
+    } else {
+        [self changePushButtonToActiveState];
+    }
+    
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];
     self.backgroundView.alpha = 0;
@@ -267,7 +274,7 @@
     }];
 }
 
-- (void)dismiss
+- (void)dismissSetupModal
 {
     [UIView animateWithDuration:0.5 animations:^{
         self.backgroundView.alpha = 0;
@@ -290,15 +297,19 @@
          logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
          fromViewController:nil
          handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            [self show];
              if (error) {
-                 NSLog(@"Process error");
+                 [[[UIAlertView alloc] initWithTitle:@"Error" message:@"There was an error linking Facebook" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                 NSLog(@"error: %@", error);
              } else if (result.isCancelled) {
                  NSLog(@"Cancelled");
              } else {
                  [[APIClient sharedClient] postFacebookToken:result.token.tokenString success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      NSLog(@"access token: %@", result.token.tokenString);
+                     [self changeFacebookButtonToCompletedState];
                      [self checkPermissionsAndDismissModal];
                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [self changeFacebookButtonToIncompletedState];
                      NSLog(@"Facebook token failure");
                  }];
              }
@@ -308,20 +319,39 @@
 
 -(void) pushButtonTouched
 {
-    //TODO when push button is touched
+    if (![[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
+        [[NotificationManager sharedManager] registerForRemoteNotificationsSuccess:^(NSData *devToken) {
+            [self changePushButtonToSelectedState];
+            [self checkPermissionsAndDismissModal];
+        } failure:^(NSError *error) {
+            NSLog(@"ERROR: %@", error);
+            [self changePushButtonToActiveState];
+            [self checkPermissionsAndDismissModal];
+        }];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:@"Enabling Push Permissions" message:@"To enable push, go to Settings > Hotspot and turn on push permissions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 -(void) contactButtonTouched
 {
+    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
     if (contactAuthStatus == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+        [LoadingIndictor showLoadingIndicatorInView:self animated:YES];
         ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
             if (granted) {
+                NSLog(@"Granted Contact Permissions");
                 [self changeContactButtonToSelectedState];
+                [self checkPermissionsAndDismissModal];
+            } else {
+                [self changeContactButtonToInactiveState];
                 [self checkPermissionsAndDismissModal];
             }
         });
+        [LoadingIndictor hideLoadingIndicatorForView:self animated:YES];
     }
     else if (contactAuthStatus == kABAuthorizationStatusDenied) {
         [[[UIAlertView alloc] initWithTitle:@"Syncing Contact Permission" message:@"To sync contacts, go to Settings > Hotspot and turn on contact permissions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -333,13 +363,11 @@
 
 -(void) checkPermissionsAndDismissModal
 {
-    //TODO Check push as well before dismissing
-    
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined)
+    if ([FBSDKAccessToken currentAccessToken] && contactAuthStatus != kABAuthorizationStatusNotDetermined && [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidFinishNewsfeedPermissions object:self];
-        [self dismiss];
+        [self dismissSetupModal];
     }
 }
 

@@ -25,6 +25,6 @@
 //@property (assign) id <FreeDrinksExplanationViewControllerDelegate> delegate;
 
 - (void)show;
-- (void)dismiss;
+- (void)dismissSetupModal;
 
 @end
