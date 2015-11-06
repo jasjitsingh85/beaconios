@@ -88,6 +88,9 @@
         self.deal = [[Deal alloc] initWithDictionary:dealDictionary];
     }
     
+    NSString *isFollowed = dictionary[@"is_followed"];
+    self.isFollowed = [isFollowed boolValue];
+    
     return self;
 }
 

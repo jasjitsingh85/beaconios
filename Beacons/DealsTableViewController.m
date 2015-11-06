@@ -8,16 +8,12 @@
 
 #import "DealsTableViewController.h"
 #import "UIView+BounceAnimation.h"
-//#import <FacebookSDK.h>
 #import "UIView+Shadow.h"
-//#import "SetDealViewController.h"
 #import "DealDetailViewController.h"
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
 #import "HappyHourTableViewCell.h"
-//#import "DealTableViewEventCell.h"
-//#import "BounceButton.h"
 #import "APIClient.h"
 #import "LocationTracker.h"
 #import "Deal.h"
@@ -25,7 +21,6 @@
 #import "LoadingIndictor.h"
 #import "AnalyticsManager.h"
 #import "ContactManager.h"
-//#import "RewardsViewController.h"
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -74,15 +69,10 @@ typedef enum dealTypeStates
 @property (assign, nonatomic) BOOL isMapViewActive;
 @property (assign, nonatomic) BOOL isMapViewDealShowing;
 @property (assign, nonatomic) BOOL hasRewardItem;
-//@property (strong, nonatomic) Deal *dealInView;
-//@property (strong, nonatomic) RewardsViewController *rewardsViewController;
-//@property (assign, nonatomic) NSInteger *currentTopRow;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
 @property (strong, nonatomic) UIView *selectedDealInMap;
-@property (nonatomic, assign) DealTypes dealType;
-@property (nonatomic, assign) DealTypes previousDealType;
 @property (nonatomic, assign) int selectedDealIndex;
 
 @property (nonatomic, strong) UIImageView *venueImageView;
@@ -97,9 +87,6 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) NSString *numberOfRewardItems;
 @property (strong, nonatomic) FeedTableViewController *feedTableViewController;
 
-//@property (strong, nonatomic) UIView *lockedOverlay;
-//@property (strong, nonatomic) UIImageView *lockButton;
-//@property (strong, nonatomic) UIImageView *largeGoldCoin;
 @property (strong, nonatomic) UILabel *rewardScore;
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UIView *priceContainer;
@@ -107,17 +94,8 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UIView *rewardExplanationContainer;
 @property (strong, nonatomic) UILabel *rewardItemLabel;
 
-//@property (strong, nonatomic) UISegmentedControl *navBarTabs;
-
 @property (strong, nonatomic) NSMutableArray *feed;
 @property (strong, nonatomic) NSMutableArray *events;
-
-@property (strong, nonatomic) UIView *hotspotTab;
-@property (strong, nonatomic) UIView *happyHourTab;
-@property (strong, nonatomic) UILabel *hotspotNavBarLabel;
-@property (strong, nonatomic) UILabel *happyHourNavBarLabel;
-@property (strong, nonatomic) UIImageView *hotspotNavBarIcon;
-@property (strong, nonatomic) UIImageView *happyHourNavBarIcon;
 
 @property (strong, nonatomic) UIImageView *notificationIcon;
 
@@ -153,97 +131,11 @@ typedef enum dealTypeStates
     self.feed = [[NSMutableArray alloc] init];
     self.events = [[NSMutableArray alloc] init];
     
-    self.hotspotTab = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 101, 25)];
-    self.happyHourTab = [[UIView alloc] initWithFrame:CGRectMake(-2, 0, 102, 25)];
-
-    UIBezierPath *hotspotMaskPath = [UIBezierPath bezierPathWithRoundedRect:self.hotspotTab.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerBottomLeft) cornerRadii:CGSizeMake(4.0, 4.0)];
-    
-    CAShapeLayer *hotspotMaskLayer = [[CAShapeLayer alloc] init];
-    hotspotMaskLayer.frame = self.view.bounds;
-    hotspotMaskLayer.path  = hotspotMaskPath.CGPath;
-    self.hotspotTab.layer.mask = hotspotMaskLayer;
-    
-    UIBezierPath *happyHourMaskPath = [UIBezierPath bezierPathWithRoundedRect:self.happyHourTab.bounds byRoundingCorners:(UIRectCornerTopRight | UIRectCornerBottomRight) cornerRadii:CGSizeMake(4.0, 4.0)];
-    
-    CAShapeLayer *happyHourMaskLayer = [[CAShapeLayer alloc] init];
-    happyHourMaskLayer.frame = self.view.bounds;
-    happyHourMaskLayer.path  = happyHourMaskPath.CGPath;
-    self.happyHourTab.layer.mask = happyHourMaskLayer;
-    
-    
-//    self.navBarTabs = [[UISegmentedControl alloc] initWithItems:@[@"", @""]];
-//    [self.navBarTabs setEnabled:YES forSegmentAtIndex:0];
-//    //self.navBarTabs.tintColor = [[ThemeManager sharedTheme] redColor];
-//    self.navBarTabs.tintColor = [UIColor unnormalizedColorWithRed:153 green:153 blue:153 alpha:255];
-//    [self.navBarTabs setWidth:100 forSegmentAtIndex:0];
-//    [self.navBarTabs setWidth:100 forSegmentAtIndex:1];
-//    self.navBarTabs.selectedSegmentIndex = 0;
-//    [self.navBarTabs addTarget:self
-//                         action:@selector(navBarTabTapped:)
-//               forControlEvents:UIControlEventValueChanged];
-//    [self.navBarTabs setImage:[UIImage imageNamed:@"hotspotSliderLabel"] forSegmentAtIndex:0];
-    //[self.navBarTabs setBackgroundImage:[UIImage imageNamed:@"navTabBackground"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//    [self.navBarTabs setDividerImage:[UIImage imageNamed:@"lock"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
-    //    self.navBarTabs.layer.borderColor = [UIColor blackColor].CGColor;
-//    self.navBarTabs.layer.borderWidth = .5;
-    //NSDictionary *attributes = [NSDictionary dictionaryWithObject:[ThemeManager regularFontOfSize:9]
-     //                                                      forKey:NSFontAttributeName];
-//    [self.navBarTabs setTitleTextAttributes:attributes
-//                                    forState:UIControlStateNormal];
-//    [self.navBarTabs setFrame:CGRectMake(0, 0, 200, 25)];
-//    self.navigationItem.titleView = self.navBarTabs;
-//    
-//    
-//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, self.navBarTabs.frame.size.height - 10), NO, 0.0);
-//    UIImage *blank = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    [self.navBarTabs setDividerImage:blank
-//                    forLeftSegmentState:UIControlStateNormal
-//                      rightSegmentState:UIControlStateNormal
-//                             barMetrics:UIBarMetricsDefault];
-//    
-//    [[[self.navBarTabs subviews] objectAtIndex:0] addSubview:self.hotspotTab];
-//    [[[self.navBarTabs subviews] objectAtIndex:1] addSubview:self.happyHourTab];
-
-//    self.hotspotNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(33, 2.5, 60, 20)];
-//    self.hotspotNavBarLabel.text = @"HOTSPOTS";
-//    self.hotspotNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
-//    [self.hotspotTab addSubview:self.hotspotNavBarLabel];
-//    
-//    self.happyHourNavBarLabel = [[UILabel alloc] initWithFrame: CGRectMake(13, 2.5, 70, 20)];
-//    self.happyHourNavBarLabel.text = @"HAPPY HOURS";
-//    self.happyHourNavBarLabel.font = [ThemeManager mediumFontOfSize:9];
-//    [self.happyHourTab addSubview:self.happyHourNavBarLabel];
-//    
-//    self.hotspotNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
-//    self.hotspotNavBarIcon.x = 18;
-//    self.hotspotNavBarIcon.y = 6.5;
-//    [self.hotspotTab addSubview:self.hotspotNavBarIcon];
-//    
-//    self.happyHourNavBarIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
-//    self.happyHourNavBarIcon.x = 80;
-//    self.happyHourNavBarIcon.y = 5;
-//    [self.happyHourTab addSubview:self.happyHourNavBarIcon];
-//    
-//    [self makeHotspotTabActive];
-    
-//    self.mapListToggleButton = [UIButton navButtonWithTitle:@"MAP"];
-//    [self.mapListToggleButton addTarget:self action:@selector(toggleMapView:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.mapListToggleButton];
-    
-//    [self getFavoriteFeed];
-    
-    [self hotspotButtonTouched];
-    
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
-
-    self.dealType = HOTSPOT;
     
     self.initialRadius = 1.6;
     self.hasRewardItem = NO;
-    
     
     self.tableView = [[UITableView alloc] init];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -251,11 +143,17 @@ typedef enum dealTypeStates
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.viewContainer addSubview:self.tableView];
+    
+    UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
+    filterHeader.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:filterHeader];
+    
+    
     
     [self checkToLaunchInvitationModal];
     
@@ -274,14 +172,7 @@ typedef enum dealTypeStates
     self.mapTapped.enabled = NO;
     [self.mapView addGestureRecognizer:self.mapTapped];
     [self.mapViewContainer addSubview:self.mapView];
-    //[self.view addSubview:tapView];
     
-//    self.mapLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.width - 100, 15, 0, 22)];
-//    self.mapLabel.textAlignment = NSTextAlignmentCenter;
-//    self.mapLabel.font = [ThemeManager boldFontOfSize:10];
-//    self.mapLabel.textColor = [UIColor whiteColor];
-//    self.mapLabel.backgroundColor = [[ThemeManager sharedTheme] brownColor];
-//    [self.mapView addSubview:self.mapLabel];
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
@@ -730,7 +621,7 @@ typedef enum dealTypeStates
                 self.mapCenter = location.coordinate;
                 [self updateMapCoordinates];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
+                [[AnalyticsManager sharedManager] viewedDeals:self.allVenues.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
             }];
         } failure:^(NSError *error) {
@@ -772,7 +663,7 @@ typedef enum dealTypeStates
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self hideRedoSearchContainer];
-        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
+        [[AnalyticsManager sharedManager] viewedDeals:self.allVenues.count];
         [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
     }];
 }
@@ -816,8 +707,7 @@ typedef enum dealTypeStates
 {
     [[APIClient sharedClient] getPlacesNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
-        NSMutableArray *venuesWithDeals = [[NSMutableArray alloc] init];
-        NSMutableArray *venuesWithoutDeals = [[NSMutableArray alloc] init];
+        NSMutableArray *venues = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         [self.mapView removeAnnotations:[self.mapView annotations]];
         self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
@@ -825,24 +715,15 @@ typedef enum dealTypeStates
         for (NSDictionary *venueJSON in responseObject[@"deals"]) {
             Venue *venue = [[Venue alloc] initWithDictionary:venueJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
-//            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
             venue.distance = [location distanceFromLocation:dealLocation];
-//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-//            [annotation setCoordinate:dealLocation2D];
-//            annotation.title = @"hotspotPin";
-//            [self.mapView addAnnotation:annotation];
-            [venuesWithDeals addObject:venue];
+            [venues addObject:venue];
         }
         
         for (NSDictionary *venueJSON in responseObject[@"non_deals"]) {
             Venue *venue = [[Venue alloc] initWithDictionary:venueJSON];
             CLLocation *dealLocation = [[CLLocation alloc] initWithLatitude:venue.coordinate.latitude longitude:venue.coordinate.longitude];
             venue.distance = [location distanceFromLocation:dealLocation];
-//            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
-//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-//            [annotation setCoordinate:dealLocation2D];
-//            [self.mapView addAnnotation:annotation];
-            [venuesWithoutDeals addObject:venue];
+            [venues addObject:venue];
         }
         
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
@@ -859,11 +740,8 @@ typedef enum dealTypeStates
             self.hasRewardItem = NO;
             self.rewardExplanationContainer.hidden = YES;
         }
-        
-        self.hotspots = venuesWithDeals;
-        self.happyHours = venuesWithoutDeals;
-        
-        self.selectedDeals = self.hotspots;
+    
+        self.allVenues = venues;
         
         [self reloadAnnotations];
         
@@ -883,28 +761,15 @@ typedef enum dealTypeStates
 {
     [self.mapView removeAnnotations:[self.mapView annotations]];
     
-    if (self.dealType == HOTSPOT || self.dealType == REWARD) {
-        int dealIndex = 0;
-        for (Deal *deal in self.selectedDeals) {
-            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(deal.venue.coordinate.latitude, deal.venue.coordinate.longitude);
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            [annotation setCoordinate:dealLocation2D];
-            annotation.title = [NSString stringWithFormat:@"%d", dealIndex];
-            ++dealIndex;
-            [self.mapView addAnnotation:annotation];
-        }
-    } else {
-        int happyHourIndex = 0;
-        for (HappyHour *happyHour in self.selectedDeals) {
-            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(happyHour.venue.coordinate.latitude, happyHour.venue.coordinate.longitude);
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            [annotation setCoordinate:dealLocation2D];
-            annotation.title = [NSString stringWithFormat:@"%d", happyHourIndex];
-            ++happyHourIndex;
-            [self.mapView addAnnotation:annotation];
-        }
+    int dealIndex = 0;
+    for (Venue *venue in self.allVenues) {
+        CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(venue.coordinate.latitude, venue.coordinate.longitude);
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        [annotation setCoordinate:dealLocation2D];
+        annotation.title = [NSString stringWithFormat:@"%d", dealIndex];
+        ++dealIndex;
+        [self.mapView addAnnotation:annotation];
     }
-    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -921,25 +786,9 @@ typedef enum dealTypeStates
         {
             pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = NO;
-            if (self.dealType == HOTSPOT){
-                //pinView.pinColor = MKPinAnnotationColorRed;
-                pinView.image = [UIImage imageNamed:@"bluePin"];
-            } else if (self.dealType == HAPPY_HOUR) {
-                //pinView.pinColor = MKPinAnnotationColorPurple;
-                pinView.image = [UIImage imageNamed:@"purplePin"];
-            } else if (self.dealType == REWARD) {
-                pinView.image = [UIImage imageNamed:@"greenPin"];
-            }
+            pinView.image = [UIImage imageNamed:@"bluePin"];
         } else {
-            if (self.dealType == HOTSPOT){
-                //pinView.pinColor = MKPinAnnotationColorRed;
-                pinView.image = [UIImage imageNamed:@"bluePin"];
-            } else if (self.dealType == HAPPY_HOUR) {
-                //pinView.pinColor = MKPinAnnotationColorPurple;
-                pinView.image = [UIImage imageNamed:@"purplePin"];
-            } else if (self.dealType == REWARD) {
-                pinView.image = [UIImage imageNamed:@"greenPin"];
-            }
+            pinView.image = [UIImage imageNamed:@"bluePin"];
             pinView.annotation = annotation;
         }
         
@@ -950,7 +799,7 @@ typedef enum dealTypeStates
 
 - (void)reloadTableView
 {
-    if (self.hotspots.count > 0 || self.happyHours.count > 0){
+    if (self.allVenues.count > 0){
         [self hideEmptyDealsView];
     }
     else {
@@ -960,49 +809,45 @@ typedef enum dealTypeStates
     [self.tableView reloadData];
 }
 
-- (void) reloadTableViewAfterDealToggle
-{
-    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
-    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
-    if (self.dealType == REWARD) {
-        //[self.rewardsViewController showRewardsScore];
-        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
-    } else if (self.dealType == HAPPY_HOUR) {
-        //[self.rewardsViewController hideRewardsScore];
-        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
-    } else if (self.dealType == HOTSPOT) {
-        //[self.rewardsViewController hideRewardsScore];
-        if (self.previousDealType == HAPPY_HOUR) {
-            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
-        } else {
-            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
-        }
-    }
-}
+//- (void) reloadTableViewAfterDealToggle
+//{
+//    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
+//    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
+//    if (self.dealType == REWARD) {
+//        //[self.rewardsViewController showRewardsScore];
+//        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
+//    } else if (self.dealType == HAPPY_HOUR) {
+//        //[self.rewardsViewController hideRewardsScore];
+//        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
+//    } else if (self.dealType == HOTSPOT) {
+//        //[self.rewardsViewController hideRewardsScore];
+//        if (self.previousDealType == HAPPY_HOUR) {
+//            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
+//        } else {
+//            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
+//        }
+//    }
+//}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.selectedDeals ? 1 : 0;
+    return self.allVenues ? 1 : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.dealType == HOTSPOT && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
-        return self.selectedDeals.count + 1;
-    } else if (self.dealType == HAPPY_HOUR && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
-        return self.selectedDeals.count + 1;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+        return self.allVenues.count + 1;
     } else {
-        return self.selectedDeals.count;
+        return self.allVenues.count;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.dealType == HOTSPOT && indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]){
-        return 0;
-    } else if (self.dealType == HAPPY_HOUR && indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
+    if (indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]){
         return 0;
     } else {
         return 151;   
@@ -1013,19 +858,15 @@ typedef enum dealTypeStates
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
     [self.tableView reloadData];
-//    [self.tableView beginUpdates];
-//    [self.tableView endUpdates];
     
 }
 
--(void)happyHourGotItButtonTouched:(id)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
-    [self.tableView reloadData];
-    //    [self.tableView beginUpdates];
-    //    [self.tableView endUpdates];
-    
-}
+//-(void)happyHourGotItButtonTouched:(id)sender
+//{
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
+//    [self.tableView reloadData];
+//    
+//}
 
 - (void)pushFavoriteFeed:(id)sender
 {
@@ -1042,94 +883,65 @@ typedef enum dealTypeStates
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (self.dealType == HOTSPOT) {
-        if (indexPath.row != 0) {
-            Deal *deal;
-            deal = self.selectedDeals[indexPath.row - 1];
-            DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-            dealViewController.deal = deal;
-            [self.navigationController pushViewController:dealViewController animated:YES];
-        }
-    } else if (self.dealType == HAPPY_HOUR) {
-        HappyHour *happyHour;
-        happyHour = self.selectedDeals[indexPath.row - 1];
-//        [[[UIAlertView alloc] initWithTitle:happyHour.venue.name message:happyHour.happyHourDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    if (indexPath.row != 0) {
+        Venue *venue;
+        venue = self.allVenues[indexPath.row - 1];
         DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.happyHour = happyHour;
+        dealViewController.venue = venue;
         [self.navigationController pushViewController:dealViewController animated:YES];
-    } else if (self.dealType == REWARD) {
-        Deal *deal;
-        deal = self.selectedDeals[indexPath.row];
-        if (!deal.locked) {
-            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
-            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
-                [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"Working");
-                }];
-            }];
-            
-            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-            [alertView show];
-            return;
-        } else {
-            [[[UIAlertView alloc] initWithTitle:@"Not Enough Points" message:@"You don't have enough points to purchase this item" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
     }
 }
 
-- (UITableViewCell *)topHappyHourExplanationTile
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
-        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
-        headerIcon.y = 5;
-        headerIcon.centerX = cell.contentView.width/2;
-        [cell.contentView addSubview:headerIcon];
-        
-        UILabel *tileHeading = [[UILabel alloc] init];
-        tileHeading.width = 250;
-        tileHeading.height = 30;
-        tileHeading.centerX = cell.contentView.width/2;
-        tileHeading.y = 30;
-        tileHeading.textAlignment = NSTextAlignmentCenter;
-        tileHeading.textColor = [UIColor blackColor];
-        tileHeading.text = @"HAPPY HOURS ON HOTSPOT";
-        tileHeading.font = [ThemeManager boldFontOfSize:12];
-        [cell.contentView addSubview:tileHeading];
-        
-        UILabel *tileTextBody = [[UILabel alloc] init];
-        tileTextBody.width = cell.contentView.width - 45;
-        tileTextBody.height = 70;
-        tileTextBody.centerX = cell.contentView.width/2;
-        tileTextBody.y = 50;
-        tileTextBody.numberOfLines = 4;
-        tileTextBody.textAlignment = NSTextAlignmentCenter;
-        tileTextBody.textColor = [UIColor blackColor];
-        tileTextBody.text = @"We’ve got the most comprehensive, up-to-date list of Happy Hours near you. Check out Hotspots to save even more with exclusive specials that are available even when happy hour isn’t";
-        tileTextBody.font = [ThemeManager lightFontOfSize:12];
-        [cell.contentView addSubview:tileTextBody];
-        
-        UIButton *gotItButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [gotItButton setTitle:@"Got It" forState:UIControlStateNormal];
-        gotItButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-        [gotItButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor]  forState:UIControlStateNormal];
-        //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
-        gotItButton.size = CGSizeMake(60, 40);
-        gotItButton.centerX = cell.contentView.width/2;
-        gotItButton.y = 110;
-        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-        [gotItButton addTarget:self action:@selector(happyHourGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:gotItButton];
-    }
-    
-    return cell;
-}
+//- (UITableViewCell *)topHappyHourExplanationTile
+//{
+//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+//    
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
+//        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
+//        headerIcon.y = 5;
+//        headerIcon.centerX = cell.contentView.width/2;
+//        [cell.contentView addSubview:headerIcon];
+//        
+//        UILabel *tileHeading = [[UILabel alloc] init];
+//        tileHeading.width = 250;
+//        tileHeading.height = 30;
+//        tileHeading.centerX = cell.contentView.width/2;
+//        tileHeading.y = 30;
+//        tileHeading.textAlignment = NSTextAlignmentCenter;
+//        tileHeading.textColor = [UIColor blackColor];
+//        tileHeading.text = @"HAPPY HOURS ON HOTSPOT";
+//        tileHeading.font = [ThemeManager boldFontOfSize:12];
+//        [cell.contentView addSubview:tileHeading];
+//        
+//        UILabel *tileTextBody = [[UILabel alloc] init];
+//        tileTextBody.width = cell.contentView.width - 45;
+//        tileTextBody.height = 70;
+//        tileTextBody.centerX = cell.contentView.width/2;
+//        tileTextBody.y = 50;
+//        tileTextBody.numberOfLines = 4;
+//        tileTextBody.textAlignment = NSTextAlignmentCenter;
+//        tileTextBody.textColor = [UIColor blackColor];
+//        tileTextBody.text = @"We’ve got the most comprehensive, up-to-date list of Happy Hours near you. Check out Hotspots to save even more with exclusive specials that are available even when happy hour isn’t";
+//        tileTextBody.font = [ThemeManager lightFontOfSize:12];
+//        [cell.contentView addSubview:tileTextBody];
+//        
+//        UIButton *gotItButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [gotItButton setTitle:@"Got It" forState:UIControlStateNormal];
+//        gotItButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+//        [gotItButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor]  forState:UIControlStateNormal];
+//        //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
+//        gotItButton.size = CGSizeMake(60, 40);
+//        gotItButton.centerX = cell.contentView.width/2;
+//        gotItButton.y = 110;
+//        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
+//        [gotItButton addTarget:self action:@selector(happyHourGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//        [cell.contentView addSubview:gotItButton];
+//    }
+//    
+//    return cell;
+//}
 
 - (UITableViewCell *)topHotspotExplanationTile
 {
@@ -1187,10 +999,10 @@ typedef enum dealTypeStates
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
 }
 
-- (void)seenHappyHourTile
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
-}
+//- (void)seenHappyHourTile
+//{
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
+//}
 
 - (void) hideRewardContainer
 {
@@ -1212,108 +1024,29 @@ typedef enum dealTypeStates
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (self.dealType == HOTSPOT) {
-        if (indexPath.row == 0) {
-            return [self topHotspotExplanationTile];
-        } else {
-            Deal *deal;
-            deal = self.hotspots[indexPath.row - 1];
-            
-            NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
-            DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
-            
-            if (!dealCell) {
-                dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
-                dealCell.backgroundColor = [UIColor clearColor];
-                dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//                dealCell.hasRewardItem = self.hasRewardItem;
-            }
-            
-            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-            [recognizer setNumberOfTapsRequired:1];
-            [dealCell.contentView addGestureRecognizer:recognizer];
-            
-            dealCell.deal = deal;
-            return dealCell;
+    if (indexPath.row == 0) {
+        return [self topHotspotExplanationTile];
+    } else {
+        Venue *venue;
+        venue = self.allVenues[indexPath.row - 1];
+        
+        NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
+        DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
+        
+        if (!dealCell) {
+            dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
+            dealCell.backgroundColor = [UIColor clearColor];
+            dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-    } else if (self.dealType == HAPPY_HOUR) {
-        if (indexPath.row == 0) {
-            return [self topHappyHourExplanationTile];
-        } else {
-            HappyHour *happyHour;
-            happyHour = self.happyHours[indexPath.row - 1];
-            
-            NSString *HappyHourCellIdentifier = [NSString stringWithFormat:@"HappyHourCell"];
-            HappyHourTableViewCell *happyHourCell = [tableView dequeueReusableCellWithIdentifier:HappyHourCellIdentifier];
-            
-            if (!happyHourCell) {
-                happyHourCell = [[HappyHourTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HappyHourCellIdentifier];
-                happyHourCell.backgroundColor = [UIColor clearColor];
-                happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            
-            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-            [recognizer setNumberOfTapsRequired:1];
-            [happyHourCell.contentView addGestureRecognizer:recognizer];
-            
-            happyHourCell.happyHour = happyHour;
-            if (indexPath.row % 2 == 0) {
-                happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.05];
-                //happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
-            } else {
-                //happyHourCell.backgroundCellView.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.15];
-                happyHourCell.backgroundCellView.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:.5];
-            }
-            
-            return happyHourCell;
-        }
+        
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+        [recognizer setNumberOfTapsRequired:1];
+        [dealCell.contentView addGestureRecognizer:recognizer];
+        
+        dealCell.venue = venue;
+        return dealCell;
     }
-    
-//    else if (self.dealType == REWARD) {
-//        Deal *deal;
-//        NSString *CellIdentifier = [NSString stringWithFormat:@"%d", (int)indexPath.row];
-//        RewardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//        
-//        if (!cell) {
-//            cell = [[RewardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//            cell.backgroundColor = [UIColor clearColor];
-//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        }
-//        
-//        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-//        [recognizer setNumberOfTapsRequired:1];
-//        [cell.contentView addGestureRecognizer:recognizer];
-//        
-////        if (indexPath.row == 0) {
-////            cell.deal = nil;
-////        } else {
-//            deal = self.selectedDeals[indexPath.row];
-//            cell.deal = deal;
-////        }
-//        
-//        return cell;
-//    }
 }
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    Deal *deal;
-//    if (self.hasEvents){
-//        if (indexPath.row == 0) {
-//            deal = self.events[0];
-//        } else {
-//            deal = self.deals[indexPath.row - 1];
-//        }
-//    } else {
-//        deal = self.deals[indexPath.row];
-//    }
-//
-//    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-//    dealViewController.deal = deal;
-//    [self.navigationController pushViewController:dealViewController animated:YES];
-//}
 
 - (void)happyHoursButtonTouched:(id)sender
 {
@@ -1332,23 +1065,7 @@ typedef enum dealTypeStates
     }
     
     [self reloadDealsInSameLocation];
-    
-//    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-//    self.mapCenter = [self.mapView centerCoordinate];
-//    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
-//    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
-//        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
-//        self.loadingDeals = NO;
-//        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-//        [self hideRedoSearchContainer];
-//        [[AnalyticsManager sharedManager] viewedDeals:self.hotspots.count];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
-//    }];
-    
-//    if (self.deals.count > 0){
-//        self.dealInView = self.deals[0];
-//        [self updateMapCoordinates];
-//    }
+
 }
 
 - (void)appSettingsButtonTouched:(id)sender
@@ -1369,12 +1086,6 @@ typedef enum dealTypeStates
     MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:MKCoordinateRegionMakeWithDistance(initialLocation, self.initialRadius * 1000, self.initialRadius * 1000 * (self.view.height/self.view.width))];
     
     [self.mapView setRegion:adjustedRegion animated:YES];
-    
-//    self.mapLabel.text = [NSString stringWithFormat:@"%@ (%@)", [self.dealInView.venue.name uppercaseString], [self stringForDistance:self.dealInView.venue.distance]];
-    //self.mapLabel.text = [NSString stringWithFormat:@"%@", [self stringForDistance:self.dealInView.venue.distance]];
-//    float mapLabelWidth = [self widthOfString:self.mapLabel.text withFont:self.mapLabel.font];
-//    self.mapLabel.width = mapLabelWidth + 10;
-//    self.mapLabel.x = self.view.width - self.mapLabel.width;
     
 }
 
@@ -1516,35 +1227,35 @@ typedef enum dealTypeStates
     }];
 }
 
-- (void) happyHourButtonTouched
-{
-    [UIView animateWithDuration:0.35f animations:^{
-        self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
-        [self hideRewardContainer];
-    } completion:^(BOOL finished) {
-        self.previousDealType = self.dealType;
-        self.dealType = HAPPY_HOUR;
-        self.selectedDeals = self.happyHours;
-        [self reloadTableViewAfterDealToggle];
-        [self reloadAnnotations];
-        [self minimizeMapViewDeal];
-    }];
-}
+//- (void) happyHourButtonTouched
+//{
+//    [UIView animateWithDuration:0.35f animations:^{
+//        self.sliderThumb.frame = CGRectMake(25, 30, 30, 30);
+//        [self hideRewardContainer];
+//    } completion:^(BOOL finished) {
+//        self.previousDealType = self.dealType;
+//        self.dealType = HAPPY_HOUR;
+//        self.selectedDeals = self.happyHours;
+//        [self reloadTableViewAfterDealToggle];
+//        [self reloadAnnotations];
+//        [self minimizeMapViewDeal];
+//    }];
+//}
 
-- (void) hotspotButtonTouched
-{
-    [UIView animateWithDuration:0.35f animations:^{
-        self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
-        [self showRewardContainer];
-    } completion:^(BOOL finished) {
-        self.previousDealType = self.dealType;
-        self.dealType = HOTSPOT;
-        self.selectedDeals = self.hotspots;
-        [self reloadTableViewAfterDealToggle];
-        [self reloadAnnotations];
-        [self minimizeMapViewDeal];
-    }];
-}
+//- (void) hotspotButtonTouched
+//{
+//    [UIView animateWithDuration:0.35f animations:^{
+//        self.sliderThumb.frame = CGRectMake(self.view.width/2 - 15, 30, 30, 30);
+//        [self showRewardContainer];
+//    } completion:^(BOOL finished) {
+//        self.previousDealType = self.dealType;
+//        self.dealType = HOTSPOT;
+//        self.selectedDeals = self.hotspots;
+//        [self reloadTableViewAfterDealToggle];
+//        [self reloadAnnotations];
+//        [self minimizeMapViewDeal];
+//    }];
+//}
 
 //- (void) rewardsButtonTouched:(id)sender
 //{
@@ -1560,116 +1271,51 @@ typedef enum dealTypeStates
 //    }];
 //}
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    self.selectedDealIndex = [view.annotation.title intValue];
-    
-    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
-    
-    if (self.dealType == HOTSPOT) {
-        Deal *deal = self.selectedDeals[self.selectedDealIndex];
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
-//        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-        //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
-        
-        if (self.dealType == HOTSPOT) {
-            
-            if (deal.isRewardItem) {
-                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
-                self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-                //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-            } else {
-                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
-                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
-            }
-            
-            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-            
-//            self.marketPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemMarketPrice];
-            
-//            NSDictionary* attributes = @{
-//                                         NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
-//                                         };
+//- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+//{
+//    self.selectedDealIndex = [view.annotation.title intValue];
+//    
+//    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
+//    
+//    if (self.dealType == HOTSPOT) {
+//        Deal *deal = self.selectedDeals[self.selectedDealIndex];
+//        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
+//        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+//        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+//        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
+////        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+//        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+//        //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+//        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
+//        
+//        if (self.dealType == HOTSPOT) {
 //            
-//            NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
-//            self.marketPriceLabel.attributedText = attrText;
-            
-            CGFloat descriptionLabelWidth;
-//            if (textSize.width < self.view.width * .6) {
-            descriptionLabelWidth = textSize.width;
+//            if (deal.isRewardItem) {
+//                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
+//                self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+//                //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
 //            } else {
-//                descriptionLabelWidth = self.view.width * .6;
+//                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
+//                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
 //            }
-            
-//            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-            
-            self.descriptionLabel.width = descriptionLabelWidth + 10;
-        }
-    } else if (self.dealType == HAPPY_HOUR) {
-        HappyHour *deal = self.selectedDeals[self.selectedDealIndex];
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
-        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-        self.dealTime.text = [deal.happyHourStartString uppercaseString];
-        self.descriptionLabel.text = @"  HAPPY HOUR";
-        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-        
-        CGFloat descriptionLabelWidth;
-        if (textSize.width < self.view.width * .6) {
-            descriptionLabelWidth = textSize.width;
-        } else {
-            descriptionLabelWidth = self.view.width * .6;
-        }
-        
-        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] purpleColor];
-        
-        self.descriptionLabel.width = descriptionLabelWidth + 10;
-        
-    }
-    
-    [self toggleMapViewDeal:nil];
-    
-}
+//            
+//            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+//            
+//            CGFloat descriptionLabelWidth;
+//            descriptionLabelWidth = textSize.width;
+//            
+//            self.descriptionLabel.width = descriptionLabelWidth + 10;
+//        }
+//    }
+//    
+//}
 
 -(void)tappedOnSelectedDealInMap:(id)sender
 {
-    if (self.dealType == HOTSPOT) {
-        Deal *deal = self.selectedDeals[self.selectedDealIndex];
-        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.deal = deal;
-        [self.navigationController pushViewController:dealViewController animated:YES];
-    } else if (self.dealType == HAPPY_HOUR) {
-        HappyHour *happyHour;
-        happyHour = self.selectedDeals[self.selectedDealIndex];
-        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.happyHour = happyHour;
-        [self.navigationController pushViewController:dealViewController animated:YES];
-    } else if (self.dealType == REWARD) {
-        Deal *deal = self.selectedDeals[self.selectedDealIndex];
-        if (!deal.locked) {
-            UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Purchase Voucher?" message:@"Would you like to purchase this voucher?"];
-            [alertView bk_addButtonWithTitle:@"Yes" handler:^{
-                [[RewardManager sharedManager] purchaseRewardItem:deal.dealID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationRewardsUpdated object:self];
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"Failure");
-                }];
-            }];
-            
-            [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-            [alertView show];
-            return;
-        } else {
-            [[[UIAlertView alloc] initWithTitle:@"Not Enough Points" message:@"You don't have enough points to purchase this item" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        }
-    }
+    Venue *venue = self.allVenues[self.selectedDealIndex];
+    DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+    dealViewController.venue = venue;
+    [self.navigationController pushViewController:dealViewController animated:YES];
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString

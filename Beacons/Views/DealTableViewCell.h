@@ -39,6 +39,6 @@
 @property (strong, nonatomic) UIButton *followButton;
 //@property (nonatomic, assign) BOOL hasRewardItem;
 
-@property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) Venue *venue;
 
 @end

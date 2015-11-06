@@ -12,7 +12,7 @@
 
 @interface DealDetailViewController : UIViewController
 
-@property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) Venue *venue;
 @property (strong, nonatomic) HappyHour *happyHour;
 
 @end

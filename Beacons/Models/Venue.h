@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSString *placeDescription;
 @property (strong, nonatomic) Deal *deal;
+@property (assign, nonatomic) BOOL isFollowed;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;
 - (id)initWithDealPlaceDictionary:(NSDictionary *)dictionary;

@@ -58,9 +58,6 @@
     NSString *isRewardItem = dictionary[@"is_reward_item"];
     self.isRewardItem = [isRewardItem boolValue];
     
-    NSString *isFollowed = dictionary[@"is_followed"];
-    self.isFollowed = [isFollowed boolValue];
-    
     if (self.inAppPayment) {
         self.dealDescriptionShort = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];
         self.dealDescription = [NSString stringWithFormat:@"%@ for $%@",self.itemName, self.itemPrice];

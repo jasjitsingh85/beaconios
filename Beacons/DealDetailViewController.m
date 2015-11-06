@@ -128,7 +128,7 @@
 
 -(void) updateIsUserPresent
 {
-    if (self.deal.venue.distance < 0.1) {
+    if (self.venue.distance < 0.1) {
         self.isPresent = YES;
     } else {
         self.isPresent = NO;
@@ -189,10 +189,10 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
     [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
-        [Utilities launchGoogleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+        [Utilities launchGoogleMapsDirectionsToCoordinate:self.venue.coordinate addressDictionary:nil destinationName:self.venue.name];
     }];
     [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
-        [Utilities launchAppleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+        [Utilities launchAppleMapsDirectionsToCoordinate:self.venue.coordinate addressDictionary:nil destinationName:self.venue.name];
     }];
     [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
     [actionSheet showInView:self.view];
@@ -227,17 +227,17 @@
 //    }];
 //}
 
-- (void) setDeal:(Deal *)deal
+- (void) setVenue:(Venue *)venue
 
 {
-    _deal = deal;
+    _venue = venue;
     
     [self updateIsUserPresent];
     
-    bool hasVenueDescription = ![self.deal.venue.placeDescription isEqual: @""];
+    bool hasVenueDescription = ![self.venue.placeDescription isEqual: @""];
     
     DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
-    dealView.deal = self.deal;
+    dealView.deal = self.venue.deal;
     [self.mainScroll addSubview:dealView];
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
@@ -258,19 +258,19 @@
     dealTextLabel.textAlignment = NSTextAlignmentCenter;
     dealTextLabel.numberOfLines = 0;
     
-    if (deal.isRewardItem) {
+    if (venue.deal.isRewardItem) {
         [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
-        dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for free. %@", [self.deal.itemName lowercaseString], self.deal.additionalInfo];
+        dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for free. %@", [self.venue.deal.itemName lowercaseString], self.venue.deal.additionalInfo];
     } else {
         //if (self.isPresent) {
             [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
         //} else {
           //  [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
         //}
-        if ([[self.deal.itemName lowercaseString] hasPrefix:@"any"]) {
-            dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+        if ([[self.venue.deal.itemName lowercaseString] hasPrefix:@"any"]) {
+            dealTextLabel.text = [NSString stringWithFormat:@"You get %@ for $%@. %@", [self.venue.deal.itemName lowercaseString], self.venue.deal.itemPrice, self.venue.deal.additionalInfo];
         } else {
-            dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.deal.itemName lowercaseString], self.deal.itemPrice, self.deal.additionalInfo];
+            dealTextLabel.text = [NSString stringWithFormat:@"You get a %@ for $%@. %@", [self.venue.deal.itemName lowercaseString], self.venue.deal.itemPrice, self.venue.deal.additionalInfo];
         }
     }
     
@@ -299,11 +299,10 @@
         
         UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
         [self.mainScroll addSubview:yelpContainer];
-        NSLog(@"yelpRating: %@", self.deal.venue.yelpRating);
-        if (![self.deal.venue.yelpRating isEmpty]) {
+        if (![self.venue.yelpRating isEmpty]) {
             UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
             yelpReview.centerX = self.view.width/2;
-            [yelpReview sd_setImageWithURL:self.deal.venue.yelpRating];
+            [yelpReview sd_setImageWithURL:self.venue.yelpRating];
             
             UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
             poweredByYelp.y = 4;
@@ -314,7 +313,7 @@
             yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
             yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
             yelpReviewCount.textAlignment = NSTextAlignmentRight;
-            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.deal.venue.yelpReviewCount];
+            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
             [yelpContainer addSubview:yelpReviewCount];
             
             [yelpContainer addSubview:yelpReview];
@@ -324,7 +323,7 @@
         
         NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
         CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-        CGRect venueDescriptionHeight = [self.deal.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
+        CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
         
         self.venueTextLabel = [[UILabel alloc] init];
         self.venueTextLabel.x = 0;
@@ -383,8 +382,8 @@
     [self.mainScroll addSubview:directionHeadingLabel];
     
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-    CLLocationCoordinate2D center = self.deal.venue.coordinate;
-    options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 300, 300);
+    CLLocationCoordinate2D center = self.venue.coordinate;
+    options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
     center.latitude -= options.region.span.latitudeDelta * 0.12;
     options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
     options.scale = [UIScreen mainScreen].scale;
@@ -414,7 +413,7 @@
         [singleTap setNumberOfTapsRequired:1];
         [mapImageView addGestureRecognizer:singleTap];
         
-        CGSize textSize = [self.deal.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
+        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
         
         int addressContainerWidth;
         if (textSize.width < (self.view.width - 10)) {
@@ -429,7 +428,7 @@
         [mapImageView addSubview:addressContainer];
         
         UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-        address.text = [self.deal.venue.address uppercaseString];
+        address.text = [self.venue.address uppercaseString];
         address.textAlignment = NSTextAlignmentCenter;
         address.font = [ThemeManager lightFontOfSize:13];
         [addressContainer addSubview:address];
@@ -459,13 +458,13 @@
     //[self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
     //self.distanceLabel.text = [self stringForDistance:self.deal.venue.distance];
     //self.dealTime.text = [self.deal.dealStartString uppercaseString];
-    self.venueTextLabel.text = self.deal.venue.placeDescription;
+    self.venueTextLabel.text = self.venue.placeDescription;
     
-    if (deal.isRewardItem) {
-        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.deal.venue.name];
+    if (venue.deal.isRewardItem) {
+        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
     } else {
        // if (self.isPresent) {
-            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
+            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
         //} else  {
         //    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'I'M GOING HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
         //}
@@ -477,7 +476,7 @@
     
     //[self.view addSubview:self.getDealButton];
     
-    if (self.deal.isFollowed) {
+    if (self.venue.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
@@ -486,9 +485,9 @@
     [self.getDealButtonContainer addSubview:self.getDealButton];
     [self.view addSubview:self.getDealButtonContainer];
     
-    [[AnalyticsManager sharedManager] viewedDeal:deal.dealID.stringValue withPlaceName:deal.venue.name];
+    [[AnalyticsManager sharedManager] viewedDeal:venue.deal.dealID.stringValue withPlaceName:venue.name];
     
-    [[APIClient sharedClient] trackView:self.deal.dealID ofType:kHotspotViewType success:nil failure:nil];
+    [[APIClient sharedClient] trackView:self.venue.deal.dealID ofType:kHotspotViewType success:nil failure:nil];
 }
 
 - (void) setHappyHour:(HappyHour *)happyHour
@@ -600,7 +599,7 @@
     
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
     CLLocationCoordinate2D center = self.happyHour.venue.coordinate;
-    options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 300, 300);
+    options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
     center.latitude -= options.region.span.latitudeDelta * 0.12;
     options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
     options.scale = [UIScreen mainScreen].scale;
@@ -714,9 +713,9 @@
 - (void) getDealButtonTouched:(id)sender
 {
     NSDate *now = [NSDate date];
-    if (![self.deal isAvailableAtDateAndTime:now] && self.deal != nil) {
+    if (![self.venue.deal isAvailableAtDateAndTime:now] && self.venue.deal != nil) {
 
-        NSString *message = [NSString stringWithFormat:@"This deal is available %@", self.deal.hoursAvailableString];
+        NSString *message = [NSString stringWithFormat:@"This deal is available %@", self.venue.deal.hoursAvailableString];
         UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
         [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
 //            [self.navigationController popToRootViewControllerAnimated:YES];
@@ -729,12 +728,12 @@
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         UIView *view = appDelegate.window.rootViewController.view;
         MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-        if (self.deal != nil){
-           [[APIClient sharedClient] checkInForDeal:self.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+        if (self.venue.deal != nil){
+           [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
                 [loadingIndicator hide:YES];
                 AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                 [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-                [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:0];
+                [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
             } failure:^(NSError *error) {
                 [loadingIndicator hide:YES];
                 [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -778,8 +777,8 @@
     [self updateFavoriteButton];
     
     NSNumber *venueID = [[NSNumber alloc] init];
-    if (self.deal != nil) {
-        venueID = self.deal.venue.venueID;
+    if (self.venue.deal != nil) {
+        venueID = self.venue.deal.venue.venueID;
     } else  {
         venueID = self.happyHour.venue.venueID;
     }

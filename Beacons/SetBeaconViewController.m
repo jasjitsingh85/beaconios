@@ -207,7 +207,7 @@
 
 - (void)showDealsExplanation
 {
-    NSArray *deals = [AppDelegate sharedAppDelegate].dealsViewController.hotspots;
+    NSArray *deals = [AppDelegate sharedAppDelegate].dealsViewController.allVenues;
     if (deals && deals.count) {
         DealExplanationView *dealExplanationView = [[DealExplanationView alloc] init];
         [dealExplanationView show];

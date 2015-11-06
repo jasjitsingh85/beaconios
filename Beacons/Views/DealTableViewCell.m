@@ -266,29 +266,29 @@
     
 }
 
-- (void)setDeal:(Deal *)deal
+- (void)setVenue:(Venue *)venue
 {
-    _deal = deal;
+    _venue = venue;
     
-    if (deal.inAppPayment) {
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.venue.name];
+    if (venue.deal.inAppPayment) {
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.name];
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
         //self.venueLabelLineOne.text = [deal.itemName uppercaseString];
         //self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
     } else {
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.deal.dealDescriptionShort];
+        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.deal.dealDescriptionShort];
         self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
         self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     }
 //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
-    [self.venueImageView sd_setImageWithURL:self.deal.venue.imageURL];
+    [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
     //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
     
     NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
     //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
-    NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.deal.itemMarketPrice];
+    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+    NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.venue.deal.itemMarketPrice];
     self.marketPriceLabel.text = marketPriceString;
     
     NSDictionary* attributes = @{
@@ -298,7 +298,7 @@
     NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
     self.marketPriceLabel.attributedText = attrText;
     
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [deal.itemName uppercaseString]];
+    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [venue.deal.itemName uppercaseString]];
     CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
     
     CGFloat descriptionLabelWidth;
@@ -307,19 +307,19 @@
     self.marketPriceLabel.x = descriptionLabelWidth + 3;
     CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
     
-    if (self.deal.isFollowed) {
+    if (self.venue.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
     }
     
-    if (self.deal.isRewardItem) {
+    if (self.venue.deal.isRewardItem) {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
         //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
         self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     } else {
-        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", deal.itemPrice];
-        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", venue.deal.itemPrice];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     }
     CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
     self.itemPriceLabel.width = itemPriceTextSize.width;
@@ -413,10 +413,10 @@
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Get Directions"];
     [actionSheet bk_addButtonWithTitle:@"Google Maps" handler:^{
-        [Utilities launchGoogleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+        [Utilities launchGoogleMapsDirectionsToCoordinate:self.venue.coordinate addressDictionary:nil destinationName:self.venue.name];
     }];
     [actionSheet bk_addButtonWithTitle:@"Apple Maps" handler:^{
-        [Utilities launchAppleMapsDirectionsToCoordinate:self.deal.venue.coordinate addressDictionary:nil destinationName:self.deal.venue.name];
+        [Utilities launchAppleMapsDirectionsToCoordinate:self.venue.coordinate addressDictionary:nil destinationName:self.venue.name];
     }];
     [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
 //    [actionSheet showInView:self.venueDetailView];
@@ -466,7 +466,7 @@
     self.isFollowed = !self.isFollowed;
     [self updateFavoriteButton];
     
-    [[APIClient sharedClient] toggleFavorite:self.deal.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] toggleFavorite:self.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.isFollowed = [responseObject[@"is_favorited"] boolValue];
         [self updateFavoriteButton];
     } failure:nil];
@@ -479,9 +479,10 @@
     self.followButton.x = self.contentView.width - 95;
     //[self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
     //[self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [self.followButton setTitleColor:[[ThemeManager sharedTheme] greenColor] forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] greenColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.followButton.backgroundColor = [UIColor whiteColor];
+    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.followButton.layer.borderColor =[[ThemeManager sharedTheme] greenColor].CGColor;
+    self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
 }
 
 - (void) makeFollowButtonInactive
@@ -491,7 +492,8 @@
     self.followButton.x = self.contentView.width - 85;
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.followButton.backgroundColor = [UIColor clearColor];
+    self.followButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+    self.followButton.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
 
