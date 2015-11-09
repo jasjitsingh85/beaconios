@@ -91,6 +91,9 @@
     NSString *isFollowed = dictionary[@"is_followed"];
     self.isFollowed = [isFollowed boolValue];
     
+    NSString *placeType = dictionary[@"place_type"];
+    self.placeType = placeType;
+    
     return self;
 }
 

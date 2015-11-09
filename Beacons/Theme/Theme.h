@@ -11,6 +11,7 @@
 @protocol Theme <NSObject>
 
 - (UIColor *)lightGrayColor;
+- (UIColor *)darkGrayColor;
 - (UIColor *)cyanColor;
 - (UIColor *)orangeColor;
 - (UIColor *)blueColor;

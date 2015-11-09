@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSURL *yelpRating;
 @property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSString *placeDescription;
+@property (strong, nonatomic) NSString *placeType;
 @property (strong, nonatomic) Deal *deal;
 @property (assign, nonatomic) BOOL isFollowed;
 

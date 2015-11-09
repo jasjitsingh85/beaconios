@@ -86,8 +86,8 @@
     [self.venuePreviewView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager regularFontOfSize:14];
-    self.dealTime.textColor = [UIColor whiteColor];
+    self.dealTime.font = [ThemeManager regularFontOfSize:11];
+    self.dealTime.textColor = [[ThemeManager sharedTheme] darkGrayColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
@@ -205,7 +205,7 @@
     self.followButton.titleLabel.textColor = [UIColor whiteColor];
     self.followButton.layer.cornerRadius = 4;
     self.followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
-    self.followButton.layer.borderWidth = 2.0;
+    self.followButton.layer.borderWidth = 1.0;
 //    self.followButton.layer.borderColor = (__bridge CGColorRef)([UIColor whiteColor]);
 //    self.followButton.layer.borderWidth = 2;
 //    self.followButton.layer.cornerRadius = 4;
@@ -270,128 +270,51 @@
 {
     _venue = venue;
     
-    if (venue.deal.inAppPayment) {
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.name];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-        //self.venueLabelLineOne.text = [deal.itemName uppercaseString];
-        //self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
-    } else {
-        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.deal.dealDescriptionShort];
-        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-    }
-//    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.name];
+    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+
     [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
-    //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
     
-    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
-    NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.venue.deal.itemMarketPrice];
-    self.marketPriceLabel.text = marketPriceString;
-    
-    NSDictionary* attributes = @{
+    if (self.venue.deal) {
+        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+        NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.venue.deal.itemMarketPrice];
+        self.marketPriceLabel.text = marketPriceString;
+        NSDictionary* attributes = @{
                                  NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
                                  };
+        NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
+        self.marketPriceLabel.attributedText = attrText;
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [venue.deal.itemName uppercaseString]];
+        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+        
+        CGFloat descriptionLabelWidth;
+        //if (textSize.width < self.contentView.width * .6) {
+        descriptionLabelWidth = textSize.width;
+        self.marketPriceLabel.x = descriptionLabelWidth + 3;
+        CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
     
-    NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
-    self.marketPriceLabel.attributedText = attrText;
-    
-    self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [venue.deal.itemName uppercaseString]];
-    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-    
-    CGFloat descriptionLabelWidth;
-    //if (textSize.width < self.contentView.width * .6) {
-    descriptionLabelWidth = textSize.width;
-    self.marketPriceLabel.x = descriptionLabelWidth + 3;
-    CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
+        if (self.venue.deal.isRewardItem) {
+            self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
+            //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+        } else {
+            self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", venue.deal.itemPrice];
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+        }
+        CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
+        self.itemPriceLabel.width = itemPriceTextSize.width;
+        self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
+        
+        self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
+    }
     
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
     }
-    
-    if (self.venue.deal.isRewardItem) {
-        self.itemPriceLabel.text = [NSString stringWithFormat:@"FREE"];
-        //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-    } else {
-        self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", venue.deal.itemPrice];
-        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    }
-    CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
-    self.itemPriceLabel.width = itemPriceTextSize.width;
-    self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
-    
-    
-//    } else {
-//        descriptionLabelWidth = self.contentView.width * .6;
-//    }
-    
-//    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
-//                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-//                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
-//                                                                           context:nil].size.width;
-
-    //self.dealTime.x = descriptionLabelWidth + 15;
-    
-    self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
-    //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-//    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
-//    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
-    //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-//    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    
-//    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
-    
-//    if ([self.dealTime.text isEqualToString:@"NOW"]) {
-//        self.dealTime.textColor = [UIColor unnormalizedColorWithRed:57 green:190 blue:111 alpha:255];
-//    }
-    
-    //self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0,0,80,80)];
-
-    
-//    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-//    //    MKCoordinateSpan span;
-//    //    //You can set span for how much Zoom to be display
-//    //    span.latitudeDelta=.15;
-//    //    span.longitudeDelta=.15;
-//    
-//    options.region = MKCoordinateRegionMakeWithDistance(self.deal.venue.coordinate, 700, 700);
-//    options.scale = [UIScreen mainScreen].scale;
-//    options.size = CGSizeMake(120, 120);
-    
-    //self.mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
-    //[self.mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
-        //self.mapSnapshotImage = mapSnap.image;
-        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.venueDetailView.width - 55, 25, 120, 120)];
-        //UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.venuePreviewView.width - 45, 15, 22, 30)];
-        //[mapImageView setImage:mapSnap.image];
-        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
-        //CALayer *imageLayer = mapImageView.layer;
-        //[imageLayer setCornerRadius:mapView.size.width/2];
-        //[imageLayer setBorderWidth:3];
-        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
-        //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
-        //[imageLayer setMasksToBounds:YES];
-        
-        //UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 15, (mapImageView.frame.size.height/2) - 15, 30, 30)];
-        //UIImage *markerImage = [UIImage imageNamed:@"marker"];
-        //[markerImageView setImage:markerImage];
-        //[mapImageView addSubview:markerImageView];
-        
-        //[mapImageView setUserInteractionEnabled:YES];
-        //UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
-        //[singleTap setNumberOfTapsRequired:1];
-        //[mapImageView addGestureRecognizer:singleTap];
-        
-        //[mapView addSubview:mapImageView];
-        //[self.venuePreviewView addSubview:mapImageView];
-        //[self.venuePreviewView addSubview:self.distanceLabel];
-   // }];
     
 }
 

@@ -99,6 +99,9 @@ typedef enum dealTypeStates
 
 @property (strong, nonatomic) UIImageView *notificationIcon;
 
+@property (strong, nonatomic) UILabel *filterHeaderLabel;
+@property (strong, nonatomic) UIButton *filterButton;
+
 @end
 
 @implementation DealsTableViewController
@@ -150,10 +153,32 @@ typedef enum dealTypeStates
     [self.viewContainer addSubview:self.tableView];
     
     UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
-    filterHeader.backgroundColor = [UIColor blackColor];
+    filterHeader.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:filterHeader];
     
+    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 18, self.view.width, 30)];
+    self.filterHeaderLabel.text = @"Hot and New";
+    self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:14];
+    self.filterHeaderLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+    [filterHeader addSubview:self.filterHeaderLabel];
     
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0.0f, 50.0f, self.view.width, .5f);
+    
+    bottomBorder.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
+    [filterHeader.layer addSublayer:bottomBorder];
+    
+    self.filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.filterButton.size = CGSizeMake(70, 25);
+    self.filterButton.x = self.view.width - 80;
+    self.filterButton.y = 20;
+    self.filterButton.layer.borderWidth = 1;
+    self.filterButton.layer.cornerRadius = 2;
+    self.filterButton.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
+    [self.filterButton setImage:[UIImage imageNamed:@"filterButton"] forState:UIControlStateNormal];
+    [self.filterButton setImage:[UIImage imageNamed:@"filterButtonSelected"] forState:UIControlStateHighlighted];
+    [self.filterButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [filterHeader addSubview:self.filterButton];
     
     [self checkToLaunchInvitationModal];
     
@@ -161,7 +186,6 @@ typedef enum dealTypeStates
     self.mapViewContainer.hidden = YES;
     [self.viewContainer addSubview:self.mapViewContainer];
     
-    //UIView *tapView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, 175)];
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 64)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
