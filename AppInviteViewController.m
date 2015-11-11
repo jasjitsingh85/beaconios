@@ -116,16 +116,6 @@
     return 0;
 }
 
-//- (NSInteger)findFriendSectionAllUsers
-//{
-//    return 1;
-//}
-
-//- (NSInteger)findFriendSectionRecents
-//{
-//    return self.groups.count + 1;
-//}
-
 - (NSInteger)findFriendSectionSuggested
 {
     return 1;

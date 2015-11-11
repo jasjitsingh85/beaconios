@@ -236,9 +236,9 @@
     
     bool hasVenueDescription = ![self.venue.placeDescription isEqual: @""];
     
-//    DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
-//    dealView.deal = self.venue.deal;
-//    [self.mainScroll addSubview:dealView];
+    DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
+    dealView.deal = self.venue.deal;
+    [self.mainScroll addSubview:dealView];
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
     dealIcon.centerX = self.view.width/2;

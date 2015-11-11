@@ -36,6 +36,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FreeDrinksExplanationPopupView.h"
 #import "AppInviteViewController.h"
+#import "FilterViewController.h"
 #import "FeedItem.h"
 #import "FeedTableViewController.h"
 #import "Event.h"
@@ -102,6 +103,8 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) UILabel *filterHeaderLabel;
 @property (strong, nonatomic) UIButton *filterButton;
 
+@property (strong, nonatomic) FilterViewController *filterViewController;
+
 @end
 
 @implementation DealsTableViewController
@@ -146,7 +149,7 @@ typedef enum dealTypeStates
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(50.0, 0.0, 50.0, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0.0, 50.0, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -155,6 +158,8 @@ typedef enum dealTypeStates
     UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
     filterHeader.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:filterHeader];
+    
+    self.filterViewController = [[FilterViewController alloc] init];
     
     self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 18, self.view.width, 30)];
     self.filterHeaderLabel.text = @"Hot and New";
@@ -177,7 +182,7 @@ typedef enum dealTypeStates
     self.filterButton.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
     [self.filterButton setImage:[UIImage imageNamed:@"filterButton"] forState:UIControlStateNormal];
     [self.filterButton setImage:[UIImage imageNamed:@"filterButtonSelected"] forState:UIControlStateHighlighted];
-    [self.filterButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.filterButton addTarget:self action:@selector(filterButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [filterHeader addSubview:self.filterButton];
     
     [self checkToLaunchInvitationModal];
@@ -874,7 +879,7 @@ typedef enum dealTypeStates
         if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
             return 0;
         } else {
-            return 141;
+            return 151;
         }
     } else {
         Venue *venue = self.allVenues[indexPath.row - 1];
@@ -983,7 +988,7 @@ typedef enum dealTypeStates
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
         UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
-        headerIcon.y = -5;
+        headerIcon.y = 5;
         headerIcon.centerX = cell.contentView.width/2;
         [cell.contentView addSubview:headerIcon];
         
@@ -991,7 +996,7 @@ typedef enum dealTypeStates
         tileHeading.width = 150;
         tileHeading.height = 30;
         tileHeading.centerX = cell.contentView.width/2;
-        tileHeading.y = 20;
+        tileHeading.y = 30;
         tileHeading.textAlignment = NSTextAlignmentCenter;
         tileHeading.textColor = [UIColor blackColor];
         tileHeading.text = @"WHAT IS A HOTSPOT?";
@@ -1002,7 +1007,7 @@ typedef enum dealTypeStates
         tileTextBody.width = cell.contentView.width - 45;
         tileTextBody.height = 70;
         tileTextBody.centerX = cell.contentView.width/2;
-        tileTextBody.y = 40;
+        tileTextBody.y = 50;
         tileTextBody.numberOfLines = 4;
         tileTextBody.textAlignment = NSTextAlignmentCenter;
         tileTextBody.textColor = [UIColor blackColor];
@@ -1017,7 +1022,7 @@ typedef enum dealTypeStates
         //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
         gotItButton.size = CGSizeMake(60, 40);
         gotItButton.centerX = cell.contentView.width/2;
-        gotItButton.y = 100;
+        gotItButton.y = 110;
         //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
         [gotItButton addTarget:self action:@selector(hotspotGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:gotItButton];
@@ -1382,6 +1387,16 @@ typedef enum dealTypeStates
     }
     
     return firstAndSecondLine;
+}
+
+-(void)filterButtonTouched:(id)sender
+{
+    UINavigationController *navigationController =
+    [[UINavigationController alloc] initWithRootViewController:self.filterViewController];
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager mediumFontOfSize:15]};
+    navigationController.navigationBar.tintColor = [UIColor blackColor];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 //-(void) makeHotspotTabActive

@@ -36,6 +36,7 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
+		410165D91BF32B4900F0219C /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410165D81BF32B4900F0219C /* FilterViewController.m */; };
 		41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F631B51B0F200252158 /* hotspotIcon@2x.png */; };
 		41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */; };
 		41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F681B52EACA00252158 /* needHelpModalBackground@2x.png */; };
@@ -368,6 +369,8 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		410165D71BF32B3D00F0219C /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		410165D81BF32B4900F0219C /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = SOURCE_ROOT; };
 		41030F631B51B0F200252158 /* hotspotIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotIcon@2x.png"; sourceTree = "<group>"; };
 		41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedHelpExplanationPopupView.h; sourceTree = "<group>"; };
 		41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedHelpExplanationPopupView.m; sourceTree = "<group>"; };
@@ -1125,6 +1128,8 @@
 				964602521994103200979929 /* SetDealViewController.m */,
 				41FD061F1B37178000F7DD08 /* DealDetailViewController.h */,
 				41FD06201B37179600F7DD08 /* DealDetailViewController.m */,
+				410165D71BF32B3D00F0219C /* FilterViewController.h */,
+				410165D81BF32B4900F0219C /* FilterViewController.m */,
 			);
 			name = Deals;
 			sourceTree = "<group>";
@@ -1861,6 +1866,7 @@
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,
 				96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */,
+				410165D91BF32B4900F0219C /* FilterViewController.m in Sources */,
 				9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */,

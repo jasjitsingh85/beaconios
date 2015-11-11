@@ -27,7 +27,7 @@
 
 - (UIColor *)lightGrayColor
 {
-    return [UIColor colorWithRed:244/255.0 green:244/255.0 blue:244/255.0 alpha:244/255.0];
+    return [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:255/255.0];
 }
 
 - (UIColor *)darkGrayColor
