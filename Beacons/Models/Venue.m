@@ -94,6 +94,9 @@
     NSString *placeType = dictionary[@"place_type"];
     self.placeType = placeType;
     
+    NSString *neighborhood = dictionary[@"neighborhood"];
+    self.neighborhood = neighborhood;
+    
     return self;
 }
 

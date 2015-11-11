@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UILabel *dealTime;
 @property (strong, nonatomic) UIView *descriptionBackground;
 @property (strong, nonatomic) UILabel *descriptionLabel;
+@property (strong, nonatomic) UILabel *placeType;
 @property (strong, nonatomic) UILabel *priceLabel;
 @property (strong, nonatomic) UILabel *marketPriceLabel;
 @property (strong, nonatomic) UILabel *itemPriceLabel;

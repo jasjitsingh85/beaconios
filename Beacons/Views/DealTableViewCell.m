@@ -46,13 +46,13 @@
 //    self.venueScroll.showsHorizontalScrollIndicator = NO;
 
     self.venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
-    self.backgroundDealView = [[UIView alloc] initWithFrame:self.venuePreviewView.bounds];
-    self.backgroundDealView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+    //self.backgroundDealView = [[UIView alloc] initWithFrame:self.venuePreviewView.bounds];
+//    self.backgroundDealView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
     //self.backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.venueImageView addSubview:self.backgroundDealView];
+    //[self.venueImageView addSubview:self.backgroundDealView];
     
-    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
-    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.venueImageView.size.width, 146)];
+    UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
     [self.backgroundGradient setImage:gradientImage];
     [self.venueImageView addSubview:self.backgroundGradient];
     
@@ -86,18 +86,12 @@
     [self.venuePreviewView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager regularFontOfSize:11];
+    self.dealTime.font = [ThemeManager regularFontOfSize:12];
     self.dealTime.textColor = [[ThemeManager sharedTheme] darkGrayColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
     [self.venuePreviewView addSubview:self.dealTime];
-    
-//    self.priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 89, 40, 26)];
-//    self.priceLabel.textColor = [UIColor whiteColor];
-//    self.priceLabel.textAlignment = NSTextAlignmentLeft;
-//    self.priceLabel.font = [ThemeManager boldFontOfSize:18];
-//    [self.venuePreviewView addSubview:self.priceLabel];
     
     self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 90, 40, 26)];
     self.marketPriceLabel.textColor = [UIColor whiteColor];
@@ -112,78 +106,6 @@
     self.itemPriceLabel.height = 26;
     self.itemPriceLabel.y = 90;
     [self.venuePreviewView addSubview:self.itemPriceLabel];
-    
-    //    self.venueDescriptionBackground = [[UIView alloc] init];
-    //    self.venueDescriptionBackground.backgroundColor = [UIColor whiteColor];
-    //    [self.contentView addSubview:self.venueDescriptionBackground];
-    
-//    self.venueDescriptionLabel = [[UILabel alloc] init];
-//    self.venueDescriptionLabel.font = [ThemeManager lightFontOfSize:1.3*10];
-//    self.venueDescriptionLabel.textAlignment = NSTextAlignmentCenter;
-//    self.venueDescriptionLabel.textColor = [UIColor blackColor];
-//    self.venueDescriptionLabel.numberOfLines = 0;
-//    [self.venueDescriptionBackground addSubview:self.venueDescriptionLabel];
-    
-    //venuePreviewView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0];
-//    [self.venueScroll addSubview:self.venuePreviewView];
-    
-//    CGFloat originForVenueDetail = self.contentView.frame.size.width;
-//    self.venueDetailView = [[UIView alloc] initWithFrame:CGRectMake(originForVenueDetail, 0, self.contentView.frame.size.width, 196)];
-//    
-//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-//    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-//    [blurEffectView setFrame:self.venueDetailView.bounds];
-//    [self.venueDetailView addSubview:blurEffectView];
-    
-//    UIVibrancyEffect *vibrance = [UIVibrancyEffect effectForBlurEffect:blurEffect];
-//    UIVisualEffectView *vibranceEffectView = [[UIVisualEffectView alloc] initWithEffect:vibrance];
-//    [vibranceEffectView setFrame:self.venueDetailView.bounds];
-//    [blurEffectView addSubview:vibranceEffectView];
-    
-    //self.venueDetailView.backgroundColor = [UIColor colorWithRed:23/255.f green:10/255.f blue:1/255.f alpha:.75];
-//    
-//    self.venueDetailLabel = [[UILabel alloc] init];
-//    self.venueDetailLabel.font = [ThemeManager boldFontOfSize:24];
-//    self.venueDetailLabel.textColor = [UIColor whiteColor];
-////    self.venueDetailLabel.adjustsFontSizeToFitWidth = YES;
-////    [self.venueDetailLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
-//    self.venueDetailLabel.textAlignment = NSTextAlignmentLeft;
-//    self.venueDetailLabel.numberOfLines = 0;
-//    [self.venueDetailView addSubview:self.venueDetailLabel];
-    
-//    self.venueDescriptionLabel = [[UILabel alloc] init];
-//    self.venueDescriptionLabel.font = [ThemeManager regularFontOfSize:13];
-//    self.venueDescriptionLabel.textColor = [UIColor whiteColor];
-////    self.venueDescriptionLabel.adjustsFontSizeToFitWidth = YES;
-//    self.venueDescriptionLabel.textAlignment = NSTextAlignmentLeft;
-//    self.venueDescriptionLabel.numberOfLines = 0;
-//    [self.venueDetailView addSubview:self.venueDescriptionLabel];
-    
-//    self.venueDetailDealHeadingLabel = [[UILabel alloc] init];
-//    self.venueDetailDealHeadingLabel.font = [ThemeManager boldFontOfSize:13];
-//    self.venueDetailDealHeadingLabel.textColor = [UIColor whiteColor];
-//    self.venueDetailDealHeadingLabel.backgroundColor = [[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.85];
-//    self.venueDetailDealHeadingLabel.text = @"THE DEAL";
-//    //self.venueDetailDealHeadingLabel.adjustsFontSizeToFitWidth = YES;
-//    self.venueDetailDealHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//    self.venueDetailDealHeadingLabel.numberOfLines = 1;
-//    [self.venueDetailView addSubview:self.venueDetailDealHeadingLabel];
-//    
-//    self.venueDetailDealFirstLineLabel = [[UILabel alloc] init];
-//    self.venueDetailDealFirstLineLabel.font = [ThemeManager boldFontOfSize:14];
-//    self.venueDetailDealFirstLineLabel.textColor = [UIColor whiteColor];
-//    //self.venueDetailDealFirstLineLabel.adjustsFontSizeToFitWidth = YES;
-//    self.venueDetailDealFirstLineLabel.textAlignment = NSTextAlignmentLeft;
-//    self.venueDetailDealFirstLineLabel.numberOfLines = 1;
-//    [self.venueDetailView addSubview:self.venueDetailDealFirstLineLabel];
-//    
-//    self.venueDetailDealSecondLineLabel = [[UILabel alloc] init];
-//    self.venueDetailDealSecondLineLabel.font = [ThemeManager regularFontOfSize:12];
-//    self.venueDetailDealSecondLineLabel.textColor = [[UIColor whiteColor] colorWithAlphaComponent:.8];
-////    self.venueDetailDealSecondLineLabel.adjustsFontSizeToFitWidth = YES;
-//    self.venueDetailDealSecondLineLabel.textAlignment = NSTextAlignmentLeft;
-//    self.venueDetailDealSecondLineLabel.numberOfLines = 0;
-//    [self.venueDetailView addSubview:self.venueDetailDealSecondLineLabel];
     
     self.distanceLabel = [[UILabel alloc] init];
     self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
@@ -206,30 +128,16 @@
     self.followButton.layer.cornerRadius = 4;
     self.followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
     self.followButton.layer.borderWidth = 1.0;
-//    self.followButton.layer.borderColor = (__bridge CGColorRef)([UIColor whiteColor]);
-//    self.followButton.layer.borderWidth = 2;
-//    self.followButton.layer.cornerRadius = 4;
-//    [self.favoriteButton setImage:[UIImage imageNamed:@"unselectedFavorite"] forState:UIControlStateNormal];
-    //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
-    //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
-    //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
-    //    self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
-    //    [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.venuePreviewView addSubview:self.followButton];
     
+    self.placeType = [[UILabel alloc] initWithFrame:CGRectMake(145, 69, self.contentView.width, 20)];
+    self.placeType.font = [ThemeManager regularFontOfSize:12];
+    self.placeType.textAlignment = NSTextAlignmentLeft;
+    self.placeType.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [self.venuePreviewView addSubview:self.placeType];
     
-//    self.venueScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * 1, self.contentView.frame.size.height);
     [self.contentView addSubview:self.venuePreviewView];
-    
-//    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-//    [recognizer setNumberOfTapsRequired:1];
-//    self.venueScroll.userInteractionEnabled = YES;
-//    [self.venueScroll addGestureRecognizer:recognizer];
-    //[self.venueScroll setUserInteractionEnabled:NO];
-    //[self.contentView addGestureRecognizer:self.venueScroll.panGestureRecognizer];
     
     return self;
 }
@@ -238,23 +146,19 @@
 {
     [super layoutSubviews];
     
-    self.venueImageView.height = 146;
     self.venueImageView.width = self.width;
     
     self.venueLabelLineOne.width = self.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
-    self.venueLabelLineOne.y = 35;
     
     self.venueLabelLineTwo.width = self.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
-    self.venueLabelLineTwo.y = 49;
     
-    self.dealTime.width = 200;
+    self.dealTime.width = self.width;
     self.dealTime.height = 20;
     self.dealTime.x = 8;
-    self.dealTime.y=117;
 
     self.distanceLabel.size = CGSizeMake(67, 20);
     //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
@@ -273,12 +177,21 @@
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.name];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-
+    
+    CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
+    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 8;
+    
     [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
     
+    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+    
     if (self.venue.deal) {
-        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+        self.venueImageView.height = 146;
+        if (self.venue.neighborhood != (NSString *)[NSNull null]) {
+            self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@ | %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self.venue.neighborhood uppercaseString],[self stringForDistance:venue.distance]];
+        } else {
+            self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+        }
         NSString *marketPriceString = [NSString stringWithFormat:@"$%@", self.venue.deal.itemMarketPrice];
         self.marketPriceLabel.text = marketPriceString;
         NSDictionary* attributes = @{
@@ -308,7 +221,29 @@
         self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
         
         self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
+        
+        self.venueLabelLineOne.y = 35;
+        self.venueLabelLineTwo.y = 49;
+        self.dealTime.y = 117;
+        
+    } else {
+        self.venuePreviewView.height = 96;
+        self.venueImageView.height = 96;
+        self.backgroundGradient.height = 96;
+        
+        self.venueLabelLineOne.y = 20;
+        self.venueLabelLineTwo.y = 34;
+        self.placeType.y = 54;
+        self.dealTime.y = 73;
+        
+        if (self.venue.neighborhood != (NSString *)[NSNull null]) {
+            self.dealTime.text = [NSString stringWithFormat:@"%@ | %@", [self.venue.neighborhood uppercaseString],[self stringForDistance:venue.distance]];
+        } else {
+            self.dealTime.text = [NSString stringWithFormat:@"%@", [self stringForDistance:venue.distance]];
+        }
     }
+    
+    self.placeType.text = [venue.placeType uppercaseString];
     
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];

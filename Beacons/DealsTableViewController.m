@@ -730,7 +730,6 @@ typedef enum dealTypeStates
 - (void)loadDealsNearCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(NSString *)radius withCompletion:(void (^)())completion
 {
     [[APIClient sharedClient] getPlacesNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
         NSMutableArray *venues = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         [self.mapView removeAnnotations:[self.mapView annotations]];
@@ -751,7 +750,6 @@ typedef enum dealTypeStates
         }
         
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
-        NSLog(@"Reward Items: %@", self.numberOfRewardItems);
         if ([self.numberOfRewardItems integerValue] > 0) {
             self.hasRewardItem = YES;
             self.rewardExplanationContainer.hidden = NO;
@@ -871,10 +869,20 @@ typedef enum dealTypeStates
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]){
-        return 0;
+    
+    if (indexPath.row == 0){
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+            return 0;
+        } else {
+            return 141;
+        }
     } else {
-        return 151;   
+        Venue *venue = self.allVenues[indexPath.row - 1];
+        if (venue.deal) {
+            return 151;
+        } else {
+            return 101;
+        }
     }
 }
 
@@ -975,7 +983,7 @@ typedef enum dealTypeStates
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
         UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
-        headerIcon.y = 5;
+        headerIcon.y = -5;
         headerIcon.centerX = cell.contentView.width/2;
         [cell.contentView addSubview:headerIcon];
         
@@ -983,7 +991,7 @@ typedef enum dealTypeStates
         tileHeading.width = 150;
         tileHeading.height = 30;
         tileHeading.centerX = cell.contentView.width/2;
-        tileHeading.y = 30;
+        tileHeading.y = 20;
         tileHeading.textAlignment = NSTextAlignmentCenter;
         tileHeading.textColor = [UIColor blackColor];
         tileHeading.text = @"WHAT IS A HOTSPOT?";
@@ -994,7 +1002,7 @@ typedef enum dealTypeStates
         tileTextBody.width = cell.contentView.width - 45;
         tileTextBody.height = 70;
         tileTextBody.centerX = cell.contentView.width/2;
-        tileTextBody.y = 50;
+        tileTextBody.y = 40;
         tileTextBody.numberOfLines = 4;
         tileTextBody.textAlignment = NSTextAlignmentCenter;
         tileTextBody.textColor = [UIColor blackColor];
@@ -1009,7 +1017,7 @@ typedef enum dealTypeStates
         //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
         gotItButton.size = CGSizeMake(60, 40);
         gotItButton.centerX = cell.contentView.width/2;
-        gotItButton.y = 110;
+        gotItButton.y = 100;
         //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
         [gotItButton addTarget:self action:@selector(hotspotGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:gotItButton];
@@ -1054,7 +1062,7 @@ typedef enum dealTypeStates
         Venue *venue;
         venue = self.allVenues[indexPath.row - 1];
         
-        NSString *DealCellIdentifier = [NSString stringWithFormat:@"DealCell"];
+        NSString *DealCellIdentifier = [NSString stringWithFormat:@"Venue: %@", venue.name];
         DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
         
         if (!dealCell) {

@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSString *yelpReviewCount;
 @property (strong, nonatomic) NSString *placeDescription;
 @property (strong, nonatomic) NSString *placeType;
+@property (strong, nonatomic) NSString *neighborhood;
 @property (strong, nonatomic) Deal *deal;
 @property (assign, nonatomic) BOOL isFollowed;
 
