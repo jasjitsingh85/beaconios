@@ -13,6 +13,6 @@
 @interface DealDetailViewController : UIViewController
 
 @property (strong, nonatomic) Venue *venue;
-@property (strong, nonatomic) HappyHour *happyHour;
+//@property (strong, nonatomic) HappyHour *happyHour;
 
 @end

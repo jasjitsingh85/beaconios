@@ -13,7 +13,7 @@
 #import "CenterNavigationController.h"
 #import "AppDelegate.h"
 #import "DealTableViewCell.h"
-#import "HappyHourTableViewCell.h"
+//#import "HappyHourTableViewCell.h"
 #import "APIClient.h"
 #import "LocationTracker.h"
 #import "Deal.h"
@@ -28,8 +28,8 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
 #import "HotspotAnnotation.h"
-#import "HappyHour.h"
-#import "HappyHourVenue.h"
+//#import "HappyHour.h"
+//#import "HappyHourVenue.h"
 #import "RewardTableViewCell.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
