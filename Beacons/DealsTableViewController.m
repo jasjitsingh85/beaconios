@@ -163,7 +163,7 @@ typedef enum dealTypeStates
     filterHeader.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:filterHeader];
     
-    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 17, self.view.width, 30)];
+    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, self.view.width, 30)];
     self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
     self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:12];
     self.filterHeaderLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
@@ -782,8 +782,6 @@ typedef enum dealTypeStates
     
         self.allVenues = venues;
         [self filterVenuesAndReloadTableView];
-        [self reloadAnnotations];
-//        [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {
             completion();
@@ -1432,7 +1430,7 @@ typedef enum dealTypeStates
     self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicate];
     
     [self updateFilterText];
-    
+    [self reloadAnnotations];
     [self reloadTableView];
 }
 
