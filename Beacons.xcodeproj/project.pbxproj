@@ -316,6 +316,16 @@
 		96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		410165E81BF42ADF00F0219C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 410165E41BF42ADF00F0219C /* WLSegmentedControls.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
+			remoteInfo = WLSegmentedControls;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1F36E85517A6170F00D12CB8 /* backArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backArrow@2x.png"; sourceTree = "<group>"; };
 		1F3EF24617979FD9005240E3 /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
@@ -371,6 +381,7 @@
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		410165D71BF32B3D00F0219C /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		410165D81BF32B4900F0219C /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = SOURCE_ROOT; };
+		410165E41BF42ADF00F0219C /* WLSegmentedControls.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLSegmentedControls.xcodeproj; path = "../Downloads/WLSegmentedControls-master/WLSegmentedControls.xcodeproj"; sourceTree = "<group>"; };
 		41030F631B51B0F200252158 /* hotspotIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotIcon@2x.png"; sourceTree = "<group>"; };
 		41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedHelpExplanationPopupView.h; sourceTree = "<group>"; };
 		41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedHelpExplanationPopupView.m; sourceTree = "<group>"; };
@@ -949,6 +960,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		410165E51BF42ADF00F0219C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				410165E91BF42ADF00F0219C /* WLSegmentedControls.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		4105DA901B7AEEEF0006B888 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,6 +1034,7 @@
 		9633992F1758512100AF9D89 = {
 			isa = PBXGroup;
 			children = (
+				410165E41BF42ADF00F0219C /* WLSegmentedControls.xcodeproj */,
 				963399411758512100AF9D89 /* Beacons */,
 				963399421758512100AF9D89 /* Supporting Files */,
 				963399681758512100AF9D89 /* BeaconsTests */,
@@ -1545,12 +1565,28 @@
 			mainGroup = 9633992F1758512100AF9D89;
 			productRefGroup = 963399391758512100AF9D89 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 410165E51BF42ADF00F0219C /* Products */;
+					ProjectRef = 410165E41BF42ADF00F0219C /* WLSegmentedControls.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				963399371758512100AF9D89 /* Beacons */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		410165E91BF42ADF00F0219C /* WLSegmentedControls.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = WLSegmentedControls.app;
+			remoteRef = 410165E81BF42ADF00F0219C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		963399361758512100AF9D89 /* Resources */ = {
