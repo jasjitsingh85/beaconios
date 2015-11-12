@@ -282,31 +282,31 @@
 
 }
 
--(void)nowButtonTapped:(UIButton *)nowButton {
-    
-    if (nowButton.tag == self.hotspotToggle) {
-        self.isHotspotNow = !self.isHotspotNow;
-        [self updateButton:nowButton onState:self.isHotspotNow];
-    } else if (nowButton.tag == self.happyHourToggle) {
-        self.isHappyHourNow = !self.isHappyHourNow;
-        [self updateButton:nowButton onState:self.isHappyHourNow];
-    }
-    NSLog(@"Hotspot: %d", self.isHotspotNow);
-    NSLog(@"Happy Hour: %d", self.isHappyHourNow);
-}
-
--(void)upcomingButtonTapped:(UIButton *)upcomingButton {
-    
-    if (upcomingButton.tag == self.hotspotToggle) {
-        self.isHotspotUpcoming = !self.isHotspotUpcoming;
-        [self updateButton:upcomingButton onState:self.isHotspotUpcoming];
-    } else if (upcomingButton.tag == self.happyHourToggle) {
-        self.isHappyHourUpcoming = !self.isHappyHourUpcoming;
-        [self updateButton:upcomingButton onState:self.isHappyHourUpcoming];
-    }
-    NSLog(@"Hotspot: %d", self.isHotspotUpcoming);
-    NSLog(@"Happy Hour: %d", self.isHappyHourUpcoming);
-}
+//-(void)nowButtonTapped:(UIButton *)nowButton {
+//    
+//    if (nowButton.tag == self.hotspotToggle) {
+//        self.isHotspotNow = !self.isHotspotNow;
+//        [self updateButton:nowButton onState:self.isHotspotNow];
+//    } else if (nowButton.tag == self.happyHourToggle) {
+//        self.isHappyHourNow = !self.isHappyHourNow;
+//        [self updateButton:nowButton onState:self.isHappyHourNow];
+//    }
+//    NSLog(@"Hotspot: %d", self.isHotspotNow);
+//    NSLog(@"Happy Hour: %d", self.isHappyHourNow);
+//}
+//
+//-(void)upcomingButtonTapped:(UIButton *)upcomingButton {
+//    
+//    if (upcomingButton.tag == self.hotspotToggle) {
+//        self.isHotspotUpcoming = !self.isHotspotUpcoming;
+//        [self updateButton:upcomingButton onState:self.isHotspotUpcoming];
+//    } else if (upcomingButton.tag == self.happyHourToggle) {
+//        self.isHappyHourUpcoming = !self.isHappyHourUpcoming;
+//        [self updateButton:upcomingButton onState:self.isHappyHourUpcoming];
+//    }
+//    NSLog(@"Hotspot: %d", self.isHotspotUpcoming);
+//    NSLog(@"Happy Hour: %d", self.isHappyHourUpcoming);
+//}
 
 -(void)updateButton:(UIButton *)button onState:(BOOL)active
 {

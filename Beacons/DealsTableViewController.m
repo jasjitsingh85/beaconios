@@ -163,9 +163,9 @@ typedef enum dealTypeStates
     filterHeader.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:filterHeader];
     
-    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 18, self.view.width, 30)];
-    self.filterHeaderLabel.text = @"Hot and New";
-    self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:14];
+    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 17, self.view.width, 30)];
+    self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
+    self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:12];
     self.filterHeaderLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
     [filterHeader addSubview:self.filterHeaderLabel];
     
@@ -427,10 +427,8 @@ typedef enum dealTypeStates
     self.filterViewController = [[FilterViewController alloc] init];
     self.filterViewController.isHotspotToggleOn = YES;
     self.filterViewController.isHappyHourToggleOn = YES;
-    self.filterViewController.isHotspotNow = YES;
-    self.filterViewController.isHotspotUpcoming = YES;
-    self.filterViewController.isHappyHourNow = YES;
-    self.filterViewController.isHappyHourUpcoming = YES;
+    self.filterViewController.now = YES;
+    self.filterViewController.upcoming = YES;
 }
 
 - (void) showDrinkModal:(id)sender
@@ -543,11 +541,6 @@ typedef enum dealTypeStates
 //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    NSLog(@"is hotspot upcoming: %d", self.filterViewController.isHotspotUpcoming);
 }
 
 - (UIView *)enableLocationView
@@ -1417,24 +1410,69 @@ typedef enum dealTypeStates
 {
     NSPredicate *hotspotFilter;
     NSPredicate *happyHourFilter;
+    NSPredicate *compoundPredicate;
     if (self.filterViewController.isHotspotToggleOn) {
         hotspotFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
     } else {
-        hotspotFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
+        hotspotFilter = [NSPredicate predicateWithFormat:@"deal == nil"];
     }
     
     if (self.filterViewController.isHappyHourToggleOn) {
         happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
     } else {
-        happyHourFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
+        happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour == nil"];
     }
     
-    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
+    if (!self.filterViewController.isHappyHourToggleOn && !self.filterViewController.isHotspotToggleOn) {
+        compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
+    } else {
+        compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
+    }
     
     self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicate];
     
-    NSLog(@"Venues: %@", self.selectedVenues);
+    [self updateFilterText];
+    
     [self reloadTableView];
+}
+
+-(void)updateFilterText
+{
+    if (self.filterViewController.isHappyHourToggleOn && self.filterViewController.isHotspotToggleOn) {
+        if (self.filterViewController.now && self.filterViewController.upcoming) {
+            self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
+        } else if (self.filterViewController.now || self.filterViewController.upcoming) {
+            if (self.filterViewController.now) {
+                self.filterHeaderLabel.text = @"Current Hotspots & Happy Hours";
+            } else {
+                self.filterHeaderLabel.text = @"Upcoming Hotspots & Happy Hours";
+            }
+        } else {
+            self.filterHeaderLabel.text = @"-";
+        }
+    } else if (self.filterViewController.isHappyHourToggleOn || self.filterViewController.isHotspotToggleOn) {
+        if (self.filterViewController.now && self.filterViewController.upcoming) {
+            if (self.filterViewController.isHotspotToggleOn) {
+                self.filterHeaderLabel.text = @"Hotspots";
+            } else {
+                self.filterHeaderLabel.text = @"Happy Hours";
+            }
+        } else if (self.filterViewController.now && !self.filterViewController.upcoming) {
+            if (self.filterViewController.isHotspotToggleOn) {
+                self.filterHeaderLabel.text = @"Current Hotspots";
+            } else {
+                self.filterHeaderLabel.text = @"Current Happy Hours";
+            }
+        } else if (!self.filterViewController.now && self.filterViewController.upcoming) {
+            if (self.filterViewController.isHotspotToggleOn) {
+                self.filterHeaderLabel.text = @"Upcoming Hotspots";
+            } else {
+                self.filterHeaderLabel.text = @"Upcoming Happy Hours";
+            }
+        }
+    } else {
+        self.filterHeaderLabel.text = @"-";
+    }
 }
 
 -(void)applyFilterNotification:(id)sender

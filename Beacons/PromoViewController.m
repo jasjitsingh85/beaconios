@@ -37,7 +37,7 @@
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     
-    UIButton *applyButton = [UIButton navButtonWithTitle:@"APPLY"];
+    UIButton *applyButton = [UIButton navButtonWithTitle:@"Apply"];
     [applyButton addTarget:self action:@selector(applyPromoCode:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:applyButton];
     

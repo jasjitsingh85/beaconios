@@ -17,9 +17,7 @@
 
 @property (assign, nonatomic) BOOL isHotspotToggleOn;
 @property (assign, nonatomic) BOOL isHappyHourToggleOn;
-@property (assign, nonatomic) BOOL isHotspotNow;
-@property (assign, nonatomic) BOOL isHotspotUpcoming;
-@property (assign, nonatomic) BOOL isHappyHourNow;
-@property (assign, nonatomic) BOOL isHappyHourUpcoming;
+@property (assign, nonatomic) BOOL now;
+@property (assign, nonatomic) BOOL upcoming;
 
 @end
