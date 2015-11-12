@@ -1406,6 +1406,11 @@ typedef enum dealTypeStates
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
+-(void)applyFilterNotification:(id)sender
+{
+    NSLog(@"WORKINGASDSAF");
+}
+
 //-(void) makeHotspotTabActive
 //{
 //    self.hotspotTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
