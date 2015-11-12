@@ -64,18 +64,6 @@
     
     [self.view addSubview:self.tableView];
     
-    [self initializeFilter];
-    
-}
-
--(void)initializeFilter
-{
-    self.isHotspotToggleOn = YES;
-    self.isHappyHourToggleOn = YES;
-    self.isHotspotNow = YES;
-    self.isHotspotUpcoming = YES;
-    self.isHappyHourNow = YES;
-    self.isHappyHourUpcoming = YES;
 }
 
 - (NSInteger)labelHeader

@@ -28,6 +28,7 @@ typedef enum ScrollDirection {
 //@property (strong, nonatomic) NSArray *hotspots;
 //@property (strong, nonatomic) NSArray *happyHours;
 @property (strong, nonatomic) NSArray *allVenues;
+@property (strong, nonatomic) NSArray *selectedVenues;
 //@property (strong, nonatomic) NSArray *rewards;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) MKMapView *mapView;

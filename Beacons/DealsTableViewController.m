@@ -136,6 +136,10 @@ typedef enum dealTypeStates
     self.feedTableViewController = [[FeedTableViewController alloc] initWithLoadingIndicator];
     self.feed = [[NSMutableArray alloc] init];
     self.events = [[NSMutableArray alloc] init];
+    self.allVenues = [[NSArray alloc] init];
+    self.selectedVenues = [[NSArray alloc] init];
+    
+    [self initializeFilterViewController];
     
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
@@ -158,9 +162,6 @@ typedef enum dealTypeStates
     UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
     filterHeader.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:filterHeader];
-    
-    self.filterViewController = [[FilterViewController alloc] init];
-//    self.filterViewController.filterDelegate = self;
     
     self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 18, self.view.width, 30)];
     self.filterHeaderLabel.text = @"Hot and New";
@@ -421,6 +422,17 @@ typedef enum dealTypeStates
 
 }
 
+-(void)initializeFilterViewController
+{
+    self.filterViewController = [[FilterViewController alloc] init];
+    self.filterViewController.isHotspotToggleOn = YES;
+    self.filterViewController.isHappyHourToggleOn = YES;
+    self.filterViewController.isHotspotNow = YES;
+    self.filterViewController.isHotspotUpcoming = YES;
+    self.filterViewController.isHappyHourNow = YES;
+    self.filterViewController.isHappyHourUpcoming = YES;
+}
+
 - (void) showDrinkModal:(id)sender
 {
     FreeDrinksExplanationPopupView *modal = [[FreeDrinksExplanationPopupView alloc] init];
@@ -657,7 +669,7 @@ typedef enum dealTypeStates
                 self.mapCenter = location.coordinate;
                 [self updateMapCoordinates];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                [[AnalyticsManager sharedManager] viewedDeals:self.allVenues.count];
+                [[AnalyticsManager sharedManager] viewedDeals:self.selectedVenues.count];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
             }];
         } failure:^(NSError *error) {
@@ -699,7 +711,7 @@ typedef enum dealTypeStates
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self hideRedoSearchContainer];
-        [[AnalyticsManager sharedManager] viewedDeals:self.allVenues.count];
+        [[AnalyticsManager sharedManager] viewedDeals:self.selectedVenues.count];
         [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
     }];
 }
@@ -776,10 +788,9 @@ typedef enum dealTypeStates
         }
     
         self.allVenues = venues;
-        
+        [self filterVenuesAndReloadTableView];
         [self reloadAnnotations];
-        
-        [self reloadTableView];
+//        [self reloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {
             completion();
@@ -796,7 +807,7 @@ typedef enum dealTypeStates
     [self.mapView removeAnnotations:[self.mapView annotations]];
     
     int dealIndex = 0;
-    for (Venue *venue in self.allVenues) {
+    for (Venue *venue in self.selectedVenues) {
         CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(venue.coordinate.latitude, venue.coordinate.longitude);
         MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
         [annotation setCoordinate:dealLocation2D];
@@ -833,14 +844,14 @@ typedef enum dealTypeStates
 
 - (void)reloadTableView
 {
-    if (self.allVenues.count > 0){
+    if (self.selectedVenues.count > 0){
         [self hideEmptyDealsView];
     }
     else {
         [self showEmptyDealsView];
     }
     
-    [self.tableView reloadData];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 //- (void) reloadTableViewAfterDealToggle
@@ -867,16 +878,16 @@ typedef enum dealTypeStates
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.allVenues ? 1 : 0;
+    return self.selectedVenues ? 1 : 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
-        return self.allVenues.count + 1;
-    } else {
-        return self.allVenues.count;
-    }
+ //   if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+    return self.selectedVenues.count + 1;
+   // } else {
+     //   return self.selectedVenues.count + 1;
+    //}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -889,7 +900,7 @@ typedef enum dealTypeStates
             return 151;
         }
     } else {
-        Venue *venue = self.allVenues[indexPath.row - 1];
+        Venue *venue = self.selectedVenues[indexPath.row - 1];
         if (venue.deal) {
             return 151;
         } else {
@@ -929,7 +940,7 @@ typedef enum dealTypeStates
     
     if (indexPath.row != 0) {
         Venue *venue;
-        venue = self.allVenues[indexPath.row - 1];
+        venue = self.selectedVenues[indexPath.row - 1];
         DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
         dealViewController.venue = venue;
         [self.navigationController pushViewController:dealViewController animated:YES];
@@ -1043,11 +1054,6 @@ typedef enum dealTypeStates
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
 }
 
-//- (void)seenHappyHourTile
-//{
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
-//}
-
 - (void) hideRewardContainer
 {
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
@@ -1071,8 +1077,9 @@ typedef enum dealTypeStates
     if (indexPath.row == 0) {
         return [self topHotspotExplanationTile];
     } else {
+        NSLog(@"INDEX ROW: %ld", (long)indexPath.row);
         Venue *venue;
-        venue = self.allVenues[indexPath.row - 1];
+        venue = self.selectedVenues[indexPath.row - 1];
         
         NSString *DealCellIdentifier = [NSString stringWithFormat:@"Venue: %@", venue.name];
         DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
@@ -1356,7 +1363,7 @@ typedef enum dealTypeStates
 
 -(void)tappedOnSelectedDealInMap:(id)sender
 {
-    Venue *venue = self.allVenues[self.selectedDealIndex];
+    Venue *venue = self.selectedVenues[self.selectedDealIndex];
     DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
     dealViewController.venue = venue;
     [self.navigationController pushViewController:dealViewController animated:YES];
@@ -1406,44 +1413,33 @@ typedef enum dealTypeStates
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
--(void)applyFilterNotification:(id)sender
+-(void)filterVenuesAndReloadTableView
 {
-    NSLog(@"WORKINGASDSAF");
+    NSPredicate *hotspotFilter;
+    NSPredicate *happyHourFilter;
+    if (self.filterViewController.isHotspotToggleOn) {
+        hotspotFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
+    } else {
+        hotspotFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
+    }
+    
+    if (self.filterViewController.isHappyHourToggleOn) {
+        happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
+    } else {
+        happyHourFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
+    }
+    
+    NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
+    
+    self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicate];
+    
+    NSLog(@"Venues: %@", self.selectedVenues);
+    [self reloadTableView];
 }
 
-//-(void) makeHotspotTabActive
-//{
-//    self.hotspotTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
-//    self.happyHourTab.backgroundColor = [UIColor clearColor];
-//    
-//    self.hotspotNavBarLabel.textColor = [UIColor whiteColor];
-//    self.happyHourNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
-//    
-//    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarPopsicle"]];
-//    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarClock"]];
-//}
-
-//-(void) makeHappyHourTabActive
-//{
-//    self.happyHourTab.backgroundColor = [[ThemeManager sharedTheme] redColor];
-//    self.hotspotTab.backgroundColor = [UIColor clearColor];
-//    
-//    self.happyHourNavBarLabel.textColor = [UIColor whiteColor];
-//    self.hotspotNavBarLabel.textColor = [[ThemeManager sharedTheme] redColor];
-//    
-//    [self.hotspotNavBarIcon setImage:[UIImage imageNamed:@"inactiveNavbarPopsicle"]];
-//    [self.happyHourNavBarIcon setImage:[UIImage imageNamed:@"activeNavbarClock"]];
-//}
-
-//-(void)navBarTabTapped:(id)sender
-//{
-//    if (self.navBarTabs.selectedSegmentIndex == 0) {
-//        [self hotspotButtonTouched:nil];
-//        [self makeHotspotTabActive];
-//    } else {
-//        [self happyHourButtonTouched:nil];
-//        [self makeHappyHourTabActive];
-//    }
-//}
+-(void)applyFilterNotification:(id)sender
+{
+    [self filterVenuesAndReloadTableView];
+}
 
 @end

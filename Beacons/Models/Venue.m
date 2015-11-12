@@ -8,6 +8,8 @@
 
 #import "Venue.h"
 #import "Deal.h"
+#import "HappyHour.h"
+#import "Event.h"
 
 @implementation Venue
 
@@ -96,6 +98,18 @@
     
     NSString *neighborhood = dictionary[@"neighborhood"];
     self.neighborhood = neighborhood;
+    
+    if (!isEmpty(dictionary[@"happy_hour"])) {
+        self.happyHour = [[HappyHour alloc] initWithDictionary:dictionary[@"happy_hour"]] ;
+    }
+    
+    self.events = [[NSMutableArray alloc] init];
+    if (!isEmpty(dictionary[@"events"])) {
+        for (NSDictionary *eventJSON in dictionary[@"events"]) {
+            Event *event = [[Event alloc] initWithDictionary:eventJSON];
+            [self.events addObject:event];
+        }
+    }
     
     return self;
 }

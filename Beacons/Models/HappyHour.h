@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSString *happyHourDescription;
 @property (strong, nonatomic) NSNumber *start;
 @property (strong, nonatomic) NSNumber *end;
-@property (strong, nonatomic) Venue *venue;
+//@property (strong, nonatomic) Venue *venue;
 @property (assign, nonatomic) BOOL isFollowed;
 
 

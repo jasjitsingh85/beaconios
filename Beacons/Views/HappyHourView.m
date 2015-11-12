@@ -100,54 +100,54 @@
     return self;
 }
 
-- (void)setHappyHour:(HappyHour *)happyHour
-
-{
-    _happyHour = happyHour;
-    
-    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.happyHour.venue.name];
-    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-    //self.venueLabelLineOne.text = [deal.itemName uppercaseString];
-    //self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
-    
-    //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
-    [self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
-    //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
-    self.descriptionLabel.text = @"  HAPPY HOUR";
-    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-    
-    CGFloat descriptionLabelWidth;
-    //if (textSize.width < self.contentView.width * .6) {
-    descriptionLabelWidth = textSize.width;
-    //    } else {
-    //        descriptionLabelWidth = self.contentView.width * .6;
-    //    }
-    
-    //    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
-    //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
-    //                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
-    //                                                                           context:nil].size.width;
-    
-    //self.dealTime.x = descriptionLabelWidth + 15;
-    
-    self.descriptionLabel.width = descriptionLabelWidth + 10;
-    //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
-    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-    //    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
-    //    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
-    //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
-    //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
-    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.happyHour.happyHourStartString uppercaseString], emDash, [self stringForDistance:self.happyHour.venue.distance]];
-    
-    
-    NSDictionary* attributes = @{
-                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
-                                 };
-    
-}
+//- (void)setHappyHour:(HappyHour *)happyHour
+//
+//{
+//    _happyHour = happyHour;
+//    
+//    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.happyHour.venue.name];
+//    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+//    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+//    //self.venueLabelLineOne.text = [deal.itemName uppercaseString];
+//    //self.venueLabelLineTwo.text = [NSString stringWithFormat:@"FOR $%@", deal.itemPrice];
+//    
+//    //    self.venueDetailLabel.text = self.deal.dealDescriptionShort;
+//    [self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
+//    //NSString *venueName = [NSString stringWithFormat:@"  @%@", [self.deal.venue.name uppercaseString]];
+//    self.descriptionLabel.text = @"  HAPPY HOUR";
+//    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+//    
+//    CGFloat descriptionLabelWidth;
+//    //if (textSize.width < self.contentView.width * .6) {
+//    descriptionLabelWidth = textSize.width;
+//    //    } else {
+//    //        descriptionLabelWidth = self.contentView.width * .6;
+//    //    }
+//    
+//    //    float descriptionLabelWidth = [venueName boundingRectWithSize:self.descriptionLabel.frame.size
+//    //                                                                           options:NSStringDrawingUsesLineFragmentOrigin
+//    //                                                                        attributes:@{ NSFontAttributeName:[ThemeManager boldFontOfSize:16] }
+//    //                                                                           context:nil].size.width;
+//    
+//    //self.dealTime.x = descriptionLabelWidth + 15;
+//    
+//    self.descriptionLabel.width = descriptionLabelWidth + 10;
+//    //self.venueDescriptionLabel.text = self.deal.venue.placeDescription;
+//    //self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+//    //    self.venueDetailDealFirstLineLabel.text = self.deal.dealDescription;
+//    //    self.venueDetailDealSecondLineLabel.text = self.deal.additionalInfo;
+//    //self.venueDetailDealSecondLineLabel.text = @"Well, Beer, and Wine only";
+//    //    self.venueDescriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", self.deal.venue.placeDescription, [self stringForDistance:deal.venue.distance]];
+//    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+//    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+//    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [self.happyHour.happyHourStartString uppercaseString], emDash, [self stringForDistance:self.happyHour.venue.distance]];
+//    
+//    
+//    NSDictionary* attributes = @{
+//                                 NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+//                                 };
+//    
+//}
 
 - (void)layoutSubviews
 {

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class Deal;
+@class Deal, HappyHour, Event;
 @interface Venue : NSObject
 
 @property (strong, nonatomic) NSNumber *venueID;
@@ -26,6 +26,8 @@
 @property (strong, nonatomic) NSString *placeType;
 @property (strong, nonatomic) NSString *neighborhood;
 @property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) HappyHour *happyHour;
+@property (strong, nonatomic) NSMutableArray *events;
 @property (assign, nonatomic) BOOL isFollowed;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;

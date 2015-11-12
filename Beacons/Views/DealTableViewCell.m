@@ -242,8 +242,9 @@
             self.dealTime.text = [NSString stringWithFormat:@"%@", [self stringForDistance:venue.distance]];
         }
     }
-    
-    self.placeType.text = [venue.placeType uppercaseString];
+    if (!isEmpty(venue.placeType)) {
+         self.placeType.text = [venue.placeType uppercaseString];   
+    }
     
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];

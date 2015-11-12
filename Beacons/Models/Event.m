@@ -30,7 +30,9 @@
     NSNumber *startTimestamp = dictionary[@"start_time"];
     self.startTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];
     
-    self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
+    if ([dictionary objectForKey:@"place"]) {
+        self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
+    }
     
     return self;
 }
