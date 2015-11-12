@@ -160,6 +160,7 @@ typedef enum dealTypeStates
     [self.view addSubview:filterHeader];
     
     self.filterViewController = [[FilterViewController alloc] init];
+//    self.filterViewController.filterDelegate = self;
     
     self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 18, self.view.width, 30)];
     self.filterHeaderLabel.text = @"Hot and New";
@@ -415,6 +416,7 @@ typedef enum dealTypeStates
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdateLocation:) name:kDidUpdateLocationNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyFilterNotification:) name:kApplyFilterNotification object:nil];
 //    [self updateRewardItems];
 
 }
@@ -529,6 +531,11 @@ typedef enum dealTypeStates
 //    self.groupDeal = YES;
     
     [[AnalyticsManager sharedManager] viewedDealTable];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"is hotspot upcoming: %d", self.filterViewController.isHotspotUpcoming);
 }
 
 - (UIView *)enableLocationView

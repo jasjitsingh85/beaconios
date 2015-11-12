@@ -21,20 +21,13 @@
 @property (readonly) NSInteger hotspotToggle;
 @property (readonly) NSInteger happyHourToggle;
 
-@property (assign, nonatomic) BOOL isHotspotToggleOn;
-@property (assign, nonatomic) BOOL isHappyHourToggleOn;
-
-@property (assign, nonatomic) BOOL isHotspotNow;
-@property (assign, nonatomic) BOOL isHotspotUpcoming;
-@property (assign, nonatomic) BOOL isHappyHourNow;
-@property (assign, nonatomic) BOOL isHappyHourUpcoming;
-
 
 @end
 
 #define selectedTransform CGAffineTransformMakeScale(1.35, 1.35)
 
 @implementation FilterViewController
+//@synthesize filterDelegate;
 
 - (NSMutableSet *)collapsedSections
 {
@@ -368,6 +361,13 @@
 -(void)dismissView:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)dismissViewAndApplyFilter:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kApplyFilterNotification object:self userInfo:nil];
+    }];
 }
 
 @end
