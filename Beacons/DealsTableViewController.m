@@ -814,6 +814,9 @@ typedef enum dealTypeStates
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
     
+    self.selectedDealIndex = [annotation.title intValue];
+    Venue *venue = self.selectedVenues[self.selectedDealIndex];
+    
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[MKPointAnnotation class]])
     {
@@ -822,9 +825,17 @@ typedef enum dealTypeStates
         {
             pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = NO;
-            pinView.image = [UIImage imageNamed:@"bluePin"];
+            if (!isEmpty(venue.deal)) {
+                pinView.image = [UIImage imageNamed:@"bluePin"];
+            } else {
+                pinView.image = [UIImage imageNamed:@"greenPin"];
+            }
         } else {
-            pinView.image = [UIImage imageNamed:@"bluePin"];
+            if (!isEmpty(venue.deal)) {
+                pinView.image = [UIImage imageNamed:@"bluePin"];
+            } else {
+                pinView.image = [UIImage imageNamed:@"greenPin"];
+            }
             pinView.annotation = annotation;
         }
         
