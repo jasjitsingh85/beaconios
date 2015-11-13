@@ -34,6 +34,7 @@
 @property (assign, nonatomic) BOOL locked;
 @property (assign, nonatomic) BOOL rewardEligibility;
 @property (assign, nonatomic) BOOL isRewardItem;
+@property (assign, nonatomic) BOOL now;
 @property (assign, nonatomic) long nowInSeconds;
 @property (assign, nonatomic) long start;
 @property (assign, nonatomic) long end;

@@ -68,6 +68,8 @@
         self.invitePrompt = dictionary[@"invite_prompt"];
     }
     
+    [self dealStartString];
+    
     return self;
 }
 
@@ -204,8 +206,10 @@
     
     if (self.nowInSeconds > self.start && self.nowInSeconds < todayDealHour.end) {
         NSString *endsAtString = [NSString stringWithFormat:@"Ends at %@", [self endsAtString]];
+        self.now = YES;
         return endsAtString;
     } else if (self.nowInSeconds < self.start) {
+        self.now = NO;
         return [self hoursAvailableString];
     } else {
         return @"";

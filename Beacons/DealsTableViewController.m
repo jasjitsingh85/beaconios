@@ -1079,7 +1079,6 @@ typedef enum dealTypeStates
     if (indexPath.row == 0) {
         return [self topHotspotExplanationTile];
     } else {
-        NSLog(@"INDEX ROW: %ld", (long)indexPath.row);
         Venue *venue;
         venue = self.selectedVenues[indexPath.row - 1];
         
@@ -1414,7 +1413,8 @@ typedef enum dealTypeStates
 {
     NSPredicate *hotspotFilter;
     NSPredicate *happyHourFilter;
-    NSPredicate *compoundPredicate;
+    NSCompoundPredicate *compoundPredicate;
+    NSPredicate *timeFilter;
     if (self.filterViewController.isHotspotToggleOn) {
         hotspotFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
     } else {
@@ -1427,13 +1427,25 @@ typedef enum dealTypeStates
         happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour == nil"];
     }
     
+    if (self.filterViewController.now && !self.filterViewController.upcoming) {
+        NSLog(@"FILTER NOW");
+        timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == YES OR deal.now == YES"];
+    } else if (self.filterViewController.upcoming && !self.filterViewController.now) {
+        NSLog(@"FILTER Upcoming");
+        timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == NO OR deal.now == NO"];
+    } else if (self.filterViewController.now && self.filterViewController.upcoming) {
+        timeFilter = [NSPredicate predicateWithValue:YES];
+    }
+    
     if (!self.filterViewController.isHappyHourToggleOn && !self.filterViewController.isHotspotToggleOn) {
         compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
     } else {
         compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
     }
     
-    self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicate];
+    NSCompoundPredicate *compoundPredicateWithNowAndUpcoming = [NSCompoundPredicate andPredicateWithSubpredicates:@[compoundPredicate, timeFilter]];
+    
+    self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicateWithNowAndUpcoming];
     
     [self updateFilterText];
     [self reloadAnnotations];
@@ -1447,9 +1459,9 @@ typedef enum dealTypeStates
             self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
         } else if (self.filterViewController.now || self.filterViewController.upcoming) {
             if (self.filterViewController.now) {
-                self.filterHeaderLabel.text = @"Current Hotspots & Happy Hours";
+                self.filterHeaderLabel.text = @"Active Hotspots & Happy Hours";
             } else {
-                self.filterHeaderLabel.text = @"Upcoming Hotspots & Happy Hours";
+                self.filterHeaderLabel.text = @"Active Hotspots & Happy Hours";
             }
         } else {
             self.filterHeaderLabel.text = @"-";
@@ -1463,9 +1475,9 @@ typedef enum dealTypeStates
             }
         } else if (self.filterViewController.now && !self.filterViewController.upcoming) {
             if (self.filterViewController.isHotspotToggleOn) {
-                self.filterHeaderLabel.text = @"Current Hotspots";
+                self.filterHeaderLabel.text = @"Active Hotspots";
             } else {
-                self.filterHeaderLabel.text = @"Current Happy Hours";
+                self.filterHeaderLabel.text = @"Active Happy Hours";
             }
         } else if (!self.filterViewController.now && self.filterViewController.upcoming) {
             if (self.filterViewController.isHotspotToggleOn) {
