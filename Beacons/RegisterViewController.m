@@ -161,9 +161,9 @@ typedef enum {
     [self.helpButton setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     self.helpButton.backgroundColor = [UIColor clearColor];
     CGRect helpButtonFrame;
-    helpButtonFrame.size = CGSizeMake(30, 30);
+    helpButtonFrame.size = CGSizeMake(40, 40);
     helpButtonFrame.origin.x = self.view.frame.size.width - helpButtonFrame.size.width - 5;
-    helpButtonFrame.origin.y = 27;
+    helpButtonFrame.origin.y = 22;
     self.helpButton.frame = helpButtonFrame;
     [self.helpButton addTarget:self action:@selector(helpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.helpButton];
