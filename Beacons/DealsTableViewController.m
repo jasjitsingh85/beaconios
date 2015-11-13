@@ -1313,44 +1313,39 @@ typedef enum dealTypeStates
 //    }];
 //}
 
-//- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-//{
-//    self.selectedDealIndex = [view.annotation.title intValue];
-//    
-//    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
-//    
-//    if (self.dealType == HOTSPOT) {
-//        Deal *deal = self.selectedDeals[self.selectedDealIndex];
-//        NSMutableDictionary *venueName = [self parseStringIntoTwoLines:deal.venue.name];
-//        self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-//        self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-//        [self.venueImageView sd_setImageWithURL:deal.venue.imageURL];
-////        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-//        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-//        //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-//        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [deal.dealStartString uppercaseString], emDash, [self stringForDistance:deal.venue.distance]];
-//        
-//        if (self.dealType == HOTSPOT) {
-//            
-//            if (deal.isRewardItem) {
-//                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [deal.itemName uppercaseString]];
-//                self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-//                //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-//            } else {
-//                self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [deal.itemName uppercaseString], deal.itemPrice];
-//                self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
-//            }
-//            
-//            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-//            
-//            CGFloat descriptionLabelWidth;
-//            descriptionLabelWidth = textSize.width;
-//            
-//            self.descriptionLabel.width = descriptionLabelWidth + 10;
-//        }
-//    }
-//    
-//}
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    self.selectedDealIndex = [view.annotation.title intValue];
+    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
+    Venue *venue = self.selectedVenues[self.selectedDealIndex];
+    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:venue.name];
+    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+    [self.venueImageView sd_setImageWithURL:venue.imageURL];
+//        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
+    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
+    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+        
+    if (venue.deal.isRewardItem) {
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [venue.deal.itemName uppercaseString]];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+        //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+    } else {
+        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [venue.deal.itemName uppercaseString], venue.deal.itemPrice];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    }
+    
+    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+    
+    CGFloat descriptionLabelWidth;
+    descriptionLabelWidth = textSize.width;
+    
+    self.descriptionLabel.width = descriptionLabelWidth + 10;
+    
+    [self toggleMapViewDeal:nil];
+    
+}
 
 -(void)tappedOnSelectedDealInMap:(id)sender
 {

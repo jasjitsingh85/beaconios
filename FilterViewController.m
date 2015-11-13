@@ -28,7 +28,6 @@
 #define selectedTransform CGAffineTransformMakeScale(1.35, 1.35)
 
 @implementation FilterViewController
-//@synthesize filterDelegate;
 
 - (NSMutableSet *)collapsedSections
 {
