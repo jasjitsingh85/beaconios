@@ -75,6 +75,7 @@ extern NSString * const kDealStatusRedeemed;
 
 extern NSString * const kHotspotViewType;
 extern NSString * const kHappyHourViewType;
+extern NSString * const kDealPlaceViewType;
 
 
 //email
