@@ -1428,10 +1428,8 @@ typedef enum dealTypeStates
     }
     
     if (self.filterViewController.now && !self.filterViewController.upcoming) {
-        NSLog(@"FILTER NOW");
         timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == YES OR deal.now == YES"];
     } else if (self.filterViewController.upcoming && !self.filterViewController.now) {
-        NSLog(@"FILTER Upcoming");
         timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == NO OR deal.now == NO"];
     } else if (self.filterViewController.now && self.filterViewController.upcoming) {
         timeFilter = [NSPredicate predicateWithValue:YES];
