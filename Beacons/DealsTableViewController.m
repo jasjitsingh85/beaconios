@@ -592,10 +592,42 @@ typedef enum dealTypeStates
 {
     if (!_emptyBeaconView) {
         _emptyBeaconView = [[UIView alloc] init];
-        _emptyBeaconView.size = CGSizeMake(self.tableView.width, 149);
-        _emptyBeaconView.backgroundColor = [UIColor whiteColor];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"noDealsPlaceholder"]];
-        [_emptyBeaconView addSubview:imageView];
+        _emptyBeaconView.size = CGSizeMake(self.tableView.width, self.view.height);
+        _emptyBeaconView.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        
+        UIView *backgroundTile = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 130)];
+        backgroundTile.backgroundColor = [UIColor whiteColor];
+        [_emptyBeaconView addSubview:backgroundTile];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
+        imageView.centerX = self.view.width/2;
+        imageView.y = 15;
+        
+        UILabel *tileHeading = [[UILabel alloc] init];
+        tileHeading.width = 150;
+        tileHeading.height = 30;
+        tileHeading.centerX = self.view.width/2;
+        tileHeading.y = 40;
+        tileHeading.textAlignment = NSTextAlignmentCenter;
+        tileHeading.textColor = [UIColor blackColor];
+        tileHeading.text = @"No Nearby Venues";
+        tileHeading.font = [ThemeManager boldFontOfSize:12];
+        [backgroundTile addSubview:tileHeading];
+        
+        UILabel *tileTextBody = [[UILabel alloc] init];
+        tileTextBody.width = self.view.width - 100;
+        tileTextBody.height = 70;
+        tileTextBody.centerX = self.view.width/2;
+        tileTextBody.y = 50;
+        tileTextBody.numberOfLines = 4;
+        tileTextBody.textAlignment = NSTextAlignmentCenter;
+        tileTextBody.textColor = [UIColor blackColor];
+        tileTextBody.text = @"Adjust filters or move the map to a different area to see nearby venues with Hotspots or Happy Hours.";
+        tileTextBody.font = [ThemeManager lightFontOfSize:12];
+        [backgroundTile addSubview:tileTextBody];
+        
+        
+        [backgroundTile addSubview:imageView];
         //[_emptyBeaconView setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:1 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
         //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(happyHoursButtonTouched:)];
         //[_emptyBeaconView addGestureRecognizer:tap];
@@ -828,13 +860,13 @@ typedef enum dealTypeStates
             if (!isEmpty(venue.deal)) {
                 pinView.image = [UIImage imageNamed:@"bluePin"];
             } else {
-                pinView.image = [UIImage imageNamed:@"greenPin"];
+                pinView.image = [UIImage imageNamed:@"grayPin"];
             }
         } else {
             if (!isEmpty(venue.deal)) {
                 pinView.image = [UIImage imageNamed:@"bluePin"];
             } else {
-                pinView.image = [UIImage imageNamed:@"greenPin"];
+                pinView.image = [UIImage imageNamed:@"grayPin"];
             }
             pinView.annotation = annotation;
         }
@@ -1462,7 +1494,7 @@ typedef enum dealTypeStates
                 self.filterHeaderLabel.text = @"Active Hotspots & Happy Hours";
             }
         } else {
-            self.filterHeaderLabel.text = @"-";
+            self.filterHeaderLabel.text = @"";
         }
     } else if (self.filterViewController.isHappyHourToggleOn || self.filterViewController.isHotspotToggleOn) {
         if (self.filterViewController.now && self.filterViewController.upcoming) {
@@ -1485,7 +1517,7 @@ typedef enum dealTypeStates
             }
         }
     } else {
-        self.filterHeaderLabel.text = @"-";
+        self.filterHeaderLabel.text = @"";
     }
 }
 

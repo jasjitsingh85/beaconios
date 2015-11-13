@@ -38,6 +38,7 @@
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
 		410165D91BF32B4900F0219C /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410165D81BF32B4900F0219C /* FilterViewController.m */; };
 		410165ED1BF47B1200F0219C /* VoucherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 410165EC1BF47B1200F0219C /* VoucherTableViewCell.m */; };
+		410165F01BF5A84700F0219C /* grayPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410165EF1BF5A84700F0219C /* grayPin@2x.png */; };
 		41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F631B51B0F200252158 /* hotspotIcon@2x.png */; };
 		41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */; };
 		41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41030F681B52EACA00252158 /* needHelpModalBackground@2x.png */; };
@@ -381,6 +382,7 @@
 		410165E41BF42ADF00F0219C /* WLSegmentedControls.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WLSegmentedControls.xcodeproj; path = "../Downloads/WLSegmentedControls-master/WLSegmentedControls.xcodeproj"; sourceTree = "<group>"; };
 		410165EC1BF47B1200F0219C /* VoucherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherTableViewCell.m; sourceTree = "<group>"; };
 		410165EE1BF47B1E00F0219C /* VoucherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoucherTableViewCell.h; sourceTree = "<group>"; };
+		410165EF1BF5A84700F0219C /* grayPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayPin@2x.png"; sourceTree = "<group>"; };
 		41030F631B51B0F200252158 /* hotspotIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotspotIcon@2x.png"; sourceTree = "<group>"; };
 		41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NeedHelpExplanationPopupView.h; sourceTree = "<group>"; };
 		41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NeedHelpExplanationPopupView.m; sourceTree = "<group>"; };
@@ -1301,6 +1303,7 @@
 			children = (
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
+				410165EF1BF5A84700F0219C /* grayPin@2x.png */,
 				41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */,
 				41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */,
 				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
@@ -1634,6 +1637,7 @@
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
 				4158AE631B44A5460034BA4A /* creditCardSideNav@2x.png in Resources */,
+				410165F01BF5A84700F0219C /* grayPin@2x.png in Resources */,
 				41F97BB81BBB9F7F003D1D86 /* contactPermissions@2x.png in Resources */,
 				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
 				41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */,

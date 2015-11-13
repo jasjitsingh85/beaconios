@@ -153,9 +153,18 @@
         [switchView addTarget:self action:@selector(updateSwitchAtIndexPath:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:switchView];
         view.tag = section;
-        NSLog(@"SECTION: %lu", section);
 //        UITapGestureRecognizer *headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerTapped:)];
 //        [view addGestureRecognizer:headerTap];
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, view.width, .5f)];
+        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [view addSubview:topBorder];
+        
+        if (self.happyHourToggle) {
+            UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, view.width, .5f)];
+            bottomBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+            [view addSubview:bottomBorder];
+        }
+        
         return view;
     } else if (section == self.nowAndUpcomingToggle) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
