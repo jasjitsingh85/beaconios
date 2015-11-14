@@ -140,9 +140,11 @@
 //    self.scrollViewContainer.contentSize = CGSizeMake(self.view.width, 2000);
 //    [self.view addSubview:self.scrollViewContainer];
     
-    self.navigationItem.title = @"Free Drinks";
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Free Drinks"];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissModalViewControllerAnimated:)];
+    UIButton *cancelButton = [UIButton navButtonWithTitle:@"Cancel"];
+    [cancelButton addTarget:self action:@selector(dismissModalViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -787,7 +789,8 @@
         title.adjustsFontSizeToFitWidth = YES;
         title.backgroundColor = [UIColor clearColor];
         title.font = [ThemeManager boldFontOfSize:11.0];
-        title.textColor = [UIColor unnormalizedColorWithRed:240 green:110 blue:97 alpha:255];
+        title.textColor = [[ThemeManager sharedTheme] redColor];
+//        title.textColor = [UIColor unnormalizedColorWithRed:240 green:110 blue:97 alpha:255];
         [view addSubview:title];
         title.text = [self tableView:tableView titleForHeaderInSection:section];
         //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

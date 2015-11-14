@@ -96,19 +96,19 @@
 //            UITextField *promoTextField = [promoFormView textFieldAtIndex:0];
 //            promoTextField.keyboardType = UIKeyboardTypeNumberPad;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UILabel *promoCode = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 130, 40)];
-    promoCode.text = @"PROMO CODE:";
-    promoCode.font = [ThemeManager boldFontOfSize:16];
+    UILabel *promoCode = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 130, 40)];
+    promoCode.text = @"Promo Code:";
+    promoCode.font = [ThemeManager mediumFontOfSize:15];
     
     // This allocates the textfield and sets its frame
     self.promoTextField = [[UITextField  alloc] initWithFrame:
-                              CGRectMake(20, 0, self.view.width, 40)];
+                              CGRectMake(20, 2, self.view.width, 40)];
     
     // This sets the border style of the text field
 //    textField.borderStyle = UITextBorderStyleRoundedRect;
     self.promoTextField.contentVerticalAlignment =
     UIControlContentVerticalAlignmentCenter;
-    [self.promoTextField setFont:[ThemeManager lightFontOfSize:16]];
+    [self.promoTextField setFont:[ThemeManager lightFontOfSize:15]];
     
     //Placeholder text is displayed when no text is typed
     self.promoTextField.placeholder = @" ";
