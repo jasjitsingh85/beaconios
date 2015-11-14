@@ -80,7 +80,8 @@
     tableViewFrame.size.height = self.view.frame.size.height;
     self.menuViewContainer = [[UIView alloc] initWithFrame:tableViewFrame];
     self.menuViewContainer.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    self.menuViewContainer.backgroundColor = [UIColor unnormalizedColorWithRed:51 green:40 blue:65 alpha:255];
+//    self.menuViewContainer.backgroundColor = [UIColor unnormalizedColorWithRed:51 green:40 blue:65 alpha:255];
+    self.menuViewContainer.backgroundColor = [UIColor blackColor];
 //    [self.tableViewContainer setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:YES];
     [self.view addSubview:self.menuViewContainer];
     

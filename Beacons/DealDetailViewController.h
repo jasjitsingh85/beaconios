@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Deal.h"
-#import "HappyHour.h"
+#import "Venue.h"
 
 @interface DealDetailViewController : UIViewController
 
 @property (strong, nonatomic) Venue *venue;
-//@property (strong, nonatomic) HappyHour *happyHour;
 
 @end
