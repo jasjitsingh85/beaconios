@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
 @property (strong, nonatomic) UILabel *dealTime;
+@property (strong, nonatomic) UILabel *happyHourTime;
 @property (strong, nonatomic) UILabel *dealPrompt;
 @property (strong, nonatomic) UIScrollView *mainScroll;
 @property (strong, nonatomic) UIButton *followButton;
@@ -306,6 +307,8 @@
     
     if (!self.deal) {
         self.getDealButtonContainer.hidden = YES;
+    } else {
+        self.getDealButtonContainer.hidden = NO;
     }
     
 //    DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
@@ -884,7 +887,8 @@
                 CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
                 CGRect dealTextHeight = [dealTextLabel boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13.5]} context:context];
                 self.dealTextLabel.height = dealTextHeight.size.height + 5;
-                height = dealTextHeight.size.height + 70;
+                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
+                height = dealTextHeight.size.height + 93;
             }
         }
     } else if (indexPath.row == self.happyHourContainer) {
@@ -896,7 +900,8 @@
             CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
             
             self.happyHourTextLabel.height = happyHourDescriptionHeight.size.height + 5;
-            height = happyHourDescriptionHeight.size.height + 75;
+            self.happyHourTime.y = self.happyHourTextLabel.y + self.happyHourTextLabel.height + 3;
+            height = happyHourDescriptionHeight.size.height + 93;
         }
     } else if (indexPath.row == self.venueContainer) {
         if (!self.hasVenueDescription) {
@@ -966,6 +971,14 @@
     self.dealTextLabel.numberOfLines = 0;
     
     self.dealTextLabel.text = [self getDealTextLabel];
+    
+    self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, self.view.width - 50, 20)];
+    self.dealTime.centerX = self.view.width/2;
+    self.dealTime.font = [ThemeManager lightFontOfSize:13];
+    self.dealTime.textAlignment = NSTextAlignmentCenter;
+    self.dealTime.numberOfLines = 1;
+    self.dealTime.text = self.venue.deal.dealStartString;
+    [cell.contentView addSubview:self.dealTime];
     
     [cell.contentView addSubview:self.dealTextLabel];
     
@@ -1122,6 +1135,15 @@
     self.happyHourTextLabel.textAlignment = NSTextAlignmentCenter;
     self.happyHourTextLabel.numberOfLines = 0;
     self.happyHourTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
+    
+    self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, self.view.width - 50, 20)];
+    self.happyHourTime.centerX = self.view.width/2;
+    self.happyHourTime.font = [ThemeManager lightFontOfSize:13];
+    self.happyHourTime.textAlignment = NSTextAlignmentCenter;
+    self.happyHourTime.numberOfLines = 1;
+    self.happyHourTime.text = self.venue.happyHour.happyHourStartString;
+    [cell.contentView addSubview:self.happyHourTime];
+    
     [cell.contentView addSubview:self.happyHourTextLabel];
     
     return cell;
