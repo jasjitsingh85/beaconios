@@ -118,7 +118,7 @@
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(65, 25);
     self.followButton.x = self.contentView.width - 85;
-    self.followButton.y = 20;
+    self.followButton.y = 10;
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -334,21 +334,21 @@
 - (void) makeFollowButtonActive
 {
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(85, 25);
-    self.followButton.x = self.contentView.width - 95;
+    self.followButton.size = CGSizeMake(80, 25);
+    self.followButton.x = self.contentView.width - 90;
     //[self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
     //[self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.followButton.layer.borderColor =[[ThemeManager sharedTheme] greenColor].CGColor;
+    self.followButton.layer.borderColor = [UIColor clearColor].CGColor;
     self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
 }
 
 - (void) makeFollowButtonInactive
 {
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(65, 25);
-    self.followButton.x = self.contentView.width - 85;
+    self.followButton.size = CGSizeMake(60, 25);
+    self.followButton.x = self.contentView.width - 70;
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     self.followButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
