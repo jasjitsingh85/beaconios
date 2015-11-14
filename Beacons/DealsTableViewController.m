@@ -196,12 +196,12 @@ typedef enum dealTypeStates
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 64, self.view.size.width, self.view.size.height - 64)];
     self.mapView.delegate = self;
     [self.mapView setShowsUserLocation:YES];
-    self.mapTapped = [[UITapGestureRecognizer alloc]
-      initWithTarget:self action:@selector(toggleMapViewDeal:)];
-    self.mapTapped.numberOfTapsRequired = 1;
-    self.mapTapped.numberOfTouchesRequired = 1;
-    self.mapTapped.enabled = NO;
-    [self.mapView addGestureRecognizer:self.mapTapped];
+//    self.mapTapped = [[UITapGestureRecognizer alloc]
+//      initWithTarget:self action:@selector(toggleMapViewDeal:)];
+//    self.mapTapped.numberOfTapsRequired = 1;
+//    self.mapTapped.numberOfTouchesRequired = 1;
+//    self.mapTapped.enabled = NO;
+//    [self.mapView addGestureRecognizer:self.mapTapped];
     [self.mapViewContainer addSubview:self.mapView];
     
     self.isMapViewActive = NO;
@@ -1198,6 +1198,25 @@ typedef enum dealTypeStates
     [self toggleMapViewDealWithoutTouch];
 }
 
+- (void) showMapViewDeal
+{
+    if (!self.isMapViewDealShowing) {
+        [UIView animateWithDuration:.5f animations:^{
+            CGRect theFrame = self.mapView.frame;
+            theFrame.size.height -= 146;
+            self.mapView.frame = theFrame;
+            
+            self.selectedDealInMap.y = self.view.height - 146;
+            
+            
+            self.mapTapped.enabled = YES;
+            
+            self.isMapViewDealShowing = !self.isMapViewDealShowing;
+            
+        }];
+    }
+}
+
 - (void) toggleMapViewDealWithoutTouch
 {
     if (self.isMapViewDealShowing) {
@@ -1358,34 +1377,40 @@ typedef enum dealTypeStates
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     self.selectedDealIndex = [view.annotation.title intValue];
-    self.marketPriceLabel.x = self.descriptionLabel.width - 60;
     Venue *venue = self.selectedVenues[self.selectedDealIndex];
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:venue.name];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     [self.venueImageView sd_setImageWithURL:venue.imageURL];
-//        self.distanceLabel.text = [self stringForDistance:deal.venue.distance];
-    NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-    //    self.priceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-    self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
+    
+    if (venue.deal) {
+        self.marketPriceLabel.x = self.descriptionLabel.width - 60;
+        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
+        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
         
-    if (venue.deal.isRewardItem) {
-        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [venue.deal.itemName uppercaseString]];
-        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-        //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        if (venue.deal.isRewardItem) {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR FREE", [venue.deal.itemName uppercaseString]];
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+            //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
+        } else {
+            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [venue.deal.itemName uppercaseString], venue.deal.itemPrice];
+            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+        }
+        
+        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+        
+        CGFloat descriptionLabelWidth;
+        descriptionLabelWidth = textSize.width;
+        self.descriptionLabel.width = descriptionLabelWidth + 10;
     } else {
-        self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR $%@", [venue.deal.itemName uppercaseString], venue.deal.itemPrice];
-        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+        self.dealTime.text = @"";
+        self.descriptionLabel.text = @"";
+        self.descriptionLabel.backgroundColor = [UIColor clearColor];
     }
     
-    CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+    [self showMapViewDeal];
     
-    CGFloat descriptionLabelWidth;
-    descriptionLabelWidth = textSize.width;
-    
-    self.descriptionLabel.width = descriptionLabelWidth + 10;
-    
-    [self toggleMapViewDeal:nil];
+//    [self toggleMapViewDeal:nil];
     
 }
 
