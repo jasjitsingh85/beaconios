@@ -1468,37 +1468,44 @@ typedef enum dealTypeStates
 
 -(void)filterVenuesAndReloadTableView
 {
-    NSPredicate *hotspotFilter;
-    NSPredicate *happyHourFilter;
-    NSCompoundPredicate *compoundPredicate;
+    NSPredicate *dealTypeFilter;
     NSPredicate *timeFilter;
-    if (self.filterViewController.isHotspotToggleOn) {
-        hotspotFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
+//    NSCompoundPredicate *compoundPredicate;
+    if (self.filterViewController.isHotspotToggleOn && !self.filterViewController.isHappyHourToggleOn) {
+        dealTypeFilter = [NSPredicate predicateWithFormat:@"deal != nil"];
+        if (self.filterViewController.now && !self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"deal.now == YES"];
+        } else if (!self.filterViewController.now && self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"deal.now == NO"];
+        }
+    } else if (!self.filterViewController.isHotspotToggleOn && self.filterViewController.isHappyHourToggleOn) {
+        dealTypeFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
+        if (self.filterViewController.now && !self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == YES"];
+        } else if (!self.filterViewController.now && self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == NO"];
+        }
     } else {
-        hotspotFilter = [NSPredicate predicateWithFormat:@"deal == nil"];
+        if (self.filterViewController.isHotspotToggleOn && self.filterViewController.isHappyHourToggleOn) {
+            dealTypeFilter = [NSPredicate predicateWithValue:YES];
+        } else {
+            dealTypeFilter = [NSPredicate predicateWithValue:NO];
+        }
+        
+        if (self.filterViewController.now && !self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"(deal.now == YES) OR (happyHour.now == YES)"];
+        } else if (!self.filterViewController.now && self.filterViewController.upcoming) {
+            timeFilter = [NSPredicate predicateWithFormat:@"(deal.now == NO) OR (happyHour.now == NO)"];
+        }
     }
     
-    if (self.filterViewController.isHappyHourToggleOn) {
-        happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour != nil"];
-    } else {
-        happyHourFilter = [NSPredicate predicateWithFormat:@"happyHour == nil"];
-    }
-    
-    if (self.filterViewController.now && !self.filterViewController.upcoming) {
-        timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == YES OR deal.now == YES"];
-    } else if (self.filterViewController.upcoming && !self.filterViewController.now) {
-        timeFilter = [NSPredicate predicateWithFormat:@"happyHour.now == NO OR deal.now == NO"];
-    } else if (self.filterViewController.now && self.filterViewController.upcoming) {
+    if (self.filterViewController.now && self.filterViewController.upcoming) {
         timeFilter = [NSPredicate predicateWithValue:YES];
+    } else if (!self.filterViewController.now && !self.filterViewController.upcoming) {
+        timeFilter = [NSPredicate predicateWithValue:NO];
     }
     
-    if (!self.filterViewController.isHappyHourToggleOn && !self.filterViewController.isHotspotToggleOn) {
-        compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
-    } else {
-        compoundPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[hotspotFilter, happyHourFilter]];
-    }
-    
-    NSCompoundPredicate *compoundPredicateWithNowAndUpcoming = [NSCompoundPredicate andPredicateWithSubpredicates:@[compoundPredicate, timeFilter]];
+    NSCompoundPredicate *compoundPredicateWithNowAndUpcoming = [NSCompoundPredicate andPredicateWithSubpredicates:@[dealTypeFilter, timeFilter]];
     
     self.selectedVenues = [self.allVenues filteredArrayUsingPredicate:compoundPredicateWithNowAndUpcoming];
     
