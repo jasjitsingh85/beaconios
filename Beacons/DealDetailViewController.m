@@ -121,15 +121,15 @@
 }
 
 -(NSInteger) dealContainer {
-    return 1;
-}
-
--(NSInteger) happyHourContainer {
     return 2;
 }
 
--(NSInteger) venueContainer {
+-(NSInteger) happyHourContainer {
     return 3;
+}
+
+-(NSInteger) venueContainer {
+    return 1;
 }
 
 -(NSInteger) mapContainer {
@@ -898,7 +898,7 @@
             CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
             
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
-            height = venueDescriptionHeight.size.height + 75;
+            height = venueDescriptionHeight.size.height + 83;
         }
     }
     return height;
@@ -1103,7 +1103,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
+    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beerGlasses"]];
     dealIcon.centerX = self.view.width/2;
     dealIcon.y = 15;
     [cell.contentView addSubview:dealIcon];
@@ -1147,17 +1147,17 @@
     
     UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
     venueIcon.centerX = self.view.width/2;
-    venueIcon.y = 5;
+    venueIcon.y = 15;
     [cell.contentView addSubview:venueIcon];
     
-    UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width, 30)];
+    UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 30)];
     venueHeadingLabel.centerX = self.view.width/2;
     venueHeadingLabel.text = @"THE VENUE";
     venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:venueHeadingLabel];
     
-    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 25)];
+    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 25)];
     [cell.contentView addSubview:yelpContainer];
     if (![self.venue.yelpRating isEmpty]) {
         UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
