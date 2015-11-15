@@ -150,7 +150,7 @@
         self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
     } else {
         self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", self.deal.itemPrice];
-        self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:16 green:193 blue:255 alpha:255];
+        self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     }
     CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
     self.itemPriceLabel.width = itemPriceTextSize.width;
