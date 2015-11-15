@@ -418,6 +418,7 @@ typedef enum dealTypeStates
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backgroundRefreshFeed:) name:kFeedUpdateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyFilterNotification:) name:kApplyFilterNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAfterToggleFavorite:) name:kRefreshAfterToggleFavoriteNotification object:nil];
 //    [self updateRewardItems];
 
 }
@@ -724,6 +725,11 @@ typedef enum dealTypeStates
     
     [self getFavoriteFeed];
     [self reloadDealsInSameLocation];
+}
+
+-(void)refreshAfterToggleFavorite:(NSNotification *)notification
+{
+    [self getFavoriteFeed];
 }
 
 -(void)reloadDealsInSameLocation

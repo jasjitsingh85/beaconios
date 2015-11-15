@@ -321,7 +321,7 @@
 //    self.isFollowed = !self.isFollowed;
 //    [self updateFavoriteButton];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshAfterToggleFavoriteNotification object:self];
     self.isFollowed = !self.isFollowed;
     [self updateFavoriteButton];
     
