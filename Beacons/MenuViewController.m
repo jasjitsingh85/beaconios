@@ -485,8 +485,6 @@
 
 - (void)inviteFriendsButtonTouched:(id)sender
 {
-    
-
         AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
         UINavigationController *navigationController =
         [[UINavigationController alloc] initWithRootViewController:appInviteViewController];

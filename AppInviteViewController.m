@@ -23,7 +23,6 @@
 #import "ContactManager.h"
 #import "LoadingIndictor.h"
 #import "NavigationBarTitleLabel.h"
-#import "APIClient.h"
 #import "AppDelegate.h"
 #import "DatePickerModalView.h"
 #import "TextMessageManager.h"
