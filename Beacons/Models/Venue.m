@@ -110,6 +110,14 @@
             [self.events addObject:event];
         }
     }
+
+    self.photos = [[NSMutableArray alloc] init];
+    if (!isEmpty(dictionary[@"photos"])) {
+        for (NSString *photo in dictionary[@"photos"]) {
+            NSURL *photoURL = [[NSURL alloc] initWithString:photo];
+            [self.photos addObject:photoURL];
+        }
+    }
     
     return self;
 }

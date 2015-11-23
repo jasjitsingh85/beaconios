@@ -28,6 +28,7 @@
 @property (strong, nonatomic) Deal *deal;
 @property (strong, nonatomic) HappyHour *happyHour;
 @property (strong, nonatomic) NSMutableArray *events;
+@property (strong, nonatomic) NSMutableArray *photos;
 @property (assign, nonatomic) BOOL isFollowed;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;
