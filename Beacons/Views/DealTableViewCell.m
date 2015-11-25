@@ -179,7 +179,7 @@
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
     CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
-    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 8;
+    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 5;
     
     [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
     
@@ -224,6 +224,7 @@
         
         self.venueLabelLineOne.y = 35;
         self.venueLabelLineTwo.y = 49;
+        self.placeType.y = 70;
         self.dealTime.y = 117;
         
     } else {
@@ -233,7 +234,7 @@
         
         self.venueLabelLineOne.y = 20;
         self.venueLabelLineTwo.y = 34;
-        self.placeType.y = 54;
+        self.placeType.y = 55;
         self.dealTime.y = 73;
         
         if (self.venue.neighborhood != (NSString *)[NSNull null]) {

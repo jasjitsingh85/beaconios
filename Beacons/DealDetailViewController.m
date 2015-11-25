@@ -15,6 +15,7 @@
 #import <MapKit/MapKit.h>
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
+#import "DealDetailImageCell.h"
 //#import "FindFriendsViewController.h"
 #import "AnalyticsManager.h"
 #import "APIClient.h"
@@ -86,11 +87,11 @@
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(60, 20);
     self.followButton.x = 0;
-    self.followButton.y = 0;
+    self.followButton.y = 1;
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
+    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:9];
     self.followButton.backgroundColor = [UIColor clearColor];
     self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
     self.followButton.layer.cornerRadius = 4;
@@ -236,6 +237,7 @@
 {
     _venue = venue;
     
+    
     [self updateIsUserPresent];
     [self updateVenueData];
     
@@ -245,7 +247,7 @@
     self.getDealButtonContainer.userInteractionEnabled = YES;
     [self.view addSubview:self.getDealButtonContainer];
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 1)];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 0.5)];
     topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
     [self.getDealButtonContainer addSubview:topBorder];
     
@@ -787,7 +789,7 @@
 - (void) makeFollowButtonActive
 {
     [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(80, 25);
+    self.followButton.size = CGSizeMake(75, 22);
 //    self.followButton.x = self.contentView.width - 95;
     self.followButton.layer.borderColor = [UIColor clearColor].CGColor;
     [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -798,7 +800,7 @@
 - (void) makeFollowButtonInactive
 {
     [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-    self.followButton.size = CGSizeMake(60, 25);
+    self.followButton.size = CGSizeMake(55, 22);
     self.followButton.layer.borderColor = [UIColor blackColor].CGColor;
 //    self.followButton.x = self.contentView.width - 85;
     [self.followButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -860,7 +862,7 @@
 {
     CGFloat height = 151;
     if (indexPath.row == self.imageContainer) {
-        height = 146;
+        height = 221;
     } else if (indexPath.row == self.mapContainer) {
         height = 200;
     } else if (indexPath.row == self.dealContainer || indexPath.row==self.tutorialContainer) {
@@ -873,8 +875,8 @@
                 CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
                 CGRect dealTextHeight = [dealTextLabel boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13.5]} context:context];
                 self.dealTextLabel.height = dealTextHeight.size.height + 5;
-                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
-                height = dealTextHeight.size.height + 93;
+//                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
+                height = dealTextHeight.size.height + 55;
             }
         }
     } else if (indexPath.row == self.happyHourContainer) {
@@ -886,8 +888,8 @@
             CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
             
             self.happyHourTextLabel.height = happyHourDescriptionHeight.size.height + 5;
-            self.happyHourTime.y = self.happyHourTextLabel.y + self.happyHourTextLabel.height + 3;
-            height = happyHourDescriptionHeight.size.height + 93;
+//            self.happyHourTime.y = self.happyHourTextLabel.y + self.happyHourTextLabel.height + 3;
+            height = happyHourDescriptionHeight.size.height + 55;
         }
     } else if (indexPath.row == self.venueContainer) {
         if (!self.hasVenueDescription) {
@@ -898,7 +900,7 @@
             CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
             
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
-            height = venueDescriptionHeight.size.height + 83;
+            height = venueDescriptionHeight.size.height + 50;
         }
     }
     return height;
@@ -938,31 +940,36 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
-    dealIcon.centerX = self.view.width/2;
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [cell.contentView addSubview:topBorder];
+    
+    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHotspotIcon"]];
+    dealIcon.x = 22;
     dealIcon.y = 15;
     [cell.contentView addSubview:dealIcon];
     
-    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 30)];
-    dealHeadingLabel.centerX = self.view.width/2;
-    dealHeadingLabel.text = @"THE DEAL";
+    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+//    dealHeadingLabel.centerX = self.view.width/2;
+    dealHeadingLabel.text = @"HOTSPOT SPECIAL";
     dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:dealHeadingLabel];
     
-    self.dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width - 50, 60)];
-    self.dealTextLabel.centerX = self.view.width/2;
-    self.dealTextLabel.font = [ThemeManager lightFontOfSize:13];
-    self.dealTextLabel.textAlignment = NSTextAlignmentCenter;
+    self.dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
+//    self.dealTextLabel.centerX = self.view.width/2;
+    self.dealTextLabel.font = [ThemeManager lightFontOfSize:12];
+    self.dealTextLabel.textAlignment = NSTextAlignmentLeft;
     self.dealTextLabel.numberOfLines = 0;
     
     self.dealTextLabel.text = [self getDealTextLabel];
     
-    self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, self.view.width - 50, 20)];
-    self.dealTime.centerX = self.view.width/2;
-    self.dealTime.font = [ThemeManager lightFontOfSize:13];
-    self.dealTime.textAlignment = NSTextAlignmentCenter;
+    self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(167, 16, self.view.width - 50, 20)];
+//    self.dealTime.centerX = self.view.width/2;
+    self.dealTime.font = [ThemeManager lightFontOfSize:10];
+    self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 1;
+    self.dealTime.textColor = [UIColor darkGrayColor];
     self.dealTime.text = self.venue.deal.dealStartString;
     [cell.contentView addSubview:self.dealTime];
     
@@ -976,119 +983,15 @@
 -(UITableViewCell *) getImageCell
 {
     static NSString *CellIdentifier = @"imageCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    DealDetailImageCell *cell = [[DealDetailImageCell alloc] init];
+    cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[DealDetailImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIImageView *venueImageView = [[UIImageView alloc] init];
-    venueImageView.height = 146;
-    venueImageView.width = cell.contentView.width;
-    venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    venueImageView.contentMode = UIViewContentModeScaleAspectFill;
-    venueImageView.clipsToBounds = YES;
-    [cell.contentView addSubview:venueImageView];
-    
-    UIView *venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 146)];
-    UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, venueImageView.size.width, 146)];
-    UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
-    [backgroundGradient setImage:gradientImage];
-    [venueImageView addSubview:backgroundGradient];
-    
-    UILabel *venueLabelLineOne = [[UILabel alloc] init];
-    venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
-    venueLabelLineOne.textColor = [UIColor whiteColor];
-    venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
-    venueLabelLineOne.numberOfLines = 1;
-    venueLabelLineOne.width = cell.contentView.width - 20;
-    venueLabelLineOne.x = 5;
-    venueLabelLineOne.y = 90;
-    venueLabelLineOne.height = 30;
-    [venuePreviewView addSubview:venueLabelLineOne];
-    
-    UILabel *venueLabelLineTwo = [[UILabel alloc] init];
-    venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
-    venueLabelLineTwo.textColor = [UIColor whiteColor];
-    venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
-    venueLabelLineTwo.numberOfLines = 1;
-    venueLabelLineTwo.width = cell.contentView.width - 20;
-    venueLabelLineTwo.x = 4;
-    venueLabelLineTwo.y = 104;
-    venueLabelLineTwo.height = 46;
-    [venuePreviewView addSubview:venueLabelLineTwo];
-    
-    UILabel *descriptionLabel = [[UILabel alloc] init];
-    descriptionLabel.height = 26;
-    descriptionLabel.x = 0;
-    descriptionLabel.y = 90;
-    descriptionLabel.font = [ThemeManager boldFontOfSize:14];
-    descriptionLabel.textColor = [UIColor whiteColor];
-    descriptionLabel.textAlignment = NSTextAlignmentLeft;
-    [venuePreviewView addSubview:descriptionLabel];
-    
-//    self.dealTime = [[UILabel alloc] init];
-//    self.dealTime.font = [ThemeManager regularFontOfSize:12];
-//    self.dealTime.textColor = [[ThemeManager sharedTheme] darkGrayColor];
-//    //self.dealTime.adjustsFontSizeToFitWidth = YES;
-//    self.dealTime.textAlignment = NSTextAlignmentLeft;
-//    self.dealTime.numberOfLines = 0;
-//    [self.venuePreviewView addSubview:self.dealTime];
-    
-//    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 90, 40, 26)];
-//    self.marketPriceLabel.textColor = [UIColor whiteColor];
-//    self.marketPriceLabel.textAlignment = NSTextAlignmentLeft;
-//    self.marketPriceLabel.font = [ThemeManager regularFontOfSize:12];
-//    [self.venuePreviewView addSubview:self.marketPriceLabel];
-//    
-//    self.itemPriceLabel = [[UILabel alloc] init];
-//    self.itemPriceLabel.textAlignment = NSTextAlignmentLeft;
-//    self.itemPriceLabel.font = [ThemeManager boldFontOfSize:14];
-//    self.itemPriceLabel.textColor = [UIColor whiteColor];
-//    self.itemPriceLabel.height = 26;
-//    self.itemPriceLabel.y = 90;
-//    [self.venuePreviewView addSubview:self.itemPriceLabel];
-//    
-//    self.distanceLabel = [[UILabel alloc] init];
-//    self.distanceLabel.font = [ThemeManager lightFontOfSize:14];
-//    self.distanceLabel.textColor = [UIColor whiteColor];
-//    [self.venuePreviewView addSubview:self.distanceLabel];
-//    //self.distanceLabel.backgroundColor = [UIColor whiteColor];
-    
-    //[self.venueScroll addSubview:self.venueDetailView];
-    
-//    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    self.followButton.size = CGSizeMake(65, 25);
-//    self.followButton.x = self.contentView.width - 85;
-//    self.followButton.y = 20;
-//    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-//    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-//    self.followButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
-//    self.followButton.backgroundColor = [UIColor clearColor];
-//    self.followButton.titleLabel.textColor = [UIColor whiteColor];
-//    self.followButton.layer.cornerRadius = 4;
-//    self.followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
-//    self.followButton.layer.borderWidth = 1.0;
-//    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.venuePreviewView addSubview:self.followButton];
-    
-//    self.placeType = [[UILabel alloc] initWithFrame:CGRectMake(145, 69, self.contentView.width, 20)];
-//    self.placeType.font = [ThemeManager regularFontOfSize:12];
-//    self.placeType.textAlignment = NSTextAlignmentLeft;
-//    self.placeType.textColor = [[ThemeManager sharedTheme] darkGrayColor];
-//    [self.venuePreviewView addSubview:self.placeType];
-    
-    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.venue.name];
-    venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-    venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-//    
-//    CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
-    
-    [venueImageView sd_setImageWithURL:self.venue.imageURL];
-    
-    [cell.contentView addSubview:venuePreviewView];
+    cell.venue = self.venue;
     
     return cell;
 }
@@ -1103,29 +1006,32 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"beerGlasses"]];
-    dealIcon.centerX = self.view.width/2;
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [cell.contentView addSubview:topBorder];
+    
+    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHappyHourIcon"]];
+    dealIcon.x = 22;
     dealIcon.y = 15;
     [cell.contentView addSubview:dealIcon];
     
-    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 30)];
-    dealHeadingLabel.centerX = self.view.width/2;
+    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     dealHeadingLabel.text = @"HAPPY HOUR";
     dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:dealHeadingLabel];
     
-    self.happyHourTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width - 50, 60)];
-    self.happyHourTextLabel.centerX = self.view.width/2;
-    self.happyHourTextLabel.font = [ThemeManager lightFontOfSize:13];
-    self.happyHourTextLabel.textAlignment = NSTextAlignmentCenter;
+    self.happyHourTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
+    self.happyHourTextLabel.font = [ThemeManager lightFontOfSize:12];
+    self.happyHourTextLabel.textAlignment = NSTextAlignmentLeft;
     self.happyHourTextLabel.numberOfLines = 0;
     self.happyHourTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
     
-    self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, self.view.width - 50, 20)];
-    self.happyHourTime.centerX = self.view.width/2;
-    self.happyHourTime.font = [ThemeManager lightFontOfSize:13];
-    self.happyHourTime.textAlignment = NSTextAlignmentCenter;
+    self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(135, 16, self.view.width - 50, 20)];
+//    self.happyHourTime.centerX = self.view.width/2;
+    self.happyHourTime.font = [ThemeManager lightFontOfSize:10];
+    self.happyHourTime.textColor = [UIColor darkGrayColor];
+    self.happyHourTime.textAlignment = NSTextAlignmentLeft;
     self.happyHourTime.numberOfLines = 1;
     self.happyHourTime.text = self.venue.happyHour.happyHourStartString;
     [cell.contentView addSubview:self.happyHourTime];
@@ -1145,51 +1051,57 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
-    venueIcon.centerX = self.view.width/2;
+    UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newVenueIcon"]];
+    venueIcon.x = 22;
     venueIcon.y = 15;
     [cell.contentView addSubview:venueIcon];
     
-    UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 30)];
-    venueHeadingLabel.centerX = self.view.width/2;
+    UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+//    venueHeadingLabel.centerX = self.view.width/2;
     venueHeadingLabel.text = @"THE VENUE";
     venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:venueHeadingLabel];
     
-    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 25)];
-    [cell.contentView addSubview:yelpContainer];
-    if (![self.venue.yelpRating isEmpty]) {
-        UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
-        yelpReview.centerX = self.view.width/2;
-        [yelpReview sd_setImageWithURL:self.venue.yelpRating];
-        
-        UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
-        poweredByYelp.y = 1.5;
-        poweredByYelp.x = self.view.width - 48;
-        [yelpContainer addSubview:poweredByYelp];
-        
-        UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 2.5, 67, 15)];
-        yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-        yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
-        yelpReviewCount.textAlignment = NSTextAlignmentRight;
-        yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
-        [yelpContainer addSubview:yelpReviewCount];
-        
-        [yelpContainer addSubview:yelpReview];
-    } else {
-        yelpContainer.height = 0;
-    }
+//    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 25)];
+//    [cell.contentView addSubview:yelpContainer];
+//    if (![self.venue.yelpRating isEmpty]) {
+//        UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
+//        yelpReview.centerX = self.view.width/2;
+//        [yelpReview sd_setImageWithURL:self.venue.yelpRating];
+//        
+//        UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
+//        poweredByYelp.y = 1.5;
+//        poweredByYelp.x = self.view.width - 48;
+//        [yelpContainer addSubview:poweredByYelp];
+//        
+//        UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 2.5, 67, 15)];
+//        yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+//        yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
+//        yelpReviewCount.textAlignment = NSTextAlignmentRight;
+//        yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
+//        [yelpContainer addSubview:yelpReviewCount];
+//        
+//        [yelpContainer addSubview:yelpReview];
+//    } else {
+//        yelpContainer.height = 0;
+//    }
     
     self.venueTextLabel = [[UILabel alloc] init];
-    self.venueTextLabel.x = 0;
+    self.venueTextLabel.x = 25;
     self.venueTextLabel.width = self.view.width - 50;
-    self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 20;
-    self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
-    self.venueTextLabel.centerX = self.view.width/2;
+//    self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 20;
+    self.venueTextLabel.y = venueHeadingLabel.y + 25;
+    self.venueTextLabel.font = [ThemeManager lightFontOfSize:12];
+//    self.venueTextLabel.centerX = self.view.width/2;
     self.venueTextLabel.numberOfLines = 0;
-    self.venueTextLabel.textAlignment = NSTextAlignmentCenter;
+    self.venueTextLabel.textAlignment = NSTextAlignmentLeft;
     self.venueTextLabel.text = self.venue.placeDescription;
+    
+//    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 5, cell.contentView.size.width - 50, 1)];
+//    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+//    [cell.contentView addSubview:topBorder];
+    
     [cell.contentView addSubview:self.venueTextLabel];
     
     return cell;
@@ -1204,6 +1116,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [cell.contentView addSubview:topBorder];
     
     UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
     docIcon.y = 10;

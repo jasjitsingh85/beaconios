@@ -120,6 +120,14 @@
 		41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */; };
 		41C4B8361BEFD5A700D471D6 /* filterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */; };
 		41C4B8381BF073B200D471D6 /* updatedBackgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C4B8371BF073B200D471D6 /* updatedBackgroundGradient@2x.png */; };
+		41C9870A1C03856700DD595D /* DealDetailImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41C987091C03856700DD595D /* DealDetailImageCell.m */; };
+		41C987111C042EB400DD595D /* newDirectionsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */; };
+		41C987121C042EB400DD595D /* newHowThisWorksIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */; };
+		41C987131C042EB400DD595D /* happeningsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */; };
+		41C987141C042EB400DD595D /* newHappyHourIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */; };
+		41C987151C042EB400DD595D /* newVenueIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */; };
+		41C987161C042EB400DD595D /* happyHourIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C987101C042EB400DD595D /* happyHourIcon@2x.png */; };
+		41C987181C05282D00DD595D /* newHotspotIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C987171C05282D00DD595D /* newHotspotIcon@2x.png */; };
 		41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D716B01BC1CE2D00DF23D2 /* Event.m */; };
 		41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */; };
 		41D716B51BCB3C5B00DF23D2 /* largeCrossout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D716B41BCB3C5B00DF23D2 /* largeCrossout@2x.png */; };
@@ -478,6 +486,15 @@
 		41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardExplanationPopupView.m; sourceTree = "<group>"; };
 		41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filterButton@2x.png"; sourceTree = "<group>"; };
 		41C4B8371BF073B200D471D6 /* updatedBackgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "updatedBackgroundGradient@2x.png"; sourceTree = "<group>"; };
+		41C987081C03855A00DD595D /* DealDetailImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDetailImageCell.h; sourceTree = "<group>"; };
+		41C987091C03856700DD595D /* DealDetailImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDetailImageCell.m; sourceTree = "<group>"; };
+		41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newDirectionsIcon@2x.png"; sourceTree = "<group>"; };
+		41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHowThisWorksIcon@2x.png"; sourceTree = "<group>"; };
+		41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happeningsIcon@2x.png"; sourceTree = "<group>"; };
+		41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHappyHourIcon@2x.png"; sourceTree = "<group>"; };
+		41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newVenueIcon@2x.png"; sourceTree = "<group>"; };
+		41C987101C042EB400DD595D /* happyHourIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happyHourIcon@2x.png"; sourceTree = "<group>"; };
+		41C987171C05282D00DD595D /* newHotspotIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHotspotIcon@2x.png"; sourceTree = "<group>"; };
 		41D716AF1BC1CE1D00DF23D2 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		41D716B01BC1CE2D00DF23D2 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsfeedUnfollow@2x.png"; sourceTree = "<group>"; };
@@ -908,6 +925,8 @@
 				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
 				41338FD719FE11D30022211C /* DealTableViewEventCell.h */,
 				41338FD919FE12080022211C /* DealTableViewEventCell.m */,
+				41C987081C03855A00DD595D /* DealDetailImageCell.h */,
+				41C987091C03856700DD595D /* DealDetailImageCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
 				41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */,
@@ -1281,6 +1300,13 @@
 		96C87C7A175A9A2C006EA3A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */,
+				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
+				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
+				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
+				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
+				41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */,
+				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
 				410165EF1BF5A84700F0219C /* grayPin@2x.png */,
@@ -1565,11 +1591,13 @@
 				41ED34D41AC9C52F00A77A92 /* retakePicture@2x.png in Resources */,
 				415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
+				41C987131C042EB400DD595D /* happeningsIcon@2x.png in Resources */,
 				410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
 				4158AE671B46481C0034BA4A /* inviteFriendsModalBackground@2x.png in Resources */,
+				41C987141C042EB400DD595D /* newHappyHourIcon@2x.png in Resources */,
 				41030F6B1B52EB7B00252158 /* helpSign@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */,
@@ -1597,6 +1625,7 @@
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
 				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
 				4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */,
+				41C987181C05282D00DD595D /* newHotspotIcon@2x.png in Resources */,
 				41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
@@ -1636,8 +1665,10 @@
 				41148CB91B7A2A9A00F4CA17 /* selectedFavorite@2x.png in Resources */,
 				41ED34CE1AC9A0AC00A77A92 /* bottomPictureGradient@2x.png in Resources */,
 				41148CB81B7A2A9A00F4CA17 /* unselectedFavorite@2x.png in Resources */,
+				41C987121C042EB400DD595D /* newHowThisWorksIcon@2x.png in Resources */,
 				4158AE571B433F690034BA4A /* hotspotSelectedInNavTab@2x.png in Resources */,
 				96CF5AE718E8E1BD000D77C2 /* plusCircleSelected@2x.png in Resources */,
+				41C987151C042EB400DD595D /* newVenueIcon@2x.png in Resources */,
 				41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */,
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				41E23A861B33AEFB00676254 /* thumb@2x.png in Resources */,
@@ -1645,6 +1676,7 @@
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */,
 				41FD063F1B3A21A600F7DD08 /* drinkIcon@2x.png in Resources */,
+				41C987111C042EB400DD595D /* newDirectionsIcon@2x.png in Resources */,
 				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,
 				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,
 				41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */,
@@ -1659,6 +1691,7 @@
 				41593DB71BE97F6C00711E57 /* checkmark@2x.png in Resources */,
 				96CBCCFA1805107500D62462 /* chatBubbleRedLeft@2x.png in Resources */,
 				4109B9C11B9B706100C3270E /* privateLock@2x.png in Resources */,
+				41C987161C042EB400DD595D /* happyHourIcon@2x.png in Resources */,
 				4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */,
 				41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */,
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
@@ -1889,6 +1922,7 @@
 				41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */,
 				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,
 				4148E9D41B098AE20050D3E3 /* VoucherRedemptionViewController.m in Sources */,
+				41C9870A1C03856700DD595D /* DealDetailImageCell.m in Sources */,
 				96AFE1351938215000209799 /* Deal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
