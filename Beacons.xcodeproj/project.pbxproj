@@ -128,6 +128,7 @@
 		41C987151C042EB400DD595D /* newVenueIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */; };
 		41C987161C042EB400DD595D /* happyHourIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C987101C042EB400DD595D /* happyHourIcon@2x.png */; };
 		41C987181C05282D00DD595D /* newHotspotIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C987171C05282D00DD595D /* newHotspotIcon@2x.png */; };
+		41CBB0E91C0619E200B7C4AA /* instagramLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */; };
 		41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D716B01BC1CE2D00DF23D2 /* Event.m */; };
 		41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */; };
 		41D716B51BCB3C5B00DF23D2 /* largeCrossout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41D716B41BCB3C5B00DF23D2 /* largeCrossout@2x.png */; };
@@ -495,6 +496,7 @@
 		41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newVenueIcon@2x.png"; sourceTree = "<group>"; };
 		41C987101C042EB400DD595D /* happyHourIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happyHourIcon@2x.png"; sourceTree = "<group>"; };
 		41C987171C05282D00DD595D /* newHotspotIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHotspotIcon@2x.png"; sourceTree = "<group>"; };
+		41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instagramLogo@2x.png"; sourceTree = "<group>"; };
 		41D716AF1BC1CE1D00DF23D2 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		41D716B01BC1CE2D00DF23D2 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsfeedUnfollow@2x.png"; sourceTree = "<group>"; };
@@ -1306,6 +1308,7 @@
 				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
 				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
 				41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */,
+				41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */,
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
@@ -1675,6 +1678,7 @@
 				4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */,
+				41CBB0E91C0619E200B7C4AA /* instagramLogo@2x.png in Resources */,
 				41FD063F1B3A21A600F7DD08 /* drinkIcon@2x.png in Resources */,
 				41C987111C042EB400DD595D /* newDirectionsIcon@2x.png in Resources */,
 				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,

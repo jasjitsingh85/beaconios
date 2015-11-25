@@ -20,7 +20,7 @@
 
 @interface DealDetailImageCell()
 
-//@property (strong, nonatomic) UILabel *eventHeader;
+@property (strong, nonatomic) UIImageView *imageSourceIcon;
 
 @end
 
@@ -96,15 +96,21 @@
             [self.photoScroll addSubview:photoView];
             
             UIImageView *photoImageView = [[UIImageView alloc] init];
-            photoImageView.height = 200;
+            photoImageView.height = photoView.size.height;
             photoImageView.width = photoView.size.width;
-            //eventImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            photoImageView.contentMode = UIViewContentModeScaleAspectFill;
-            photoImageView.clipsToBounds = YES;
+            //photoImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            photoImageView.contentMode = UIViewContentModeScaleAspectFit;
+//            photoImageView.clipsToBounds = YES;
             [photoImageView sd_setImageWithURL:photo_url];
             [photoView addSubview:photoImageView];
         }
     }
+    
+    self.imageSourceIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"instagramLogo"]];
+    self.imageSourceIcon.x = self.contentView.size.width - 30;
+    self.imageSourceIcon.y = 170;
+    self.imageSourceIcon.alpha = 0;
+    [self.contentView addSubview:self.imageSourceIcon];
     
     if (venue.photos.count == 0) {
         self.pageControl.hidden = YES;
@@ -174,7 +180,36 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     CGFloat pageWidth = self.photoScroll.frame.size.width;
     int page = floor((self.photoScroll.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    if (page > 0) {
+        [self fadeInImage];
+    } else {
+        [self fadeOutImage];
+    }
     self.pageControl.currentPage = page;
+}
+
+- (void)setView:(UIImageView *)view hidden:(BOOL)hidden {
+    [UIView transitionWithView:view duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
+        [view setHidden:hidden];
+    } completion:nil];
+}
+
+- (void)fadeInImage
+{
+    [UIView beginAnimations:@"fade in" context:nil];
+    [UIView setAnimationDuration:0.5];
+    self.imageSourceIcon.alpha = 1;
+    [UIView commitAnimations];
+    
+}
+
+- (void)fadeOutImage
+{
+    [UIView beginAnimations:@"fade out" context:nil];
+    [UIView setAnimationDuration:0.5];
+    self.imageSourceIcon.alpha = 0;
+    [UIView commitAnimations];
+    
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
