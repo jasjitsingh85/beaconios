@@ -179,7 +179,6 @@
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
     CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
-    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 5;
     
     [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
     
@@ -246,6 +245,8 @@
     if (!isEmpty(venue.placeType)) {
          self.placeType.text = [venue.placeType uppercaseString];   
     }
+    
+    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 6;
     
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];

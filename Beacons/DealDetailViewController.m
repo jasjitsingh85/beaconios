@@ -237,7 +237,6 @@
 {
     _venue = venue;
     
-    
     [self updateIsUserPresent];
     [self updateVenueData];
     
@@ -862,9 +861,9 @@
 {
     CGFloat height = 151;
     if (indexPath.row == self.imageContainer) {
-        height = 221;
+        height = 201;
     } else if (indexPath.row == self.mapContainer) {
-        height = 200;
+        height = 230;
     } else if (indexPath.row == self.dealContainer || indexPath.row==self.tutorialContainer) {
         if (!self.deal) {
             height = 0;
@@ -877,6 +876,8 @@
                 self.dealTextLabel.height = dealTextHeight.size.height + 5;
 //                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
                 height = dealTextHeight.size.height + 55;
+            } else {
+                height = 128;
             }
         }
     } else if (indexPath.row == self.happyHourContainer) {
@@ -966,11 +967,11 @@
     
     self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(167, 16, self.view.width - 50, 20)];
 //    self.dealTime.centerX = self.view.width/2;
-    self.dealTime.font = [ThemeManager lightFontOfSize:10];
+    self.dealTime.font = [ThemeManager lightFontOfSize:9];
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 1;
     self.dealTime.textColor = [UIColor darkGrayColor];
-    self.dealTime.text = self.venue.deal.dealStartString;
+    self.dealTime.text = [self.venue.deal.dealStartString uppercaseString];
     [cell.contentView addSubview:self.dealTime];
     
     [cell.contentView addSubview:self.dealTextLabel];
@@ -1029,11 +1030,11 @@
     
     self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(135, 16, self.view.width - 50, 20)];
 //    self.happyHourTime.centerX = self.view.width/2;
-    self.happyHourTime.font = [ThemeManager lightFontOfSize:10];
+    self.happyHourTime.font = [ThemeManager lightFontOfSize:9];
     self.happyHourTime.textColor = [UIColor darkGrayColor];
     self.happyHourTime.textAlignment = NSTextAlignmentLeft;
     self.happyHourTime.numberOfLines = 1;
-    self.happyHourTime.text = self.venue.happyHour.happyHourStartString;
+    self.happyHourTime.text = [self.venue.happyHour.happyHourStartString uppercaseString];
     [cell.contentView addSubview:self.happyHourTime];
     
     [cell.contentView addSubview:self.happyHourTextLabel];
@@ -1102,6 +1103,14 @@
 //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
 //    [cell.contentView addSubview:topBorder];
     
+    UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16, self.view.width - 50, 20)];
+    venueType.font = [ThemeManager lightFontOfSize:9];
+    venueType.textColor = [UIColor darkGrayColor];
+    venueType.textAlignment = NSTextAlignmentLeft;
+    venueType.numberOfLines = 1;
+    venueType.text = [self.venue.placeType uppercaseString];
+    [cell.contentView addSubview:venueType];
+    
     [cell.contentView addSubview:self.venueTextLabel];
     
     return cell;
@@ -1121,25 +1130,24 @@
     topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
     [cell.contentView addSubview:topBorder];
     
-    UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
-    docIcon.y = 10;
-    docIcon.centerX = self.view.width/2;
+    UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHowThisWorksIcon"]];
+    docIcon.y = 15;
+    docIcon.x = 22;
     [cell.contentView addSubview:docIcon];
 
-    UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, self.view.width, 30)];
-    docHeadingLabel.centerX = self.view.width/2;
+    UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     docHeadingLabel.text = @"HOW THIS WORKS";
     docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    docHeadingLabel.textAlignment = NSTextAlignmentCenter;
+    docHeadingLabel.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:docHeadingLabel];
 
-    UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 55, self.view.width, 80)];
-    docTextLabel.centerX = self.view.width/2;
-    docTextLabel.font = [ThemeManager lightFontOfSize:13];
+    UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 80)];
+    docTextLabel.x = 25;
+    docTextLabel.font = [ThemeManager lightFontOfSize:12];
     docTextLabel.width = self.view.width - 50;
-    docTextLabel.centerX = self.view.width/2;
+    docTextLabel.y = docHeadingLabel.y + 25;
     docTextLabel.numberOfLines = 0;
-    docTextLabel.textAlignment = NSTextAlignmentCenter;
+    docTextLabel.textAlignment = NSTextAlignmentLeft;
     [cell.contentView addSubview:docTextLabel];
     
     if (self.venue.deal.isRewardItem) {
@@ -1161,6 +1169,21 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [cell.contentView addSubview:topBorder];
+    
+    UIImageView *locationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newDirectionsIcon"]];
+    locationIcon.y = 15;
+    locationIcon.x = 22;
+    [cell.contentView addSubview:locationIcon];
+    
+    UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+    locationHeadingLabel.text = @"LOCATION";
+    locationHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    locationHeadingLabel.textAlignment = NSTextAlignmentLeft;
+    [cell.contentView addSubview:locationHeadingLabel];
+    
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
     CLLocationCoordinate2D center = self.venue.coordinate;
     options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
@@ -1169,7 +1192,7 @@
     options.scale = [UIScreen mainScreen].scale;
     options.size = CGSizeMake(self.view.width, 200);
     
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 20, self.view.width, 200)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 200)];
 
     MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
     [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {

@@ -43,12 +43,13 @@
 {
     _venue = venue;
     
-    NSURL *photo_url = self.venue.photos[0];
+//    NSURL *photo_url = self.venue.photos[0];
     
     self.photoScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 200)];
     self.photoScroll.pagingEnabled = YES;
     self.photoScroll.showsHorizontalScrollIndicator = NO;
     self.photoScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * venue.photos.count, self.contentView.frame.size.height);
+    self.photoScroll.backgroundColor = [UIColor blackColor];
     self.photoScroll.delegate = self;
     [self.contentView addSubview:self.photoScroll];
     
@@ -57,11 +58,14 @@
     
     self.pageControl = [[UIPageControl alloc] init];
     self.pageControl.hidesForSinglePage = NO;
+    self.pageControl.height = 25;
+    self.pageControl.width = self.contentView.size.width;
+    self.pageControl.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
     self.pageControl.numberOfPages = venue.photos.count;
-    self.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    self.pageControl.pageIndicatorTintColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
+    //self.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+    //self.pageControl.pageIndicatorTintColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
     self.pageControl.centerX = self.contentView.width/2;
-    self.pageControl.y = 212;
+    self.pageControl.y = 175;
     //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
     //[self.pageControl sizeToFit];
@@ -82,7 +86,7 @@
     
 //    [self updateDate];
     
-    for (int i = 0; i < venue.photos.count; i++) {
+    for (int i = 0; i < venue.photos.count + 1; i++) {
         if (i == 0) {
             UIImageView *firstPhoto = [self getFirstImageView];
             [self.photoScroll addSubview: firstPhoto];
@@ -102,6 +106,10 @@
         }
     }
     
+    if (venue.photos.count == 0) {
+        self.pageControl.hidden = YES;
+    }
+    
 }
 
 -(UIImageView *)getFirstImageView
@@ -114,30 +122,30 @@
     venueImageView.clipsToBounds = YES;
     
     UIView *venuePreviewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 146)];
-    UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, venueImageView.size.width, 196)];
+    UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, venueImageView.size.width, 196)];
     UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
     [backgroundGradient setImage:gradientImage];
     [venueImageView addSubview:backgroundGradient];
     
     UILabel *venueLabelLineOne = [[UILabel alloc] init];
-    venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+    venueLabelLineOne.font = [ThemeManager lightFontOfSize:25];
     venueLabelLineOne.textColor = [UIColor whiteColor];
     venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
     venueLabelLineOne.numberOfLines = 1;
     venueLabelLineOne.width = self.contentView.width - 20;
     venueLabelLineOne.x = 5;
-    venueLabelLineOne.y = 147;
+    venueLabelLineOne.y = 122;
     venueLabelLineOne.height = 30;
     [venuePreviewView addSubview:venueLabelLineOne];
     
     UILabel *venueLabelLineTwo = [[UILabel alloc] init];
-    venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    venueLabelLineTwo.font = [ThemeManager boldFontOfSize:25];
     venueLabelLineTwo.textColor = [UIColor whiteColor];
     venueLabelLineTwo.textAlignment = NSTextAlignmentLeft;
     venueLabelLineTwo.numberOfLines = 1;
     venueLabelLineTwo.width = self.contentView.width - 20;
-    venueLabelLineTwo.x = 4;
-    venueLabelLineTwo.y = 161;
+    venueLabelLineTwo.x = 5;
+    venueLabelLineTwo.y = 136;
     venueLabelLineTwo.height = 46;
     [venuePreviewView addSubview:venueLabelLineTwo];
     
