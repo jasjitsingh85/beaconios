@@ -666,15 +666,16 @@
         //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
         //    [cell.contentView addSubview:topBorder];
         
-        UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16, self.view.width - 50, 20)];
-        venueType.font = [ThemeManager lightFontOfSize:9];
-        venueType.textColor = [UIColor darkGrayColor];
-        venueType.textAlignment = NSTextAlignmentLeft;
-        venueType.numberOfLines = 1;
-        venueType.text = [self.venue.placeType uppercaseString];
-        [self.venueCell.contentView addSubview:venueType];
-        
-        [self.venueCell.contentView addSubview:self.venueTextLabel];
+        if (self.venue.placeType) {
+            UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16, self.view.width - 50, 20)];
+            venueType.font = [ThemeManager lightFontOfSize:9];
+            venueType.textColor = [UIColor darkGrayColor];
+            venueType.textAlignment = NSTextAlignmentLeft;
+            venueType.numberOfLines = 1;
+            venueType.text = [self.venue.placeType uppercaseString];
+            [self.venueCell.contentView addSubview:venueType];
+            [self.venueCell.contentView addSubview:self.venueTextLabel];
+        }
     }
 }
 
