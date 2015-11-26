@@ -799,7 +799,6 @@
     options.size = CGSizeMake(self.view.width, 150);
     
     UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 150)];
-    mapImageView.backgroundColor = [UIColor grayColor];
 
     MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
     [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
