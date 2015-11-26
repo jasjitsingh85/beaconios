@@ -793,12 +793,12 @@
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
     CLLocationCoordinate2D center = self.venue.coordinate;
     options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
-    center.latitude -= options.region.span.latitudeDelta * 0.12;
+    center.latitude += options.region.span.latitudeDelta * .12;
     options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
     options.scale = [UIScreen mainScreen].scale;
-    options.size = CGSizeMake(self.view.width, 200);
+    options.size = CGSizeMake(self.view.width, 150);
     
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 200)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 150)];
 
     MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
     [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
@@ -813,7 +813,7 @@
         //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
         //[imageLayer setMasksToBounds:YES];
 
-        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20 - 30, 40, 40)];
+        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20, 40, 40)];
         UIImage *markerImage = [UIImage imageNamed:@"bluePin"];
         [markerImageView setImage:markerImage];
         [mapImageView addSubview:markerImageView];
@@ -823,33 +823,52 @@
         [singleTap setNumberOfTapsRequired:1];
         [mapImageView addGestureRecognizer:singleTap];
 
-        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
+//        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
 
-        int addressContainerWidth;
-        if (textSize.width < (self.view.width - 10)) {
-            addressContainerWidth = textSize.width + 100;
-        } else {
-            addressContainerWidth = self.view.width - 10;
-        }
+//        int addressContainerWidth;
+//        if (textSize.width < (self.view.width - 10)) {
+//            addressContainerWidth = textSize.width + 100;
+//        } else {
+//            addressContainerWidth = self.view.width - 10;
+//        }
 
-        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
-        addressContainer.backgroundColor = [UIColor whiteColor];
-        addressContainer.centerX = self.view.width/2;
-        [mapImageView addSubview:addressContainer];
-
-        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-        address.text = [self.venue.address uppercaseString];
-        address.textAlignment = NSTextAlignmentCenter;
-        address.font = [ThemeManager lightFontOfSize:13];
-        [addressContainer addSubview:address];
-
-        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
-        getDirections.text = @"GET DIRECTIONS";
-        getDirections.textAlignment = NSTextAlignmentCenter;
-        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
-        getDirections.font = [ThemeManager lightFontOfSize:13];
-        [addressContainer addSubview:getDirections];
+//        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
+//        addressContainer.backgroundColor = [UIColor whiteColor];
+//        addressContainer.centerX = self.view.width/2;
+//        [mapImageView addSubview:addressContainer];
+//
+//        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
+//        address.text = [self.venue.address uppercaseString];
+//        address.textAlignment = NSTextAlignmentCenter;
+//        address.font = [ThemeManager lightFontOfSize:13];
+//        [addressContainer addSubview:address];
+//
+//        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
+//        getDirections.text = @"GET DIRECTIONS";
+//        getDirections.textAlignment = NSTextAlignmentCenter;
+//        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
+//        getDirections.font = [ThemeManager lightFontOfSize:13];
+//        [addressContainer addSubview:getDirections];
     }];
+    
+    NSString *locationString;
+    if (self.venue.neighborhood) {
+        locationString = [NSString stringWithFormat:@"%@ - %@ | %@", self.venue.address, self.venue.neighborhood, [self stringForDistance:self.venue.distance]];
+    } else {
+        locationString = [NSString stringWithFormat:@"%@ - %@", self.venue.address, [self stringForDistance:self.venue.distance]];
+    }
+    
+    UILabel *locationInfo = [[UILabel alloc] initWithFrame:CGRectMake(25, 38, self.mapCell.contentView.width - 50, 16)];
+    locationInfo.font = [ThemeManager lightFontOfSize:12];
+    locationInfo.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+    locationInfo.text = locationString;
+    [self.mapCell.contentView addSubview:locationInfo];
+
+    NSRange range = [locationString rangeOfString:self.venue.address];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:locationString];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
+    locationInfo.attributedText = attributedText;
     
     [self.mapCell.contentView addSubview:mapImageView];
     
