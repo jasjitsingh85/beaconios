@@ -65,6 +65,14 @@
 @property (strong, nonatomic) UILabel *dealTextLabel;
 @property (strong, nonatomic) UILabel *happyHourTextLabel;
 
+@property (strong, nonatomic) UITableViewCell *mapCell;
+@property (strong, nonatomic) DealDetailImageCell *imageCell;
+@property (strong, nonatomic) UITableViewCell *dealCell;
+@property (strong, nonatomic) UITableViewCell *tutorialCell;
+@property (strong, nonatomic) UITableViewCell *happyHourCell;
+@property (strong, nonatomic) UITableViewCell *venueCell;
+@property (strong, nonatomic) UITableViewCell *eventsCell;
+
 @end
 
 @implementation DealDetailViewController
@@ -106,6 +114,7 @@
     } else {
         [self makeFollowButtonInactive];
     }
+    
 }
 
 -(void) updateIsUserPresent
@@ -212,6 +221,14 @@
 
 {
     _venue = venue;
+    
+    [self getDealCell];
+    [self getMapCell];
+    [self getTutorialCell];
+    [self happyHourCell];
+    [self getVenueCell];
+    [self getEventsCell];
+    [self getImageCell];
     
     [self updateIsUserPresent];
     [self updateVenueData];
@@ -490,28 +507,27 @@
 -(UITableViewCell *) getDealCell
 {
     static NSString *CellIdentifier = @"dealCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.dealCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.dealCell) {
+        self.dealCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.dealCell.contentView.size.width - 50, 0.5)];
     topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [cell.contentView addSubview:topBorder];
+    [self.dealCell.contentView addSubview:topBorder];
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHotspotIcon"]];
     dealIcon.x = 22;
     dealIcon.y = 15;
-    [cell.contentView addSubview:dealIcon];
+    [self.dealCell.contentView addSubview:dealIcon];
     
     UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
 //    dealHeadingLabel.centerX = self.view.width/2;
     dealHeadingLabel.text = @"HOTSPOT SPECIAL";
     dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:dealHeadingLabel];
+    [self.dealCell.contentView addSubview:dealHeadingLabel];
     
     self.dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
 //    self.dealTextLabel.centerX = self.view.width/2;
@@ -528,57 +544,47 @@
     self.dealTime.numberOfLines = 1;
     self.dealTime.textColor = [UIColor darkGrayColor];
     self.dealTime.text = [self.venue.deal.dealStartString uppercaseString];
-    [cell.contentView addSubview:self.dealTime];
+    [self.dealCell.contentView addSubview:self.dealTime];
     
-    [cell.contentView addSubview:self.dealTextLabel];
+    [self.dealCell.contentView addSubview:self.dealTextLabel];
     
     [self updateButtonText];
     
-    return cell;
+    return self.dealCell;
 }
 
--(UITableViewCell *) getImageCell
+-(void) getImageCell
 {
-    static NSString *CellIdentifier = @"imageCell";
-    DealDetailImageCell *cell = [[DealDetailImageCell alloc] init];
-    cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (!cell) {
-        cell = [[DealDetailImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    cell.venue = self.venue;
-    
-    return cell;
+    self.imageCell = [[DealDetailImageCell alloc] init];
+    self.imageCell.venue = self.venue;
 }
 
--(UITableViewCell *) getHappyHourCell
+-(void) getHappyHourCell
 {
+    
     static NSString *CellIdentifier = @"happyHourCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.happyHourCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.happyHourCell) {
+        self.happyHourCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     if (self.hasVenueDescription) {
-        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.happyHourCell.contentView.size.width - 50, 0.5)];
         topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-        [cell.contentView addSubview:topBorder];
+        [self.happyHourCell.contentView addSubview:topBorder];
     }
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHappyHourIcon"]];
     dealIcon.x = 22;
     dealIcon.y = 15;
-    [cell.contentView addSubview:dealIcon];
+    [self.happyHourCell.contentView addSubview:dealIcon];
     
     UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     dealHeadingLabel.text = @"HAPPY HOUR";
     dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:dealHeadingLabel];
+    [self.happyHourCell.contentView addSubview:dealHeadingLabel];
     
     self.happyHourTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
     self.happyHourTextLabel.font = [ThemeManager lightFontOfSize:12];
@@ -593,34 +599,31 @@
     self.happyHourTime.textAlignment = NSTextAlignmentLeft;
     self.happyHourTime.numberOfLines = 1;
     self.happyHourTime.text = [self.venue.happyHour.happyHourStartString uppercaseString];
-    [cell.contentView addSubview:self.happyHourTime];
+    [self.happyHourCell.contentView addSubview:self.happyHourTime];
     
-    [cell.contentView addSubview:self.happyHourTextLabel];
-    
-    return cell;
+    [self.happyHourCell.contentView addSubview:self.happyHourTextLabel];
 }
 
--(UITableViewCell *) getVenueCell
+-(void) getVenueCell
 {
     static NSString *CellIdentifier = @"venueCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.venueCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.venueCell) {
+        self.venueCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.venueCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newVenueIcon"]];
     venueIcon.x = 22;
     venueIcon.y = 15;
-    [cell.contentView addSubview:venueIcon];
+    [self.venueCell.contentView addSubview:venueIcon];
     
     UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
 //    venueHeadingLabel.centerX = self.view.width/2;
     venueHeadingLabel.text = @"THE VENUE";
     venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:venueHeadingLabel];
+    [self.venueCell.contentView addSubview:venueHeadingLabel];
     
 //    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 25)];
 //    [cell.contentView addSubview:yelpContainer];
@@ -667,37 +670,35 @@
     venueType.textAlignment = NSTextAlignmentLeft;
     venueType.numberOfLines = 1;
     venueType.text = [self.venue.placeType uppercaseString];
-    [cell.contentView addSubview:venueType];
+    [self.venueCell.contentView addSubview:venueType];
     
-    [cell.contentView addSubview:self.venueTextLabel];
-    
-    return cell;
+    [self.venueCell.contentView addSubview:self.venueTextLabel];
 }
 
--(UITableViewCell *) getEventsCell
+-(void) getEventsCell
 {
-    static NSString *CellIdentifier = @"eventsCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    static NSString *CellIdentifier = @"eventCell";
+    self.eventsCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.eventsCell) {
+        self.eventsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.eventsCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.eventsCell.contentView.size.width - 50, 0.5)];
     topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [cell.contentView addSubview:topBorder];
+    [self.eventsCell.contentView addSubview:topBorder];
     
     UIImageView *eventIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"happeningsIcon"]];
     eventIcon.y = 15;
     eventIcon.x = 22;
-    [cell.contentView addSubview:eventIcon];
+    [self.eventsCell.contentView addSubview:eventIcon];
     
     UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     eventHeadingLabel.text = @"HAPPENINGS";
     eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:eventHeadingLabel];
+    [self.eventsCell.contentView addSubview:eventHeadingLabel];
     
     for (int i = 0; i < [self.venue.events count]; i++)
     {
@@ -707,43 +708,41 @@
         eventTextLabel.numberOfLines = 1;
         eventTextLabel.textAlignment = NSTextAlignmentLeft;
         eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
-        [cell.contentView addSubview:eventTextLabel];
+        [self.eventsCell.contentView addSubview:eventTextLabel];
         
         UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 52 + (33 * i), self.view.width - 50, 20)];
         eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
         eventTimeTextLabel.numberOfLines = 1;
         eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
         eventTimeTextLabel.text = event.getDateAsString;
-        [cell.contentView addSubview:eventTimeTextLabel];
+        [self.eventsCell.contentView addSubview:eventTimeTextLabel];
     }
-    
-    return cell;
 }
 
--(UITableViewCell *) getTutorialCell
+-(void) getTutorialCell
 {
-    static NSString *CellIdentifier = @"tutorialCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    static NSString *CellIdentifier = @"tutorialCell";
+    self.tutorialCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.tutorialCell) {
+        self.tutorialCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.tutorialCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.tutorialCell.contentView.size.width - 50, 0.5)];
     topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [cell.contentView addSubview:topBorder];
+    [self.tutorialCell.contentView addSubview:topBorder];
     
     UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHowThisWorksIcon"]];
     docIcon.y = 15;
     docIcon.x = 22;
-    [cell.contentView addSubview:docIcon];
+    [self.tutorialCell.contentView addSubview:docIcon];
 
     UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     docHeadingLabel.text = @"HOW THIS WORKS";
     docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     docHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:docHeadingLabel];
+    [self.tutorialCell.contentView addSubview:docHeadingLabel];
 
     UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 80)];
     docTextLabel.x = 25;
@@ -752,41 +751,38 @@
     docTextLabel.y = docHeadingLabel.y + 25;
     docTextLabel.numberOfLines = 0;
     docTextLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:docTextLabel];
+    [self.tutorialCell.contentView addSubview:docTextLabel];
     
     if (self.venue.deal.isRewardItem) {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
     } else {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
     }
-    
-    return cell;
 }
 
--(UITableViewCell *) getMapCell
+-(void) getMapCell
 {
     static NSString *CellIdentifier = @"mapCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.mapCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.mapCell) {
+        self.mapCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.mapCell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.mapCell.contentView.size.width - 50, 0.5)];
     topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [cell.contentView addSubview:topBorder];
+    [self.mapCell.contentView addSubview:topBorder];
     
     UIImageView *locationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newDirectionsIcon"]];
     locationIcon.y = 15;
     locationIcon.x = 22;
-    [cell.contentView addSubview:locationIcon];
+    [self.mapCell.contentView addSubview:locationIcon];
     
     UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
     locationHeadingLabel.text = @"LOCATION";
     locationHeadingLabel.font = [ThemeManager boldFontOfSize:12];
     locationHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [cell.contentView addSubview:locationHeadingLabel];
+    [self.mapCell.contentView addSubview:locationHeadingLabel];
     
     MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
     CLLocationCoordinate2D center = self.venue.coordinate;
@@ -849,39 +845,34 @@
         [addressContainer addSubview:getDirections];
     }];
     
-    [cell.contentView addSubview:mapImageView];
-    
-    return cell;
+    [self.mapCell.contentView addSubview:mapImageView];
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"dealCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
+    NSLog(@"ROW NUMBER: %ld", (long)indexPath.row);
     if (indexPath.row == self.imageContainer) {
-        return [self getImageCell];
+        return self.imageCell;
     } else if (indexPath.row == self.dealContainer && self.deal) {
-        return [self getDealCell];
+        return self.dealCell;
     } else if (indexPath.row == self.happyHourContainer && self.happyHour) {
-        return [self getHappyHourCell];
+        return self.happyHourCell;
     } else if (indexPath.row == self.venueContainer && self.hasVenueDescription) {
-        return [self getVenueCell];
+        return self.venueCell;
     } else if (indexPath.row == self.tutorialContainer && self.deal) {
-        return [self getTutorialCell];
+        return self.tutorialCell;
     } else if (indexPath.row == self.mapContainer) {
-        return [self getMapCell];
+        return self.mapCell;
     } else if (indexPath.row == self.eventsContainer) {
-        return [self getEventsCell];
+        return self.eventsCell;
+    } else {
+        static NSString *CellIdentifier = @"genericCell";
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }
-    
-    return cell;
 }
 
 @end
