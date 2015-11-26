@@ -60,6 +60,7 @@
 @property (readonly) NSInteger venueContainer;
 @property (readonly) NSInteger eventsContainer;
 @property (readonly) NSInteger mapContainer;
+@property (readonly) NSInteger happeningsContainer;
 
 @property (strong, nonatomic) UILabel *dealTextLabel;
 @property (strong, nonatomic) UILabel *happyHourTextLabel;
@@ -129,16 +130,20 @@
     return 3;
 }
 
+-(NSInteger) happeningsContainer {
+    return 4;
+}
+
 -(NSInteger) venueContainer {
     return 1;
 }
 
 -(NSInteger) mapContainer {
-    return 5;
+    return 6;
 }
 
 -(NSInteger) tutorialContainer {
-    return 4;
+    return 5;
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
@@ -202,35 +207,6 @@
     [actionSheet bk_setCancelButtonWithTitle:@"Nevermind" handler:nil];
     [actionSheet showInView:self.view];
 }
-
-//#pragma mark - Find Friends Delegate
-//- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
-//{
-//    //if (contacts.count >= self.deal.inviteRequirement.integerValue) {
-//    [self setBeaconOnServerWithInvitedContacts:contacts andMessage:message andDate:date];
-//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
-//    //}
-////    else {
-////        NSString *message = [NSString stringWithFormat:@"Just select %d more friends to unlock this deal", self.deal.inviteRequirement.integerValue - contacts.count];
-////        [[[UIAlertView alloc] initWithTitle:@"You're Almost There..." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-////    }
-//}
-
-//- (void)setBeaconOnServerWithInvitedContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
-//{
-//    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-//    UIView *view = appDelegate.window.rootViewController.view;
-//    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-//    [[APIClient sharedClient] applyForDeal:self.deal invitedContacts:contacts customMessage:message time:date imageUrl:@"" success:^(Beacon *beacon) {
-//        [loadingIndicator hide:YES];
-//        [[AnalyticsManager sharedManager] setDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name numberOfInvites:contacts.count];
-//        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-//        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-//    } failure:^(NSError *error) {
-//        [loadingIndicator hide:YES];
-//        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//    }];
-//}
 
 - (void) setVenue:(Venue *)venue
 
@@ -298,395 +274,6 @@
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 120.0, 0.0);
     }
     
-//    DealView *dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
-//    dealView.deal = self.venue.deal;
-//    [self.mainScroll addSubview:dealView];
-    
-//    if (hasVenueDescription) {
-//        
-//        UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
-//        venueIcon.centerX = self.view.width/2;
-//        venueIcon.y = dealTextLabel.y + dealTextLabel.height + 10;
-//        [self.mainScroll addSubview:venueIcon];
-//        
-//        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 20, self.view.width, 30)];
-//        venueHeadingLabel.centerX = self.view.width/2;
-//        venueHeadingLabel.text = @"THE VENUE";
-//        venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//        venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//        [self.mainScroll addSubview:venueHeadingLabel];
-//        
-//        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
-//        [self.mainScroll addSubview:yelpContainer];
-//        if (![self.venue.yelpRating isEmpty]) {
-//            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
-//            yelpReview.centerX = self.view.width/2;
-//            [yelpReview sd_setImageWithURL:self.venue.yelpRating];
-//            
-//            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
-//            poweredByYelp.y = 4;
-//            poweredByYelp.x = self.view.width - 48;
-//            [yelpContainer addSubview:poweredByYelp];
-//            
-//            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 5, 67, 15)];
-//            yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-//            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
-//            yelpReviewCount.textAlignment = NSTextAlignmentRight;
-//            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
-//            [yelpContainer addSubview:yelpReviewCount];
-//            
-//            [yelpContainer addSubview:yelpReview];
-//        } else {
-//            yelpContainer.height = 0;
-//        }
-//        
-//        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
-//        CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-//        CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:14]} context:context];
-//        
-//        self.venueTextLabel = [[UILabel alloc] init];
-//        self.venueTextLabel.x = 0;
-//        self.venueTextLabel.width = self.view.width - 50;
-//        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 25;
-//        self.venueTextLabel.height = venueDescriptionHeight.size.height;
-//        self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
-//        self.venueTextLabel.centerX = self.view.width/2;
-//        self.venueTextLabel.numberOfLines = 0;
-//        self.venueTextLabel.textAlignment = NSTextAlignmentCenter;
-//        [self.mainScroll addSubview:self.venueTextLabel];
-//        
-//    }
-//    
-//    UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"documentIcon"]];
-//    docIcon.centerX = self.view.width/2;
-//    [self.mainScroll addSubview:docIcon];
-//    
-//    UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
-//    docHeadingLabel.centerX = self.view.width/2;
-//    docHeadingLabel.text = @"HOW THIS WORKS";
-//    docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//    docHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.mainScroll addSubview:docHeadingLabel];
-//    
-//    UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 80)];
-//    docTextLabel.centerX = self.view.width/2;
-//    docTextLabel.font = [ThemeManager lightFontOfSize:13];
-//    docTextLabel.width = self.view.width - 50;
-//    docTextLabel.centerX = self.view.width/2;
-//    docTextLabel.numberOfLines = 0;
-//    docTextLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.mainScroll addSubview:docTextLabel];
-//    
-//    if (hasVenueDescription) {
-//        docIcon.y = self.venueTextLabel.y + self.venueTextLabel.size.height + 15;
-//        docHeadingLabel.y = docIcon.y + 20;
-//        docTextLabel.y = docIcon.y + 40;
-//    } else {
-//        docIcon.y = dealTextLabel.y + dealTextLabel.size.height + 10;
-//        docHeadingLabel.y = docIcon.y + 20;
-//        docTextLabel.y = docIcon.y + 40;
-//    }
-//    
-//    UIImageView *directionsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"directionsIcon"]];
-//    directionsIcon.centerX = self.view.width/2;
-//    directionsIcon.y = docTextLabel.y + docTextLabel.size.height + 10;
-//    [self.mainScroll addSubview:directionsIcon];
-//    
-//    UILabel *directionHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
-//    directionHeadingLabel.y = docTextLabel.y + docTextLabel.size.height + 30;
-//    directionHeadingLabel.centerX = self.view.width/2;
-//    directionHeadingLabel.text = @"DIRECTIONS";
-//    directionHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//    directionHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.mainScroll addSubview:directionHeadingLabel];
-//    
-//    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-//    CLLocationCoordinate2D center = self.venue.coordinate;
-//    options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
-//    center.latitude -= options.region.span.latitudeDelta * 0.12;
-//    options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
-//    options.scale = [UIScreen mainScreen].scale;
-//    options.size = CGSizeMake(self.view.width, 200);
-//    
-//    MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
-//    [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
-//        //mapSnapshotImage = mapSnap.image;
-//        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
-//        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, docTextLabel.y + docTextLabel.size.height + 60, self.view.width, 200)];
-//        [mapImageView setImage:mapSnap.image];
-//        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
-//        //CALayer *imageLayer = mapImageView.layer;
-//        //[imageLayer setCornerRadius:200/2];
-//        //[imageLayer setBorderWidth:3];
-//        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
-//        //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
-//        //[imageLayer setMasksToBounds:YES];
-//        
-//        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20 - 30, 40, 40)];
-//        UIImage *markerImage = [UIImage imageNamed:@"bluePin"];
-//        [markerImageView setImage:markerImage];
-//        [mapImageView addSubview:markerImageView];
-//        
-//        [mapImageView setUserInteractionEnabled:YES];
-//        UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
-//        [singleTap setNumberOfTapsRequired:1];
-//        [mapImageView addGestureRecognizer:singleTap];
-//        
-//        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
-//        
-//        int addressContainerWidth;
-//        if (textSize.width < (self.view.width - 10)) {
-//            addressContainerWidth = textSize.width + 100;
-//        } else {
-//            addressContainerWidth = self.view.width - 10;
-//        }
-//        
-//        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
-//        addressContainer.backgroundColor = [UIColor whiteColor];
-//        addressContainer.centerX = self.view.width/2;
-//        [mapImageView addSubview:addressContainer];
-//        
-//        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-//        address.text = [self.venue.address uppercaseString];
-//        address.textAlignment = NSTextAlignmentCenter;
-//        address.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:address];
-//        
-//        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
-//        getDirections.text = @"GET DIRECTIONS";
-//        getDirections.textAlignment = NSTextAlignmentCenter;
-//        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
-//        getDirections.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:getDirections];
-//        
-//        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 90);
-//        
-//        [self.mainScroll addSubview:mapImageView];
-//    }];
-//
-//    self.venueTextLabel.text = self.venue.placeDescription;
-//    
-//    if (venue.deal.isRewardItem) {
-//        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
-//    } else {
-//       // if (self.isPresent) {
-//            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
-//        //} else  {
-//        //    docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'I'M GOING HERE' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.deal.venue.name];
-//        //}
-//    }
-//    
-//    self.dealPrompt.text = @"Tap below to get voucher";
-//    
-//    [self.view addSubview:self.mainScroll];
-//    
-//    //[self.view addSubview:self.getDealButton];
-//    
-
-//}
-
-//- (void) setHappyHour:(HappyHour *)happyHour
-//{
-//    _happyHour = happyHour;
-//    
-//    HappyHourView *happyHourView = [[HappyHourView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 146)];
-//    happyHourView.happyHour = self.happyHour;
-//    [self.mainScroll addSubview:happyHourView];
-//    
-//    bool hasHappyHourVenueDescription = ![self.happyHour.venue.placeDescription isEqual: @""];
-//    
-//    UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dollarSign"]];
-//    dealIcon.centerX = self.view.width/2;
-//    dealIcon.y = 165;
-//    [self.mainScroll addSubview:dealIcon];
-//    
-//    UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 185, self.view.width, 30)];
-//    dealHeadingLabel.centerX = self.view.width/2;
-//    dealHeadingLabel.text = @"HAPPY HOUR DEAL";
-//    dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//    dealHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.mainScroll addSubview:dealHeadingLabel];
-//    
-//    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
-//    CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-//    CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
-//    
-//    UILabel *dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 210, self.view.width - 50, happyHourDescriptionHeight.size.height)];
-//    dealTextLabel.centerX = self.view.width/2;
-//    dealTextLabel.font = [ThemeManager lightFontOfSize:13];
-//    dealTextLabel.textAlignment = NSTextAlignmentCenter;
-//    dealTextLabel.numberOfLines = 0;
-//    
-//    [self.mainScroll addSubview:dealTextLabel];
-//    
-//    UIImageView *directionsIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"directionsIcon"]];
-//    directionsIcon.centerX = self.view.width/2;
-//    directionsIcon.y = 0;
-//    [self.mainScroll addSubview:directionsIcon];
-//    
-//    UILabel *directionHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 30)];
-//    directionHeadingLabel.y = 0;
-//    directionHeadingLabel.centerX = self.view.width/2;
-//    directionHeadingLabel.text = @"DIRECTIONS";
-//    directionHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//    directionHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.mainScroll addSubview:directionHeadingLabel];
-//    
-//    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:self.happyHour.venue.name];
-//    self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
-//    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-//    [self.venueImageView sd_setImageWithURL:self.happyHour.venue.imageURL];
-//    self.distanceLabel.text = [self stringForDistance:self.happyHour.venue.distance];
-//    self.dealTime.text = [self.happyHour.happyHourStartString uppercaseString];
-//    dealTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
-//    
-//    if (hasHappyHourVenueDescription) {
-//        UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"venueIcon"]];
-//        venueIcon.centerX = self.view.width/2;
-//        venueIcon.y = dealTextLabel.y + dealTextLabel.height + 5;
-//        [self.mainScroll addSubview:venueIcon];
-//        
-//        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + 20, self.view.width, 30)];
-//        venueHeadingLabel.centerX = self.view.width/2;
-//        venueHeadingLabel.text = @"THE VENUE";
-//        venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-//        venueHeadingLabel.textAlignment = NSTextAlignmentCenter;
-//        [self.mainScroll addSubview:venueHeadingLabel];
-//        
-//        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 20, self.view.width, 25)];
-//        [self.mainScroll addSubview:yelpContainer];
-//        if (![self.happyHour.venue.yelpRating isEmpty]) {
-//            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 83, 15)];
-//            yelpReview.centerX = self.view.width/2;
-//            [yelpReview sd_setImageWithURL:self.happyHour.venue.yelpRating];
-//            
-//            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
-//            poweredByYelp.y = 4;
-//            poweredByYelp.x = self.view.width - 48;
-//            [yelpContainer addSubview:poweredByYelp];
-//            
-//            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 5, 67, 15)];
-//            yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-//            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
-//            yelpReviewCount.textAlignment = NSTextAlignmentRight;
-//            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.happyHour.venue.yelpReviewCount];
-//            [yelpContainer addSubview:yelpReviewCount];
-//            
-//            [yelpContainer addSubview:yelpReview];
-//        } else {
-//            yelpContainer.height = 0;
-//        }
-//        
-//        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
-//        CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-//        CGRect happyHourVenueHeight = [self.happyHour.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
-//        
-//        self.venueTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, venueIcon.y + yelpContainer.height + 40, self.view.width - 50, happyHourVenueHeight.size.height)];
-//        self.venueTextLabel.centerX = self.view.width/2;
-//        self.venueTextLabel.font = [ThemeManager lightFontOfSize:13];
-//        self.venueTextLabel.centerX = self.view.width/2;
-//        self.venueTextLabel.numberOfLines = 0;
-//        self.venueTextLabel.textAlignment = NSTextAlignmentCenter;
-//        [self.mainScroll addSubview:self.venueTextLabel];
-//        
-//        self.venueTextLabel.text = self.happyHour.venue.placeDescription;
-//    }
-//    
-//    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-//    CLLocationCoordinate2D center = self.happyHour.venue.coordinate;
-//    options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
-//    center.latitude -= options.region.span.latitudeDelta * 0.12;
-//    options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
-//    options.scale = [UIScreen mainScreen].scale;
-//    options.size = CGSizeMake(self.view.width, 200);
-//    
-//    MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
-//    [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
-//        //mapSnapshotImage = mapSnap.image;
-//        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
-//        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 200)];
-//        [mapImageView setImage:mapSnap.image];
-//        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
-//        //CALayer *imageLayer = mapImageView.layer;
-//        //[imageLayer setCornerRadius:200/2];
-//        //[imageLayer setBorderWidth:3];
-//        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
-//        //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
-//        //[imageLayer setMasksToBounds:YES];
-//        
-//        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20 - 30, 40, 40)];
-//        UIImage *markerImage = [UIImage imageNamed:@"purplePin"];
-//        [markerImageView setImage:markerImage];
-//        [mapImageView addSubview:markerImageView];
-//        
-//        [mapImageView setUserInteractionEnabled:YES];
-//        UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
-//        [singleTap setNumberOfTapsRequired:1];
-//        [mapImageView addGestureRecognizer:singleTap];
-//        
-//        CGSize textSize = [self.happyHour.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
-//        
-//        int addressContainerWidth;
-//        if (textSize.width < (self.view.width - 10)) {
-//            addressContainerWidth = textSize.width + 100;
-//        } else {
-//            addressContainerWidth = self.view.width - 10;
-//        }
-//        
-//        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
-//        addressContainer.backgroundColor = [UIColor whiteColor];
-//        addressContainer.centerX = self.view.width/2;
-//        [mapImageView addSubview:addressContainer];
-//        
-//        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-//        address.text = [self.happyHour.venue.address uppercaseString];
-//        address.textAlignment = NSTextAlignmentCenter;
-//        address.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:address];
-//        
-//        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
-//        getDirections.text = @"GET DIRECTIONS";
-//        getDirections.textAlignment = NSTextAlignmentCenter;
-//        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
-//        getDirections.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:getDirections];
-//        
-//        if (hasHappyHourVenueDescription) {
-//            directionsIcon.y = self.venueTextLabel.y + self.venueTextLabel.height + 10;
-//        } else {
-//            directionsIcon.y = dealTextLabel.y + dealTextLabel.height + 10;
-//        }
-//        directionHeadingLabel.y = directionsIcon.y + directionsIcon.height;
-//        mapImageView.y = directionHeadingLabel.y + directionHeadingLabel.height;
-//        
-//        [self.mainScroll addSubview:mapImageView];
-//        
-//        self.mainScroll.contentSize = CGSizeMake(self.view.width, mapImageView.y + mapImageView.height + 50);
-//
-//    }];
-//    
-//    [self.view addSubview:self.mainScroll];
-//    
-//    //if (self.isPresent) {
-//        [self.getDealButton setTitle:@"CHECK IN" forState:UIControlStateNormal];
-//    //} else {
-//    //    [self.getDealButton setTitle:@"I'M GOING HERE" forState:UIControlStateNormal];
-//    //}
-//    
-//    self.dealPrompt.text = @"Tap below to share your activity";
-//    
-//    [self.getDealButtonContainer addSubview:self.getDealButton];
-//    [self.view addSubview:self.getDealButtonContainer];
-//    
-//    if (self.happyHour.isFollowed) {
-//        [self makeFollowButtonActive];
-//    } else {
-//        [self makeFollowButtonInactive];
-//    }
-//    
-//    [[APIClient sharedClient] trackView:self.happyHour.ID ofType:kHappyHourViewType success:nil failure:nil];
-//
-    
     [self.tableView reloadData];
     
     [[APIClient sharedClient] trackView:self.venue.venueID ofType:kDealPlaceViewType success:nil failure:nil];
@@ -738,36 +325,7 @@
                 [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             }];
         }
-//        } else {
-//            [[APIClient sharedClient] checkInForHappyHour:self.happyHour isPresent:self.isPresent isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                [loadingIndicator hide:YES];
-//                self.getDealButton.backgroundColor = [UIColor unnormalizedColorWithRed:162 green:60 blue:233 alpha:255];
-//                if (self.isPresent) {
-//                    [self.getDealButton setTitle:@"CHECKED IN" forState:UIControlStateNormal];
-//                } else {
-//                    [self.getDealButton setTitle:@"GOING" forState:UIControlStateNormal];
-//                }
-//    //            [[AnalyticsManager sharedManager] setDeal:self.happyHour.ID.stringValue withPlaceName:self.happyHour.venue.name numberOfInvites:0];
-//            } failure:^(NSError *error) {
-//                [loadingIndicator hide:YES];
-//                [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//            }];
-//        }
     }
-    
-    
-    
-//    [[AnalyticsManager sharedManager] invitedFriendsDeal:self.deal.dealID.stringValue withPlaceName:self.deal.venue.name];
-    
-//    SetDealViewController *dealViewController = [[SetDealViewController alloc] init];
-//    dealViewController.deal = self.deal;
-//    [self.navigationController pushViewController:dealViewController animated:YES];
-    
-//    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-//    findFriendsViewController.delegate = self;
-//    findFriendsViewController.deal = self.deal;
-//    findFriendsViewController.textMoreFriends = NO;
-//    [self.navigationController pushViewController:findFriendsViewController animated:YES];
 }
 
 - (void)followButtonTouched:(id)sender
@@ -838,15 +396,6 @@
     }
 }
 
-//-(NSInteger)getNumberOfRows
-//{
-//    [self updateVenueData];
-//
-//    NSInteger numberOfRows = 6;
-//    
-//    return numberOfRows;
-//}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -854,7 +403,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 7;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -864,6 +413,14 @@
         height = 201;
     } else if (indexPath.row == self.mapContainer) {
         height = 230;
+        
+    } else if (indexPath.row == self.happeningsContainer) {
+//        if (self.venue.events.count > 0) {
+//            height = 200;
+//            NSLog(@"EVENTS: %@", self.venue.events);
+//        } else {
+            height = 0;
+//        }
     } else if (indexPath.row == self.dealContainer || indexPath.row==self.tutorialContainer) {
         if (!self.deal) {
             height = 0;
@@ -872,7 +429,7 @@
                 NSString *dealTextLabel = [self getDealTextLabel];
                 NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
                 CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-                CGRect dealTextHeight = [dealTextLabel boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13.5]} context:context];
+                CGRect dealTextHeight = [dealTextLabel boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12.5]} context:context];
                 self.dealTextLabel.height = dealTextHeight.size.height + 5;
 //                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
                 height = dealTextHeight.size.height + 55;
@@ -886,11 +443,11 @@
         } else {
             NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
             CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-            CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
+            CGRect happyHourDescriptionHeight = [self.happyHour.happyHourDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
             
             self.happyHourTextLabel.height = happyHourDescriptionHeight.size.height + 5;
 //            self.happyHourTime.y = self.happyHourTextLabel.y + self.happyHourTextLabel.height + 3;
-            height = happyHourDescriptionHeight.size.height + 55;
+            height = happyHourDescriptionHeight.size.height + 50;
         }
     } else if (indexPath.row == self.venueContainer) {
         if (!self.hasVenueDescription) {
@@ -898,7 +455,7 @@
         } else {
             NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
             CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
-            CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]} context:context];
+            CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
             
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
             height = venueDescriptionHeight.size.height + 50;
@@ -1007,9 +564,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
-    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [cell.contentView addSubview:topBorder];
+    if (self.hasVenueDescription) {
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [cell.contentView addSubview:topBorder];
+    }
     
     UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHappyHourIcon"]];
     dealIcon.x = 22;

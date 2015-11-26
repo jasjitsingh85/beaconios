@@ -57,7 +57,8 @@
     [self.venueImageView addSubview:self.backgroundGradient];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
-    self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+    //self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
+    self.venueLabelLineOne.font = [ThemeManager lightFontOfSize:26];
     self.venueLabelLineOne.textColor = [UIColor whiteColor];
     //self.venueLabelLineOne.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
@@ -66,7 +67,8 @@
     [self.venuePreviewView addSubview:self.venueLabelLineOne];
     
     self.venueLabelLineTwo = [[UILabel alloc] init];
-    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    //self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
+    self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:26];
     self.venueLabelLineTwo.textColor = [UIColor whiteColor];
     //self.venueLabelLineTwo.adjustsFontSizeToFitWidth = YES;
     //[self.venueLabel setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
@@ -149,12 +151,13 @@
     self.venueImageView.width = self.width;
     
     self.venueLabelLineOne.width = self.width - 20;
-    self.venueLabelLineOne.x = 5;
+    self.venueLabelLineOne.x = 4;
     self.venueLabelLineOne.height = 30;
     
     self.venueLabelLineTwo.width = self.width - 20;
-    self.venueLabelLineTwo.x = 4;
+    self.venueLabelLineTwo.x = 5;
     self.venueLabelLineTwo.height = 46;
+    //self.venueLabelLineTwo.height = 30;
     
     self.dealTime.width = self.width;
     self.dealTime.height = 20;
@@ -178,7 +181,9 @@
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
     
-    CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
+//    CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:34]}];
+    
+    CGSize lineTwoTextSize = [self.venueLabelLineTwo.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:26]}];
     
     [self.venueImageView sd_setImageWithURL:self.venue.imageURL];
     
@@ -221,9 +226,12 @@
         
         self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
         
-        self.venueLabelLineOne.y = 35;
-        self.venueLabelLineTwo.y = 49;
-        self.placeType.y = 70;
+        //self.venueLabelLineOne.y = 35;
+        //self.venueLabelLineTwo.y = 49;
+        self.venueLabelLineOne.y = 38;
+        self.venueLabelLineTwo.y = 52;
+        
+        self.placeType.y = 70.5;
         self.dealTime.y = 117;
         
     } else {
@@ -231,9 +239,12 @@
         self.venueImageView.height = 96;
         self.backgroundGradient.height = 96;
         
-        self.venueLabelLineOne.y = 20;
-        self.venueLabelLineTwo.y = 34;
-        self.placeType.y = 55;
+//        self.venueLabelLineOne.y = 20;
+//        self.venueLabelLineTwo.y = 34;
+        self.venueLabelLineOne.y = 23;
+        self.venueLabelLineTwo.y = 37;
+        
+        self.placeType.y = 55.5;
         self.dealTime.y = 73;
         
         if (self.venue.neighborhood != (NSString *)[NSNull null]) {
@@ -246,14 +257,13 @@
          self.placeType.text = [venue.placeType uppercaseString];   
     }
     
-    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 6;
-    
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];
     } else {
         [self makeFollowButtonInactive];
     }
     
+    self.placeType.x = self.venueLabelLineTwo.x + lineTwoTextSize.width + 6;
 }
 
 - (NSString *)stringForDistance:(CLLocationDistance)distance

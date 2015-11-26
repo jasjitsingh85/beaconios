@@ -1129,11 +1129,12 @@ typedef enum dealTypeStates
             dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
+        dealCell.venue = venue;
+        
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
         [recognizer setNumberOfTapsRequired:1];
         [dealCell.contentView addGestureRecognizer:recognizer];
         
-        dealCell.venue = venue;
         return dealCell;
     }
 }
