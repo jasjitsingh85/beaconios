@@ -361,7 +361,8 @@
 
 - (void)redeemDeal
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+//    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowLoadingInRedemptionView" object:self userInfo:nil];
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         [self refreshBeaconDataInDeal];
@@ -369,8 +370,11 @@
         //NSLog(@"DealStatus: %@", dealStatus);
         self.dealStatus.dealStatus = dealStatus;
         [self updateRedeemButtonAppearance];
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-    } failure:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+//        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+    }];
 }
 
 - (void)updateRedeemButtonAppearance
