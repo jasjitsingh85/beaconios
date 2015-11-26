@@ -10,6 +10,7 @@
 #import "DealDetailViewController.h"
 #import "Deal.h"
 #import "Venue.h"
+#import "Event.h"
 #import "HappyHour.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MapKit/MapKit.h>
@@ -60,7 +61,6 @@
 @property (readonly) NSInteger venueContainer;
 @property (readonly) NSInteger eventsContainer;
 @property (readonly) NSInteger mapContainer;
-@property (readonly) NSInteger happeningsContainer;
 
 @property (strong, nonatomic) UILabel *dealTextLabel;
 @property (strong, nonatomic) UILabel *happyHourTextLabel;
@@ -130,7 +130,7 @@
     return 3;
 }
 
--(NSInteger) happeningsContainer {
+-(NSInteger) eventsContainer {
     return 4;
 }
 
@@ -414,13 +414,12 @@
     } else if (indexPath.row == self.mapContainer) {
         height = 230;
         
-    } else if (indexPath.row == self.happeningsContainer) {
-//        if (self.venue.events.count > 0) {
-//            height = 200;
-//            NSLog(@"EVENTS: %@", self.venue.events);
-//        } else {
+    } else if (indexPath.row == self.eventsContainer) {
+        if (self.venue.events.count > 0) {
+            height = 50 + (self.venue.events.count * 33);
+        } else {
             height = 0;
-//        }
+        }
     } else if (indexPath.row == self.dealContainer || indexPath.row==self.tutorialContainer) {
         if (!self.deal) {
             height = 0;
@@ -675,6 +674,52 @@
     return cell;
 }
 
+-(UITableViewCell *) getEventsCell
+{
+    static NSString *CellIdentifier = @"eventsCell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, cell.contentView.size.width - 50, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    [cell.contentView addSubview:topBorder];
+    
+    UIImageView *eventIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"happeningsIcon"]];
+    eventIcon.y = 15;
+    eventIcon.x = 22;
+    [cell.contentView addSubview:eventIcon];
+    
+    UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+    eventHeadingLabel.text = @"HAPPENINGS";
+    eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+    eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
+    [cell.contentView addSubview:eventHeadingLabel];
+    
+    for (int i = 0; i < [self.venue.events count]; i++)
+    {
+        Event *event = self.venue.events[i];
+        UILabel *eventTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 38 + (33 * i), self.view.width - 50, 20)];
+        eventTextLabel.font = [ThemeManager boldFontOfSize:12];
+        eventTextLabel.numberOfLines = 1;
+        eventTextLabel.textAlignment = NSTextAlignmentLeft;
+        eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
+        [cell.contentView addSubview:eventTextLabel];
+        
+        UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 52 + (33 * i), self.view.width - 50, 20)];
+        eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
+        eventTimeTextLabel.numberOfLines = 1;
+        eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
+        eventTimeTextLabel.text = event.getDateAsString;
+        [cell.contentView addSubview:eventTimeTextLabel];
+    }
+    
+    return cell;
+}
+
 -(UITableViewCell *) getTutorialCell
 {
     static NSString *CellIdentifier = @"tutorialCell";
@@ -832,6 +877,8 @@
         return [self getTutorialCell];
     } else if (indexPath.row == self.mapContainer) {
         return [self getMapCell];
+    } else if (indexPath.row == self.eventsContainer) {
+        return [self getEventsCell];
     }
     
     return cell;
