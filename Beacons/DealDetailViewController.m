@@ -431,7 +431,7 @@
     if (indexPath.row == self.imageContainer) {
         height = 201;
     } else if (indexPath.row == self.mapContainer) {
-        height = 230;
+        height = 250;
         
     } else if (indexPath.row == self.eventsContainer) {
         if (self.venue.events.count > 0) {
@@ -799,6 +799,7 @@
     options.size = CGSizeMake(self.view.width, 150);
     
     UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 150)];
+    mapImageView.backgroundColor = [UIColor grayColor];
 
     MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
     [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
@@ -849,6 +850,19 @@
 //        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
 //        getDirections.font = [ThemeManager lightFontOfSize:13];
 //        [addressContainer addSubview:getDirections];
+        
+        UIButton *getDirectionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        getDirectionsButton.frame = CGRectMake(25, 230, self.mapCell.contentView.width - 50, 20);
+        [getDirectionsButton setTitle:@"GET DIRECTIONS" forState:UIControlStateNormal];
+        getDirectionsButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+        getDirectionsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+        getDirectionsButton.layer.cornerRadius = 3;
+        getDirectionsButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+        getDirectionsButton.layer.borderWidth = 1.5;
+        [getDirectionsButton addTarget:self action:@selector(getDirectionsToBeacon:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mapCell.contentView addSubview:getDirectionsButton];
     }];
     
     NSString *locationString;
