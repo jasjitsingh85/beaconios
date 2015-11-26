@@ -815,7 +815,7 @@
         //[imageLayer setMasksToBounds:YES];
 
         UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20, 40, 40)];
-        UIImage *markerImage = [UIImage imageNamed:@"bluePin"];
+        UIImage *markerImage = [UIImage imageNamed:@"bigRedPin"];
         [markerImageView setImage:markerImage];
         [mapImageView addSubview:markerImageView];
 
