@@ -35,7 +35,16 @@
     if (!self) {
         return nil;
     }
+        
+    self.photoScroll = [[UIScrollView alloc] init];
+    [self.contentView addSubview:self.photoScroll];
+        
+    self.pageControl = [[UIPageControl alloc] init];
+    [self.contentView addSubview:self.pageControl];
     
+    self.imageSourceIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"instagramLogo"]];
+    [self.contentView addSubview:self.imageSourceIcon];
+        
     return self;
 }
 
@@ -43,48 +52,28 @@
 {
     _venue = venue;
     
-//    NSURL *photo_url = self.venue.photos[0];
-    
-    self.photoScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 200)];
+    self.photoScroll.frame = CGRectMake(0, 0, self.contentView.frame.size.width, 201);
     self.photoScroll.pagingEnabled = YES;
     self.photoScroll.showsHorizontalScrollIndicator = NO;
-    self.photoScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * venue.photos.count, self.contentView.frame.size.height);
-    self.photoScroll.backgroundColor = [UIColor blackColor];
+    self.photoScroll.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     self.photoScroll.delegate = self;
-    [self.contentView addSubview:self.photoScroll];
-    
     [self.photoScroll setUserInteractionEnabled:NO];
     [self.contentView addGestureRecognizer:self.photoScroll.panGestureRecognizer];
     
-    self.pageControl = [[UIPageControl alloc] init];
-    self.pageControl.hidesForSinglePage = NO;
+    self.pageControl.hidesForSinglePage = YES;
     self.pageControl.height = 25;
     self.pageControl.width = self.contentView.size.width;
     self.pageControl.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-    self.pageControl.numberOfPages = venue.photos.count;
     //self.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor blackColor] colorWithAlphaComponent:.2];
     self.pageControl.centerX = self.contentView.width/2;
-    self.pageControl.y = 175;
+    self.pageControl.y = 176;
     //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
     //[self.pageControl sizeToFit];
-    [self.contentView addSubview:self.pageControl];
     
-//    self.eventHeader = [[UILabel alloc] init];
-//    self.eventHeader.textColor = [UIColor whiteColor];
-//    self.eventHeader.font = [ThemeManager boldFontOfSize:13];
-////    self.eventHeader.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:204];
-//    self.eventHeader.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-//    self.eventHeader.textAlignment = NSTextAlignmentCenter;
-//    self.eventHeader.width = 140;
-//    self.eventHeader.height = 24;
-//    self.eventHeader.x = 0;
-//    self.eventHeader.y = 25;
-//    self.eventHeader.text = event.venue.name;
-//    [self.contentView addSubview:self.eventHeader];
-    
-//    [self updateDate];
+    self.photoScroll.contentSize = CGSizeMake(self.contentView.frame.size.width * venue.photos.count, self.contentView.frame.size.height);
+    self.pageControl.numberOfPages = venue.photos.count;
     
     for (int i = 0; i < venue.photos.count + 1; i++) {
         if (i == 0) {
@@ -92,7 +81,7 @@
             [self.photoScroll addSubview: firstPhoto];
         } else {
             NSURL *photo_url = venue.photos[i - 1];
-            UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 200)];
+            UIView *photoView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 201)];
             [self.photoScroll addSubview:photoView];
             
             UIImageView *photoImageView = [[UIImageView alloc] init];
@@ -106,22 +95,20 @@
         }
     }
     
-    self.imageSourceIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"instagramLogo"]];
     self.imageSourceIcon.x = self.contentView.size.width - 30;
-    self.imageSourceIcon.y = 170;
+    self.imageSourceIcon.y = 178.5;
     self.imageSourceIcon.alpha = 0;
-    [self.contentView addSubview:self.imageSourceIcon];
     
-    if (venue.photos.count == 0) {
-        self.pageControl.hidden = YES;
-    }
-    
+//    if (venue.photos.count == 0) {
+//        self.pageControl.hidden = YES;
+//    }
+//    
 }
 
 -(UIImageView *)getFirstImageView
 {
     UIImageView *venueImageView = [[UIImageView alloc] init];
-    venueImageView.height = 196;
+    venueImageView.height = 201;
     venueImageView.width = self.contentView.width;
     venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     venueImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -188,11 +175,11 @@
     self.pageControl.currentPage = page;
 }
 
-- (void)setView:(UIImageView *)view hidden:(BOOL)hidden {
-    [UIView transitionWithView:view duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
-        [view setHidden:hidden];
-    } completion:nil];
-}
+//- (void)setView:(UIImageView *)view hidden:(BOOL)hidden {
+//    [UIView transitionWithView:view duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^(void){
+//        [view setHidden:hidden];
+//    } completion:nil];
+//}
 
 - (void)fadeInImage
 {

@@ -87,7 +87,6 @@
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
     self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
@@ -222,7 +221,7 @@
 {
     _venue = venue;
     
-    self.hasVenueDescription = ![self.venue.placeDescription isEqual: @""];
+    self.hasVenueDescription = !isEmpty(self.venue.placeDescription);
     
     [self updateIsUserPresent];
     [self updateVenueData];
@@ -557,6 +556,7 @@
 {
     self.imageCell = [[DealDetailImageCell alloc] init];
     self.imageCell.venue = self.venue;
+    self.imageCell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 -(void) getHappyHourCell
@@ -622,7 +622,7 @@
         
         UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
         //    venueHeadingLabel.centerX = self.view.width/2;
-        venueHeadingLabel.text = @"THE VENUE";
+        venueHeadingLabel.text = [self.venue.name uppercaseString];
         venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
         [self.venueCell.contentView addSubview:venueHeadingLabel];
@@ -666,13 +666,16 @@
         //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
         //    [cell.contentView addSubview:topBorder];
         
+        CGSize textSize = [venueHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
+        
         if (self.venue.placeType) {
-            UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16, self.view.width - 50, 20)];
+            UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16.5, self.view.width - 50, 20)];
             venueType.font = [ThemeManager lightFontOfSize:9];
             venueType.textColor = [UIColor darkGrayColor];
             venueType.textAlignment = NSTextAlignmentLeft;
             venueType.numberOfLines = 1;
             venueType.text = [self.venue.placeType uppercaseString];
+            venueType.x = venueHeadingLabel.x + textSize.width + 4;
             [self.venueCell.contentView addSubview:venueType];
             [self.venueCell.contentView addSubview:self.venueTextLabel];
         }
@@ -852,9 +855,9 @@
 //        [addressContainer addSubview:getDirections];
         
         UIButton *getDirectionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        getDirectionsButton.frame = CGRectMake(25, 230, self.mapCell.contentView.width - 50, 20);
+        getDirectionsButton.frame = CGRectMake(25, 230, self.mapCell.contentView.width - 50, 25);
         [getDirectionsButton setTitle:@"GET DIRECTIONS" forState:UIControlStateNormal];
-        getDirectionsButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+        getDirectionsButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
         getDirectionsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
         [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
@@ -866,7 +869,7 @@
     }];
     
     NSString *locationString;
-    if (self.venue.neighborhood) {
+    if (!isEmpty(self.venue.neighborhood)) {
         locationString = [NSString stringWithFormat:@"%@ - %@ | %@", self.venue.address, self.venue.neighborhood, [self stringForDistance:self.venue.distance]];
     } else {
         locationString = [NSString stringWithFormat:@"%@ - %@", self.venue.address, [self stringForDistance:self.venue.distance]];
@@ -874,7 +877,8 @@
     
     UILabel *locationInfo = [[UILabel alloc] initWithFrame:CGRectMake(25, 38, self.mapCell.contentView.width - 50, 16)];
     locationInfo.font = [ThemeManager lightFontOfSize:12];
-    locationInfo.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+//    locationInfo.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+    locationInfo.textColor = [UIColor blackColor];
     locationInfo.text = locationString;
     [self.mapCell.contentView addSubview:locationInfo];
 
@@ -890,8 +894,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"ROW NUMBER: %ld", (long)indexPath.row);
     if (indexPath.row == self.imageContainer) {
         return self.imageCell;
     } else if (indexPath.row == self.dealContainer && self.deal) {

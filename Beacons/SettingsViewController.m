@@ -36,7 +36,7 @@
     buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
     secretButton.frame = buttonFrame;
     secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [secretButton setTitle:@"Made with \U0000E022 in Seattle" forState:UIControlStateNormal];
+    [secretButton setTitle:@"Made with \U0000E022 in Madison" forState:UIControlStateNormal];
     secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
     [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
