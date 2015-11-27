@@ -2123,7 +2123,7 @@
 			buildSettings = {
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hotspot Studios Inc. (E5Y3J9RGBG)";
 				CURRENT_PROJECT_VERSION = 65;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
