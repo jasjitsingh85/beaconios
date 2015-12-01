@@ -25,6 +25,7 @@
 //#import "DealView.h"
 //#import "HappyHourView.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "SocialNotificationPopupView.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -32,7 +33,7 @@
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UIImageView *venueImageView;
 @property (strong, nonatomic) UIImageView *backgroundGradient;
-@property (strong, nonatomic) UIImageView *getDealButtonContainer;
+@property (strong, nonatomic) UIView *getDealButtonContainer;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
 @property (strong, nonatomic) UILabel *venueLabelLineTwo;
 @property (strong, nonatomic) UILabel *distanceLabel;
@@ -73,6 +74,9 @@
 @property (strong, nonatomic) UITableViewCell *venueCell;
 @property (strong, nonatomic) UITableViewCell *eventsCell;
 
+@property (strong, nonatomic) UILabel *togglePrompt;
+@property (strong, nonatomic) UIButton *togglePromptHelpButton;
+
 @end
 
 @implementation DealDetailViewController
@@ -90,8 +94,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    self.isPublic = YES;
-    
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(60, 20);
     self.followButton.x = 0;
@@ -107,6 +109,75 @@
     self.followButton.layer.borderWidth = 1.0;
     [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
+    
+    self.getDealButtonContainer = [[UIView alloc] init];
+    self.getDealButtonContainer.backgroundColor = [UIColor whiteColor];
+    self.getDealButtonContainer.width = self.view.width;
+    self.getDealButtonContainer.height = 90;
+    self.getDealButtonContainer.y = self.view.height - 90;
+    self.getDealButtonContainer.userInteractionEnabled = YES;
+    [self.view addSubview:self.getDealButtonContainer];
+    
+    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.width - 70, 11, 100, 30)];
+    switchView.on = YES;
+    switchView.transform = CGAffineTransformMakeScale(0.75, .75);
+    switchView.onTintColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [switchView addTarget:self action:@selector(updateToggle:) forControlEvents:UIControlEventTouchUpInside];
+    [self.getDealButtonContainer addSubview:switchView];
+    
+    self.togglePrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 16, self.view.width, 20)];
+    self.togglePrompt.font = [ThemeManager lightFontOfSize:10];
+    self.togglePrompt.textAlignment = NSTextAlignmentLeft;
+//    self.togglePrompt.text = @"Friends - Your friends see where you're going";
+    [self.getDealButtonContainer addSubview:self.togglePrompt];
+    
+    self.togglePromptHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.togglePromptHelpButton.size = CGSizeMake(24, 24);
+    self.togglePromptHelpButton.y = 15.5;
+    [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"blackHelpButton"] forState:UIControlStateNormal];
+//    [self.mapListToggleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.mapListToggleButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.togglePromptHelpButton addTarget:self action:@selector(showHelpModal:) forControlEvents:UIControlEventTouchUpInside];
+    [self.getDealButtonContainer addSubview:self.togglePromptHelpButton];
+    
+    [self updateToggle:switchView];
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
+//    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    topBorder.backgroundColor = [UIColor blackColor];
+    [self.getDealButtonContainer addSubview:topBorder];
+    
+    //    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    self.publicToggleButton.size = CGSizeMake(65, 25);
+    //    self.publicToggleButton.x = self.view.width - 90;
+    //    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    //    self.publicToggleButton.y = 45;
+    //    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
+    //    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    //    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    //    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
+    //    self.publicToggleButton.backgroundColor = [UIColor clearColor];
+    //    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+    //    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.getDealButtonContainer addSubview:self.publicToggleButton];
+    //
+    //    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
+    //    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
+    //    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
+    
+    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.getDealButton.size = CGSizeMake(self.view.width - 50, 30);
+    self.getDealButton.centerX = self.view.width/2.0;
+    self.getDealButton.y = 50;
+    self.getDealButton.layer.cornerRadius = 4;
+    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    [self.getDealButtonContainer addSubview:self.getDealButton];
+    
+    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.venue.isFollowed) {
         [self makeFollowButtonActive];
@@ -234,53 +305,11 @@
     [self getEventsCell];
     [self getImageCell];
     
-    self.getDealButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
-    self.getDealButtonContainer.height = 120;
-    self.getDealButtonContainer.y = self.view.height - 120;
-    self.getDealButtonContainer.userInteractionEnabled = YES;
-    [self.view addSubview:self.getDealButtonContainer];
-    
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 40, self.view.width, 0.5)];
-    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
-    [self.getDealButtonContainer addSubview:topBorder];
-    
-    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.publicToggleButton.size = CGSizeMake(65, 25);
-    self.publicToggleButton.x = self.view.width - 90;
-    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    self.publicToggleButton.y = 45;
-    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
-    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
-    self.publicToggleButton.backgroundColor = [UIColor clearColor];
-    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.getDealButtonContainer addSubview:self.publicToggleButton];
-    
-    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
-    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
-    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
-    
-    self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
-    self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = 73;
-    self.getDealButton.layer.cornerRadius = 4;
-    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    
-    [self.getDealButtonContainer addSubview:self.getDealButton];
-    
-    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
-    [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
-    self.dealPrompt.font = [ThemeManager mediumFontOfSize:9];
-    self.dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
-    self.dealPrompt.text = @"Tap below to get voucher";
-    [self.getDealButtonContainer addSubview:self.dealPrompt];
+//    self.dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
+//    self.dealPrompt.font = [ThemeManager mediumFontOfSize:9];
+//    self.dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
+//    self.dealPrompt.text = @"Tap below to get voucher";
+//    [self.getDealButtonContainer addSubview:self.dealPrompt];
     
     if (!self.deal) {
         [self.getDealButtonContainer setHidden:YES];
@@ -297,22 +326,22 @@
     [[APIClient sharedClient] trackView:self.venue.venueID ofType:kDealPlaceViewType success:nil failure:nil];
 }
 
--(void) publicToggleButtonTouched:(id)sender
-{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select 'Friends' so your friends know where you’re going. Select 'Only Me' if you don’t want your friends to see your activity."];
-    [actionSheet bk_addButtonWithTitle:@"Friends" handler:^{
-        self.isPublic = YES;
-        [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
-        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"publicGlobe"]];
-    }];
-    [actionSheet bk_addButtonWithTitle:@"Only Me" handler:^{
-        self.isPublic = NO;
-        [self.publicToggleButton setTitle:@"Only Me" forState:UIControlStateNormal];
-        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"privateLock"]];
-    }];
-    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-    [actionSheet showInView:self.view];
-}
+//-(void) publicToggleButtonTouched:(id)sender
+//{
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select 'Friends' so your friends know where you’re going. Select 'Only Me' if you don’t want your friends to see your activity."];
+//    [actionSheet bk_addButtonWithTitle:@"Friends" handler:^{
+//        self.isPublic = YES;
+//        [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
+//        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"publicGlobe"]];
+//    }];
+//    [actionSheet bk_addButtonWithTitle:@"Only Me" handler:^{
+//        self.isPublic = NO;
+//        [self.publicToggleButton setTitle:@"Only Me" forState:UIControlStateNormal];
+//        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"privateLock"]];
+//    }];
+//    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+//    [actionSheet showInView:self.view];
+//}
 
 - (void) getDealButtonTouched:(id)sender
 {
@@ -473,9 +502,12 @@
             NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
             CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
             CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
-            
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
-            height = venueDescriptionHeight.size.height + 50;
+            if (![self.venue.yelpRating isEmpty]) {
+                height = venueDescriptionHeight.size.height + 70;
+            } else {
+                height = venueDescriptionHeight.size.height + 50;
+            }
         }
     }
     return height;
@@ -627,35 +659,35 @@
         venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
         [self.venueCell.contentView addSubview:venueHeadingLabel];
         
-        //    UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 25)];
-        //    [cell.contentView addSubview:yelpContainer];
-        //    if (![self.venue.yelpRating isEmpty]) {
-        //        UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
-        //        yelpReview.centerX = self.view.width/2;
-        //        [yelpReview sd_setImageWithURL:self.venue.yelpRating];
-        //
-        //        UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
-        //        poweredByYelp.y = 1.5;
-        //        poweredByYelp.x = self.view.width - 48;
-        //        [yelpContainer addSubview:poweredByYelp];
-        //
-        //        UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(203, 2.5, 67, 15)];
-        //        yelpReviewCount.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-        //        yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
-        //        yelpReviewCount.textAlignment = NSTextAlignmentRight;
-        //        yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
-        //        [yelpContainer addSubview:yelpReviewCount];
-        //
-        //        [yelpContainer addSubview:yelpReview];
-        //    } else {
-        //        yelpContainer.height = 0;
-        //    }
+        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
+        [self.venueCell.contentView addSubview:yelpContainer];
+        if (![self.venue.yelpRating isEmpty]) {
+            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
+            yelpReview.x = 25;
+            [yelpReview sd_setImageWithURL:self.venue.yelpRating];
+    
+            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
+            poweredByYelp.y = 1.5;
+            poweredByYelp.x = 181;
+            [yelpContainer addSubview:poweredByYelp];
+    
+            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(112, 2.5, 67, 15)];
+            yelpReviewCount.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
+            yelpReviewCount.textAlignment = NSTextAlignmentRight;
+            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
+            [yelpContainer addSubview:yelpReviewCount];
+    
+            [yelpContainer addSubview:yelpReview];
+        } else {
+            yelpContainer.height = 0;
+        }
         
         self.venueTextLabel = [[UILabel alloc] init];
         self.venueTextLabel.x = 25;
         self.venueTextLabel.width = self.view.width - 50;
-        //    self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 20;
-        self.venueTextLabel.y = venueHeadingLabel.y + 25;
+        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 20;
+//        self.venueTextLabel.y = venueHeadingLabel.y + 25;
         self.venueTextLabel.font = [ThemeManager lightFontOfSize:12];
         //    self.venueTextLabel.centerX = self.view.width/2;
         self.venueTextLabel.numberOfLines = 0;
@@ -719,7 +751,7 @@
             eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
             [self.eventsCell.contentView addSubview:eventTextLabel];
             
-            UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 52 + (33 * i), self.view.width - 50, 20)];
+            UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 53 + (33 * i), self.view.width - 50, 20)];
             eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
             eventTimeTextLabel.numberOfLines = 1;
             eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
@@ -914,6 +946,32 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
+}
+
+- (void)updateToggle:(UISwitch *)_switch{
+    if ([_switch isOn]) {
+        self.isPublic = YES;
+        self.togglePromptHelpButton.x = 220;
+        self.togglePrompt.text = @"Friends - Your friends see where you're going";
+        NSRange range = [self.togglePrompt.text rangeOfString:@"Friends"];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:10] range:range];
+        self.togglePrompt.attributedText = attributedText;
+    } else {
+        self.isPublic = NO;
+        self.togglePromptHelpButton.x = 229;
+        self.togglePrompt.text = @"Only Me - Friends don't see where you're going";
+        NSRange range = [self.togglePrompt.text rangeOfString:@"Only Me"];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:10] range:range];
+        self.togglePrompt.attributedText = attributedText;
+    }
+}
+
+- (void) showHelpModal:(id)sender
+{
+    SocialNotificationPopupView *modal = [[SocialNotificationPopupView alloc] init];
+    [modal show];
 }
 
 @end

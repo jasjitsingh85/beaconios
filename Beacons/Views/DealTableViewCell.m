@@ -191,6 +191,7 @@
     
     if (self.venue.deal) {
         self.venueImageView.height = 146;
+        self.backgroundGradient.height = 146;
         if (self.venue.neighborhood != (NSString *)[NSNull null]) {
             self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@ | %@", [self.venue.deal.dealStartString uppercaseString], emDash, [self.venue.neighborhood uppercaseString],[self stringForDistance:venue.distance]];
         } else {

@@ -104,7 +104,7 @@ DEPENDENCIES:
   - AFNetworking (~> 1.2)
   - AHAlertView
   - BlocksKit (~> 2.2.5)
-  - Braintree
+  - Braintree (~> 3.9)
   - BSKeyboardControls (~> 2.0)
   - CocoaLumberjack (~> 1.6.2)
   - CrittercismSDK
