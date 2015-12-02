@@ -45,21 +45,21 @@
     
     UILabel *headerTitle = [[UILabel alloc] init];
     headerTitle.height = 30;
-    headerTitle.x = 70;
+    headerTitle.x = 60;
     headerTitle.width = self.width - 150;
     headerTitle.textAlignment = NSTextAlignmentLeft;
     //self.headerTitle.centerX = self.tableView.width/2;
-    headerTitle.font = [ThemeManager boldFontOfSize:12];
-    headerTitle.y = 270;
-    headerTitle.text = @"HOTSPOT BAT SIGNAL";
+    headerTitle.font = [ThemeManager boldFontOfSize:11];
+    headerTitle.y = 265;
+    headerTitle.text = @"THE HOTSPOT BAT SIGNAL";
     [self.imageView addSubview:headerTitle];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 285, self.width - 110, 80)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 280, self.width - 120, 80)];
     textLabel.width = self.width - 140;
-    textLabel.font = [ThemeManager lightFontOfSize:12];
+    textLabel.font = [ThemeManager lightFontOfSize:11];
     textLabel.textAlignment = NSTextAlignmentLeft;
     textLabel.numberOfLines = 4;
-    textLabel.text = @"Invite friends to Hotspot, and you'll both receive a free drink (up to $5) when they register.";
+    textLabel.text = @"Select 'Friends' so friends can easily join you. Select 'Only Me' if you don't want your friends to see your activity.";
     [self.imageView addSubview:textLabel];
     
 //    UILabel *textLabelLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(0, 325, self.width - 110, 80)];
@@ -77,9 +77,9 @@
     
     UIButton *launchInviteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     launchInviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    launchInviteButton.size = CGSizeMake(220, 30);
+    launchInviteButton.size = CGSizeMake(200, 30);
     launchInviteButton.centerX = (self.width/2.0);
-    launchInviteButton.y = 366;
+    launchInviteButton.y = 360;
     launchInviteButton.layer.cornerRadius = 3;
     [launchInviteButton setTitle:@"GOT IT" forState:UIControlStateNormal];
     [launchInviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
