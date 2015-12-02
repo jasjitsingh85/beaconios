@@ -126,7 +126,7 @@
     [self.getDealButtonContainer addSubview:switchView];
     
     self.togglePrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 16, self.view.width, 20)];
-    self.togglePrompt.font = [ThemeManager lightFontOfSize:10];
+    self.togglePrompt.font = [ThemeManager lightFontOfSize:12];
     self.togglePrompt.textAlignment = NSTextAlignmentLeft;
 //    self.togglePrompt.text = @"Friends - Your friends see where you're going";
     [self.getDealButtonContainer addSubview:self.togglePrompt];
@@ -951,19 +951,19 @@
 - (void)updateToggle:(UISwitch *)_switch{
     if ([_switch isOn]) {
         self.isPublic = YES;
-        self.togglePromptHelpButton.x = 220;
-        self.togglePrompt.text = @"Friends - Your friends see where you're going";
+        self.togglePromptHelpButton.x = 223;
+        self.togglePrompt.text = @"Friends - I'm down with friends joining";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Friends"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
-        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:10] range:range];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
         self.togglePrompt.attributedText = attributedText;
     } else {
         self.isPublic = NO;
-        self.togglePromptHelpButton.x = 229;
-        self.togglePrompt.text = @"Only Me - Friends don't see where you're going";
+        self.togglePromptHelpButton.x = 213;
+        self.togglePrompt.text = @"Only Me - I want to keep this private";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Only Me"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
-        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:10] range:range];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
         self.togglePrompt.attributedText = attributedText;
     }
 }
