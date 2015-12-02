@@ -83,6 +83,7 @@
     launchInviteButton.layer.cornerRadius = 3;
     [launchInviteButton setTitle:@"GOT IT" forState:UIControlStateNormal];
     [launchInviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [launchInviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     launchInviteButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
     [launchInviteButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:launchInviteButton];

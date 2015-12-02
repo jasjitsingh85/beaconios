@@ -176,7 +176,7 @@
     
     [self.getDealButtonContainer addSubview:self.getDealButton];
     
-    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    self.getDealButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     [self.getDealButton addTarget:self action:@selector(getDealButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.venue.isFollowed) {
