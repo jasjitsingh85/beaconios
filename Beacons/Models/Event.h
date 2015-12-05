@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSURL *websiteURL;
+@property (strong, nonatomic) NSURL *deepLinkURL;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) Venue *venue;
 

@@ -30,9 +30,14 @@
         [self getImage];
     }
     
-    NSString *url = [NSString stringWithFormat:@"%@", dictionary[@"url"]];
-    if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
-        self.url = [NSURL URLWithString:url];
+    NSString *webURL = [NSString stringWithFormat:@"%@", dictionary[@"web_url"]];
+    if (webURL != (id)[NSNull null] || imageUrl.length != 0) {
+        self.url = [NSURL URLWithString:webURL];
+    }
+    
+    NSString *deepLinkURL = [NSString stringWithFormat:@"%@", dictionary[@"deep_link_url"]];
+    if (deepLinkURL != (id)[NSNull null] || imageUrl.length != 0) {
+        self.deepLinkURL = [NSURL URLWithString:deepLinkURL];
     }
     
     self.name = dictionary[@"name"];

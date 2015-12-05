@@ -26,6 +26,7 @@
 //#import "HappyHourView.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "SocialNotificationPopupView.h"
+#import "WebViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -77,6 +78,9 @@
 @property (strong, nonatomic) UILabel *togglePrompt;
 @property (strong, nonatomic) UIButton *togglePromptHelpButton;
 
+@property (strong, nonatomic) UIButton *openYelpButton;
+@property (strong, nonatomic) WebViewController *webView;
+
 @end
 
 @implementation DealDetailViewController
@@ -93,6 +97,8 @@
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+    
+    self.webView = [[WebViewController alloc] init];
     
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(60, 20);
@@ -503,10 +509,15 @@
             CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
             CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
+            self.openYelpButton.y = self.venueTextLabel.y + self.venueTextLabel.height + 10;
             if (![self.venue.yelpRating isEmpty]) {
                 height = venueDescriptionHeight.size.height + 70;
             } else {
                 height = venueDescriptionHeight.size.height + 50;
+            }
+            
+            if (!isEmpty(self.venue.yelpID)) {
+                height = height + 38;
             }
         }
     }
@@ -659,7 +670,7 @@
         venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
         [self.venueCell.contentView addSubview:venueHeadingLabel];
         
-        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 25, self.view.width, 25)];
+        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 26.5, self.view.width, 25)];
         [self.venueCell.contentView addSubview:yelpContainer];
         if (![self.venue.yelpRating isEmpty]) {
             UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
@@ -686,7 +697,7 @@
         self.venueTextLabel = [[UILabel alloc] init];
         self.venueTextLabel.x = 25;
         self.venueTextLabel.width = self.view.width - 50;
-        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 20;
+        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 23;
 //        self.venueTextLabel.y = venueHeadingLabel.y + 25;
         self.venueTextLabel.font = [ThemeManager lightFontOfSize:12];
         //    self.venueTextLabel.centerX = self.view.width/2;
@@ -711,6 +722,21 @@
             [self.venueCell.contentView addSubview:venueType];
             [self.venueCell.contentView addSubview:self.venueTextLabel];
         }
+    }
+    
+    if (!isEmpty(self.venue.yelpID)) {
+        self.openYelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.openYelpButton.frame = CGRectMake(25, 0, self.venueCell.contentView.width - 50, 25);
+        [self.openYelpButton setTitle:@"SEE IN YELP" forState:UIControlStateNormal];
+        self.openYelpButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        self.openYelpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+        self.openYelpButton.layer.cornerRadius = 3;
+        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+        self.openYelpButton.layer.borderWidth = 1.5;
+        [self.openYelpButton addTarget:self action:@selector(openYelpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.venueCell.contentView addSubview:self.openYelpButton];
     }
 }
 
@@ -972,6 +998,23 @@
 {
     SocialNotificationPopupView *modal = [[SocialNotificationPopupView alloc] init];
     [modal show];
+}
+
+- (void) openYelpButtonTouched:(id)sender
+{
+    if ([self isYelpInstalled]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"yelp:///biz/%@", self.venue.yelpID]]];
+    } else {
+        self.webView.websiteUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://yelp.com/biz/%@", self.venue.yelpID]];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+- (BOOL)isYelpInstalled {
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"yelp://"]];
 }
 
 @end

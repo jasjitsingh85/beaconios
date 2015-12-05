@@ -22,9 +22,14 @@
     self.title = dictionary[@"title"];
     //self.websiteURL = dictionary[@"website"];
     
-    NSString *websiteURLString = dictionary[@"website"];
+    NSString *websiteURLString = dictionary[@"web_url"];
     if (![websiteURLString isEqual:[NSNull null]]){
         self.websiteURL = [NSURL URLWithString:websiteURLString];
+    }
+    
+    NSString *deepLinkURLString = dictionary[@"deep_link_url"];
+    if (![deepLinkURLString isEqual:[NSNull null]]){
+        self.deepLinkURL = [NSURL URLWithString:deepLinkURLString];
     }
     
     NSNumber *startTimestamp = dictionary[@"start_time"];

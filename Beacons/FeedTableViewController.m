@@ -532,21 +532,31 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath: (NSIndexPath *)indexPath {
+    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
     if (indexPath.row == 0) {
         Event *event = self.events[self.eventCell.pageControl.currentPage];
-        self.webView.websiteUrl = event.websiteURL;
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
-        [self presentViewController:navigationController
-                               animated:YES
-                             completion:nil];
-    } else {
-        FeedItem *feedItem = self.feed[indexPath.row - 1];
-        if (![feedItem.source isEqualToString:@"hotspot"]) {
-            self.webView.websiteUrl = feedItem.url;
+        if (isInstalled) {;
+            [[UIApplication sharedApplication] openURL:event.deepLinkURL];
+        } else {
+            self.webView.websiteUrl = event.websiteURL;
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
             [self presentViewController:navigationController
-                               animated:YES
-                             completion:nil];
+                                   animated:YES
+                                 completion:nil];
+        }
+    } else {
+        FeedItem *feedItem = self.feed[indexPath.row - 1];
+            if (![feedItem.source isEqualToString:@"hotspot"]) {
+//                if (isInstalled) {
+//                    NSLog(@"%@", feedItem.deepLinkURL);
+//                    [[UIApplication sharedApplication] openURL:feedItem.deepLinkURL];
+//                } else {
+                    self.webView.websiteUrl = feedItem.url;
+                    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+                    [self presentViewController:navigationController
+                                       animated:YES
+                                     completion:nil];
+            //}
         }
     }
 }
