@@ -447,17 +447,26 @@
     self.smsButton.size = CGSizeMake(self.view.width - 50, 35);
     self.smsButton.centerX = self.view.width/2;
     [self.smsButton setTitle:@"TEXT INVITE" forState:UIControlStateNormal];
-    self.smsButton.y = 465;
+    self.smsButton.y = 460;
     self.smsButton.layer.cornerRadius = 3;
     self.smsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.smsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     [self.smsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.smsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
-    self.smsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
-    [self.smsButton addTarget:self action:@selector(smsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareButton.size = CGSizeMake(self.view.width - 50, 35);
+    shareButton.centerX = self.view.width/2;
+    [shareButton setTitle:@"Share on social media" forState:UIControlStateNormal];
+    shareButton.y = 493;
+    [shareButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+    [shareButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    shareButton.titleLabel.font = [ThemeManager lightFontOfSize:12];
+    [shareButton addTarget:self action:@selector(shareButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.emailButton];
     [self.view addSubview:self.smsButton];
+    [self.view addSubview:shareButton];
     
     [[APIClient sharedClient] getPromo:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *promoCode = responseObject[@"promo_code"];
@@ -1489,6 +1498,27 @@
 {
     [self presentViewController:self.emailModal animated:YES completion:NULL];
     
+}
+
+-(void)shareButtonTouched:(id)sender
+{
+    NSArray *objectsToShare = @[self.smsMessage];
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    
+    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
+                                   UIActivityTypePrint,
+                                   UIActivityTypeAssignToContact,
+                                   UIActivityTypeSaveToCameraRoll,
+                                   UIActivityTypeAddToReadingList,
+                                   UIActivityTypePostToFlickr,
+                                   UIActivityTypePostToVimeo,
+                                   UIActivityTypeMessage,
+                                   UIActivityTypeMail];
+    
+    activityVC.excludedActivityTypes = excludeActivities;
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 @end
