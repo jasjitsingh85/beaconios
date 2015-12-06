@@ -392,14 +392,14 @@
     
     [self.view addSubview:promptHeading];
     
-    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 50, 60)];
+    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 40, 60)];
     self.prompt.centerX = self.view.width/2;
     self.prompt.y = 265;
     self.prompt.font = [ThemeManager lightFontOfSize:14];
     self.prompt.textColor = [UIColor blackColor];
     self.prompt.numberOfLines = 1;
     self.prompt.textAlignment = NSTextAlignmentCenter;
-    self.prompt.text = [NSString stringWithFormat:@"Send friends a drink and you’ll get one too."];
+    self.prompt.text = [NSString stringWithFormat:@"Send friends a drink and you’ll get one too"];
     
 //    UILabel *promoCodePrompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
 //    promoCodePrompt.centerX = self.view.width/2;
@@ -422,6 +422,7 @@
     self.promoCode.textAlignment = NSTextAlignmentCenter;
     self.promoCode.y = 375;
     self.promoCode.textColor = [[ThemeManager sharedTheme] redColor];
+//    self.promoCode.textColor = [UIColor blackColor];
     self.promoCode.font = [ThemeManager boldFontOfSize:20];
     [self.view addSubview:self.promoCode];
     
@@ -451,6 +452,7 @@
     self.smsButton.layer.cornerRadius = 3;
     self.smsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     self.smsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
+    [self.smsButton addTarget:self action:@selector(smsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.smsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.smsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
