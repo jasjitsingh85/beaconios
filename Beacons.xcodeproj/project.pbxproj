@@ -185,6 +185,7 @@
 		41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */; };
 		41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */; };
 		41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */; };
+		41FFB0131C14934100947EEC /* drinkImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0121C14934100947EEC /* drinkImage@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -569,6 +570,7 @@
 		41FD06401B3A278400F7DD08 /* redoSearchContainer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redoSearchContainer@2x.png"; sourceTree = "<group>"; };
 		41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeDrinks@2x.png"; sourceTree = "<group>"; };
 		41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "largeGoldCoin@2x.png"; sourceTree = "<group>"; };
+		41FFB0121C14934100947EEC /* drinkImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinkImage@2x.png"; sourceTree = "<group>"; };
 		66C23B352142BA151A81D35D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
@@ -1361,6 +1363,7 @@
 				41C4B8371BF073B200D471D6 /* updatedBackgroundGradient@2x.png */,
 				41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */,
 				41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */,
+				41FFB0121C14934100947EEC /* drinkImage@2x.png */,
 				41F144051B10E9C10010BCF1 /* navBarUpdated@2x.png */,
 				415929701AFD8E37002BBCD0 /* mapMarker@2x.png */,
 				4105DA9A1B7D7DF10006B888 /* facebookIcon@2x.png */,
@@ -1654,6 +1657,7 @@
 				41ED34CA1AC8D68400A77A92 /* topPictureGradient@2x.png in Resources */,
 				41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */,
 				41F97BBC1BBC75FF003D1D86 /* paymentPermissions@2x.png in Resources */,
+				41FFB0131C14934100947EEC /* drinkImage@2x.png in Resources */,
 				41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */,
 				410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,

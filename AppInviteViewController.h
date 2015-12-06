@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AddressBook/AddressBook.h>
+//#import <AddressBook/AddressBook.h>
 
 @class AppInviteViewController, Deal;
 //@protocol AppInviteViewControllerDelegate <NSObject>
@@ -16,14 +16,14 @@
 //
 //@end
 
-@interface AppInviteViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface AppInviteViewController : UIViewController
 
 //@property (weak, nonatomic) id<FindFriendsViewControllerDelegate>delegate;
-@property (strong, nonatomic) UITableView *tableView;
-@property (assign, nonatomic) BOOL autoCheckSuggested;
-@property (strong, nonatomic) NSArray *selectedContacts;
-@property (strong, nonatomic) NSArray *inactiveContacts;
-@property (strong, nonatomic) Deal *deal;
-@property (assign, nonatomic) BOOL textMoreFriends;
+//@property (strong, nonatomic) UITableView *tableView;
+//@property (assign, nonatomic) BOOL autoCheckSuggested;
+//@property (strong, nonatomic) NSArray *selectedContacts;
+//@property (strong, nonatomic) NSArray *inactiveContacts;
+//@property (strong, nonatomic) Deal *deal;
+//@property (assign, nonatomic) BOOL textMoreFriends;
 
 @end

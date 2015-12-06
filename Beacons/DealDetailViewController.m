@@ -51,6 +51,7 @@
 @property (assign, nonatomic) BOOL isPresent;
 @property (assign, nonatomic) BOOL isPublic;
 @property (assign, nonatomic) BOOL hasVenueDescription;
+@property (assign, nonatomic) BOOL isDealActive;
 
 @property (strong, nonatomic) Deal *deal;
 @property (strong, nonatomic) HappyHour *happyHour;
@@ -147,6 +148,8 @@
     [self.getDealButtonContainer addSubview:self.togglePromptHelpButton];
     
     [self updateToggle:switchView];
+    
+    self.isDealActive = YES;
     
     UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
 //    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
@@ -330,6 +333,11 @@
     [self.tableView reloadData];
     
     [[APIClient sharedClient] trackView:self.venue.venueID ofType:kDealPlaceViewType success:nil failure:nil];
+    
+    [[APIClient sharedClient] getIsDealActive:self.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.isDealActive = [responseObject[@"active"] boolValue];
+    } failure:nil];
+
 }
 
 //-(void) publicToggleButtonTouched:(id)sender
@@ -364,19 +372,23 @@
         //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
         //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        UIView *view = appDelegate.window.rootViewController.view;
-        MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-        if (self.venue.deal != nil){
-           [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
-                [loadingIndicator hide:YES];
-                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-                [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
-            } failure:^(NSError *error) {
-                [loadingIndicator hide:YES];
-                [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            }];
+        if (self.isDealActive) {
+            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+            UIView *view = appDelegate.window.rootViewController.view;
+            MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+            if (self.venue.deal != nil){
+                [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+                    [loadingIndicator hide:YES];
+                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                    [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+                    [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
+                } failure:^(NSError *error) {
+                    [loadingIndicator hide:YES];
+                    [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                }];
+            }
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Limit Reached" message:@"You already used Hotspot here today. You can only redeem one Hotspot drink special per venue per day." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
     }
 }

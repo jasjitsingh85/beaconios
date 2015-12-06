@@ -506,4 +506,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [self getPath:@"places/" parameters:parameters success:success failure:failure];
 }
 
+- (void)getIsDealActive:(NSNumber *)venueID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"venue_id" : venueID};
+    [[APIClient sharedClient] getPath:@"check-in/" parameters:parameters success:success failure:failure];
+}
+
 @end
