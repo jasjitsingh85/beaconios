@@ -186,6 +186,8 @@
 		41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */; };
 		41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */; };
 		41FFB0131C14934100947EEC /* drinkImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0121C14934100947EEC /* drinkImage@2x.png */; };
+		41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0141C15248C00947EEC /* unfollowButton@2x.png */; };
+		41FFB0171C1538CA00947EEC /* setupNewsfeedWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -571,6 +573,8 @@
 		41FD06421B3A316A00F7DD08 /* freeDrinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "freeDrinks@2x.png"; sourceTree = "<group>"; };
 		41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "largeGoldCoin@2x.png"; sourceTree = "<group>"; };
 		41FFB0121C14934100947EEC /* drinkImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinkImage@2x.png"; sourceTree = "<group>"; };
+		41FFB0141C15248C00947EEC /* unfollowButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unfollowButton@2x.png"; sourceTree = "<group>"; };
+		41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setupNewsfeedWhite@2x.png"; sourceTree = "<group>"; };
 		66C23B352142BA151A81D35D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
@@ -1317,6 +1321,7 @@
 			children = (
 				41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */,
 				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
+				41FFB0141C15248C00947EEC /* unfollowButton@2x.png */,
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
 				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
 				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
@@ -1333,6 +1338,7 @@
 				41CBB0EA1C077A2600B7C4AA /* bigRedPin@2x.png */,
 				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
 				41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */,
+				41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */,
 				41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */,
 				4109B9C01B9B706100C3270E /* publicGlobe@2x.png */,
 				4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */,
@@ -1593,6 +1599,7 @@
 			files = (
 				964263B4181CEDF80015375C /* SugarPie.ttf in Resources */,
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
+				41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */,
 				41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
 				41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */,
@@ -1621,6 +1628,7 @@
 				41030F6B1B52EB7B00252158 /* helpSign@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */,
+				41FFB0171C1538CA00947EEC /* setupNewsfeedWhite@2x.png in Resources */,
 				41148CB51B79BE9C00F4CA17 /* greyHamburger@2x.png in Resources */,
 				96CBCCFD1805107500D62462 /* chatBubblePinkLeft@2x.png in Resources */,
 				41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */,

@@ -28,7 +28,7 @@
 @property (assign, nonatomic) BOOL isViewShowing;
 @property (strong, nonatomic) UIView *emptyFeedView;
 @property (assign, nonatomic) BOOL pullToRefresh;
-@property (strong, nonatomic) UIImageView *syncContactsButtonContainer;
+@property (strong, nonatomic) UIView *syncContactsButtonContainer;
 @property (strong, nonatomic) UIButton *syncContactsButton;
 
 @property (strong, nonatomic) UIImageView *firstRecPicture;
@@ -61,7 +61,7 @@
     self = [super init];
     
     self.tableView = [[UITableView alloc] init];
-    self.tableView.backgroundColor = [UIColor unnormalizedColorWithRed:230 green:230 blue:230 alpha:255];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
@@ -366,23 +366,29 @@
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Newsfeed"];
     
-    self.syncContactsButtonContainer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"buttonBackground"]];
-    self.syncContactsButtonContainer.height = 120;
-    self.syncContactsButtonContainer.y = self.view.height - 120;
+    self.syncContactsButtonContainer = [[UIView alloc] init];
+    self.syncContactsButtonContainer.backgroundColor = [UIColor whiteColor];
+    self.syncContactsButtonContainer.width = self.view.width;
+    self.syncContactsButtonContainer.height = 50;
+    self.syncContactsButtonContainer.y = self.view.height - 50;
     self.syncContactsButtonContainer.userInteractionEnabled = YES;
     
     self.syncContactsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.syncContactsButton.size = CGSizeMake(self.view.width - 50, 35);
+    self.syncContactsButton.size = CGSizeMake(self.view.width - 50, 30);
     self.syncContactsButton.centerX = self.view.width/2.0;
-    self.syncContactsButton.y = 73;
-    self.syncContactsButton.layer.cornerRadius = 4;
+    self.syncContactsButton.y = 10;
+    self.syncContactsButton.layer.cornerRadius = 3;
     self.syncContactsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.syncContactsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.syncContactsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
-    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
+    topBorder.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
+    [self.syncContactsButtonContainer addSubview:topBorder];
+    [self.syncContactsButton setImage:[UIImage imageNamed:@"setupNewsfeedWhite"] forState:UIControlStateNormal];
+    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
     [self.syncContactsButton addTarget:self action:@selector(showSetupModal) forControlEvents:UIControlEventTouchUpInside];
-    [self.syncContactsButton setTitle:@"SETUP NEWSFEED" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"  SETUP NEWSFEED" forState:UIControlStateNormal];
 
     [self.syncContactsButtonContainer addSubview:self.syncContactsButton];
     
@@ -619,21 +625,21 @@
                                                              attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
                                                                 context:nil];
         
-        CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(220, 0)
+        CGRect messageBodyRect = [feedItem.message boundingRectWithSize:CGSizeMake(200, 0)
                                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                                   attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:11]}
                                                                      context:nil];
         
         if (feedItem.image) {
-            imageHeight = feedItem.image.size.height;
+            imageHeight = feedItem.image.size.height + 30;
 
         } else {
             imageHeight = 0;
         }
         if ([feedItem.source isEqualToString:@"hotspot"]) {
-            cellHeight = messageRect.size.height + imageHeight + 70;
+            cellHeight = messageRect.size.height + imageHeight + 40;
         } else {
-            cellHeight = messageBodyRect.size.height + imageHeight + 80;
+            cellHeight = messageBodyRect.size.height + imageHeight + 40;
         }
     }
     return cellHeight;

@@ -30,7 +30,7 @@
         [self getImage];
     }
     
-    NSString *webURL = [NSString stringWithFormat:@"%@", dictionary[@"web_url"]];
+    NSString *webURL = [NSString stringWithFormat:@"%@", dictionary[@"url"]];
     if (webURL != (id)[NSNull null] || imageUrl.length != 0) {
         self.url = [NSURL URLWithString:webURL];
     }
@@ -98,7 +98,7 @@
 {
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager downloadImageWithURL:self.imageURL options:(0) progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-        self.image = [self scaleImage:image scaledToMaxWidth:280 maxHeight:280];
+        self.image = [self scaleImage:image scaledToMaxWidth:210 maxHeight:210];
         self.isImageDownloaded = YES;
     }];
 }

@@ -61,7 +61,7 @@
     UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"setupNewsfeed"]];
     drinkIcon.size = CGSizeMake(30, 30);
     drinkIcon.centerX = self.width/2;
-    drinkIcon.y = 125;
+    drinkIcon.y = 130;
     [self.imageView addSubview:drinkIcon];
     
     UILabel *headerTitle = [[UILabel alloc] init];
@@ -90,7 +90,7 @@
     self.doneButton.backgroundColor = [UIColor whiteColor];
     self.doneButton.size = CGSizeMake(230, 25);
     self.doneButton.centerX = self.width/2.0;
-    self.doneButton.y = 390;
+    self.doneButton.y = 385;
     [self.doneButton setTitle:@"I'll do this later" forState:UIControlStateNormal];
     [self.doneButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.doneButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
@@ -100,39 +100,39 @@
     self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.linkFacebookButton.size = CGSizeMake(self.width - 50, 35);
     self.linkFacebookButton.y = 255;
-    self.linkFacebookButton.width = 170;
-    self.linkFacebookButton.height = 30;
+    self.linkFacebookButton.width = 180;
+    self.linkFacebookButton.height = 25;
     self.linkFacebookButton.centerX = self.imageView.width/2.0;
-    self.linkFacebookButton.layer.cornerRadius = 4;
+    self.linkFacebookButton.layer.cornerRadius = 3;
     self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
     self.linkFacebookButton.layer.borderWidth = 1;
     self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    self.linkFacebookButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
+    self.linkFacebookButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
     
     self.enablePushButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.enablePushButton.size = CGSizeMake(self.width - 50, 35);
     self.enablePushButton.y = 300;
-    self.enablePushButton.width = 170;
-    self.enablePushButton.height = 30;
+    self.enablePushButton.width = 180;
+    self.enablePushButton.height = 25;
     self.enablePushButton.centerX = self.imageView.width/2.0;
-    self.enablePushButton.layer.cornerRadius = 4;
+    self.enablePushButton.layer.cornerRadius = 3;
     self.enablePushButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
     self.enablePushButton.layer.borderWidth = 1;
     self.enablePushButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.enablePushButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    self.enablePushButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
+    self.enablePushButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
     
     self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
     self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
-    self.syncContactsButton.layer.cornerRadius = 4;
+    self.syncContactsButton.layer.cornerRadius = 3;
     self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
     self.syncContactsButton.layer.borderWidth = 1;
     [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
-    self.syncContactsButton.frame=CGRectMake(0,345,170,30);
-    self.syncContactsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
+    self.syncContactsButton.frame=CGRectMake(0,345,180,25);
+    self.syncContactsButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
     self.syncContactsButton.centerX = self.imageView.width/2;
     
     [self.linkFacebookButton
@@ -156,7 +156,7 @@
 
 -(void) changeFacebookButtonToCompletedState
 {
-    [self.linkFacebookButton setTitle: @"  Facebook Linked" forState: UIControlStateNormal];
+    [self.linkFacebookButton setTitle: @"  FACEBOOK LINKED" forState: UIControlStateNormal];
     [self.linkFacebookButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
     self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -164,7 +164,7 @@
 
 -(void) changeFacebookButtonToIncompletedState
 {
-    [self.linkFacebookButton setTitle: @"Link Facebook" forState: UIControlStateNormal];
+    [self.linkFacebookButton setTitle: @"LINK FACEBOOK" forState: UIControlStateNormal];
     [self.linkFacebookButton setImage:nil forState:UIControlStateNormal];
     self.linkFacebookButton.backgroundColor = [UIColor clearColor];
     [self.linkFacebookButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
@@ -172,7 +172,7 @@
 
 -(void) changeContactButtonToActiveState
 {
-    [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"SYNC CONTACTS" forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [UIColor clearColor];
     [self.syncContactsButton setImage:nil forState:UIControlStateNormal];
     [self.syncContactsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
@@ -181,7 +181,7 @@
 
 -(void) changeContactButtonToSelectedState
 {
-    [self.syncContactsButton setTitle:@"  Contacts Synced" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"  CONTACTS SYNCED" forState:UIControlStateNormal];
     [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.syncContactsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -189,7 +189,7 @@
 
 -(void) changeContactButtonToInactiveState
 {
-    [self.syncContactsButton setTitle:@"Sync Contacts" forState:UIControlStateNormal];
+    [self.syncContactsButton setTitle:@"SYNC CONTACTS" forState:UIControlStateNormal];
     [self.syncContactsButton setImage:nil forState:UIControlStateNormal];
     self.syncContactsButton.backgroundColor = [UIColor grayColor];
     self.syncContactsButton.layer.borderColor = [UIColor grayColor].CGColor;
@@ -197,7 +197,7 @@
 
 -(void) changePushButtonToActiveState
 {
-    [self.enablePushButton setTitle:@"Enable Push" forState:UIControlStateNormal];
+    [self.enablePushButton setTitle:@"ENABLE PUSH" forState:UIControlStateNormal];
     self.enablePushButton.backgroundColor = [UIColor clearColor];
     [self.enablePushButton setImage:nil forState:UIControlStateNormal];
     [self.enablePushButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
@@ -206,7 +206,7 @@
 
 -(void) changePushButtonToSelectedState
 {
-    [self.enablePushButton setTitle:@"  Push Enabled" forState:UIControlStateNormal];
+    [self.enablePushButton setTitle:@"  PUSH ENABLED" forState:UIControlStateNormal];
     [self.enablePushButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
     self.enablePushButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     [self.enablePushButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
