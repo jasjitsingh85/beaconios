@@ -73,10 +73,10 @@ typedef enum dealTypeStates
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, strong) UIView *redoSearchContainer;
 @property (nonatomic, strong) UIButton *redoSearchButton;
-@property (strong, nonatomic) UIView *selectedDealInMap;
+@property (strong, nonatomic) UIImageView *selectedDealInMap;
 @property (nonatomic, assign) int selectedDealIndex;
 
-@property (nonatomic, strong) UIImageView *venueImageView;
+//@property (nonatomic, strong) UIImageView *venueImageView;
 @property (nonatomic, strong) UIImageView *backgroundGradient;
 @property (nonatomic, strong) UIView *venueView;
 @property (strong, nonatomic) UILabel *venueLabelLineOne;
@@ -207,8 +207,8 @@ typedef enum dealTypeStates
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
-    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height, self.view.width, 146)];
-    self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
+    self.selectedDealInMap = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mapVenueBackground"]];
+//    self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
     UITapGestureRecognizer *selectedDealTapped = [[UITapGestureRecognizer alloc]
                       initWithTarget:self action:@selector(tappedOnSelectedDealInMap:)];
     selectedDealTapped.numberOfTapsRequired = 1;
@@ -240,28 +240,28 @@ typedef enum dealTypeStates
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
     
-    self.venueImageView = [[UIImageView alloc] init];
-    self.venueImageView.height = 146;
-    self.venueImageView.width = self.view.width;
-    self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.venueImageView.clipsToBounds = YES;
-    [self.selectedDealInMap addSubview:self.venueImageView];
+//    self.venueImageView = [[UIImageView alloc] init];
+//    self.venueImageView.height = 146;
+//    self.venueImageView.width = self.view.width;
+//    self.venueImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    self.venueImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.venueImageView.clipsToBounds = YES;
+//    [self.selectedDealInMap addSubview:self.venueImageView];
     
-    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
-    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
-    [self.backgroundGradient setImage:gradientImage];
-    [self.venueImageView addSubview:self.backgroundGradient];
+//    self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 87, self.venueImageView.size.width, 60)];
+//    UIImage *gradientImage = [UIImage imageNamed:@"backgroundGradient@2x.png"];
+//    [self.backgroundGradient setImage:gradientImage];
+//    [self.venueImageView addSubview:self.backgroundGradient];
     
     self.venueView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.selectedDealInMap.frame.size.width, 146)];
-    UIView *backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
-    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
-    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [self.venueView addSubview:backgroundView];
+//    UIView *backgroundView = [[UIView alloc] initWithFrame:self.venueImageView.bounds];
+//    backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+//    backgroundView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+//    [self.venueView addSubview:backgroundView];
     
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:20];
-    self.venueLabelLineOne.textColor = [UIColor whiteColor];
+    self.venueLabelLineOne.textColor = [UIColor blackColor];
     self.venueLabelLineOne.width = self.view.width - 20;
     self.venueLabelLineOne.x = 5;
     self.venueLabelLineOne.height = 30;
@@ -274,7 +274,7 @@ typedef enum dealTypeStates
     
     self.venueLabelLineTwo = [[UILabel alloc] init];
     self.venueLabelLineTwo.font = [ThemeManager boldFontOfSize:34];
-    self.venueLabelLineTwo.textColor = [UIColor whiteColor];
+    self.venueLabelLineTwo.textColor = [UIColor blackColor];
     self.venueLabelLineTwo.width = self.view.width - 20;
     self.venueLabelLineTwo.x = 4;
     self.venueLabelLineTwo.height = 46;
@@ -333,7 +333,7 @@ typedef enum dealTypeStates
     self.marketPriceLabel.textAlignment = NSTextAlignmentCenter;
     self.marketPriceLabel.font = [ThemeManager regularFontOfSize:12];
     
-    [self.venueImageView addSubview:self.marketPriceLabel];
+    [self.selectedDealInMap addSubview:self.marketPriceLabel];
 
     [self.priceContainer addSubview:self.priceLabel];
     [self.venueView addSubview:self.priceContainer];
@@ -864,15 +864,15 @@ typedef enum dealTypeStates
             pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"CustomPinAnnotationView"];
             pinView.canShowCallout = NO;
             if (!isEmpty(venue.deal)) {
-                pinView.image = [UIImage imageNamed:@"bluePin"];
+                pinView.image = [UIImage imageNamed:@"newRedPin"];
             } else {
-                pinView.image = [UIImage imageNamed:@"grayPin"];
+                pinView.image = [UIImage imageNamed:@"newGrayPin"];
             }
         } else {
             if (!isEmpty(venue.deal)) {
-                pinView.image = [UIImage imageNamed:@"bluePin"];
+                pinView.image = [UIImage imageNamed:@"newRedPin"];
             } else {
-                pinView.image = [UIImage imageNamed:@"grayPin"];
+                pinView.image = [UIImage imageNamed:@"newGrayPin"];
             }
             pinView.annotation = annotation;
         }
@@ -1151,9 +1151,9 @@ typedef enum dealTypeStates
 
 - (void) redoSearchButtonTouched:(id)sender
 {
-    if (self.isMapViewDealShowing) {
-        [self toggleMapViewDealWithoutTouch];
-    }
+//    if (self.isMapViewDealShowing) {
+//        [self toggleMapViewDealWithoutTouch];
+//    }
     
     [self reloadDealsInSameLocation];
 
@@ -1199,67 +1199,94 @@ typedef enum dealTypeStates
     return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
+//
+//- (void)toggleMapViewDeal:(id)sender
+//{
+//    [self toggleMapViewDealWithoutTouch];
+//}
 
-- (void)toggleMapViewDeal:(id)sender
+- (void) showMapViewDeal:(CGPoint)point
 {
-    [self toggleMapViewDealWithoutTouch];
+//    if (!self.isMapViewDealShowing) {
+//        [UIView animateWithDuration:.5f animations:^{
+//            CGRect theFrame = self.mapView.frame;
+//            theFrame.size.height -= 146;
+//            self.mapView.frame = theFrame;
+//            
+//            self.selectedDealInMap.y = self.view.height - 146;
+//            
+//            
+//            self.mapTapped.enabled = YES;
+//            
+//            self.isMapViewDealShowing = !self.isMapViewDealShowing;
+//            
+//        }];
+//    }
+    NSLog(@"%f", point.x);
+    NSLog(@"%f", point.y);
+    self.selectedDealInMap.x = [self getUpdatedX:point.x];
+    self.selectedDealInMap.y = [self getUpdatedY:point.y];
+    
 }
 
-- (void) showMapViewDeal
+-(CGFloat)getUpdatedX:(CGFloat)pointX
 {
-    if (!self.isMapViewDealShowing) {
-        [UIView animateWithDuration:.5f animations:^{
-            CGRect theFrame = self.mapView.frame;
-            theFrame.size.height -= 146;
-            self.mapView.frame = theFrame;
-            
-            self.selectedDealInMap.y = self.view.height - 146;
-            
-            
-            self.mapTapped.enabled = YES;
-            
-            self.isMapViewDealShowing = !self.isMapViewDealShowing;
-            
-        }];
-    }
-}
-
-- (void) toggleMapViewDealWithoutTouch
-{
-    if (self.isMapViewDealShowing) {
-        [UIView animateWithDuration:.5f animations:^{
-            CGRect theFrame = self.mapView.frame;
-            theFrame.size.height += 146;
-            self.mapView.frame = theFrame;
-            
-            self.selectedDealInMap.y = self.view.height;
-            
-            self.mapTapped.enabled = NO;
-            
-            [self hideRedoSearchContainer];
-        }];
+    CGFloat x = (pointX/2) - 131.5;
+    if (x < 0) {
+        return 0;
+    } else if (x > (320 - 263)) {
+        return 320 - 263;
     } else {
-        [UIView animateWithDuration:.5f animations:^{
-            CGRect theFrame = self.mapView.frame;
-            theFrame.size.height -= 146;
-            self.mapView.frame = theFrame;
-            
-            self.selectedDealInMap.y = self.view.height - 146;
-        
-            
-            self.mapTapped.enabled = YES;
-            
-        }];
+        return x;
     }
-    self.isMapViewDealShowing = !self.isMapViewDealShowing;
 }
 
-- (void) minimizeMapViewDeal
+-(CGFloat)getUpdatedY:(CGFloat)pointY
 {
-    if (self.isMapViewDealShowing) {
-        [self toggleMapViewDealWithoutTouch];
+    CGFloat y = (pointY/2) - 70;
+    if (y < 100) {
+        return 120 + y;
+    } else {
+        return y;
     }
 }
+
+//- (void) toggleMapViewDealWithoutTouch
+//{
+//    if (self.isMapViewDealShowing) {
+//        [UIView animateWithDuration:.5f animations:^{
+//            CGRect theFrame = self.mapView.frame;
+//            theFrame.size.height += 146;
+//            self.mapView.frame = theFrame;
+//            
+//            self.selectedDealInMap.y = self.view.height;
+//            
+//            self.mapTapped.enabled = NO;
+//            
+//            [self hideRedoSearchContainer];
+//        }];
+//    } else {
+//        [UIView animateWithDuration:.5f animations:^{
+//            CGRect theFrame = self.mapView.frame;
+//            theFrame.size.height -= 146;
+//            self.mapView.frame = theFrame;
+//            
+//            self.selectedDealInMap.y = self.view.height - 146;
+//        
+//            
+//            self.mapTapped.enabled = YES;
+//            
+//        }];
+//    }
+//    self.isMapViewDealShowing = !self.isMapViewDealShowing;
+//}
+
+//- (void) minimizeMapViewDeal
+//{
+//    if (self.isMapViewDealShowing) {
+//        [self toggleMapViewDealWithoutTouch];
+//    }
+//}
 
 - (void)toggleMapView:(id)sender
 {
@@ -1388,7 +1415,7 @@ typedef enum dealTypeStates
     NSMutableDictionary *venueName = [self parseStringIntoTwoLines:venue.name];
     self.venueLabelLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
     self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-    [self.venueImageView sd_setImageWithURL:venue.imageURL];
+//    [self.venueImageView sd_setImageWithURL:venue.imageURL];
     
     if (venue.deal) {
         self.marketPriceLabel.x = self.descriptionLabel.width - 60;
@@ -1415,7 +1442,9 @@ typedef enum dealTypeStates
         self.descriptionLabel.backgroundColor = [UIColor clearColor];
     }
     
-    [self showMapViewDeal];
+    CGPoint windowPoint = [view convertPoint:[view center] toView:self.view];
+    
+    [self showMapViewDeal:windowPoint];
     
 //    [self toggleMapViewDeal:nil];
     

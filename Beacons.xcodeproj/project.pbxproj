@@ -188,6 +188,9 @@
 		41FFB0131C14934100947EEC /* drinkImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0121C14934100947EEC /* drinkImage@2x.png */; };
 		41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0141C15248C00947EEC /* unfollowButton@2x.png */; };
 		41FFB0171C1538CA00947EEC /* setupNewsfeedWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */; };
+		41FFB01A1C153F7400947EEC /* newGrayPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0181C153F7400947EEC /* newGrayPin@2x.png */; };
+		41FFB01B1C153F7400947EEC /* newRedPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB0191C153F7400947EEC /* newRedPin@2x.png */; };
+		41FFB01D1C1549C300947EEC /* mapVenueBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FFB01C1C1549C300947EEC /* mapVenueBackground@2x.png */; };
 		960631E91946206B0011E132 /* DealTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960631E81946206B0011E132 /* DealTableViewCell.m */; };
 		960631EB194625320011E132 /* lock_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EA194625320011E132 /* lock_open@2x.png */; };
 		960631ED194629850011E132 /* lock_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960631EC194629850011E132 /* lock_closed@2x.png */; };
@@ -575,6 +578,9 @@
 		41FFB0121C14934100947EEC /* drinkImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinkImage@2x.png"; sourceTree = "<group>"; };
 		41FFB0141C15248C00947EEC /* unfollowButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unfollowButton@2x.png"; sourceTree = "<group>"; };
 		41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setupNewsfeedWhite@2x.png"; sourceTree = "<group>"; };
+		41FFB0181C153F7400947EEC /* newGrayPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newGrayPin@2x.png"; sourceTree = "<group>"; };
+		41FFB0191C153F7400947EEC /* newRedPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newRedPin@2x.png"; sourceTree = "<group>"; };
+		41FFB01C1C1549C300947EEC /* mapVenueBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapVenueBackground@2x.png"; sourceTree = "<group>"; };
 		66C23B352142BA151A81D35D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		960631E71946206B0011E132 /* DealTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewCell.h; sourceTree = "<group>"; };
 		960631E81946206B0011E132 /* DealTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewCell.m; sourceTree = "<group>"; };
@@ -1323,6 +1329,8 @@
 				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
 				41FFB0141C15248C00947EEC /* unfollowButton@2x.png */,
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
+				41FFB0181C153F7400947EEC /* newGrayPin@2x.png */,
+				41FFB0191C153F7400947EEC /* newRedPin@2x.png */,
 				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
 				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
 				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
@@ -1331,6 +1339,7 @@
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
+				41FFB01C1C1549C300947EEC /* mapVenueBackground@2x.png */,
 				410165EF1BF5A84700F0219C /* grayPin@2x.png */,
 				41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */,
 				41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */,
@@ -1599,12 +1608,14 @@
 			files = (
 				964263B4181CEDF80015375C /* SugarPie.ttf in Resources */,
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
+				41FFB01A1C153F7400947EEC /* newGrayPin@2x.png in Resources */,
 				41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */,
 				41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
 				41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */,
 				41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */,
 				41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */,
+				41FFB01D1C1549C300947EEC /* mapVenueBackground@2x.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
@@ -1756,6 +1767,7 @@
 				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
 				415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */,
+				41FFB01B1C153F7400947EEC /* newRedPin@2x.png in Resources */,
 				4158AE5C1B4389900034BA4A /* listToggleButton@2x.png in Resources */,
 				4158AE611B43BBC20034BA4A /* menuButtonWithNotification@2x.png in Resources */,
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
