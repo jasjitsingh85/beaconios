@@ -143,6 +143,7 @@ typedef enum dealTypeStates
     
     [self initializeFilterViewController];
     
+    
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
     
@@ -209,7 +210,7 @@ typedef enum dealTypeStates
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
-    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 80)];
+    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, HOTSPOT_HEIGHT)];
     self.selectedDealInMap.layer.cornerRadius = 6;
     self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
     self.selectedDealInMap.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -224,27 +225,31 @@ typedef enum dealTypeStates
     [self.selectedDealInMap addGestureRecognizer:selectedDealTapped];
     [self.mapViewContainer addSubview:self.selectedDealInMap];
     
-    UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
-    [panRec setDelegate:self];
-    [self.mapView addGestureRecognizer:panRec];
+//    UIPanGestureRecognizer* panRec = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didDragMap:)];
+//    [panRec setDelegate:self];
+//    [self.mapView addGestureRecognizer:panRec];
     
-    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.mapView.height, self.view.width, 55)];
+    self.redoSearchContainer = [[UIView alloc] initWithFrame:CGRectMake(0, self.mapView.height, self.view.width, 35)];
     self.redoSearchContainer.centerX = self.view.width/2;
-    self.redoSearchContainer.backgroundColor = [UIColor clearColor];
+    self.redoSearchContainer.backgroundColor = [UIColor whiteColor];
     [self.mapView addSubview:self.redoSearchContainer];
     
     self.redoSearchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.redoSearchButton.size = CGSizeMake(self.view.width, 75);
+    self.redoSearchButton.size = CGSizeMake(160, 22);
     self.redoSearchButton.centerX = self.redoSearchContainer.width/2.0;
     self.redoSearchButton.centerY = self.redoSearchContainer.height/2.0;
-    [self.redoSearchButton setImage:[UIImage imageNamed:@"redoSearchContainer"] forState:UIControlStateNormal];
+//    [self.redoSearchButton setImage:[UIImage imageNamed:@"redoSearchContainer"] forState:UIControlStateNormal];
     //self.redoSearchButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
-    //[self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
+    [self.redoSearchButton setTitle:@"REDO SEARCH IN AREA" forState:UIControlStateNormal];
     //self.inviteFriendsButton.imageEdgeInsets = UIEdgeInsetsMake(0., self.inviteFriendsButton.frame.size.width - (chevronImage.size.width + 25.), 0., 0.);
     //self.inviteFriendsButton.titleEdgeInsets = UIEdgeInsetsMake(0., 0., 0., chevronImage.size.width);
-    self.redoSearchButton.titleLabel.font = [ThemeManager regularFontOfSize:16];
-    [self.redoSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.redoSearchButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    self.redoSearchButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+    self.redoSearchButton.layer.cornerRadius = 3;
+    self.redoSearchButton.layer.borderWidth = 1;
+    self.redoSearchButton.backgroundColor = [UIColor whiteColor];
+    self.redoSearchButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+    [self.redoSearchButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    [self.redoSearchButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     [self.redoSearchButton addTarget:self action:@selector(redoSearchButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.redoSearchContainer addSubview:self.redoSearchButton];
     
@@ -253,10 +258,10 @@ typedef enum dealTypeStates
     self.venueLabelLineOne = [[UILabel alloc] init];
     self.venueLabelLineOne.font = [ThemeManager boldFontOfSize:12];
     self.venueLabelLineOne.textColor = [UIColor blackColor];
-    self.venueLabelLineOne.width = self.view.width - 20;
+    self.venueLabelLineOne.width = 150;
     self.venueLabelLineOne.x = 10;
-    self.venueLabelLineOne.height = 32;
-    self.venueLabelLineOne.y = 5;
+    self.venueLabelLineOne.height = 15;
+    self.venueLabelLineOne.y = 6;
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
     self.venueLabelLineOne.numberOfLines = 1;
     [self.venueView addSubview:self.venueLabelLineOne];
@@ -709,7 +714,7 @@ typedef enum dealTypeStates
         //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        [self hideRedoSearchContainer];
+        [self hideRedoSearchContainer:YES];
         [[AnalyticsManager sharedManager] viewedDeals:self.selectedVenues.count];
         [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
     }];
@@ -1210,10 +1215,10 @@ typedef enum dealTypeStates
 -(CGFloat)getUpdatedY:(CGFloat)pointY
 {
     CGFloat y = (pointY/2) - 60;
-    if (y < self.selectedDealInMap.height + 10) {
-        return self.selectedDealInMap.height + y + 40;
+    if (y < 10 + HOTSPOT_HEIGHT) {
+        return y + 40 + HOTSPOT_HEIGHT;
     } else {
-        return y;
+        return y - (self.selectedDealInMap.height - HOTSPOT_HEIGHT);
     }
 }
 
@@ -1261,6 +1266,7 @@ typedef enum dealTypeStates
 
 - (void)toggleMapViewFrame
 {
+    [self hideRedoSearchContainer:NO];
     [UIView transitionWithView:self.viewContainer
                       duration:.75
                        options:UIViewAnimationOptionTransitionFlipFromLeft
@@ -1293,12 +1299,12 @@ typedef enum dealTypeStates
     return YES;
 }
 
-- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer {
-    
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.isMapViewActive){
-        [self showRedoSearchContainer];
-    }
-}
+//- (void)didDragMap:(UIGestureRecognizer*)gestureRecognizer {
+//    
+//    if (gestureRecognizer.state == UIGestureRecognizerStateBegan && self.isMapViewActive){
+//        [self showRedoSearchContainer];
+//    }
+//}
 
 - (void) showRedoSearchContainer
 {
@@ -1310,24 +1316,31 @@ typedef enum dealTypeStates
     
     [UIView animateWithDuration:0.5 animations:^{  // animate the following:
         CGRect frame = self.redoSearchContainer.frame;
-        frame.origin.y = self.mapView.height - 55;
-        self.redoSearchContainer.frame = frame; // move to new location
+        frame.origin.y = self.mapView.height - 35;
+        self.redoSearchContainer.frame = frame;
     }];
+    
+    
 }
 
-- (void) hideRedoSearchContainer
+- (void) hideRedoSearchContainer:(BOOL)animated
 {
 //    [UIView animateWithDuration:0.8 animations:^{  // animate the following:
 //        CGRect frame = self.mapLabel.frame;
 //        frame.origin.x = self.view.width - self.mapLabel.width;
 //        self.mapLabel.frame = frame; // move to new location
 //    }];
-    
-    [UIView animateWithDuration:0.35 animations:^{  // animate the following:
+    if (animated) {
+        [UIView animateWithDuration:0.35 animations:^{  // animate the following:
+            CGRect frame = self.redoSearchContainer.frame;
+            frame.origin.y = self.mapView.height;
+            self.redoSearchContainer.frame = frame; // move to new location
+        }];
+    } else {
         CGRect frame = self.redoSearchContainer.frame;
         frame.origin.y = self.mapView.height;
-        self.redoSearchContainer.frame = frame; // move to new location
-    }];
+        self.redoSearchContainer.frame = frame;
+    }
 }
 
 //- (void) happyHourButtonTouched
@@ -1374,6 +1387,34 @@ typedef enum dealTypeStates
 //    }];
 //}
 
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
+    [self hideSelectedDeal];
+    [self showRedoSearchContainer];
+}
+
+- (void)hideSelectedDeal
+{
+    [UIView transitionWithView:self.selectedDealInMap
+                      duration:0.25
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:NULL
+                    completion:NULL];
+    
+    self.selectedDealInMap.hidden = YES;
+}
+
+- (void)showSelectedDeal
+{
+    [UIView transitionWithView:self.selectedDealInMap
+                      duration:0.25
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:NULL
+                    completion:NULL];
+    
+    self.selectedDealInMap.hidden = NO;
+}
+
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     self.selectedDealIndex = [view.annotation.title intValue];
@@ -1383,6 +1424,7 @@ typedef enum dealTypeStates
     CGPoint windowPoint = [view convertPoint:[view center] toView:self.view];
     [self updateSelectedDealInMap:venue];
     [self showMapViewDeal:windowPoint];
+    [self showSelectedDeal];
     
 //    [self toggleMapViewDeal:nil];
     
@@ -1537,6 +1579,7 @@ typedef enum dealTypeStates
     NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
     
     if (venue.deal) {
+        self.selectedDealInMap.height = HOTSPOT_HEIGHT;
         if (venue.neighborhood != (NSString *)[NSNull null]) {
             self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@ | %@", [venue.deal.dealStartString uppercaseString], emDash, [venue.neighborhood uppercaseString],[self stringForDistance:venue.distance]];
         } else {
@@ -1574,8 +1617,9 @@ typedef enum dealTypeStates
         self.dealTime.y = 55;
         
     } else {
+        self.selectedDealInMap.height = NON_HOTSPOT_HEIGHT;
         self.placeType.y = 55.5;
-        self.dealTime.y = 55;
+        self.dealTime.y = 19;
         self.descriptionLabel.width = 0;
         
         if (venue.neighborhood != (NSString *)[NSNull null]) {
@@ -1593,6 +1637,9 @@ typedef enum dealTypeStates
     
     CGSize dealTimeSize = [self.dealTime.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:9]}];
     CGFloat dealTimeWidth = dealTimeSize.width;
+    if (headingWidth > 150) {
+        headingWidth = 150;
+    }
     
     NSArray *sorted1 = [[NSArray arrayWithObjects: @(self.descriptionLabel.width),@(headingWidth), @(dealTimeWidth), nil] sortedArrayUsingSelector:@selector(compare:)];
     
