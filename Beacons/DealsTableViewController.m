@@ -209,7 +209,7 @@ typedef enum dealTypeStates
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
     
-    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 230, 90)];
+    self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, 80)];
     self.selectedDealInMap.layer.cornerRadius = 6;
     self.selectedDealInMap.backgroundColor = [UIColor whiteColor];
     self.selectedDealInMap.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -255,7 +255,7 @@ typedef enum dealTypeStates
     self.venueLabelLineOne.textColor = [UIColor blackColor];
     self.venueLabelLineOne.width = self.view.width - 20;
     self.venueLabelLineOne.x = 10;
-    self.venueLabelLineOne.height = 30;
+    self.venueLabelLineOne.height = 32;
     self.venueLabelLineOne.y = 5;
     self.venueLabelLineOne.textAlignment = NSTextAlignmentLeft;
     self.venueLabelLineOne.numberOfLines = 1;
@@ -265,7 +265,7 @@ typedef enum dealTypeStates
     //self.descriptionLabel.width = self.venuePreviewView.size.width * .6;
     self.descriptionLabel.height = 22;
     self.descriptionLabel.x = 0;
-    self.descriptionLabel.y = 36;
+    self.descriptionLabel.y = 32;
     self.descriptionLabel.font = [ThemeManager boldFontOfSize:11];
     //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
@@ -273,14 +273,17 @@ typedef enum dealTypeStates
     [self.venueView addSubview:self.descriptionLabel];
     
     self.dealTime = [[UILabel alloc] init];
-    self.dealTime.font = [ThemeManager regularFontOfSize:12];
+    self.dealTime.font = [ThemeManager regularFontOfSize:9];
     self.dealTime.textColor = [[ThemeManager sharedTheme] darkGrayColor];
     //self.dealTime.adjustsFontSizeToFitWidth = YES;
+    self.dealTime.x = 10;
+    self.dealTime.height = 20;
+    self.dealTime.width = self.selectedDealInMap.width;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
     [self.venueView addSubview:self.dealTime];
     
-    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 34, 40, 26)];
+    self.marketPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 30, 40, 26)];
     self.marketPriceLabel.textColor = [UIColor whiteColor];
     self.marketPriceLabel.textAlignment = NSTextAlignmentLeft;
     self.marketPriceLabel.font = [ThemeManager regularFontOfSize:11];
@@ -291,7 +294,7 @@ typedef enum dealTypeStates
     self.itemPriceLabel.font = [ThemeManager boldFontOfSize:11];
     self.itemPriceLabel.textColor = [UIColor whiteColor];
     self.itemPriceLabel.height = 26;
-    self.itemPriceLabel.y = 34;
+    self.itemPriceLabel.y = 30;
     [self.venueView addSubview:self.itemPriceLabel];
     
     self.distanceLabel = [[UILabel alloc] init];
@@ -1194,11 +1197,11 @@ typedef enum dealTypeStates
 
 -(CGFloat)getUpdatedX:(CGFloat)pointX
 {
-    CGFloat x = (pointX/2) - 131.5;
-    if (x < 0) {
-        return 0;
-    } else if (x > (320 - 263)) {
-        return 320 - 263;
+    CGFloat x = (pointX/2) - self.selectedDealInMap.width/2;
+    if (x < 10) {
+        return 10;
+    } else if (x > (320 - self.selectedDealInMap.width - 10)) {
+        return 320 - self.selectedDealInMap.width - 10;
     } else {
         return x;
     }
@@ -1206,9 +1209,9 @@ typedef enum dealTypeStates
 
 -(CGFloat)getUpdatedY:(CGFloat)pointY
 {
-    CGFloat y = (pointY/2) - 70;
-    if (y < 100) {
-        return 120 + y;
+    CGFloat y = (pointY/2) - 60;
+    if (y < self.selectedDealInMap.height + 10) {
+        return self.selectedDealInMap.height + y + 40;
     } else {
         return y;
     }
@@ -1375,40 +1378,10 @@ typedef enum dealTypeStates
 {
     self.selectedDealIndex = [view.annotation.title intValue];
     Venue *venue = self.selectedVenues[self.selectedDealIndex];
-//    NSMutableDictionary *venueName = [self parseStringIntoTwoLines:venue.name];
     self.venueLabelLineOne.text = [venue.name uppercaseString];
-//    self.venueLabelLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
-//    [self.venueImageView sd_setImageWithURL:venue.imageURL];
-    
-//    if (venue.deal) {
-//        self.marketPriceLabel.x = self.descriptionLabel.width - 60;
-//        NSString *emDash= [NSString stringWithUTF8String:"\xe2\x80\x94"];
-//        self.dealTime.text = [NSString stringWithFormat:@"%@ %@ %@", [venue.deal.dealStartString uppercaseString], emDash, [self stringForDistance:venue.distance]];
-//        
-//        if (venue.deal.isRewardItem) {
-//            self.descriptionLabel.text = [NSString stringWithFormat:@"      %@ FOR FREE", [venue.deal.itemName uppercaseString]];
-//            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] greenColor];
-//            //self.descriptionLabel.backgroundColor = [UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255];
-//        } else {
-//            self.descriptionLabel.text = [NSString stringWithFormat:@"      %@ FOR $%@", [venue.deal.itemName uppercaseString], venue.deal.itemPrice];
-//            self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-//        }
-//        
-//        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
-//        
-//        CGFloat descriptionLabelWidth;
-//        descriptionLabelWidth = textSize.width;
-//        self.descriptionLabel.width = descriptionLabelWidth + 10;
-//    } else {
-//        self.dealTime.text = @"";
-//        self.descriptionLabel.text = @"";
-//        self.descriptionLabel.backgroundColor = [UIColor clearColor];
-//    }
     
     CGPoint windowPoint = [view convertPoint:[view center] toView:self.view];
-    
     [self updateSelectedDealInMap:venue];
-    
     [self showMapViewDeal:windowPoint];
     
 //    [self toggleMapViewDeal:nil];
@@ -1578,7 +1551,6 @@ typedef enum dealTypeStates
         self.marketPriceLabel.attributedText = attrText;
         self.descriptionLabel.text = [NSString stringWithFormat:@"   %@ FOR", [venue.deal.itemName uppercaseString]];
         CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:11]}];
-        
         CGFloat descriptionLabelWidth;
         descriptionLabelWidth = textSize.width;
         self.marketPriceLabel.x = descriptionLabelWidth + 3;
@@ -1599,11 +1571,12 @@ typedef enum dealTypeStates
         self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 15;
         
         self.placeType.y = 70.5;
-        self.dealTime.y = 117;
+        self.dealTime.y = 55;
         
     } else {
         self.placeType.y = 55.5;
-        self.dealTime.y = 73;
+        self.dealTime.y = 55;
+        self.descriptionLabel.width = 0;
         
         if (venue.neighborhood != (NSString *)[NSNull null]) {
             self.dealTime.text = [NSString stringWithFormat:@"%@ | %@", [venue.neighborhood uppercaseString],[self stringForDistance:venue.distance]];
@@ -1615,24 +1588,34 @@ typedef enum dealTypeStates
         self.placeType.text = [venue.placeType uppercaseString];
     }
     
+    CGSize headingSize = [self.venueLabelLineOne.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:11.5]}];
+    CGFloat headingWidth = headingSize.width;
+    
+    CGSize dealTimeSize = [self.dealTime.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:9]}];
+    CGFloat dealTimeWidth = dealTimeSize.width;
+    
+    NSArray *sorted1 = [[NSArray arrayWithObjects: @(self.descriptionLabel.width),@(headingWidth), @(dealTimeWidth), nil] sortedArrayUsingSelector:@selector(compare:)];
+    
+    self.selectedDealInMap.width = [sorted1[2] floatValue] + 25;
+    
     self.placeType.x = 6;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    NSLog(@"%@", gestureRecognizer);
-    NSLog(@"%@", touch.view);
-//    if([touch.view isKindOfClass:[UITableViewCell class]]) {
-//        return NO;
-//    }
-//    // UITableViewCellContentView => UITableViewCell
-//    if([touch.view.superview isKindOfClass:[UITableViewCell class]]) {
-//        return NO;
-//    }
-//    // UITableViewCellContentView => UITableViewCellScrollView => UITableViewCell
-//    if([touch.view.superview.superview isKindOfClass:[UITableViewCell class]]) {
-//        return NO;
-//    }
-    return YES; // handle the touch
-}
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+//    NSLog(@"%@", gestureRecognizer);
+//    NSLog(@"%@", touch.view);
+////    if([touch.view isKindOfClass:[UITableViewCell class]]) {
+////        return NO;
+////    }
+////    // UITableViewCellContentView => UITableViewCell
+////    if([touch.view.superview isKindOfClass:[UITableViewCell class]]) {
+////        return NO;
+////    }
+////    // UITableViewCellContentView => UITableViewCellScrollView => UITableViewCell
+////    if([touch.view.superview.superview isKindOfClass:[UITableViewCell class]]) {
+////        return NO;
+////    }
+//    return YES; // handle the touch
+//}
 
 @end
