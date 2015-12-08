@@ -382,10 +382,10 @@
     
     UIImageView *promptIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkImage"]];
     promptIcon.centerX = self.view.width/2;
-    promptIcon.y = 60;
+    promptIcon.y = 50;
     [self.view addSubview:promptIcon];
     
-    UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 265, self.view.width, 15)];
+    UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width, 15)];
     promptHeading.textAlignment = NSTextAlignmentCenter;
     promptHeading.text = [[NSString stringWithFormat:@"GET FREE DRINKS."] uppercaseString];
     promptHeading.font = [ThemeManager boldFontOfSize:14];
@@ -394,7 +394,7 @@
     
     self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 40, 60)];
     self.prompt.centerX = self.view.width/2;
-    self.prompt.y = 265;
+    self.prompt.y = 250;
     self.prompt.font = [ThemeManager lightFontOfSize:14];
     self.prompt.textColor = [UIColor blackColor];
     self.prompt.numberOfLines = 1;
@@ -411,7 +411,7 @@
 //    promoCodePrompt.text = [NSString stringWithFormat:@"Send your promo code:"];
 //    [view addSubview:promoCodePrompt];
     
-    UILabel *sendPromoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 350, self.view.width, 20)];
+    UILabel *sendPromoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 310, self.view.width, 20)];
     sendPromoLabel.text = @"SEND YOUR PROMO CODE";
     sendPromoLabel.textAlignment = NSTextAlignmentCenter;
     sendPromoLabel.font = [ThemeManager lightFontOfSize:11];
@@ -420,7 +420,7 @@
     
     self.promoCode = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width, 25)];
     self.promoCode.textAlignment = NSTextAlignmentCenter;
-    self.promoCode.y = 375;
+    self.promoCode.y = 335;
     self.promoCode.textColor = [[ThemeManager sharedTheme] redColor];
 //    self.promoCode.textColor = [UIColor blackColor];
     self.promoCode.font = [ThemeManager boldFontOfSize:20];
@@ -435,7 +435,7 @@
     self.emailButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.emailButton.size = CGSizeMake(self.view.width - 50, 35);
     self.emailButton.centerX = self.view.width/2;
-    self.emailButton.y = 415;
+    self.emailButton.y = 375;
     self.emailButton.layer.cornerRadius = 3;
     self.emailButton.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
     [self.emailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -448,7 +448,7 @@
     self.smsButton.size = CGSizeMake(self.view.width - 50, 35);
     self.smsButton.centerX = self.view.width/2;
     [self.smsButton setTitle:@"TEXT INVITE" forState:UIControlStateNormal];
-    self.smsButton.y = 460;
+    self.smsButton.y = 420;
     self.smsButton.layer.cornerRadius = 3;
     self.smsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     self.smsButton.titleLabel.font = [ThemeManager boldFontOfSize:13];
@@ -460,7 +460,7 @@
     shareButton.size = CGSizeMake(self.view.width - 50, 35);
     shareButton.centerX = self.view.width/2;
     [shareButton setTitle:@"Share on social media" forState:UIControlStateNormal];
-    shareButton.y = 493;
+    shareButton.y = 453;
     [shareButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
     [shareButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     shareButton.titleLabel.font = [ThemeManager lightFontOfSize:12];
