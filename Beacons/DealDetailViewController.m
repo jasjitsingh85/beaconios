@@ -481,7 +481,7 @@
         
     } else if (indexPath.row == self.eventsContainer) {
         if (self.venue.events.count > 0) {
-            height = 50 + (self.venue.events.count * 33);
+            height = 50 + (self.venue.events.count * 38);
         } else {
             height = 0;
         }
@@ -782,20 +782,50 @@
         for (int i = 0; i < [self.venue.events count]; i++)
         {
             Event *event = self.venue.events[i];
-            UILabel *eventTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 38 + (33 * i), self.view.width - 50, 20)];
+            UILabel *eventTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 38 + (38 * i), self.view.width - 50, 20)];
+            eventTextLabel.tag = i;
             eventTextLabel.font = [ThemeManager boldFontOfSize:12];
             eventTextLabel.numberOfLines = 1;
             eventTextLabel.textAlignment = NSTextAlignmentLeft;
             eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
             [self.eventsCell.contentView addSubview:eventTextLabel];
             
-            UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 53 + (33 * i), self.view.width - 50, 20)];
+            UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 53 + (38 * i), self.view.width - 50, 20)];
+            eventTimeTextLabel.tag = i;
             eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
             eventTimeTextLabel.numberOfLines = 1;
             eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
             eventTimeTextLabel.text = event.getDateAsString;
             [self.eventsCell.contentView addSubview:eventTimeTextLabel];
+            
+            UITapGestureRecognizer *eventHeaderGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
+            eventHeaderGestureRecognizer.numberOfTapsRequired = 1;
+            [eventTextLabel addGestureRecognizer:eventHeaderGestureRecognizer];
+            eventTextLabel.userInteractionEnabled = YES;
+            
+            UITapGestureRecognizer *eventBodyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
+            eventBodyGestureRecognizer.numberOfTapsRequired = 1;
+            [eventTimeTextLabel addGestureRecognizer:eventBodyGestureRecognizer];
+            eventTimeTextLabel.userInteractionEnabled = YES;
         }
+    }
+}
+
+-(void)eventTapped:(UITapGestureRecognizer *)sender
+{
+    UIView *view = sender.view; //cast pointer to the derived class if needed
+    NSLog(@"%ld", (long)view.tag);
+    
+    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
+    Event *event = self.events[view.tag];
+    if (isInstalled) {;
+        [[UIApplication sharedApplication] openURL:event.deepLinkURL];
+    } else {
+        self.webView.websiteUrl = event.websiteURL;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
     }
 }
 
