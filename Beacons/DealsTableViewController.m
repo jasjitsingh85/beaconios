@@ -808,14 +808,28 @@ typedef enum dealTypeStates
 {
     [self.mapView removeAnnotations:[self.mapView annotations]];
     
+    int nonDealIndex = 0;
+    for (Venue *venue in self.selectedVenues) {
+        if (!venue.deal) {
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(venue.coordinate.latitude, venue.coordinate.longitude);
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            annotation.title = [NSString stringWithFormat:@"%d", nonDealIndex];
+            [self.mapView addAnnotation:annotation];
+        }
+        ++nonDealIndex;
+    }
+    
     int dealIndex = 0;
     for (Venue *venue in self.selectedVenues) {
-        CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(venue.coordinate.latitude, venue.coordinate.longitude);
-        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-        [annotation setCoordinate:dealLocation2D];
-        annotation.title = [NSString stringWithFormat:@"%d", dealIndex];
+        if (venue.deal) {
+            CLLocationCoordinate2D dealLocation2D = CLLocationCoordinate2DMake(venue.coordinate.latitude, venue.coordinate.longitude);
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:dealLocation2D];
+            annotation.title = [NSString stringWithFormat:@"%d", dealIndex];
+            [self.mapView addAnnotation:annotation];
+        }
         ++dealIndex;
-        [self.mapView addAnnotation:annotation];
     }
 }
 
@@ -1618,6 +1632,8 @@ typedef enum dealTypeStates
         
     } else {
         self.selectedDealInMap.height = NON_HOTSPOT_HEIGHT;
+        self.marketPriceLabel.text = @"";
+        self.itemPriceLabel.text = @"";
         self.placeType.y = 55.5;
         self.dealTime.y = 19;
         self.descriptionLabel.width = 0;
