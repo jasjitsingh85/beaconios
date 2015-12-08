@@ -11,5 +11,6 @@
 @interface UIButton (HSNavButton)
 
 + (id)navButtonWithTitle:(NSString *)title;
++ (id)navButtonBoldWithTitle:(NSString *)title;
 
 @end

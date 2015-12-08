@@ -48,7 +48,7 @@
     [cancelButton addTarget:self action:@selector(dismissView:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
-    UIButton *applyButton = [UIButton navButtonWithTitle:@"Apply"];
+    UIButton *applyButton = [UIButton navButtonBoldWithTitle:@"Apply"];
     [applyButton addTarget:self action:@selector(dismissViewAndApplyFilter:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:applyButton];
     
