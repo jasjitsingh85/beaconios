@@ -1230,7 +1230,7 @@ typedef enum dealTypeStates
 {
     CGFloat y = (pointY/2) - 60;
     if (y < 10 + HOTSPOT_HEIGHT) {
-        return y + 40 + HOTSPOT_HEIGHT;
+        return y + 50 + HOTSPOT_HEIGHT;
     } else {
         return y - (self.selectedDealInMap.height - HOTSPOT_HEIGHT);
     }
@@ -1628,13 +1628,22 @@ typedef enum dealTypeStates
         self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 15;
         
         self.placeType.y = 70.5;
-        self.dealTime.y = 55;
+        self.venueLabelLineOne.y = 9;
+        self.marketPriceLabel.y = 25;
+        self.itemPriceLabel.y = 25;
+        self.descriptionLabel.y = 28;
+        self.dealTime.y = 49;
         
     } else {
         self.selectedDealInMap.height = NON_HOTSPOT_HEIGHT;
         self.marketPriceLabel.text = @"";
         self.itemPriceLabel.text = @"";
+        
         self.placeType.y = 55.5;
+        self.venueLabelLineOne.y = 6;
+        self.marketPriceLabel.y = 30;
+        self.itemPriceLabel.y = 30;
+        self.descriptionLabel.y = 32;
         self.dealTime.y = 19;
         self.descriptionLabel.width = 0;
         

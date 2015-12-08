@@ -19,7 +19,7 @@ typedef enum ScrollDirection {
     ScrollDirectionCrazy,
 } ScrollDirection;
 
-static const double HOTSPOT_HEIGHT = 80;
+static const double HOTSPOT_HEIGHT = 72;
 static const double NON_HOTSPOT_HEIGHT = 42;
 
 @interface DealsTableViewController : UIViewController <MKMapViewDelegate> {
