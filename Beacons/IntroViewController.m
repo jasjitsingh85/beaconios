@@ -43,48 +43,37 @@
     [self.view addSubview:logoImageView];
     
     self.facebookRegisterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    CGRect registerButtonFrame = CGRectZero;
-    registerButtonFrame.size = CGSizeMake(self.view.width, 45);
-    registerButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
-    registerButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 150;
-    self.facebookRegisterButton.frame = registerButtonFrame;
+    self.facebookRegisterButton.frame = CGRectMake(0, 300, self.view.width - 75, 35);
+    self.facebookRegisterButton.centerX = self.view.width/2;
     self.facebookRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.facebookRegisterButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    //self.registerButton.layer.cornerRadius = 4;
+    self.facebookRegisterButton.backgroundColor = [UIColor unnormalizedColorWithRed:46 green:83 blue:147 alpha:255];
+    self.facebookRegisterButton.layer.cornerRadius = 4;
     [self.facebookRegisterButton addTarget:self action:@selector(transitionToRegisterWithFacebookView) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookRegisterButton setTitle:@"Facebook!" forState:UIControlStateNormal];
+    [self.facebookRegisterButton setTitle:@"Register with Facebook" forState:UIControlStateNormal];
     [self.facebookRegisterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.facebookRegisterButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    self.facebookRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:14];
     [self.view addSubview:self.facebookRegisterButton];
     
     self.basicRegisterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    CGRect basicRegisterButtonFrame = CGRectZero;
-    basicRegisterButtonFrame.size = CGSizeMake(self.view.width, 45);
-    basicRegisterButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
-    basicRegisterButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 100;
-    self.basicRegisterButton.frame = basicRegisterButtonFrame;
+    self.basicRegisterButton.frame = CGRectMake(0, 400, self.view.width - 75, 35);
+    self.basicRegisterButton.centerX = self.view.width/2;
     self.basicRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.basicRegisterButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    //self.registerButton.layer.cornerRadius = 4;
+    self.basicRegisterButton.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    self.basicRegisterButton.layer.cornerRadius = 4;
     [self.basicRegisterButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
-    [self.basicRegisterButton setTitle:@"Register!" forState:UIControlStateNormal];
-    [self.basicRegisterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.basicRegisterButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    [self.basicRegisterButton setTitle:@"Register with Email" forState:UIControlStateNormal];
+    [self.basicRegisterButton setTitleColor:[UIColor unnormalizedColorWithRed:84 green:84 blue:84 alpha:255] forState:UIControlStateNormal];
+    self.basicRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:14];
     [self.view addSubview:self.basicRegisterButton];
     
     self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    CGRect loginButtonFrame = CGRectZero;
-    loginButtonFrame.size = CGSizeMake(self.view.width, 45);
-    loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
-    loginButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 15;
-    self.loginButton.frame = loginButtonFrame;
+    self.loginButton.frame = CGRectMake(0, 500, self.view.width, 35);
     self.loginButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    self.loginButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    //self.registerButton.layer.cornerRadius = 4;
+    self.loginButton.backgroundColor = [UIColor clearColor];
     [self.loginButton addTarget:self action:@selector(transitionToLoginView) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButton setTitle:@"Login!" forState:UIControlStateNormal];
-    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.loginButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    [self.loginButton setTitle:@"Already have an account? Log in" forState:UIControlStateNormal];
+    [self.loginButton setTitleColor:[UIColor unnormalizedColorWithRed:99 green:99 blue:99 alpha:255] forState:UIControlStateNormal];
+    self.loginButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [self.view addSubview:self.loginButton];
 }
 
