@@ -19,12 +19,6 @@
 #import "LoadingIndictor.h"
 #import "Theme.h"
 
-typedef enum {
-    ViewModeRegister=0,
-    ViewModeSignIn,
-    ViewModeActivation,
-} ViewMode;
-
 @interface RegisterViewController () <FormViewDelegate>
 
 @property (strong, nonatomic) FormView *registerFormView;
@@ -36,10 +30,10 @@ typedef enum {
 @property (strong, nonatomic) UIButton *loginButton;
 @property (strong, nonatomic) UIButton *backButton;
 @property (strong, nonatomic) UIButton *helpButton;
-@property (assign, nonatomic) ViewMode viewMode;
 @property (assign, nonatomic) BOOL makingNetworkRequest;
-@property (strong, nonatomic) UIImageView *hotbotImageView;
-@property (strong, nonatomic) UILabel *hotbotCommentLabel;
+@property (strong, nonatomic) UILabel *titleLabel;
+@property (assign, nonatomic) BOOL hasFacebookParams;
+
 @end
 
 @implementation RegisterViewController
@@ -72,6 +66,7 @@ typedef enum {
     self.registerFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 35*registerFormTitles.count) formTitles:registerFormTitles formPlaceholders:registerFormPlaceholders];
     self.registerFormView.delegate = self;
     self.registerFormView.backgroundColor = [UIColor whiteColor];
+    self.registerFormView.alpha = 0;
 //    self.registerFormView.layer.cornerRadius = 4;
     //self.registerFormView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     //self.registerFormView.layer.borderWidth = 1;
@@ -101,7 +96,7 @@ typedef enum {
     
     NSArray *signInFormTitles = @[@"PHONE"];
     NSArray *signInFormPlaceholders = @[@"(555) 123-4567"];
-    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 175, self.view.width, 30*signInFormTitles.count) formTitles:signInFormTitles formPlaceholders:signInFormPlaceholders];
+    self.signInFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 35*signInFormTitles.count) formTitles:signInFormTitles formPlaceholders:signInFormPlaceholders];
     self.signInFormView.delegate = self;
     self.signInFormView.backgroundColor = [UIColor whiteColor];
     self.signInFormView.layer.cornerRadius = 4;
@@ -141,20 +136,20 @@ typedef enum {
     self.confirmButton.frame = confirmButtonFrame;
     [self.view addSubview:self.confirmButton];
     [self.confirmButton addTarget:self action:@selector(confirmButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.loginButton setTitle:@"I have an account" forState:UIControlStateNormal];
-    UIColor *loginButtonColor = [UIColor whiteColor];
-    [self.loginButton setTitleColor:[loginButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    [self.loginButton setTitleColor:loginButtonColor forState:UIControlStateNormal];
-    CGRect loginButtonFrame;
-    loginButtonFrame.size = self.confirmButton.frame.size;
-    loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - loginButtonFrame.size.width);
-    loginButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame);
-    self.loginButton.titleLabel.font = [ThemeManager lightFontOfSize:12];
-    self.loginButton.frame = loginButtonFrame;
-    [self.view addSubview:self.loginButton];
-    [self.loginButton addTarget:self action:@selector(loginButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [self.loginButton setTitle:@"I have an account" forState:UIControlStateNormal];
+//    UIColor *loginButtonColor = [UIColor whiteColor];
+//    [self.loginButton setTitleColor:[loginButtonColor colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//    [self.loginButton setTitleColor:loginButtonColor forState:UIControlStateNormal];
+//    CGRect loginButtonFrame;
+//    loginButtonFrame.size = self.confirmButton.frame.size;
+//    loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - loginButtonFrame.size.width);
+//    loginButtonFrame.origin.y = CGRectGetMaxY(self.confirmButton.frame);
+//    self.loginButton.titleLabel.font = [ThemeManager lightFontOfSize:12];
+//    self.loginButton.frame = loginButtonFrame;
+//    [self.view addSubview:self.loginButton];
+//    [self.loginButton addTarget:self action:@selector(loginButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.helpButton setImage:[UIImage imageNamed:@"updatedHelpButton"] forState:UIControlStateNormal];
@@ -168,29 +163,35 @@ typedef enum {
     [self.helpButton addTarget:self action:@selector(helpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.helpButton];
     
-//    self.hotbotImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotbotSmile"]];
-//    CGRect hotbotFrame = self.hotbotImageView.frame;
-//    hotbotFrame.origin = CGPointMake(-33, 58);
-//    self.hotbotImageView.frame = hotbotFrame;
-//    [self.view addSubview:self.hotbotImageView];
+    self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.backButton.x = 10;
+    self.backButton.y = 25;
+    self.backButton.width = 30;
+    self.backButton.height = 30;
+    [self.backButton setImage:[UIImage imageNamed:@"backArrowBlue"] forState:UIControlStateNormal];
+    [self.backButton addTarget:self action:@selector(backToIntroView:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.backButton];
     
-//    UIImageView *hotspotDrinkIcons = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotDrinkIcons"]];
-//    hotspotDrinkIcons.centerX = self.view.width/2;
-//    hotspotDrinkIcons.y = 75;
-//    [self.view addSubview:hotspotDrinkIcons];
-    
-    self.hotbotCommentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, self.view.width, 20)];
-    self.hotbotCommentLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
-    [self.view addSubview:self.hotbotCommentLabel];
-    
-    self.viewMode = -1;
-    [self enterRegisterMode];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, self.view.width, 20)];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    [self.view addSubview:self.titleLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:@"UIKeyboardWillShowNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
+//    self.viewMode = -1;
+
+    if (self.viewMode == ViewModeFacebookRegister) {
+        [self enterFacebookRegisterMode];
+    } else if (self.viewMode == ViewModeRegister) {
+        [self enterRegisterMode];
+    } else if (self.viewMode == ViewModeSignIn) {
+        [self enterSignInMode];
+    }
 }
+
 
 - (void)dealloc
 {
@@ -221,19 +222,25 @@ typedef enum {
     [self.signInFormView endEditing];
 }
 
-- (void)loginButtonTouched:(id)sender
+- (void)backToIntroView:(id)sender
 {
-    [self dismissKeyboard];
-    if (self.viewMode == ViewModeActivation) {
-        [self enterRegisterMode];
-    }
-    else if (self.viewMode == ViewModeRegister) {
-        [self enterSignInMode];
-    }
-    else if (self.viewMode == ViewModeSignIn) {
-        [self enterRegisterMode];
-    }
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate showIntroView];
 }
+
+//- (void)loginButtonTouched:(id)sender
+//{
+//    [self dismissKeyboard];
+//    if (self.viewMode == ViewModeActivation) {
+//        [self enterRegisterMode];
+//    }
+//    else if (self.viewMode == ViewModeRegister) {
+//        [self enterSignInMode];
+//    }
+//    else if (self.viewMode == ViewModeSignIn) {
+//        [self enterRegisterMode];
+//    }
+//}
 
 - (void)confirmButtonTouched:(id)sender
 {
@@ -241,8 +248,10 @@ typedef enum {
     if (self.viewMode == ViewModeRegister && [self registerInputsAreValid]) {
         [self registerAccount];
         [self enterActivationMode];
-    }
-    else if (self.viewMode == ViewModeSignIn) {
+    } else if (self.viewMode == ViewModeFacebookRegister && [self registerFacebookInputsAreValid]) {
+        [self registerFacebookAccount];
+        [self enterActivationMode];
+    } else if (self.viewMode == ViewModeSignIn) {
         [self signInAccount];
     }
     else if (self.viewMode == ViewModeActivation) {
@@ -287,14 +296,46 @@ typedef enum {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)enterSignInMode
+- (void)enterFacebookRegisterMode
 {
     if (self.viewMode == ViewModeSignIn) {
         return;
     }
     
-    UITextField *textField = [self.signInFormView textFieldAtIndex:0];
-    [textField becomeFirstResponder];
+    self.promoFormView.hidden = NO;
+    self.viewMode = ViewModeFacebookRegister;
+    [self.confirmButton setTitle:@"Next" forState:UIControlStateNormal];
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Not a user? Register here!" attributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+    
+    [self.loginButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    NSRange range = [attributedTitle.string rangeOfString:@"Register here!"];
+    [attributedTitle addAttributes:@{NSForegroundColorAttributeName : [[ThemeManager sharedTheme] lightBlueColor]} range:range];
+    self.signInFormView.alpha = 1;
+    self.signInFormView.transform = CGAffineTransformMakeTranslation(-CGRectGetMaxX(self.signInFormView.frame) - 20, 0);
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.5 options:0 animations:^{
+        self.signInFormView.transform = CGAffineTransformIdentity;
+        self.registerFormView.alpha = 0;
+        self.activationFormView.alpha = 0;
+    } completion:^(BOOL finished) {
+//        UITextField *textField = [self.signInFormView textFieldAtIndex:0];
+//        [textField becomeFirstResponder];
+    }];
+    
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Almost there! Enter your phone number." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Almost there!"]];
+    self.titleLabel.attributedText = attributedText;
+    self.titleLabel.alpha = 0;
+    self.titleLabel.y = 100;
+    [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
+        self.titleLabel.alpha = 1;
+    } completion:nil];
+}
+
+- (void)enterSignInMode
+{
+    if (self.viewMode == ViewModeSignIn) {
+        return;
+    }
     
     self.promoFormView.hidden = YES;
     self.viewMode = ViewModeSignIn;
@@ -311,15 +352,17 @@ typedef enum {
         self.registerFormView.alpha = 0;
         self.activationFormView.alpha = 0;
     } completion:^(BOOL finished) {
-        
+        //        UITextField *textField = [self.signInFormView textFieldAtIndex:0];
+        //        [textField becomeFirstResponder];
     }];
     
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Hey, again. What's your number?" attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Hey, again."]];
-    self.hotbotCommentLabel.attributedText = attributedText;
-    self.hotbotCommentLabel.alpha = 0;
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Almost there! Enter your phone number." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
+    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Almost there!"]];
+    self.titleLabel.attributedText = attributedText;
+    self.titleLabel.alpha = 0;
+    self.titleLabel.y = 100;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
-        self.hotbotCommentLabel.alpha = 1;
+        self.titleLabel.alpha = 1;
     } completion:nil];
 }
 
@@ -348,11 +391,11 @@ typedef enum {
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"WELCOME TO HOTSPOT" attributes:@{NSFontAttributeName : [ThemeManager lightFontOfSize:13]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:13] range:[attributedText.string rangeOfString:@"WELCOME!"]];
-    self.hotbotCommentLabel.attributedText = attributedText;
-    self.hotbotCommentLabel.textAlignment = NSTextAlignmentCenter;
-    self.hotbotCommentLabel.alpha = 0;
+    self.titleLabel.attributedText = attributedText;
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
-        self.hotbotCommentLabel.alpha = 1;
+        self.titleLabel.alpha = 1;
     } completion:nil];
 }
 
@@ -382,10 +425,10 @@ typedef enum {
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:@"Let's get started! Enter your activation code." attributes:@{NSFontAttributeName : [ThemeManager regularFontOfSize:13]}];
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Let's get started!"]];
-    self.hotbotCommentLabel.attributedText = attributedText;
-    self.hotbotCommentLabel.alpha = 0;
+    self.titleLabel.attributedText = attributedText;
+    self.titleLabel.alpha = 0;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
-        self.hotbotCommentLabel.alpha = 1;
+        self.titleLabel.alpha = 1;
     } completion:nil];
 }
 
@@ -411,6 +454,28 @@ typedef enum {
     }
     
     inputsAreValid = phoneValid && nameIsValid; //&& others valid
+    if (!inputsAreValid) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Couldn't Register Account" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+    return inputsAreValid;
+}
+
+- (BOOL)registerFacebookInputsAreValid
+{
+    BOOL inputsAreValid = YES;
+    NSString *alertMessage = @"";
+    
+    
+    //validate phone number
+    NSString *phoneText = [self.signInFormView textFieldAtIndex:0].text;
+    NSLog(@"phone %@", phoneText);
+    BOOL phoneValid = [Utilities americanPhoneNumberIsValid:phoneText];
+    if (!phoneValid) {
+        alertMessage = @"Please enter a valid phone number";
+    }
+    
+    inputsAreValid = phoneValid; //&& others valid
     if (!inputsAreValid) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Couldn't Register Account" message:alertMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
@@ -460,6 +525,53 @@ typedef enum {
                                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                                    [alertView show];
                                    [self enterRegisterMode];
+                               }];
+}
+
+- (void)registerFacebookAccount
+{
+    if (self.makingNetworkRequest) {
+        return;
+    }
+    self.makingNetworkRequest = YES;
+    
+    NSArray *nameComponents = [self.facebookParams[@"name"] componentsSeparatedByString:@" "];
+    NSString *firstName = [nameComponents firstObject];
+    NSString *lastName = @"";
+    if (nameComponents.count > 1) {
+        lastName = [nameComponents lastObject];
+    }
+    NSString *emailText = self.facebookParams[@"email"];
+    NSString *facebook_id = self.facebookParams[@"facebook_id"];
+    NSString *facebook_token = self.facebookParams[@"facebook_token"];
+    NSString *phoneText = [Utilities normalizePhoneNumber:[self.signInFormView textFieldAtIndex:0].text];
+    NSString *promoCodeText = [self.promoFormView textFieldAtIndex:0].text;
+    NSDictionary *parameters = @{@"first_name" : firstName,
+                                 @"last_name" : lastName,
+                                 @"email" : emailText,
+                                 @"phone_number" : phoneText,
+                                 @"promo_code": promoCodeText,
+                                 @"facebook_id" : facebook_id,
+                                 @"facebook_token" : facebook_token};
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] postPath:@"user/me/" parameters:parameters
+                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
+                                   self.makingNetworkRequest = NO;
+                                   [[AppDelegate sharedAppDelegate] registeredWithResponse:responseObject];
+                                   [[[UIAlertView alloc] initWithTitle:@"Thanks" message:@"Activation code sent via SMS" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                   [self enterActivationMode];
+                               }
+                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                   [LoadingIndictor hideLoadingIndicatorForView:self.view animated:NO];
+                                   self.makingNetworkRequest = NO;
+                                   NSString *message = @"Something went wrong";
+                                   if (operation.response.statusCode == kHTTPStatusCodeBadRequest) {
+                                       message = [error serverErrorMessage];
+                                   }
+                                   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                   [alertView show];
+                                   [self enterFacebookRegisterMode];
                                }];
 }
 

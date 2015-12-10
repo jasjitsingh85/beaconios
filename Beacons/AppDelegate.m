@@ -24,6 +24,7 @@
 #import "LocationTracker.h"
 #import "NotificationManager.h"
 #import "CrashManager.h"
+#import "IntroViewController.h"
 //#import "RegistrationFlowViewController.h"
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
@@ -40,6 +41,7 @@
 @interface AppDelegate()
 
 @property (strong, nonatomic) RegisterViewController *registerViewController;
+@property (strong, nonatomic) IntroViewController *introViewController;
 @property (strong, nonatomic) NSDictionary *tentativeAccountData;
 
 @end
@@ -121,8 +123,7 @@
 
     BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyIsLoggedIn];
     if (!isLoggedIn) {
-        self.registerViewController = [[RegisterViewController alloc] init];
-        self.window.rootViewController = self.registerViewController;
+        [self showIntroView];
     }
     else {
         self.window.rootViewController = self.sideNavigationViewController;
@@ -275,6 +276,32 @@
     [CrashManager setupForUser];
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
 
+}
+
+- (void)showIntroView
+{
+    self.introViewController = [[IntroViewController alloc] init];
+    self.window.rootViewController = self.introViewController;
+}
+
+- (void)startRegistration
+{
+    self.registerViewController = [[RegisterViewController alloc] init];
+    self.window.rootViewController = self.registerViewController;
+}
+
+-(void)startRegistrationWithFacebook:(NSDictionary *)paramaters
+{
+    self.registerViewController = [[RegisterViewController alloc] init];
+    self.registerViewController.facebookParams = paramaters;
+    self.registerViewController.viewMode = ViewModeFacebookRegister;
+    self.window.rootViewController = self.registerViewController;
+}
+
+-(void)startLogin
+{
+    self.registerViewController = [[RegisterViewController alloc] init];
+    self.window.rootViewController = self.registerViewController;
 }
 
 - (void)didFinishPermissions

@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -93,12 +93,12 @@ static dispatch_once_t onceToken;
             [[[UIAlertView alloc] initWithTitle:@"Session Expired" message:@"Please log in" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
     }
-#if DEBUG
-    if (operation.error) {
-        NSString *title = [NSString stringWithFormat:@"error request: %@", operation.request];
-        [[[UIAlertView alloc] initWithTitle:title message:operation.error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }
-#endif
+//#if DEBUG
+//    if (operation.error) {
+//        NSString *title = [NSString stringWithFormat:@"error request: %@", operation.request];
+//        [[[UIAlertView alloc] initWithTitle:title message:operation.error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }
+//#endif
 }
 
 #pragma mark - server calls
