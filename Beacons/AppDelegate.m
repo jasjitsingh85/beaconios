@@ -287,6 +287,7 @@
 - (void)startRegistration
 {
     self.registerViewController = [[RegisterViewController alloc] init];
+    self.registerViewController.viewMode = ViewModeRegister;
     self.window.rootViewController = self.registerViewController;
 }
 
@@ -301,6 +302,7 @@
 -(void)startLogin
 {
     self.registerViewController = [[RegisterViewController alloc] init];
+    self.registerViewController.viewMode = ViewModeSignIn;
     self.window.rootViewController = self.registerViewController;
 }
 
@@ -313,8 +315,8 @@
 
 - (void)logoutOfServer
 {
-    self.registerViewController = [[RegisterViewController alloc] init];
-    self.window.rootViewController = self.registerViewController;
+    self.introViewController = [[IntroViewController alloc] init];
+    self.window.rootViewController = self.introViewController;
     //nil out any view controllers that have user data
     [BeaconManager sharedManager].beacons = nil;
     [self clearUserDefaults];

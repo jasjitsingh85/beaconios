@@ -26,15 +26,11 @@
     
     self.registerViewController = [[RegisterViewController alloc] init];
     [self addChildViewController:self.registerViewController];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+//    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
 //    [self.walkthroughViewController.registerButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
 
 - (void)registerButtonTouched
 {

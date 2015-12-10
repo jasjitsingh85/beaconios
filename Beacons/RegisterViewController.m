@@ -109,7 +109,7 @@
     
     NSArray *activationFormTitles = @[@"CODE"];
     NSArray *activationFormPlaceholders = @[@"* * * *"];
-    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 175, self.view.width, 36*activationFormTitles.count) formTitles:activationFormTitles formPlaceholders:activationFormPlaceholders];
+    self.activationFormView = [[FormView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 36*activationFormTitles.count) formTitles:activationFormTitles formPlaceholders:activationFormPlaceholders];
     self.activationFormView.delegate = self;
     self.activationFormView.backgroundColor = [UIColor whiteColor];
     self.activationFormView.layer.cornerRadius = 4;
@@ -298,9 +298,9 @@
 
 - (void)enterFacebookRegisterMode
 {
-    if (self.viewMode == ViewModeSignIn) {
-        return;
-    }
+//    if (self.viewMode == ViewModeSignIn) {
+//        return;
+//    }
     
     self.promoFormView.hidden = NO;
     self.viewMode = ViewModeFacebookRegister;
@@ -333,9 +333,9 @@
 
 - (void)enterSignInMode
 {
-    if (self.viewMode == ViewModeSignIn) {
-        return;
-    }
+//    if (self.viewMode == ViewModeSignIn) {
+//        return;
+//    }
     
     self.promoFormView.hidden = YES;
     self.viewMode = ViewModeSignIn;
@@ -368,9 +368,9 @@
 
 - (void)enterRegisterMode
 {
-    if (self.viewMode == ViewModeRegister) {
-        return;
-    }
+//    if (self.viewMode == ViewModeRegister) {
+//        return;
+//    }
     self.promoFormView.hidden = NO;
     self.viewMode = ViewModeRegister;
     [self.confirmButton setTitle:@"Register" forState:UIControlStateNormal];
@@ -427,6 +427,7 @@
     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:[attributedText.string rangeOfString:@"Let's get started!"]];
     self.titleLabel.attributedText = attributedText;
     self.titleLabel.alpha = 0;
+    self.titleLabel.y = 100;
     [UIView animateWithDuration:0.3 delay:0.2 options:0 animations:^{
         self.titleLabel.alpha = 1;
     } completion:nil];

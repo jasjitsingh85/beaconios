@@ -23,16 +23,16 @@
 
 @implementation IntroViewController
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return YES;
+//}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
     
     UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
@@ -46,7 +46,7 @@
     CGRect registerButtonFrame = CGRectZero;
     registerButtonFrame.size = CGSizeMake(self.view.width, 45);
     registerButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
-    registerButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height;
+    registerButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 150;
     self.facebookRegisterButton.frame = registerButtonFrame;
     self.facebookRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.facebookRegisterButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
@@ -56,6 +56,36 @@
     [self.facebookRegisterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.facebookRegisterButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
     [self.view addSubview:self.facebookRegisterButton];
+    
+    self.basicRegisterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    CGRect basicRegisterButtonFrame = CGRectZero;
+    basicRegisterButtonFrame.size = CGSizeMake(self.view.width, 45);
+    basicRegisterButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
+    basicRegisterButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 100;
+    self.basicRegisterButton.frame = basicRegisterButtonFrame;
+    self.basicRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.basicRegisterButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    //self.registerButton.layer.cornerRadius = 4;
+    [self.basicRegisterButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
+    [self.basicRegisterButton setTitle:@"Register!" forState:UIControlStateNormal];
+    [self.basicRegisterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.basicRegisterButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    [self.view addSubview:self.basicRegisterButton];
+    
+    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    CGRect loginButtonFrame = CGRectZero;
+    loginButtonFrame.size = CGSizeMake(self.view.width, 45);
+    loginButtonFrame.origin.x = 0.5*(self.view.frame.size.width - registerButtonFrame.size.width);
+    loginButtonFrame.origin.y = self.view.frame.size.height - registerButtonFrame.size.height - 15;
+    self.loginButton.frame = loginButtonFrame;
+    self.loginButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    self.loginButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    //self.registerButton.layer.cornerRadius = 4;
+    [self.loginButton addTarget:self action:@selector(transitionToLoginView) forControlEvents:UIControlEventTouchUpInside];
+    [self.loginButton setTitle:@"Login!" forState:UIControlStateNormal];
+    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.loginButton.titleLabel.font = [ThemeManager boldFontOfSize:16];
+    [self.view addSubview:self.loginButton];
 }
 
 -(void)transitionToRegisterView
@@ -64,7 +94,7 @@
     [appDelegate startRegistration];
 }
 
--(void)loginButtonClicked
+-(void)transitionToLoginView
 {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate startLogin];
