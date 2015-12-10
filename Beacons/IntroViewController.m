@@ -35,39 +35,84 @@
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
     
-    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoNav"]];
-    CGRect logoFrame = logoImageView.frame;
-    logoFrame.origin.x = 0.5*(self.view.frame.size.width - logoFrame.size.width);
-    logoFrame.origin.y = 25;
-    logoImageView.frame = logoFrame;
+    UIImageView *logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotLogoBlackBig"]];
+    logoImageView.width = 115;
+    logoImageView.height = 40;
+    logoImageView.centerX = self.view.width/2;
+    logoImageView.y = 40;
     [self.view addSubview:logoImageView];
     
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIconBig"]];
+    iconImageView.height = 180;
+    iconImageView.width = 180;
+    iconImageView.centerX = self.view.width/2;
+    iconImageView.y = 80;
+    [self.view addSubview:iconImageView];
+    
+    UILabel *subtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 250, self.view.width - 100, 60)];
+    subtitle.centerX = self.view.width/2;
+    subtitle.text = @"Hotspot connects you to the places and people you care about";
+    subtitle.textAlignment = NSTextAlignmentCenter;
+    subtitle.numberOfLines = 0;
+    subtitle.textColor = [UIColor unnormalizedColorWithRed:70 green:70 blue:70 alpha:255];
+    subtitle.font = [ThemeManager regularFontOfSize:14];
+    [self.view addSubview:subtitle];
+    
+    UILabel *extraSubtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 275, self.view.width - 110, 60)];
+    extraSubtitle.centerX = self.view.width/2;
+    extraSubtitle.text = @"in real life";
+    extraSubtitle.textAlignment = NSTextAlignmentCenter;
+    extraSubtitle.numberOfLines = 0;
+    extraSubtitle.textColor = [UIColor unnormalizedColorWithRed:70 green:70 blue:70 alpha:255];
+    extraSubtitle.font = [ThemeManager boldFontOfSize:14];
+    [self.view addSubview:extraSubtitle];
+    
     self.facebookRegisterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.facebookRegisterButton.frame = CGRectMake(0, 300, self.view.width - 75, 35);
+    self.facebookRegisterButton.frame = CGRectMake(0, 340, self.view.width - 75, 35);
     self.facebookRegisterButton.centerX = self.view.width/2;
-    self.facebookRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.facebookRegisterButton.backgroundColor = [UIColor unnormalizedColorWithRed:46 green:83 blue:147 alpha:255];
     self.facebookRegisterButton.layer.cornerRadius = 4;
     [self.facebookRegisterButton addTarget:self action:@selector(transitionToRegisterWithFacebookView) forControlEvents:UIControlEventTouchUpInside];
-    [self.facebookRegisterButton setTitle:@"Register with Facebook" forState:UIControlStateNormal];
+    [self.facebookRegisterButton setTitle:@"          Register with Facebook" forState:UIControlStateNormal];
     [self.facebookRegisterButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.facebookRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:14];
+    [self.facebookRegisterButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.facebookRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:13];
     [self.view addSubview:self.facebookRegisterButton];
     
+    UIImageView *facebookIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"facebookIconWhite"]];
+    facebookIcon.width = 20;
+    facebookIcon.height = 20;
+    facebookIcon.y = 348;
+    facebookIcon.x = 77;
+    [self.view addSubview:facebookIcon];
+    
     self.basicRegisterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.basicRegisterButton.frame = CGRectMake(0, 400, self.view.width - 75, 35);
+    self.basicRegisterButton.frame = CGRectMake(0, 390, self.view.width - 75, 35);
     self.basicRegisterButton.centerX = self.view.width/2;
     self.basicRegisterButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.basicRegisterButton.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
     self.basicRegisterButton.layer.cornerRadius = 4;
     [self.basicRegisterButton addTarget:self action:@selector(transitionToRegisterView) forControlEvents:UIControlEventTouchUpInside];
-    [self.basicRegisterButton setTitle:@"Register with Email" forState:UIControlStateNormal];
+    [self.basicRegisterButton setTitle:@"           Register with your Email" forState:UIControlStateNormal];
     [self.basicRegisterButton setTitleColor:[UIColor unnormalizedColorWithRed:84 green:84 blue:84 alpha:255] forState:UIControlStateNormal];
-    self.basicRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:14];
+    [self.basicRegisterButton setTitleColor:[[UIColor unnormalizedColorWithRed:84 green:84 blue:84 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    self.basicRegisterButton.titleLabel.font = [ThemeManager mediumFontOfSize:13];
     [self.view addSubview:self.basicRegisterButton];
     
+    UIImageView *emailIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"emailIcon"]];
+    emailIcon.width = 19;
+    emailIcon.height = 19;
+    emailIcon.y = 398;
+    emailIcon.x = 78;
+    [self.view addSubview:emailIcon];
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 440, self.view.width - 50, 0.5)];
+    //    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:129 green:129 blue:129 alpha:255];
+    [self.view addSubview:topBorder];
+    
     self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.loginButton.frame = CGRectMake(0, 500, self.view.width, 35);
+    self.loginButton.frame = CGRectMake(0, 440, self.view.width, 35);
     self.loginButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.loginButton.backgroundColor = [UIColor clearColor];
     [self.loginButton addTarget:self action:@selector(transitionToLoginView) forControlEvents:UIControlEventTouchUpInside];
@@ -75,6 +120,11 @@
     [self.loginButton setTitleColor:[UIColor unnormalizedColorWithRed:99 green:99 blue:99 alpha:255] forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [self.view addSubview:self.loginButton];
+    
+    NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:self.loginButton.titleLabel.text];
+    NSRange attrStringRange = [self.loginButton.titleLabel.text rangeOfString:@"Log in"];
+    [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager mediumFontOfSize:14] range:attrStringRange];
+    self.loginButton.titleLabel.attributedText = attrMessage;
 }
 
 -(void)transitionToRegisterView
