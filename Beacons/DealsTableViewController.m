@@ -443,9 +443,9 @@ typedef enum dealTypeStates
         }
         
         //self.feedTableViewController.isRefreshing = NO;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         self.feedTableViewController.events = self.events;
         self.feedTableViewController.feed = self.feed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedFinishRefreshNotification object:self userInfo:nil];
         [[AnalyticsManager sharedManager] openNewsfeedWithNumberOfFollowItems:self.feed.count];
         [self checkNewsfeedNotification];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

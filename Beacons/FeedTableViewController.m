@@ -182,6 +182,7 @@
 
 -(void)feedFinishedRefreshing:(NSNotification *)notification
 {
+    [self.tableView reloadData];
     [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     [self.refreshControl endRefreshing];
     self.isRefreshing = NO;
