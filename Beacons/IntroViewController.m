@@ -51,7 +51,7 @@
     
     UILabel *subtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 250, self.view.width - 100, 60)];
     subtitle.centerX = self.view.width/2;
-    subtitle.text = @"Hotspot connects you to the places and people you care about";
+    subtitle.text = @"Hotspot connects you to places and people you care about";
     subtitle.textAlignment = NSTextAlignmentCenter;
     subtitle.numberOfLines = 0;
     subtitle.textColor = [UIColor unnormalizedColorWithRed:70 green:70 blue:70 alpha:255];
@@ -60,7 +60,7 @@
     
     UILabel *extraSubtitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 275, self.view.width - 110, 60)];
     extraSubtitle.centerX = self.view.width/2;
-    extraSubtitle.text = @"in real life";
+    extraSubtitle.text = @"\xe2\x80\x94 in real life";
     extraSubtitle.textAlignment = NSTextAlignmentCenter;
     extraSubtitle.numberOfLines = 0;
     extraSubtitle.textColor = [UIColor unnormalizedColorWithRed:70 green:70 blue:70 alpha:255];
