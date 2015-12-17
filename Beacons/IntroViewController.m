@@ -45,7 +45,7 @@
     UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIconBig"]];
     iconImageView.height = 180;
     iconImageView.width = 180;
-    iconImageView.centerX = self.view.width/2;
+    iconImageView.centerX = self.view.width/2 - 5;
     iconImageView.y = 80;
     [self.view addSubview:iconImageView];
     

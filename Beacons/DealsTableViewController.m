@@ -147,7 +147,7 @@ typedef enum dealTypeStates
     self.viewContainer = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:self.viewContainer];
     
-    self.initialRadius = 1.6;
+    self.initialRadius = 0.5;
     self.hasRewardItem = NO;
     
     self.tableView = [[UITableView alloc] init];

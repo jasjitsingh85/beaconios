@@ -15,6 +15,7 @@
 #import "SecretSettingsViewController.h"
 #import "User.h"
 #import "GroupsViewController.h"
+#import "FaqViewController.h"
 
 @interface SettingsViewController ()
 
@@ -36,7 +37,7 @@
     buttonFrame.origin = CGPointMake(0, self.view.frame.size.height - buttonFrame.size.height - 64);
     secretButton.frame = buttonFrame;
     secretButton.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [secretButton setTitle:@"Made with \U0000E022 in Madison" forState:UIControlStateNormal];
+    [secretButton setTitle:@"Made with \U0000E022 in New Haven" forState:UIControlStateNormal];
     secretButton.titleLabel.font = [ThemeManager lightFontOfSize:14];
     [secretButton addTarget:self action:@selector(secretButtonTouched:) forControlEvents:UIControlEventTouchDownRepeat];
     [secretButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -55,7 +56,7 @@
 //    if (!section) {
 //        return 1;
 //    }
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,11 +77,11 @@
         }
         else if (indexPath.row == 1) {
             cell.textLabel.text = @"Terms";
-        }
-        else if (indexPath.row == 2) {
+        } else if (indexPath.row == 2) {
             cell.textLabel.text = @"Feedback";
-        }
-        if (indexPath.row == 3) {
+        } else if (indexPath.row == 3) {
+            cell.textLabel.text = @"FAQ";
+        } else if (indexPath.row == 4) {
             cell.textLabel.text = @"Logout";
         }
     }
@@ -92,23 +93,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == 0) {
-//        [self groupsSelected];
-//    }
+
         if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            [self privacySelected];
+            if (indexPath.row == 0) {
+                [self privacySelected];
+            }
+            else if (indexPath.row == 1) {
+                [self termsSelected];
+            }
+            else if (indexPath.row == 2) {
+                [self feedbackSelected];
+            } else if (indexPath.row == 3) {
+                [self faqSelected];
+            } else if (indexPath.row == 4) {
+                [self logoutSelected];
+            }
         }
-        else if (indexPath.row == 1) {
-            [self termsSelected];
-        }
-        else if (indexPath.row == 2) {
-            [self feedbackSelected];
-        }
-        else if (indexPath.row == 3) {
-            [self logoutSelected];
-        }
-    }
 }
 
 //- (void)groupsSelected
@@ -116,6 +116,12 @@
 //    GroupsViewController *groupsViewController = [[GroupsViewController alloc] init];
 //    [self.navigationController pushViewController:groupsViewController animated:YES];
 //}
+
+- (void)faqSelected
+{
+    FaqViewController *faqViewController = [[FaqViewController alloc] init];
+    [self.navigationController pushViewController:faqViewController animated:YES];
+}
 
 - (void)termsSelected
 {
