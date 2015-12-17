@@ -53,6 +53,7 @@
     
     self.backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.venueImageView.size.width, 146)];
     UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
+    self.backgroundGradient.alpha = .8;
     [self.backgroundGradient setImage:gradientImage];
     [self.venueImageView addSubview:self.backgroundGradient];
     
