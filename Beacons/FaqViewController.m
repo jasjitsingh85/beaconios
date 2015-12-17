@@ -15,12 +15,28 @@
 #import "SecretSettingsViewController.h"
 #import "User.h"
 #import "GroupsViewController.h"
+#import "UIButton+HSNavButton.h"
 
 @interface FaqViewController ()
 
 @end
 
 @implementation FaqViewController
+
+-(id)initForModal
+{
+    self = [super init];
+    
+    UIButton *cancelButton = [UIButton navButtonWithTitle:@"Cancel"];
+    [cancelButton addTarget:self action:@selector(dismissView:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    
+    if (!self) {
+        return nil;
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -155,6 +171,11 @@
         height = 125;
     }
     return height;
+}
+
+-(void)dismissView:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view delegate

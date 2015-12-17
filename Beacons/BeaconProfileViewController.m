@@ -49,6 +49,7 @@
 #import "DealStatus.h"
 #import "DealView.h"
 #import "NeedHelpExplanationPopupView.h"
+#import "FaqViewController.h"
 
 @interface BeaconProfileViewController () <FindFriendsViewControllerDelegate, SetBeaconViewControllerDelegate, DealRedemptionViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -82,6 +83,7 @@
 @property (assign, nonatomic) BOOL dealMode;
 @property (assign, nonatomic) BOOL hasCheckedPayment;
 @property (strong, nonatomic) DealView *dealView;
+@property (strong, nonatomic) FaqViewController *faqViewController;
 
 @end
 
@@ -110,6 +112,8 @@
                                                  selector:@selector(showLoadingIndicator:) name:@"ShowLoadingInRedemptionView" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(hideLoadingIndicator:) name:@"HideLoadingInRedemptionView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(showFaq:) name:@"ShowFaq" object:nil];
     }
     return self;
 }
@@ -211,6 +215,8 @@
     
     self.dealView = [[DealView alloc] initWithFrame:CGRectMake(0, 64, self.view.width, 146)];
     [self.view addSubview:self.dealView];
+    
+    self.faqViewController = [[FaqViewController alloc] initForModal];
     
     self.dealRedemptionViewController = [[DealRedemptionViewController alloc] init];
     self.dealRedemptionViewController.delegate = self;
@@ -1315,6 +1321,14 @@
 -(void)hideLoadingIndicator:(id)sender
 {
     [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+}
+
+-(void)showFaq:(id)sender
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.faqViewController];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
 }
 
 

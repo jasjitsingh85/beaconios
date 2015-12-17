@@ -10,4 +10,6 @@
 
 @interface FaqViewController : UITableViewController
 
+-(id)initForModal;
+
 @end

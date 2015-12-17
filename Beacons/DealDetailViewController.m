@@ -27,6 +27,7 @@
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "SocialNotificationPopupView.h"
 #import "WebViewController.h"
+#import "FaqViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -81,6 +82,7 @@
 
 @property (strong, nonatomic) UIButton *openYelpButton;
 @property (strong, nonatomic) WebViewController *webView;
+@property (strong, nonatomic) FaqViewController *faqViewController;
 
 @end
 
@@ -100,6 +102,7 @@
     [self.view addSubview:self.tableView];
     
     self.webView = [[WebViewController alloc] init];
+    self.faqViewController = [[FaqViewController alloc] initForModal];
     
     self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followButton.size = CGSizeMake(60, 20);
@@ -473,7 +476,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 151;
+    CGFloat height = 186;
     if (indexPath.row == self.imageContainer) {
         height = 201;
     } else if (indexPath.row == self.mapContainer) {
@@ -498,7 +501,7 @@
 //                self.dealTime.y = self.dealTextLabel.y + self.dealTextLabel.height + 3;
                 height = dealTextHeight.size.height + 55;
             } else {
-                height = 128;
+                height = 138;
             }
         }
     } else if (indexPath.row == self.happyHourContainer) {
@@ -521,7 +524,7 @@
             CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
             CGRect venueDescriptionHeight = [self.venue.placeDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
             self.venueTextLabel.height = venueDescriptionHeight.size.height + 5;
-            self.openYelpButton.y = self.venueTextLabel.y + self.venueTextLabel.height + 10;
+            self.openYelpButton.y = self.venueTextLabel.y + self.venueTextLabel.height;
             if (![self.venue.yelpRating isEmpty]) {
                 height = venueDescriptionHeight.size.height + 70;
             } else {
@@ -529,7 +532,7 @@
             }
             
             if (!isEmpty(self.venue.yelpID)) {
-                height = height + 38;
+                height = height + 23;
             }
         }
     }
@@ -739,14 +742,14 @@
     if (!isEmpty(self.venue.yelpID)) {
         self.openYelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.openYelpButton.frame = CGRectMake(25, 0, self.venueCell.contentView.width - 50, 25);
-        [self.openYelpButton setTitle:@"SEE IN YELP" forState:UIControlStateNormal];
-        self.openYelpButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        [self.openYelpButton setTitle:@"See in Yelp" forState:UIControlStateNormal];
+        self.openYelpButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
         self.openYelpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-        self.openYelpButton.layer.cornerRadius = 3;
-        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
-        self.openYelpButton.layer.borderWidth = 1.5;
+        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//        self.openYelpButton.layer.cornerRadius = 3;
+//        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+//        self.openYelpButton.layer.borderWidth = 1.5;
         [self.openYelpButton addTarget:self action:@selector(openYelpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [self.venueCell.contentView addSubview:self.openYelpButton];
     }
@@ -868,6 +871,27 @@
     } else {
         docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
     }
+    
+    UIButton *faqButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    faqButton.frame = CGRectMake(25, 108, self.tutorialCell.contentView.width - 50, 25);
+    [faqButton setTitle:@"Read FAQ" forState:UIControlStateNormal];
+    faqButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+    faqButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    //        self.openYelpButton.layer.cornerRadius = 3;
+    //        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+    //        self.openYelpButton.layer.borderWidth = 1.5;
+    [faqButton addTarget:self action:@selector(faqButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.tutorialCell.contentView addSubview:faqButton];
+}
+
+-(void) faqButtonTouched:(id)sender
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.faqViewController];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
 }
 
 -(void) getMapCell
@@ -955,15 +979,15 @@
 //        [addressContainer addSubview:getDirections];
         
         UIButton *getDirectionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        getDirectionsButton.frame = CGRectMake(25, 230, self.mapCell.contentView.width - 50, 25);
-        [getDirectionsButton setTitle:@"GET DIRECTIONS" forState:UIControlStateNormal];
-        getDirectionsButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        getDirectionsButton.frame = CGRectMake(25, 225, self.mapCell.contentView.width - 50, 25);
+        [getDirectionsButton setTitle:@"Get Directions" forState:UIControlStateNormal];
+        getDirectionsButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
         getDirectionsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-        getDirectionsButton.layer.cornerRadius = 3;
-        getDirectionsButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
-        getDirectionsButton.layer.borderWidth = 1.5;
+        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//        getDirectionsButton.layer.cornerRadius = 3;
+//        getDirectionsButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+//        getDirectionsButton.layer.borderWidth = 1.5;
         [getDirectionsButton addTarget:self action:@selector(getDirectionsToBeacon:) forControlEvents:UIControlEventTouchUpInside];
         [self.mapCell.contentView addSubview:getDirectionsButton];
     }];

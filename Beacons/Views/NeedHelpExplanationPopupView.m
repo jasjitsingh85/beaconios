@@ -51,11 +51,11 @@
     self.inviteTextView.font = [ThemeManager lightFontOfSize:5.5*1.3];
     [self.chatBubble addSubview:self.inviteTextView];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"helpSign"]];
-    drinkIcon.size = CGSizeMake(30, 30);
-    drinkIcon.centerX = self.width/2;
-    drinkIcon.y = 130;
-    [self.imageView addSubview:drinkIcon];
+//    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"helpSign"]];
+//    drinkIcon.size = CGSizeMake(30, 30);
+//    drinkIcon.centerX = self.width/2;
+//    drinkIcon.y = 130;
+//    [self.imageView addSubview:drinkIcon];
     
     UILabel *headerTitle = [[UILabel alloc] init];
     headerTitle.height = 30;
@@ -63,10 +63,23 @@
     headerTitle.textAlignment = NSTextAlignmentCenter;
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
-    headerTitle.y = 150;
+    headerTitle.y = 130;
     headerTitle.text = @"NEED HELP?";
     [self.imageView addSubview:headerTitle];
     
+    UIButton *faqButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    faqButton.frame = CGRectMake(25, 255, self.width - 50, 25);
+    [faqButton setTitle:@"Read FAQ" forState:UIControlStateNormal];
+    faqButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+    faqButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    //        self.openYelpButton.layer.cornerRadius = 3;
+    //        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+    //        self.openYelpButton.layer.borderWidth = 1.5;
+    [faqButton addTarget:self action:@selector(faqButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.imageView addSubview:faqButton];
+
     UILabel *callHeader = [[UILabel alloc] init];
     callHeader.height = 30;
     callHeader.width = self.width;
@@ -139,7 +152,7 @@
 {
     _beacon = beacon;
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, self.width - 110, 100)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.width - 110, 100)];
     textLabel.centerX = self.width/2;
     textLabel.font = [ThemeManager lightFontOfSize:12];
     textLabel.textAlignment = NSTextAlignmentCenter;
@@ -200,6 +213,20 @@
 //        [LoadingIndictor hideLoadingIndicatorForView:self.superview animated:YES];
         [self removeFromSuperview];
     } failure:nil];
+}
+
+-(void) faqButtonTouched:(id)sender
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        self.backgroundView.alpha = 0;
+        CGFloat angle = -M_1_PI + (float) random()/RAND_MAX *2*M_1_PI;
+        CGAffineTransform transform = CGAffineTransformMakeTranslation(0, self.height);
+        transform = CGAffineTransformRotate(transform, angle);
+        self.imageView.transform = transform;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowFaq" object:self];
+    }];
 }
 
 @end
