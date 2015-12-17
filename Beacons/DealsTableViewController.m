@@ -30,7 +30,6 @@
 #import "HotspotAnnotation.h"
 //#import "HappyHour.h"
 //#import "HappyHourVenue.h"
-#import "RewardTableViewCell.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>

@@ -83,6 +83,9 @@
 @property (strong, nonatomic) UIButton *openYelpButton;
 @property (strong, nonatomic) WebViewController *webView;
 @property (strong, nonatomic) FaqViewController *faqViewController;
+@property (strong, nonatomic) UIView *checkInLabelContainer;
+@property (strong, nonatomic) UILabel *checkInText;
+@property (strong, nonatomic) UIImageView *checkInIcon;
 
 @end
 
@@ -123,19 +126,19 @@
     self.getDealButtonContainer = [[UIView alloc] init];
     self.getDealButtonContainer.backgroundColor = [UIColor whiteColor];
     self.getDealButtonContainer.width = self.view.width;
-    self.getDealButtonContainer.height = 90;
-    self.getDealButtonContainer.y = self.view.height - 90;
+    self.getDealButtonContainer.height = 100;
+    self.getDealButtonContainer.y = self.view.height - 100;
     self.getDealButtonContainer.userInteractionEnabled = YES;
     [self.view addSubview:self.getDealButtonContainer];
     
-    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.width - 70, 11, 100, 30)];
+    UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.width - 70, 8.5, 100, 30)];
     switchView.on = YES;
     switchView.transform = CGAffineTransformMakeScale(0.75, .75);
-    switchView.onTintColor = [[ThemeManager sharedTheme] lightBlueColor];
+    switchView.onTintColor = [[ThemeManager sharedTheme] redColor];
     [switchView addTarget:self action:@selector(updateToggle:) forControlEvents:UIControlEventTouchUpInside];
     [self.getDealButtonContainer addSubview:switchView];
     
-    self.togglePrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 16, self.view.width, 20)];
+    self.togglePrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 13.5, self.view.width, 20)];
     self.togglePrompt.font = [ThemeManager lightFontOfSize:12];
     self.togglePrompt.textAlignment = NSTextAlignmentLeft;
 //    self.togglePrompt.text = @"Friends - Your friends see where you're going";
@@ -143,12 +146,16 @@
     
     self.togglePromptHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.togglePromptHelpButton.size = CGSizeMake(24, 24);
-    self.togglePromptHelpButton.y = 15.5;
+    self.togglePromptHelpButton.y = 13;
     [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"blackHelpButton"] forState:UIControlStateNormal];
 //    [self.mapListToggleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [self.mapListToggleButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     [self.togglePromptHelpButton addTarget:self action:@selector(showHelpModal:) forControlEvents:UIControlEventTouchUpInside];
     [self.getDealButtonContainer addSubview:self.togglePromptHelpButton];
+    
+    self.checkInText = [[UILabel alloc] initWithFrame:CGRectMake(12, 3, self.view.width, 20)];
+    self.checkInText.textAlignment = NSTextAlignmentCenter;
+    self.checkInText.font = [ThemeManager lightFontOfSize:12];
     
     [self updateToggle:switchView];
     
@@ -178,13 +185,22 @@
     //    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
     
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.getDealButton.size = CGSizeMake(self.view.width - 50, 30);
+    self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
     self.getDealButton.centerX = self.view.width/2.0;
-    self.getDealButton.y = 50;
+    self.getDealButton.y = 47;
     self.getDealButton.layer.cornerRadius = 4;
-    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
     [self.getDealButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    
+    self.checkInIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkInIcon"]];
+    self.checkInIcon.y = 5.75;
+    self.checkInIcon.x = 69;
+    
+    self.checkInLabelContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 82, self.view.width, 25)];
+    [self.checkInLabelContainer addSubview:self.checkInIcon];
+    [self.checkInLabelContainer addSubview:self.checkInText];
+    [self.getDealButtonContainer addSubview:self.checkInLabelContainer];
     
     [self.getDealButtonContainer addSubview:self.getDealButton];
     
@@ -328,7 +344,18 @@
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
     } else {
         [self.getDealButtonContainer setHidden:NO];
-        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 120.0, 0.0);
+        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 110.0, 0.0);
+    }
+
+    if ([self.deal.checkInCount intValue] > 24) {
+        self.getDealButtonContainer.height = 112;
+        self.getDealButtonContainer.y = self.view.height - 112;
+        self.checkInText.text = [NSString stringWithFormat:@"%@ people have checked-in here", self.venue.deal.checkInCount];
+        self.checkInLabelContainer.hidden = NO;
+    } else {
+        self.getDealButtonContainer.height = 97;
+        self.getDealButtonContainer.y = self.view.height - 97;
+        self.checkInLabelContainer.hidden = YES;
     }
     
     [self updateButtonText];

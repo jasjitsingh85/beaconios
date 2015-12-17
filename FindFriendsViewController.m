@@ -395,7 +395,7 @@
     [self view];
     _deal = deal;
     //[self updateNavTitleForDeal:deal];
-    self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
+//    self.composeMessageTextView.text = [self defaultInviteMessageForDeal:deal];
 //    [self updateInviteButtonTextForDeal:nil];
     
     ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
@@ -410,14 +410,14 @@
     return customMessage.length > maxLength;
 }
 
-- (NSString *)defaultInviteMessageForDeal:(Deal *)deal
-{
-    NSString *text = [NSString stringWithFormat:@"Hey! You should meet us at %@ at %@ %@. %@", deal.venue.name, self.date.formattedTime, self.date.formattedDay.lowercaseString, deal.invitePrompt];
-    if ([self customMessageExceedsMaxLength:text]) {
-        text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. %@", deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.invitePrompt];
-    }
-    return text;
-}
+//- (NSString *)defaultInviteMessageForDeal:(Deal *)deal
+//{
+//    NSString *text = [NSString stringWithFormat:@"Hey! You should meet us at %@ at %@ %@. %@", deal.venue.name, self.date.formattedTime, self.date.formattedDay.lowercaseString, deal.invitePrompt];
+//    if ([self customMessageExceedsMaxLength:text]) {
+//        text = [NSString stringWithFormat:@"Hey! You should meet us at %@, at %@. %@", deal.venue.name, self.date.formattedTime.lowercaseString, self.deal.invitePrompt];
+//    }
+//    return text;
+//}
 
 - (void) setTextMoreFriends:(BOOL)textMoreFriends
 {
@@ -1321,7 +1321,7 @@
     self.date = datePicker.date;
     self.dateLabel.text = self.date.fullFormattedDate;
     if (!self.modifiedMessage) {
-        self.composeMessageTextView.text = [self defaultInviteMessageForDeal:self.deal];
+//        self.composeMessageTextView.text = [self defaultInviteMessageForDeal:self.deal];
     }
 }
 

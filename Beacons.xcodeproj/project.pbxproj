@@ -78,8 +78,8 @@
 		41148CB91B7A2A9A00F4CA17 /* selectedFavorite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CB71B7A2A9A00F4CA17 /* selectedFavorite@2x.png */; };
 		41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */; };
 		411B4F7C1C22A11B00CA7100 /* FaqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F7B1C22A11B00CA7100 /* FaqViewController.m */; };
+		411B4F7E1C236EB000CA7100 /* checkInIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
-		41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
@@ -449,9 +449,8 @@
 		41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsfeedIcon@2x.png"; sourceTree = "<group>"; };
 		411B4F7A1C22A11100CA7100 /* FaqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaqViewController.h; sourceTree = "<group>"; };
 		411B4F7B1C22A11B00CA7100 /* FaqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaqViewController.m; sourceTree = "<group>"; };
+		411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkInIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardTableViewCell.h; sourceTree = "<group>"; };
-		41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardTableViewCell.m; sourceTree = "<group>"; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
@@ -969,10 +968,8 @@
 				41C987091C03856700DD595D /* DealDetailImageCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
 				960631E81946206B0011E132 /* DealTableViewCell.m */,
-				41246CB91B031EE400EFB8F0 /* RewardTableViewCell.h */,
 				4105DA971B7BC1E90006B888 /* FeedItemTableViewCell.h */,
 				4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */,
-				41246CBA1B031EF300EFB8F0 /* RewardTableViewCell.m */,
 				9666524B19786CA300EE85F8 /* DealExplanationView.h */,
 				9666524C19786CA300EE85F8 /* DealExplanationView.m */,
 			);
@@ -1344,6 +1341,7 @@
 			children = (
 				41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */,
 				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
+				411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */,
 				41FFB0141C15248C00947EEC /* unfollowButton@2x.png */,
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
 				41FFB0181C153F7400947EEC /* newGrayPin@2x.png */,
@@ -1763,6 +1761,7 @@
 				41C987161C042EB400DD595D /* happyHourIcon@2x.png in Resources */,
 				4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */,
 				41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */,
+				411B4F7E1C236EB000CA7100 /* checkInIcon@2x.png in Resources */,
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
 				41030F641B51B0F200252158 /* hotspotIcon@2x.png in Resources */,
 				41FFB0221C19EFDF00947EEC /* hotspotIconBig@2x.png in Resources */,
@@ -1969,7 +1968,6 @@
 				4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */,
 				4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
-				41246CBB1B031EF300EFB8F0 /* RewardTableViewCell.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				4158AE6E1B46F0620034BA4A /* ContactExplanationPopupView.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
