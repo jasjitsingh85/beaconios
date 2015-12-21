@@ -116,15 +116,15 @@
             NSRange range;
             if (contact) {
                 userLabel.text = contact.fullName;
-                if (contact.lastName) {
-                    range = [userLabel.text rangeOfString:[NSString stringWithFormat:@" %@", contact.lastName]];
+                if (contact.firstName) {
+                    range = [userLabel.text rangeOfString:[NSString stringWithFormat:@" %@", contact.firstName]];
                     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:userLabel.text];
                     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:range];
                     userLabel.attributedText = attributedText;
                 }
             } else {
                 userLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-                range = [userLabel.text rangeOfString:user.lastName];
+                range = [userLabel.text rangeOfString:user.firstName];
                 NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:userLabel.text];
                 [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:13] range:range];
                 userLabel.attributedText = attributedText;
