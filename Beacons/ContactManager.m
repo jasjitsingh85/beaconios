@@ -10,10 +10,10 @@
 #import "Contact.h"
 #import "Group.h"
 #import "Utilities.h"
+#import "User.h"
 
 @interface ContactManager()
 
-@property (strong, nonatomic) NSDictionary *contactDictionary;
 @property (strong, nonatomic) NSArray *groups;
 
 @end
@@ -152,6 +152,7 @@
         NSDictionary *parameters = @{@"contact" : contactParameter};
         [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                       [self updateManageFriendsFromServer:nil failure:nil];
                                        [self updateFriendsFromServer:nil failure:nil];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -273,6 +274,36 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+}
+
+- (void)updateManageFriendsFromServer:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
+{
+    NSURLRequest *request = [[APIClient sharedClient] requestWithMethod:@"GET" path:@"friend/manage/" parameters:nil];
+    self.updateManageFriendsOperation = [[APIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *approvedUsers = [[NSMutableArray alloc] init];
+        NSMutableArray *notApprovedUsers = [[NSMutableArray alloc] init];
+        NSArray *approvedUserData = responseObject[@"friends"];
+        NSArray *notApprovedUserData = responseObject[@"removed_friends"];
+        for (NSDictionary *userData in approvedUserData) {
+            User *user = [[User alloc] initWithUserDictionary:userData];
+            if (user) {
+                [approvedUsers addObject:user];
+            }
+        }
+        
+        for (NSDictionary *userData in notApprovedUserData) {
+            User *user = [[User alloc] initWithUserDictionary:userData];
+            if (user) {
+                [notApprovedUsers addObject:user];
+            }
+        }
+        
+        self.approvedUsers = approvedUsers;
+        self.notApprovedUsers = notApprovedUsers;
+    } failure:nil];
+    
+    [[APIClient sharedClient] enqueueHTTPRequestOperation:self.updateManageFriendsOperation];
+    
 }
 
 - (void)updateFriendsFromServer:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure

@@ -309,7 +309,7 @@
 - (void)didFinishPermissions
 {
     self.window.rootViewController = self.sideNavigationViewController;
-    //[[ContactManager sharedManager] syncContacts];
+    [[ContactManager sharedManager] syncContacts];
     [[LocationTracker sharedTracker] requestLocationPermission];
 }
 

@@ -14,9 +14,13 @@
 @interface ContactManager : NSObject
 
 @property (strong, nonatomic) AFHTTPRequestOperation *updateFriendsOperation;
+@property (strong, nonatomic) AFHTTPRequestOperation *updateManageFriendsOperation;
 @property (strong, nonatomic) NSArray *recommendedContacts;
 @property (strong, nonatomic) NSArray *recentContacts;
 @property (strong, nonatomic) NSArray *usersWhoAreContacts;
+@property (strong, nonatomic) NSArray *approvedUsers;
+@property (strong, nonatomic) NSArray *notApprovedUsers;
+@property (strong, nonatomic) NSDictionary *contactDictionary;
 @property (readonly) ABAuthorizationStatus authorizationStatus;
 
 + (ContactManager *)sharedManager;

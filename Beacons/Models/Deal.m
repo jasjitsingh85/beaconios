@@ -32,7 +32,6 @@
     self.itemPointCost = dictionary[@"item_point_cost"];
     self.itemMarketPrice = dictionary[@"item_market_price"];
     self.checkInCount = dictionary[@"total_check_ins"];
-    NSLog(@"%@", self.checkInCount);
 //    NSNumber *bonusRequirement = dictionary[@"bonus_invite_requirement"];
 //    if (!isEmpty(bonusRequirement)) {
 //        self.bonusRequirement = bonusRequirement;

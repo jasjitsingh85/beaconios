@@ -79,6 +79,9 @@
 		41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41148CBA1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png */; };
 		411B4F7C1C22A11B00CA7100 /* FaqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F7B1C22A11B00CA7100 /* FaqViewController.m */; };
 		411B4F7E1C236EB000CA7100 /* checkInIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */; };
+		411B4F821C273A1300CA7100 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F811C273A1300CA7100 /* FriendsViewController.m */; };
+		411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F841C273C5800CA7100 /* FriendsTableViewController.m */; };
+		411B4F871C27A0B100CA7100 /* friendIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411B4F861C27A0B100CA7100 /* friendIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
@@ -450,6 +453,11 @@
 		411B4F7A1C22A11100CA7100 /* FaqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaqViewController.h; sourceTree = "<group>"; };
 		411B4F7B1C22A11B00CA7100 /* FaqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaqViewController.m; sourceTree = "<group>"; };
 		411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkInIcon@2x.png"; sourceTree = "<group>"; };
+		411B4F801C273A0400CA7100 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		411B4F811C273A1300CA7100 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		411B4F831C273C4200CA7100 /* FriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsTableViewController.h; sourceTree = "<group>"; };
+		411B4F841C273C5800CA7100 /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
+		411B4F861C27A0B100CA7100 /* friendIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
@@ -1005,6 +1013,17 @@
 			name = Feed;
 			sourceTree = "<group>";
 		};
+		411B4F7F1C27397D00CA7100 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				411B4F801C273A0400CA7100 /* FriendsViewController.h */,
+				411B4F811C273A1300CA7100 /* FriendsViewController.m */,
+				411B4F831C273C4200CA7100 /* FriendsTableViewController.h */,
+				411B4F841C273C5800CA7100 /* FriendsTableViewController.m */,
+			);
+			name = Social;
+			sourceTree = "<group>";
+		};
 		413B7B181AD44EE500EB5385 /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -1030,9 +1049,9 @@
 				1F465C211763F97D00F35A8B /* Venue.h */,
 				1F465C221763F97D00F35A8B /* Venue.m */,
 				1F465C29176510EB00F35A8B /* Contact.h */,
+				1F465C2A176510EB00F35A8B /* Contact.m */,
 				4105DA941B7AEFA30006B888 /* FeedItem.h */,
 				4105DA951B7AEFBE0006B888 /* FeedItem.m */,
-				1F465C2A176510EB00F35A8B /* Contact.m */,
 				96A9873317E6A6C6007D77B8 /* BeaconImage.h */,
 				96A9873417E6A6C6007D77B8 /* BeaconImage.m */,
 				96E565D418E87CB80007545D /* Group.h */,
@@ -1180,6 +1199,7 @@
 		96585A15199D3A6000A6E02A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				411B4F7F1C27397D00CA7100 /* Social */,
 				4105DA901B7AEEEF0006B888 /* Feed */,
 				413B7B181AD44EE500EB5385 /* Payments */,
 				96585A14199D39CD00A6E02A /* Deals */,
@@ -1358,6 +1378,7 @@
 				41FD06221B377C6700F7DD08 /* directionsIcon@2x.png */,
 				41FFB0241C19FF0A00947EEC /* facebookIconWhite@2x.png */,
 				41FFB01C1C1549C300947EEC /* mapVenueBackground@2x.png */,
+				411B4F861C27A0B100CA7100 /* friendIcon@2x.png */,
 				410165EF1BF5A84700F0219C /* grayPin@2x.png */,
 				41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */,
 				41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */,
@@ -1694,6 +1715,7 @@
 				41FD06311B390A9D00F7DD08 /* tapDivider@2x.png in Resources */,
 				41CB5C6D1C0D71B70077485B /* socialNotificationBackground@2x.png in Resources */,
 				4158AE631B44A5460034BA4A /* creditCardSideNav@2x.png in Resources */,
+				411B4F871C27A0B100CA7100 /* friendIcon@2x.png in Resources */,
 				410165F01BF5A84700F0219C /* grayPin@2x.png in Resources */,
 				41F97BB81BBB9F7F003D1D86 /* contactPermissions@2x.png in Resources */,
 				96D52D261838415300496923 /* SecretSettingsViewController.xib in Resources */,
@@ -1966,6 +1988,7 @@
 				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */,
+				411B4F821C273A1300CA7100 /* FriendsViewController.m in Sources */,
 				4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
@@ -1988,6 +2011,7 @@
 				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
 				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
 				41CB5C6B1C0D6EC40077485B /* SocialNotificationPopupView.m in Sources */,
+				411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */,
 				963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */,
 				41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,

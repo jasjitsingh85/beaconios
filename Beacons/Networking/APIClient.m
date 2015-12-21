@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -510,6 +510,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{@"venue_id" : venueID};
     [[APIClient sharedClient] getPath:@"check-in/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getManageFriends:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"friend/manage/" parameters:parameters success:success failure:failure];
 }
 
 @end

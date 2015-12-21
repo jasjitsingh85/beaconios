@@ -66,6 +66,7 @@ static dispatch_once_t onceToken;
     }
     self.firstName = userDictionary[@"first_name"];
     self.lastName = userDictionary[@"last_name"];
+    self.username = userDictionary[@"username"];
     self.userID = userDictionary[@"id"];
     return self;
 }

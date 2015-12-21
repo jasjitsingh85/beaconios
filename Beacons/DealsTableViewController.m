@@ -337,7 +337,7 @@ typedef enum dealTypeStates
     [self.selectedDealInMap addSubview:self.venueView];
     
     self.mapListToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mapListToggleButton.size = CGSizeMake(70, 70);
+    self.mapListToggleButton.size = CGSizeMake(70, 62);
     self.mapListToggleButton.x = self.view.width - 80;
     self.mapListToggleButton.y = self.view.height - 80;
     [self.mapListToggleButton setImage:[UIImage imageNamed:@"mapToggleButton"] forState:UIControlStateNormal];

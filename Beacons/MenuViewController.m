@@ -30,6 +30,7 @@
 #import "PaymentsViewController.h"
 #import "AppInviteViewController.h"
 #import "ContactManager.h"
+#import "FriendsViewController.h"
 
 
 @interface MenuViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -198,7 +199,7 @@
     [self.menuViewContainer addSubview:self.promoContainer];
     
     self.promoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.promoButton setTitle:@"PROMOTIONS" forState:UIControlStateNormal];
+    [self.promoButton setTitle:@"FRIENDS" forState:UIControlStateNormal];
     [self.promoButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     self.promoButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
     self.promoButton.titleLabel.textColor = [UIColor whiteColor];
@@ -207,8 +208,8 @@
     self.promoButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.promoButton addTarget:self action:@selector(promoButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *promoIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"promoCode"]];
-    promoIcon.frame = CGRectMake(16, 12, 30, 30);
+    UIImageView *promoIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"friendIcon"]];
+    promoIcon.frame = CGRectMake(18, 10, 28, 28);
     promoIcon.contentMode=UIViewContentModeScaleAspectFill;
     [self.promoButton addSubview:promoIcon];
     [self.promoContainer addSubview:self.promoButton];
@@ -255,9 +256,9 @@
     [[BeaconManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingBeacons)) options:0 context:NULL];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconUpdated:) name:kNotificationBeaconUpdated object:nil];
     
-    [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers)) options:0 context:NULL];
-    [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingRewards)) options:0 context:NULL];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardsUpdated:) name:kNotificationRewardsUpdated object:nil];
+//    [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(vouchers)) options:0 context:NULL];
+//    [[RewardManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUpdatingRewards)) options:0 context:NULL];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewardsUpdated:) name:kNotificationRewardsUpdated object:nil];
     
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -479,8 +480,8 @@
 
 - (void)promoButtonTouched:(id)sender
 {
-    PromoViewController *promoViewController = [[PromoViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:promoViewController animated:YES];
+    FriendsViewController *friendsViewController = [[FriendsViewController alloc] init];
+    [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:friendsViewController animated:YES];
 }
 
 - (void)inviteFriendsButtonTouched:(id)sender
@@ -511,13 +512,13 @@
    [self.tableView reloadData];
 }
 
-- (void)rewardsUpdated:(NSNotification *)notification
-{
-    [[RewardManager sharedManager] updateActiveVouchers:^(NSArray *beacons) {
-        [self.tableView reloadData];
-    } failure:nil];
-    
-}
+//- (void)rewardsUpdated:(NSNotification *)notification
+//{
+//    [[RewardManager sharedManager] updateActiveVouchers:^(NSArray *beacons) {
+//        [self.tableView reloadData];
+//    } failure:nil];
+//    
+//}
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
