@@ -34,16 +34,40 @@
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     [self.tableView setLayoutMargins:UIEdgeInsetsZero];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
-    [self updateFriendList];
-    [self.tableView reloadData];
+    
+    self.allContacts = [ContactManager sharedManager].contactDictionary;
+    [self refreshFriends];
 
 }
 
--(void)updateFriendList
+-(void)refreshFriends
 {
-    self.allContacts = [ContactManager sharedManager].contactDictionary;
-    self.approvedUsers = [ContactManager sharedManager].approvedUsers;
-    self.notApprovedUsers = [ContactManager sharedManager].notApprovedUsers;
+    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    [[APIClient sharedClient] getManageFriends:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *approvedUsers = [[NSMutableArray alloc] init];
+        NSMutableArray *notApprovedUsers = [[NSMutableArray alloc] init];
+        NSArray *approvedUserData = responseObject[@"friends"];
+        NSArray *notApprovedUserData = responseObject[@"removed_friends"];
+        for (NSDictionary *userData in approvedUserData) {
+            User *user = [[User alloc] initWithUserDictionary:userData];
+            if (user) {
+                [approvedUsers addObject:user];
+            }
+        }
+        
+        for (NSDictionary *userData in notApprovedUserData) {
+            User *user = [[User alloc] initWithUserDictionary:userData];
+            if (user) {
+                [notApprovedUsers addObject:user];
+            }
+        }
+        self.approvedUsers = approvedUsers;
+        self.notApprovedUsers = notApprovedUsers;
+        [self.tableView reloadData];
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -70,7 +94,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"%ld-%ld", (long)indexPath.section, (long)indexPath.row];
+    User *user;
+    if (indexPath.section == 1) {
+        user = self.approvedUsers[indexPath.row];
+    } else {
+        user = self.notApprovedUsers[indexPath.row];
+    }
+    
+    NSString *userFullName = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"%ld-%ld-%@", (long)indexPath.section, (long)indexPath.row, userFullName];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -79,7 +111,6 @@
         [cell.contentView addSubview:userLabel];
         
         if (indexPath.section == 1) {
-            User *user = self.approvedUsers[indexPath.row];
             NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:user.username];
             Contact *contact = self.allContacts[normalizedPhoneNumber];
             NSRange range;
@@ -111,10 +142,11 @@
             [removeButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
             removeButton.titleLabel.font = [ThemeManager regularFontOfSize:11];
             [removeButton setTitle:@"Remove" forState:UIControlStateNormal];
+            removeButton.tag = indexPath.row;
+            [removeButton addTarget:self action:@selector(removeButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:removeButton];
 
         } else if (indexPath.section == 2) {
-            User *user = self.notApprovedUsers[indexPath.row];
             NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:user.username];
             Contact *contact = self.allContacts[normalizedPhoneNumber];
             if (contact) {
@@ -123,19 +155,21 @@
                 userLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
             }
             
-            UIButton *removeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            removeButton.size = CGSizeMake(65, 25);
-            removeButton.x = cell.size.width - 90;
-            removeButton.y = 7.5;
-            removeButton.layer.cornerRadius = 4;
-            removeButton.backgroundColor = [UIColor whiteColor];
-            removeButton.layer.borderColor = [UIColor blackColor].CGColor;
-            removeButton.layer.borderWidth = 1;
-            [removeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [removeButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-            removeButton.titleLabel.font = [ThemeManager regularFontOfSize:11];
-            [removeButton setTitle:@"Add" forState:UIControlStateNormal];
-            [cell.contentView addSubview:removeButton];
+            UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            addButton.size = CGSizeMake(65, 25);
+            addButton.x = cell.size.width - 90;
+            addButton.y = 7.5;
+            addButton.layer.cornerRadius = 4;
+            addButton.backgroundColor = [UIColor whiteColor];
+            addButton.layer.borderColor = [UIColor blackColor].CGColor;
+            addButton.layer.borderWidth = 1;
+            [addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [addButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+            addButton.titleLabel.font = [ThemeManager regularFontOfSize:11];
+            [addButton setTitle:@"Add" forState:UIControlStateNormal];
+            addButton.tag = indexPath.row;
+            [addButton addTarget:self action:@selector(addButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:addButton];
         }
         
     }
@@ -175,5 +209,26 @@
     return 40;
 }
 
+-(void)removeButtonTouched:(UIButton *)sender
+{
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    User *user = self.approvedUsers[sender.tag];
+    [[APIClient sharedClient] toggleFriendBlocking:user.userID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self refreshFriends];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self refreshFriends];
+    }];
+}
+
+-(void)addButtonTouched:(UIButton *)sender
+{
+//    [LoadingIndictor showLoadingIndicatorInView:self.tableView animated:YES];
+    User *user = self.notApprovedUsers[sender.tag];
+    [[APIClient sharedClient] toggleFriendBlocking:user.userID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self refreshFriends];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self refreshFriends];
+    }];
+}
 
 @end

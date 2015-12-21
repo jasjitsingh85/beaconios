@@ -518,4 +518,10 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] getPath:@"friend/manage/" parameters:parameters success:success failure:failure];
 }
 
+- (void)toggleFriendBlocking:(NSNumber *)userID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"user_id" : userID };
+    [[APIClient sharedClient] postPath:@"friend/manage/" parameters:parameters success:success failure:failure];
+}
+
 @end
