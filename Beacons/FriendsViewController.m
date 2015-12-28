@@ -23,6 +23,18 @@
 
 @implementation FriendsViewController
 
+- (id)initWithModal
+{
+    self = [super init];
+    if (self) {
+        UIButton *applyButton = [UIButton navButtonBoldWithTitle:@"Done"];
+        [applyButton addTarget:self action:@selector(dismissView:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:applyButton];
+    }
+    return self;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,6 +46,11 @@
     [self.view addSubview:self.friendsTableViewController.view];
     self.friendsTableViewController.view.frame = self.view.bounds;
     
+}
+
+-(void)dismissView:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

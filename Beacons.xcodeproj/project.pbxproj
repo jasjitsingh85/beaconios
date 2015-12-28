@@ -115,6 +115,9 @@
 		41593DB71BE97F6C00711E57 /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41593DB61BE97F6C00711E57 /* checkmark@2x.png */; };
 		41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */; };
 		417CE4961BE53C67009D4B9A /* setupNewsfeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */; };
+		418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AC1C2DA85C0037D55A /* friends@2x.png */; };
+		418366AF1C2DB9CE0037D55A /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */; };
+		418366B11C2E00010037D55A /* dropShadowTopBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */; };
 		41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
@@ -501,6 +504,9 @@
 		41593DB61BE97F6C00711E57 /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
 		41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newHotspotLogo@2x.png"; sourceTree = "<group>"; };
 		417CE4951BE53C67009D4B9A /* setupNewsfeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "setupNewsfeed@2x.png"; sourceTree = "<group>"; };
+		418366AC1C2DA85C0037D55A /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
+		418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
+		418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropShadowTopBorder@2x.png"; sourceTree = "<group>"; };
 		41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNewsfeedPopupView.m; sourceTree = "<group>"; };
 		41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNewsfeedPopupView.h; sourceTree = "<group>"; };
 		41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealsIcon@2x.png"; sourceTree = "<group>"; };
@@ -1410,12 +1416,15 @@
 				41E23A831B33A9B100676254 /* slider@2x.png */,
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
+				418366AC1C2DA85C0037D55A /* friends@2x.png */,
 				4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */,
+				418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */,
 				4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */,
 				41148CB21B7998D900F4CA17 /* trayIcon@2x.png */,
 				41593DB61BE97F6C00711E57 /* checkmark@2x.png */,
 				96D1D560199B2D06007216F3 /* whiteChevron@2x.png */,
 				41C4B8371BF073B200D471D6 /* updatedBackgroundGradient@2x.png */,
+				418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */,
 				41E23A871B33B0A200676254 /* hotspotSliderLabel@2x.png */,
 				41E6B3ED1AEE350A00D34EAF /* addFriends@2x.png */,
 				41FFB0121C14934100947EEC /* drinkImage@2x.png */,
@@ -1651,6 +1660,7 @@
 				964263B4181CEDF80015375C /* SugarPie.ttf in Resources */,
 				963399461758512100AF9D89 /* InfoPlist.strings in Resources */,
 				41FFB01A1C153F7400947EEC /* newGrayPin@2x.png in Resources */,
+				418366B11C2E00010037D55A /* dropShadowTopBorder@2x.png in Resources */,
 				41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */,
 				41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
@@ -1771,6 +1781,7 @@
 				41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */,
 				41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
+				418366AF1C2DB9CE0037D55A /* settingsButton@2x.png in Resources */,
 				41338FD619FA38CA0022211C /* marker@2x.png in Resources */,
 				4105DAA71B7F9F270006B888 /* crossOutButton@2x.png in Resources */,
 				41FD06271B377C6700F7DD08 /* documentIcon@2x.png in Resources */,
@@ -1820,6 +1831,7 @@
 				4158AE611B43BBC20034BA4A /* menuButtonWithNotification@2x.png in Resources */,
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
 				41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */,
+				418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,

@@ -16,6 +16,7 @@
 #import "User.h"
 #import "GroupsViewController.h"
 #import "FaqViewController.h"
+#import "PromoViewController.h"
 
 @interface SettingsViewController ()
 
@@ -56,7 +57,7 @@
 //    if (!section) {
 //        return 1;
 //    }
-    return 5;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,6 +83,8 @@
         } else if (indexPath.row == 3) {
             cell.textLabel.text = @"FAQ";
         } else if (indexPath.row == 4) {
+            cell.textLabel.text = @"Promo";
+        } else if (indexPath.row == 5) {
             cell.textLabel.text = @"Logout";
         }
     }
@@ -106,6 +109,8 @@
             } else if (indexPath.row == 3) {
                 [self faqSelected];
             } else if (indexPath.row == 4) {
+                [self promoSelected];
+            } else if (indexPath.row == 5) {
                 [self logoutSelected];
             }
         }
@@ -155,6 +160,12 @@
     [mailViewController setSubject:@"Feedback"];
     [mailViewController setToRecipients:@[kFeedbackEmailAddress]];
     [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:mailViewController animated:YES completion:nil];
+}
+
+-(void)promoSelected
+{
+    PromoViewController *promoViewController = [[PromoViewController alloc] init];
+    [self.navigationController pushViewController:promoViewController animated:YES];
 }
 
 - (void)logoutSelected

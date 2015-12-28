@@ -36,6 +36,7 @@
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@"Promotions"];
     self.tableView.backgroundView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.tableView.backgroundView.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIButton *applyButton = [UIButton navButtonWithTitle:@"Apply"];
     [applyButton addTarget:self action:@selector(applyPromoCode:) forControlEvents:UIControlEventTouchUpInside];

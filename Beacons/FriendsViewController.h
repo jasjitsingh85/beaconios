@@ -10,4 +10,6 @@
 
 @interface FriendsViewController : UIViewController
 
+- (id)initWithModal;
+
 @end

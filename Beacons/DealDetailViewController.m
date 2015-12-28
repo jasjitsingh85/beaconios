@@ -28,6 +28,7 @@
 #import "SocialNotificationPopupView.h"
 #import "WebViewController.h"
 #import "FaqViewController.h"
+#import "FriendsViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -145,12 +146,12 @@
     [self.getDealButtonContainer addSubview:self.togglePrompt];
     
     self.togglePromptHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.togglePromptHelpButton.size = CGSizeMake(24, 24);
     self.togglePromptHelpButton.y = 12;
-    [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"blackHelpButton"] forState:UIControlStateNormal];
+    [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"settingsButton"] forState:UIControlStateNormal];
+    self.togglePromptHelpButton.size = CGSizeMake(24, 24);
 //    [self.mapListToggleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [self.mapListToggleButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [self.togglePromptHelpButton addTarget:self action:@selector(showHelpModal:) forControlEvents:UIControlEventTouchUpInside];
+    [self.togglePromptHelpButton addTarget:self action:@selector(showFriendsModal:) forControlEvents:UIControlEventTouchUpInside];
     [self.getDealButtonContainer addSubview:self.togglePromptHelpButton];
     
     self.checkInText = [[UILabel alloc] initWithFrame:CGRectMake(12, 3, self.view.width, 20)];
@@ -161,11 +162,20 @@
     
     self.isDealActive = YES;
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
-//    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
-    topBorder.backgroundColor = [UIColor blackColor];
-    [self.getDealButtonContainer addSubview:topBorder];
+//    UIImageView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
+////    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
+//    topBorder.backgroundColor = [UIColor blackColor];
+//    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.view.width, 3)];
+//    topBorder.layer.masksToBounds = NO;
+//    topBorder.layer.shadowColor = [UIColor blackColor].CGColor;
+//    topBorder.layer.shadowOffset = CGSizeMake(0.0f, -4.0f);
+//    topBorder.layer.shadowOpacity = 0.5f;
+//    topBorder.layer.shadowPath = shadowPath.CGPath;
+//    [self.getDealButtonContainer addSubview:topBorder];
     
+    UIImageView *topBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dropShadowTopBorder"]];
+    topBorder.y = -8;
+    [self.getDealButtonContainer addSubview:topBorder];
     //    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //    self.publicToggleButton.size = CGSizeMake(65, 25);
     //    self.publicToggleButton.x = self.view.width - 90;
@@ -1070,7 +1080,7 @@
 - (void)updateToggle:(UISwitch *)_switch{
     if ([_switch isOn]) {
         self.isPublic = YES;
-        self.togglePromptHelpButton.x = 223;
+        self.togglePromptHelpButton.x = 222;
         self.togglePrompt.text = @"Friends - I'm down with friends joining";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Friends"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
@@ -1078,7 +1088,7 @@
         self.togglePrompt.attributedText = attributedText;
     } else {
         self.isPublic = NO;
-        self.togglePromptHelpButton.x = 213;
+        self.togglePromptHelpButton.x = 212;
         self.togglePrompt.text = @"Only Me - I want to keep this private";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Only Me"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
@@ -1091,6 +1101,15 @@
 {
     SocialNotificationPopupView *modal = [[SocialNotificationPopupView alloc] init];
     [modal show];
+}
+
+-(void)showFriendsModal:(id)sender
+{
+    FriendsViewController *friendViewController = [[FriendsViewController alloc] initWithModal];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:friendViewController];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
 }
 
 - (void) openYelpButtonTouched:(id)sender
