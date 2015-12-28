@@ -49,16 +49,13 @@
     [self.noFriendsView.layer setZPosition:1000];
     self.noFriendsView.hidden = NO;
     [self.tableView addSubview:self.noFriendsView];
-    [self updateNoFriendsView];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 25)];
-    view.backgroundColor = [UIColor whiteColor];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, self.view.width - 60, 20)];
-    UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Friends"]];
+    UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"friends"]];
     headerIcon.centerX = self.tableView.width/2;
     headerIcon.y = 75;
     [self.noFriendsView addSubview:headerIcon];
     
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, self.view.width - 60, 20)];
     label.font = [ThemeManager boldFontOfSize:12];
     label.textAlignment = NSTextAlignmentCenter;
     label.y = 100;
@@ -107,15 +104,20 @@
     [self.noFriendsView addSubview:self.linkFacebookButton];
     [self.noFriendsView addSubview:self.syncContactsButton];
     
+    [self updateNoFriendsView];
     self.allContacts = [ContactManager sharedManager].contactDictionary;
     [self refreshFriends];
-    
-    [self updateNoFriendsView];
 
 }
 
 -(void)updateNoFriendsView
 {
+    if (self.approvedUsers.count == 0 && self.notApprovedUsers.count == 0 ) {
+        self.noFriendsView.hidden = NO;
+    } else {
+        self.noFriendsView.hidden = YES;
+    }
+    
     if ([FBSDKAccessToken currentAccessToken]) {
         [self changeFacebookButtonToCompletedState];
     } else {
@@ -160,11 +162,7 @@
         self.approvedUsers = [approvedUsers sortedArrayUsingDescriptors:@[sort]];
         self.notApprovedUsers = [notApprovedUsers sortedArrayUsingDescriptors:@[sort]];
         [self.tableView reloadData];
-        if (self.approvedUsers.count == 0 && self.notApprovedUsers.count == 0 ) {
-            self.noFriendsView.hidden = NO;
-        } else {
-            self.noFriendsView.hidden = YES;
-        }
+        [self updateNoFriendsView];
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.tableView animated:YES];
@@ -218,7 +216,7 @@
             if (contact) {
                 userLabel.text = contact.fullName;
                 if (contact.firstName) {
-                    range = [userLabel.text rangeOfString:[NSString stringWithFormat:@" %@", contact.firstName]];
+                    range = [userLabel.text rangeOfString:[NSString stringWithFormat:@"%@", contact.firstName]];
                     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:userLabel.text];
                     [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
                     userLabel.attributedText = attributedText;
@@ -251,11 +249,14 @@
             NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:user.username];
             Contact *contact = self.allContacts[normalizedPhoneNumber];
             NSRange range;
-            if (contact.firstName) {
-                range = [userLabel.text rangeOfString:[NSString stringWithFormat:@" %@", contact.firstName]];
-                NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:userLabel.text];
-                [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
-                userLabel.attributedText = attributedText;
+            if (contact) {
+                userLabel.text = contact.fullName;
+                if (contact.firstName) {
+                    range = [userLabel.text rangeOfString:[NSString stringWithFormat:@"%@", contact.firstName]];
+                    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:userLabel.text];
+                    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+                    userLabel.attributedText = attributedText;
+                }
             } else {
                 userLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
                 range = [userLabel.text rangeOfString:user.firstName];
@@ -291,7 +292,7 @@
     view.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, self.view.width - 60, 20)];
     if (section == 0) {
-        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Friends"]];
+        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"friends"]];
         headerIcon.centerX = self.tableView.width/2;
         headerIcon.y = 15;
         [view addSubview:headerIcon];
