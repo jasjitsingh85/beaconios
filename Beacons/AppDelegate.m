@@ -309,8 +309,11 @@
 - (void)didFinishPermissions
 {
     self.window.rootViewController = self.sideNavigationViewController;
-    [[ContactManager sharedManager] syncContacts];
     [[LocationTracker sharedTracker] requestLocationPermission];
+    ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
+    if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
+         [[ContactManager sharedManager] syncContacts];
+    }
 }
 
 - (void)logoutOfServer
