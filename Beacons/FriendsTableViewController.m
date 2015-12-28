@@ -66,7 +66,7 @@
     body.textAlignment = NSTextAlignmentCenter;
     body.font = [ThemeManager lightFontOfSize:12];
     body.numberOfLines = 0;
-    body.text = @"Make sure facebook is linked and contacts are synced to find friends with Hotspot in your area.";
+    body.text = @"Link facebook and sync contacts to find your friends on Hotspot. You’ll be able to invite them to join you when you check in.";
     [self.noFriendsView addSubview:body];
     
     self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
