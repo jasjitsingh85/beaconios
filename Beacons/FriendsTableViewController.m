@@ -306,7 +306,7 @@
         body.textAlignment = NSTextAlignmentCenter;
         body.font = [ThemeManager lightFontOfSize:12];
         body.numberOfLines = 0;
-        body.text = @"Add or remove your friends on Hotspot. If you remove a friend, they won't see you check-ins. Friend removals are kept completely private.";
+        body.text = @"Add or remove your friends on Hotspot. If you remove a friend, they won't see you check-in. Friend removals are kept completely private.";
         [view addSubview:body];
         
     } else if (section == 1) {
