@@ -397,9 +397,9 @@
     self.prompt.y = 250;
     self.prompt.font = [ThemeManager lightFontOfSize:14];
     self.prompt.textColor = [UIColor blackColor];
-    self.prompt.numberOfLines = 1;
+    self.prompt.numberOfLines = 2;
     self.prompt.textAlignment = NSTextAlignmentCenter;
-    self.prompt.text = [NSString stringWithFormat:@"Send friends a drink and you’ll get one too"];
+    self.prompt.text = [NSString stringWithFormat:@"Send friends a drink and you’ll get one when they use theirs"];
     
 //    UILabel *promoCodePrompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, view.width - 50, 30)];
 //    promoCodePrompt.centerX = self.view.width/2;

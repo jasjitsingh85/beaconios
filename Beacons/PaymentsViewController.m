@@ -10,7 +10,7 @@
 #import "APIClient.h"
 #import "Deal.h"
 #import "Venue.h"
-#import "BeaconProfileViewController.h"
+#import "RedemptionViewController.h"
 
 @interface PaymentsViewController()
 
@@ -21,7 +21,7 @@
 
 @implementation PaymentsViewController
 
-@synthesize beaconProfileViewController = _beaconProfileViewController;
+@synthesize redemptionViewController = _redemptionViewController;
 @synthesize delegate;
 
 - (id) initWithClientToken: (NSString *)clientToken  {
@@ -147,7 +147,7 @@
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (dismiss_payment_modal) {
                 [self dismissViewControllerAnimated:YES completion:nil];
-                [self.beaconProfileViewController refreshDeal];
+                [self.redemptionViewController refreshDeal];
             } else {
                 [self showCardDeclined];
             }

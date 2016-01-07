@@ -29,6 +29,7 @@
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
 #import "BeaconProfileViewController.h"
+#import "RedemptionViewController.h"
 #import "PermissionsViewController.h"
 #import "Beacon.h"
 #import "BeaconManager.h"
@@ -374,24 +375,24 @@
 {
     Beacon *beacon = [[Beacon alloc] init];
     beacon.beaconID = beaconID;
-    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
-    beaconProfileViewController.beacon = beacon;
-    [beaconProfileViewController refreshBeaconData];
-    [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+    RedemptionViewController *redemptionTableViewController = [[RedemptionViewController alloc] init];
+    redemptionTableViewController.beacon = beacon;
+    [redemptionTableViewController refreshBeaconData];
+    [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
     if (promptForCheckIn) {
-        [beaconProfileViewController promptForCheckIn];
+        [redemptionTableViewController promptForCheckIn];
     }
 }
 
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon
 {
-    BeaconProfileViewController *beaconProfileViewController = [[BeaconProfileViewController alloc] init];
-    beaconProfileViewController.beacon = beacon;
+    RedemptionViewController *redemptionTableViewController = [[RedemptionViewController alloc] init];
+    redemptionTableViewController.beacon = beacon;
     if (beacon.deal) {
-        beaconProfileViewController.openToDealView = YES;
+        redemptionTableViewController.openToDealView = YES;
     }
-    [beaconProfileViewController refreshBeaconData];
-    [self.centerNavigationController setSelectedViewController:beaconProfileViewController animated:YES];
+    [redemptionTableViewController refreshBeaconData];
+    [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
 }
 
 //- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher

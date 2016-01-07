@@ -10,7 +10,7 @@
 #import "Deal.h"
 #import "Venue.h"
 
-@class BeaconProfileViewController;
+@class RedemptionViewController;
 
 @protocol RegistrationViewControllerDelegate <NSObject>
 
@@ -19,12 +19,12 @@
 @end
 
 @interface PaymentsViewController: UIViewController <BTDropInViewControllerDelegate> {
-    BeaconProfileViewController *_beaconProfileViewController;
+    RedemptionViewController *_RedemptionViewController;
 }
 
 @property (nonatomic, strong) Braintree *braintree;
 @property (nonatomic, strong) NSNumber *beaconID;
-@property (nonatomic, strong) BeaconProfileViewController *beaconProfileViewController;
+@property (nonatomic, strong) RedemptionViewController *redemptionViewController;
 @property (nonatomic, assign) BOOL onlyAddPayment;
 @property (nonatomic, assign) BOOL inRegFlow;
 @property (assign) id <RegistrationViewControllerDelegate> delegate;
