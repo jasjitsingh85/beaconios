@@ -35,13 +35,15 @@ typedef void (^PhotoPickerCompletionBlock)(UIImage *image, BOOL cancelled);
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
+    imagePickerController.allowsEditing = YES;
     imagePickerController.delegate = self;
     [viewController presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+//    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
     UIImage *scaledImage;
     if (image.size.width >= image.size.height) {
         scaledImage = [image scaledToSize:CGSizeMake(720.0, 720.0*image.size.height/image.size.width)];

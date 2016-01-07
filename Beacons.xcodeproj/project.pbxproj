@@ -86,6 +86,10 @@
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
+		412E8C981C3ECA4900E54486 /* textFriendsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */; };
+		412E8C991C3ECA4900E54486 /* paymentIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C951C3ECA4900E54486 /* paymentIcon@2x.png */; };
+		412E8C9A1C3ECA4900E54486 /* redeemIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C961C3ECA4900E54486 /* redeemIcon@2x.png */; };
+		412E8C9B1C3ECA4900E54486 /* newDrinkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C971C3ECA4900E54486 /* newDrinkIcon@2x.png */; };
 		41338FD619FA38CA0022211C /* marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD519FA38CA0022211C /* marker@2x.png */; };
 		41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */ = {isa = PBXBuildFile; fileRef = 41338FD719FE11D30022211C /* DealTableViewEventCell.h */; };
 		41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41338FD919FE12080022211C /* DealTableViewEventCell.m */; };
@@ -469,6 +473,10 @@
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
 		412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addPhotoBox@2x.png"; sourceTree = "<group>"; };
+		412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textFriendsIcon@2x.png"; sourceTree = "<group>"; };
+		412E8C951C3ECA4900E54486 /* paymentIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentIcon@2x.png"; sourceTree = "<group>"; };
+		412E8C961C3ECA4900E54486 /* redeemIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redeemIcon@2x.png"; sourceTree = "<group>"; };
+		412E8C971C3ECA4900E54486 /* newDrinkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newDrinkIcon@2x.png"; sourceTree = "<group>"; };
 		41338FD519FA38CA0022211C /* marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker@2x.png"; sourceTree = "<group>"; };
 		41338FD719FE11D30022211C /* DealTableViewEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealTableViewEventCell.h; sourceTree = "<group>"; };
 		41338FD919FE12080022211C /* DealTableViewEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealTableViewEventCell.m; sourceTree = "<group>"; };
@@ -1389,6 +1397,10 @@
 				41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */,
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41FFB0261C1A007B00947EEC /* newFacebookWhite@2x.png */,
+				412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */,
+				412E8C951C3ECA4900E54486 /* paymentIcon@2x.png */,
+				412E8C961C3ECA4900E54486 /* redeemIcon@2x.png */,
+				412E8C971C3ECA4900E54486 /* newDrinkIcon@2x.png */,
 				41338FD519FA38CA0022211C /* marker@2x.png */,
 				412E8C901C3CC00700E54486 /* cameraIcon@2x.png */,
 				412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */,
@@ -1681,6 +1693,7 @@
 				41FFB01D1C1549C300947EEC /* mapVenueBackground@2x.png in Resources */,
 				9633994E1758512100AF9D89 /* Default.png in Resources */,
 				96C5F20B17DEE39000B48EE2 /* navBar@2x.png in Resources */,
+				412E8C991C3ECA4900E54486 /* paymentIcon@2x.png in Resources */,
 				41FFB0231C19EFDF00947EEC /* hotspotLogoBlackBig@2x.png in Resources */,
 				963763A418DBD73C005DC57D /* downArrowRed@2x.png in Resources */,
 				410FC8A11B3B57600097EA26 /* hotspotDrinkIcons@2x.png in Resources */,
@@ -1694,6 +1707,7 @@
 				415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */,
 				9690F2CA18009A2B0010EFA3 /* rightArrow@2x.png in Resources */,
 				41C987131C042EB400DD595D /* happeningsIcon@2x.png in Resources */,
+				412E8C9A1C3ECA4900E54486 /* redeemIcon@2x.png in Resources */,
 				410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
@@ -1752,6 +1766,7 @@
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
 				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,
+				412E8C9B1C3ECA4900E54486 /* newDrinkIcon@2x.png in Resources */,
 				41ED34D71AC9F91400A77A92 /* Default-568h@2x.png in Resources */,
 				4158AE551B433CD80034BA4A /* navTabBackground@2x.png in Resources */,
 				4105DAA31B7F0F010006B888 /* activeNavbarPopsicle@2x.png in Resources */,
@@ -1864,6 +1879,7 @@
 				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
 				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,
+				412E8C981C3ECA4900E54486 /* textFriendsIcon@2x.png in Resources */,
 				41FFB0271C1A007B00947EEC /* newFacebookWhite@2x.png in Resources */,
 				41FFB0291C1A06E700947EEC /* emailIcon@2x.png in Resources */,
 				4105DAA91B7FFD710006B888 /* notification@2x.png in Resources */,

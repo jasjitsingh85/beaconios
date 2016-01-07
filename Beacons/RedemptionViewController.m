@@ -24,6 +24,7 @@
 #import "UIImage+Resize.h"
 #import "UIView+Shadow.h"
 #import "DealRedemptionViewController.h"
+#import <MessageUI/MFMailComposeViewController.h>
 #import "HSNavigationController.h"
 #import "Beacon.h"
 #import "Deal.h"
@@ -51,7 +52,7 @@
 #import "NeedHelpExplanationPopupView.h"
 #import "FaqViewController.h"
 
-@interface RedemptionViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface RedemptionViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
@@ -85,6 +86,10 @@
 @property (strong, nonatomic) UILabel *headerTitle;
 @property (strong, nonatomic) UILabel *headerExplanationText;
 @property (strong, nonatomic) UILabel *inviteFriendsExplanation;
+
+@property (strong, nonatomic) UIImageView *photoView;
+@property (assign, nonatomic) BOOL hasImage;
+@property (assign, nonatomic) CGFloat imageHeight;
 
 @end
 
@@ -182,7 +187,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.feedbackButton = [[UIButton alloc] init];
-    self.feedbackButton.size = CGSizeMake(25, 25);
+    self.feedbackButton.size = CGSizeMake(25, 90);
     self.feedbackButton.layer.cornerRadius = 2;
     self.feedbackButton.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
     self.feedbackButton.layer.borderWidth = 1.0;
@@ -190,12 +195,20 @@
     [self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
     self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
     [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.feedbackButton];
+    
+    UIButton *textFriendsButton = [[UIButton alloc] init];
+    [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
+    textFriendsButton.size = CGSizeMake(28, 28);
+    [textFriendsButton setImage:[UIImage imageNamed:@"textFriendsIcon"] forState:UIControlStateNormal];
+    [textFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
     self.faqViewController = [[FaqViewController alloc] initForModal];
     self.hasCheckedPayment = NO;
     self.dealMode = NO;
-
+    self.hasImage = NO;
+    self.imageHeight = 136;
 }
 
 - (void)refreshBeaconData
@@ -220,25 +233,15 @@
     self.dealStatus = beacon.userDealStatus;
     [self updateRedeemButtonAppearance];
     
-    //self.beaconChatViewController.beacon = beacon;
     self.timeLabel.text = beacon.time.formattedTime;
     if (self.locationLabel.text) {
-        //        self.directionsButton.hidden = NO;
-        //        CGRect directionsButtonFrame = self.directionsButton.frame;
         CGFloat textWidth = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width;
         textWidth = MIN(textWidth, self.locationLabel.frame.size.width);
-        //        directionsButtonFrame.origin.x = CGRectGetMinX(self.locationLabel.frame) + textWidth + 8;
-        //        directionsButtonFrame.origin.y = CGRectGetMinY(self.locationLabel.frame) + 0.5*(self.locationLabel.frame.size.height - directionsButtonFrame.size.height);
-        //        self.directionsButton.frame = directionsButtonFrame;
-    }
-    else {
-        //        self.directionsButton.hidden = YES;
     }
 
     self.dealMode = YES;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.imageView sd_setImageWithURL:self.beacon.deal.venue.imageURL];
-    NSLog(@"AUTH Boolean: %d", self.beacon.userDealStatus.paymentAuthorization);
     if (!self.beacon.userDealStatus.paymentAuthorization && !self.hasCheckedPayment) {
         [self initPaymentsViewControllerAndSetDeal];
         self.hasCheckedPayment = YES;
@@ -303,21 +306,15 @@
 
 - (void)inviteMoreFriends
 {
-    FindFriendsViewController *findFriendsViewController = [[FindFriendsViewController alloc] init];
-    findFriendsViewController.delegate = self;
-    NSMutableArray *inactives = [[NSMutableArray alloc] init];
-    for (BeaconStatus *status in self.beacon.guestStatuses.allValues) {
-        if (status.user) {
-            [inactives addObject:status.user];
-        }
-        else if (status.contact) {
-            [inactives addObject:status.contact];
-        }
+    MFMessageComposeViewController *smsModal = [[MFMessageComposeViewController alloc] init];
+    smsModal.messageComposeDelegate = self;
+    if (self.hasImage) {
+        NSData *imgData = UIImagePNGRepresentation(self.photoView.image);
+        [smsModal addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"image.png"];
     }
-    findFriendsViewController.inactiveContacts = inactives;
-    findFriendsViewController.deal = self.beacon.deal;
-    findFriendsViewController.textMoreFriends = YES;
-    [self.navigationController pushViewController:findFriendsViewController animated:YES];
+    NSString *smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
+    smsModal.body = smsMessage;
+    [self presentViewController:smsModal animated:YES completion:nil];
 }
 
 //#pragma mark - UIGestureRecognzierDelegate
@@ -352,33 +349,12 @@
 
 - (void)inviteButtonTouched:(id)sender
 {
-    //[self enableVenmoButtonTouched];
     [self inviteMoreFriends];
 }
 
 - (void)imageViewTapped:(id)sender
 {
     [self getDirectionsToBeacon];
-}
-
-
-#pragma mark - FindFriendsViewControllerDelegate
-- (void)findFriendViewController:(FindFriendsViewController *)findFriendsViewController didPickContacts:(NSArray *)contacts andMessage:(NSString *)message andDate:(NSDate *)date
-{
-    [self.navigationController popToViewController:self animated:YES];
-    if (!contacts || !contacts.count) {
-        return;
-    }
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
-    [[APIClient sharedClient] inviteMoreContacts:contacts toBeacon:self.beacon withMessage:message success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self refreshBeaconData];
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        [[[UIAlertView alloc] initWithTitle:@"Failed" message:@"Please try again later" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }];
-    [[AnalyticsManager sharedManager] inviteToBeacon:contacts.count];
 }
 
 
@@ -486,7 +462,7 @@
 {
     CGFloat height;
     if (indexPath.row == self.photoContainer) {
-        height = 190;
+        height = self.imageHeight + 55;
     } else {
         height = 300;
     };
@@ -527,23 +503,33 @@
         headerTitle.y = 14;
         [photoCell addSubview:headerTitle];
         
-        UIImageView *photoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addPhotoBox"]];
-        photoView.centerX = self.view.width/2;
-        photoView.userInteractionEnabled = YES;
-        photoView.y = 40;
+        self.photoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addPhotoBox"]];
+        self.photoView.width = 300;
+        self.photoView.height = self.imageHeight;
+        self.photoView.centerX = self.view.width/2;
+        self.photoView.userInteractionEnabled = YES;
+        self.photoView.contentMode = UIViewContentModeScaleAspectFill;
+        self.photoView.clipsToBounds = YES;
+        self.photoView.y = 40;
         
         UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapped:)];
         photoTap.numberOfTapsRequired = 1;
-        [photoView addGestureRecognizer:photoTap];
+        [self.photoView addGestureRecognizer:photoTap];
         
-        [photoCell addSubview:photoView];
+        [photoCell addSubview:self.photoView];
     }
     return photoCell;
 }
 
 -(void)photoTapped:(id)sender
 {
-    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Want to add a photo?"];
+    NSString *photoPrompt;
+    if (self.hasImage) {
+        photoPrompt = @"Want to change this photo?";
+    } else {
+        photoPrompt = @"Want to add a photo?";
+    }
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:photoPrompt];
     [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     }];
@@ -566,14 +552,40 @@
             else {
                 scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
             }
-//            [self.beaconChatViewController createChatMessageWithImage:scaledImage];
+            [self updateImage:scaledImage];
+            self.hasImage = YES;
             [[APIClient sharedClient] postImage:scaledImage forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
             }];
         }
     }];
+}
+
+-(UIImage*)scaleImageForWidth: (UIImage *)sourceImage scaledToWidth:(float) i_width
+{
+    float oldWidth = sourceImage.size.width;
+    float scaleFactor = i_width / oldWidth;
+    
+    float newHeight = sourceImage.size.height * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)updateImage:(UIImage *)image
+{
+    
+    UIImage *updatedImage = [self scaleImageForWidth:image scaledToWidth:300];
+    self.photoView.height = updatedImage.size.height;
+    self.imageHeight = updatedImage.size.height;
+    self.photoView.image = updatedImage;
+    [self.tableView reloadData];
 }
 
 -(UITableViewCell *)getRedemptionCell
