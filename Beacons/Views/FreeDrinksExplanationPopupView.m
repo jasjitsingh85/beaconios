@@ -45,7 +45,7 @@
     self.inviteTextView.font = [ThemeManager lightFontOfSize:5.5*1.3];
     [self.chatBubble addSubview:self.inviteTextView];
     
-    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
+    UIImageView *drinkIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newDrinkIcon"]];
     drinkIcon.size = CGSizeMake(30, 30);
     drinkIcon.centerX = self.width/2;
     drinkIcon.y = 257;

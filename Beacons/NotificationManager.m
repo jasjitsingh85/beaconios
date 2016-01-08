@@ -143,7 +143,15 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
         NSNumber *recommendationID = userInfo[@"rec"];
         [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSetBeaconWithRecommendationID:recommendationID];
     }
+    else if ([notificationType isEqualToString:kPushNotificationTypeNewsfeed]) {
+        [self performSelector:@selector(pushFeed:) withObject:nil afterDelay:2.0];
+    }
     [[AnalyticsManager sharedManager] foregroundFromPush];
+}
+
+-(void)pushFeed:(id)sender
+{
+    [[AppDelegate sharedAppDelegate] setSelectedViewControllerToNewsfeed];
 }
 
 - (void)didReceiveInForegroundRemoteNotificationWithType:(NSString *)notificationType alert:(NSString *)alert userInfo:(NSDictionary *)userInfo

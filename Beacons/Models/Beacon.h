@@ -28,6 +28,7 @@
 @property (assign, nonatomic) BOOL isAuthorized;
 @property (readonly) BOOL userAttending;
 @property (readonly) BOOL userHere;
+@property (strong, nonatomic) NSURL *imageURL;
 @property (readonly) DealStatus *userDealStatus;
 
 - (id)initWithData:(NSDictionary *)data;

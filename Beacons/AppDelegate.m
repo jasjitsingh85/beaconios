@@ -28,6 +28,7 @@
 //#import "RegistrationFlowViewController.h"
 #import "RegisterViewController.h"
 #import "SetBeaconViewController.h"
+#import "FeedTableViewController.h"
 #import "BeaconProfileViewController.h"
 #import "RedemptionViewController.h"
 #import "PermissionsViewController.h"
@@ -408,6 +409,11 @@
 {
     [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
     [self.setBeaconViewController preloadWithRecommendation:recommendationID];
+}
+
+- (void)setSelectedViewControllerToNewsfeed
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kPushFavoriteFeedNotification object:self userInfo:nil];
 }
 
 //- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated

@@ -35,6 +35,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kPushNotificationTypeBeaconUpdate @"Hotspot Update"
 #define kPushNotificationTypeGeneral @"General"
 #define kPushNotificationTypeRecommendation @"Recommendation"
+#define kPushNotificationTypeNewsfeed @"Newsfeed"
 
 //local notifications
 #define kLocalNotificationTypeKey @"localNotificationTypeKey"
@@ -47,6 +48,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kPushNotificationMessageReceived @"pushNotificationMessageReceived"
 #define kDealsUpdatedNotification @"dealsUpdatedNotification"
 #define kFeedUpdateNotification @"feedUpdateNotification"
+#define kPushFavoriteFeedNotification @"pushFavoriteFeedNotification"
 #define kRefreshAfterToggleFavoriteNotification @"refreshAfterToggleFavoriteNotification"
 #define kFeedBackgroundUpdateNotification @"feedBackgroundUpdateNotification"
 #define kRemoveNewsfeedNotification @"removeNewsfeedNotification"

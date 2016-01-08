@@ -385,14 +385,14 @@
     promptIcon.y = 50;
     [self.view addSubview:promptIcon];
     
-    UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width, 15)];
+    UILabel *promptHeading = [[UILabel alloc] initWithFrame:CGRectMake(0, 248, self.view.width, 15)];
     promptHeading.textAlignment = NSTextAlignmentCenter;
     promptHeading.text = [[NSString stringWithFormat:@"GET FREE DRINKS."] uppercaseString];
     promptHeading.font = [ThemeManager boldFontOfSize:14];
     
     [self.view addSubview:promptHeading];
     
-    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 40, 60)];
+    self.prompt = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.width - 75, 60)];
     self.prompt.centerX = self.view.width/2;
     self.prompt.y = 250;
     self.prompt.font = [ThemeManager lightFontOfSize:14];

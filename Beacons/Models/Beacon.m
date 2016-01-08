@@ -50,6 +50,13 @@
     }
     self.guestStatuses = [NSDictionary dictionaryWithDictionary:guestStatuses];
     
+    NSString *imageUrl = [NSString stringWithFormat:@"%@", data[@"image_url"]];
+    if (imageUrl != (id)[NSNull null] || imageUrl.length != 0) {
+        self.imageURL = [NSURL URLWithString:imageUrl];
+    }
+    
+    NSLog(@"IMAGE URL: %@", self.imageURL);
+    
 //    deals
     NSArray *dealStatusesDictionary = data[@"deal_statuses"];
     if (!isEmpty(dealStatusesDictionary)) {

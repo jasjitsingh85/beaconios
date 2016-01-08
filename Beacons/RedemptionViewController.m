@@ -32,7 +32,6 @@
 #import "Theme.h"
 #import "User.h"
 #import "BeaconManager.h"
-#import "FindFriendsViewController.h"
 #import "APIClient.h"
 #import "LoadingIndictor.h"
 #import "PhotoManager.h"
@@ -63,7 +62,6 @@
 @property (strong, nonatomic) UILabel *descriptionLabelLineOne;
 @property (strong, nonatomic) UILabel *descriptionLabelLineTwo;
 @property (strong, nonatomic) UILabel *locationLabel;
-@property (strong, nonatomic) UIButton *inviteButton;
 @property (strong, nonatomic) UIButton *feedbackButton;
 @property (assign, nonatomic) BOOL fullDescriptionViewShown;
 @property (assign, nonatomic) BOOL keyboardShown;
@@ -186,15 +184,6 @@
     [self.view addSubview:self.tableView];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    self.feedbackButton = [[UIButton alloc] init];
-    self.feedbackButton.size = CGSizeMake(25, 90);
-    self.feedbackButton.layer.cornerRadius = 2;
-    self.feedbackButton.layer.borderColor = [[UIColor unnormalizedColorWithRed:167 green:167 blue:167 alpha:255] CGColor];
-    self.feedbackButton.layer.borderWidth = 1.0;
-    [self.feedbackButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
-    [self.feedbackButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    self.feedbackButton.titleLabel.font = [ThemeManager regularFontOfSize:10];
-    [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *textFriendsButton = [[UIButton alloc] init];
     [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
@@ -233,6 +222,10 @@
     self.dealStatus = beacon.userDealStatus;
     [self updateRedeemButtonAppearance];
     
+    if (self.beacon.imageURL) {
+        [self downloadImageAndUpdate];
+    }
+    
     self.timeLabel.text = beacon.time.formattedTime;
     if (self.locationLabel.text) {
         CGFloat textWidth = [self.locationLabel.text sizeWithAttributes:@{NSFontAttributeName : self.locationLabel.font}].width;
@@ -248,6 +241,23 @@
     }
     
     [self.tableView reloadData];
+}
+
+-(void)downloadImageAndUpdate
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:self.beacon.imageURL
+                          options:0
+                         progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                             // progression tracking code
+                         }
+                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                            if (image) {
+                                [self updateImage:image];
+                            }
+                            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                        }];
 }
 
 
@@ -340,8 +350,7 @@
     [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
         [self refreshBeaconData];
     } failure:nil];
-    //self.joinButton.hidden = YES;
-    self.inviteButton.hidden = NO;
+
     if (didJoin) {
         didJoin();
     }
@@ -464,7 +473,7 @@
     if (indexPath.row == self.photoContainer) {
         height = self.imageHeight + 55;
     } else {
-        height = 300;
+        height = 305;
     };
     
     return height;
@@ -600,38 +609,38 @@
         [redemptionCell addSubview:topBorder];
         
         self.headerIcon = [[UIImageView alloc] init];
-        self.headerIcon.height = 30;
-        self.headerIcon.width = 30;
-        self.headerIcon.centerX = self.view.width/2;
-        self.headerIcon.y = 0;
+        self.headerIcon.height = 25;
+        self.headerIcon.width = 25;
+        self.headerIcon.x = 17;
+        self.headerIcon.y = 12;
         [redemptionCell addSubview:self.headerIcon];
         
         self.headerTitle = [[UILabel alloc] init];
         self.headerTitle.height = 20;
         self.headerTitle.width = self.tableView.width;
-        self.headerTitle.textAlignment = NSTextAlignmentCenter;
-        //self.headerTitle.centerX = self.tableView.width/2;
+        self.headerTitle.textAlignment = NSTextAlignmentLeft;
+        self.headerTitle.x = 42;
         self.headerTitle.font = [ThemeManager boldFontOfSize:11];
-        self.headerTitle.y = 30;
+        self.headerTitle.y = 15;
         [redemptionCell addSubview:self.headerTitle];
         
-        self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.width - 45, 50)];
+        self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
         self.headerExplanationText.centerX = self.view.width/2;
         self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
-        self.headerExplanationText.textAlignment = NSTextAlignmentCenter;
+        self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
         self.headerExplanationText.numberOfLines = 2;
         [redemptionCell addSubview:self.headerExplanationText];
         
-        self.inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 255, self.view.width - 50, 50)];
+        self.inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 235, self.view.width - 50, 50)];
         self.inviteFriendsExplanation.centerX = self.view.width/2;
         self.inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
         self.inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
-        self.inviteFriendsExplanation.text = @"Tap below to text more friends to meet you here.";
+        self.inviteFriendsExplanation.text = @"Tap below to learn more or report an issue.";
         self.inviteFriendsExplanation.numberOfLines = 1;
         [redemptionCell addSubview:self.inviteFriendsExplanation];
         
         self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.redeemButton.y = 100;
+        self.redeemButton.y = 85;
         self.redeemButton.size = CGSizeMake(self.view.width, 150);
         [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -679,27 +688,30 @@
         self.inviteFriendsButton.centerX = self.view.width/2;
         self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
         self.inviteFriendsButton.layer.cornerRadius = 4;
-        self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-        self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
+        self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
         self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 50)];
-        footerView.backgroundColor = [UIColor whiteColor];
-        [self.inviteFriendsButton setTitle:@"TEXT MORE FRIENDS" forState:UIControlStateNormal];
-        self.inviteFriendsButton.y = 295;
+        [self.inviteFriendsButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
+        self.inviteFriendsButton.y = 275;
+        
+//        self.feedbackButton = [[UIButton alloc] init];
+//        self.feedbackButton.size = CGSizeMake(self.view.width, 25);
+//        self.feedbackButton.y = 280;
+//        self.feedbackButton.centerX = self.view.width/2;
+////        self.feedbackButton.layer.cornerRadius = 2;
+////        self.feedbackButton.layer.borderColor = [UIColor blackColor].CGColor;
+////        self.feedbackButton.layer.borderWidth = 1.0;
+//        [self.feedbackButton setTitle:@"Need Help?" forState:UIControlStateNormal];
+//        [self.feedbackButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        self.feedbackButton.titleLabel.font = [ThemeManager lightFontOfSize:12];
+//        [self.feedbackButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//        [redemptionCell addSubview:self.feedbackButton];
         
         [redemptionCell addSubview:self.inviteFriendsButton];
-        [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.inviteFriendsButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
         [redemptionCell addSubview:self.redeemButton];
-        
-        ABAuthorizationStatus contactAuthStatus = [ContactManager sharedManager].authorizationStatus;
-        if (contactAuthStatus == kABAuthorizationStatusAuthorized) {
-            self.inviteFriendsButton.hidden = NO;
-            self.inviteFriendsExplanation.hidden = NO;
-        } else {
-            self.inviteFriendsButton.hidden = YES;
-            self.inviteFriendsExplanation.hidden = YES;
-        }
     
     }
     return redemptionCell;
@@ -782,7 +794,7 @@
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;
-        [self.headerIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
+        [self.headerIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
         self.headerTitle.text = @"SHOW VOUCHER TO SERVER";
         if (self.dealStatus.isRewardAuthorization) {
             self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. Hotspot will cover this round!"];
@@ -796,18 +808,26 @@
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
         voucherTitleText = @"VOUCHER REDEEMED";
-        itemNameText = [NSString stringWithFormat:@"PAID $%@ FOR %@", self.deal.itemPrice, [self.deal.itemName uppercaseString]];
+        if (self.dealStatus.isRewardAuthorization) {
+            itemNameText = [NSString stringWithFormat:@"%@ FOR FREE",[self.deal.itemName uppercaseString]];
+        } else {
+            itemNameText = [NSString stringWithFormat:@"PAID $%@ FOR %@", self.deal.itemPrice, [self.deal.itemName uppercaseString]];
+        }
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
         serverMessageText = @"REDEEMED";
-        accentColor = [UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255];
-        [self.headerIcon setImage:[UIImage imageNamed:@"drinkIcon"]];
+        accentColor = [[ThemeManager sharedTheme] redColor];
+        [self.headerIcon setImage:[UIImage imageNamed:@"newDrinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Text more friends to meet you to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
+        if (self.dealStatus.isRewardAuthorization) {
+            self.headerExplanationText.text = [NSString stringWithFormat:@"You just received a %@ for free. Text friends to meet you and don’t forget to tip!", self.deal.itemName];
+        } else {
+            self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Text friends to meet you to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
+        }
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
-        [self.voucherIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
+        [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
         
     } else if (!self.dealStatus.paymentAuthorization) {
-        [self.headerIcon setImage:[UIImage imageNamed:@"creditCardIcon"]];
+        [self.headerIcon setImage:[UIImage imageNamed:@"paymentIcon"]];
         self.headerTitle.text = @"ALMOST THERE!";
         self.headerExplanationText.text = @"Just add a payment method to pay for your drink. You’re only charged after you receive it.";
         [self.redeemButton setImage:[UIImage imageNamed:@"inactiveVoucher"] forState:UIControlStateNormal];
