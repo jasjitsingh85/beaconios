@@ -471,7 +471,7 @@
 {
     CGFloat height;
     if (indexPath.row == self.photoContainer) {
-        height = self.imageHeight + 55;
+        height = self.imageHeight + 75;
     } else {
         height = 305;
     };
@@ -512,6 +512,14 @@
         headerTitle.y = 14;
         [photoCell addSubview:headerTitle];
         
+        UILabel *headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 29, self.view.width - 45, 25)];
+        headerExplanationText.centerX = self.view.width/2;
+        headerExplanationText.font = [ThemeManager lightFontOfSize:12];
+        headerExplanationText.textAlignment = NSTextAlignmentLeft;
+        headerExplanationText.numberOfLines = 1;
+        headerExplanationText.text = @"Add a picture to your check-in to share with friends";
+        [photoCell addSubview:headerExplanationText];
+        
         self.photoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"addPhotoBox"]];
         self.photoView.width = 300;
         self.photoView.height = self.imageHeight;
@@ -519,7 +527,7 @@
         self.photoView.userInteractionEnabled = YES;
         self.photoView.contentMode = UIViewContentModeScaleAspectFill;
         self.photoView.clipsToBounds = YES;
-        self.photoView.y = 40;
+        self.photoView.y = 60;
         
         UITapGestureRecognizer *photoTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoTapped:)];
         photoTap.numberOfTapsRequired = 1;
@@ -631,16 +639,16 @@
         self.headerExplanationText.numberOfLines = 2;
         [redemptionCell addSubview:self.headerExplanationText];
         
-        self.inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 235, self.view.width - 50, 50)];
-        self.inviteFriendsExplanation.centerX = self.view.width/2;
-        self.inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
-        self.inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
-        self.inviteFriendsExplanation.text = @"Tap below to learn more or report an issue.";
-        self.inviteFriendsExplanation.numberOfLines = 1;
-        [redemptionCell addSubview:self.inviteFriendsExplanation];
+//        self.inviteFriendsExplanation = [[UILabel alloc] initWithFrame:CGRectMake(0, 235, self.view.width - 50, 50)];
+//        self.inviteFriendsExplanation.centerX = self.view.width/2;
+//        self.inviteFriendsExplanation.font = [ThemeManager lightFontOfSize:12];
+//        self.inviteFriendsExplanation.textAlignment = NSTextAlignmentCenter;
+//        self.inviteFriendsExplanation.text = @"Tap below to learn more or report an issue.";
+//        self.inviteFriendsExplanation.numberOfLines = 1;
+//        [redemptionCell addSubview:self.inviteFriendsExplanation];
         
         self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.redeemButton.y = 85;
+        self.redeemButton.y = 115;
         self.redeemButton.size = CGSizeMake(self.view.width, 150);
         [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -686,14 +694,14 @@
         self.inviteFriendsButton = [[UIButton alloc] init];
         self.inviteFriendsButton.size = CGSizeMake(self.view.width - 50, 35);
         self.inviteFriendsButton.centerX = self.view.width/2;
-        self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:15];
-        self.inviteFriendsButton.layer.cornerRadius = 4;
-        self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-        [self.inviteFriendsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
+        self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+//        self.inviteFriendsButton.layer.cornerRadius = 4;
+//        self.inviteFriendsButton.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [self.inviteFriendsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
+        [self.inviteFriendsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
         self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.inviteFriendsButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
-        self.inviteFriendsButton.y = 275;
+        self.inviteFriendsButton.y = 72;
         
 //        self.feedbackButton = [[UIButton alloc] init];
 //        self.feedbackButton.size = CGSizeMake(self.view.width, 25);

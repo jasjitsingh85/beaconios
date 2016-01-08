@@ -315,7 +315,7 @@
         label.textColor = [[ThemeManager sharedTheme] redColor];
     } else if (section == 2)  {
         label.font = [ThemeManager boldFontOfSize:12];
-        label.text = @"REMOVED";
+        label.text = @"ALL CONTACTS";
         label.textColor = [[ThemeManager sharedTheme] darkGrayColor];
     } else {
         
