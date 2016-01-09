@@ -13,7 +13,6 @@
 #import "Beacon.h"
 #import "AppDelegate.h"
 #import "CenterNavigationController.h"
-#import "BeaconProfileViewController.h"
 #import "AnalyticsManager.h"
 #import "LocationTracker.h"
 #import "BeaconManager.h"
@@ -166,10 +165,6 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     }];
     if ([notificationType isEqualToString:kPushNotificationTypeMessage]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kPushNotificationMessageReceived object:nil userInfo:userInfo];
-        BOOL showingChat = [[AppDelegate sharedAppDelegate].centerNavigationController.selectedViewController isKindOfClass:[BeaconProfileViewController class]] || ([AppDelegate sharedAppDelegate].centerNavigationController.viewControllers.count && [[AppDelegate sharedAppDelegate].centerNavigationController.visibleViewController  isKindOfClass:[BeaconProfileViewController class]]);
-        if (!showingChat) {
-            [alertView show];
-        }
     }
     else {
         [alertView show];

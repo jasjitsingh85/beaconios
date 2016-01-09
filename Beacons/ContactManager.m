@@ -153,7 +153,6 @@
         [[APIClient sharedClient] postPath:@"friends/" parameters:parameters
                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                        [self updateManageFriendsFromServer:nil failure:nil];
-                                       [self updateFriendsFromServer:nil failure:nil];
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                    }];
@@ -304,76 +303,6 @@
     
     [[APIClient sharedClient] enqueueHTTPRequestOperation:self.updateManageFriendsOperation];
     
-}
-
-- (void)updateFriendsFromServer:(void (^)(NSArray *contacts))success failure:(void (^)(NSError *error))failure
-{
-    NSURLRequest *request = [[APIClient sharedClient] requestWithMethod:@"GET" path:@"friends/" parameters:nil];
-    self.updateFriendsOperation = [[APIClient sharedClient] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *recommendedContacts = [[NSMutableArray alloc] init];
-        NSMutableArray *recentContacts = [[NSMutableArray alloc] init];
-        NSMutableArray *usersWhoAreContacts = [[NSMutableArray alloc] init];
-        NSArray *usersWhoAreContactsData = responseObject[@"all_profiles"];
-        NSArray *contactsData = responseObject[@"contacts"];
-        NSArray *usersData = responseObject[@"users"];
-        NSArray *recentUsersData = responseObject[@"profile_recents"];
-        NSArray *recentContactsData = responseObject[@"contacts_recents"];
-        for (NSDictionary *contactData in contactsData) {
-            NSString *phoneNumber = contactData[@"phone_number"];
-            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-            if (contact) {
-                contact.isSuggested = YES;
-                [recommendedContacts addObject:contact];
-            }
-        }
-        for (NSDictionary *contactData in recentContactsData) {
-            NSString *phoneNumber = contactData[@"phone_number"];
-            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-            if (contact) {
-                contact.isSuggested = YES;
-                contact.isRecent = YES;
-                [recentContacts addObject:contact];
-            }
-        }
-        for (NSDictionary *userData in usersData) {
-            NSString *phoneNumber = userData[@"phone_number"];
-            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-            if (contact) {
-                contact.isSuggested = YES;
-                contact.isUser = YES;
-                [recommendedContacts addObject:contact];
-            }
-        }
-        for (NSDictionary *userData in recentUsersData) {
-            NSString *phoneNumber = userData[@"phone_number"];
-            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-            if (contact) {
-                contact.isSuggested = YES;
-                contact.isUser = YES;
-                contact.isRecent = YES;
-                [recentContacts addObject:contact];
-            }
-        }
-        for (NSDictionary *userData in usersWhoAreContactsData) {
-            NSString *phoneNumber = userData[@"phone_number"];
-            NSString *normalizedPhoneNumber = [Utilities normalizePhoneNumber:phoneNumber];
-            Contact *contact = self.contactDictionary[normalizedPhoneNumber];
-            if (contact) {
-                contact.isUser = YES;
-                contact.isAllUser = YES;
-                [usersWhoAreContacts addObject:contact];
-            }
-        }
-        self.recentContacts = recentContacts;
-        self.recommendedContacts = recommendedContacts;
-        self.usersWhoAreContacts = usersWhoAreContacts;
-    } failure:nil];
-    [[APIClient sharedClient] enqueueHTTPRequestOperation:self.updateFriendsOperation];
-
 }
 
 @end

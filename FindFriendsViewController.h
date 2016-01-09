@@ -1,5 +1,4 @@
 //
-//  FindFriendsViewController.h
 //  Beacons
 //
 //  Created by Jeffrey Ames on 6/9/13.

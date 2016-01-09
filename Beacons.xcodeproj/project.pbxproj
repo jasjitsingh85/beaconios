@@ -13,7 +13,6 @@
 		1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F465C0917618B9200F35A8B /* SelectLocationViewController.xib */; };
 		1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */; };
 		1F465C231763F97D00F35A8B /* Venue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C221763F97D00F35A8B /* Venue.m */; };
-		1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C271764FB7600F35A8B /* FindFriendsViewController.m */; };
 		1F465C2B176510EB00F35A8B /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F465C2A176510EB00F35A8B /* Contact.m */; };
 		1F4D658B17653C9D00D02369 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4D658A17653C9D00D02369 /* MessageUI.framework */; };
 		1F526389175C492800DD26E1 /* BeaconAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F526386175C492800DD26E1 /* BeaconAnnotationView.m */; };
@@ -58,7 +57,6 @@
 		4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */; };
 		4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */; };
 		4105DAB31B8053370006B888 /* bigGroupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */; };
-		4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */; };
 		4109B9C11B9B706100C3270E /* privateLock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4109B9BF1B9B706100C3270E /* privateLock@2x.png */; };
 		4109B9C21B9B706100C3270E /* publicGlobe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4109B9C01B9B706100C3270E /* publicGlobe@2x.png */; };
 		410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D194F1B4B815C002C5F0F /* AppInviteViewController.m */; };
@@ -98,8 +96,6 @@
 		4148E9C41B0434880050D3E3 /* Voucher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C31B0434880050D3E3 /* Voucher.m */; };
 		4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C61B0439030050D3E3 /* RewardManager.m */; };
 		4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */; };
-		4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */; };
-		4148E9D41B098AE20050D3E3 /* VoucherRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -130,7 +126,6 @@
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
 		41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */; };
 		41BEAC2B1A1DE4750069F932 /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */; };
-		41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74331B017C7300D6EFC1 /* RewardsViewController.m */; };
 		41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */; };
 		41C4B8361BEFD5A700D471D6 /* filterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */; };
 		41C4B8381BF073B200D471D6 /* updatedBackgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41C4B8371BF073B200D471D6 /* updatedBackgroundGradient@2x.png */; };
@@ -266,7 +261,6 @@
 		96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859CFF17EFD5D600C1C467 /* InsetTextField.m */; };
 		96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859D0417F3F00B00C1C467 /* KenBurnsView.m */; };
 		96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */; };
-		968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */; };
 		968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 968CDA8E17F79CEB00D64441 /* JADatePicker.m */; };
 		968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */; };
 		968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 968E287118C3DF5500CB447D /* menuSettings@2x.png */; };
@@ -286,7 +280,6 @@
 		96A3BC2A18564CCF00CA1F99 /* UIButton+HSNavButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A3BC2918564CCF00CA1F99 /* UIButton+HSNavButton.m */; };
 		96A8E03218D61A8800493C65 /* DatePickerModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A8E03118D61A8800493C65 /* DatePickerModalView.m */; };
 		96A90B7118D0D07B008026CC /* backgroundGradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */; };
-		96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */; };
 		96A9871E17E51753007D77B8 /* InviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9871D17E51753007D77B8 /* InviteListViewController.m */; };
 		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
 		96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872F17E68C44007D77B8 /* PhotoManager.m */; };
@@ -364,8 +357,6 @@
 		1F465C1F1763E2EE00F35A8B /* FourSquareAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FourSquareAPIClient.m; sourceTree = "<group>"; };
 		1F465C211763F97D00F35A8B /* Venue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Venue.h; sourceTree = "<group>"; };
 		1F465C221763F97D00F35A8B /* Venue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Venue.m; sourceTree = "<group>"; };
-		1F465C261764FB7600F35A8B /* FindFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindFriendsViewController.h; path = ../FindFriendsViewController.h; sourceTree = "<group>"; };
-		1F465C271764FB7600F35A8B /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindFriendsViewController.m; path = ../FindFriendsViewController.m; sourceTree = "<group>"; };
 		1F465C29176510EB00F35A8B /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		1F465C2A176510EB00F35A8B /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		1F4D658A17653C9D00D02369 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -439,8 +430,6 @@
 		4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activeNavbarClock@2x.png"; sourceTree = "<group>"; };
 		4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inactiveNavbarClock@2x.png"; sourceTree = "<group>"; };
 		4105DAB21B8053370006B888 /* bigGroupIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigGroupIcon@2x.png"; sourceTree = "<group>"; };
-		410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentExplanationPopupView.h; sourceTree = "<group>"; };
-		410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentExplanationPopupView.m; sourceTree = "<group>"; };
 		4109B9BF1B9B706100C3270E /* privateLock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "privateLock@2x.png"; sourceTree = "<group>"; };
 		4109B9C01B9B706100C3270E /* publicGlobe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "publicGlobe@2x.png"; sourceTree = "<group>"; };
 		410D194E1B4B814B002C5F0F /* AppInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInviteViewController.h; sourceTree = SOURCE_ROOT; };
@@ -488,10 +477,6 @@
 		4148E9C51B0438F80050D3E3 /* RewardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardManager.h; sourceTree = "<group>"; };
 		4148E9C61B0439030050D3E3 /* RewardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardManager.m; sourceTree = "<group>"; };
 		4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "singleGoldCoin@2x.png"; sourceTree = "<group>"; };
-		4148E9CF1B09459B0050D3E3 /* VoucherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoucherViewController.h; sourceTree = "<group>"; };
-		4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherViewController.m; sourceTree = "<group>"; };
-		4148E9D21B098AD00050D3E3 /* VoucherRedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoucherRedemptionViewController.h; sourceTree = "<group>"; };
-		4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherRedemptionViewController.m; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -528,8 +513,6 @@
 		41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "groupsIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC281A1DE3BA0069F932 /* shareIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shareIcon@2x.png"; sourceTree = "<group>"; };
 		41BEAC2A1A1DE4750069F932 /* settingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsIcon@2x.png"; sourceTree = "<group>"; };
-		41BF74321B017C6100D6EFC1 /* RewardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardsViewController.h; sourceTree = "<group>"; };
-		41BF74331B017C7300D6EFC1 /* RewardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardsViewController.m; sourceTree = "<group>"; };
 		41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardExplanationPopupView.h; sourceTree = "<group>"; };
 		41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardExplanationPopupView.m; sourceTree = "<group>"; };
 		41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filterButton@2x.png"; sourceTree = "<group>"; };
@@ -718,8 +701,6 @@
 		96859D0417F3F00B00C1C467 /* KenBurnsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KenBurnsView.m; sourceTree = "<group>"; };
 		96859D0C17F4048300C1C467 /* JAGrandCentralDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAGrandCentralDispatch.h; sourceTree = "<group>"; };
 		96859D0D17F4048300C1C467 /* JAGrandCentralDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAGrandCentralDispatch.m; sourceTree = "<group>"; };
-		968CDA8A17F78ED600D64441 /* SetBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetBeaconViewController.h; sourceTree = "<group>"; };
-		968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetBeaconViewController.m; sourceTree = "<group>"; };
 		968CDA8D17F79CEB00D64441 /* JADatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JADatePicker.h; sourceTree = "<group>"; };
 		968CDA8E17F79CEB00D64441 /* JADatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JADatePicker.m; sourceTree = "<group>"; };
 		968E286F18C3DAEE00CB447D /* menuSetHotspot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menuSetHotspot@2x.png"; sourceTree = "<group>"; };
@@ -747,8 +728,6 @@
 		96A8E03018D61A8800493C65 /* DatePickerModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatePickerModalView.h; path = ../DatePickerModalView.h; sourceTree = "<group>"; };
 		96A8E03118D61A8800493C65 /* DatePickerModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatePickerModalView.m; path = ../DatePickerModalView.m; sourceTree = "<group>"; };
 		96A90B7018D0D07B008026CC /* backgroundGradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backgroundGradient@2x.png"; sourceTree = "<group>"; };
-		96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconProfileViewController.h; sourceTree = "<group>"; };
-		96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconProfileViewController.m; sourceTree = "<group>"; };
 		96A9871C17E51753007D77B8 /* InviteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteListViewController.h; sourceTree = "<group>"; };
 		96A9871D17E51753007D77B8 /* InviteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteListViewController.m; sourceTree = "<group>"; };
 		96A9871F17E517FB007D77B8 /* BeaconStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeaconStatus.h; path = ../BeaconStatus.h; sourceTree = "<group>"; };
@@ -985,8 +964,6 @@
 				41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */,
 				41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */,
 				41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */,
-				410830381AF751A500BC13D3 /* PaymentExplanationPopupView.h */,
-				410830391AF751B800BC13D3 /* PaymentExplanationPopupView.m */,
 				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
 				961FE29418D10F7100CF891A /* ExplanationPopupView.m */,
 				9651C79B193E74C20083A0FE /* DashedBorderButton.h */,
@@ -1050,8 +1027,6 @@
 			children = (
 				413B7B191AD44F0500EB5385 /* PaymentsViewController.h */,
 				413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */,
-				41BF74331B017C7300D6EFC1 /* RewardsViewController.m */,
-				41BF74321B017C6100D6EFC1 /* RewardsViewController.h */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1205,8 +1180,6 @@
 			children = (
 				96AFE1301938209E00209799 /* DealsTableViewController.h */,
 				96AFE1311938209E00209799 /* DealsTableViewController.m */,
-				4148E9D21B098AD00050D3E3 /* VoucherRedemptionViewController.h */,
-				4148E9D31B098AE20050D3E3 /* VoucherRedemptionViewController.m */,
 				9651C798193E72390083A0FE /* DealRedemptionViewController.h */,
 				9651C799193E72390083A0FE /* DealRedemptionViewController.m */,
 				41FD061F1B37178000F7DD08 /* DealDetailViewController.h */,
@@ -1288,8 +1261,6 @@
 			children = (
 				410D194E1B4B814B002C5F0F /* AppInviteViewController.h */,
 				410D194F1B4B815C002C5F0F /* AppInviteViewController.m */,
-				1F465C261764FB7600F35A8B /* FindFriendsViewController.h */,
-				1F465C271764FB7600F35A8B /* FindFriendsViewController.m */,
 			);
 			name = Invite;
 			sourceTree = "<group>";
@@ -1321,12 +1292,6 @@
 		96585A1C199D3AF700A6E02A /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
-				968CDA8A17F78ED600D64441 /* SetBeaconViewController.h */,
-				968CDA8B17F78ED600D64441 /* SetBeaconViewController.m */,
-				96A9871517E2C7D3007D77B8 /* BeaconProfileViewController.h */,
-				96A9871617E2C7D3007D77B8 /* BeaconProfileViewController.m */,
-				4148E9CF1B09459B0050D3E3 /* VoucherViewController.h */,
-				4148E9D01B0945AD0050D3E3 /* VoucherViewController.m */,
 				96A9871C17E51753007D77B8 /* InviteListViewController.h */,
 				96A9871D17E51753007D77B8 /* InviteListViewController.m */,
 			);
@@ -1948,7 +1913,6 @@
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
-				4108303A1AF751B800BC13D3 /* PaymentExplanationPopupView.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,
 				96C7FE951897270200A79CC3 /* IntroViewController.m in Sources */,
 				41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */,
@@ -2002,11 +1966,9 @@
 				1F465C201763E2EE00F35A8B /* FourSquareAPIClient.m in Sources */,
 				96859CF717EFC89800C1C467 /* RegisterViewController.m in Sources */,
 				96E623F01816485C0048125B /* BounceButton.m in Sources */,
-				96A9871717E2C7D3007D77B8 /* BeaconProfileViewController.m in Sources */,
 				1F465C231763F97D00F35A8B /* Venue.m in Sources */,
 				9651C79D193E74C20083A0FE /* DashedBorderButton.m in Sources */,
 				41F144091B22B30B0010BCF1 /* HotspotAnnotation.m in Sources */,
-				1F465C281764FB7600F35A8B /* FindFriendsViewController.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
@@ -2031,13 +1993,11 @@
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */,
 				411B4F821C273A1300CA7100 /* FriendsViewController.m in Sources */,
-				4148E9D11B0945AD0050D3E3 /* VoucherViewController.m in Sources */,
 				963763A218DB890F005DC57D /* UIView+Edge.m in Sources */,
 				96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */,
 				4158AE6E1B46F0620034BA4A /* ContactExplanationPopupView.m in Sources */,
 				96DEA50B181A2E93001E5812 /* RandomObjectManager.m in Sources */,
 				4148E9C41B0434880050D3E3 /* Voucher.m in Sources */,
-				41BF74341B017C7300D6EFC1 /* RewardsViewController.m in Sources */,
 				41F1440F1B24DA8C0010BCF1 /* HappyHourVenue.m in Sources */,
 				964638AE18A19F4B007D6962 /* RegistrationFlowViewController.m in Sources */,
 				964263AF181CE75D0015375C /* NavigationBarTitleLabel.m in Sources */,
@@ -2050,7 +2010,6 @@
 				1F8E3AFD179F8849001B8BE0 /* CrashManager.m in Sources */,
 				960631E91946206B0011E132 /* DealTableViewCell.m in Sources */,
 				96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */,
-				968CDA8C17F78ED600D64441 /* SetBeaconViewController.m in Sources */,
 				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
 				41CB5C6B1C0D6EC40077485B /* SocialNotificationPopupView.m in Sources */,
 				411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */,
@@ -2061,7 +2020,6 @@
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
 				41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */,
 				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,
-				4148E9D41B098AE20050D3E3 /* VoucherRedemptionViewController.m in Sources */,
 				41C9870A1C03856700DD595D /* DealDetailImageCell.m in Sources */,
 				96AFE1351938215000209799 /* Deal.m in Sources */,
 			);
@@ -2129,10 +2087,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Jas/Documents/FacebookSDK,
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
@@ -2228,10 +2182,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Jas/Documents/FacebookSDK,
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";
@@ -2257,10 +2207,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 65;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/Jas/Documents/FacebookSDK,
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Beacons/Beacons-Prefix.pch";
 				INFOPLIST_FILE = "Beacons/Beacons-Info.plist";

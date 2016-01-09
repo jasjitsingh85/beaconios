@@ -8,7 +8,6 @@
 
 #import "RewardExplanationPopupView.h"
 #import "Theme.h"
-#import "BeaconProfileViewController.h"
 
 @interface RewardExplanationPopupView()
 

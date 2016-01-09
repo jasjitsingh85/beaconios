@@ -20,7 +20,6 @@
 #import "Voucher.h"
 #import "BeaconManager.h"
 #import "RewardManager.h"
-#import "BeaconProfileViewController.h"
 #import "SettingsViewController.h"
 #import "PromoViewController.h"
 #import "GroupsViewController.h"

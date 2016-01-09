@@ -99,20 +99,6 @@
     return [self.emptyBeaconSubtitlePicker getRandomObject];
 }
 
-- (void)updateStringsFromServer
-{
-    [[APIClient sharedClient] getPath:@"content/" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *options = responseObject[@"content"];
-        if (options && options.count) {
-            self.emptyBeaconSubtitlePicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionEmptyHotSpot givenResponseOptions:options];
-            self.inviteFriendsToAppPicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionInviteFriends givenResponseOptions:options];
-            self.setBeaconPlaceholderPicker.objectOptions = [self optionsForDisplayLocation:kRandomObjectOptionHotSpotPlaceholder givenResponseOptions:options];
-            self.hasUpdatedFromServer = YES;
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRandomStringsUpdated object:nil];
-        }
-    } failure:nil];
-}
-
 - (NSArray *)optionsForDisplayLocation:(NSString *)displayLocation givenResponseOptions:(NSArray *)options
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"display_location = %@", displayLocation];

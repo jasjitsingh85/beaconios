@@ -17,13 +17,10 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
 #import "DealDetailImageCell.h"
-//#import "FindFriendsViewController.h"
 #import "AnalyticsManager.h"
 #import "APIClient.h"
 #import "AppDelegate.h"
 #import "LoadingIndictor.h"
-//#import "DealView.h"
-//#import "HappyHourView.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "SocialNotificationPopupView.h"
 #import "WebViewController.h"

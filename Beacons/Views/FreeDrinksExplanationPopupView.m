@@ -8,7 +8,6 @@
 
 #import "FreeDrinksExplanationPopupView.h"
 #import "Theme.h"
-#import "BeaconProfileViewController.h"
 
 @interface FreeDrinksExplanationPopupView()
 

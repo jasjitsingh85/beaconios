@@ -27,9 +27,7 @@
 #import "IntroViewController.h"
 //#import "RegistrationFlowViewController.h"
 #import "RegisterViewController.h"
-#import "SetBeaconViewController.h"
 #import "FeedTableViewController.h"
-#import "BeaconProfileViewController.h"
 #import "RedemptionViewController.h"
 #import "PermissionsViewController.h"
 #import "Beacon.h"
@@ -81,14 +79,6 @@
     return _sideNavigationViewController;
 }
 
-- (SetBeaconViewController *)setBeaconViewController
-{
-    if (!_setBeaconViewController) {
-        _setBeaconViewController = [[SetBeaconViewController alloc] init];
-    }
-    return _setBeaconViewController;
-}
-
 - (MenuViewController *)menuViewController
 {
     if (!_menuViewController) {
@@ -115,10 +105,6 @@
     NSDictionary *initDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                @"kohotspot-deals-with-friends55666e25a8b3b", @"kochavaAppId", nil];
     kochavaTracker = [[KochavaTracker alloc] initKochavaWithParams:initDict];
-    
-    
-    //update content from server
-    [[RandomObjectManager sharedManager] updateStringsFromServer];
     
     [ThemeManager customizeAppAppearance];
     self.centerNavigationController.selectedViewController = self.dealsViewController;
@@ -340,7 +326,6 @@
 
 - (void)setSelectedViewControllerToHome
 {
-    [self.setBeaconViewController updateDescriptionPlaceholder];
     [self.centerNavigationController setSelectedViewController:self.dealsViewController animated:YES];
 }
 
@@ -394,21 +379,6 @@
     }
     [redemptionTableViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
-}
-
-//- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher
-//{
-//    VoucherViewController *voucherViewController = [[VoucherViewController alloc] init];
-//    voucherViewController.voucher = voucher;
-//    voucherViewController.openToDealView = YES;
-//    [voucherViewController refreshVoucherData];
-//    [self.centerNavigationController setSelectedViewController:voucherViewController animated:YES];
-//}
-
-- (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID
-{
-    [self.centerNavigationController setSelectedViewController:self.setBeaconViewController animated:NO];
-    [self.setBeaconViewController preloadWithRecommendation:recommendationID];
 }
 
 - (void)setSelectedViewControllerToNewsfeed

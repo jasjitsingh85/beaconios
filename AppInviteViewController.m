@@ -1,5 +1,4 @@
 //
-//  FindFriendsViewController.m
 //  Beacons
 //
 //  Created by Jeffrey Ames on 6/9/13.
@@ -20,50 +19,30 @@
 #import "Deal.h"
 #import "Venue.h"
 #import "Utilities.h"
-//#import "ContactManager.h"
 #import "LoadingIndictor.h"
 #import "NavigationBarTitleLabel.h"
 #import "AppDelegate.h"
-//#import "DatePickerModalView.h"
 #import "TextMessageManager.h"
-//#import "ContactExplanationPopupView.h"
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-//#import "RewardsViewController.h"
 
-//@interface AppInviteViewController () <UISearchBarDelegate, UITextViewDelegate, ContactExplanationViewControllerDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 @interface AppInviteViewController()
 
-//@property (strong, nonatomic) NSArray *usersInContactsList;
-//@property (strong, nonatomic) NSArray *recentsList;
-//@property (strong, nonatomic) NSArray *suggestedList;
-//@property (strong, nonatomic) NSArray *nonSuggestedList;
-//@property (strong, nonatomic) UIScrollView *scrollViewContainer;
-//@property (strong, nonatomic) NSMutableDictionary *contactDictionary;
-//@property (strong, nonatomic) NSMutableDictionary *selectedContactDictionary;
-//@property (strong, nonatomic) NSMutableDictionary *inactiveContactDictionary;
 @property (strong, nonatomic) NSMutableDictionary *tableViewHeaderPool;
 @property (strong, nonatomic) NSMutableDictionary *selectAllButtonPool;
 @property (strong, nonatomic) NSMutableSet *collapsedSections;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UIView *sendMessageContainer;
 @property (strong, nonatomic) UIButton *sendMessage;
-//@property (strong, nonatomic) UIButton *skipButton;
 @property (strong, nonatomic) UILabel *prompt;
 @property (assign, nonatomic) BOOL inviteButtonShown;
 @property (assign, nonatomic) BOOL inSearchMode;
-//@property (assign, nonatomic) BOOL onlyContacts;
-//@property (strong, nonatomic) NSArray *groups;
 @property (readonly) NSInteger promptContainer;
 @property (readonly) NSInteger searchBarContainer;
-//@property (readonly) NSInteger findFriendSectionAllUsers;
-//@property (readonly) NSInteger findFriendSectionRecents;
 @property (readonly) NSInteger findFriendSectionSuggested;
 @property (readonly) NSInteger findFriendSectionContacts;
 @property (nonatomic, strong) NSDate *date;
-//@property (strong, nonatomic) UITextView *composeMessageTextView;
-//@property (strong, nonatomic) UILabel *messageCount;
 @property (assign, nonatomic) BOOL modifiedMessage;
 @property (assign, nonatomic) BOOL isSendMessageShowing;
 @property (assign, nonatomic) BOOL isKeyboardShowing;
@@ -75,11 +54,6 @@
 @property (strong, nonatomic) UIButton *emailButton;
 @property (strong, nonatomic) UIButton *smsButton;
 @property (strong, nonatomic) NSString *smsMessage;
-
-//@property (strong, nonatomic) UIView *dateView;
-//@property (strong, nonatomic) UIView *dateContentView;
-//@property (strong, nonatomic) UILabel *dateTitleLabel;
-//@property (strong, nonatomic) UILabel *dateLabel;
 
 @end
 

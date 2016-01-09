@@ -16,7 +16,6 @@
 #import "LoadingIndictor.h"
 #import "APIClient.h"
 #import "BeaconManager.h"
-#import "FindFriendsViewController.h"
 #import "BeaconStatus.h"
 #import "ContactManager.h"
 

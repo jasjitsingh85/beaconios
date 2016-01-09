@@ -8,7 +8,6 @@
 
 #import "NeedHelpExplanationPopupView.h"
 #import "Theme.h"
-#import "BeaconProfileViewController.h"
 #import "APIClient.h"
 #import "LoadingIndictor.h"
 #import "Deal.h"

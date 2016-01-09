@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -338,29 +338,29 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     NSDictionary *parameters = @{ @"beacon_id" : beaconID };
     [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
-
-- (void)getRewardsScore:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-{
-    NSDictionary *parameters = @{};
-    [[APIClient sharedClient] getPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-}
-
-- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-{
-    NSDictionary *parameters = @{ @"deal_id" : dealID };
-    [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-}
-- (void)redeemVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
-    [[APIClient sharedClient] putPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-}
-
-- (void)deleteVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
-    [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-}
+//
+//- (void)getRewardsScore:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+//{
+//    NSDictionary *parameters = @{};
+//    [[APIClient sharedClient] getPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+//}
+//
+//- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+//{
+//    NSDictionary *parameters = @{ @"deal_id" : dealID };
+//    [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+//}
+//- (void)redeemVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+//{
+//    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
+//    [[APIClient sharedClient] putPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+//}
+//
+//- (void)deleteVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+//{
+//    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
+//    [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
+//}
 
 - (void)addRewardItem:(NSString *)referringUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
