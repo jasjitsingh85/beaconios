@@ -829,7 +829,7 @@
         if (self.dealStatus.isRewardAuthorization) {
             self.headerExplanationText.text = [NSString stringWithFormat:@"You just received a %@ for free. Text friends to meet you and don’t forget to tip!", self.deal.itemName];
         } else {
-            self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Text friends to meet you to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
+            self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Invite friends to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
         }
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];

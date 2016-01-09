@@ -422,7 +422,7 @@
         accentColor = [UIColor unnormalizedColorWithRed:240 green:122 blue:101 alpha:255];
         [self.headerIcon setImage:[UIImage imageNamed:@"drinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Text more friends to meet you to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Invite friends to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemedIcon"]];
 
