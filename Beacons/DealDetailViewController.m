@@ -593,7 +593,11 @@
     if (self.deal.isRewardItem) {
         [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
     } else {
-        [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
+        if (self.deal.venue.hasPosIntegration) {
+            [self.getDealButton setTitle:@"CHECK IN AND OPEN TAB" forState:UIControlStateNormal];
+        } else {
+            [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
+        }
     }
 }
 

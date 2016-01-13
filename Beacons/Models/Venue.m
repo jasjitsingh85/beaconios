@@ -56,7 +56,8 @@
     if (![yelpRatingImage isEqual:[NSNull null]]){
         self.yelpRating = [NSURL URLWithString:yelpRatingImage];
     }
-    
+
+    NSLog(@"HADSD: %@", dictionary[@"has_pos"]);
     self.hasPosIntegration = [dictionary[@"has_pos"] boolValue];
     
     return self;
