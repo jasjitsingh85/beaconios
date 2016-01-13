@@ -96,6 +96,10 @@
 		4148E9C41B0434880050D3E3 /* Voucher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C31B0434880050D3E3 /* Voucher.m */; };
 		4148E9C71B0439030050D3E3 /* RewardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4148E9C61B0439030050D3E3 /* RewardManager.m */; };
 		4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */; };
+		414F73F21C44CDA800CF49C4 /* TabTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73F11C44CDA800CF49C4 /* TabTableView.m */; };
+		414F73F51C4584BF00CF49C4 /* Tab.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73F41C4584BF00CF49C4 /* Tab.m */; };
+		414F73F81C4584D900CF49C4 /* TabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73F71C4584D900CF49C4 /* TabItem.m */; };
+		414F73FB1C46107000CF49C4 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73FA1C46107000CF49C4 /* TabViewController.m */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -477,6 +481,14 @@
 		4148E9C51B0438F80050D3E3 /* RewardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RewardManager.h; sourceTree = "<group>"; };
 		4148E9C61B0439030050D3E3 /* RewardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RewardManager.m; sourceTree = "<group>"; };
 		4148E9CD1B0874130050D3E3 /* singleGoldCoin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "singleGoldCoin@2x.png"; sourceTree = "<group>"; };
+		414F73F01C44CD9500CF49C4 /* TabTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabTableView.h; sourceTree = "<group>"; };
+		414F73F11C44CDA800CF49C4 /* TabTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabTableView.m; sourceTree = "<group>"; };
+		414F73F31C4584B200CF49C4 /* Tab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tab.h; sourceTree = "<group>"; };
+		414F73F41C4584BF00CF49C4 /* Tab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tab.m; sourceTree = "<group>"; };
+		414F73F61C4584CD00CF49C4 /* TabItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabItem.h; sourceTree = "<group>"; };
+		414F73F71C4584D900CF49C4 /* TabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabItem.m; sourceTree = "<group>"; };
+		414F73F91C46106100CF49C4 /* TabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
+		414F73FA1C46107000CF49C4 /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -978,6 +990,8 @@
 				4105DA981B7BC1FE0006B888 /* FeedItemTableViewCell.m */,
 				9666524B19786CA300EE85F8 /* DealExplanationView.h */,
 				9666524C19786CA300EE85F8 /* DealExplanationView.m */,
+				414F73F01C44CD9500CF49C4 /* TabTableView.h */,
+				414F73F11C44CDA800CF49C4 /* TabTableView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1027,6 +1041,8 @@
 			children = (
 				413B7B191AD44F0500EB5385 /* PaymentsViewController.h */,
 				413B7B1A1AD44F7D00EB5385 /* PaymentsViewController.m */,
+				414F73F91C46106100CF49C4 /* TabViewController.h */,
+				414F73FA1C46107000CF49C4 /* TabViewController.m */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1068,6 +1084,10 @@
 				96D5EEFB19575D6C00786C27 /* DealHours.m */,
 				41D716AF1BC1CE1D00DF23D2 /* Event.h */,
 				41D716B01BC1CE2D00DF23D2 /* Event.m */,
+				414F73F31C4584B200CF49C4 /* Tab.h */,
+				414F73F41C4584BF00CF49C4 /* Tab.m */,
+				414F73F61C4584CD00CF49C4 /* TabItem.h */,
+				414F73F71C4584D900CF49C4 /* TabItem.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1943,6 +1963,7 @@
 				96E623ED1814996E0048125B /* NSObject+Empty.m in Sources */,
 				963FD6901810FF33003509C2 /* JAInsetLabel.m in Sources */,
 				9671F66818BD5603007DF715 /* BeaconTableViewCell.m in Sources */,
+				414F73F51C4584BF00CF49C4 /* Tab.m in Sources */,
 				1F52638A175C492800DD26E1 /* BeaconCell.m in Sources */,
 				413B7B1B1AD44F7D00EB5385 /* PaymentsViewController.m in Sources */,
 				4158AE751B4714D30034BA4A /* DealView.m in Sources */,
@@ -1954,12 +1975,14 @@
 				1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */,
 				41BF74371B01B4D800D6EFC1 /* RewardExplanationPopupView.m in Sources */,
 				411B4F7C1C22A11B00CA7100 /* FaqViewController.m in Sources */,
+				414F73F21C44CDA800CF49C4 /* TabTableView.m in Sources */,
 				412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */,
 				96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */,
 				1F465C0A17618B9200F35A8B /* SelectLocationViewController.m in Sources */,
 				96E565D018E871720007545D /* GroupsViewController.m in Sources */,
 				96D5EEF91957531300786C27 /* UIView+BounceAnimation.m in Sources */,
 				96D5EEFC19575D6C00786C27 /* DealHours.m in Sources */,
+				414F73FB1C46107000CF49C4 /* TabViewController.m in Sources */,
 				96F14C1C17D8499B0093C976 /* ChatViewController.m in Sources */,
 				969D649917EF85F200F5AB36 /* ImageViewController.m in Sources */,
 				96859CF417EFC3C600C1C467 /* FormView.m in Sources */,
@@ -1971,6 +1994,7 @@
 				41F144091B22B30B0010BCF1 /* HotspotAnnotation.m in Sources */,
 				1F465C2B176510EB00F35A8B /* Contact.m in Sources */,
 				968CDA8F17F79CEB00D64441 /* JADatePicker.m in Sources */,
+				414F73F81C4584D900CF49C4 /* TabItem.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
 				96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */,

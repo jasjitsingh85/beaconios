@@ -56,6 +56,9 @@
     if (![yelpRatingImage isEqual:[NSNull null]]){
         self.yelpRating = [NSURL URLWithString:yelpRatingImage];
     }
+    
+    self.hasPosIntegration = [dictionary[@"has_pos"] boolValue];
+    
     return self;
 }
 
@@ -118,6 +121,8 @@
             [self.photos addObject:photoURL];
         }
     }
+    
+    self.hasPosIntegration = [dictionary[@"has_pos"] boolValue];
     
     return self;
 }

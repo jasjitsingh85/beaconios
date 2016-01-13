@@ -30,6 +30,7 @@
 @property (strong, nonatomic) NSMutableArray *events;
 @property (strong, nonatomic) NSMutableArray *photos;
 @property (assign, nonatomic) BOOL isFollowed;
+@property (assign, nonatomic) BOOL hasPosIntegration;
 
 - (id)initWithFoursquareDictionary:(NSDictionary *)data;
 - (id)initWithDealPlaceDictionary:(NSDictionary *)dictionary;
