@@ -23,7 +23,6 @@
 #import "UIButton+HSNavButton.h"
 #import "UIImage+Resize.h"
 #import "UIView+Shadow.h"
-#import "DealRedemptionViewController.h"
 #import <MessageUI/MFMailComposeViewController.h>
 #import "HSNavigationController.h"
 #import "Beacon.h"
@@ -57,7 +56,6 @@
 
 @interface RedemptionViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
-@property (strong, nonatomic) DealRedemptionViewController *dealRedemptionViewController;
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 @property (strong, nonatomic) UIView *descriptionView;
 @property (strong, nonatomic) UIImageView *imageView;
@@ -216,7 +214,7 @@
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
         self.beacon = beacon;
         if (self.beacon.deal) {
-            [self.dealRedemptionViewController setBeacon:self.beacon];
+            [self setBeacon:self.beacon];
         }
     } failure:nil];
 }
@@ -496,7 +494,11 @@
     if (indexPath.row == self.photoContainer) {
         height = self.imageHeight + 75;
     } else {
-        height = ((self.tabItems.count + 1) * 22) + 100;
+        if (self.beacon.deal.venue.hasPosIntegration) {
+            height = ((self.tabItems.count + 1) * 22) + 100;
+        } else {
+            height = 300;
+        }
     };
     
     return height;
@@ -718,7 +720,6 @@
             self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
             self.redeemButton.y = 115;
             self.redeemButton.size = CGSizeMake(self.view.width, 150);
-            [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             
             self.voucherTitle = [[UILabel alloc] init];
             self.voucherTitle.size = CGSizeMake(self.redeemButton.width, 34);
@@ -773,6 +774,7 @@
             [self.inviteFriendsButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             
             [redemptionCell addSubview:self.redeemButton];
+            [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         }
     
     }
