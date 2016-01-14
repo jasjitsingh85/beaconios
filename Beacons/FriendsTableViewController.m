@@ -53,54 +53,23 @@
     
     UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"friends"]];
     headerIcon.centerX = self.tableView.width/2;
-    headerIcon.y = 75;
+    headerIcon.y = 135;
     [self.noFriendsView addSubview:headerIcon];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, self.view.width - 60, 20)];
     label.font = [ThemeManager boldFontOfSize:12];
     label.textAlignment = NSTextAlignmentCenter;
-    label.y = 100;
+    label.y = 160;
     label.text = @"FIND FRIENDS ON HOTSPOT";
     [self.noFriendsView addSubview:label];
     
-    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(30, 115, self.view.width - 60, 60)];
+    UILabel *body = [[UILabel alloc] initWithFrame:CGRectMake(30, 175, self.view.width - 60, 60)];
     body.textAlignment = NSTextAlignmentCenter;
     body.font = [ThemeManager lightFontOfSize:12];
     body.numberOfLines = 0;
     body.text = @"Link facebook and sync contacts to find your friends on Hotspot. You’ll be able to invite them to join you when you check in.";
     [self.noFriendsView addSubview:body];
     
-//    self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
-//    self.linkFacebookButton.size = CGSizeMake(self.view.width - 50, 35);
-//    self.linkFacebookButton.y = 200;
-//    self.linkFacebookButton.width = self.view.width - 60;
-//    self.linkFacebookButton.height = 35;
-//    self.linkFacebookButton.centerX = self.view.width/2.0;
-//    self.linkFacebookButton.layer.cornerRadius = 3;
-//    self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
-//    self.linkFacebookButton.layer.borderWidth = 1;
-//    self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-//    [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-//    self.linkFacebookButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
-//    
-//    self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-//    self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
-//    self.syncContactsButton.layer.cornerRadius = 3;
-//    self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
-//    self.syncContactsButton.layer.borderWidth = 1;
-//    [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
-//    self.syncContactsButton.frame=CGRectMake(0, 260, self.view.width - 60, 35);
-//    self.syncContactsButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
-//    self.syncContactsButton.centerX = self.view.width/2;
-    
-//    [self.linkFacebookButton
-//     addTarget:self
-//     action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.syncContactsButton
-//     addTarget:self
-//     action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     
     [self.noFriendsView addSubview:self.linkFacebookButton];
     [self.noFriendsView addSubview:self.syncContactsButton];
