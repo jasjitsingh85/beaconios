@@ -18,6 +18,7 @@
 #import "UIButton+HSNavButton.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "FindFriendsPopupView.h"
 
 @interface FriendsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -42,7 +43,7 @@
     self.tableView.dataSource = self;
     [self.tableView setSeparatorInset:UIEdgeInsetsMake(0, 15, 0, 15)];
     [self.tableView setLayoutMargins:UIEdgeInsetsZero];
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 60, 0);
     
     self.noFriendsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.width, self.view.height * 2)];
     self.noFriendsView.backgroundColor = [UIColor whiteColor];
@@ -69,37 +70,37 @@
     body.text = @"Link facebook and sync contacts to find your friends on Hotspot. You’ll be able to invite them to join you when you check in.";
     [self.noFriendsView addSubview:body];
     
-    self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    self.linkFacebookButton.size = CGSizeMake(self.view.width - 50, 35);
-    self.linkFacebookButton.y = 200;
-    self.linkFacebookButton.width = self.view.width - 60;
-    self.linkFacebookButton.height = 35;
-    self.linkFacebookButton.centerX = self.view.width/2.0;
-    self.linkFacebookButton.layer.cornerRadius = 3;
-    self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
-    self.linkFacebookButton.layer.borderWidth = 1;
-    self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
-    [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    self.linkFacebookButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
+//    self.linkFacebookButton=[UIButton buttonWithType:UIButtonTypeCustom];
+//    self.linkFacebookButton.size = CGSizeMake(self.view.width - 50, 35);
+//    self.linkFacebookButton.y = 200;
+//    self.linkFacebookButton.width = self.view.width - 60;
+//    self.linkFacebookButton.height = 35;
+//    self.linkFacebookButton.centerX = self.view.width/2.0;
+//    self.linkFacebookButton.layer.cornerRadius = 3;
+//    self.linkFacebookButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
+//    self.linkFacebookButton.layer.borderWidth = 1;
+//    self.linkFacebookButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
+//    [self.linkFacebookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.linkFacebookButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//    self.linkFacebookButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
+//    
+//    self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
+//    self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
+//    self.syncContactsButton.layer.cornerRadius = 3;
+//    self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
+//    self.syncContactsButton.layer.borderWidth = 1;
+//    [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
+//    self.syncContactsButton.frame=CGRectMake(0, 260, self.view.width - 60, 35);
+//    self.syncContactsButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
+//    self.syncContactsButton.centerX = self.view.width/2;
     
-    self.syncContactsButton=[UIButton buttonWithType:UIButtonTypeCustom];
-    self.syncContactsButton.backgroundColor=[[ThemeManager sharedTheme] lightBlueColor];
-    self.syncContactsButton.layer.cornerRadius = 3;
-    self.syncContactsButton.layer.borderColor = [[ThemeManager sharedTheme] lightBlueColor].CGColor;
-    self.syncContactsButton.layer.borderWidth = 1;
-    [self.syncContactsButton setImage:[UIImage imageNamed:@"checkmark"] forState:UIControlStateNormal];
-    self.syncContactsButton.frame=CGRectMake(0, 260, self.view.width - 60, 35);
-    self.syncContactsButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
-    self.syncContactsButton.centerX = self.view.width/2;
-    
-    [self.linkFacebookButton
-     addTarget:self
-     action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.syncContactsButton
-     addTarget:self
-     action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+//    [self.linkFacebookButton
+//     addTarget:self
+//     action:@selector(facebookButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.syncContactsButton
+//     addTarget:self
+//     action:@selector(contactButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     
     [self.noFriendsView addSubview:self.linkFacebookButton];
     [self.noFriendsView addSubview:self.syncContactsButton];
@@ -107,6 +108,8 @@
     [self updateNoFriendsView];
     self.allContacts = [ContactManager sharedManager].contactDictionary;
     [self refreshFriends];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshFriends) name:kRefreshManageFriends object:nil];
 
 }
 

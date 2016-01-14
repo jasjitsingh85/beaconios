@@ -100,6 +100,9 @@
 		414F73F51C4584BF00CF49C4 /* Tab.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73F41C4584BF00CF49C4 /* Tab.m */; };
 		414F73F81C4584D900CF49C4 /* TabItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73F71C4584D900CF49C4 /* TabItem.m */; };
 		414F73FB1C46107000CF49C4 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73FA1C46107000CF49C4 /* TabViewController.m */; };
+		414F73FD1C476CBE00CF49C4 /* friendsWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F73FC1C476CBE00CF49C4 /* friendsWhite@2x.png */; };
+		414F74001C476FD400CF49C4 /* FindFriendsPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73FF1C476FD400CF49C4 /* FindFriendsPopupView.m */; };
+		414F74021C47738700CF49C4 /* smallModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74011C47738700CF49C4 /* smallModalBackground@2x.png */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -489,6 +492,10 @@
 		414F73F71C4584D900CF49C4 /* TabItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabItem.m; sourceTree = "<group>"; };
 		414F73F91C46106100CF49C4 /* TabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
 		414F73FA1C46107000CF49C4 /* TabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
+		414F73FC1C476CBE00CF49C4 /* friendsWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendsWhite@2x.png"; sourceTree = "<group>"; };
+		414F73FE1C476FC600CF49C4 /* FindFriendsPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsPopupView.h; sourceTree = "<group>"; };
+		414F73FF1C476FD400CF49C4 /* FindFriendsPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsPopupView.m; sourceTree = "<group>"; };
+		414F74011C47738700CF49C4 /* smallModalBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallModalBackground@2x.png"; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -974,6 +981,8 @@
 				41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */,
 				41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */,
 				41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */,
+				414F73FE1C476FC600CF49C4 /* FindFriendsPopupView.h */,
+				414F73FF1C476FD400CF49C4 /* FindFriendsPopupView.m */,
 				41BF74351B01B4C100D6EFC1 /* RewardExplanationPopupView.h */,
 				41BF74361B01B4D800D6EFC1 /* RewardExplanationPopupView.m */,
 				961FE29318D10F7100CF891A /* ExplanationPopupView.h */,
@@ -1380,6 +1389,7 @@
 				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
 				41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */,
 				41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */,
+				414F74011C47738700CF49C4 /* smallModalBackground@2x.png */,
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41FFB0261C1A007B00947EEC /* newFacebookWhite@2x.png */,
 				412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */,
@@ -1398,6 +1408,7 @@
 				41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */,
 				41FD06231B377C6700F7DD08 /* documentIcon@2x.png */,
 				41CBB0EA1C077A2600B7C4AA /* bigRedPin@2x.png */,
+				414F73FC1C476CBE00CF49C4 /* friendsWhite@2x.png */,
 				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
 				41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */,
 				41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */,
@@ -1672,6 +1683,7 @@
 				41FFB0151C15248C00947EEC /* unfollowButton@2x.png in Resources */,
 				41D716B31BCB279C00DF23D2 /* newsfeedUnfollow@2x.png in Resources */,
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
+				414F74021C47738700CF49C4 /* smallModalBackground@2x.png in Resources */,
 				41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */,
 				41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */,
 				41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */,
@@ -1785,6 +1797,7 @@
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				41CBB0EB1C077A2600B7C4AA /* bigRedPin@2x.png in Resources */,
 				41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */,
+				414F73FD1C476CBE00CF49C4 /* friendsWhite@2x.png in Resources */,
 				41CBB0E91C0619E200B7C4AA /* instagramLogo@2x.png in Resources */,
 				41FD063F1B3A21A600F7DD08 /* drinkIcon@2x.png in Resources */,
 				41C987111C042EB400DD595D /* newDirectionsIcon@2x.png in Resources */,
@@ -1943,6 +1956,7 @@
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				96A8E03218D61A8800493C65 /* DatePickerModalView.m in Sources */,
 				96E565D618E87CB80007545D /* Group.m in Sources */,
+				414F74001C476FD400CF49C4 /* FindFriendsPopupView.m in Sources */,
 				1FD6582C175878610007455B /* APIClient.m in Sources */,
 				96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */,
 				966C3F02192983080082E2C6 /* Constants.m in Sources */,

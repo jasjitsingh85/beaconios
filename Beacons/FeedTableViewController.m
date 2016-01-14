@@ -51,8 +51,6 @@
 @property (strong, nonatomic) WebViewController *webView;
 @property (strong, nonatomic) SetupNewsfeedPopupView *modal;
 
-//@property (strong, nonatomic) UINavigationController *navigationWebviewController;
-
 @end
 
 @implementation FeedTableViewController
@@ -67,7 +65,6 @@
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
     self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
     self.tableView.showsVerticalScrollIndicator = YES;
-    //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
