@@ -23,7 +23,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDefaultsKeyCheckinPromptHotspots @"checkinPromptHotspots"
 #define kDefaultsKeyHasSeenHotspotTile @"hasSeenHotspotTile"
 #define kDefaultsKeyHasSeenHappyHourTile @"hasSeenHappyHourTile"
-//#define kDefaultsKeyHasShownHotspotExplanation @"hasShownHotspotExplanation"
+#define kDefaultsKeyHasShownHotspotSocialExplanation @"hasShownHotspotSocialExplanation"
 //#define kDefaultsKeyHasShownPaymentExplanation @"hasShownPaymentExplanation"
 #define kDefaultsKeyHasShownDealExplanation @"hasShownDealExplanation"
 #define kDefaultsKeyHasShownDealsIntroduction @"hasShownDealsIntroduction"

@@ -103,6 +103,10 @@
 		414F73FD1C476CBE00CF49C4 /* friendsWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F73FC1C476CBE00CF49C4 /* friendsWhite@2x.png */; };
 		414F74001C476FD400CF49C4 /* FindFriendsPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 414F73FF1C476FD400CF49C4 /* FindFriendsPopupView.m */; };
 		414F74021C47738700CF49C4 /* smallModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74011C47738700CF49C4 /* smallModalBackground@2x.png */; };
+		414F74041C545D0100CF49C4 /* newSettingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74031C545D0100CF49C4 /* newSettingsIcon@2x.png */; };
+		414F74061C545EF200CF49C4 /* topBorderWithDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74051C545EF200CF49C4 /* topBorderWithDropShadow@2x.png */; };
+		414F74081C54640200CF49C4 /* socialTutorialBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74071C54640200CF49C4 /* socialTutorialBackground@2x.png */; };
+		414F740A1C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74091C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -496,6 +500,10 @@
 		414F73FE1C476FC600CF49C4 /* FindFriendsPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendsPopupView.h; sourceTree = "<group>"; };
 		414F73FF1C476FD400CF49C4 /* FindFriendsPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendsPopupView.m; sourceTree = "<group>"; };
 		414F74011C47738700CF49C4 /* smallModalBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smallModalBackground@2x.png"; sourceTree = "<group>"; };
+		414F74031C545D0100CF49C4 /* newSettingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newSettingsIcon@2x.png"; sourceTree = "<group>"; };
+		414F74051C545EF200CF49C4 /* topBorderWithDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBorderWithDropShadow@2x.png"; sourceTree = "<group>"; };
+		414F74071C54640200CF49C4 /* socialTutorialBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "socialTutorialBackground@2x.png"; sourceTree = "<group>"; };
+		414F74091C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendScreenshotForTutorial@2x.png"; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -1414,10 +1422,13 @@
 				41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */,
 				41593DB81BE98FC400711E57 /* newHotspotLogo@2x.png */,
 				4109B9C01B9B706100C3270E /* publicGlobe@2x.png */,
+				414F74091C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png */,
 				4158AE601B43BBC20034BA4A /* menuButtonWithNotification@2x.png */,
+				414F74031C545D0100CF49C4 /* newSettingsIcon@2x.png */,
 				41CB5C6C1C0D71B70077485B /* socialNotificationBackground@2x.png */,
 				4105DAA81B7FFD700006B888 /* notification@2x.png */,
 				41FD06241B377C6700F7DD08 /* venueIcon@2x.png */,
+				414F74071C54640200CF49C4 /* socialTutorialBackground@2x.png */,
 				41D716B41BCB3C5B00DF23D2 /* largeCrossout@2x.png */,
 				41FD06251B377C6700F7DD08 /* dollarSign@2x.png */,
 				41FD063E1B3A21A600F7DD08 /* drinkIcon@2x.png */,
@@ -1467,6 +1478,7 @@
 				41148CB71B7A2A9A00F4CA17 /* selectedFavorite@2x.png */,
 				41030F6C1B5C27EF00252158 /* homeIcon@2x.png */,
 				4111AAFE1B65F1B10001C94A /* buttonBackground@2x.png */,
+				414F74051C545EF200CF49C4 /* topBorderWithDropShadow@2x.png */,
 				41E23A891B33B0C600676254 /* hotspotSliderLabel@2x.png */,
 				41FD06361B39EF2700F7DD08 /* activeVoucher@2x.png */,
 				41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */,
@@ -1685,6 +1697,7 @@
 				9625822418E9E05300677D92 /* plusCircleGray@2x.png in Resources */,
 				414F74021C47738700CF49C4 /* smallModalBackground@2x.png in Resources */,
 				41593DB91BE98FC400711E57 /* newHotspotLogo@2x.png in Resources */,
+				414F740A1C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png in Resources */,
 				41FD062B1B38EBA200F7DD08 /* groupIcon@2x.png in Resources */,
 				41FD06331B39B24700F7DD08 /* creditCardIcon@2x.png in Resources */,
 				41FFB01D1C1549C300947EEC /* mapVenueBackground@2x.png in Resources */,
@@ -1847,6 +1860,7 @@
 				41C4B8361BEFD5A700D471D6 /* filterButton@2x.png in Resources */,
 				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
+				414F74081C54640200CF49C4 /* socialTutorialBackground@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
 				41C4B8381BF073B200D471D6 /* updatedBackgroundGradient@2x.png in Resources */,
 				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
@@ -1858,6 +1872,7 @@
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
 				41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */,
 				418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */,
+				414F74061C545EF200CF49C4 /* topBorderWithDropShadow@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
 				41BEAC291A1DE3BA0069F932 /* shareIcon@2x.png in Resources */,
@@ -1881,6 +1896,7 @@
 				41FFB0271C1A007B00947EEC /* newFacebookWhite@2x.png in Resources */,
 				41FFB0291C1A06E700947EEC /* emailIcon@2x.png in Resources */,
 				4105DAA91B7FFD710006B888 /* notification@2x.png in Resources */,
+				414F74041C545D0100CF49C4 /* newSettingsIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

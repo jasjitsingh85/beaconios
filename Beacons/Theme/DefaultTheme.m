@@ -92,7 +92,7 @@
 
 - (UIColor *)redColor
 {
-    return [UIColor colorWithRed:225/255.0 green:86/255.0 blue:72/255.0 alpha:1.0];
+    return [UIColor colorWithRed:215/255.0 green:63/255.0 blue:58/255.0 alpha:1.0];
 }
 
 

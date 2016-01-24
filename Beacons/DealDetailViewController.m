@@ -122,7 +122,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
     
     self.getDealButtonContainer = [[UIView alloc] init];
-    self.getDealButtonContainer.backgroundColor = [UIColor whiteColor];
+    self.getDealButtonContainer.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
     self.getDealButtonContainer.width = self.view.width;
     self.getDealButtonContainer.height = 100;
     self.getDealButtonContainer.y = self.view.height - 100;
@@ -137,14 +137,14 @@
     [self.getDealButtonContainer addSubview:switchView];
     
     self.togglePrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 12.5, self.view.width, 20)];
-    self.togglePrompt.font = [ThemeManager lightFontOfSize:12];
+    self.togglePrompt.font = [ThemeManager lightFontOfSize:11];
     self.togglePrompt.textAlignment = NSTextAlignmentLeft;
 //    self.togglePrompt.text = @"Friends - Your friends see where you're going";
     [self.getDealButtonContainer addSubview:self.togglePrompt];
     
     self.togglePromptHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.togglePromptHelpButton.y = 12;
-    [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"settingsButton"] forState:UIControlStateNormal];
+    self.togglePromptHelpButton.y = 11;
+    [self.togglePromptHelpButton setImage:[UIImage imageNamed:@"newSettingsIcon"] forState:UIControlStateNormal];
     self.togglePromptHelpButton.size = CGSizeMake(24, 24);
 //    [self.mapListToggleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [self.mapListToggleButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -170,9 +170,12 @@
 //    topBorder.layer.shadowPath = shadowPath.CGPath;
 //    [self.getDealButtonContainer addSubview:topBorder];
     
-    UIImageView *topBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dropShadowTopBorder"]];
-    topBorder.y = -8;
+    UIImageView *topBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"topBorderWithDropShadow"]];
+    topBorder.y = -12;
     [self.getDealButtonContainer addSubview:topBorder];
+    
+    
+    
     //    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //    self.publicToggleButton.size = CGSizeMake(65, 25);
     //    self.publicToggleButton.x = self.view.width - 90;
@@ -410,19 +413,25 @@
         //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
         if (self.isDealActive) {
-            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-            UIView *view = appDelegate.window.rootViewController.view;
-            MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-            if (self.venue.deal != nil){
-                [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
-                    [loadingIndicator hide:YES];
-                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                    [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-                    [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
-                } failure:^(NSError *error) {
-                    [loadingIndicator hide:YES];
-                    [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }];
+            BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+            if (!socialExplanationShown) {
+                [self showHelpModal:nil];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+            } else {
+                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                UIView *view = appDelegate.window.rootViewController.view;
+                MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+                if (self.venue.deal != nil){
+                    [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+                        [loadingIndicator hide:YES];
+                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+                        [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
+                    } failure:^(NSError *error) {
+                        [loadingIndicator hide:YES];
+                        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }];
+                }
             }
         } else {
             [[[UIAlertView alloc] initWithTitle:@"Limit Reached" message:@"You already used Hotspot here today. You can only redeem one Hotspot drink special per venue per day." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -1081,19 +1090,19 @@
 - (void)updateToggle:(UISwitch *)_switch{
     if ([_switch isOn]) {
         self.isPublic = YES;
-        self.togglePromptHelpButton.x = 222;
+        self.togglePromptHelpButton.x = 210;
         self.togglePrompt.text = @"Friends - I'm down with friends joining";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Friends"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
-        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:range];
         self.togglePrompt.attributedText = attributedText;
     } else {
         self.isPublic = NO;
-        self.togglePromptHelpButton.x = 212;
+        self.togglePromptHelpButton.x = 200;
         self.togglePrompt.text = @"Only Me - I want to keep this private";
         NSRange range = [self.togglePrompt.text rangeOfString:@"Only Me"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:self.togglePrompt.text];
-        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:11] range:range];
         self.togglePrompt.attributedText = attributedText;
     }
 }

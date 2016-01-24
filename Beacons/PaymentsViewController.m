@@ -112,7 +112,7 @@
 
 - (void)dropInViewController:(__unused BTDropInViewController *)viewController didSucceedWithPaymentMethod:(BTPaymentMethod *)paymentMethod {
     self.nonce = paymentMethod.nonce;
-    NSLog(@"DID SUCCEED WITH PAYMENT METHOD: %@", paymentMethod);
+//    NSLog(@"DID SUCCEED WITH PAYMENT METHOD: %@", self.nonce);
     [self postNonceToServer:self.nonce]; // Send payment method nonce to your server
 }
 
