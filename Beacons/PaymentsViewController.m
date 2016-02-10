@@ -35,6 +35,40 @@
     }
 }
 
+- (void) openPaymentModalForOpenTab
+{
+    // Create and retain a `Braintree` instance with the client token
+    //[Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
+    self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
+    // Create a BTDropInViewController
+    //        self.braintree = braintree;
+    BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
+    // This is where you might want to customize your Drop in. (See below.)
+    //
+    //    dropInViewController.summaryTitle = ;
+    //    dropInViewController.summaryDescription = @"You won't be charged until your voucher is redeemed and you’ve received your drink";
+    //    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
+    //    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
+    dropInViewController.callToActionText = @"SAVE";
+    dropInViewController.summaryTitle = @"Save Time and Money";
+    dropInViewController.summaryDescription = @"Save time at the bar by adding payment before you go out. You’re only charged after you’ve redeemed your drink.";
+    dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
+    
+    // The way you present your BTDropInViewController instance is up to you.
+    // In this example, we wrap it in a new, modally presented navigation controller:
+    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                          target:self
+                                                                                                          action:@selector(userDidCancelPayment)];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
+    navigationController.navigationBar.topItem.title = @"One Time Setup";
+    navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+    navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
+}
 - (void)openPaymentModalWithDeal: (Deal *)deal {
     
     // Create and retain a `Braintree` instance with the client token
@@ -123,14 +157,13 @@
 - (void)postNonceToServer:(NSString *)paymentMethodNonce {
     if (self.onlyAddPayment) {
         [[APIClient sharedClient] postPaymentNonce:paymentMethodNonce success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
-            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (dismiss_payment_modal) {
                     if (self.inRegFlow) {
                         [self.delegate finishPermissions];
                     }
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshCustomerPaymentInfo object:self];
                     [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 [self showCardDeclined];
@@ -141,9 +174,7 @@
         }];
     } else {
         [[APIClient sharedClient] postPurchase:paymentMethodNonce forBeaconWithID:self.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"Success %@", responseObject[@"dismiss_payment_modal"]);
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
-            NSLog(@"DISMISS PAYMENT MODAL: %d", [dismiss_payment_modal_string boolValue]);
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (dismiss_payment_modal) {
                 [self dismissViewControllerAnimated:YES completion:nil];

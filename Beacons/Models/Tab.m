@@ -18,7 +18,13 @@
         return nil;
     }
     
-    self.tabID = @"11111";
+    self.tabID = dictionary[@"id"];
+    
+    NSString *isClaimed = dictionary[@"tab_claimed"];
+    self.isClaimed = [isClaimed boolValue];
+    self.subtotal = dictionary[@"subtotal"];
+    self.tax = dictionary[@"tax"];
+    self.convenienceFee = dictionary[@"convenience_fee"];
     
     return self;
 }

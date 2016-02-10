@@ -91,7 +91,7 @@
     self.dealTime = [[UILabel alloc] init];
     self.dealTime.font = [ThemeManager regularFontOfSize:12];
     self.dealTime.textColor = [[ThemeManager sharedTheme] darkGrayColor];
-    //self.dealTime.adjustsFontSizeToFitWidth = YES;
+    self.dealTime.x = 8;
     self.dealTime.textAlignment = NSTextAlignmentLeft;
     self.dealTime.numberOfLines = 0;
     [self.venuePreviewView addSubview:self.dealTime];
@@ -140,6 +140,12 @@
     self.placeType.textColor = [[ThemeManager sharedTheme] darkGrayColor];
     [self.venuePreviewView addSubview:self.placeType];
     
+    self.payFullTab = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payFullTabForDeal"]];
+    self.payFullTab.x = 6;
+    self.payFullTab.y = 121;
+    self.payFullTab.hidden = YES;
+    [self.venuePreviewView addSubview:self.payFullTab];
+    
     [self.contentView addSubview:self.venuePreviewView];
     
     return self;
@@ -162,7 +168,6 @@
     
     self.dealTime.width = self.width;
     self.dealTime.height = 20;
-    self.dealTime.x = 8;
 
     self.distanceLabel.size = CGSizeMake(67, 20);
     //self.distanceLabel.layer.cornerRadius = self.distanceLabel.width/2.0;
@@ -227,14 +232,17 @@
         self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
         
         self.descriptionLabel.width = descriptionLabelWidth + marketLabelTextSize.width + itemPriceTextSize.width + 10;
-        
-        //self.venueLabelLineOne.y = 35;
-        //self.venueLabelLineTwo.y = 49;
+    
         self.venueLabelLineOne.y = 38;
         self.venueLabelLineTwo.y = 52;
         
         self.placeType.y = 70.5;
-        self.dealTime.y = 117;
+        self.dealTime.y = 120;
+        
+        if (self.venue.hasPosIntegration) {
+            self.dealTime.x = 80;
+            self.payFullTab.hidden = NO;
+        }
         
     } else {
         self.venuePreviewView.height = 96;

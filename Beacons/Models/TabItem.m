@@ -18,9 +18,8 @@
         return nil;
     }
     
-    self.menuItemID = @"11111";
-    self.name = @"Shot of Jameson";
-    self.price = @4;
+    self.name = dictionary[@"name"];
+    self.price = dictionary[@"price"];
     
     return self;
 }

@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSArray *tabItems;
 @property (strong, nonatomic) Tab *tab;
 @property (assign, nonatomic) BOOL tabSummary;
+@property (strong, nonatomic) UILabel *tipAmount;
 
 @end

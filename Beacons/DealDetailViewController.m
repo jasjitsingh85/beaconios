@@ -422,11 +422,10 @@
                 UIView *view = appDelegate.window.rootViewController.view;
                 MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
                 if (self.venue.deal != nil){
-                    [[APIClient sharedClient] checkInForDeal:self.venue.deal isPresent:self.isPresent isPublic:self.isPublic success:^(Beacon *beacon) {
+                    [[APIClient sharedClient] checkInForVenue:self.venue isPublic:self.isPublic success:^(Beacon *beacon) {
                         [loadingIndicator hide:YES];
                         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
                         [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-                        [[AnalyticsManager sharedManager] setDeal:self.venue.deal.dealID.stringValue withPlaceName:self.venue.name numberOfInvites:0];
                     } failure:^(NSError *error) {
                         [loadingIndicator hide:YES];
                         [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

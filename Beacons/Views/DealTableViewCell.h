@@ -30,5 +30,6 @@
 @property (assign, nonatomic) BOOL isFollowed;
 @property (strong, nonatomic) UIButton *followButton;
 @property (strong, nonatomic) Venue *venue;
+@property (strong, nonatomic) UIImageView *payFullTab;
 
 @end

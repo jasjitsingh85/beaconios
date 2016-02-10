@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class Tab;
+@class Tab, Venue;
 @interface TabViewController : UIViewController
 
 @property (strong, nonatomic) NSArray *tabItems;
 @property (strong, nonatomic) Tab *tab;
+@property (strong, nonatomic) Venue *venue;
 
 @end

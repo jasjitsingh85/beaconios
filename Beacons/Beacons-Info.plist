@@ -33,7 +33,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.41</string>
+	<string>4.42</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -53,7 +53,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>145</string>
+	<string>146</string>
 	<key>FacebookAppID</key>
 	<string>741683799178892</string>
 	<key>FacebookDisplayName</key>
@@ -91,6 +91,8 @@
 	</dict>
 	<key>NSContactsUsageDescription</key>
 	<string>Hotspot syncs contacts from your address book to Hotspot servers to help you connect with other Hotspot users.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Hotspot needs your location to help you find nearby offers at venues</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This enables you to see Hotspots in your area</string>
 	<key>UIAppFonts</key>

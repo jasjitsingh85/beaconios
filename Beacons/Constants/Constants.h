@@ -57,6 +57,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kDidFinishNewsfeedPermissions @"didFinishNewsfeedPermissions"
 #define kApplyFilterNotification @"applyFilterNotification"
 #define kRefreshManageFriends @"refreshManageFriends"
+#define kRefreshCustomerPaymentInfo @"refreshCustomerPayment"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"

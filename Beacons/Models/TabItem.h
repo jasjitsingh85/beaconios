@@ -12,8 +12,6 @@
 
 @interface TabItem : NSObject
 
-@property (strong, nonatomic) Tab *tab;
-@property (strong, nonatomic) NSString *menuItemID;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSNumber *price;
 

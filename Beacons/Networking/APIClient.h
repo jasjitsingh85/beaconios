@@ -12,7 +12,7 @@
 #import "NSError+ServerErrorMessage.h"
 #import "HTTPStatusCodes.h"
 
-@class Beacon, Contact, Deal, HappyHour;
+@class Beacon, Contact, Deal, HappyHour, Venue;
 @interface APIClient : AFHTTPClient
 
 + (APIClient *)sharedClient;
@@ -71,7 +71,7 @@
 - (void)storeLastFollowView: (NSNumber *)timestamp success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)postReferredPhoneNumbers: (NSArray *)contacts success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)checkInForDeal:(Deal *)deal isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure;
-- (void)checkInForHappyHour:(HappyHour *)happyHour isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(NSError *error))failure;
+- (void)checkInForVenue:(Venue *)venue isPublic:(BOOL)isPublic success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure;
 - (void)getFollowRecommendations:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
 - (void)trackView:(NSNumber *)viewID ofType:(NSString *)viewType success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)postFacebookToken:(NSString *)fb_token success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
@@ -79,5 +79,10 @@
 - (void)getIsDealActive:(NSNumber *)venueID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)getManageFriends:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 - (void)toggleFriendBlocking:(NSNumber *)userID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)getTab:(NSNumber *)venueID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)getPaymentInfo:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure;
+- (void)closeTab:(NSNumber *)venueID withTip:(NSNumber *)tip success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)postBackgroundLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

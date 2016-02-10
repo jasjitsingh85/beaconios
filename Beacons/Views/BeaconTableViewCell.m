@@ -105,29 +105,15 @@
 - (void)setBeacon:(Beacon *)beacon
 {
     _beacon = beacon;
-//    Deal *deal = beacon.deal;
     [self.thumbnailImageView sd_setImageWithURL:beacon.deal.venue.imageURL];
-//    self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit;
-//    CGRect thumbnailFrame = CGRectZero;
-//    thumbnailFrame.size = CGSizeMake(39, 39);
-//    thumbnailFrame.origin.x = 0.5*(self.thumbnailContainerView.frame.size.width - thumbnailFrame.size.width);
-//    thumbnailFrame.origin.y = 0.5*(self.thumbnailContainerView.frame.size.height - thumbnailFrame.size.height);
-//    self.thumbnailImageView.frame = thumbnailFrame;
-//    self.thumbnailImageView.layer.cornerRadius = 0;
-//    if (!beacon.images || !beacon.images.count) {
-//
-////    }
-////    else {
-////        self.thumbnailImageView.contentMode = UIViewContentModeScaleAspectFill;
-////        BeaconImage *beaconImage = [beacon.images lastObject];
-////        [self.thumbnailImageView setImageWithURL:beaconImage.imageURL];
-////        self.thumbnailImageView.frame = self.thumbnailContainerView.bounds;
-////        self.thumbnailImageView.layer.cornerRadius = self.thumbnailContainerView.layer.cornerRadius;
-////    }
-    NSString *firstLine = [NSString stringWithFormat:@"VOUCHER FOR %@", [beacon.deal.itemName uppercaseString]];
-//    if (beacon.address && beacon.address.length) {
-//        titleText = [titleText stringByAppendingString:[NSString stringWithFormat:@" @ %@", beacon.address]];
-//    }
+    
+    NSString *firstLine;
+    if (beacon.venue.hasPosIntegration) {
+        firstLine = [NSString stringWithFormat:@"OPEN TAB"];
+    } else {
+        firstLine = [NSString stringWithFormat:@"VOUCHER FOR %@", [beacon.deal.itemName uppercaseString]];
+    }
+
     self.firstLine.text = firstLine;
     [self updateInvitedLabel];
 }

@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@class User, Deal, DealStatus;
+@class User, Deal, DealStatus, Venue;
 @interface Beacon : NSObject <NSCoding>
 
 @property (readonly) BOOL isUserBeacon;
@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSDictionary *guestStatuses;
 @property (nonatomic, strong) NSArray *dealStatuses;
 @property (strong, nonatomic) Deal *deal;
+@property (strong, nonatomic) Venue *venue;
 @property (nonatomic, strong) NSArray *images;
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSString *beaconDescription;

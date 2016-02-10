@@ -25,6 +25,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 @property (strong, nonatomic) FetchLocationFailureBlock fetchLocationFailureBlock;
 @property (assign, nonatomic) BOOL fetchingLocation;
 @property (assign, nonatomic) BOOL fetchingiBeacon;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter; //REMOVE
 
 @end
 
@@ -49,6 +50,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
         self.locationManager.distanceFilter = kCLDistanceFilterNone;
         self.locationManager.delegate = self;
+        self.dateFormatter = [[NSDateFormatter alloc] init]; //REMOVE
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
@@ -62,7 +64,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (BOOL)authorized
 {
-    return [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse;
+    return [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
 }
 
 //- (void)startMonitoringBeaconRegions
@@ -83,6 +85,13 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     }
 }
 
+-(void)startTrackingVisits
+{
+    if (self.authorized) {
+        [self.locationManager startMonitoringVisits];
+    }
+}
+
 - (void)stopTracking
 {
     [self.locationManager stopUpdatingLocation];
@@ -90,8 +99,8 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (void)requestLocationPermission
 {
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
+    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+        [self.locationManager requestAlwaysAuthorization];
     }
     [self.locationManager startUpdatingLocation];
 }
@@ -100,7 +109,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 {
     self.fetchLocationSuccessBlock = success;
     self.fetchLocationFailureBlock = failure;
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
         [self failedToFetchLocation];
     }
     else {
@@ -245,10 +254,44 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     else if (status == kCLAuthorizationStatusRestricted) {
      
     }
-    else if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+    else if (status == kCLAuthorizationStatusAuthorized) {
         [self startTrackingIfAuthorized];
 //        [self startMonitoringBeaconRegions];
     }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didVisit:(CLVisit *)visit
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:visit.coordinate.latitude longitude:visit.coordinate.longitude];
+    [[APIClient sharedClient] postBackgroundLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertTitle = @"Visit";
+            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\nTo: %@\nLocation: (%f, %f)",
+                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
+                                           [self.dateFormatter stringFromDate:visit.departureDate],
+                                           visit.coordinate.latitude,
+                                           visit.coordinate.longitude];
+            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
+            localNotification.category = @"GLOBAL"; // Lazy categorization
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            localNotification.alertTitle = @"Visit";
+            localNotification.alertBody = [NSString stringWithFormat:@"FAILURE! From: %@\nTo: %@\nLocation: (%f, %f)",
+                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
+                                           [self.dateFormatter stringFromDate:visit.departureDate],
+                                           visit.coordinate.latitude,
+                                           visit.coordinate.longitude];
+            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
+            localNotification.category = @"GLOBAL"; // Lazy categorization
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        }
+    }];
 }
 
 #pragma mark - UIApplication Notifications

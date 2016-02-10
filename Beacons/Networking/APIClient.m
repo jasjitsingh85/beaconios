@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -460,14 +460,20 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     }];
 }
 
-- (void)checkInForHappyHour:(HappyHour *)happyHour isPresent:(BOOL)isPresent isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(NSError *error))failure
+- (void)checkInForVenue:(Venue *)venue isPublic:(BOOL)isPublic success:(void (^)(Beacon *beacon))success failure:(void (^)(NSError *error))failure
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    parameters[@"deal_id"] = happyHour.ID;
-    parameters[@"is_deal"] = [NSNumber numberWithBool:NO];
-    parameters[@"is_present"] = [NSNumber numberWithBool:isPresent];
+    parameters[@"place_id"] = venue.venueID;
+    parameters[@"is_deal"] = [NSNumber numberWithBool:YES];
     parameters[@"is_public"] = [NSNumber numberWithBool:isPublic];
-    [[APIClient sharedClient] postPath:@"check-in/" parameters:parameters success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    [[APIClient sharedClient] postPath:@"v2/check-in/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        Beacon *beacon = [[Beacon alloc] initWithData:responseObject[@"beacon"]];
+        [[BeaconManager sharedManager] addBeacon:beacon];
+        if (success) {
+            success(beacon);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
         }
@@ -522,6 +528,32 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{ @"user_id" : userID };
     [[APIClient sharedClient] postPath:@"friend/manage/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getTab:(NSNumber *)venueID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"place_id" : venueID};
+    [[APIClient sharedClient] getPath:@"tab/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getPaymentInfo:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{};
+    [[APIClient sharedClient] getPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
+- (void)closeTab:(NSNumber *)venueID withTip:(NSNumber *)tip success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"place_id" : venueID, @"tip" : tip};
+    [[APIClient sharedClient] postPath:@"tab/" parameters:parameters success:success failure:failure];
+}
+
+- (void)postBackgroundLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"latitude" : @(location.coordinate.latitude),
+                                 @"longitude" : @(location.coordinate.longitude)};
+    [[APIClient sharedClient] postPath:@"background/location/" parameters:parameters success:success failure:failure];
 }
 
 @end

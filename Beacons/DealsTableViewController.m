@@ -39,6 +39,7 @@
 #import "FeedItem.h"
 #import "FeedTableViewController.h"
 #import "Event.h"
+#import "SponsoredEvent.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -138,6 +139,7 @@ typedef enum dealTypeStates
     self.feed = [[NSMutableArray alloc] init];
     self.events = [[NSMutableArray alloc] init];
     self.allVenues = [[NSArray alloc] init];
+    self.sponsoredEvents = [[NSArray alloc] init];
     self.selectedVenues = [[NSArray alloc] init];
     
     [self initializeFilterViewController];
@@ -759,6 +761,7 @@ typedef enum dealTypeStates
 {
     [[APIClient sharedClient] getPlacesNearCoordinate:coordinate withRadius:radius success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *venues = [[NSMutableArray alloc] init];
+        NSMutableArray *sponsoredEvents = [[NSMutableArray alloc] init];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
         [self.mapView removeAnnotations:[self.mapView annotations]];
         self.numberOfRewardItems = responseObject[@"number_of_reward_items"];
@@ -777,6 +780,11 @@ typedef enum dealTypeStates
             [venues addObject:venue];
         }
         
+        for (NSDictionary *sponsoredEventJSON in responseObject[@"sponsored_events"]) {
+            SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:sponsoredEventJSON];
+            [sponsoredEvents addObject:sponsoredEvent];
+        }
+        
         self.rewardScore.text = [NSString stringWithFormat:@"%@x", self.numberOfRewardItems];
         if ([self.numberOfRewardItems integerValue] > 0) {
             self.hasRewardItem = YES;
@@ -792,6 +800,8 @@ typedef enum dealTypeStates
         }
     
         self.allVenues = venues;
+        self.sponsoredEvents = sponsoredEvents;
+        NSLog(@"Sponsored Events: %@", self.sponsoredEvents);
         [self filterVenuesAndReloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {

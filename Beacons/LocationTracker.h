@@ -24,6 +24,7 @@ extern NSString * const kDidRangeBeaconNotification;
 - (void)requestLocationPermission;
 - (void)startTrackingIfAuthorized;
 - (void)stopTracking;
+- (void)startTrackingVisits;
 //- (void)monitorRegion:(CLRegion *)region;
 //- (void)stopMonitoringForRegionWithIdentifier:(NSString *)regionIdentifier;
 //- (void)stopMonitoringAllRegionsAroundHotspots;

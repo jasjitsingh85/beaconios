@@ -32,5 +32,6 @@
 - (id) initWithClientToken: (NSString *)clientToken ;
 - (void) openPaymentModalWithDeal: (Deal *)deal;
 - (void) openPaymentModalToAddPayment;
+- (void) openPaymentModalForOpenTab;
 
 @end

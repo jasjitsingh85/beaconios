@@ -32,6 +32,7 @@ static const double NON_HOTSPOT_HEIGHT = 42;
 //@property (strong, nonatomic) NSArray *happyHours;
 @property (strong, nonatomic) NSArray *allVenues;
 @property (strong, nonatomic) NSArray *selectedVenues;
+@property (strong, nonatomic) NSArray *sponsoredEvents;
 //@property (strong, nonatomic) NSArray *rewards;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) MKMapView *mapView;

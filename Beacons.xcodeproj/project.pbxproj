@@ -35,6 +35,7 @@
 		1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0017701C9B0090A7C2 /* LoadingIndictor.m */; };
 		1FEAEE0417702AD00090A7C2 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */; };
 		1FEEFF12175EFF070091AD01 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEFF11175EFF070091AD01 /* Utilities.m */; };
+		410140311C6A976500799E37 /* SponsoredEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 410140301C6A976500799E37 /* SponsoredEvent.m */; };
 		410165D91BF32B4900F0219C /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410165D81BF32B4900F0219C /* FilterViewController.m */; };
 		410165ED1BF47B1200F0219C /* VoucherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 410165EC1BF47B1200F0219C /* VoucherTableViewCell.m */; };
 		410165F01BF5A84700F0219C /* grayPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 410165EF1BF5A84700F0219C /* grayPin@2x.png */; };
@@ -107,6 +108,8 @@
 		414F74061C545EF200CF49C4 /* topBorderWithDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74051C545EF200CF49C4 /* topBorderWithDropShadow@2x.png */; };
 		414F74081C54640200CF49C4 /* socialTutorialBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74071C54640200CF49C4 /* socialTutorialBackground@2x.png */; };
 		414F740A1C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F74091C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png */; };
+		414F740C1C5B383E00CF49C4 /* iconForTab@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F740B1C5B383E00CF49C4 /* iconForTab@2x.png */; };
+		414F740E1C60968E00CF49C4 /* newPaymentIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 414F740D1C60968E00CF49C4 /* newPaymentIcon@2x.png */; };
 		415353B11A962BA7009A4DD5 /* oneOnOneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */; };
 		415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */; };
 		415353B51A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */; };
@@ -132,6 +135,13 @@
 		418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AC1C2DA85C0037D55A /* friends@2x.png */; };
 		418366AF1C2DB9CE0037D55A /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */; };
 		418366B11C2E00010037D55A /* dropShadowTopBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */; };
+		418981321C61193300F967A9 /* visa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981311C61193300F967A9 /* visa@2x.png */; };
+		418981371C6124C900F967A9 /* american_express@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981331C6124C900F967A9 /* american_express@2x.png */; };
+		418981381C6124C900F967A9 /* discover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981341C6124C900F967A9 /* discover@2x.png */; };
+		418981391C6124C900F967A9 /* paypal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981351C6124C900F967A9 /* paypal@2x.png */; };
+		4189813A1C6124C900F967A9 /* master@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981361C6124C900F967A9 /* master@2x.png */; };
+		4189813D1C62374700F967A9 /* payFullTabWithoutDeal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4189813B1C62374700F967A9 /* payFullTabWithoutDeal@2x.png */; };
+		4189813E1C62374700F967A9 /* payFullTabForDeal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4189813C1C62374700F967A9 /* payFullTabForDeal@2x.png */; };
 		41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */; };
 		41BEAC251A1DDF590069F932 /* dealsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */; };
 		41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41BEAC261A1DE2200069F932 /* groupsIcon@2x.png */; };
@@ -408,6 +418,8 @@
 		1FEAEE0317702AD00090A7C2 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		1FEEFF10175EFF070091AD01 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		1FEEFF11175EFF070091AD01 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		4101402F1C6A975C00799E37 /* SponsoredEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SponsoredEvent.h; sourceTree = "<group>"; };
+		410140301C6A976500799E37 /* SponsoredEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SponsoredEvent.m; sourceTree = "<group>"; };
 		410165D71BF32B3D00F0219C /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		410165D81BF32B4900F0219C /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = SOURCE_ROOT; };
 		410165EC1BF47B1200F0219C /* VoucherTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherTableViewCell.m; sourceTree = "<group>"; };
@@ -504,6 +516,8 @@
 		414F74051C545EF200CF49C4 /* topBorderWithDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBorderWithDropShadow@2x.png"; sourceTree = "<group>"; };
 		414F74071C54640200CF49C4 /* socialTutorialBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "socialTutorialBackground@2x.png"; sourceTree = "<group>"; };
 		414F74091C5466DE00CF49C4 /* friendScreenshotForTutorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendScreenshotForTutorial@2x.png"; sourceTree = "<group>"; };
+		414F740B1C5B383E00CF49C4 /* iconForTab@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconForTab@2x.png"; sourceTree = "<group>"; };
+		414F740D1C60968E00CF49C4 /* newPaymentIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newPaymentIcon@2x.png"; sourceTree = "<group>"; };
 		415353B01A962BA7009A4DD5 /* oneOnOneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButton@2x.png"; sourceTree = "<group>"; };
 		415353B21A962C9E009A4DD5 /* manyFriendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manyFriendButton@2x.png"; sourceTree = "<group>"; };
 		415353B41A9640A6009A4DD5 /* oneOnOneButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oneOnOneButtonSelected@2x.png"; sourceTree = "<group>"; };
@@ -534,6 +548,13 @@
 		418366AC1C2DA85C0037D55A /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
 		418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
 		418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropShadowTopBorder@2x.png"; sourceTree = "<group>"; };
+		418981311C61193300F967A9 /* visa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visa@2x.png"; sourceTree = "<group>"; };
+		418981331C6124C900F967A9 /* american_express@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "american_express@2x.png"; sourceTree = "<group>"; };
+		418981341C6124C900F967A9 /* discover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover@2x.png"; sourceTree = "<group>"; };
+		418981351C6124C900F967A9 /* paypal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paypal@2x.png"; sourceTree = "<group>"; };
+		418981361C6124C900F967A9 /* master@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "master@2x.png"; sourceTree = "<group>"; };
+		4189813B1C62374700F967A9 /* payFullTabWithoutDeal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "payFullTabWithoutDeal@2x.png"; sourceTree = "<group>"; };
+		4189813C1C62374700F967A9 /* payFullTabForDeal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "payFullTabForDeal@2x.png"; sourceTree = "<group>"; };
 		41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupNewsfeedPopupView.m; sourceTree = "<group>"; };
 		41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetupNewsfeedPopupView.h; sourceTree = "<group>"; };
 		41BEAC241A1DDF590069F932 /* dealsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dealsIcon@2x.png"; sourceTree = "<group>"; };
@@ -1101,6 +1122,8 @@
 				96D5EEFB19575D6C00786C27 /* DealHours.m */,
 				41D716AF1BC1CE1D00DF23D2 /* Event.h */,
 				41D716B01BC1CE2D00DF23D2 /* Event.m */,
+				4101402F1C6A975C00799E37 /* SponsoredEvent.h */,
+				410140301C6A976500799E37 /* SponsoredEvent.m */,
 				414F73F31C4584B200CF49C4 /* Tab.h */,
 				414F73F41C4584BF00CF49C4 /* Tab.m */,
 				414F73F61C4584CD00CF49C4 /* TabItem.h */,
@@ -1391,12 +1414,15 @@
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
 				41FFB0181C153F7400947EEC /* newGrayPin@2x.png */,
 				41FFB0281C1A06E700947EEC /* emailIcon@2x.png */,
+				414F740B1C5B383E00CF49C4 /* iconForTab@2x.png */,
 				41FFB0191C153F7400947EEC /* newRedPin@2x.png */,
 				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
 				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
 				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
 				41C9870F1C042EB400DD595D /* newVenueIcon@2x.png */,
 				41CBB0E81C0619E200B7C4AA /* instagramLogo@2x.png */,
+				418981311C61193300F967A9 /* visa@2x.png */,
+				414F740D1C60968E00CF49C4 /* newPaymentIcon@2x.png */,
 				414F74011C47738700CF49C4 /* smallModalBackground@2x.png */,
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				41FFB0261C1A007B00947EEC /* newFacebookWhite@2x.png */,
@@ -1447,6 +1473,8 @@
 				41E23A851B33AEFB00676254 /* thumb@2x.png */,
 				41FD062A1B38EBA200F7DD08 /* groupIcon@2x.png */,
 				418366AC1C2DA85C0037D55A /* friends@2x.png */,
+				4189813B1C62374700F967A9 /* payFullTabWithoutDeal@2x.png */,
+				4189813C1C62374700F967A9 /* payFullTabForDeal@2x.png */,
 				4105DAAE1B80097B0006B888 /* activeNavbarClock@2x.png */,
 				418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */,
 				4105DAAF1B80097B0006B888 /* inactiveNavbarClock@2x.png */,
@@ -1485,6 +1513,10 @@
 				41FD06321B39B24700F7DD08 /* creditCardIcon@2x.png */,
 				415353B61A9640B1009A4DD5 /* manyFriendButtonSelected@2x.png */,
 				41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */,
+				418981331C6124C900F967A9 /* american_express@2x.png */,
+				418981341C6124C900F967A9 /* discover@2x.png */,
+				418981351C6124C900F967A9 /* paypal@2x.png */,
+				418981361C6124C900F967A9 /* master@2x.png */,
 				41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */,
 				41FD06441B3A46D000F7DD08 /* largeGoldCoin@2x.png */,
 				41FD063C1B3A1EF800F7DD08 /* redeemedIcon@2x.png */,
@@ -1755,6 +1787,7 @@
 				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
 				4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */,
 				41C987181C05282D00DD595D /* newHotspotIcon@2x.png in Resources */,
+				418981321C61193300F967A9 /* visa@2x.png in Resources */,
 				41FFB0251C19FF0A00947EEC /* facebookIconWhite@2x.png in Resources */,
 				41FD06411B3A278400F7DD08 /* redoSearchContainer@2x.png in Resources */,
 				96CBCCFB1805107500D62462 /* chatBubbleGreenLeft@2x.png in Resources */,
@@ -1769,6 +1802,7 @@
 				41FD06351B39C09800F7DD08 /* inactiveVoucher@2x.png in Resources */,
 				41F97BBC1BBC75FF003D1D86 /* paymentPermissions@2x.png in Resources */,
 				41FFB0131C14934100947EEC /* drinkImage@2x.png in Resources */,
+				418981371C6124C900F967A9 /* american_express@2x.png in Resources */,
 				41E23A881B33B0A200676254 /* hotspotSliderLabel@2x.png in Resources */,
 				410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
@@ -1816,6 +1850,7 @@
 				41C987111C042EB400DD595D /* newDirectionsIcon@2x.png in Resources */,
 				968E287218C3DF5500CB447D /* menuSettings@2x.png in Resources */,
 				968E287018C3DAEE00CB447D /* menuSetHotspot@2x.png in Resources */,
+				418981391C6124C900F967A9 /* paypal@2x.png in Resources */,
 				41F144061B10E9C10010BCF1 /* navBarUpdated@2x.png in Resources */,
 				41030F6F1B5C326B00252158 /* promoCode@2x.png in Resources */,
 				96CBCCF41805107500D62462 /* chatBubbleYellowRight@2x.png in Resources */,
@@ -1831,6 +1866,7 @@
 				4109B9C11B9B706100C3270E /* privateLock@2x.png in Resources */,
 				41C987161C042EB400DD595D /* happyHourIcon@2x.png in Resources */,
 				4105DAA21B7F0F010006B888 /* inactiveNavbarPopsicle@2x.png in Resources */,
+				4189813D1C62374700F967A9 /* payFullTabWithoutDeal@2x.png in Resources */,
 				41030F691B52EACA00252158 /* needHelpModalBackground@2x.png in Resources */,
 				411B4F7E1C236EB000CA7100 /* checkInIcon@2x.png in Resources */,
 				41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */,
@@ -1883,19 +1919,24 @@
 				960631ED194629850011E132 /* lock_closed@2x.png in Resources */,
 				410D19521B4F85BB002C5F0F /* poweredByYelp@2x.png in Resources */,
 				96CBCCE31805066700D62462 /* menuHome@2x.png in Resources */,
+				4189813A1C6124C900F967A9 /* master@2x.png in Resources */,
 				41338FD819FE11D30022211C /* DealTableViewEventCell.h in Resources */,
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
+				414F740E1C60968E00CF49C4 /* newPaymentIcon@2x.png in Resources */,
+				414F740C1C5B383E00CF49C4 /* iconForTab@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
 				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
 				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,
 				412E8C981C3ECA4900E54486 /* textFriendsIcon@2x.png in Resources */,
+				418981381C6124C900F967A9 /* discover@2x.png in Resources */,
 				41FFB0271C1A007B00947EEC /* newFacebookWhite@2x.png in Resources */,
 				41FFB0291C1A06E700947EEC /* emailIcon@2x.png in Resources */,
 				4105DAA91B7FFD710006B888 /* notification@2x.png in Resources */,
+				4189813E1C62374700F967A9 /* payFullTabForDeal@2x.png in Resources */,
 				414F74041C545D0100CF49C4 /* newSettingsIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2035,6 +2076,7 @@
 				4105DA931B7AEF1A0006B888 /* FeedTableViewController.m in Sources */,
 				96F14C2617D84F0D0093C976 /* ChatTableViewCell.m in Sources */,
 				410D19501B4B815C002C5F0F /* AppInviteViewController.m in Sources */,
+				410140311C6A976500799E37 /* SponsoredEvent.m in Sources */,
 				96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */,
 				1FB74EE917764F7C00F0F385 /* UIColor+UnnormalizedColor.m in Sources */,
 				96859CEB17EF9C8800C1C467 /* SoundPlayer.m in Sources */,

@@ -95,6 +95,9 @@
 @property (strong, nonatomic) Tab *tab;
 @property (strong, nonatomic) NSArray *tabItems;
 
+@property (strong, nonatomic) UIView *claimedTabView;
+@property (strong, nonatomic) UIView *unclaimedTabView;
+
 @end
 
 @implementation RedemptionViewController
@@ -146,6 +149,11 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self refreshTab];
 }
 
 - (void) refreshDeal
@@ -245,6 +253,8 @@
         self.hasCheckedPayment = YES;
     }
     
+    [self refreshTab];
+    
     [self.tableView reloadData];
 }
 
@@ -312,7 +322,6 @@
 
 - (void)redeemRewardItem
 {
-    NSLog(@"User Deal Status: %@", self.beacon.userDealStatus.dealStatusID);
     [[APIClient sharedClient] redeemRewardItem:self.beacon.userDealStatus.dealStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self refreshDeal];
@@ -632,18 +641,28 @@
 
 -(void)refreshTab
 {
-    Tab *tab = [[Tab alloc] initWithDictionary:nil];
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    int i = 0;
-    for (i = 0; i < 4; i++) {
-        TabItem *item = [[TabItem alloc] initWithDictionary:nil];
-        [arr addObject:item];
-    }
-    self.tabTableView.tabSummary = YES;
-    self.tabTableView.tabItems = arr;
-    self.tabItems = arr;
-    self.tab = tab;
-    [self.tableView reloadData];
+    [[APIClient sharedClient] getTab:self.beacon.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.tab = [[Tab alloc] initWithDictionary:responseObject[@"tab"]];
+        NSMutableArray *tabItemArray = [[NSMutableArray alloc] init];
+        for (NSDictionary *tabItemJSON in responseObject[@"tab_items"]) {
+            TabItem *item = [[TabItem alloc] initWithDictionary:tabItemJSON];
+            [tabItemArray addObject:item];
+        }
+        self.tabTableView.tabSummary = YES;
+        self.tabTableView.tab = self.tab;
+        self.tabTableView.tabItems = tabItemArray;
+        self.tabItems = tabItemArray;
+        
+        if (tabItemArray.count) {
+            self.unclaimedTabView.hidden = YES;
+            self.claimedTabView.hidden = NO;
+        } else {
+            self.unclaimedTabView.hidden = NO;
+            self.claimedTabView.hidden = YES;
+        }
+        
+        [self.tableView reloadData];
+    } failure:nil];
 }
 
 -(UITableViewCell *)getRedemptionCell
@@ -653,40 +672,108 @@
     if (!redemptionCell) {
         redemptionCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
-        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
-        topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:161 green:161 blue:161 alpha:255];
-        [redemptionCell addSubview:topBorder];
-        
-        self.headerIcon = [[UIImageView alloc] init];
-        self.headerIcon.height = 18;
-        self.headerIcon.width = 18;
-        self.headerIcon.x = 20;
-        self.headerIcon.y = 15;
-        [redemptionCell addSubview:self.headerIcon];
-        
-        self.headerTitle = [[UILabel alloc] init];
-        self.headerTitle.height = 20;
-        self.headerTitle.width = self.tableView.width;
-        self.headerTitle.textAlignment = NSTextAlignmentLeft;
-        self.headerTitle.x = 42;
-        self.headerTitle.font = [ThemeManager boldFontOfSize:11];
-        self.headerTitle.y = 14;
-        [redemptionCell addSubview:self.headerTitle];
-        
-        self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
-        self.headerExplanationText.centerX = self.view.width/2;
-        self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
-        self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
-        self.headerExplanationText.numberOfLines = 2;
-        [redemptionCell addSubview:self.headerExplanationText];
-        
         if (self.beacon.deal.venue.hasPosIntegration) {
+            self.unclaimedTabView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 300)];
+            [redemptionCell addSubview:self.unclaimedTabView];
+            
+            UIView *topUnclaimedBorder = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
+            topUnclaimedBorder.backgroundColor = [UIColor unnormalizedColorWithRed:161 green:161 blue:161 alpha:255];
+            [self.unclaimedTabView addSubview:topUnclaimedBorder];
+            
+            UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iconForTab"]];
+            image.centerX = self.view.width/2;
+            image.y = 25;
+            [self.unclaimedTabView addSubview:image];
+            
+            UILabel *headerTitle = [[UILabel alloc] init];
+            headerTitle.height = 20;
+            headerTitle.width = self.tableView.width;
+            headerTitle.textAlignment = NSTextAlignmentCenter;
+            headerTitle.centerX = self.view.width/2;
+            headerTitle.font = [ThemeManager boldFontOfSize:12];
+            headerTitle.textColor = [[ThemeManager sharedTheme] redColor];
+            headerTitle.y = 90;
+            headerTitle.text = @"TELL YOUR SERVER";
+            [self.unclaimedTabView addSubview:headerTitle];
+            
+            UILabel *bodyLineOne = [[UILabel alloc] init];
+            bodyLineOne.height = 20;
+            bodyLineOne.width = self.tableView.width;
+            bodyLineOne.textAlignment = NSTextAlignmentCenter;
+            bodyLineOne.centerX = self.view.width/2;
+            bodyLineOne.font = [ThemeManager lightFontOfSize:12];
+            bodyLineOne.y = 120;
+            bodyLineOne.text = [NSString stringWithFormat:@"My name is %@", self.dealStatus.user.fullName];
+            [self.unclaimedTabView addSubview:bodyLineOne];
+            
+            NSMutableAttributedString *attrMessage = [[NSMutableAttributedString alloc] initWithString:bodyLineOne.text];
+            NSRange attrStringRange = [bodyLineOne.text rangeOfString:self.dealStatus.user.fullName];
+            [attrMessage addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:attrStringRange];
+            bodyLineOne.attributedText = attrMessage;
+            
+            UILabel *bodyLineTwo = [[UILabel alloc] init];
+            bodyLineTwo.height = 20;
+            bodyLineTwo.width = self.tableView.width;
+            bodyLineTwo.textAlignment = NSTextAlignmentCenter;
+            bodyLineTwo.centerX = self.view.width/2;
+            bodyLineTwo.font = [ThemeManager lightFontOfSize:12];
+            bodyLineTwo.y = 140;
+            bodyLineTwo.text = @"and I've opened a tab with Hotspot";
+            [self.unclaimedTabView addSubview:bodyLineTwo];
+            
+            UIButton *needHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            needHelpButton.size = CGSizeMake(70, 22);
+            needHelpButton.centerX = self.view.width/2;
+            needHelpButton.y = 175;
+            needHelpButton.titleLabel.font = [ThemeManager mediumFontOfSize:11];
+            needHelpButton.layer.cornerRadius = 2;
+            needHelpButton.layer.borderWidth = 1;
+            needHelpButton.layer.borderColor = [UIColor blackColor].CGColor;
+            [needHelpButton setTitle:@"Need Help" forState:UIControlStateNormal];
+            [needHelpButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [needHelpButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+            [needHelpButton addTarget:self action:@selector(changeTip:) forControlEvents:UIControlEventTouchUpInside];
+            [self.unclaimedTabView addSubview:needHelpButton];
+            
+            self.claimedTabView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, ((self.tabItems.count + 1) * 22) + 100)];
+            [redemptionCell addSubview:self.claimedTabView];
+            
+            UIView *topClaimedBorder = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
+            topClaimedBorder.backgroundColor = [UIColor unnormalizedColorWithRed:161 green:161 blue:161 alpha:255];
+            [self.claimedTabView addSubview:topClaimedBorder];
+            
+            self.headerIcon = [[UIImageView alloc] init];
+            self.headerIcon.height = 18;
+            self.headerIcon.width = 18;
+            self.headerIcon.x = 20;
+            self.headerIcon.y = 15;
+            [self.claimedTabView addSubview:self.headerIcon];
+            
+            self.headerTitle = [[UILabel alloc] init];
+            self.headerTitle.height = 20;
+            self.headerTitle.width = self.tableView.width;
+            self.headerTitle.textAlignment = NSTextAlignmentLeft;
+            self.headerTitle.x = 42;
+            self.headerTitle.font = [ThemeManager boldFontOfSize:11];
+            self.headerTitle.y = 14;
+            [self.claimedTabView addSubview:self.headerTitle];
+            
+            self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
+            self.headerExplanationText.centerX = self.view.width/2;
+            self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
+            self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
+            self.headerExplanationText.numberOfLines = 2;
+            [self.claimedTabView addSubview:self.headerExplanationText];
+            
             self.tabTableView = [[TabTableView alloc] init];
             self.tabTableView.tableView.x = 0;
             self.tabTableView.tableView.y = 75;
-            [redemptionCell addSubview:self.tabTableView.tableView];
+            [self.claimedTabView addSubview:self.tabTableView.tableView];
             
-            [self.headerIcon setImage:[UIImage imageNamed:@"paymentIcon"]];
+            [self.headerIcon setImage:[UIImage imageNamed:@"newPaymentIcon"]];
+            
+            self.unclaimedTabView.hidden = YES;
+            self.claimedTabView.hidden = YES;
             
             UIView *buttonContainer = [[UIView alloc] init];
             buttonContainer.backgroundColor = [UIColor whiteColor];
@@ -696,16 +783,20 @@
             buttonContainer.userInteractionEnabled = YES;
             [self.view addSubview:buttonContainer];
             
-            UIImageView *topBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dropShadowTopBorder"]];
-            topBorder.y = -8;
-            [buttonContainer addSubview:topBorder];
+            UIImageView *topButtonBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dropShadowTopBorder"]];
+            topButtonBorder.y = -8;
+            [buttonContainer addSubview:topButtonBorder];
             
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.size = CGSizeMake(self.view.width - 50, 35);
             button.centerX = self.view.width/2.0;
             button.y = 12.5;
             button.layer.cornerRadius = 4;
-            button.backgroundColor = [[ThemeManager sharedTheme] redColor];
+            if (self.tabItems.count) {
+                button.backgroundColor = [[ThemeManager sharedTheme] redColor];
+            } else {
+                button.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+            }
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
             
@@ -714,9 +805,34 @@
             button.titleLabel.font = [ThemeManager boldFontOfSize:13];
             [button addTarget:self action:@selector(reviewTabButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitle:@"REVIEW AND PAY TAB" forState:UIControlStateNormal];
-            
-            [self refreshTab];
         } else {
+            UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
+            topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:161 green:161 blue:161 alpha:255];
+            [redemptionCell addSubview:topBorder];
+            
+            self.headerIcon = [[UIImageView alloc] init];
+            self.headerIcon.height = 18;
+            self.headerIcon.width = 18;
+            self.headerIcon.x = 20;
+            self.headerIcon.y = 15;
+            [redemptionCell addSubview:self.headerIcon];
+            
+            self.headerTitle = [[UILabel alloc] init];
+            self.headerTitle.height = 20;
+            self.headerTitle.width = self.tableView.width;
+            self.headerTitle.textAlignment = NSTextAlignmentLeft;
+            self.headerTitle.x = 42;
+            self.headerTitle.font = [ThemeManager boldFontOfSize:11];
+            self.headerTitle.y = 14;
+            [redemptionCell addSubview:self.headerTitle];
+            
+            self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
+            self.headerExplanationText.centerX = self.view.width/2;
+            self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
+            self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
+            self.headerExplanationText.numberOfLines = 2;
+            [redemptionCell addSubview:self.headerExplanationText];
+            
             self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
             self.redeemButton.y = 115;
             self.redeemButton.size = CGSizeMake(self.view.width, 150);
@@ -822,10 +938,8 @@
     //    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowLoadingInRedemptionView" object:self userInfo:nil];
     [[APIClient sharedClient] redeemDeal:self.deal success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
         [self refreshBeaconDataInDeal];
         NSString *dealStatus = responseObject[@"deal_status"];
-        //NSLog(@"DealStatus: %@", dealStatus);
         self.dealStatus.dealStatus = dealStatus;
         [self updateVoucherInfo];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
@@ -938,10 +1052,15 @@
 
 -(void)reviewTabButtonTouched:(id)sender
 {
-    TabViewController *tabTableViewController = [[TabViewController alloc] init];
-    tabTableViewController.tabItems = self.tabItems;
-    tabTableViewController.tab = self.tab;
-    [self.navigationController pushViewController:tabTableViewController animated:YES];
+    if (self.tabItems.count) {
+        TabViewController *tabTableViewController = [[TabViewController alloc] init];
+        tabTableViewController.tabItems = self.tabItems;
+        tabTableViewController.tab = self.tab;
+        tabTableViewController.venue = self.beacon.venue;
+        [self.navigationController pushViewController:tabTableViewController animated:YES];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Start Tab" message:@"You'll be able to review and pay your tab once your server has added at least one item to your bill." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 @end

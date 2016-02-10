@@ -15,6 +15,7 @@
 #import "Deal.h"
 #import "BeaconImage.h"
 #import "Utilities.h"
+#import "Venue.h"
 
 @implementation Beacon
 
@@ -55,9 +56,6 @@
         self.imageURL = [NSURL URLWithString:imageUrl];
     }
     
-    NSLog(@"IMAGE URL: %@", self.imageURL);
-    
-//    deals
     NSArray *dealStatusesDictionary = data[@"deal_statuses"];
     if (!isEmpty(dealStatusesDictionary)) {
         NSMutableArray *dealStatuses = [[NSMutableArray alloc] init];
@@ -89,6 +87,8 @@
     
     NSString *isAuthorized = data[@"is_authorized"];
     self.isAuthorized = [isAuthorized boolValue];
+    
+    self.venue = [[Venue alloc] initWithDealPlaceDictionary:data[@"place"]];
 }
 
 #pragma mark - NSCoding
