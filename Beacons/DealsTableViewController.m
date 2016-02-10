@@ -656,9 +656,9 @@ typedef enum dealTypeStates
 //    }
     self.loadingDeals = YES;
     [self hideEnableLocationView];
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
     if (locationTracker.authorized) {
+        [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
             //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
