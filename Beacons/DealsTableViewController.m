@@ -28,8 +28,7 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "Utilities.h"
 #import "HotspotAnnotation.h"
-//#import "HappyHour.h"
-//#import "HappyHourVenue.h"
+#import "SponsoredEventTableViewCell.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "RewardManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -107,6 +106,8 @@ typedef enum dealTypeStates
 
 @property (strong, nonatomic) FilterViewController *filterViewController;
 
+@property (strong, nonatomic) SponsoredEventTableViewCell *eventCell;
+
 @end
 
 @implementation DealsTableViewController
@@ -157,39 +158,39 @@ typedef enum dealTypeStates
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0.0, 50.0, 0.0);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
     self.tableView.showsVerticalScrollIndicator = NO;
     //self.tableView.backgroundColor = [UIColor colorWithWhite:178/255.0 alpha:1.0];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.viewContainer addSubview:self.tableView];
     
-    UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
-    filterHeader.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:filterHeader];
+//    UIView *filterHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 50, self.view.width, 50)];
+//    filterHeader.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:filterHeader];
     
-    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, self.view.width, 30)];
-    self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
-    self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:12];
-    self.filterHeaderLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-    [filterHeader addSubview:self.filterHeaderLabel];
+//    self.filterHeaderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17, self.view.width, 30)];
+//    self.filterHeaderLabel.text = @"Hotspots & Happy Hours";
+//    self.filterHeaderLabel.font = [ThemeManager boldFontOfSize:12];
+//    self.filterHeaderLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+//    [filterHeader addSubview:self.filterHeaderLabel];
     
-    CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0.0f, 50.0f, self.view.width, .5f);
+//    CALayer *bottomBorder = [CALayer layer];
+//    bottomBorder.frame = CGRectMake(0.0f, 50.0f, self.view.width, .5f);
     
-    bottomBorder.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
-    [filterHeader.layer addSublayer:bottomBorder];
+//    bottomBorder.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
+//    [filterHeader.layer addSublayer:bottomBorder];
     
-    self.filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.filterButton.size = CGSizeMake(70, 25);
-    self.filterButton.x = self.view.width - 80;
-    self.filterButton.y = 20;
-    self.filterButton.layer.borderWidth = 1;
-    self.filterButton.layer.cornerRadius = 2;
-    self.filterButton.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
-    [self.filterButton setImage:[UIImage imageNamed:@"filterButton"] forState:UIControlStateNormal];
-    [self.filterButton setImage:[UIImage imageNamed:@"filterButtonSelected"] forState:UIControlStateHighlighted];
-    [self.filterButton addTarget:self action:@selector(filterButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [filterHeader addSubview:self.filterButton];
+//    self.filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.filterButton.size = CGSizeMake(70, 25);
+//    self.filterButton.x = self.view.width - 80;
+//    self.filterButton.y = 20;
+//    self.filterButton.layer.borderWidth = 1;
+//    self.filterButton.layer.cornerRadius = 2;
+//    self.filterButton.layer.borderColor = [[UIColor blackColor] colorWithAlphaComponent:.3].CGColor;
+//    [self.filterButton setImage:[UIImage imageNamed:@"filterButton"] forState:UIControlStateNormal];
+//    [self.filterButton setImage:[UIImage imageNamed:@"filterButtonSelected"] forState:UIControlStateHighlighted];
+//    [self.filterButton addTarget:self action:@selector(filterButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [filterHeader addSubview:self.filterButton];
     
     [self checkToLaunchInvitationModal];
     
@@ -651,9 +652,6 @@ typedef enum dealTypeStates
 
 - (void)reloadDeals
 {
-//    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
-//        [[LocationTracker sharedTracker] startMonitoringBeaconRegions];
-//    }
     self.loadingDeals = YES;
     [self hideEnableLocationView];
     LocationTracker *locationTracker = [[LocationTracker alloc] init];
@@ -888,74 +886,113 @@ typedef enum dealTypeStates
         [self showEmptyDealsView];
     }
     
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+    
+//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
-
-//- (void) reloadTableViewAfterDealToggle
-//{
-//    NSRange range = NSMakeRange(0, [self numberOfSectionsInTableView:self.tableView]);
-//    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
-//    if (self.dealType == REWARD) {
-//        //[self.rewardsViewController showRewardsScore];
-//        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
-//    } else if (self.dealType == HAPPY_HOUR) {
-//        //[self.rewardsViewController hideRewardsScore];
-//        [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
-//    } else if (self.dealType == HOTSPOT) {
-//        //[self.rewardsViewController hideRewardsScore];
-//        if (self.previousDealType == HAPPY_HOUR) {
-//            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationLeft];
-//        } else {
-//            [self.tableView reloadSections:sections withRowAnimation:UITableViewRowAnimationRight];
-//        }
-//    }
-//}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.selectedVenues ? 1 : 0;
+    if (self.sponsoredEvents && self.selectedVenues) {
+        return 2;
+    } else if (self.sponsoredEvents || self.selectedVenues) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0 && self.sponsoredEvents) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+        /* Create custom view to display section header... */
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8.5, tableView.frame.size.width, 15)];
+        [label setFont:[ThemeManager mediumFontOfSize:10]];
+        NSString *string = @"FEATURED EVENTS";
+        [label setText:string];
+        [view addSubview:label]
+        ;
+        UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 30, view.width, 1.f)];
+        bottomBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        
+        NSRange range = [label.text rangeOfString:@"FEATURED"];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:label.text];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager italicFontOfSize:10] range:range];
+        label.attributedText = attributedText;
+        
+        [view addSubview:bottomBorder];
+        
+        [view setBackgroundColor:[UIColor whiteColor]];
+        return view;
+    } else {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+        /* Create custom view to display section header... */
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8.5, tableView.frame.size.width, 15)];
+        [label setFont:[ThemeManager mediumFontOfSize:10]];
+        NSString *string = @"HOTSPOTS & HAPPY HOURS";
+        [label setText:string];
+        [view addSubview:label]
+        ;
+        UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 30, view.width, 1.f)];
+        bottomBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [view addSubview:bottomBorder];
+        
+        NSRange range = [label.text rangeOfString:@"HOTSPOTS &"];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:label.text];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager italicFontOfSize:10] range:range];
+        label.attributedText = attributedText;
+        
+        [view setBackgroundColor:[UIColor whiteColor]];
+        return view;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section==0 && !self.sponsoredEvents) {
+        return 0;
+    } else {
+        return 30;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
- //   if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
-    return self.selectedVenues.count + 1;
-   // } else {
-     //   return self.selectedVenues.count + 1;
-    //}
+    if (section == 0) {
+        return 1;
+    } else {
+         return self.selectedVenues.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.row == 0){
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
-            return 0;
-        } else {
-            return 151;
-        }
+    if (indexPath.section == 0) {
+        return 151;
     } else {
-        Venue *venue = self.selectedVenues[indexPath.row - 1];
-        if (venue.deal) {
-            return 151;
-        } else {
-            return 101;
-        }
+//        if (indexPath.row == 0){
+//            if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+//                return 0;
+//            } else {
+//                return 151;
+//            }
+//        } else {
+            Venue *venue = self.selectedVenues[indexPath.row];
+            if (venue.deal) {
+                return 151;
+            } else {
+                return 101;
+            }
+//        }
     }
 }
 
--(void)hotspotGotItButtonTouched:(id)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
-    [self.tableView reloadData];
-    
-}
-
-//-(void)happyHourGotItButtonTouched:(id)sender
+//-(void)hotspotGotItButtonTouched:(id)sender
 //{
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHappyHourTile];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
 //    [self.tableView reloadData];
 //    
 //}
@@ -975,35 +1012,41 @@ typedef enum dealTypeStates
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row != 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
+        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+        dealViewController.venue = event.venue;
+        [self.navigationController pushViewController:dealViewController animated:YES];
+    } else {
         Venue *venue;
-        venue = self.selectedVenues[indexPath.row - 1];
+        venue = self.selectedVenues[indexPath.row];
         DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
         dealViewController.venue = venue;
         [self.navigationController pushViewController:dealViewController animated:YES];
     }
 }
 
-//- (UITableViewCell *)topHappyHourExplanationTile
+
+//- (UITableViewCell *)topHotspotExplanationTile
 //{
 //    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
 //    
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    
-//    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHappyHourTile]) {
-//        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"drinkIcon"]];
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
+//        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
 //        headerIcon.y = 5;
 //        headerIcon.centerX = cell.contentView.width/2;
 //        [cell.contentView addSubview:headerIcon];
 //        
 //        UILabel *tileHeading = [[UILabel alloc] init];
-//        tileHeading.width = 250;
+//        tileHeading.width = 150;
 //        tileHeading.height = 30;
 //        tileHeading.centerX = cell.contentView.width/2;
 //        tileHeading.y = 30;
 //        tileHeading.textAlignment = NSTextAlignmentCenter;
 //        tileHeading.textColor = [UIColor blackColor];
-//        tileHeading.text = @"HAPPY HOURS ON HOTSPOT";
+//        tileHeading.text = @"WHAT IS A HOTSPOT?";
 //        tileHeading.font = [ThemeManager boldFontOfSize:12];
 //        [cell.contentView addSubview:tileHeading];
 //        
@@ -1015,7 +1058,7 @@ typedef enum dealTypeStates
 //        tileTextBody.numberOfLines = 4;
 //        tileTextBody.textAlignment = NSTextAlignmentCenter;
 //        tileTextBody.textColor = [UIColor blackColor];
-//        tileTextBody.text = @"We’ve got the most comprehensive, up-to-date list of Happy Hours near you. Check out Hotspots to save even more with exclusive specials that are available even when happy hour isn’t";
+//        tileTextBody.text = @"We buy drinks wholesale from bars, giving you access to exclusive, anytime drink specials. Get craft beers, cocktails, or shots for as little as $1, and never wait for the check when you pay with Hotspot.";
 //        tileTextBody.font = [ThemeManager lightFontOfSize:12];
 //        [cell.contentView addSubview:tileTextBody];
 //        
@@ -1028,68 +1071,17 @@ typedef enum dealTypeStates
 //        gotItButton.centerX = cell.contentView.width/2;
 //        gotItButton.y = 110;
 //        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-//        [gotItButton addTarget:self action:@selector(happyHourGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//        [gotItButton addTarget:self action:@selector(hotspotGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 //        [cell.contentView addSubview:gotItButton];
 //    }
-//    
+//
 //    return cell;
 //}
 
-- (UITableViewCell *)topHotspotExplanationTile
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {
-        UIImageView *headerIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hotspotIcon"]];
-        headerIcon.y = 5;
-        headerIcon.centerX = cell.contentView.width/2;
-        [cell.contentView addSubview:headerIcon];
-        
-        UILabel *tileHeading = [[UILabel alloc] init];
-        tileHeading.width = 150;
-        tileHeading.height = 30;
-        tileHeading.centerX = cell.contentView.width/2;
-        tileHeading.y = 30;
-        tileHeading.textAlignment = NSTextAlignmentCenter;
-        tileHeading.textColor = [UIColor blackColor];
-        tileHeading.text = @"WHAT IS A HOTSPOT?";
-        tileHeading.font = [ThemeManager boldFontOfSize:12];
-        [cell.contentView addSubview:tileHeading];
-        
-        UILabel *tileTextBody = [[UILabel alloc] init];
-        tileTextBody.width = cell.contentView.width - 45;
-        tileTextBody.height = 70;
-        tileTextBody.centerX = cell.contentView.width/2;
-        tileTextBody.y = 50;
-        tileTextBody.numberOfLines = 4;
-        tileTextBody.textAlignment = NSTextAlignmentCenter;
-        tileTextBody.textColor = [UIColor blackColor];
-        tileTextBody.text = @"We buy drinks wholesale from bars, giving you access to exclusive, anytime drink specials. Get craft beers, cocktails, or shots for as little as $1, and never wait for the check when you pay with Hotspot.";
-        tileTextBody.font = [ThemeManager lightFontOfSize:12];
-        [cell.contentView addSubview:tileTextBody];
-        
-        UIButton *gotItButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [gotItButton setTitle:@"Got It" forState:UIControlStateNormal];
-        gotItButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-        [gotItButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor]  forState:UIControlStateNormal];
-        //    gotItButton.titleLabel.textColor = [[ThemeManager sharedTheme] lightBlueColor];
-        gotItButton.size = CGSizeMake(60, 40);
-        gotItButton.centerX = cell.contentView.width/2;
-        gotItButton.y = 110;
-        //happyHourButton.backgroundColor = [[[ThemeManager sharedTheme] blueColor] colorWithAlphaComponent:0.2];
-        [gotItButton addTarget:self action:@selector(hotspotGotItButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:gotItButton];
-    }
-
-    return cell;
-}
-
-- (void)seenHotspotTile
-{
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
-}
+//- (void)seenHotspotTile
+//{
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasSeenHotspotTile];
+//}
 
 - (void) hideRewardContainer
 {
@@ -1111,28 +1103,49 @@ typedef enum dealTypeStates
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return [self topHotspotExplanationTile];
-    } else {
-        Venue *venue;
-        venue = self.selectedVenues[indexPath.row - 1];
+    if (indexPath.section == 0) {
+        NSString *DealCellIdentifier = [NSString stringWithFormat:@"events"];
+        self.eventCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
         
-        NSString *DealCellIdentifier = [NSString stringWithFormat:@"Venue: %@", venue.name];
-        DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
-        
-        if (!dealCell) {
-            dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
-            dealCell.backgroundColor = [UIColor clearColor];
-            dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (!self.eventCell) {
+            self.eventCell = [[SponsoredEventTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
+            self.eventCell.backgroundColor = [UIColor clearColor];
+            self.eventCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+            [recognizer setNumberOfTapsRequired:1];
+            [self.eventCell.contentView addGestureRecognizer:recognizer];
         }
         
-        dealCell.venue = venue;
+        if (self.sponsoredEvents.count > 0) {
+            self.eventCell.events = self.sponsoredEvents;
+        }
         
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
-        [recognizer setNumberOfTapsRequired:1];
-        [dealCell.contentView addGestureRecognizer:recognizer];
+        return self.eventCell;
+    } else {
+//        if (indexPath.row == 0) {
+//            return [self topHotspotExplanationTile];
+//        } else {
+            Venue *venue;
+//            venue = self.selectedVenues[indexPath.row - 1];
+            venue = self.selectedVenues[indexPath.row];
+            
+            NSString *DealCellIdentifier = [NSString stringWithFormat:@"Venue: %@", venue.name];
+            DealTableViewCell *dealCell = [tableView dequeueReusableCellWithIdentifier:DealCellIdentifier];
+            
+            if (!dealCell) {
+                dealCell = [[DealTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DealCellIdentifier];
+                dealCell.backgroundColor = [UIColor clearColor];
+                dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                dealCell.venue = venue;
+                
+                UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedOnCell:)];
+                [recognizer setNumberOfTapsRequired:1];
+                [dealCell.contentView addGestureRecognizer:recognizer];
+            }
         
-        return dealCell;
+            return dealCell;
+//        }
     }
 }
 

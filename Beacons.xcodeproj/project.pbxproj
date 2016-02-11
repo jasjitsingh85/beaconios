@@ -135,6 +135,7 @@
 		418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AC1C2DA85C0037D55A /* friends@2x.png */; };
 		418366AF1C2DB9CE0037D55A /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */; };
 		418366B11C2E00010037D55A /* dropShadowTopBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */; };
+		418683D81C6C75FB00FD3305 /* SponsoredEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 418683D71C6C75FB00FD3305 /* SponsoredEventTableViewCell.m */; };
 		418981321C61193300F967A9 /* visa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981311C61193300F967A9 /* visa@2x.png */; };
 		418981371C6124C900F967A9 /* american_express@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981331C6124C900F967A9 /* american_express@2x.png */; };
 		418981381C6124C900F967A9 /* discover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 418981341C6124C900F967A9 /* discover@2x.png */; };
@@ -548,6 +549,8 @@
 		418366AC1C2DA85C0037D55A /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
 		418366AE1C2DB9CE0037D55A /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
 		418366B01C2E00010037D55A /* dropShadowTopBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropShadowTopBorder@2x.png"; sourceTree = "<group>"; };
+		418683D61C6C75F000FD3305 /* SponsoredEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SponsoredEventTableViewCell.h; sourceTree = "<group>"; };
+		418683D71C6C75FB00FD3305 /* SponsoredEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SponsoredEventTableViewCell.m; sourceTree = "<group>"; };
 		418981311C61193300F967A9 /* visa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visa@2x.png"; sourceTree = "<group>"; };
 		418981331C6124C900F967A9 /* american_express@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "american_express@2x.png"; sourceTree = "<group>"; };
 		418981341C6124C900F967A9 /* discover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover@2x.png"; sourceTree = "<group>"; };
@@ -1020,6 +1023,8 @@
 				9651C79C193E74C20083A0FE /* DashedBorderButton.m */,
 				41338FD719FE11D30022211C /* DealTableViewEventCell.h */,
 				41338FD919FE12080022211C /* DealTableViewEventCell.m */,
+				418683D61C6C75F000FD3305 /* SponsoredEventTableViewCell.h */,
+				418683D71C6C75FB00FD3305 /* SponsoredEventTableViewCell.m */,
 				41C987081C03855A00DD595D /* DealDetailImageCell.h */,
 				41C987091C03856700DD595D /* DealDetailImageCell.m */,
 				960631E71946206B0011E132 /* DealTableViewCell.h */,
@@ -2001,6 +2006,7 @@
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,
+				418683D81C6C75FB00FD3305 /* SponsoredEventTableViewCell.m in Sources */,
 				9695644B175862790081B349 /* CenterNavigationController.m in Sources */,
 				96859D0E17F4048300C1C467 /* JAGrandCentralDispatch.m in Sources */,
 				96DEA505181A2D71001E5812 /* RandomObjectPicker.m in Sources */,

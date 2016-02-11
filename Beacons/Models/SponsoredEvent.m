@@ -25,7 +25,7 @@
     self.startTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];
     
     NSNumber *endTimestamp = dictionary[@"end_time"];
-    self.endTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];
+    self.endTime = [NSDate dateWithTimeIntervalSince1970:endTimestamp.floatValue];
     
     if ([dictionary objectForKey:@"place"]) {
         self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
@@ -37,11 +37,18 @@
 -(NSString *)getDateAsString
 {
     NSDateFormatter *day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE - h:mm a"];
+    [day setDateFormat: @"EEEE h:mma"];
+    
+    NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
+    [endTimeFormat setDateFormat: @"h:mma"];
     
     self.startTime = [self dateRoundedDownTo5Minutes:self.startTime];
+    self.endTime = [self dateRoundedDownTo5Minutes:self.endTime];
     
-    NSString *dateString = [NSString stringWithFormat:@"%@", [day stringFromDate:self.startTime]];
+    NSLog(@"start: %@", self.startTime);
+    NSLog(@"end: %@", self.endTime);
+    
+    NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
     return dateString;
 }
 
