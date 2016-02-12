@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Venue.h"
+#import "SponsoredEvent.h"
 
 @interface DealDetailViewController : UIViewController
 
 @property (strong, nonatomic) Venue *venue;
+@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 
 @end

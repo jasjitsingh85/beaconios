@@ -327,6 +327,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 
+- (void)postPurchase: (NSString *)paymentNonce forEventWithID:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce , @"event_status_id" : eventID };
+    [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
 - (void)postPaymentNonce: (NSString *)paymentNonce success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
     NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce };
@@ -338,29 +344,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     NSDictionary *parameters = @{ @"beacon_id" : beaconID };
     [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
-//
-//- (void)getRewardsScore:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-//{
-//    NSDictionary *parameters = @{};
-//    [[APIClient sharedClient] getPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-//}
-//
-//- (void)purchaseRewardItem:(NSNumber *)dealID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
-//{
-//    NSDictionary *parameters = @{ @"deal_id" : dealID };
-//    [[APIClient sharedClient] postPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-//}
-//- (void)redeemVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-//{
-//    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
-//    [[APIClient sharedClient] putPath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-//}
-//
-//- (void)deleteVoucher: (NSNumber *)voucherID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-//{
-//    NSDictionary *parameters = @{ @"voucher_id" : voucherID };
-//    [[APIClient sharedClient] deletePath:@"reward/voucher/" parameters:parameters success:success failure:failure];
-//}
+
+- (void)checkIfPaymentOnFileForEvent:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{ @"event_status_id" : eventID };
+    [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
 
 - (void)addRewardItem:(NSString *)referringUserPhoneNumber success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
@@ -548,12 +537,20 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"tab/" parameters:parameters success:success failure:failure];
 }
 
-- (void)postBackgroundLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-             failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)postBackgroundLocation:(CLLocation *)location success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSDictionary *parameters = @{@"latitude" : @(location.coordinate.latitude),
                                  @"longitude" : @(location.coordinate.longitude)};
     [[APIClient sharedClient] postPath:@"background/location/" parameters:parameters success:success failure:failure];
+}
+
+- (void)reserveTicket:(NSNumber *)eventID isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"event_id"] = eventID;
+    parameters[@"is_public"] = [NSNumber numberWithBool:isPublic];
+    
+    [[APIClient sharedClient] postPath:@"reserve/" parameters:parameters success:success failure:failure];
 }
 
 @end

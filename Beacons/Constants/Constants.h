@@ -58,6 +58,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kApplyFilterNotification @"applyFilterNotification"
 #define kRefreshManageFriends @"refreshManageFriends"
 #define kRefreshCustomerPaymentInfo @"refreshCustomerPayment"
+#define kConfirmEventReservation @"confirmEventReservation"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"
@@ -81,6 +82,7 @@ extern NSString * const kDealStatusRedeemed;
 extern NSString * const kHotspotViewType;
 extern NSString * const kHappyHourViewType;
 extern NSString * const kDealPlaceViewType;
+extern NSString * const kSponsoredEventViewType;
 
 
 //email

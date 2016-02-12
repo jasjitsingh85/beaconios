@@ -19,6 +19,10 @@
         return nil;
     }
     
+    self.eventID = dictionary[@"id"];
+    
+    self.itemPrice = dictionary[@"item_price"];
+    
     self.title = dictionary[@"title"];
     
     NSNumber *startTimestamp = dictionary[@"start_time"];
@@ -28,7 +32,7 @@
     self.endTime = [NSDate dateWithTimeIntervalSince1970:endTimestamp.floatValue];
     
     if ([dictionary objectForKey:@"place"]) {
-        self.venue = [[Venue alloc] initWithDealPlaceDictionary:dictionary[@"place"]];
+        self.venue = [[Venue alloc] initWithDictionary:dictionary[@"place"]];
     }
     
     return self;

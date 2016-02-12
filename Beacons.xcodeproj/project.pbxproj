@@ -82,6 +82,7 @@
 		411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F841C273C5800CA7100 /* FriendsTableViewController.m */; };
 		411B4F871C27A0B100CA7100 /* friendIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411B4F861C27A0B100CA7100 /* friendIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
+		4122D6DD1C6DE44500A53821 /* EventStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6DC1C6DE44500A53821 /* EventStatus.m */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -482,6 +483,8 @@
 		411B4F841C273C5800CA7100 /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
 		411B4F861C27A0B100CA7100 /* friendIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4122D6DB1C6DE43600A53821 /* EventStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventStatus.h; sourceTree = "<group>"; };
+		4122D6DC1C6DE44500A53821 /* EventStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventStatus.m; sourceTree = "<group>"; };
 		412E8C8D1C3C625100E54486 /* RedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionViewController.h; sourceTree = "<group>"; };
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
@@ -1127,6 +1130,8 @@
 				96D5EEFB19575D6C00786C27 /* DealHours.m */,
 				41D716AF1BC1CE1D00DF23D2 /* Event.h */,
 				41D716B01BC1CE2D00DF23D2 /* Event.m */,
+				4122D6DB1C6DE43600A53821 /* EventStatus.h */,
+				4122D6DC1C6DE44500A53821 /* EventStatus.m */,
 				4101402F1C6A975C00799E37 /* SponsoredEvent.h */,
 				410140301C6A976500799E37 /* SponsoredEvent.m */,
 				414F73F31C4584B200CF49C4 /* Tab.h */,
@@ -2091,6 +2096,7 @@
 				9691D25F17F8BD0D0095BA80 /* JAPlaceholderTextView.m in Sources */,
 				1F5D4BB117767E9600A1A66E /* NSDate+FormattedDate.m in Sources */,
 				9651C79A193E72390083A0FE /* DealRedemptionViewController.m in Sources */,
+				4122D6DD1C6DE44500A53821 /* EventStatus.m in Sources */,
 				96C8996C1939285F00F33CCA /* CommonMacros.m in Sources */,
 				1FE443ED177ABCAE00469634 /* SettingsViewController.m in Sources */,
 				4158AE6A1B46488F0034BA4A /* FreeDrinksExplanationPopupView.m in Sources */,

@@ -497,7 +497,19 @@
 
 - (void)paymentButtonTouched:(id)sender
 {
-    [self.paymentsViewController openPaymentModalToAddPayment];
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *clientToken = responseObject[@"client_token"];
+        self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        self.paymentsViewController.onlyAddPayment = YES;
+        [self addChildViewController:self.paymentsViewController];
+        self.paymentsViewController.view.frame = self.view.bounds;
+        [self.paymentsViewController openPaymentModalToAddPayment];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
 }
 
 - (void)groupButtonTouched:(id)sender

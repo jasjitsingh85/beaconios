@@ -799,7 +799,6 @@ typedef enum dealTypeStates
     
         self.allVenues = venues;
         self.sponsoredEvents = sponsoredEvents;
-        NSLog(@"Sponsored Events: %@", self.sponsoredEvents);
         [self filterVenuesAndReloadTableView];
         self.lastUpdatedDeals = [NSDate date];
         if (completion) {
@@ -1015,7 +1014,7 @@ typedef enum dealTypeStates
     if (indexPath.section == 0 && indexPath.row == 0) {
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
         DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.venue = event.venue;
+        dealViewController.sponsoredEvent = event;
         [self.navigationController pushViewController:dealViewController animated:YES];
     } else {
         Venue *venue;

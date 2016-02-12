@@ -24,6 +24,7 @@ NSString * const kDealStatusRedeemed = @"R";
 NSString * const kHotspotViewType = @"HT";
 NSString * const kHappyHourViewType = @"HH";
 NSString * const kDealPlaceViewType = @"DP";
+NSString * const kSponsoredEventViewType = @"SP";
 
 NSString * const kAppID = @"741683799178892";
 

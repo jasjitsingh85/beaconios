@@ -9,6 +9,8 @@
 #import <Braintree/Braintree.h>
 #import "Deal.h"
 #import "Venue.h"
+#import "SponsoredEvent.h"
+#import "EventStatus.h"
 
 @class RedemptionViewController;
 
@@ -33,5 +35,6 @@
 - (void) openPaymentModalWithDeal: (Deal *)deal;
 - (void) openPaymentModalToAddPayment;
 - (void) openPaymentModalForOpenTab;
+- (void) openPaymentModalWithEvent:(EventStatus *)eventStatus;
 
 @end

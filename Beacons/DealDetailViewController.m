@@ -11,6 +11,7 @@
 #import "Deal.h"
 #import "Venue.h"
 #import "Event.h"
+#import "SponsoredEvent.h"
 #import "HappyHour.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MapKit/MapKit.h>
@@ -26,8 +27,12 @@
 #import "WebViewController.h"
 #import "FaqViewController.h"
 #import "FriendsViewController.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import "TextMessageManager.h"
+#import "PaymentsViewController.h"
+#import "EventStatus.h"
 
-@interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) UIButton *getDealButton;
 @property (strong, nonatomic) UITableView *tableView;
@@ -63,6 +68,7 @@
 @property (readonly) NSInteger venueContainer;
 @property (readonly) NSInteger eventsContainer;
 @property (readonly) NSInteger mapContainer;
+@property (readonly) NSInteger sponsoredEventcontainer;
 
 @property (strong, nonatomic) UILabel *dealTextLabel;
 @property (strong, nonatomic) UILabel *happyHourTextLabel;
@@ -74,6 +80,7 @@
 @property (strong, nonatomic) UITableViewCell *happyHourCell;
 @property (strong, nonatomic) UITableViewCell *venueCell;
 @property (strong, nonatomic) UITableViewCell *eventsCell;
+@property (strong, nonatomic) UITableViewCell *sponsoredEventCell;
 
 @property (strong, nonatomic) UILabel *togglePrompt;
 @property (strong, nonatomic) UIButton *togglePromptHelpButton;
@@ -84,6 +91,8 @@
 @property (strong, nonatomic) UIView *checkInLabelContainer;
 @property (strong, nonatomic) UILabel *checkInText;
 @property (strong, nonatomic) UIImageView *checkInIcon;
+
+@property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 
 @end
 
@@ -104,22 +113,6 @@
     
     self.webView = [[WebViewController alloc] init];
     self.faqViewController = [[FaqViewController alloc] initForModal];
-    
-    self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.followButton.size = CGSizeMake(60, 20);
-    self.followButton.x = 0;
-    self.followButton.y = 1;
-    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:9];
-    self.followButton.backgroundColor = [UIColor clearColor];
-    self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    self.followButton.layer.cornerRadius = 4;
-    self.followButton.layer.borderColor = [[UIColor blackColor] CGColor];
-    self.followButton.layer.borderWidth = 1.0;
-    [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
     
     self.getDealButtonContainer = [[UIView alloc] init];
     self.getDealButtonContainer.backgroundColor = [[ThemeManager sharedTheme] lightGrayColor];
@@ -174,26 +167,6 @@
     topBorder.y = -12;
     [self.getDealButtonContainer addSubview:topBorder];
     
-    
-    
-    //    self.publicToggleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    self.publicToggleButton.size = CGSizeMake(65, 25);
-    //    self.publicToggleButton.x = self.view.width - 90;
-    //    self.publicToggleButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    //    self.publicToggleButton.y = 45;
-    //    [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
-    //    [self.publicToggleButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
-    //    [self.publicToggleButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    //    self.publicToggleButton.titleLabel.font = [ThemeManager mediumFontOfSize:9];
-    //    self.publicToggleButton.backgroundColor = [UIColor clearColor];
-    //    self.publicToggleButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
-    //    [self.publicToggleButton addTarget:self action:@selector(publicToggleButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    //    [self.getDealButtonContainer addSubview:self.publicToggleButton];
-    //
-    //    self.publicToggleButtonIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"publicGlobe"]];
-    //    self.publicToggleButtonIcon.frame = CGRectMake(16, 5, 16, 16);
-    //    [self.publicToggleButton addSubview:self.publicToggleButtonIcon];
-    
     self.getDealButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.getDealButton.size = CGSizeMake(self.view.width - 50, 35);
     self.getDealButton.centerX = self.view.width/2.0;
@@ -223,6 +196,7 @@
         [self makeFollowButtonInactive];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showReservationConfirmation) name:kConfirmEventReservation object:nil];
 }
 
 -(void) updateIsUserPresent
@@ -234,33 +208,50 @@
     }
 }
 
+- (void) initPaymentsViewControllerForEvent
+{
+    [[APIClient sharedClient] getClientToken:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *clientToken = responseObject[@"client_token"];
+        self.paymentsViewController = [[PaymentsViewController alloc] initWithClientToken:clientToken];
+        [self addChildViewController:self.paymentsViewController];
+        self.paymentsViewController.view.frame = self.view.bounds;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+    
+}
+
+-(NSInteger)sponsoredEventContainer
+{
+    return 1;
+}
+
 -(NSInteger)imageContainer
 {
     return 0;
 }
 
 -(NSInteger) dealContainer {
-    return 2;
-}
-
--(NSInteger) happyHourContainer {
     return 3;
 }
 
--(NSInteger) eventsContainer {
+-(NSInteger) happyHourContainer {
     return 4;
 }
 
+-(NSInteger) eventsContainer {
+    return 5;
+}
+
 -(NSInteger) venueContainer {
-    return 1;
+    return 2;
 }
 
 -(NSInteger) mapContainer {
-    return 6;
+    return 7;
 }
 
 -(NSInteger) tutorialContainer {
-    return 5;
+    return 6;
 }
 
 -(NSMutableDictionary *)parseStringIntoTwoLines:(NSString *)originalString
@@ -325,10 +316,45 @@
     [actionSheet showInView:self.view];
 }
 
+-(void) setSponsoredEvent:(SponsoredEvent *)sponsoredEvent
+{
+    _sponsoredEvent = sponsoredEvent;
+    
+    self.venue = sponsoredEvent.venue;
+    
+    [self initPaymentsViewControllerForEvent];
+}
+
 - (void) setVenue:(Venue *)venue
 
 {
     _venue = venue;
+    
+    if (self.sponsoredEvent) {
+        UIButton *textFriendsButton = [[UIButton alloc] init];
+        [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
+        textFriendsButton.size = CGSizeMake(28, 28);
+        [textFriendsButton setImage:[UIImage imageNamed:@"textFriendsIcon"] forState:UIControlStateNormal];
+        [textFriendsButton addTarget:self action:@selector(inviteMoreFriends:) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
+    } else {
+        self.followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.followButton.size = CGSizeMake(60, 20);
+        self.followButton.x = 0;
+        self.followButton.y = 1;
+        [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+        [self.followButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+        [self.followButton setTitleColor:[[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        self.followButton.titleLabel.font = [ThemeManager regularFontOfSize:9];
+        self.followButton.backgroundColor = [UIColor clearColor];
+        self.followButton.titleLabel.textColor = [[ThemeManager sharedTheme] redColor];
+        self.followButton.layer.cornerRadius = 4;
+        self.followButton.layer.borderColor = [[UIColor blackColor] CGColor];
+        self.followButton.layer.borderWidth = 1.0;
+        [self.followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.followButton];
+    }
     
     self.hasVenueDescription = !isEmpty(self.venue.placeDescription);
     
@@ -343,24 +369,22 @@
     [self getEventsCell];
     [self getImageCell];
     
-//    self.dealPrompt = [[UILabel alloc] initWithFrame:CGRectMake(25, 47, 150, 16)];
-//    self.dealPrompt.font = [ThemeManager mediumFontOfSize:9];
-//    self.dealPrompt.textColor = [UIColor unnormalizedColorWithRed:38 green:38 blue:38 alpha:255];
-//    self.dealPrompt.text = @"Tap below to get voucher";
-//    [self.getDealButtonContainer addSubview:self.dealPrompt];
-    
-    if (!self.deal) {
-        [self.getDealButtonContainer setHidden:YES];
-        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
-    } else {
+    if (self.deal || self.sponsoredEvent) {
         [self.getDealButtonContainer setHidden:NO];
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 110.0, 0.0);
+    } else {
+        [self.getDealButtonContainer setHidden:YES];
+        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
     }
-
-    if ([self.deal.checkInCount intValue] > 24) {
+    
+    if ([self.deal.checkInCount intValue] > 24 || self.sponsoredEvent) {
         self.getDealButtonContainer.height = 110;
         self.getDealButtonContainer.y = self.view.height - 110;
-        self.checkInText.text = [NSString stringWithFormat:@"%@ people have checked-in here", self.venue.deal.checkInCount];
+        if (self.sponsoredEvent) {
+            self.checkInText.text = @"You will be charged a $1 deposit";
+        } else {
+            self.checkInText.text = [NSString stringWithFormat:@"%@ people have checked-in here", self.venue.deal.checkInCount];
+        }
         self.checkInLabelContainer.hidden = NO;
     } else {
         self.getDealButtonContainer.height = 97;
@@ -370,72 +394,125 @@
     
     [self updateButtonText];
     
+    if (self.sponsoredEvent) {
+        [[APIClient sharedClient] trackView:self.sponsoredEvent.eventID ofType:kSponsoredEventViewType success:nil failure:nil];
+        
+    } else {
+        
+        [[APIClient sharedClient] trackView:self.venue.venueID ofType:kDealPlaceViewType success:nil failure:nil];
+        
+        [[APIClient sharedClient] getIsDealActive:self.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            self.isDealActive = [responseObject[@"active"] boolValue];
+        } failure:nil];
+    }
+    
     [self.tableView reloadData];
-    
-    [[APIClient sharedClient] trackView:self.venue.venueID ofType:kDealPlaceViewType success:nil failure:nil];
-    
-    [[APIClient sharedClient] getIsDealActive:self.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.isDealActive = [responseObject[@"active"] boolValue];
-    } failure:nil];
 
 }
 
-//-(void) publicToggleButtonTouched:(id)sender
-//{
-//    UIActionSheet *actionSheet = [[UIActionSheet alloc] bk_initWithTitle:@"Select 'Friends' so your friends know where you’re going. Select 'Only Me' if you don’t want your friends to see your activity."];
-//    [actionSheet bk_addButtonWithTitle:@"Friends" handler:^{
-//        self.isPublic = YES;
-//        [self.publicToggleButton setTitle:@"Friends" forState:UIControlStateNormal];
-//        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"publicGlobe"]];
-//    }];
-//    [actionSheet bk_addButtonWithTitle:@"Only Me" handler:^{
-//        self.isPublic = NO;
-//        [self.publicToggleButton setTitle:@"Only Me" forState:UIControlStateNormal];
-//        [self.publicToggleButtonIcon setImage:[UIImage imageNamed:@"privateLock"]];
-//    }];
-//    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
-//    [actionSheet showInView:self.view];
-//}
-
 - (void) getDealButtonTouched:(id)sender
 {
-    NSDate *now = [NSDate date];
-    if (![self.venue.deal isAvailableAtDateAndTime:now] && self.venue.deal != nil) {
-
-        NSString *message = [NSString stringWithFormat:@"This deal is available %@", self.venue.deal.hoursAvailableString];
-        UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
-        [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
-        [alertView show];
-
-        //        NSString *message = [NSString stringWithFormat:@"This deal is only available %@", self.deal.hoursAvailableString];
-        //        [[[UIAlertView alloc] initWithTitle:@"Sorry" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    } else {
-        if (self.isDealActive) {
-            BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
-            if (!socialExplanationShown) {
-                [self showHelpModal:nil];
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
-            } else {
-                AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                UIView *view = appDelegate.window.rootViewController.view;
-                MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
-                if (self.venue.deal != nil){
-                    [[APIClient sharedClient] checkInForVenue:self.venue isPublic:self.isPublic success:^(Beacon *beacon) {
-                        [loadingIndicator hide:YES];
-                        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-                        [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
-                    } failure:^(NSError *error) {
-                        [loadingIndicator hide:YES];
-                        [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    }];
-                }
-            }
+    if (self.deal) {
+        NSDate *now = [NSDate date];
+        if (![self.venue.deal isAvailableAtDateAndTime:now] && self.venue.deal != nil) {
+            
+            NSString *message = [NSString stringWithFormat:@"This deal is available %@", self.venue.deal.hoursAvailableString];
+            UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"Sorry" message:message];
+            [alertView bk_setCancelButtonWithTitle:@"OK" handler:^{
+                //            [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
+            [alertView show];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Limit Reached" message:@"You already used Hotspot here today. You can only redeem one Hotspot drink special per venue per day." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            if (self.isDealActive) {
+                BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+                if (!socialExplanationShown) {
+                    [self showHelpModal:nil];
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+                } else {
+                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                    UIView *view = appDelegate.window.rootViewController.view;
+                    MBProgressHUD *loadingIndicator = [LoadingIndictor showLoadingIndicatorInView:view animated:YES];
+                    if (self.venue.deal != nil){
+                        [[APIClient sharedClient] checkInForVenue:self.venue isPublic:self.isPublic success:^(Beacon *beacon) {
+                            [loadingIndicator hide:YES];
+                            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                            [appDelegate setSelectedViewControllerToBeaconProfileWithBeacon:beacon];
+                        } failure:^(NSError *error) {
+                            [loadingIndicator hide:YES];
+                            [[[UIAlertView alloc] initWithTitle:@"Something went wrong" message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        }];
+                    }
+                }
+            } else {
+                [[[UIAlertView alloc] initWithTitle:@"Limit Reached" message:@"You already used Hotspot here today. You can only redeem one Hotspot drink special per venue per day." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+        }
+    } else if (self.sponsoredEvent) {
+        BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+        if (!socialExplanationShown) {
+            [self showHelpModal:nil];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
+        } else {
+            if (self.sponsoredEvent.isReserved) {
+                [[[UIAlertView alloc] initWithTitle:@"Already Reserved" message:@"You've already reserved a spot at this event. Your voucher will become active on the day of the event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            } else {
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 deposit to hold your spot."];
+                [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
+                    [self processPayment];
+                }];
+                [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
+                    
+                }];
+                [alertView show];
+            }
         }
     }
+}
+
+-(void)showReservationConfirmation
+{
+    [[[UIAlertView alloc] initWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    self.sponsoredEvent.isReserved = YES;
+    [self updateReservationButtonStyle];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+}
+
+-(void)updateReservationButtonStyle
+{
+    if (self.sponsoredEvent.isReserved){
+        self.getDealButton.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.5];
+        [self.getDealButton setTitle:@"RESERVED" forState:UIControlStateNormal];
+    } else {
+        self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
+        [self.getDealButton setTitle:@"RESERVE YOUR SPOT" forState:UIControlStateNormal];
+    }
+}
+
+-(void)processPayment
+{
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        EventStatus *eventStatus = [[EventStatus alloc] initWithDictionary:responseObject[@"event_status"]];
+        [self completePayment:eventStatus];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+
+}
+
+-(void)completePayment:(EventStatus *)eventStatus
+{
+    [[APIClient sharedClient] checkIfPaymentOnFileForEvent:eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
+        BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
+        if (!dismiss_payment_modal) {
+            [self.paymentsViewController openPaymentModalWithEvent:eventStatus];
+        }
+        [self showReservationConfirmation];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
 }
 
 - (void)followButtonTouched:(id)sender
@@ -513,7 +590,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -521,16 +598,21 @@
     CGFloat height = 186;
     if (indexPath.row == self.imageContainer) {
         height = 201;
-    } else if (indexPath.row == self.mapContainer) {
+    } else if (indexPath.row == self.sponsoredEventcontainer) {
+        if (self.sponsoredEvent) {
+            height = 100;
+        } else {
+            height = 0;
+        }
+    }else if (indexPath.row == self.mapContainer) {
         height = 250;
-        
     } else if (indexPath.row == self.eventsContainer) {
         if (self.venue.events.count > 0) {
             height = 50 + (self.venue.events.count * 38);
         } else {
             height = 0;
         }
-    } else if (indexPath.row == self.dealContainer || indexPath.row==self.tutorialContainer) {
+    } else if (indexPath.row == self.dealContainer) {
         if (!self.deal) {
             height = 0;
         } else {
@@ -546,7 +628,14 @@
                 height = 138;
             }
         }
-    } else if (indexPath.row == self.happyHourContainer) {
+    } else if (indexPath.row==self.tutorialContainer) {
+        if (!self.deal && !self.sponsoredEvent) {
+            return 0;
+        } else {
+            return 138;
+        }
+        
+    }else if (indexPath.row == self.happyHourContainer) {
         if (!self.happyHour) {
             height = 0;
         } else {
@@ -598,14 +687,18 @@
 
 -(void)updateButtonText
 {
-    if (self.deal.isRewardItem) {
-        [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
-    } else {
-        if (self.deal.venue.hasPosIntegration) {
-            [self.getDealButton setTitle:@"CHECK IN AND OPEN TAB" forState:UIControlStateNormal];
+    if (self.deal) {
+        if (self.deal.isRewardItem) {
+            [self.getDealButton setTitle:@"USE FREE DRINK HERE" forState:UIControlStateNormal];
         } else {
-            [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
+            if (self.deal.venue.hasPosIntegration) {
+                [self.getDealButton setTitle:@"CHECK IN AND OPEN TAB" forState:UIControlStateNormal];
+            } else {
+                [self.getDealButton setTitle:@"CHECK IN AND GET VOUCHER" forState:UIControlStateNormal];
+            }
         }
+    } else if (self.sponsoredEvent) {
+        [self.getDealButton setTitle:@"RESERVE YOUR SPOT" forState:UIControlStateNormal];
     }
 }
 
@@ -616,43 +709,43 @@
     if (!self.dealCell) {
         self.dealCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.dealCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
     
-    if (!isEmpty(self.venue.deal)) {
-        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.dealCell.contentView.size.width - 50, 0.5)];
-        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-        [self.dealCell.contentView addSubview:topBorder];
-        
-        UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHotspotIcon"]];
-        dealIcon.x = 22;
-        dealIcon.y = 15;
-        [self.dealCell.contentView addSubview:dealIcon];
-        
-        UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-        //    dealHeadingLabel.centerX = self.view.width/2;
-        dealHeadingLabel.text = @"HOTSPOT SPECIAL";
-        dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
-        [self.dealCell.contentView addSubview:dealHeadingLabel];
-        
-        self.dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
-        //    self.dealTextLabel.centerX = self.view.width/2;
-        self.dealTextLabel.font = [ThemeManager lightFontOfSize:12];
-        self.dealTextLabel.textAlignment = NSTextAlignmentLeft;
-        self.dealTextLabel.numberOfLines = 0;
-        
-        self.dealTextLabel.text = [self getDealTextLabel];
-        
-        self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(167, 16, self.view.width - 50, 20)];
-        //    self.dealTime.centerX = self.view.width/2;
-        self.dealTime.font = [ThemeManager lightFontOfSize:9];
-        self.dealTime.textAlignment = NSTextAlignmentLeft;
-        self.dealTime.numberOfLines = 1;
-        self.dealTime.textColor = [UIColor darkGrayColor];
-        self.dealTime.text = [self.venue.deal.dealStartString uppercaseString];
-        [self.dealCell.contentView addSubview:self.dealTime];
-        
-        [self.dealCell.contentView addSubview:self.dealTextLabel];
+        if (!isEmpty(self.venue.deal)) {
+            UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.dealCell.contentView.size.width - 50, 0.5)];
+            topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+            [self.dealCell.contentView addSubview:topBorder];
+            
+            UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHotspotIcon"]];
+            dealIcon.x = 22;
+            dealIcon.y = 15;
+            [self.dealCell.contentView addSubview:dealIcon];
+            
+            UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            //    dealHeadingLabel.centerX = self.view.width/2;
+            dealHeadingLabel.text = @"HOTSPOT SPECIAL";
+            dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
+            [self.dealCell.contentView addSubview:dealHeadingLabel];
+            
+            self.dealTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
+            //    self.dealTextLabel.centerX = self.view.width/2;
+            self.dealTextLabel.font = [ThemeManager lightFontOfSize:12];
+            self.dealTextLabel.textAlignment = NSTextAlignmentLeft;
+            self.dealTextLabel.numberOfLines = 0;
+            
+            self.dealTextLabel.text = [self getDealTextLabel];
+            
+            self.dealTime = [[UILabel alloc] initWithFrame:CGRectMake(167, 16, self.view.width - 50, 20)];
+            //    self.dealTime.centerX = self.view.width/2;
+            self.dealTime.font = [ThemeManager lightFontOfSize:9];
+            self.dealTime.textAlignment = NSTextAlignmentLeft;
+            self.dealTime.numberOfLines = 1;
+            self.dealTime.textColor = [UIColor darkGrayColor];
+            self.dealTime.text = [self.venue.deal.dealStartString uppercaseString];
+            [self.dealCell.contentView addSubview:self.dealTime];
+            
+            [self.dealCell.contentView addSubview:self.dealTextLabel];
+        }
     }
 }
 
@@ -670,42 +763,42 @@
     if (!self.happyHourCell) {
         self.happyHourCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.happyHourCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    if (!isEmpty(self.happyHour)) {
-        if (self.hasVenueDescription) {
-            UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.happyHourCell.contentView.size.width - 50, 0.5)];
-            topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-            [self.happyHourCell.contentView addSubview:topBorder];
+        
+        if (!isEmpty(self.happyHour)) {
+            if (self.hasVenueDescription) {
+                UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.happyHourCell.contentView.size.width - 50, 0.5)];
+                topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+                [self.happyHourCell.contentView addSubview:topBorder];
+            }
+            
+            UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHappyHourIcon"]];
+            dealIcon.x = 22;
+            dealIcon.y = 15;
+            [self.happyHourCell.contentView addSubview:dealIcon];
+            
+            UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            dealHeadingLabel.text = @"HAPPY HOUR";
+            dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
+            [self.happyHourCell.contentView addSubview:dealHeadingLabel];
+            
+            self.happyHourTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
+            self.happyHourTextLabel.font = [ThemeManager lightFontOfSize:12];
+            self.happyHourTextLabel.textAlignment = NSTextAlignmentLeft;
+            self.happyHourTextLabel.numberOfLines = 0;
+            self.happyHourTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
+            
+            self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(135, 16, self.view.width - 50, 20)];
+            //    self.happyHourTime.centerX = self.view.width/2;
+            self.happyHourTime.font = [ThemeManager lightFontOfSize:9];
+            self.happyHourTime.textColor = [UIColor darkGrayColor];
+            self.happyHourTime.textAlignment = NSTextAlignmentLeft;
+            self.happyHourTime.numberOfLines = 1;
+            self.happyHourTime.text = [self.venue.happyHour.happyHourStartString uppercaseString];
+            [self.happyHourCell.contentView addSubview:self.happyHourTime];
+            
+            [self.happyHourCell.contentView addSubview:self.happyHourTextLabel];
         }
-        
-        UIImageView *dealIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHappyHourIcon"]];
-        dealIcon.x = 22;
-        dealIcon.y = 15;
-        [self.happyHourCell.contentView addSubview:dealIcon];
-        
-        UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-        dealHeadingLabel.text = @"HAPPY HOUR";
-        dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        dealHeadingLabel.textAlignment = NSTextAlignmentLeft;
-        [self.happyHourCell.contentView addSubview:dealHeadingLabel];
-        
-        self.happyHourTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 35, self.view.width - 50, 60)];
-        self.happyHourTextLabel.font = [ThemeManager lightFontOfSize:12];
-        self.happyHourTextLabel.textAlignment = NSTextAlignmentLeft;
-        self.happyHourTextLabel.numberOfLines = 0;
-        self.happyHourTextLabel.text = [NSString stringWithFormat:@"%@", self.happyHour.happyHourDescription];
-        
-        self.happyHourTime = [[UILabel alloc] initWithFrame:CGRectMake(135, 16, self.view.width - 50, 20)];
-        //    self.happyHourTime.centerX = self.view.width/2;
-        self.happyHourTime.font = [ThemeManager lightFontOfSize:9];
-        self.happyHourTime.textColor = [UIColor darkGrayColor];
-        self.happyHourTime.textAlignment = NSTextAlignmentLeft;
-        self.happyHourTime.numberOfLines = 1;
-        self.happyHourTime.text = [self.venue.happyHour.happyHourStartString uppercaseString];
-        [self.happyHourCell.contentView addSubview:self.happyHourTime];
-        
-        [self.happyHourCell.contentView addSubview:self.happyHourTextLabel];
     }
 }
 
@@ -716,88 +809,88 @@
     if (!self.venueCell) {
         self.venueCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.venueCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    if (self.hasVenueDescription) {
-        UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newVenueIcon"]];
-        venueIcon.x = 22;
-        venueIcon.y = 15;
-        [self.venueCell.contentView addSubview:venueIcon];
+        if (self.hasVenueDescription) {
+            UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newVenueIcon"]];
+            venueIcon.x = 22;
+            venueIcon.y = 15;
+            [self.venueCell.contentView addSubview:venueIcon];
+            
+            UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            //    venueHeadingLabel.centerX = self.view.width/2;
+            venueHeadingLabel.text = [self.venue.name uppercaseString];
+            venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
+            [self.venueCell.contentView addSubview:venueHeadingLabel];
+            
+            UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 26.5, self.view.width, 25)];
+            [self.venueCell.contentView addSubview:yelpContainer];
+            if (![self.venue.yelpRating isEmpty]) {
+                UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
+                yelpReview.x = 25;
+                [yelpReview sd_setImageWithURL:self.venue.yelpRating];
         
-        UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-        //    venueHeadingLabel.centerX = self.view.width/2;
-        venueHeadingLabel.text = [self.venue.name uppercaseString];
-        venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        venueHeadingLabel.textAlignment = NSTextAlignmentLeft;
-        [self.venueCell.contentView addSubview:venueHeadingLabel];
+                UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
+                poweredByYelp.y = 1.5;
+                poweredByYelp.x = 181;
+                [yelpContainer addSubview:poweredByYelp];
         
-        UIView *yelpContainer = [[UIView alloc] initWithFrame:CGRectMake(0, venueHeadingLabel.y + 26.5, self.view.width, 25)];
-        [self.venueCell.contentView addSubview:yelpContainer];
-        if (![self.venue.yelpRating isEmpty]) {
-            UIImageView *yelpReview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 83, 15)];
-            yelpReview.x = 25;
-            [yelpReview sd_setImageWithURL:self.venue.yelpRating];
-    
-            UIImageView *poweredByYelp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yelpLogo"]];
-            poweredByYelp.y = 1.5;
-            poweredByYelp.x = 181;
-            [yelpContainer addSubview:poweredByYelp];
-    
-            UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(112, 2.5, 67, 15)];
-            yelpReviewCount.textColor = [[ThemeManager sharedTheme] darkGrayColor];
-            yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
-            yelpReviewCount.textAlignment = NSTextAlignmentRight;
-            yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
-            [yelpContainer addSubview:yelpReviewCount];
-    
-            [yelpContainer addSubview:yelpReview];
-        } else {
-            yelpContainer.height = 0;
-        }
+                UILabel *yelpReviewCount = [[UILabel alloc] initWithFrame:CGRectMake(112, 2.5, 67, 15)];
+                yelpReviewCount.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+                yelpReviewCount.font = [ThemeManager lightFontOfSize:10];
+                yelpReviewCount.textAlignment = NSTextAlignmentRight;
+                yelpReviewCount.text = [NSString stringWithFormat:@"%@ reviews on", self.venue.yelpReviewCount];
+                [yelpContainer addSubview:yelpReviewCount];
         
-        self.venueTextLabel = [[UILabel alloc] init];
-        self.venueTextLabel.x = 25;
-        self.venueTextLabel.width = self.view.width - 50;
-        self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 23;
-//        self.venueTextLabel.y = venueHeadingLabel.y + 25;
-        self.venueTextLabel.font = [ThemeManager lightFontOfSize:12];
-        //    self.venueTextLabel.centerX = self.view.width/2;
-        self.venueTextLabel.numberOfLines = 0;
-        self.venueTextLabel.textAlignment = NSTextAlignmentLeft;
-        self.venueTextLabel.text = self.venue.placeDescription;
-        
-        //    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 5, cell.contentView.size.width - 50, 1)];
-        //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-        //    [cell.contentView addSubview:topBorder];
-        
-        CGSize textSize = [venueHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
-        
-        if (self.venue.placeType) {
-            UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16.5, self.view.width - 50, 20)];
-            venueType.font = [ThemeManager lightFontOfSize:9];
-            venueType.textColor = [UIColor darkGrayColor];
-            venueType.textAlignment = NSTextAlignmentLeft;
-            venueType.numberOfLines = 1;
-            venueType.text = [self.venue.placeType uppercaseString];
-            venueType.x = venueHeadingLabel.x + textSize.width + 4;
-            [self.venueCell.contentView addSubview:venueType];
+                [yelpContainer addSubview:yelpReview];
+            } else {
+                yelpContainer.height = 0;
+            }
+            
+            self.venueTextLabel = [[UILabel alloc] init];
+            self.venueTextLabel.x = 25;
+            self.venueTextLabel.width = self.view.width - 50;
+            self.venueTextLabel.y = venueHeadingLabel.y + yelpContainer.height + 23;
+    //        self.venueTextLabel.y = venueHeadingLabel.y + 25;
+            self.venueTextLabel.font = [ThemeManager lightFontOfSize:12];
+            //    self.venueTextLabel.centerX = self.view.width/2;
+            self.venueTextLabel.numberOfLines = 0;
+            self.venueTextLabel.textAlignment = NSTextAlignmentLeft;
+            self.venueTextLabel.text = self.venue.placeDescription;
+            
+            //    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 5, cell.contentView.size.width - 50, 1)];
+            //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+            //    [cell.contentView addSubview:topBorder];
+            
+            CGSize textSize = [venueHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
+            
+            if (self.venue.placeType) {
+                UILabel *venueType = [[UILabel alloc] initWithFrame:CGRectMake(122, 16.5, self.view.width - 50, 20)];
+                venueType.font = [ThemeManager lightFontOfSize:9];
+                venueType.textColor = [UIColor darkGrayColor];
+                venueType.textAlignment = NSTextAlignmentLeft;
+                venueType.numberOfLines = 1;
+                venueType.text = [self.venue.placeType uppercaseString];
+                venueType.x = venueHeadingLabel.x + textSize.width + 4;
+                [self.venueCell.contentView addSubview:venueType];
+            }
+            
             [self.venueCell.contentView addSubview:self.venueTextLabel];
         }
-    }
-    
-    if (!isEmpty(self.venue.yelpID)) {
-        self.openYelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.openYelpButton.frame = CGRectMake(25, 0, self.venueCell.contentView.width - 50, 25);
-        [self.openYelpButton setTitle:@"See in Yelp" forState:UIControlStateNormal];
-        self.openYelpButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-        self.openYelpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-        [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-//        self.openYelpButton.layer.cornerRadius = 3;
-//        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
-//        self.openYelpButton.layer.borderWidth = 1.5;
-        [self.openYelpButton addTarget:self action:@selector(openYelpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-        [self.venueCell.contentView addSubview:self.openYelpButton];
+        
+        if (!isEmpty(self.venue.yelpID)) {
+            self.openYelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.openYelpButton.frame = CGRectMake(25, 0, self.venueCell.contentView.width - 50, 25);
+            [self.openYelpButton setTitle:@"See in Yelp" forState:UIControlStateNormal];
+            self.openYelpButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+            self.openYelpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+            [self.openYelpButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    //        self.openYelpButton.layer.cornerRadius = 3;
+    //        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+    //        self.openYelpButton.layer.borderWidth = 1.5;
+            [self.openYelpButton addTarget:self action:@selector(openYelpButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+            [self.venueCell.contentView addSubview:self.openYelpButton];
+        }
     }
 }
 
@@ -809,53 +902,53 @@
     if (!self.eventsCell) {
         self.eventsCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.eventsCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    if (self.venue.events.count > 0) {
         
-        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.eventsCell.contentView.size.width - 50, 0.5)];
-        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-        [self.eventsCell.contentView addSubview:topBorder];
-        
-        UIImageView *eventIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"happeningsIcon"]];
-        eventIcon.y = 15;
-        eventIcon.x = 22;
-        [self.eventsCell.contentView addSubview:eventIcon];
-        
-        UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-        eventHeadingLabel.text = @"HAPPENINGS";
-        eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-        eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
-        [self.eventsCell.contentView addSubview:eventHeadingLabel];
-        
-        for (int i = 0; i < [self.venue.events count]; i++)
-        {
-            Event *event = self.venue.events[i];
-            UILabel *eventTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 38 + (38 * i), self.view.width - 50, 20)];
-            eventTextLabel.tag = i;
-            eventTextLabel.font = [ThemeManager boldFontOfSize:12];
-            eventTextLabel.numberOfLines = 1;
-            eventTextLabel.textAlignment = NSTextAlignmentLeft;
-            eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
-            [self.eventsCell.contentView addSubview:eventTextLabel];
+        if (self.venue.events.count > 0) {
             
-            UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 53 + (38 * i), self.view.width - 50, 20)];
-            eventTimeTextLabel.tag = i;
-            eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
-            eventTimeTextLabel.numberOfLines = 1;
-            eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
-            eventTimeTextLabel.text = event.getDateAsString;
-            [self.eventsCell.contentView addSubview:eventTimeTextLabel];
+            UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.eventsCell.contentView.size.width - 50, 0.5)];
+            topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+            [self.eventsCell.contentView addSubview:topBorder];
             
-            UITapGestureRecognizer *eventHeaderGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
-            eventHeaderGestureRecognizer.numberOfTapsRequired = 1;
-            [eventTextLabel addGestureRecognizer:eventHeaderGestureRecognizer];
-            eventTextLabel.userInteractionEnabled = YES;
+            UIImageView *eventIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"happeningsIcon"]];
+            eventIcon.y = 15;
+            eventIcon.x = 22;
+            [self.eventsCell.contentView addSubview:eventIcon];
             
-            UITapGestureRecognizer *eventBodyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
-            eventBodyGestureRecognizer.numberOfTapsRequired = 1;
-            [eventTimeTextLabel addGestureRecognizer:eventBodyGestureRecognizer];
-            eventTimeTextLabel.userInteractionEnabled = YES;
+            UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            eventHeadingLabel.text = @"HAPPENINGS";
+            eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
+            [self.eventsCell.contentView addSubview:eventHeadingLabel];
+            
+            for (int i = 0; i < [self.venue.events count]; i++)
+            {
+                Event *event = self.venue.events[i];
+                UILabel *eventTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 38 + (38 * i), self.view.width - 50, 20)];
+                eventTextLabel.tag = i;
+                eventTextLabel.font = [ThemeManager boldFontOfSize:12];
+                eventTextLabel.numberOfLines = 1;
+                eventTextLabel.textAlignment = NSTextAlignmentLeft;
+                eventTextLabel.text = [NSString stringWithFormat:@"\u2022 %@", [event.title capitalizedString]];
+                [self.eventsCell.contentView addSubview:eventTextLabel];
+                
+                UILabel *eventTimeTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(33, 53 + (38 * i), self.view.width - 50, 20)];
+                eventTimeTextLabel.tag = i;
+                eventTimeTextLabel.font = [ThemeManager italicFontOfSize:11];
+                eventTimeTextLabel.numberOfLines = 1;
+                eventTimeTextLabel.textAlignment = NSTextAlignmentLeft;
+                eventTimeTextLabel.text = event.getDateAsString;
+                [self.eventsCell.contentView addSubview:eventTimeTextLabel];
+                
+                UITapGestureRecognizer *eventHeaderGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
+                eventHeaderGestureRecognizer.numberOfTapsRequired = 1;
+                [eventTextLabel addGestureRecognizer:eventHeaderGestureRecognizer];
+                eventTextLabel.userInteractionEnabled = YES;
+                
+                UITapGestureRecognizer *eventBodyGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(eventTapped:)];
+                eventBodyGestureRecognizer.numberOfTapsRequired = 1;
+                [eventTimeTextLabel addGestureRecognizer:eventBodyGestureRecognizer];
+                eventTimeTextLabel.userInteractionEnabled = YES;
+            }
         }
     }
 }
@@ -886,50 +979,50 @@
     if (!self.tutorialCell) {
         self.tutorialCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.tutorialCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.tutorialCell.contentView.size.width - 50, 0.5)];
-    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [self.tutorialCell.contentView addSubview:topBorder];
-    
-    UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHowThisWorksIcon"]];
-    docIcon.y = 15;
-    docIcon.x = 22;
-    [self.tutorialCell.contentView addSubview:docIcon];
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.tutorialCell.contentView.size.width - 50, 0.5)];
+        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [self.tutorialCell.contentView addSubview:topBorder];
+        
+        UIImageView *docIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newHowThisWorksIcon"]];
+        docIcon.y = 15;
+        docIcon.x = 22;
+        [self.tutorialCell.contentView addSubview:docIcon];
 
-    UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-    docHeadingLabel.text = @"HOW THIS WORKS";
-    docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    docHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [self.tutorialCell.contentView addSubview:docHeadingLabel];
+        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+        docHeadingLabel.text = @"HOW THIS WORKS";
+        docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+        docHeadingLabel.textAlignment = NSTextAlignmentLeft;
+        [self.tutorialCell.contentView addSubview:docHeadingLabel];
 
-    UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 80)];
-    docTextLabel.x = 25;
-    docTextLabel.font = [ThemeManager lightFontOfSize:12];
-    docTextLabel.width = self.view.width - 50;
-    docTextLabel.y = docHeadingLabel.y + 25;
-    docTextLabel.numberOfLines = 0;
-    docTextLabel.textAlignment = NSTextAlignmentLeft;
-    [self.tutorialCell.contentView addSubview:docTextLabel];
-    
-    if (self.venue.deal.isRewardItem) {
-        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
-    } else {
-        docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
+        UILabel *docTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, self.view.width, 80)];
+        docTextLabel.x = 25;
+        docTextLabel.font = [ThemeManager lightFontOfSize:12];
+        docTextLabel.width = self.view.width - 50;
+        docTextLabel.y = docHeadingLabel.y + 25;
+        docTextLabel.numberOfLines = 0;
+        docTextLabel.textAlignment = NSTextAlignmentLeft;
+        [self.tutorialCell.contentView addSubview:docTextLabel];
+        
+        if (self.venue.deal.isRewardItem) {
+            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
+        } else {
+            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
+        }
+        
+        UIButton *faqButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        faqButton.frame = CGRectMake(25, 108, self.tutorialCell.contentView.width - 50, 25);
+        [faqButton setTitle:@"Read FAQ" forState:UIControlStateNormal];
+        faqButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+        faqButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+        [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+        //        self.openYelpButton.layer.cornerRadius = 3;
+        //        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+        //        self.openYelpButton.layer.borderWidth = 1.5;
+        [faqButton addTarget:self action:@selector(faqButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.tutorialCell.contentView addSubview:faqButton];
     }
-    
-    UIButton *faqButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    faqButton.frame = CGRectMake(25, 108, self.tutorialCell.contentView.width - 50, 25);
-    [faqButton setTitle:@"Read FAQ" forState:UIControlStateNormal];
-    faqButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-    faqButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-    [faqButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    //        self.openYelpButton.layer.cornerRadius = 3;
-    //        self.openYelpButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
-    //        self.openYelpButton.layer.borderWidth = 1.5;
-    [faqButton addTarget:self action:@selector(faqButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    [self.tutorialCell.contentView addSubview:faqButton];
 }
 
 -(void) faqButtonTouched:(id)sender
@@ -947,118 +1040,119 @@
     if (!self.mapCell) {
         self.mapCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         self.mapCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.mapCell.contentView.size.width - 50, 0.5)];
-    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-    [self.mapCell.contentView addSubview:topBorder];
-    
-    UIImageView *locationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newDirectionsIcon"]];
-    locationIcon.y = 15;
-    locationIcon.x = 22;
-    [self.mapCell.contentView addSubview:locationIcon];
-    
-    UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
-    locationHeadingLabel.text = @"LOCATION";
-    locationHeadingLabel.font = [ThemeManager boldFontOfSize:12];
-    locationHeadingLabel.textAlignment = NSTextAlignmentLeft;
-    [self.mapCell.contentView addSubview:locationHeadingLabel];
-    
-    MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
-    CLLocationCoordinate2D center = self.venue.coordinate;
-    options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
-    center.latitude += options.region.span.latitudeDelta * .12;
-    options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
-    options.scale = [UIScreen mainScreen].scale;
-    options.size = CGSizeMake(self.view.width, 150);
-    
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 150)];
-
-    MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
-    [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
-        //mapSnapshotImage = mapSnap.image;
-        //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
-        [mapImageView setImage:mapSnap.image];
-        //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
-        //CALayer *imageLayer = mapImageView.layer;
-        //[imageLayer setCornerRadius:200/2];
-        //[imageLayer setBorderWidth:3];
-        //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
-        //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
-        //[imageLayer setMasksToBounds:YES];
-
-        UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20, 40, 40)];
-        UIImage *markerImage = [UIImage imageNamed:@"bigRedPin"];
-        [markerImageView setImage:markerImage];
-        [mapImageView addSubview:markerImageView];
-
-        [mapImageView setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
-        [singleTap setNumberOfTapsRequired:1];
-        [mapImageView addGestureRecognizer:singleTap];
-
-//        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
-
-//        int addressContainerWidth;
-//        if (textSize.width < (self.view.width - 10)) {
-//            addressContainerWidth = textSize.width + 100;
-//        } else {
-//            addressContainerWidth = self.view.width - 10;
-//        }
-
-//        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
-//        addressContainer.backgroundColor = [UIColor whiteColor];
-//        addressContainer.centerX = self.view.width/2;
-//        [mapImageView addSubview:addressContainer];
-//
-//        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
-//        address.text = [self.venue.address uppercaseString];
-//        address.textAlignment = NSTextAlignmentCenter;
-//        address.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:address];
-//
-//        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
-//        getDirections.text = @"GET DIRECTIONS";
-//        getDirections.textAlignment = NSTextAlignmentCenter;
-//        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
-//        getDirections.font = [ThemeManager lightFontOfSize:13];
-//        [addressContainer addSubview:getDirections];
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.mapCell.contentView.size.width - 50, 0.5)];
+        topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+        [self.mapCell.contentView addSubview:topBorder];
         
-        UIButton *getDirectionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        getDirectionsButton.frame = CGRectMake(25, 225, self.mapCell.contentView.width - 50, 25);
-        [getDirectionsButton setTitle:@"Get Directions" forState:UIControlStateNormal];
-        getDirectionsButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-        getDirectionsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
-        [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-//        getDirectionsButton.layer.cornerRadius = 3;
-//        getDirectionsButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
-//        getDirectionsButton.layer.borderWidth = 1.5;
-        [getDirectionsButton addTarget:self action:@selector(getDirectionsToBeacon:) forControlEvents:UIControlEventTouchUpInside];
-        [self.mapCell.contentView addSubview:getDirectionsButton];
-    }];
-    
-    NSString *locationString;
-    if (!isEmpty(self.venue.neighborhood)) {
-        locationString = [NSString stringWithFormat:@"%@ - %@ | %@", self.venue.address, self.venue.neighborhood, [self stringForDistance:self.venue.distance]];
-    } else {
-        locationString = [NSString stringWithFormat:@"%@ - %@", self.venue.address, [self stringForDistance:self.venue.distance]];
-    }
-    
-    UILabel *locationInfo = [[UILabel alloc] initWithFrame:CGRectMake(25, 38, self.mapCell.contentView.width - 50, 16)];
-    locationInfo.font = [ThemeManager lightFontOfSize:12];
-//    locationInfo.textColor = [[ThemeManager sharedTheme] darkGrayColor];
-    locationInfo.textColor = [UIColor blackColor];
-    locationInfo.text = locationString;
-    [self.mapCell.contentView addSubview:locationInfo];
+        UIImageView *locationIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"newDirectionsIcon"]];
+        locationIcon.y = 15;
+        locationIcon.x = 22;
+        [self.mapCell.contentView addSubview:locationIcon];
+        
+        UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+        locationHeadingLabel.text = @"LOCATION";
+        locationHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+        locationHeadingLabel.textAlignment = NSTextAlignmentLeft;
+        [self.mapCell.contentView addSubview:locationHeadingLabel];
+        
+        MKMapSnapshotOptions *options = [[MKMapSnapshotOptions alloc] init];
+        CLLocationCoordinate2D center = self.venue.coordinate;
+        options.region = MKCoordinateRegionMakeWithDistance(self.venue.coordinate, 300, 300);
+        center.latitude += options.region.span.latitudeDelta * .12;
+        options.region = MKCoordinateRegionMakeWithDistance(center, 300, 300);
+        options.scale = [UIScreen mainScreen].scale;
+        options.size = CGSizeMake(self.view.width, 150);
+        
+        UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, self.view.width, 150)];
 
-    NSRange range = [locationString rangeOfString:self.venue.address];
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:locationString];
-    [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
-    [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
-    locationInfo.attributedText = attributedText;
-    
-    [self.mapCell.contentView addSubview:mapImageView];
+        MKMapSnapshotter *mapSnapshot = [[MKMapSnapshotter alloc] initWithOptions:options];
+        [mapSnapshot startWithCompletionHandler:^(MKMapSnapshot *mapSnap, NSError *error) {
+            //mapSnapshotImage = mapSnap.image;
+            //UIView *mapView = [[UIView alloc] initWithFrame:CGRectMake(self.view.width - 55, 25, 120, 120)];
+            [mapImageView setImage:mapSnap.image];
+            //[mapImageView setImage:[UIImage imageNamed:@"mapMarker"]];
+            //CALayer *imageLayer = mapImageView.layer;
+            //[imageLayer setCornerRadius:200/2];
+            //[imageLayer setBorderWidth:3];
+            //[imageLayer setBorderColor:[[UIColor whiteColor] CGColor]];
+            //[imageLayer setBorderColor:[[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.9] CGColor]];
+            //[imageLayer setMasksToBounds:YES];
+
+            UIImageView *markerImageView = [[UIImageView alloc] initWithFrame:CGRectMake((mapImageView.frame.size.width/2) - 20, (mapImageView.frame.size.height/2) - 20, 40, 40)];
+            UIImage *markerImage = [UIImage imageNamed:@"bigRedPin"];
+            [markerImageView setImage:markerImage];
+            [mapImageView addSubview:markerImageView];
+
+            [mapImageView setUserInteractionEnabled:YES];
+            UITapGestureRecognizer *singleTap =  [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getDirectionsToBeacon:)];
+            [singleTap setNumberOfTapsRequired:1];
+            [mapImageView addGestureRecognizer:singleTap];
+
+    //        CGSize textSize = [self.venue.address sizeWithAttributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:13]}];
+
+    //        int addressContainerWidth;
+    //        if (textSize.width < (self.view.width - 10)) {
+    //            addressContainerWidth = textSize.width + 100;
+    //        } else {
+    //            addressContainerWidth = self.view.width - 10;
+    //        }
+
+    //        UIView *addressContainer = [[UIView alloc] initWithFrame:CGRectMake(0, mapImageView.height - 60, addressContainerWidth, 50)];
+    //        addressContainer.backgroundColor = [UIColor whiteColor];
+    //        addressContainer.centerX = self.view.width/2;
+    //        [mapImageView addSubview:addressContainer];
+    //
+    //        UILabel *address = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, addressContainer.width, 20)];
+    //        address.text = [self.venue.address uppercaseString];
+    //        address.textAlignment = NSTextAlignmentCenter;
+    //        address.font = [ThemeManager lightFontOfSize:13];
+    //        [addressContainer addSubview:address];
+    //
+    //        UILabel *getDirections = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, addressContainer.width, 20)];
+    //        getDirections.text = @"GET DIRECTIONS";
+    //        getDirections.textAlignment = NSTextAlignmentCenter;
+    //        getDirections.textColor = [[ThemeManager sharedTheme] redColor];
+    //        getDirections.font = [ThemeManager lightFontOfSize:13];
+    //        [addressContainer addSubview:getDirections];
+            
+            UIButton *getDirectionsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            getDirectionsButton.frame = CGRectMake(25, 225, self.mapCell.contentView.width - 50, 25);
+            [getDirectionsButton setTitle:@"Get Directions" forState:UIControlStateNormal];
+            getDirectionsButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+            getDirectionsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+            [getDirectionsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    //        getDirectionsButton.layer.cornerRadius = 3;
+    //        getDirectionsButton.layer.borderColor = [[ThemeManager sharedTheme] redColor].CGColor;
+    //        getDirectionsButton.layer.borderWidth = 1.5;
+            [getDirectionsButton addTarget:self action:@selector(getDirectionsToBeacon:) forControlEvents:UIControlEventTouchUpInside];
+            [self.mapCell.contentView addSubview:getDirectionsButton];
+        }];
+        
+        NSString *locationString;
+        if (!isEmpty(self.venue.neighborhood)) {
+            locationString = [NSString stringWithFormat:@"%@ - %@ | %@", self.venue.address, self.venue.neighborhood, [self stringForDistance:self.venue.distance]];
+        } else {
+            locationString = [NSString stringWithFormat:@"%@ - %@", self.venue.address, [self stringForDistance:self.venue.distance]];
+        }
+        
+        UILabel *locationInfo = [[UILabel alloc] initWithFrame:CGRectMake(25, 38, self.mapCell.contentView.width - 50, 16)];
+        locationInfo.font = [ThemeManager lightFontOfSize:12];
+    //    locationInfo.textColor = [[ThemeManager sharedTheme] darkGrayColor];
+        locationInfo.textColor = [UIColor blackColor];
+        locationInfo.text = locationString;
+        [self.mapCell.contentView addSubview:locationInfo];
+
+        NSRange range = [locationString rangeOfString:self.venue.address];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:locationString];
+        [attributedText addAttribute:NSFontAttributeName value:[ThemeManager boldFontOfSize:12] range:range];
+        [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:range];
+        locationInfo.attributedText = attributedText;
+        
+        [self.mapCell.contentView addSubview:mapImageView];
+        
+    }
     
 }
 
@@ -1072,7 +1166,7 @@
         return self.happyHourCell;
     } else if (indexPath.row == self.venueContainer && self.hasVenueDescription) {
         return self.venueCell;
-    } else if (indexPath.row == self.tutorialContainer && self.deal) {
+    } else if (indexPath.row == self.tutorialContainer && (self.deal || self.sponsoredEvent)) {
         return self.tutorialCell;
     } else if (indexPath.row == self.mapContainer) {
         return self.mapCell;
@@ -1136,6 +1230,20 @@
 
 - (BOOL)isYelpInstalled {
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"yelp://"]];
+}
+
+-(void)inviteMoreFriends:(id)sender
+{
+    MFMessageComposeViewController *smsModal = [[MFMessageComposeViewController alloc] init];
+    smsModal.messageComposeDelegate = self;
+//    if (self.hasImage) {
+//        NSData *imgData = UIImagePNGRepresentation(self.photoView.image);
+//        [smsModal addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"image.png"];
+//    }
+
+    NSString *smsMessage = [NSString stringWithFormat:@"I’m going to %@ at %@ with Hotspot -- you should come!", self.sponsoredEvent.title, self.venue.name];
+    smsModal.body = smsMessage;
+    [self presentViewController:smsModal animated:YES completion:nil];
 }
 
 @end

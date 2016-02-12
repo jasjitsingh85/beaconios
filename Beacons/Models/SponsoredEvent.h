@@ -13,9 +13,12 @@
 
 @interface SponsoredEvent : NSObject
 
+@property (strong, nonatomic) NSNumber *eventID;
+@property (strong, nonatomic) NSNumber *itemPrice;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSDate *endTime;
+@property (assign, nonatomic) BOOL isReserved;
 @property (strong, nonatomic) Venue *venue;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

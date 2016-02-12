@@ -98,11 +98,11 @@
         //[eventView addSubview:backgroundViewOrange];
         
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
-        eventTitleLineOne.x = 15;
+        eventTitleLineOne.x = 10;
         eventTitleLineOne.height = 24;
         eventTitleLineOne.y = 45;
         eventTitleLineOne.text = [NSString stringWithFormat:@" %@ ", [event.title uppercaseString]];
-        eventTitleLineOne.font = [ThemeManager boldFontOfSize:15];
+        eventTitleLineOne.font = [ThemeManager boldFontOfSize:16];
         eventTitleLineOne.backgroundColor = [[ThemeManager sharedTheme] redColor];
         eventTitleLineOne.textColor = [UIColor whiteColor];
         eventTitleLineOne.width = [self widthOfString:eventTitleLineOne.text withFont:eventTitleLineOne.font];
@@ -113,29 +113,29 @@
         [eventView addSubview:eventTitleLineOne];
         
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:[event.venue.name uppercaseString]];
-        CGFloat firstStringWidth = [self widthOfString:[[venueName objectForKey:@"firstLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:13]];
-        CGFloat secondStringWidth = [self widthOfString:[[venueName objectForKey:@"secondLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:13]];
+        CGFloat firstStringWidth = [self widthOfString:[[venueName objectForKey:@"firstLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:14]];
+        CGFloat secondStringWidth = [self widthOfString:[[venueName objectForKey:@"secondLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:14]];
         
-        UILabel *venueTitle = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, MAX(firstStringWidth, secondStringWidth), 50)];
+        UILabel *venueTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, MAX(firstStringWidth, secondStringWidth), 50)];
         venueTitle.text = [NSString stringWithFormat:@"%@", [event.venue.name uppercaseString]];
-        venueTitle.font = [ThemeManager boldFontOfSize:13];
+        venueTitle.font = [ThemeManager boldFontOfSize:14];
         venueTitle.textColor = [UIColor whiteColor];
         venueTitle.textAlignment = NSTextAlignmentLeft;
         venueTitle.numberOfLines = 0;
         [eventView addSubview:venueTitle];
         
-        UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(25 + MAX(firstStringWidth, secondStringWidth), 80, 1, 30)];
+        UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(20 + MAX(firstStringWidth, secondStringWidth), 77.5, 1, 25)];
         verticalLine.backgroundColor = [UIColor whiteColor];
         [eventView addSubview:verticalLine];
         
         UILabel *dateString = [[UILabel alloc] init];
         dateString.textColor = [UIColor whiteColor];
-        dateString.font = [ThemeManager boldFontOfSize:13];
+        dateString.font = [ThemeManager boldFontOfSize:14];
         dateString.textAlignment = NSTextAlignmentLeft;
         dateString.width = 250;
         dateString.height = 50;
         dateString.x = verticalLine.x + 10;
-        dateString.y = 70;
+        dateString.y = 65;
         dateString.text = [event.getDateAsString uppercaseString];
         [eventView addSubview:dateString];
     }
