@@ -323,6 +323,8 @@
     self.venue = sponsoredEvent.venue;
     
     [self initPaymentsViewControllerForEvent];
+    
+    [self updateReservationButtonStyle];
 }
 
 - (void) setVenue:(Venue *)venue

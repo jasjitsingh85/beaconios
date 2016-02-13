@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSDate *endTime;
 @property (assign, nonatomic) BOOL isReserved;
 @property (strong, nonatomic) Venue *venue;
+@property (strong, nonatomic) NSString *socialMessage;
+@property (strong, nonatomic) NSString *statusMessage;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getDateAsString;

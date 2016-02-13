@@ -61,6 +61,7 @@
     self.pageControl.numberOfPages = events.count;
     self.pageControl.centerX = self.contentView.width/2;
     self.pageControl.y = 135;
+    self.pageControl.hidesForSinglePage = YES;
     //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
     //[self.pageControl sizeToFit];
@@ -82,11 +83,16 @@
         [eventImageView sd_setImageWithURL:event.venue.imageURL];
         [eventView addSubview:eventImageView];
         
-        UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, 151)];
-        UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
-        backgroundGradient.alpha = .8;
-        [backgroundGradient setImage:gradientImage];
-        [eventView addSubview:backgroundGradient];
+        UIView *colorBackgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, 151)];
+        colorBackgroundGradient.backgroundColor = [UIColor unnormalizedColorWithRed:27 green:20 blue:100 alpha:255];
+        colorBackgroundGradient.alpha = .4;
+        [eventView addSubview:colorBackgroundGradient];
+        
+//        UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, 151)];
+//        UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
+//        backgroundGradient.alpha = .8;
+//        [backgroundGradient setImage:gradientImage];
+//        [eventView addSubview:backgroundGradient];
         
 //        UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:eventImageView.bounds];
 //        backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
@@ -98,50 +104,81 @@
         //[eventView addSubview:backgroundViewOrange];
         
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
-        eventTitleLineOne.x = 10;
-        eventTitleLineOne.height = 24;
+        eventTitleLineOne.x = 15;
+        eventTitleLineOne.height = 22;
         eventTitleLineOne.y = 45;
-        eventTitleLineOne.text = [NSString stringWithFormat:@" %@ ", [event.title uppercaseString]];
-        eventTitleLineOne.font = [ThemeManager boldFontOfSize:16];
+        eventTitleLineOne.text = [NSString stringWithFormat:@"  %@  ", [event.title uppercaseString]];
+        eventTitleLineOne.font = [ThemeManager boldFontOfSize:14];
         eventTitleLineOne.backgroundColor = [[ThemeManager sharedTheme] redColor];
         eventTitleLineOne.textColor = [UIColor whiteColor];
         eventTitleLineOne.width = [self widthOfString:eventTitleLineOne.text withFont:eventTitleLineOne.font];
         //eventTitleLineOne.adjustsFontSizeToFitWidth = YES;
 //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
         eventTitleLineOne.textAlignment = NSTextAlignmentLeft;
-        eventTitleLineOne.numberOfLines = 2;
+        eventTitleLineOne.numberOfLines = 1;
         [eventView addSubview:eventTitleLineOne];
         
         NSMutableDictionary *venueName = [self parseStringIntoTwoLines:[event.venue.name uppercaseString]];
         CGFloat firstStringWidth = [self widthOfString:[[venueName objectForKey:@"firstLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:14]];
         CGFloat secondStringWidth = [self widthOfString:[[venueName objectForKey:@"secondLine"] uppercaseString] withFont:[ThemeManager boldFontOfSize:14]];
         
-        UILabel *venueTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, MAX(firstStringWidth, secondStringWidth), 50)];
-        venueTitle.text = [NSString stringWithFormat:@"%@", [event.venue.name uppercaseString]];
-        venueTitle.font = [ThemeManager boldFontOfSize:14];
-        venueTitle.textColor = [UIColor whiteColor];
-        venueTitle.textAlignment = NSTextAlignmentLeft;
-        venueTitle.numberOfLines = 0;
-        [eventView addSubview:venueTitle];
+        UILabel *venueTitleLineOne = [[UILabel alloc] initWithFrame:CGRectMake(15, 57, MAX(firstStringWidth, secondStringWidth), 50)];
+        venueTitleLineOne.text = [[venueName objectForKey:@"firstLine"] uppercaseString];
+        venueTitleLineOne.font = [ThemeManager boldFontOfSize:14];
+        venueTitleLineOne.textColor = [UIColor whiteColor];
+        venueTitleLineOne.textAlignment = NSTextAlignmentLeft;
+        venueTitleLineOne.numberOfLines = 1;
+        [eventView addSubview:venueTitleLineOne];
         
-        UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(20 + MAX(firstStringWidth, secondStringWidth), 77.5, 1, 25)];
+        UILabel *venueTitleLineTwo = [[UILabel alloc] initWithFrame:CGRectMake(15, 73, MAX(firstStringWidth, secondStringWidth), 50)];
+        venueTitleLineTwo.text = [[venueName objectForKey:@"secondLine"] uppercaseString];
+        venueTitleLineTwo.font = [ThemeManager boldFontOfSize:14];
+        venueTitleLineTwo.textColor = [UIColor whiteColor];
+        venueTitleLineTwo.textAlignment = NSTextAlignmentLeft;
+        venueTitleLineTwo.numberOfLines = 1;
+        [eventView addSubview:venueTitleLineTwo];
+        
+        UIView *verticalLine = [[UIView alloc] initWithFrame:CGRectMake(25 + MAX(firstStringWidth, secondStringWidth), 77.5, .5, 25)];
         verticalLine.backgroundColor = [UIColor whiteColor];
         [eventView addSubview:verticalLine];
         
         UILabel *dateString = [[UILabel alloc] init];
         dateString.textColor = [UIColor whiteColor];
-        dateString.font = [ThemeManager boldFontOfSize:14];
+        dateString.font = [ThemeManager mediumFontOfSize:13];
         dateString.textAlignment = NSTextAlignmentLeft;
         dateString.width = 250;
         dateString.height = 50;
         dateString.x = verticalLine.x + 10;
-        dateString.y = 65;
+        dateString.y = 57;
         dateString.text = [event.getDateAsString uppercaseString];
         [eventView addSubview:dateString];
+        
+        UILabel *extraString = [[UILabel alloc] initWithFrame:CGRectMake(dateString.x, 87, self.width, 20)];
+        extraString.textColor = [UIColor whiteColor];
+        extraString.font = [ThemeManager mediumFontOfSize:9];
+        extraString.text = [self getExtraEventString:event];
+        extraString.textAlignment = NSTextAlignmentLeft;
+        [eventView addSubview:extraString];
     }
     
 }
 
+-(NSString *)getExtraEventString:(SponsoredEvent *)sponsoredEvent
+{
+    if ([sponsoredEvent.socialMessage length] != 0) {
+        if ([sponsoredEvent.statusMessage length] != 0) {
+            return [NSString stringWithFormat:@"%@ | %@", [sponsoredEvent.socialMessage uppercaseString], [sponsoredEvent.statusMessage uppercaseString]];
+        } else {
+            return [NSString stringWithFormat:@"%@", [sponsoredEvent.socialMessage uppercaseString]];
+        }
+    } else {
+        if ([sponsoredEvent.statusMessage length] != 0) {
+            return [NSString stringWithFormat:@"%@", [sponsoredEvent.statusMessage uppercaseString]];
+        } else {
+            return @"";
+        }
+    }
+}
 - (CGFloat)widthOfString:(NSString *)string withFont:(NSFont *)font {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
     return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
@@ -168,8 +205,8 @@
     NSMutableDictionary *firstAndSecondLine = [[NSMutableDictionary alloc] init];
     NSArray *arrayOfStrings = [originalString componentsSeparatedByString:@" "];
     if ([arrayOfStrings count] == 1) {
-        [firstAndSecondLine setObject:@"" forKey:@"firstLine"];
-        [firstAndSecondLine setObject:originalString forKey:@"secondLine"];
+        [firstAndSecondLine setObject:originalString forKey:@"firstLine"];
+        [firstAndSecondLine setObject:@"" forKey:@"secondLine"];
     } else {
         NSMutableString *firstLine = [[NSMutableString alloc] init];
         NSMutableString *secondLine = [[NSMutableString alloc] init];

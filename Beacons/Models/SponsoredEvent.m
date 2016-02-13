@@ -25,6 +25,9 @@
     
     self.title = dictionary[@"title"];
     
+    NSString *isReserved = dictionary[@"is_reserved"];
+    self.isReserved = [isReserved boolValue];
+    
     NSNumber *startTimestamp = dictionary[@"start_time"];
     self.startTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];
     
@@ -34,6 +37,13 @@
     if ([dictionary objectForKey:@"place"]) {
         self.venue = [[Venue alloc] initWithDictionary:dictionary[@"place"]];
     }
+    
+    self.socialMessage = dictionary[@"social_message"];
+    
+    self.statusMessage = dictionary[@"status_message"];
+    
+    NSLog(@"social: %@", self.socialMessage);
+    NSLog(@"status: %@", self.statusMessage);
     
     return self;
 }
@@ -48,9 +58,6 @@
     
     self.startTime = [self dateRoundedDownTo5Minutes:self.startTime];
     self.endTime = [self dateRoundedDownTo5Minutes:self.endTime];
-    
-    NSLog(@"start: %@", self.startTime);
-    NSLog(@"end: %@", self.endTime);
     
     NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
     return dateString;
