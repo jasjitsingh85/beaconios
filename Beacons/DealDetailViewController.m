@@ -51,6 +51,7 @@
 @property (strong, nonatomic) UIImageView *publicToggleButtonIcon;
 
 @property (strong, nonatomic) UILabel *venueTextLabel;
+@property (strong, nonatomic) UILabel *eventTextLabel;
 @property (assign, nonatomic) BOOL isFollowed;
 @property (assign, nonatomic) BOOL isPresent;
 @property (assign, nonatomic) BOOL isPublic;
@@ -68,7 +69,7 @@
 @property (readonly) NSInteger venueContainer;
 @property (readonly) NSInteger eventsContainer;
 @property (readonly) NSInteger mapContainer;
-@property (readonly) NSInteger sponsoredEventcontainer;
+@property (readonly) NSInteger sponsoredEventContainer;
 
 @property (strong, nonatomic) UILabel *dealTextLabel;
 @property (strong, nonatomic) UILabel *happyHourTextLabel;
@@ -85,6 +86,7 @@
 @property (strong, nonatomic) UILabel *togglePrompt;
 @property (strong, nonatomic) UIButton *togglePromptHelpButton;
 
+@property (strong, nonatomic) UIButton *openFacebookButton;
 @property (strong, nonatomic) UIButton *openYelpButton;
 @property (strong, nonatomic) WebViewController *webView;
 @property (strong, nonatomic) FaqViewController *faqViewController;
@@ -367,6 +369,7 @@
     [self getMapCell];
     [self getTutorialCell];
     [self getHappyHourCell];
+    [self getSponsoredEventCell];
     [self getVenueCell];
     [self getEventsCell];
     [self getImageCell];
@@ -600,13 +603,18 @@
     CGFloat height = 186;
     if (indexPath.row == self.imageContainer) {
         height = 201;
-    } else if (indexPath.row == self.sponsoredEventcontainer) {
+    } else if (indexPath.row == self.sponsoredEventContainer) {
         if (self.sponsoredEvent) {
-            height = 100;
+            NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+            CGSize labelSize = (CGSize){self.view.width - 50, FLT_MAX};
+            CGRect eventDescriptionHeight = [self.sponsoredEvent.eventDescription boundingRectWithSize:labelSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[ThemeManager lightFontOfSize:12]} context:context];
+            self.eventTextLabel.height = eventDescriptionHeight.size.height + 5;
+            self.openFacebookButton.y = self.eventTextLabel.y + self.eventTextLabel.height;
+            height = eventDescriptionHeight.size.height + 90;
         } else {
             height = 0;
         }
-    }else if (indexPath.row == self.mapContainer) {
+    } else if (indexPath.row == self.mapContainer) {
         height = 250;
     } else if (indexPath.row == self.eventsContainer) {
         if (self.venue.events.count > 0) {
@@ -722,7 +730,7 @@
             dealIcon.y = 15;
             [self.dealCell.contentView addSubview:dealIcon];
             
-            UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            UILabel *dealHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
             //    dealHeadingLabel.centerX = self.view.width/2;
             dealHeadingLabel.text = @"HOTSPOT SPECIAL";
             dealHeadingLabel.font = [ThemeManager boldFontOfSize:12];
@@ -804,6 +812,68 @@
     }
 }
 
+-(void) getSponsoredEventCell
+{
+    static NSString *CellIdentifier = @"sponsoredEventCell";
+    self.sponsoredEventCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!self.sponsoredEventCell) {
+        self.sponsoredEventCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        self.sponsoredEventCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (self.sponsoredEvent) {
+            UIImageView *venueIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"eventDrinkIcon"]];
+            venueIcon.x = 22;
+            venueIcon.y = 13;
+            [self.sponsoredEventCell.contentView addSubview:venueIcon];
+            
+            UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
+            eventHeadingLabel.text = [self.sponsoredEvent.title uppercaseString];
+            eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
+            eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
+            [self.sponsoredEventCell.contentView addSubview:eventHeadingLabel];
+            
+            UILabel *extraLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 39, self.view.width - 50, 12)];
+            extraLabel.text = [self getExtraEventString:self.sponsoredEvent];
+            extraLabel.font = [ThemeManager lightFontOfSize:9];
+            extraLabel.textColor = [UIColor darkGrayColor];
+            extraLabel.textAlignment = NSTextAlignmentLeft;
+            [self.sponsoredEventCell.contentView addSubview:extraLabel];
+            
+            self.eventTextLabel = [[UILabel alloc] init];
+            self.eventTextLabel.x = 25;
+            self.eventTextLabel.width = self.view.width - 50;
+            self.eventTextLabel.y = extraLabel.y + 15;
+            self.eventTextLabel.font = [ThemeManager lightFontOfSize:12];
+            self.eventTextLabel.numberOfLines = 0;
+            self.eventTextLabel.textAlignment = NSTextAlignmentLeft;
+            self.eventTextLabel.text = self.sponsoredEvent.eventDescription;
+            
+            CGSize textSize = [eventHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
+            
+            UILabel *eventTime = [[UILabel alloc] initWithFrame:CGRectMake(122, 16.5, self.view.width - 50, 20)];
+            eventTime.font = [ThemeManager lightFontOfSize:9];
+            eventTime.textColor = [UIColor darkGrayColor];
+            eventTime.textAlignment = NSTextAlignmentLeft;
+            eventTime.numberOfLines = 1;
+            eventTime.text = self.sponsoredEvent.getDateAsString;
+            eventTime.x = eventHeadingLabel.x + textSize.width + 4;
+            [self.sponsoredEventCell.contentView addSubview:eventTime];
+            
+            [self.sponsoredEventCell.contentView addSubview:self.eventTextLabel];
+            
+            self.openFacebookButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.openFacebookButton.frame = CGRectMake(25, 0, self.sponsoredEventCell.contentView.width - 50, 25);
+            [self.openFacebookButton setTitle:@"See in Facebook" forState:UIControlStateNormal];
+            self.openFacebookButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+            self.openFacebookButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+            self.openFacebookButton.y = self.eventTextLabel.y + self.eventTextLabel.height;
+            [self.openFacebookButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:1.] forState:UIControlStateNormal];
+            [self.openFacebookButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+            [self.openFacebookButton addTarget:self action:@selector(openFacebookButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+            [self.sponsoredEventCell.contentView addSubview:self.openFacebookButton];
+        }
+    }
+}
+
 -(void) getVenueCell
 {
     static NSString *CellIdentifier = @"venueCell";
@@ -817,7 +887,13 @@
             venueIcon.y = 15;
             [self.venueCell.contentView addSubview:venueIcon];
             
-            UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            if (self.sponsoredEvent) {
+                UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 0, self.venueCell.contentView.size.width - 50, 0.5)];
+                topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+                [self.venueCell.contentView addSubview:topBorder];
+            }
+            
+            UILabel *venueHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
             //    venueHeadingLabel.centerX = self.view.width/2;
             venueHeadingLabel.text = [self.venue.name uppercaseString];
             venueHeadingLabel.font = [ThemeManager boldFontOfSize:12];
@@ -858,10 +934,6 @@
             self.venueTextLabel.numberOfLines = 0;
             self.venueTextLabel.textAlignment = NSTextAlignmentLeft;
             self.venueTextLabel.text = self.venue.placeDescription;
-            
-            //    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(25, 5, cell.contentView.size.width - 50, 1)];
-            //    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
-            //    [cell.contentView addSubview:topBorder];
             
             CGSize textSize = [venueHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
             
@@ -916,7 +988,7 @@
             eventIcon.x = 22;
             [self.eventsCell.contentView addSubview:eventIcon];
             
-            UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+            UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
             eventHeadingLabel.text = @"HAPPENINGS";
             eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
             eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
@@ -991,7 +1063,7 @@
         docIcon.x = 22;
         [self.tutorialCell.contentView addSubview:docIcon];
 
-        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+        UILabel *docHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
         docHeadingLabel.text = @"HOW THIS WORKS";
         docHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         docHeadingLabel.textAlignment = NSTextAlignmentLeft;
@@ -1052,7 +1124,7 @@
         locationIcon.x = 22;
         [self.mapCell.contentView addSubview:locationIcon];
         
-        UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, self.view.width, 30)];
+        UILabel *locationHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
         locationHeadingLabel.text = @"LOCATION";
         locationHeadingLabel.font = [ThemeManager boldFontOfSize:12];
         locationHeadingLabel.textAlignment = NSTextAlignmentLeft;
@@ -1174,6 +1246,8 @@
         return self.mapCell;
     } else if (indexPath.row == self.eventsContainer) {
         return self.eventsCell;
+    } else if (indexPath.row == self.sponsoredEventContainer) {
+        return self.sponsoredEventCell;
     } else {
         static NSString *CellIdentifier = @"genericCell";
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -1217,6 +1291,20 @@
                      completion:nil];
 }
 
+- (void) openFacebookButtonTouched:(id)sender
+{
+    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
+    if (isInstalled) {;
+        [[UIApplication sharedApplication] openURL:self.sponsoredEvent.deepLinkURL];
+    } else {
+        self.webView.websiteUrl = self.sponsoredEvent.websiteURL;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
+    }
+}
+
 - (void) openYelpButtonTouched:(id)sender
 {
     if ([self isYelpInstalled]) {
@@ -1246,6 +1334,23 @@
     NSString *smsMessage = [NSString stringWithFormat:@"I’m going to %@ at %@ with Hotspot -- you should come!", self.sponsoredEvent.title, self.venue.name];
     smsModal.body = smsMessage;
     [self presentViewController:smsModal animated:YES completion:nil];
+}
+
+-(NSString *)getExtraEventString:(SponsoredEvent *)sponsoredEvent
+{
+    if (![sponsoredEvent.socialMessage isEqualToString:@""]) {
+        if (![sponsoredEvent.statusMessage isEqualToString:@""]) {
+            return [NSString stringWithFormat:@"%@ | %@", [sponsoredEvent.socialMessage uppercaseString], [sponsoredEvent.statusMessage uppercaseString]];
+        } else {
+            return [NSString stringWithFormat:@"%@", [sponsoredEvent.socialMessage uppercaseString]];
+        }
+    } else {
+        if (![sponsoredEvent.statusMessage isEqualToString:@""]) {
+            return [NSString stringWithFormat:@"%@", [sponsoredEvent.statusMessage uppercaseString]];
+        } else {
+            return @"";
+        }
+    }
 }
 
 @end

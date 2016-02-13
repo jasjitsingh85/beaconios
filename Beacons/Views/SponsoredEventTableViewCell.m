@@ -165,20 +165,21 @@
 
 -(NSString *)getExtraEventString:(SponsoredEvent *)sponsoredEvent
 {
-    if ([sponsoredEvent.socialMessage length] != 0) {
-        if ([sponsoredEvent.statusMessage length] != 0) {
+    if (![sponsoredEvent.socialMessage isEqualToString:@""]) {
+        if (![sponsoredEvent.statusMessage isEqualToString:@""]) {
             return [NSString stringWithFormat:@"%@ | %@", [sponsoredEvent.socialMessage uppercaseString], [sponsoredEvent.statusMessage uppercaseString]];
         } else {
             return [NSString stringWithFormat:@"%@", [sponsoredEvent.socialMessage uppercaseString]];
         }
     } else {
-        if ([sponsoredEvent.statusMessage length] != 0) {
+        if (![sponsoredEvent.statusMessage isEqualToString:@""]) {
             return [NSString stringWithFormat:@"%@", [sponsoredEvent.statusMessage uppercaseString]];
         } else {
             return @"";
         }
     }
 }
+
 - (CGFloat)widthOfString:(NSString *)string withFont:(NSFont *)font {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
     return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;

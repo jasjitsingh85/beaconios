@@ -25,6 +25,8 @@
     
     self.title = dictionary[@"title"];
     
+    self.eventDescription = dictionary[@"description"];
+    
     NSString *isReserved = dictionary[@"is_reserved"];
     self.isReserved = [isReserved boolValue];
     
@@ -38,12 +40,27 @@
         self.venue = [[Venue alloc] initWithDictionary:dictionary[@"place"]];
     }
     
-    self.socialMessage = dictionary[@"social_message"];
+    NSString *websiteURLString = dictionary[@"web_url"];
+    if (![websiteURLString isEqual:[NSNull null]]){
+        self.websiteURL = [NSURL URLWithString:websiteURLString];
+    }
     
-    self.statusMessage = dictionary[@"status_message"];
+    NSString *deepLinkURLString = dictionary[@"deep_link_url"];
+    if (![deepLinkURLString isEqual:[NSNull null]]){
+        self.deepLinkURL = [NSURL URLWithString:deepLinkURLString];
+    }
     
-    NSLog(@"social: %@", self.socialMessage);
-    NSLog(@"status: %@", self.statusMessage);
+    if (dictionary[@"social_message"] != nil || dictionary[@"social_message"] != (id)[NSNull null]) {
+        self.socialMessage = dictionary[@"social_message"];
+    } else {
+        self.socialMessage = @"";
+    }
+
+    if (dictionary[@"status_message"] != nil || dictionary[@"status_message"] != (id)[NSNull null]) {
+        self.statusMessage = dictionary[@"status_message"];
+    } else {
+        self.statusMessage = @"";
+    }
     
     return self;
 }
