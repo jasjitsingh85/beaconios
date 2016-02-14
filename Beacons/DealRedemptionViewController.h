@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class DealStatus, Deal, Beacon;
+@class DealStatus, Deal, Beacon, SponsoredEvent;
 
 @protocol DealRedemptionViewControllerDelegate <NSObject>
 
@@ -26,6 +26,7 @@
 @property (strong, nonatomic) Deal *deal;
 @property (strong, nonatomic) Beacon *beacon;
 @property (strong, nonatomic) DealStatus *dealStatus;
+@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 @property (assign) id <DealRedemptionViewControllerDelegate> delegate;
 
 - (void)setBeaconDeal:(Beacon *)beacon;

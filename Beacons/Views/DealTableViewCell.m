@@ -82,7 +82,7 @@
     self.descriptionLabel.height = 26;
     self.descriptionLabel.x = 0;
     self.descriptionLabel.y = 90;
-    self.descriptionLabel.font = [ThemeManager boldFontOfSize:14];
+    self.descriptionLabel.font = [ThemeManager boldFontOfSize:13];
     //self.descriptionLabel.adjustsFontSizeToFitWidth = YES;
     self.descriptionLabel.textColor = [UIColor whiteColor];
     self.descriptionLabel.textAlignment = NSTextAlignmentLeft;
@@ -104,7 +104,7 @@
     
     self.itemPriceLabel = [[UILabel alloc] init];
     self.itemPriceLabel.textAlignment = NSTextAlignmentLeft;
-    self.itemPriceLabel.font = [ThemeManager boldFontOfSize:14];
+    self.itemPriceLabel.font = [ThemeManager boldFontOfSize:13];
     self.itemPriceLabel.textColor = [UIColor whiteColor];
     self.itemPriceLabel.height = 26;
     self.itemPriceLabel.y = 90;
@@ -211,7 +211,7 @@
         NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:self.marketPriceLabel.text attributes:attributes];
         self.marketPriceLabel.attributedText = attrText;
         self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [venue.deal.itemName uppercaseString]];
-        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14]}];
+        CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:13]}];
         
         CGFloat descriptionLabelWidth;
         //if (textSize.width < self.contentView.width * .6) {
@@ -227,7 +227,7 @@
             self.itemPriceLabel.text = [NSString stringWithFormat:@"$%@", venue.deal.itemPrice];
             self.descriptionLabel.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
         }
-        CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:14.5]}];
+        CGSize itemPriceTextSize = [self.itemPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:13.5]}];
         self.itemPriceLabel.width = itemPriceTextSize.width;
         self.itemPriceLabel.x = self.marketPriceLabel.x + marketLabelTextSize.width + 3;
         

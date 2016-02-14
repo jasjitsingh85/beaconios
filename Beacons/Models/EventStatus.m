@@ -22,6 +22,8 @@
     
     self.eventStatusID = dictionary[@"id"];
     
+    self.status = dictionary[@""];
+    
     if ([dictionary objectForKey:@"event"]) {
         self.sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:dictionary[@"event"]];
     }

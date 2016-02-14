@@ -264,33 +264,35 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 {
     CLLocation *location = [[CLLocation alloc] initWithLatitude:visit.coordinate.latitude longitude:visit.coordinate.longitude];
     [[APIClient sharedClient] postBackgroundLocation:location success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertTitle = @"Visit";
-            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\nTo: %@\nLocation: (%f, %f)",
-                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
-                                           [self.dateFormatter stringFromDate:visit.departureDate],
-                                           visit.coordinate.latitude,
-                                           visit.coordinate.longitude];
-            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
-            localNotification.category = @"GLOBAL"; // Lazy categorization
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        }
+//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//            localNotification.alertTitle = @"Visit";
+//            localNotification.alertBody = [NSString stringWithFormat:@"From: %@\nTo: %@\nLocation: (%f, %f)",
+//                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
+//                                           [self.dateFormatter stringFromDate:visit.departureDate],
+//                                           visit.coordinate.latitude,
+//                                           visit.coordinate.longitude];
+//            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
+//            localNotification.category = @"GLOBAL"; // Lazy categorization
+//            
+//            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//        }
+        NSLog(@"Background location sent to server successfully");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
-            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-            localNotification.alertTitle = @"Visit";
-            localNotification.alertBody = [NSString stringWithFormat:@"FAILURE! From: %@\nTo: %@\nLocation: (%f, %f)",
-                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
-                                           [self.dateFormatter stringFromDate:visit.departureDate],
-                                           visit.coordinate.latitude,
-                                           visit.coordinate.longitude];
-            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
-            localNotification.category = @"GLOBAL"; // Lazy categorization
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        }
+//        if ([[UIApplication sharedApplication] currentUserNotificationSettings].types & UIUserNotificationTypeAlert) {
+//            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//            localNotification.alertTitle = @"Visit";
+//            localNotification.alertBody = [NSString stringWithFormat:@"FAILURE! From: %@\nTo: %@\nLocation: (%f, %f)",
+//                                           [self.dateFormatter stringFromDate:visit.arrivalDate],
+//                                           [self.dateFormatter stringFromDate:visit.departureDate],
+//                                           visit.coordinate.latitude,
+//                                           visit.coordinate.longitude];
+//            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:15];
+//            localNotification.category = @"GLOBAL"; // Lazy categorization
+//            
+//            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+//        }
+        NSLog(@"Background location sent to server successfully");
     }];
 }
 

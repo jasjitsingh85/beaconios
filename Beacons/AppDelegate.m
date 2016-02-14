@@ -367,9 +367,9 @@
     redemptionTableViewController.beacon = beacon;
     [redemptionTableViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
-    if (promptForCheckIn) {
-        [redemptionTableViewController promptForCheckIn];
-    }
+//    if (promptForCheckIn) {
+//        [redemptionTableViewController promptForCheckIn];
+//    }
 }
 
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon

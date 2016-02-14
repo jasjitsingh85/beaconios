@@ -39,6 +39,7 @@
 #import "FeedTableViewController.h"
 #import "Event.h"
 #import "SponsoredEvent.h"
+#import "RedemptionViewController.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -1013,9 +1014,15 @@ typedef enum dealTypeStates
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
-        DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
-        dealViewController.sponsoredEvent = event;
-        [self.navigationController pushViewController:dealViewController animated:YES];
+        if (event.isReserved) {
+            RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
+            redemptionViewController.sponsoredEvent = event;
+            [self.navigationController pushViewController:redemptionViewController animated:YES];
+        } else {
+            DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
+            dealViewController.sponsoredEvent = event;
+            [self.navigationController pushViewController:dealViewController animated:YES];
+        }
     } else {
         Venue *venue;
         venue = self.selectedVenues[indexPath.row];
