@@ -160,6 +160,19 @@
     textLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you time and money. Present this green voucher to your server - they'll tap it as payment for your drink. You're only charged once through the app. You won't be charged by the bar.", beacon.deal.venue.name];
 }
 
+-(void)setSponsoredEvent:(SponsoredEvent *)sponsoredEvent
+{
+    _sponsoredEvent = sponsoredEvent;
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, self.width - 110, 100)];
+    textLabel.centerX = self.width/2;
+    textLabel.font = [ThemeManager lightFontOfSize:12];
+    textLabel.textAlignment = NSTextAlignmentCenter;
+    textLabel.numberOfLines = 6;
+    [self.imageView addSubview:textLabel];
+    textLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from to save you time and money. Present this green voucher to at the door - they'll tap it as payment for your entry to the event. You're only charged once through the app. You won't be charged by the venue."];
+}
+
 - (void)show
 {
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];

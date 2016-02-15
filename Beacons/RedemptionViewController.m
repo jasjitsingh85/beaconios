@@ -480,9 +480,12 @@
 
 - (void) feedbackButtonTouched:(id)sender
 {
-    
     NeedHelpExplanationPopupView *modal = [[NeedHelpExplanationPopupView alloc] init];
-    modal.beacon = self.beacon;
+    if (self.sponsoredEvent) {
+        modal.sponsoredEvent = self.sponsoredEvent;
+    } else {
+         modal.beacon = self.beacon;
+    }
     [modal show];
     
     //    [self feedbackDeal];

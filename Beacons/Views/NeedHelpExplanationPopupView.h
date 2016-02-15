@@ -8,21 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-
-//@protocol FreeDrinksExplanationViewControllerDelegate <NSObject>
-//
-//- (void)launchInviteFriends;
-////- (void) inviteMoreFriends;
-//////-(BOOL) isUserCreator;
-//
-//@end
-@class Beacon, Deal;
+@class Beacon, Deal, SponsoredEvent;
 @interface NeedHelpExplanationPopupView : UIView
 
 @property (strong, nonatomic) NSAttributedString *attributedInviteText;
 @property (strong, nonatomic) UIButton *doneButton;
 @property (strong, nonatomic) Beacon *beacon;
-//@property (assign) id <FreeDrinksExplanationViewControllerDelegate> delegate;
+@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 
 - (void)show;
 
