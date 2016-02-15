@@ -20,6 +20,7 @@
 @property (strong, nonatomic) DealStatus *dealStatus;
 
 - (void)refreshBeaconData;
+- (void)refreshSponsoredEventData;
 //- (void)promptForCheckIn;
 - (void)refreshDeal;
 

@@ -35,11 +35,13 @@
 #import "FreeDrinksExplanationPopupView.h"
 #import "AppInviteViewController.h"
 #import "FilterViewController.h"
+#import "FaqViewController.h"
 #import "FeedItem.h"
 #import "FeedTableViewController.h"
 #import "Event.h"
 #import "SponsoredEvent.h"
 #import "RedemptionViewController.h"
+#import "HelpPopupView.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
 
@@ -108,6 +110,8 @@ typedef enum dealTypeStates
 @property (strong, nonatomic) FilterViewController *filterViewController;
 
 @property (strong, nonatomic) SponsoredEventTableViewCell *eventCell;
+
+@property (strong, nonatomic) FaqViewController *faqViewController;
 
 @end
 
@@ -212,6 +216,7 @@ typedef enum dealTypeStates
     
     self.isMapViewActive = NO;
     self.isMapViewDealShowing = NO;
+    self.faqViewController = [[FaqViewController alloc] initForModal];
     
     self.selectedDealInMap = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 210, HOTSPOT_HEIGHT)];
     self.selectedDealInMap.layer.cornerRadius = 6;
@@ -396,6 +401,8 @@ typedef enum dealTypeStates
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNewsfeedNotification:) name:kRemoveNewsfeedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applyFilterNotification:) name:kApplyFilterNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAfterToggleFavorite:) name:kRefreshAfterToggleFavoriteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showFaq:) name:@"ShowFaq" object:nil];
 //    [self updateRewardItems];
 
 }
@@ -895,18 +902,20 @@ typedef enum dealTypeStates
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (self.sponsoredEvents && self.selectedVenues) {
-        return 2;
-    } else if (self.sponsoredEvents || self.selectedVenues) {
-        return 1;
-    } else {
-        return 0;
-    }
+//    if (self.sponsoredEvents && self.selectedVenues) {
+//        return 2;
+//    } else if (self.sponsoredEvents || self.selectedVenues) {
+//        return 1;
+//    } else {
+//        return 0;
+//    }
+    return 2;
+
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (section == 0 && self.sponsoredEvents) {
+    if (section == 0 && self.sponsoredEvents.count) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
         /* Create custom view to display section header... */
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8.5, tableView.frame.size.width, 15)];
@@ -925,6 +934,14 @@ typedef enum dealTypeStates
         
         [view addSubview:bottomBorder];
         
+        UIButton *featuredEventHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        featuredEventHelpButton.size = CGSizeMake(30, 30);
+        featuredEventHelpButton.x = 98;
+        featuredEventHelpButton.y = .5;
+        [featuredEventHelpButton setImage:[UIImage imageNamed:@"helpIcon"] forState:UIControlStateNormal];
+        [featuredEventHelpButton addTarget:self action:@selector(showFeaturedEventExplanationModal:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:featuredEventHelpButton];
+        
         [view setBackgroundColor:[UIColor whiteColor]];
         return view;
     } else {
@@ -940,19 +957,48 @@ typedef enum dealTypeStates
         bottomBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
         [view addSubview:bottomBorder];
         
+        UIButton *filterButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        filterButton.size = CGSizeMake(100, 35);
+        filterButton.x = 235;
+        filterButton.y = -1.75;
+        [filterButton setImage:[UIImage imageNamed:@"newFilterButton"] forState:UIControlStateNormal];
+        [filterButton setImage:[UIImage imageNamed:@"newFilterButtonSelected"] forState:UIControlStateSelected];
+        [filterButton addTarget:self action:@selector(filterButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:filterButton];
+        
         NSRange range = [label.text rangeOfString:@"HOTSPOTS &"];
         NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:label.text];
         [attributedText addAttribute:NSFontAttributeName value:[ThemeManager italicFontOfSize:10] range:range];
         label.attributedText = attributedText;
+        
+        UIButton *hotspotHelpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        hotspotHelpButton.size = CGSizeMake(30, 30);
+        hotspotHelpButton.x = 145;
+        hotspotHelpButton.y = .5;
+        [hotspotHelpButton setImage:[UIImage imageNamed:@"helpIcon"] forState:UIControlStateNormal];
+        [hotspotHelpButton addTarget:self action:@selector(showHotspotExplanationModal:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:hotspotHelpButton];
         
         [view setBackgroundColor:[UIColor whiteColor]];
         return view;
     }
 }
 
+- (void)showFeaturedEventExplanationModal:(id)sender
+{
+    HelpPopupView *featuredEventPopup = [[HelpPopupView alloc] init];
+    [featuredEventPopup showFeaturedEventExplanationModal];
+}
+
+- (void)showHotspotExplanationModal:(id)sender
+{
+    HelpPopupView *hotspotPopup = [[HelpPopupView alloc] init];
+    [hotspotPopup showHotspotExplanationModal];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section==0 && !self.sponsoredEvents) {
+    if (section == 0 && !self.sponsoredEvents.count) {
         return 0;
     } else {
         return 30;
@@ -962,7 +1008,11 @@ typedef enum dealTypeStates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 1;
+        if (self.sponsoredEvents.count) {
+            return 1;
+        } else {
+            return 0;
+        }
     } else {
          return self.selectedVenues.count;
     }
@@ -1017,7 +1067,10 @@ typedef enum dealTypeStates
         if (event.isReserved) {
             RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
             redemptionViewController.sponsoredEvent = event;
+            [redemptionViewController refreshSponsoredEventData];
             [self.navigationController pushViewController:redemptionViewController animated:YES];
+//            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+//            [appDelegate setSelectedViewControllerToSponsoredEvent:event];
         } else {
             DealDetailViewController *dealViewController = [[DealDetailViewController alloc] init];
             dealViewController.sponsoredEvent = event;
@@ -1123,7 +1176,7 @@ typedef enum dealTypeStates
             [self.eventCell.contentView addGestureRecognizer:recognizer];
         }
         
-        if (self.sponsoredEvents.count > 0) {
+        if (self.sponsoredEvents.count) {
             self.eventCell.events = self.sponsoredEvents;
         }
         
@@ -1700,6 +1753,14 @@ typedef enum dealTypeStates
     self.selectedDealInMap.width = [sorted1[2] floatValue] + 25;
     
     self.placeType.x = 6;
+}
+
+-(void)showFaq:(id)sender
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.faqViewController];
+    [self presentViewController:navigationController
+                       animated:YES
+                     completion:nil];
 }
 
 //- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {

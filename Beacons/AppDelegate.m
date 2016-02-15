@@ -137,7 +137,7 @@
     
     //initialize location tracker
     [LocationTracker sharedTracker];
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways) {
         [[LocationTracker sharedTracker] startTrackingIfAuthorized];
         [[LocationTracker sharedTracker] startTrackingVisits];
     }
@@ -190,7 +190,7 @@
         }
     }
 
-    if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+    if (hasFinishedPermissions && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways) {
         [[LocationTracker sharedTracker] requestLocationPermission];
     }
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
@@ -380,6 +380,17 @@
         redemptionTableViewController.openToDealView = YES;
     }
     [redemptionTableViewController refreshBeaconData];
+    [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
+}
+
+- (void)setSelectedViewControllerToSponsoredEvent:(SponsoredEvent *)sponsoredEvent
+{
+    RedemptionViewController *redemptionTableViewController = [[RedemptionViewController alloc] init];
+    redemptionTableViewController.sponsoredEvent = sponsoredEvent;
+//    if (beacon.deal) {
+//        redemptionTableViewController.openToDealView = YES;
+//    }
+    [redemptionTableViewController refreshSponsoredEventData];
     [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
 }
 

@@ -22,11 +22,11 @@
     
     self.eventStatusID = dictionary[@"id"];
     
-    self.status = dictionary[@""];
+    self.status = dictionary[@"status"];
     
-    if ([dictionary objectForKey:@"event"]) {
-        self.sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:dictionary[@"event"]];
-    }
+//    if ([dictionary objectForKey:@"event"]) {
+//        self.sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:dictionary[@"event"]];
+//    }
     
     return self;
 }

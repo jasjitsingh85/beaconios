@@ -64,7 +64,11 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 
 - (BOOL)authorized
 {
-    return [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 //- (void)startMonitoringBeaconRegions
@@ -109,7 +113,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
 {
     self.fetchLocationSuccessBlock = success;
     self.fetchLocationFailureBlock = failure;
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorized) {
+    if (![self authorized]) {
         [self failedToFetchLocation];
     }
     else {
@@ -254,7 +258,7 @@ typedef void (^FetchLocationFailureBlock)(NSError *error);
     else if (status == kCLAuthorizationStatusRestricted) {
      
     }
-    else if (status == kCLAuthorizationStatusAuthorized) {
+    else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self startTrackingIfAuthorized];
 //        [self startMonitoringBeaconRegions];
     }

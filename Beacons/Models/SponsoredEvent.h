@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class Venue;
+@class Venue, EventStatus;
 
 @interface SponsoredEvent : NSObject
 
@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSString *statusMessage;
 @property (strong, nonatomic) NSURL *websiteURL;
 @property (strong, nonatomic) NSURL *deepLinkURL;
+@property (strong, nonatomic) EventStatus *eventStatus;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getDateAsString;

@@ -553,4 +553,16 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"reserve/" parameters:parameters success:success failure:failure];
 }
 
+- (void)getSponsoredEvent:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"event_id" : eventID};
+    [[APIClient sharedClient] getPath:@"reserve/" parameters:parameters success:success failure:failure];
+}
+
+- (void)redeemEvent:(NSNumber *)eventStatusID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSDictionary *parameters = @{@"event_status_id" : eventStatusID};
+    [[APIClient sharedClient] putPath:@"reserve/" parameters:parameters success:success failure:failure];
+}
+
 @end

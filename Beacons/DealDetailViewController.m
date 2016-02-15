@@ -31,6 +31,8 @@
 #import "TextMessageManager.h"
 #import "PaymentsViewController.h"
 #import "EventStatus.h"
+#import "HelpPopupView.h"
+#import "FaqViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -93,6 +95,7 @@
 @property (strong, nonatomic) UIView *checkInLabelContainer;
 @property (strong, nonatomic) UILabel *checkInText;
 @property (strong, nonatomic) UIImageView *checkInIcon;
+@property (strong, nonatomic) UIButton *helpButton;
 
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 
@@ -146,24 +149,13 @@
     [self.togglePromptHelpButton addTarget:self action:@selector(showFriendsModal:) forControlEvents:UIControlEventTouchUpInside];
     [self.getDealButtonContainer addSubview:self.togglePromptHelpButton];
     
-    self.checkInText = [[UILabel alloc] initWithFrame:CGRectMake(12, 3, self.view.width, 20)];
+    self.checkInText = [[UILabel alloc] initWithFrame:CGRectMake(12, 5, self.view.width, 20)];
     self.checkInText.textAlignment = NSTextAlignmentCenter;
     self.checkInText.font = [ThemeManager lightFontOfSize:12];
     
     [self updateToggle:switchView];
     
     self.isDealActive = YES;
-    
-//    UIImageView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 0.5)];
-////    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:204 green:204 blue:204 alpha:255];
-//    topBorder.backgroundColor = [UIColor blackColor];
-//    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.view.width, 3)];
-//    topBorder.layer.masksToBounds = NO;
-//    topBorder.layer.shadowColor = [UIColor blackColor].CGColor;
-//    topBorder.layer.shadowOffset = CGSizeMake(0.0f, -4.0f);
-//    topBorder.layer.shadowOpacity = 0.5f;
-//    topBorder.layer.shadowPath = shadowPath.CGPath;
-//    [self.getDealButtonContainer addSubview:topBorder];
     
     UIImageView *topBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"topBorderWithDropShadow"]];
     topBorder.y = -12;
@@ -179,7 +171,7 @@
     [self.getDealButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     
     self.checkInIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkInIcon"]];
-    self.checkInIcon.y = 5.75;
+    self.checkInIcon.y = 7.75;
     self.checkInIcon.x = 69;
     
     self.checkInLabelContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 80, self.view.width, 25)];
@@ -198,7 +190,24 @@
         [self makeFollowButtonInactive];
     }
     
+    self.helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.helpButton.size = CGSizeMake(30, 30);
+    self.helpButton.hidden = YES;
+    self.helpButton.x = 231;
+    self.helpButton.y = 0;
+    [self.helpButton setImage:[UIImage imageNamed:@"helpIcon"] forState:UIControlStateNormal];
+    [self.helpButton addTarget:self action:@selector(showFeeExplanationModal:) forControlEvents:UIControlEventTouchUpInside];
+    [self.checkInLabelContainer addSubview:self.helpButton];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showReservationConfirmation) name:kConfirmEventReservation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(faqButtonTouched:) name:@"ShowFaq" object:nil];
+}
+
+-(void)showFeeExplanationModal:(id)sender
+{
+    HelpPopupView *feePopup = [[HelpPopupView alloc] init];
+    [feePopup showFeeExplanationModal];
 }
 
 -(void) updateIsUserPresent
@@ -387,7 +396,13 @@
         self.getDealButtonContainer.y = self.view.height - 110;
         if (self.sponsoredEvent) {
             self.checkInText.text = @"You will be charged a $1 deposit";
+            self.checkInIcon.hidden = YES;
+            self.helpButton.hidden = NO;
+            self.checkInText.x = -12;
         } else {
+            self.checkInText.x = 12;
+            self.checkInIcon.hidden = NO;
+            self.helpButton.hidden = YES;
             self.checkInText.text = [NSString stringWithFormat:@"%@ people have checked-in here", self.venue.deal.checkInCount];
         }
         self.checkInLabelContainer.hidden = NO;
@@ -497,8 +512,8 @@
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        EventStatus *eventStatus = [[EventStatus alloc] initWithDictionary:responseObject[@"event_status"]];
-        [self completePayment:eventStatus];
+        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+        [self completePayment:sponsoredEvent.eventStatus];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
@@ -850,7 +865,7 @@
             CGSize textSize = [eventHeadingLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:12]}];
             
             UILabel *eventTime = [[UILabel alloc] initWithFrame:CGRectMake(122, 16.5, self.view.width - 50, 20)];
-            eventTime.font = [ThemeManager lightFontOfSize:9];
+            eventTime.font = [ThemeManager lightFontOfSize:11];
             eventTime.textColor = [UIColor darkGrayColor];
             eventTime.textAlignment = NSTextAlignmentLeft;
             eventTime.numberOfLines = 1;

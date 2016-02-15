@@ -35,6 +35,6 @@
 - (void) openPaymentModalWithDeal: (Deal *)deal;
 - (void) openPaymentModalToAddPayment;
 - (void) openPaymentModalForOpenTab;
-- (void) openPaymentModalWithEvent:(EventStatus *)eventStatus;
+- (void) openPaymentModalWithEvent:(SponsoredEvent *)sponsoredEvent;
 
 @end

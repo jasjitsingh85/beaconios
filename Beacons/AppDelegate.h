@@ -19,6 +19,7 @@ FeedTableViewController,
 User,
 Beacon,
 Voucher,
+SponsoredEvent,
 Deal;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
@@ -47,6 +48,7 @@ Deal;
 - (void)contactAuthorizationStatusDenied;
 - (void)setSelectedViewControllerToHome;
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon;
+- (void)setSelectedViewControllerToSponsoredEvent:(SponsoredEvent *)sponsoredEvent;
 //- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;

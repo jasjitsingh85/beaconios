@@ -18,7 +18,7 @@
 
     @property (strong, nonatomic) NSString *clientToken;
     @property (strong, nonatomic) NSString *nonce;
-    @property (strong, nonatomic) EventStatus *eventStatus;
+    @property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 
 @end
 
@@ -73,9 +73,9 @@
                      completion:nil];
 }
 
-- (void) openPaymentModalWithEvent:(EventStatus *)eventStatus
+- (void) openPaymentModalWithEvent:(SponsoredEvent *)sponsoredEvent
 {
-    self.eventStatus = eventStatus;
+    self.sponsoredEvent = sponsoredEvent;
     // Create and retain a `Braintree` instance with the client token
     //[Braintree setupWithClientToken:self.clientToken completion:^(Braintree *braintree, NSError *error) {
     self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
@@ -84,7 +84,7 @@
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
     //
-    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$1 deposit for event: %@", self.eventStatus.sponsoredEvent.title];
+    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$1 deposit for event: %@", self.sponsoredEvent.title];
     dropInViewController.summaryDescription = [NSString stringWithFormat:@"You won't be charged the full price until your ticket is redeemed at the door."];
     //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
@@ -210,7 +210,7 @@
             NSLog(@"Failure");
         }];
     } else {
-        if (self.eventStatus.sponsoredEvent) {
+        if (self.sponsoredEvent) {
             [self postPurchaseForEvent:paymentMethodNonce];
         } else {
             [self postPurchaseForBeacon:paymentMethodNonce];
@@ -221,7 +221,7 @@
 
 -(void)postPurchaseForEvent:(NSString *)paymentMethodNonce
 {
-    [[APIClient sharedClient] postPurchase:paymentMethodNonce forEventWithID:self.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] postPurchase:paymentMethodNonce forEventWithID:self.sponsoredEvent.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (dismiss_payment_modal) {

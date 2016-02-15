@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Venue.h"
 #import "SponsoredEvent.h"
+#import "EventStatus.h"
 
 @implementation SponsoredEvent
 
@@ -27,8 +28,14 @@
     
     self.eventDescription = dictionary[@"description"];
     
-    NSString *isReserved = dictionary[@"is_reserved"];
-    self.isReserved = [isReserved boolValue];
+    NSDictionary *event_status = dictionary[@"event_status"];
+    if (event_status == (id)[NSNull null]) {
+        self.isReserved = NO;
+        self.eventStatus = nil;
+    } else {
+        self.isReserved = YES;
+        self.eventStatus = [[EventStatus alloc] initWithDictionary:dictionary[@"event_status"]];
+    }
     
     NSNumber *startTimestamp = dictionary[@"start_time"];
     self.startTime = [NSDate dateWithTimeIntervalSince1970:startTimestamp.floatValue];

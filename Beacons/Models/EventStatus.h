@@ -14,7 +14,7 @@
 @interface EventStatus : NSObject
 
 @property (strong, nonatomic) NSNumber *eventStatusID;
-@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
+//@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 @property (strong, nonatomic) NSString *status;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;

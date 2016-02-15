@@ -56,17 +56,6 @@
     [self.eventScroll setUserInteractionEnabled:NO];
     [self.contentView addGestureRecognizer:self.eventScroll.panGestureRecognizer];
     
-    self.pageControl = [[UIPageControl alloc] init];
-    self.pageControl.hidesForSinglePage = NO;
-    self.pageControl.numberOfPages = events.count;
-    self.pageControl.centerX = self.contentView.width/2;
-    self.pageControl.y = 135;
-    self.pageControl.hidesForSinglePage = YES;
-    //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
-    //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
-    //[self.pageControl sizeToFit];
-    [self.contentView addSubview:self.pageControl];
-    
 //    [self updateDate];
     
     for (int i = 0; i < events.count; i++) {
@@ -105,7 +94,7 @@
         
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
         eventTitleLineOne.x = 15;
-        eventTitleLineOne.height = 22;
+        eventTitleLineOne.height = 26;
         eventTitleLineOne.y = 45;
         eventTitleLineOne.text = [NSString stringWithFormat:@"  %@  ", [event.title uppercaseString]];
         eventTitleLineOne.font = [ThemeManager boldFontOfSize:14];
@@ -160,6 +149,17 @@
         extraString.textAlignment = NSTextAlignmentLeft;
         [eventView addSubview:extraString];
     }
+    
+    self.pageControl = [[UIPageControl alloc] init];
+    self.pageControl.hidesForSinglePage = NO;
+    self.pageControl.numberOfPages = events.count;
+    self.pageControl.centerX = self.contentView.width/2;
+    self.pageControl.y = 135;
+    self.pageControl.hidesForSinglePage = YES;
+    //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
+    //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
+    //[self.pageControl sizeToFit];
+    [self.contentView addSubview:self.pageControl];
     
 }
 

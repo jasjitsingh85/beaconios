@@ -52,6 +52,7 @@
 #import "TabTableView.h"
 #import "TabItem.h"
 #import "Tab.h"
+#import "SponsoredEvent.h"
 #import "TabViewController.h"
 
 @interface RedemptionViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
@@ -188,8 +189,8 @@
     [super viewDidLoad];
     
     self.tableView = [[UITableView alloc] init];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.tableView.backgroundColor = [UIColor whiteColor];
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
@@ -198,8 +199,6 @@
     self.tableView.allowsSelection = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
     
     UIButton *textFriendsButton = [[UIButton alloc] init];
     [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
@@ -224,15 +223,28 @@
     
     [self showVoucherViewForSponsoredEvent];
     
-//    if (self.beacon.imageURL) {
+//    if (self.sponsoredEvent.venue.imageURL) {
 //        [self downloadImageAndUpdate];
 //    }
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//    [self.imageView sd_setImageWithURL:self.beacon.deal.venue.imageURL];
+//    [self.imageView sd_setImageWithURL:self.sponsoredEvent.venue.imageURL];
     
     [self.tableView reloadData];
+}
+
+-(void)refreshSponsoredEventData
+{
+    if (!self.sponsoredEvent) {
+        return;
+    }
     
+    [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+        [self setSponsoredEvent:sponsoredEvent];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failed");
+    }];
 }
 
 - (void)refreshBeaconData
@@ -299,17 +311,31 @@
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager downloadImageWithURL:self.beacon.imageURL
-                          options:0
-                         progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                             // progression tracking code
-                         }
-                        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                            if (image) {
-                                [self updateImage:image];
-                            }
-                            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                        }];
+    if (self.sponsoredEvent) {
+        [manager downloadImageWithURL:self.sponsoredEvent.venue.imageURL
+                              options:0
+                             progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                 // progression tracking code
+                             }
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                if (image) {
+                                    [self updateImage:image];
+                                }
+                                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                            }];
+    } else {
+        [manager downloadImageWithURL:self.beacon.imageURL
+                              options:0
+                             progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                 // progression tracking code
+                             }
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                if (image) {
+                                    [self updateImage:image];
+                                }
+                                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                            }];
+    }
 }
 
 
@@ -373,7 +399,13 @@
         NSData *imgData = UIImagePNGRepresentation(self.photoView.image);
         [smsModal addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"image.png"];
     }
-    NSString *smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
+    NSString *smsMessage;
+    if (self.sponsoredEvent) {
+        smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come!", self.sponsoredEvent.title, self.sponsoredEvent.venue.name];
+    } else {
+        smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
+    }
+
     smsModal.body = smsMessage;
     [self presentViewController:smsModal animated:YES completion:nil];
 }
@@ -390,16 +422,16 @@
     self.keyboardShown = NO;
 }
 
-- (void)join:(void (^)())didJoin
-{
-    [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
-        [self refreshBeaconData];
-    } failure:nil];
-
-    if (didJoin) {
-        didJoin();
-    }
-}
+//- (void)join:(void (^)())didJoin
+//{
+//    [[BeaconManager sharedManager] confirmBeacon:self.beacon success:^{
+//        [self refreshBeaconData];
+//    } failure:nil];
+//
+//    if (didJoin) {
+//        didJoin();
+//    }
+//}
 
 - (void)inviteButtonTouched:(id)sender
 {
@@ -589,21 +621,25 @@
 
 -(void)photoTapped:(id)sender
 {
-    NSString *photoPrompt;
-    if (self.hasImage) {
-        photoPrompt = @"Want to change this photo?";
+    if (self.sponsoredEvent) {
+        [[[UIAlertView alloc] initWithTitle:@"Disabled" message:@"The photo feature is disabled for events." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        photoPrompt = @"Want to add a photo?";
+        NSString *photoPrompt;
+        if (self.hasImage) {
+            photoPrompt = @"Want to change this photo?";
+        } else {
+            photoPrompt = @"Want to add a photo?";
+        }
+        UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:photoPrompt];
+        [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
+            [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+        }];
+        [actionSheet bk_addButtonWithTitle:@"Add From Library" handler:^{
+            [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        }];
+        [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:nil];
+        [actionSheet showInView:self.view];
     }
-    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:photoPrompt];
-    [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
-    }];
-    [actionSheet bk_addButtonWithTitle:@"Add From Library" handler:^{
-        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }];
-    [actionSheet bk_setCancelButtonWithTitle:@"Not Now" handler:nil];
-    [actionSheet showInView:self.view];
 }
 
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)source
@@ -682,20 +718,20 @@
 
 -(UITableViewCell *)getRedemptionCellForSponsoredEvent
 {
-    static NSString *CellIdentifier = @"redemptionCell";
-    UITableViewCell *redemptionCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!redemptionCell) {
-        redemptionCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"redemptionCellForEvent";
+    UITableViewCell *redemptionCellForEvent = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!redemptionCellForEvent) {
+        redemptionCellForEvent = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(20, 0, self.view.width - 40, 0.5)];
         topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:161 green:161 blue:161 alpha:255];
-        [redemptionCell addSubview:topBorder];
+        [redemptionCellForEvent addSubview:topBorder];
         
         self.headerIcon = [[UIImageView alloc] init];
         self.headerIcon.height = 18;
         self.headerIcon.width = 18;
         self.headerIcon.x = 20;
         self.headerIcon.y = 15;
-        [redemptionCell addSubview:self.headerIcon];
+        [redemptionCellForEvent addSubview:self.headerIcon];
         
         self.headerTitle = [[UILabel alloc] init];
         self.headerTitle.height = 20;
@@ -704,14 +740,14 @@
         self.headerTitle.x = 42;
         self.headerTitle.font = [ThemeManager boldFontOfSize:11];
         self.headerTitle.y = 14;
-        [redemptionCell addSubview:self.headerTitle];
+        [redemptionCellForEvent addSubview:self.headerTitle];
         
         self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
         self.headerExplanationText.centerX = self.view.width/2;
         self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
         self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
         self.headerExplanationText.numberOfLines = 2;
-        [redemptionCell addSubview:self.headerExplanationText];
+        [redemptionCellForEvent addSubview:self.headerExplanationText];
         
         self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.redeemButton.y = 115;
@@ -730,7 +766,7 @@
         self.itemName.font = [ThemeManager boldFontOfSize:16];
         self.itemName.y = 36;
         self.itemName.textAlignment = NSTextAlignmentCenter;
-        self.itemName.text = [self.deal.itemName uppercaseString];
+        self.itemName.text = [self.sponsoredEvent.title uppercaseString];
         [self.redeemButton addSubview:self.itemName];
         
         self.venueName = [[UILabel alloc] init];
@@ -738,7 +774,7 @@
         self.venueName.font = [ThemeManager boldFontOfSize:16];
         self.venueName.textAlignment = NSTextAlignmentCenter;
         self.venueName.y = 52;
-        self.venueName.text = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
+        self.venueName.text = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
         [self.redeemButton addSubview:self.venueName];
         
         self.voucherIcon = [[UIImageView alloc] init];
@@ -766,14 +802,14 @@
         [self.inviteFriendsButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
         self.inviteFriendsButton.y = 72;
         
-        [redemptionCell addSubview:self.inviteFriendsButton];
+        [redemptionCellForEvent addSubview:self.inviteFriendsButton];
         [self.inviteFriendsButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
-        [redemptionCell addSubview:self.redeemButton];
+        [redemptionCellForEvent addSubview:self.redeemButton];
         [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     }
     
-    return redemptionCell;
+    return redemptionCellForEvent;
 }
 
 -(UITableViewCell *)getRedemptionCell
@@ -1010,38 +1046,73 @@
 
 - (void)redeemButtonTouched:(id)sender
 {
-    if (self.dealStatus.paymentAuthorization) {
-        if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+    if (self.sponsoredEvent) {
+        if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
         } else {
             NSString *message;
-            if (self.dealStatus.isRewardAuthorization) {
-                message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and Hotspot will be charged $%@ for a %@. Don’t charge the customer for this drink.", self.deal.itemPrice, self.deal.itemName];
-            } else {
-                message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@ for a %@. They are paying through the Hotspot app, so don’t charge them for this drink.", self.deal.itemPrice, self.deal.itemName];
-            }
+            message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@. They are paying through the Hotspot app, so don’t charge them in person.", self.sponsoredEvent.itemPrice];
             UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
             [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
-                [self redeemDeal];
+                [self redeemEvent];
             }];
             [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
             [alertView show];
             return;
         }
     } else {
-        [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
-            if ([rewardItemsString intValue] > 0 && self.beacon.deal.rewardEligibility) {
-                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-                [self promptToUseRewardItems];
+        if (self.dealStatus.paymentAuthorization) {
+            if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed]) {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                return;
             } else {
-                [self initPaymentsViewControllerAndSetDeal];
+                NSString *message;
+                if (self.dealStatus.isRewardAuthorization) {
+                    message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and Hotspot will be charged $%@ for a %@. Don’t charge the customer for this drink.", self.deal.itemPrice, self.deal.itemName];
+                } else {
+                    message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@ for a %@. They are paying through the Hotspot app, so don’t charge them for this drink.", self.deal.itemPrice, self.deal.itemName];
+                }
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
+                [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
+                    [self redeemDeal];
+                }];
+                [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+                [alertView show];
+                return;
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-        }];
+        } else {
+            [[APIClient sharedClient] getRewardsItems:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSString *rewardItemsString = responseObject[@"number_of_reward_items"];
+                if ([rewardItemsString intValue] > 0 && self.beacon.deal.rewardEligibility) {
+                    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+                    [self promptToUseRewardItems];
+                } else {
+                    [self initPaymentsViewControllerAndSetDeal];
+                }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+            }];
+        }
     }
+}
+
+- (void)redeemEvent
+{
+    //    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowLoadingInRedemptionView" object:self userInfo:nil];
+    [[APIClient sharedClient] redeemEvent:self.sponsoredEvent.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject objectForKey:@"sponsored_event"]) {
+            [self refreshSponsoredEventData];
+            [self showVoucherViewForSponsoredEvent];
+        } else {
+            [[[UIAlertView alloc] initWithTitle:@"Voucher Unavailable" message:@"The voucher will be available for staff to tap 30 minutes before the event begins. Only event staff should tap this voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+        //        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+    }];
 }
 
 - (void)redeemDeal
@@ -1074,54 +1145,33 @@
     UIColor *backgroundColor;
     UIColor *color;
     
-    if (![self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
+    if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"U"]) {
         color = activeColor;
         backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
         voucherTitleText = @"VOUCHER FOR:";
-        itemNameText = [NSString stringWithFormat:@"%@", [self.deal.itemName uppercaseString]];
-        venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
+        itemNameText = [NSString stringWithFormat:@"%@", [self.sponsoredEvent.title uppercaseString]];
+        venueNameText = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
         self.headerTitle.text = @"SHOW VOUCHER TO SERVER";
-        if (self.dealStatus.isRewardAuthorization) {
-            self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. Hotspot will cover this round!"];
-        } else {
-            self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.deal.itemPrice];
-        }
-        
+        self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.sponsoredEvent.itemPrice];
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
-    } else if ([self.dealStatus.dealStatus isEqualToString:kDealStatusRedeemed] && self.dealStatus.paymentAuthorization) {
+    } else if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
         voucherTitleText = @"VOUCHER REDEEMED";
-        if (self.dealStatus.isRewardAuthorization) {
-            itemNameText = [NSString stringWithFormat:@"%@ FOR FREE",[self.deal.itemName uppercaseString]];
-        } else {
-            itemNameText = [NSString stringWithFormat:@"PAID $%@ FOR %@", self.deal.itemPrice, [self.deal.itemName uppercaseString]];
-        }
-        venueNameText = [NSString stringWithFormat:@"@ %@", [self.deal.venue.name uppercaseString]];
+        itemNameText = [NSString stringWithFormat:@"PAID $%@", self.sponsoredEvent.itemPrice];
+        venueNameText = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
         serverMessageText = @"REDEEMED";
         accentColor = [[ThemeManager sharedTheme] redColor];
         [self.headerIcon setImage:[UIImage imageNamed:@"newDrinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        if (self.dealStatus.isRewardAuthorization) {
-            self.headerExplanationText.text = [NSString stringWithFormat:@"You just received a %@ for free. Text friends to meet you and don’t forget to tip!", self.deal.itemName];
-        } else {
-            self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@ for %@. Invite friends to earn free drinks. And don’t forget to tip!", self.deal.itemPrice, self.deal.itemName];
-        }
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@. Invite friends to earn free drinks. And don’t forget to tip!", self.sponsoredEvent.itemPrice];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
-        
-    } else if (!self.dealStatus.paymentAuthorization) {
-        [self.headerIcon setImage:[UIImage imageNamed:@"paymentIcon"]];
-        self.headerTitle.text = @"ALMOST THERE!";
-        self.headerExplanationText.text = @"Just add a payment method to pay for your drink. You’re only charged after you receive it.";
-        [self.redeemButton setImage:[UIImage imageNamed:@"inactiveVoucher"] forState:UIControlStateNormal];
-        accentColor = color;
     }
-    
     
     self.voucherTitle.textColor = color;
     self.itemName.textColor = color;
@@ -1132,6 +1182,7 @@
     self.itemName.text = itemNameText;
     self.venueName.text = venueNameText;
     self.serverMessage.text = serverMessageText;
+    
 }
 
 - (void)updateVoucherInfo
