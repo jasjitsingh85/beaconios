@@ -385,7 +385,7 @@
     
     if (self.deal || self.sponsoredEvent) {
         [self.getDealButtonContainer setHidden:NO];
-        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 110.0, 0.0);
+        self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 130.0, 0.0);
     } else {
         [self.getDealButtonContainer setHidden:YES];
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);

@@ -117,7 +117,7 @@
 -(void)showFeeExplanationModal
 {
     self.headerTitle.text = @"HOW DO RESERVATIONS WORK?";
-    self.textLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from to save you time and money. Present this green voucher to your server - they'll tap it as payment for your drink."];
+    self.textLabel.text = [NSString stringWithFormat:@"To manage event demand, we charge a $1 (non-refundable) deposit with reservations. Just tap 'RESERVE' and your ticket will be available when the event starts."];
     
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];
