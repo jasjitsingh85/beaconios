@@ -45,7 +45,7 @@
 -(NSString *)getDateAsString
 {
     NSDateFormatter *day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE - h:mm a"];
+    [day setDateFormat: @"EEEE h:mm a"];
     
     self.startTime = [self dateRoundedDownTo5Minutes:self.startTime];
     

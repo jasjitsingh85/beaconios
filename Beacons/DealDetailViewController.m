@@ -1095,10 +1095,14 @@
         docTextLabel.textAlignment = NSTextAlignmentLeft;
         [self.tutorialCell.contentView addSubview:docTextLabel];
         
-        if (self.venue.deal.isRewardItem) {
-            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
+        if (self.sponsoredEvent) {
+            docTextLabel.text = [NSString stringWithFormat:@"We arrange events with venues to help you save time and money. We limit event capacity to ensure a great experience. When you tap 'RESERVE' you'll be charged a $1 deposit to hold your spot."];
         } else {
-            docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
+            if (self.venue.deal.isRewardItem) {
+                docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
+            } else {
+                docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'CHECK IN AND GET VOUCHER' to get a drink voucher. You'll only be charged once, through the app, when your server taps to redeem.", self.venue.name];
+            }
         }
         
         UIButton *faqButton = [UIButton buttonWithType:UIButtonTypeCustom];

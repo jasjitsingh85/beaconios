@@ -134,7 +134,7 @@
 - (void)showFeaturedEventExplanationModal
 {
     self.headerTitle.text = @"WHAT IS A FEATURED EVENT?";
-    self.textLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from to save you time and money. Present this green voucher to your server - they'll tap it as payment for your drink."];
+    self.textLabel.text = [NSString stringWithFormat:@"These are special events (e.g. $10 Open Bars) that are fun, convenient and affordable. We limit the capacity to ensure a better experience. You must reserve a spot to get in."];
     
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];
