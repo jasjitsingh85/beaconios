@@ -475,6 +475,8 @@
         } else {
             if (self.sponsoredEvent.isReserved) {
                 [[[UIAlertView alloc] initWithTitle:@"Already Reserved" message:@"You've already reserved a spot at this event. Your voucher will become active on the day of the event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            } else if (self.sponsoredEvent.isSoldOut) {
+                [[[UIAlertView alloc] initWithTitle:@"Sold Out" message:@"This event is sold out. Please check back later or reserve a spot for another event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else {
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 deposit to hold your spot."];
                 [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
@@ -513,20 +515,20 @@
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
-        [self completePayment:sponsoredEvent.eventStatus];
+        [self completePayment:sponsoredEvent];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
 
 }
 
--(void)completePayment:(EventStatus *)eventStatus
+-(void)completePayment:(SponsoredEvent *)event
 {
-    [[APIClient sharedClient] checkIfPaymentOnFileForEvent:eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] checkIfPaymentOnFileForEvent:event.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (!dismiss_payment_modal) {
-            [self.paymentsViewController openPaymentModalWithEvent:eventStatus];
+            [self.paymentsViewController openPaymentModalWithEvent:event];
         }
         [self showReservationConfirmation];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];

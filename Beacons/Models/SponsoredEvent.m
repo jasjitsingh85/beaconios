@@ -28,6 +28,9 @@
     
     self.eventDescription = dictionary[@"description"];
     
+    NSString *isSoldOut = dictionary[@"is_sold_out"];
+    self.isSoldOut = [isSoldOut boolValue];
+    
     NSDictionary *event_status = dictionary[@"event_status"];
     if (event_status == (id)[NSNull null]) {
         self.isReserved = NO;
@@ -63,6 +66,7 @@
         self.socialMessage = @"";
     }
 
+    NSLog(@"STATUS: %@", dictionary[@"status_message"]);
     if (dictionary[@"status_message"] != nil || dictionary[@"status_message"] != (id)[NSNull null]) {
         self.statusMessage = dictionary[@"status_message"];
     } else {

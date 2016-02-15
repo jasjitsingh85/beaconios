@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSDate *endTime;
 @property (assign, nonatomic) BOOL isReserved;
+@property (assign, nonatomic) BOOL isSoldOut;
 @property (strong, nonatomic) Venue *venue;
 @property (strong, nonatomic) NSString *socialMessage;
 @property (strong, nonatomic) NSString *statusMessage;
