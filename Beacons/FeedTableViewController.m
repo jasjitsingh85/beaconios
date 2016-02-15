@@ -610,7 +610,7 @@
     {
         if (self.events.count > 0)
         {
-            cellHeight = 200;
+            cellHeight = 151;
         } else {
             cellHeight = 0;
         }

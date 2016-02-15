@@ -77,21 +77,6 @@
         colorBackgroundGradient.alpha = .4;
         [eventView addSubview:colorBackgroundGradient];
         
-//        UIImageView *backgroundGradient = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.width, 151)];
-//        UIImage *gradientImage = [UIImage imageNamed:@"updatedBackgroundGradient@2x.png"];
-//        backgroundGradient.alpha = .8;
-//        [backgroundGradient setImage:gradientImage];
-//        [eventView addSubview:backgroundGradient];
-        
-//        UIView *backgroundViewBlack = [[UIView alloc] initWithFrame:eventImageView.bounds];
-//        backgroundViewBlack.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-//        //UIView *backgroundViewOrange = [[UIView alloc] initWithFrame:eventImageView.bounds];
-//        //backgroundViewOrange.backgroundColor = [UIColor colorWithRed:(199/255.) green:(88/255.) blue:(13/255.) alpha:.2 ];
-//        //backgroundViewBlack.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//        //backgroundViewOrange.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//        [eventView addSubview:backgroundViewBlack];
-        //[eventView addSubview:backgroundViewOrange];
-        
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
         eventTitleLineOne.x = 15;
         eventTitleLineOne.height = 26;
