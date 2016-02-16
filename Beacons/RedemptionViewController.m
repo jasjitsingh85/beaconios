@@ -53,6 +53,7 @@
 #import "TabItem.h"
 #import "Tab.h"
 #import "SponsoredEvent.h"
+#import "WebViewController.h"
 #import "TabViewController.h"
 
 @interface RedemptionViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
@@ -98,6 +99,7 @@
 
 @property (strong, nonatomic) UIView *claimedTabView;
 @property (strong, nonatomic) UIView *unclaimedTabView;
+@property (strong, nonatomic) WebViewController *webView;
 
 @end
 
@@ -207,6 +209,8 @@
     [textFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
+    
+    self.webView = [[WebViewController alloc] init];
     
     self.faqViewController = [[FaqViewController alloc] initForModal];
     self.hasCheckedPayment = NO;
@@ -476,6 +480,20 @@
     }
     
     return firstAndSecondLine;
+}
+
+- (void) seeFacebookButtonTouched:(id)sender
+{
+    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
+    if (isInstalled) {;
+        [[UIApplication sharedApplication] openURL:self.sponsoredEvent.deepLinkURL];
+    } else {
+        self.webView.websiteUrl = self.sponsoredEvent.websiteURL;
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+        [self presentViewController:navigationController
+                           animated:YES
+                         completion:nil];
+    }
 }
 
 - (void) feedbackButtonTouched:(id)sender
@@ -803,11 +821,10 @@
         [self.inviteFriendsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
         [self.inviteFriendsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
         self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [self.inviteFriendsButton setTitle:@"NEED HELP?" forState:UIControlStateNormal];
+        [self.inviteFriendsButton setTitle:@"SEE IN FACEBOOK" forState:UIControlStateNormal];
         self.inviteFriendsButton.y = 72;
-        
         [redemptionCellForEvent addSubview:self.inviteFriendsButton];
-        [self.inviteFriendsButton addTarget:self action:@selector(feedbackButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [self.inviteFriendsButton addTarget:self action:@selector(seeFacebookButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
         
         [redemptionCellForEvent addSubview:self.redeemButton];
         [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
