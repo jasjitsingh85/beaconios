@@ -690,6 +690,7 @@
     self.photoView.height = updatedImage.size.height;
     self.imageHeight = updatedImage.size.height;
     self.photoView.image = updatedImage;
+    [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     [self.tableView reloadData];
 }
 
