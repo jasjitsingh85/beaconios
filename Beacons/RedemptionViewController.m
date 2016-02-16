@@ -252,8 +252,9 @@
     if (!self.beacon) {
         return;
     }
+    
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
-        self.beacon = beacon;
+//        self.beacon = beacon;
         if (self.beacon.deal) {
             [self setBeacon:self.beacon];
         }
