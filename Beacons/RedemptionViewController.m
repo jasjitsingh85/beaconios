@@ -254,10 +254,10 @@
     }
     
     [[BeaconManager sharedManager] getBeaconWithID:self.beacon.beaconID success:^(Beacon *beacon) {
-//        self.beacon = beacon;
-        if (self.beacon.deal) {
-            [self setBeacon:self.beacon];
-        }
+        self.beacon = beacon;
+//        if (self.beacon.deal) {
+//            [self setBeacon:self.beacon];
+//        }
     } failure:nil];
 }
 
@@ -271,6 +271,7 @@
     
     if (beacon.deal.venue.hasPosIntegration) {
         [self showPosIntegrationView];
+           [self refreshTab];
     } else {
         [self showVoucherView];
     }
@@ -286,8 +287,6 @@
         [self initPaymentsViewControllerAndSetDeal];
         self.hasCheckedPayment = YES;
     }
-    
-    [self refreshTab];
     
     [self.tableView reloadData];
 }
