@@ -476,11 +476,21 @@
             if (self.sponsoredEvent.isReserved) {
                 [[[UIAlertView alloc] initWithTitle:@"Already Reserved" message:@"You've already reserved a spot at this event. Your voucher will become active on the day of the event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (self.sponsoredEvent.isSoldOut) {
-                [[[UIAlertView alloc] initWithTitle:@"Sold Out" message:@"This event is sold out. Please check back later or reserve a spot for another event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [self showSoldOutAlert];
             } else {
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 non-refundable deposit to hold your spot."];
                 [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
-                    [self checkPaymentForEvent];
+                    [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+                        self.sponsoredEvent = sponsoredEvent;
+                        if (!self.sponsoredEvent.isSoldOut) {
+                            [self checkPaymentForEvent];
+                        } else {
+                            [self showSoldOutAlert];
+                        }
+                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }];
                 }];
                 [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
                     
@@ -489,6 +499,11 @@
             }
         }
     }
+}
+
+-(void)showSoldOutAlert
+{
+    [[[UIAlertView alloc] initWithTitle:@"Sold Out" message:@"This event is sold out. Please check back later or reserve a spot for another event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 -(void)showReservationConfirmation
@@ -520,9 +535,9 @@
 -(void)completeReservation
 {
     [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
-        self.sponsoredEvent = sponsoredEvent;
-        [self showReservationConfirmation];
+            SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+            self.sponsoredEvent = sponsoredEvent;
+            [self showReservationConfirmation];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
