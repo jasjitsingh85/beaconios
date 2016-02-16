@@ -510,7 +510,7 @@
 {
 //    [[[UIAlertView alloc] initWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher."];
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
     [alertView bk_addButtonWithTitle:@"OK" handler:^{
         self.sponsoredEvent.isReserved = YES;
         [self updateReservationButtonStyle];
@@ -1132,7 +1132,7 @@
         [self.tutorialCell.contentView addSubview:docTextLabel];
         
         if (self.sponsoredEvent) {
-            docTextLabel.text = [NSString stringWithFormat:@"We arrange events with venues to help you save time and money. We limit event capacity to ensure a great experience. When you tap 'RESERVE' you'll be charged a $1 deposit to hold your spot."];
+            docTextLabel.text = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged a $1 deposit."];
         } else {
             if (self.venue.deal.isRewardItem) {
                 docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];

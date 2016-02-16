@@ -116,8 +116,8 @@
 
 -(void)showFeeExplanationModal
 {
-    self.headerTitle.text = @"HOW DO RESERVATIONS WORK?";
-    self.textLabel.text = [NSString stringWithFormat:@"To manage event demand, we charge a $1 (non-refundable) deposit with reservations. Just tap 'RESERVE' and your ticket will be available when the event starts."];
+    self.headerTitle.text = @"RESERVE YOUR TICKET";
+    self.textLabel.text = [NSString stringWithFormat:@"To manage demand, we charge a non-refundable $1 deposit for reservations. Tap 'RESERVE' to get your ticket and reserve your spot. You won't be charged until you use it at the door."];
     
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];
@@ -134,7 +134,7 @@
 - (void)showFeaturedEventExplanationModal
 {
     self.headerTitle.text = @"WHAT IS A FEATURED EVENT?";
-    self.textLabel.text = [NSString stringWithFormat:@"These are special events (e.g. $10 Open Bars) that are fun, convenient and affordable. We limit the capacity to ensure a better experience. You must reserve a spot to get in."];
+    self.textLabel.text = [NSString stringWithFormat:@"We partner with venues to host events, such as Open Bars and beer tastings. We limit attendance to ensure a great experience, so you must reserve a spot through the Hotspot to get in."];
     
     UIWindow *frontWindow = [[UIApplication sharedApplication] keyWindow];
     [frontWindow.rootViewController.view addSubview:self];

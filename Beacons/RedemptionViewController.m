@@ -1175,8 +1175,8 @@
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
-        self.headerTitle.text = @"SHOW VOUCHER TO SERVER";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"When you order, have your server tap below to redeem. You'll pay $%@ for your drink through the app.", self.sponsoredEvent.itemPrice];
+        self.headerTitle.text = @"SHOW TICKET AT DOOR";
+        self.headerExplanationText.text = [NSString stringWithFormat:@"We’ll tap your ticket at the door. You aren’t charged until the ticket is redeemed."];
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
     } else if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
@@ -1189,7 +1189,7 @@
         accentColor = [[ThemeManager sharedTheme] redColor];
         [self.headerIcon setImage:[UIImage imageNamed:@"newDrinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You just paid $%@. Invite friends to earn free drinks. And don’t forget to tip!", self.sponsoredEvent.itemPrice];
+        self.headerExplanationText.text = [NSString stringWithFormat:@"You're all set. You've been charged $%@. Enjoy your night and don't forget to tip.", self.sponsoredEvent.itemPrice];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
     }
