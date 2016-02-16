@@ -478,7 +478,7 @@
             } else if (self.sponsoredEvent.isSoldOut) {
                 [[[UIAlertView alloc] initWithTitle:@"Sold Out" message:@"This event is sold out. Please check back later or reserve a spot for another event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else {
-                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 deposit to hold your spot."];
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 non-refundable deposit to hold your spot."];
                 [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
                     [self checkPaymentForEvent];
                 }];
