@@ -493,10 +493,17 @@
 
 -(void)showReservationConfirmation
 {
-    [[[UIAlertView alloc] initWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    self.sponsoredEvent.isReserved = YES;
-    [self updateReservationButtonStyle];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+//    [[[UIAlertView alloc] initWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
+    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher."];
+    [alertView bk_addButtonWithTitle:@"OK" handler:^{
+        self.sponsoredEvent.isReserved = YES;
+        [self updateReservationButtonStyle];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    [alertView show];
 }
 
 -(void)updateReservationButtonStyle
