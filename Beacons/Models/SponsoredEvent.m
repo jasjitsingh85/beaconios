@@ -87,21 +87,32 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *nextWeek = [calendar dateByAddingComponents:comps toDate:now options:nil];
     
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *compToCheckMinutes = [gregorian components:NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:self.startTime];
+    
+    NSDateFormatter *day = [[NSDateFormatter alloc] init];
+    NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
     if ([self date:self.startTime isBetweenDate:now andDate:nextWeek]) {
-        NSDateFormatter *day = [[NSDateFormatter alloc] init];
-        [day setDateFormat: @"EEEE h:mma"];
         
-        NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
-        [endTimeFormat setDateFormat: @"h:mma"];
+        if (compToCheckMinutes.minute == 0) {
+            [day setDateFormat: @"EEEE ha"];
+            [endTimeFormat setDateFormat: @"ha"];
+        } else {
+            [day setDateFormat: @"EEEE h:mma"];
+            [endTimeFormat setDateFormat: @"h:mma"];
+        }
         
         NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
         return dateString;
     } else {
-        NSDateFormatter *day = [[NSDateFormatter alloc] init];
-        [day setDateFormat: @"MMM d, h:mma"];
         
-        NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
-        [endTimeFormat setDateFormat: @"h:mma"];
+        if (compToCheckMinutes.minute == 0) {
+            [day setDateFormat: @"MMM d, ha"];
+            [endTimeFormat setDateFormat: @"ha"];
+        } else {
+            [day setDateFormat: @"MMM d, h:mma"];
+            [endTimeFormat setDateFormat: @"h:mma"];
+        }
         
         NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
         return dateString;
