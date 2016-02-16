@@ -327,9 +327,15 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 
-- (void)postPurchase: (NSString *)paymentNonce forEventWithID:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+- (void)postPurchaseForEventWithPaymentNonce: (NSString *)paymentNonce success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
 {
-    NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce , @"event_status_id" : eventID };
+    NSDictionary *parameters = @{ @"payment_nonce" : paymentNonce , @"is_event" : [NSNumber numberWithBool:YES]};
+    [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
+}
+
+- (void)postPurchaseForEvent:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    NSDictionary *parameters = @{ @"is_event" : [NSNumber numberWithBool:YES]};
     [[APIClient sharedClient] postPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 
@@ -345,9 +351,9 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 
-- (void)checkIfPaymentOnFileForEvent:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)checkIfPaymentOnFileForEvent:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSDictionary *parameters = @{ @"event_status_id" : eventID };
+    NSDictionary *parameters = @{};
     [[APIClient sharedClient] putPath:@"purchases/" parameters:parameters success:success failure:failure];
 }
 

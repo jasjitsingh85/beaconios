@@ -199,7 +199,7 @@
     [self.helpButton addTarget:self action:@selector(showFeeExplanationModal:) forControlEvents:UIControlEventTouchUpInside];
     [self.checkInLabelContainer addSubview:self.helpButton];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showReservationConfirmation) name:kConfirmEventReservation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeReservation) name:kConfirmEventReservation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(faqButtonTouched:) name:@"ShowFaq" object:nil];
 }
@@ -480,7 +480,7 @@
             } else {
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 deposit to hold your spot."];
                 [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
-                    [self processPayment];
+                    [self checkPaymentForEvent];
                 }];
                 [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
                     
@@ -510,30 +510,45 @@
     }
 }
 
--(void)processPayment
+-(void)completeReservation
 {
     [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
-        [self completePayment:sponsoredEvent];
+        self.sponsoredEvent = sponsoredEvent;
+        [self showReservationConfirmation];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
 
 }
 
--(void)completePayment:(SponsoredEvent *)event
+-(void)checkPaymentForEvent
 {
-    [[APIClient sharedClient] checkIfPaymentOnFileForEvent:event.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    [[APIClient sharedClient] checkIfPaymentOnFileForEvent:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (!dismiss_payment_modal) {
-            [self.paymentsViewController openPaymentModalWithEvent:event];
+            [self.paymentsViewController openPaymentModalWithEvent:self.sponsoredEvent];
+            [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        } else {
+            [self payWithCardOnFile];
         }
-        [self showReservationConfirmation];
-        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+    }];
+}
+
+-(void)payWithCardOnFile
+{
+    [[APIClient sharedClient] postPurchaseForEvent:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self completeReservation];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
 }
 

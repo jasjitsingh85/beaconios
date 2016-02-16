@@ -84,7 +84,7 @@
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
     //
-    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$1 deposit for event: %@", self.sponsoredEvent.title];
+    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$1 Reservation Deposit"];
     dropInViewController.summaryDescription = [NSString stringWithFormat:@"You won't be charged the full price until your ticket is redeemed at the door."];
     //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
@@ -221,12 +221,13 @@
 
 -(void)postPurchaseForEvent:(NSString *)paymentMethodNonce
 {
-    [[APIClient sharedClient] postPurchase:paymentMethodNonce forEventWithID:self.sponsoredEvent.eventStatus.eventStatusID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] postPurchaseForEventWithPaymentNonce:paymentMethodNonce success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
         BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
         if (dismiss_payment_modal) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshCustomerPaymentInfo object:self];
+            [self dismissViewControllerAnimated:YES completion:^ {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kConfirmEventReservation object:self];
+            }];
         } else {
             [self showCardDeclined];
         }

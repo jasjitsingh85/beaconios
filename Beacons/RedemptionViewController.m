@@ -1109,7 +1109,7 @@
             [self refreshSponsoredEventData];
             [self showVoucherViewForSponsoredEvent];
         } else {
-            [[[UIAlertView alloc] initWithTitle:@"Voucher Unavailable" message:@"The voucher will be available for staff to tap 30 minutes before the event begins. Only event staff should tap this voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Ticket Unavailable" message:@"The ticket will be available for staff to tap 30 minutes before the event begins. Only event staff should tap this ticket." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
         //        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];

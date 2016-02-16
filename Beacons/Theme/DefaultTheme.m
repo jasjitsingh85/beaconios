@@ -82,7 +82,7 @@
 
 - (UIColor *)greenColor
 {
-    return [UIColor unnormalizedColorWithRed:0 green:200 blue:157 alpha:255];
+    return [UIColor unnormalizedColorWithRed:0 green:110 blue:74 alpha:255];
 }
 
 - (UIColor *)darkGreenColor
