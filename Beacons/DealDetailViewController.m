@@ -512,7 +512,6 @@
 
 -(void)completeReservation
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
     [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
         self.sponsoredEvent = sponsoredEvent;

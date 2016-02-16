@@ -705,12 +705,26 @@ typedef enum dealTypeStates
 {
     
     [self getFavoriteFeed];
-    [self reloadDealsInSameLocation];
+    [self reloadDealsInBackground];
 }
 
 -(void)refreshAfterToggleFavorite:(NSNotification *)notification
 {
     [self getFavoriteFeed];
+}
+
+-(void)reloadDealsInBackground
+{
+    self.mapCenter = [self.mapView centerCoordinate];
+    NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
+    [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
+        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+        self.loadingDeals = NO;
+        [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [self hideRedoSearchContainer:YES];
+        [[AnalyticsManager sharedManager] viewedDeals:self.selectedVenues.count];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDealsUpdatedNotification object:nil];
+    }];
 }
 
 -(void)reloadDealsInSameLocation

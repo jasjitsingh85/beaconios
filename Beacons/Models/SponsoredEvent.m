@@ -66,7 +66,6 @@
         self.socialMessage = @"";
     }
 
-    NSLog(@"STATUS: %@", dictionary[@"status_message"]);
     if (dictionary[@"status_message"] != nil || dictionary[@"status_message"] != (id)[NSNull null]) {
         self.statusMessage = dictionary[@"status_message"];
     } else {
@@ -78,17 +77,46 @@
 
 -(NSString *)getDateAsString
 {
-    NSDateFormatter *day = [[NSDateFormatter alloc] init];
-    [day setDateFormat: @"EEEE h:mma"];
-    
-    NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
-    [endTimeFormat setDateFormat: @"h:mma"];
-    
     self.startTime = [self dateRoundedDownTo5Minutes:self.startTime];
     self.endTime = [self dateRoundedDownTo5Minutes:self.endTime];
     
-    NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
-    return dateString;
+    NSDate *now = [NSDate date];
+    
+    NSDateComponents *comps = [[NSDateComponents alloc]init];
+    comps.day = 7;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *nextWeek = [calendar dateByAddingComponents:comps toDate:now options:nil];
+    
+    if ([self date:self.startTime isBetweenDate:now andDate:nextWeek]) {
+        NSDateFormatter *day = [[NSDateFormatter alloc] init];
+        [day setDateFormat: @"EEEE h:mma"];
+        
+        NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
+        [endTimeFormat setDateFormat: @"h:mma"];
+        
+        NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
+        return dateString;
+    } else {
+        NSDateFormatter *day = [[NSDateFormatter alloc] init];
+        [day setDateFormat: @"MMM d, h:mma"];
+        
+        NSDateFormatter *endTimeFormat = [[NSDateFormatter alloc] init];
+        [endTimeFormat setDateFormat: @"h:mma"];
+        
+        NSString *dateString = [NSString stringWithFormat:@"%@ - %@", [day stringFromDate:self.startTime], [endTimeFormat stringFromDate:self.endTime]];
+        return dateString;
+    }
+}
+
+- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending)
+        return NO;
+    
+    return YES;
 }
 
 - (NSDate *) dateRoundedDownTo5Minutes:(NSDate *)dt{
