@@ -37,6 +37,8 @@
 #import "RandomObjectManager.h"
 #import "Deal.h"
 #import <Braintree/Braintree.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate()
 
@@ -123,6 +125,7 @@
             [[ContactManager sharedManager] syncContacts];
         }
         [CrashManager setupForUser];
+        [self logUser];
     }
     //see if launched from local notification
 //    if (launchOptions) {
@@ -156,6 +159,8 @@
     
     [self incrementAndSaveLaunchCount];
     
+    [Fabric with:@[[Crashlytics class]]];
+    
     return YES;
 }
 
@@ -166,6 +171,14 @@
     [[NSUserDefaults standardUserDefaults] setInteger:launchCount  forKey:@"launchCount"];
 }
 
+- (void) logUser {
+    // TODO: Use the current user's information
+    // You can call any combination of these three methods
+    User *loggedInUser = [User loggedInUser];
+    [CrashlyticsKit setUserIdentifier:[NSString stringWithFormat:@"%@", loggedInUser.userID]];
+    [CrashlyticsKit setUserEmail:loggedInUser.email];
+    [CrashlyticsKit setUserName:loggedInUser.fullName];
+}
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -264,6 +277,7 @@
     self.window.rootViewController = [[PermissionsViewController alloc] init];
     [[AnalyticsManager sharedManager] setupForUser];
     [CrashManager setupForUser];
+    [self logUser];
     [[BeaconManager sharedManager] updateBeacons:nil failure:nil];
 
 }

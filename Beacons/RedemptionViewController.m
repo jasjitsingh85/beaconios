@@ -156,7 +156,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if (!self.sponsoredEvent) {
+    if (self.beacon.deal.venue.hasPosIntegration) {
         [self refreshTab];
     }
 }

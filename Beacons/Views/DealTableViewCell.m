@@ -360,10 +360,11 @@
     self.followButton.x = self.contentView.width - 90;
     //[self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
     //[self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
-    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+    [self.followButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.followButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
     self.followButton.layer.borderColor = [UIColor clearColor].CGColor;
-    self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+//    self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+    self.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
 }
 
 - (void) makeFollowButtonInactive
