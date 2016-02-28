@@ -571,4 +571,13 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] putPath:@"reserve/" parameters:parameters success:success failure:failure];
 }
 
+- (void)toggleInterested:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    parameters[@"event_id"] = eventID;
+    parameters[@"is_interested"] = [NSNumber numberWithBool:0];
+    
+    [[APIClient sharedClient] postPath:@"reserve/" parameters:parameters success:success failure:failure];
+}
+
 @end

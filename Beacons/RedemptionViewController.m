@@ -1166,7 +1166,7 @@
     UIColor *backgroundColor;
     UIColor *color;
     
-    if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"U"]) {
+    if (self.sponsoredEvent.eventStatusOption == EventStatusGoing) {
         color = activeColor;
         backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
         voucherTitleText = @"VOUCHER FOR:";
@@ -1179,7 +1179,7 @@
         self.headerExplanationText.text = [NSString stringWithFormat:@"We’ll tap your ticket at the door. You aren’t charged until the ticket is redeemed."];
         [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
-    } else if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
+    } else if (self.sponsoredEvent.eventStatusOption == EventStatusRedeemed) {
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
         voucherTitleText = @"VOUCHER REDEEMED";

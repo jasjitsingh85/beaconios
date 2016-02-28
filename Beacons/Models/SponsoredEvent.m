@@ -39,10 +39,12 @@
         self.eventStatus = [[EventStatus alloc] initWithDictionary:dictionary[@"event_status"]];
         if ([self.eventStatus.status isEqualToString:@"I"]) {
             self.eventStatusOption = EventStatusInterested;
-        } else if ([self.eventStatus.status isEqualToString:@"G"]) {
+        } else if ([self.eventStatus.status isEqualToString:@"U"]) {
             self.eventStatusOption = EventStatusGoing;
         } else if ([self.eventStatus.status isEqualToString:@"R"]) {
             self.eventStatusOption = EventStatusRedeemed;
+        } else if ([self.eventStatus.status isEqualToString:@"N"]) {
+            self.eventStatusOption = EventStatusNoSelection;
         }
     }
     

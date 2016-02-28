@@ -18,6 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 //#import "SetDealViewController.h"
 #import "CenterNavigationController.h"
+#import "APIClient.h"
 
 @interface SponsoredEventTableViewCell()
 
@@ -44,7 +45,7 @@
 {
     _events = events;
     
-    SponsoredEvent *event = self.events[0];
+//    SponsoredEvent *event = self.events[0];
     
     self.eventScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 151)];
     self.eventScroll.pagingEnabled = YES;
@@ -53,13 +54,14 @@
     self.eventScroll.delegate = self;
     [self.contentView addSubview:self.eventScroll];
     
-    [self.eventScroll setUserInteractionEnabled:NO];
+    [self.eventScroll setUserInteractionEnabled:YES];
     [self.contentView addGestureRecognizer:self.eventScroll.panGestureRecognizer];
     
 //    [self updateDate];
     
     for (int i = 0; i < events.count; i++) {
         SponsoredEvent *event = events[i];
+        NSLog(@"EVENT: %@", event);
         UIView *eventView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 151)];
         [self.eventScroll addSubview:eventView];
         
@@ -138,7 +140,6 @@
         followButton.size = CGSizeMake(85, 25);
         followButton.x = self.contentView.width - 95;
         followButton.y = 10;
-        followButton.tag = i;
         [followButton setTitle:@"INTERESTED" forState:UIControlStateNormal];
         [followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
@@ -146,10 +147,13 @@
         followButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
         followButton.titleLabel.textColor = [UIColor whiteColor];
         followButton.layer.cornerRadius = 4;
+        followButton.tag = [event.eventID integerValue];
         followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
         followButton.layer.borderWidth = 1.0;
-        [followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [followButton addTarget:self action:@selector(buttonTouched:) forControlEvents:UIControlEventTouchUpInside];
         [eventView addSubview:followButton];
+        
+        [self setButtonState:followButton forEvent:event];
     }
     
     self.pageControl = [[UIPageControl alloc] init];
@@ -163,6 +167,44 @@
     //[self.pageControl sizeToFit];
     [self.contentView addSubview:self.pageControl];
     
+}
+
+-(void)setButtonState:(UIButton *)button forEvent:(SponsoredEvent *)event
+{
+    NSLog(@"status option: %u",event.eventStatusOption);
+    if (event.eventStatusOption == EventStatusNoSelection) {
+        [button setTitle:@"INTERESTED" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        button.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        button.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+        button.layer.borderColor = [[UIColor whiteColor] CGColor];
+        button.titleLabel.textColor = [UIColor whiteColor];
+    } else if (event.eventStatusOption == EventStatusInterested) {
+        [button setTitle:@"INTERESTED" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        button.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        button.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
+        button.layer.borderColor = [[UIColor clearColor] CGColor];
+        button.titleLabel.textColor = [UIColor blackColor];
+    } else if (event.eventStatusOption == EventStatusGoing) {
+        [button setTitle:@"GOING" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        button.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        button.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
+        button.titleLabel.textColor = [UIColor blackColor];
+        button.layer.borderColor = [[UIColor clearColor] CGColor];
+    } else if (event.eventStatusOption == EventStatusRedeemed) {
+        [button setTitle:@"GOING" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        button.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        button.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
+        button.titleLabel.textColor = [UIColor blackColor];
+        button.layer.borderColor = [[UIColor clearColor] CGColor];
+    }
 }
 
 -(NSString *)getExtraEventString:(SponsoredEvent *)sponsoredEvent
@@ -182,12 +224,22 @@
     }
 }
 
-//- (void)followButtonTouched:(id)sender
-//{
-//    
-//    //    self.isFollowed = !self.isFollowed;
-//    //    [self updateFavoriteButton];
-//    
+- (void)buttonTouched:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    
+//    if ([button.titleLabel.text isEqualToString:@"GOING"]) {
+//        [[[UIAlertView alloc] initWithTitle:@"Already Going" message:@"You've already reserved a spot at this event" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }
+
+    if ([button.titleLabel.text isEqualToString:@"INTERESTED"]) {
+        [[APIClient sharedClient] toggleInterested:[NSNumber numberWithInteger:button.tag] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            SponsoredEvent *event = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+            [self setButtonState:button forEvent:event];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"FAILURE");
+        }];
+    }
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshAfterToggleFavoriteNotification object:self];
 //    self.isFollowed = !self.isFollowed;
 //    [self updateFavoriteButton];
@@ -196,9 +248,9 @@
 //        self.isFollowed = [responseObject[@"is_favorited"] boolValue];
 //        [self updateFavoriteButton];
 //    } failure:nil];
-//}
+}
 
-//- (void) makeFollowButtonActive
+//- (void)makeButtonActive:(UIButton *)button
 //{
 //    [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
 //    self.followButton.size = CGSizeMake(80, 25);
@@ -211,8 +263,8 @@
 //    //    self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
 //    self.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
 //}
-//
-//- (void) makeFollowButtonInactive
+
+//- (void)makeButtonInactive:(UIButton *)button
 //{
 //    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
 //    self.followButton.size = CGSizeMake(60, 25);
@@ -223,6 +275,14 @@
 //    self.followButton.layer.borderColor = [UIColor whiteColor].CGColor;
 //}
 
+//- (void) updateFavoriteButton
+//{
+//    if (self.isFollowed) {
+//        [self makeFollowButtonActive];
+//    } else {
+//        [self makeFollowButtonInactive];
+//    }
+//}
 
 - (CGFloat)widthOfString:(NSString *)string withFont:(NSFont *)font {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
