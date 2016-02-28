@@ -133,6 +133,23 @@
         extraString.text = [self getExtraEventString:event];
         extraString.textAlignment = NSTextAlignmentLeft;
         [eventView addSubview:extraString];
+        
+        UIButton *followButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        followButton.size = CGSizeMake(85, 25);
+        followButton.x = self.contentView.width - 95;
+        followButton.y = 10;
+        followButton.tag = i;
+        [followButton setTitle:@"INTERESTED" forState:UIControlStateNormal];
+        [followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+        followButton.titleLabel.font = [ThemeManager mediumFontOfSize:10];
+        followButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+        followButton.titleLabel.textColor = [UIColor whiteColor];
+        followButton.layer.cornerRadius = 4;
+        followButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+        followButton.layer.borderWidth = 1.0;
+        [followButton addTarget:self action:@selector(followButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+        [eventView addSubview:followButton];
     }
     
     self.pageControl = [[UIPageControl alloc] init];
@@ -164,6 +181,48 @@
         }
     }
 }
+
+//- (void)followButtonTouched:(id)sender
+//{
+//    
+//    //    self.isFollowed = !self.isFollowed;
+//    //    [self updateFavoriteButton];
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshAfterToggleFavoriteNotification object:self];
+//    self.isFollowed = !self.isFollowed;
+//    [self updateFavoriteButton];
+//    
+//    [[APIClient sharedClient] toggleFavorite:self.venue.venueID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        self.isFollowed = [responseObject[@"is_favorited"] boolValue];
+//        [self updateFavoriteButton];
+//    } failure:nil];
+//}
+
+//- (void) makeFollowButtonActive
+//{
+//    [self.followButton setTitle:@"FOLLOWING" forState:UIControlStateNormal];
+//    self.followButton.size = CGSizeMake(80, 25);
+//    self.followButton.x = self.contentView.width - 90;
+//    //[self.followButton setTitleColor:[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] forState:UIControlStateNormal];
+//    //[self.followButton setTitleColor:[[UIColor unnormalizedColorWithRed:31 green:186 blue:98 alpha:255] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    [self.followButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.followButton setTitleColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    self.followButton.layer.borderColor = [UIColor clearColor].CGColor;
+//    //    self.followButton.backgroundColor = [[ThemeManager sharedTheme] greenColor];
+//    self.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:.75];
+//}
+//
+//- (void) makeFollowButtonInactive
+//{
+//    [self.followButton setTitle:@"FOLLOW" forState:UIControlStateNormal];
+//    self.followButton.size = CGSizeMake(60, 25);
+//    self.followButton.x = self.contentView.width - 70;
+//    [self.followButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.followButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateSelected];
+//    self.followButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+//    self.followButton.layer.borderColor = [UIColor whiteColor].CGColor;
+//}
+
 
 - (CGFloat)widthOfString:(NSString *)string withFont:(NSFont *)font {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];

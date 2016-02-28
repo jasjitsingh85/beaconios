@@ -33,11 +33,17 @@
     
     NSDictionary *event_status = dictionary[@"event_status"];
     if (event_status == (id)[NSNull null]) {
-        self.isReserved = NO;
+        self.eventStatusOption = EventStatusNoSelection;
         self.eventStatus = nil;
     } else {
-        self.isReserved = YES;
         self.eventStatus = [[EventStatus alloc] initWithDictionary:dictionary[@"event_status"]];
+        if ([self.eventStatus.status isEqualToString:@"I"]) {
+            self.eventStatusOption = EventStatusInterested;
+        } else if ([self.eventStatus.status isEqualToString:@"G"]) {
+            self.eventStatusOption = EventStatusGoing;
+        } else if ([self.eventStatus.status isEqualToString:@"R"]) {
+            self.eventStatusOption = EventStatusRedeemed;
+        }
     }
     
     NSNumber *startTimestamp = dictionary[@"start_time"];

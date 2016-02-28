@@ -1063,7 +1063,7 @@ typedef enum dealTypeStates
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
-        if (event.isReserved) {
+        if (event.eventStatusOption == EventStatusGoing) {
             RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
             redemptionViewController.sponsoredEvent = event;
             [redemptionViewController refreshSponsoredEventData];

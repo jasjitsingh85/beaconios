@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+typedef enum {
+    EventStatusNoSelection=0,
+    EventStatusGoing,
+    EventStatusInterested,
+    EventStatusRedeemed,
+} EventStatusOption;
+
 @class Venue, EventStatus;
 
 @interface SponsoredEvent : NSObject
@@ -19,7 +26,7 @@
 @property (strong, nonatomic) NSString *eventDescription;
 @property (strong, nonatomic) NSDate *startTime;
 @property (strong, nonatomic) NSDate *endTime;
-@property (assign, nonatomic) BOOL isReserved;
+//@property (assign, nonatomic) BOOL isReserved;
 @property (assign, nonatomic) BOOL isSoldOut;
 @property (strong, nonatomic) Venue *venue;
 @property (strong, nonatomic) NSString *socialMessage;
@@ -27,6 +34,7 @@
 @property (strong, nonatomic) NSURL *websiteURL;
 @property (strong, nonatomic) NSURL *deepLinkURL;
 @property (strong, nonatomic) EventStatus *eventStatus;
+@property (assign, nonatomic) EventStatusOption eventStatusOption;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getDateAsString;

@@ -473,7 +473,7 @@
             [self showHelpModal:nil];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
         } else {
-            if (self.sponsoredEvent.isReserved) {
+            if (self.sponsoredEvent.eventStatusOption == EventStatusGoing) {
                 [[[UIAlertView alloc] initWithTitle:@"Already Reserved" message:@"You've already reserved a spot at this event. Your voucher will become active on the day of the event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (self.sponsoredEvent.isSoldOut) {
                     [self showSoldOutAlert];
@@ -512,7 +512,7 @@
     
     UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
     [alertView bk_addButtonWithTitle:@"OK" handler:^{
-        self.sponsoredEvent.isReserved = YES;
+        self.sponsoredEvent.eventStatusOption = EventStatusGoing;
         [self updateReservationButtonStyle];
         [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
         [self.navigationController popViewControllerAnimated:YES];
@@ -523,7 +523,7 @@
 
 -(void)updateReservationButtonStyle
 {
-    if (self.sponsoredEvent.isReserved){
+    if (self.sponsoredEvent.eventStatusOption == EventStatusGoing){
         self.getDealButton.backgroundColor = [[[ThemeManager sharedTheme] redColor] colorWithAlphaComponent:.5];
         [self.getDealButton setTitle:@"RESERVED" forState:UIControlStateNormal];
     } else {
