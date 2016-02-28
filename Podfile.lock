@@ -102,6 +102,7 @@ PODS:
   - SDWebImage (3.7.1):
     - SDWebImage/Core (= 3.7.1)
   - SDWebImage/Core (3.7.1)
+  - SendBirdSDK (2.0.20)
   - UIView+Positioning (1.0.1)
 
 DEPENDENCIES:
@@ -125,6 +126,7 @@ DEPENDENCIES:
   - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController (~> 1.0.0)
   - SDWebImage (~> 3.7)
+  - SendBirdSDK
   - UIView+Positioning
 
 SPEC CHECKSUMS:
@@ -149,6 +151,7 @@ SPEC CHECKSUMS:
   Mixpanel: dc56111f1b327b38e0ae5a805f33f5d0c9e7f7f2
   MSDynamicsDrawerViewController: 7c95dcc55f5558a778294a3983efbcb85e9a9942
   SDWebImage: ed3095af2ff88b436426037444979b917f6c5575
+  SendBirdSDK: 9cd8115b27562109c9041d505e8f126304a3fa7a
   UIView+Positioning: e3bf0946adc9d174b9bac668d4a39ecd850c813f
 
 COCOAPODS: 0.39.0
