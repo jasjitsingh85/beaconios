@@ -1068,7 +1068,7 @@
 - (void)redeemButtonTouched:(id)sender
 {
     if (self.sponsoredEvent) {
-        if ([self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
+        if (self.sponsoredEvent.eventStatusOption == EventStatusRedeemed) {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This voucher has already been redeemed and can't be reused" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             return;
         } else {
