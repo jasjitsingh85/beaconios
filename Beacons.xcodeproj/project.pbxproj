@@ -91,6 +91,7 @@
 		4122D6EA1C71BCC200A53821 /* newFilterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E91C71BCC200A53821 /* newFilterButton@2x.png */; };
 		4122D6EC1C71BE6900A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */; };
 		4122D6EE1C71BEAA00A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */; };
+		4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -502,6 +503,8 @@
 		4122D6E91C71BCC200A53821 /* newFilterButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newFilterButton@2x.png"; sourceTree = "<group>"; };
 		4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newFilterButtonSelected@2x.png"; sourceTree = "<group>"; };
 		4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newFilterButtonSelected@2x.png"; sourceTree = "<group>"; };
+		4122D6F01C83C90900A53821 /* EventRedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRedemptionViewController.h; sourceTree = "<group>"; };
+		4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventRedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C8D1C3C625100E54486 /* RedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionViewController.h; sourceTree = "<group>"; };
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
@@ -1277,6 +1280,8 @@
 				410165D81BF32B4900F0219C /* FilterViewController.m */,
 				412E8C8D1C3C625100E54486 /* RedemptionViewController.h */,
 				412E8C8E1C3C626600E54486 /* RedemptionViewController.m */,
+				4122D6F01C83C90900A53821 /* EventRedemptionViewController.h */,
+				4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */,
 			);
 			name = Deals;
 			sourceTree = "<group>";
@@ -2069,6 +2074,7 @@
 				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				410165ED1BF47B1200F0219C /* VoucherTableViewCell.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
+				4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */,
 				96A8E03218D61A8800493C65 /* DatePickerModalView.m in Sources */,
 				96E565D618E87CB80007545D /* Group.m in Sources */,
 				414F74001C476FD400CF49C4 /* FindFriendsPopupView.m in Sources */,

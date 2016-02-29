@@ -41,6 +41,7 @@
 #import "Event.h"
 #import "SponsoredEvent.h"
 #import "RedemptionViewController.h"
+#import "EventRedemptionViewController.h"
 #import "HelpPopupView.h"
 
 @interface DealsTableViewController () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate,FreeDrinksExplanationViewControllerDelegate>
@@ -1064,10 +1065,10 @@ typedef enum dealTypeStates
     if (indexPath.section == 0 && indexPath.row == 0) {
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
         if (event.eventStatusOption == EventStatusGoing) {
-            RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
-            redemptionViewController.sponsoredEvent = event;
-            [redemptionViewController refreshSponsoredEventData];
-            [self.navigationController pushViewController:redemptionViewController animated:YES];
+            EventRedemptionViewController *eventRedemptionViewController = [[EventRedemptionViewController alloc] init];
+            eventRedemptionViewController.sponsoredEvent = event;
+            [eventRedemptionViewController refreshSponsoredEventData];
+            [self.navigationController pushViewController:eventRedemptionViewController animated:YES];
 //            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 //            [appDelegate setSelectedViewControllerToSponsoredEvent:event];
         } else {
