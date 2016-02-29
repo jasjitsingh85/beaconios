@@ -194,18 +194,25 @@
     mainView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:mainView];
     
-    UIImageView *testImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"privateLock"]];
+    UIImageView *testImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paymentPermissions"]];
+    testImage.y = 100;
+    testImage.x = 20;
     [mainView addSubview:testImage];
     
-    UIView *foregroundView = [[UIView alloc] initWithFrame:self.view.bounds];
-    foregroundView.backgroundColor = [UIColor grayColor];
-    [mainView addSubview:foregroundView];
-    
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    blurEffectView.frame = self.view.bounds;
-    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [foregroundView addSubview:blurEffectView];
+    [blurEffectView setFrame:self.view.bounds];
+    [mainView addSubview:blurEffectView];
+    
+//    UIView *foregroundView = [[UIView alloc] initWithFrame:self.view.bounds];
+//    foregroundView.backgroundColor = [UIColor grayColor];
+//    [mainView addSubview:foregroundView];
+//    
+//    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+//    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    blurEffectView.frame = self.view.bounds;
+//    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+//    [foregroundView addSubview:blurEffectView];
 
     
     self.tableView = [[UITableView alloc] init];
