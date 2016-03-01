@@ -45,15 +45,15 @@
     return [UIColor unnormalizedColorWithRed:60 green:181 blue:194 alpha:255];
 }
 
-//- (UIColor *)lightBlueColor
-//{
-//    return [UIColor unnormalizedColorWithRed:0 green:130 blue:213 alpha:255];
-//}
-
 - (UIColor *)lightBlueColor
 {
     return [UIColor unnormalizedColorWithRed:0 green:130 blue:213 alpha:255];
 }
+
+//- (UIColor *)lightBlueColor
+//{
+//    return [UIColor unnormalizedColorWithRed:68 green:81 blue:131 alpha:255];
+//}
 
 - (UIColor *)darkColor
 {
