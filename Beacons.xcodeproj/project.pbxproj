@@ -92,6 +92,7 @@
 		4122D6EC1C71BE6900A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */; };
 		4122D6EE1C71BEAA00A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */; };
 		4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */; };
+		4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F41C87372000A53821 /* EventChatViewController.m */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -505,6 +506,8 @@
 		4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newFilterButtonSelected@2x.png"; sourceTree = "<group>"; };
 		4122D6F01C83C90900A53821 /* EventRedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventRedemptionViewController.h; sourceTree = "<group>"; };
 		4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventRedemptionViewController.m; sourceTree = "<group>"; };
+		4122D6F31C87371100A53821 /* EventChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventChatViewController.h; sourceTree = "<group>"; };
+		4122D6F41C87372000A53821 /* EventChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventChatViewController.m; sourceTree = "<group>"; };
 		412E8C8D1C3C625100E54486 /* RedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionViewController.h; sourceTree = "<group>"; };
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
@@ -1210,8 +1213,6 @@
 		963399411758512100AF9D89 /* Beacons */ = {
 			isa = PBXGroup;
 			children = (
-				41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */,
-				41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */,
 				9633994A1758512100AF9D89 /* AppDelegate.h */,
 				9633994B1758512100AF9D89 /* AppDelegate.m */,
 				9615F4E0175BEBA9005CF62D /* Models */,
@@ -1402,6 +1403,8 @@
 		96859D0617F402F200C1C467 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */,
+				41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */,
 				411B4F7A1C22A11100CA7100 /* FaqViewController.h */,
 				411B4F7B1C22A11B00CA7100 /* FaqViewController.m */,
 				96A9872E17E68C44007D77B8 /* PhotoManager.h */,
@@ -1697,6 +1700,8 @@
 				96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */,
 				96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */,
 				96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */,
+				4122D6F31C87371100A53821 /* EventChatViewController.h */,
+				4122D6F41C87372000A53821 /* EventChatViewController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -2179,6 +2184,7 @@
 				41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
 				969D649617E96E1B00F5AB36 /* UIImage+Resize.m in Sources */,
+				4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */,
 				96C904BE18CF54AD0020820A /* MapSnapshotImageView.m in Sources */,
 				41030F671B52E6E500252158 /* NeedHelpExplanationPopupView.m in Sources */,
 				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,

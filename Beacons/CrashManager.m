@@ -7,7 +7,7 @@
 //
 
 #import "CrashManager.h"
-#import <CrittercismSDK/Crittercism.h>
+#import <Crittercism/Crittercism.h>
 #import "User.h"
 
 @interface CrashManager()

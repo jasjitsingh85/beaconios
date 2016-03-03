@@ -1064,10 +1064,10 @@ typedef enum dealTypeStates
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
-        if (event.eventStatusOption == EventStatusGoing) {
+        if (event.eventStatusOption == EventStatusGoing || event.eventStatusOption == EventStatusRedeemed) {
             EventRedemptionViewController *eventRedemptionViewController = [[EventRedemptionViewController alloc] init];
             eventRedemptionViewController.sponsoredEvent = event;
-            [eventRedemptionViewController refreshSponsoredEventData];
+//            [eventRedemptionViewController refreshSponsoredEventData];
             [self.navigationController pushViewController:eventRedemptionViewController animated:YES];
 //            AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
 //            [appDelegate setSelectedViewControllerToSponsoredEvent:event];
