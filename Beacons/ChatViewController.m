@@ -67,19 +67,18 @@
     self.textView.returnKeyType = UIReturnKeySend;
     [self.textViewContainer addSubview:self.textView];
     
-    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view insertSubview:self.tableView belowSubview:self.textViewContainer];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
-    self.desiredEdgeInsets = UIEdgeInsetsZero;
+    self.desiredEdgeInsets = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];

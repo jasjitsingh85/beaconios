@@ -140,19 +140,20 @@
     //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     ////    [self.view addSubview:self.tableView];
     
-    self.eventChatViewController = [[EventChatViewController alloc] init];
-    self.eventChatViewController.view.bounds = self.view.bounds;
-    [self.view addSubview:self.eventChatViewController.view];
-    
     UIButton *textFriendsButton = [[UIButton alloc] init];
     [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
     textFriendsButton.size = CGSizeMake(28, 28);
     [textFriendsButton setImage:[UIImage imageNamed:@"textFriendsIcon"] forState:UIControlStateNormal];
     [textFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.eventChatViewController = [[EventChatViewController alloc] init];
+    self.eventChatViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
+    [self.view addSubview:self.eventChatViewController.view];
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@""];
+
     
     self.webView = [[WebViewController alloc] init];
     

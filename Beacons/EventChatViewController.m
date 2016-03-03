@@ -40,7 +40,7 @@
     NSString *APP_ID = @"E646196E-AE50-4BA7-99C9-EADF05C2267B";
     [SendBird initAppId:APP_ID withDeviceId:[SendBird deviceUniqueID]];
     [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName];
-    [SendBird joinChannel:@"test"];
+    [SendBird joinChannel:@"1fc48.TEST"];
     
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
         // Connected to SendBird channel
@@ -77,11 +77,47 @@
     } allDataReceivedBlock:^(NSUInteger sendBirdDataType, int count) {
         // Callback for [SendBird loadMoreMessagesWithLimit:]
     } messageDeliveryBlock:^(BOOL send, NSString *message, NSString *data, NSString *messageId) {
-        // Determine the message has been successfully sent.
+        NSLog(@"MESSAGE SENT");
+        NSLog(@"MESSAGE: %@", message);
+        NSLog(@"%d", send);
     }];
     
     [SendBird connect];
 }
+
+-(void) sendMessage:(NSString *)message
+{
+    [SendBird sendMessage:message];
+}
+
+//- (void) loadPreviousMessages
+//{
+//    // Load last 50 messages then connect to SendBird.
+//    [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
+//        long long maxMessageTs = LLONG_MIN;
+//        for (SendBirdMessageModel *model in queryResult) {
+//            // Add message to an array here.
+//            if (maxMessageTs <= [model getMessageTimestamp]) {
+//                maxMessageTs = [model getMessageTimestamp];
+//            }
+//        }
+//        
+//        // Load last 50 messages then connect to SendBird.
+//        [SendBird connectWithMessageTs:maxMessageId];
+//    } endBlock:^(NSError *error) {
+//        
+//    }];
+//}
+
+//- (void) addMessage:(SendBirdMessageModel *)message
+//{
+//    if ([message isPast]) { // Check if the message is old one.
+//        [self insertObject:message atIndex:0]; // Insert the message at the beginning of the list
+//    }
+//    else {
+//        [self addObject:message]; // Append the mssage at the end of the list
+//    }
+//}
 
 - (void)dealloc
 {
@@ -149,11 +185,13 @@
     chatMessage.avatarURL = [User loggedInUser].avatarURL;
     chatMessage.messageString = messageString;
     [self addChatMessage:chatMessage];
-    [[APIClient sharedClient] postMessageWithText:chatMessage.messageString forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Failed to post message" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-    }];
+    
+    [self sendMessage:messageString];
+//    [[APIClient sharedClient] postMessageWithText:chatMessage.messageString forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        [[[UIAlertView alloc] initWithTitle:@"Failed to post message" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }];
 }
 
 - (void)createChatMessageWithImage:(UIImage *)image
