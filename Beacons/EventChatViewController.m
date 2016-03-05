@@ -43,7 +43,7 @@
     [SendBird joinChannel:@"1fc48.TEST"];
     
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
-        // Connected to SendBird channel
+        [self loadPreviousMessages];
     } errorBlock:^(NSInteger code) {
         // Error occured due to bad APP_ID (or other unknown reason)
     } channelLeftBlock:^(SendBirdChannel *channel) {
@@ -90,24 +90,25 @@
     [SendBird sendMessage:message];
 }
 
-//- (void) loadPreviousMessages
-//{
-//    // Load last 50 messages then connect to SendBird.
-//    [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
-//        long long maxMessageTs = LLONG_MIN;
-//        for (SendBirdMessageModel *model in queryResult) {
-//            // Add message to an array here.
-//            if (maxMessageTs <= [model getMessageTimestamp]) {
-//                maxMessageTs = [model getMessageTimestamp];
-//            }
-//        }
-//        
-//        // Load last 50 messages then connect to SendBird.
+- (void) loadPreviousMessages
+{
+    // Load last 50 messages then connect to SendBird.
+    [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
+        long long maxMessageTs = LLONG_MIN;
+        for (SendBirdMessageModel *model in queryResult) {
+            // Add message to an array here.
+            NSLog(@"model: %@", model);
+            if (maxMessageTs <= [model getMessageTimestamp]) {
+                maxMessageTs = [model getMessageTimestamp];
+            }
+        }
+        
+        // Load last 50 messages then connect to SendBird.
 //        [SendBird connectWithMessageTs:maxMessageId];
-//    } endBlock:^(NSError *error) {
-//        
-//    }];
-//}
+    } endBlock:^(NSError *error) {
+        
+    }];
+}
 
 //- (void) addMessage:(SendBirdMessageModel *)message
 //{
