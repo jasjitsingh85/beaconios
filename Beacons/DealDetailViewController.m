@@ -514,11 +514,11 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
     [self.navigationController popViewControllerAnimated:YES];
-    self.sponsoredEvent.eventStatusOption = EventStatusGoing;
+//    self.sponsoredEvent.eventStatusOption = EventStatusGoing;
     RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
     redemptionViewController.sponsoredEvent = self.sponsoredEvent;
-    [redemptionViewController refreshSponsoredEventData];
     [self.navigationController pushViewController:redemptionViewController animated:YES];
+    [redemptionViewController refreshSponsoredEventData];
     
 //    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
 //    [alertView bk_addButtonWithTitle:@"OK" handler:^{
