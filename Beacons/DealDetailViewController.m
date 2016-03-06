@@ -1142,7 +1142,8 @@
         [self.tutorialCell.contentView addSubview:docTextLabel];
         
         if (self.sponsoredEvent) {
-            docTextLabel.text = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged a $1 deposit."];
+            NSString *message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.itemPrice];
+            docTextLabel.text = message;
         } else {
             if (self.venue.deal.isRewardItem) {
                 docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];
