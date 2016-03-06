@@ -133,7 +133,7 @@ typedef enum {
     
     [self enterContactsMode];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishPermissions:) name:kFinishPermissionsAfterPayment object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishPermissions) name:kFinishPermissionsAfterPayment object:nil];
 }
 
 - (BOOL)prefersStatusBarHidden
