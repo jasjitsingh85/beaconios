@@ -160,7 +160,11 @@
     self.pageControl.hidesForSinglePage = NO;
     self.pageControl.numberOfPages = events.count;
     self.pageControl.centerX = self.contentView.width/2;
-    self.pageControl.y = 135;
+    self.pageControl.y = 132;
+    self.pageControl.x = 0;
+    self.pageControl.height = 20;
+    self.pageControl.width = self.contentView.width;
+    self.pageControl.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.8];
     self.pageControl.hidesForSinglePage = YES;
     //self.pageControl.currentPageIndicatorTintColor = [[ThemeManager sharedTheme] redColor];
     //self.pageControl.pageIndicatorTintColor = [[UIColor whiteColor] colorWithAlphaComponent:.6];
@@ -171,7 +175,6 @@
 
 -(void)setButtonState:(UIButton *)button forEvent:(SponsoredEvent *)event
 {
-    NSLog(@"status option: %u",event.eventStatusOption);
     if (event.eventStatusOption == EventStatusNoSelection) {
         [button setTitle:@"INTERESTED" forState:UIControlStateNormal];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

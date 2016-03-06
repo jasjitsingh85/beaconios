@@ -885,7 +885,7 @@ typedef enum dealTypeStates
 
 - (void)reloadTableView
 {
-    if (self.selectedVenues.count > 0){
+    if (self.selectedVenues.count > 0 || self.sponsoredEvents.count){
         [self hideEmptyDealsView];
     }
     else {
@@ -901,14 +901,14 @@ typedef enum dealTypeStates
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    if (self.sponsoredEvents && self.selectedVenues) {
-//        return 2;
-//    } else if (self.sponsoredEvents || self.selectedVenues) {
-//        return 1;
-//    } else {
-//        return 0;
-//    }
-    return 2;
+    if (self.sponsoredEvents.count && self.selectedVenues.count) {
+        return 2;
+    } else if (self.sponsoredEvents.count || self.selectedVenues.count) {
+        return 2;
+    } else {
+        return 0;
+    }
+//    return 2;
 
 }
 
@@ -998,6 +998,8 @@ typedef enum dealTypeStates
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0 && !self.sponsoredEvents.count) {
+        return 0;
+    } else if (section == 1 && !self.selectedVenues.count) {
         return 0;
     } else {
         return 30;
