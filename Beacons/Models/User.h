@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SendBirdSDK/SendBirdSDK.h>
 
 @interface User : NSObject
 
@@ -29,6 +30,7 @@
 + (void)logoutUser;
 - (id)initWithData:(NSDictionary *)userData;
 - (id)initWithUserDictionary:(NSDictionary *)userDictionary;
+- (id)initWithSendBirdUserData:(SendBirdSender *)sender;
 - (NSString *)fullName;
 - (NSString *)abbreviatedName;
 

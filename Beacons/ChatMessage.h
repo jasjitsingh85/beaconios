@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SendBirdSDK/SendBirdSDK.h>
 
 @class User, Contact;
 @interface ChatMessage : NSObject
@@ -25,6 +26,6 @@
 @property (readonly) BOOL isSystemMessage;
 
 - (id)initWithData:(NSDictionary *)messageData;
-- (id)initWithSendBirdData:(NSDictionary *)messageData;
+- (id)initWithSendBirdData:(SendBirdMessage *)messageData;
 
 @end

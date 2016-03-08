@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "Utilities.h"
+#import <SendBirdSDK/SendBirdSDK.h>
 
 static User *_loggedInUser = nil;
 static dispatch_once_t onceToken;
@@ -51,6 +52,21 @@ static dispatch_once_t onceToken;
 //        self.rewardScore = userData[@"reward_score"];
         self.promoCode = userData[@"promo_code"];
         NSString *avatarString = userData[@"avatar_url"];
+        if (avatarString) {
+            self.avatarURL = [NSURL URLWithString:avatarString];
+        }
+    }
+    return self;
+}
+
+- (id)initWithSendBirdUserData:(SendBirdSender *)sender
+{
+    self = [super init];
+    if (self) {
+        self.firstName = [[sender.name componentsSeparatedByString:@" "] objectAtIndex:0];
+        self.lastName = [[sender.name componentsSeparatedByString:@" "] objectAtIndex:1];
+        self.userID =  [NSNumber numberWithLongLong:sender.senderId];
+        NSString *avatarString = sender.imageUrl;
         if (avatarString) {
             self.avatarURL = [NSURL URLWithString:avatarString];
         }

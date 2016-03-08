@@ -113,21 +113,6 @@
 {
     [super viewDidLoad];
     
-    UIImageView *testImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paymentPermissions"]];
-    self.view.backgroundColor = [UIColor whiteColor];
-    testImage.y = 100;
-    testImage.x = 20;
-    [self.view addSubview:testImage];
-    
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    self.overlayView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    self.overlayView.y = self.view.height;
-    self.overlayView.x = 0;
-    self.overlayView.width = self.view.width;
-    self.overlayView.height = self.view.height;
-    //    [self.overlayView setFrame:self.view.bounds];
-    [self.view addSubview:self.overlayView];
-    
     //    self.tableView = [[UITableView alloc] init];
     ////    self.view.backgroundColor = [UIColor whiteColor];
     ////    self.tableView.backgroundColor = [UIColor whiteColor];
@@ -149,6 +134,15 @@
     self.eventChatViewController = [[EventChatViewController alloc] init];
     self.eventChatViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
     [self.view addSubview:self.eventChatViewController.view];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    self.overlayView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.overlayView.y = self.view.height;
+    self.overlayView.x = 0;
+    self.overlayView.width = self.view.width;
+    self.overlayView.height = self.view.height;
+    //    [self.overlayView setFrame:self.view.bounds];
+    [self.view addSubview:self.overlayView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
@@ -339,10 +333,11 @@
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
-    if (self.sponsoredEvent.eventStatusOption != EventStatusRedeemed) {
+//    if (self.sponsoredEvent.eventStatusOption != EventStatusRedeemed) {
+    if (self.sponsoredEvent.eventStatusOption == EventStatusRedeemed) {
         [self showOverlayView];
     }
-    
+
 //    [self.tableView reloadData];
 }
 

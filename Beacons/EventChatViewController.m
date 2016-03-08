@@ -39,11 +39,11 @@
     User *loggedInUser = [User loggedInUser];
     NSString *APP_ID = @"E646196E-AE50-4BA7-99C9-EADF05C2267B";
     [SendBird initAppId:APP_ID withDeviceId:[SendBird deviceUniqueID]];
-    [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName];
+    [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:loggedInUser.phoneNumber];
     [SendBird joinChannel:@"1fc48.TEST"];
     
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
-        [self loadPreviousMessages];
+        [self reloadMessagesFromServerCompletion:nil];
     } errorBlock:^(NSInteger code) {
         // Error occured due to bad APP_ID (or other unknown reason)
     } channelLeftBlock:^(SendBirdChannel *channel) {
@@ -147,8 +147,30 @@
 
 - (void)reloadMessagesFromServerCompletion:(void (^)())completion
 {
-    [[APIClient sharedClient] getMessagesForBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self parseMessages:responseObject withCompletion:^(NSArray *messages) {
+//    [[APIClient sharedClient] getMessagesForBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [self parseMessages:responseObject withCompletion:^(NSArray *messages) {
+//            self.messages = messages;
+//            [self reloadMessages];
+//            if (completion) {
+//                completion();
+//            }
+//        }];
+//
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//    }];
+    
+    // Load last 50 messages then connect to SendBird.
+    [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
+        long long maxMessageTs = LLONG_MIN;
+        for (SendBirdMessageModel *model in queryResult) {
+            // Add message to an array here.
+            NSLog(@"model: %@", model);
+            if (maxMessageTs <= [model getMessageTimestamp]) {
+                maxMessageTs = [model getMessageTimestamp];
+            }
+        }
+        
+        [self parseMessages:queryResult withCompletion:^(NSArray *messages) {
             self.messages = messages;
             [self reloadMessages];
             if (completion) {
@@ -156,24 +178,31 @@
             }
         }];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        // Load last 50 messages then connect to SendBird.
+        //        [SendBird connectWithMessageTs:maxMessageId];
+    } endBlock:^(NSError *error) {
+        
     }];
+    
 }
 
-- (void)parseMessages:(NSDictionary *)messagesData withCompletion:(void (^)(NSArray *messages))completion
+- (void)parseMessages:(NSMutableArray *)messagesData withCompletion:(void (^)(NSArray *messages))completion
 {
-    if (![messagesData.allKeys containsObject:@"messages"]) {
-        if (completion) {
-            completion(nil);
-        }
-        return;
-    }
+//    if (![messagesData.allKeys containsObject:@"messages"]) {
+//        if (completion) {
+//            completion(nil);
+//        }
+//        return;
+//    }
     
     NSMutableArray *messages = [[NSMutableArray alloc] init];
-    for (NSDictionary *messageData in messagesData[@"messages"]) {
-        ChatMessage *chatMessage = [[ChatMessage alloc] initWithData:messageData];
+    for (SendBirdMessage *message in messagesData) {
+        ChatMessage *chatMessage = [[ChatMessage alloc] initWithSendBirdData:message];
         [messages addObject:chatMessage];
     }
+    
+    messages = [[[messages reverseObjectEnumerator] allObjects] mutableCopy];
+    
     if (completion) {
         completion([NSArray arrayWithArray:messages]);
     }
@@ -188,11 +217,6 @@
     [self addChatMessage:chatMessage];
     
     [self sendMessage:messageString];
-//    [[APIClient sharedClient] postMessageWithText:chatMessage.messageString forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [[[UIAlertView alloc] initWithTitle:@"Failed to post message" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//    }];
 }
 
 - (void)createChatMessageWithImage:(UIImage *)image

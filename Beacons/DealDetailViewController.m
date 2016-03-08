@@ -33,7 +33,7 @@
 #import "EventStatus.h"
 #import "HelpPopupView.h"
 #import "FaqViewController.h"
-#import "RedemptionViewController.h"
+#import "EventRedemptionViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -515,7 +515,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
     [self.navigationController popViewControllerAnimated:YES];
 //    self.sponsoredEvent.eventStatusOption = EventStatusGoing;
-    RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
+    EventRedemptionViewController *redemptionViewController = [[EventRedemptionViewController alloc] init];
     redemptionViewController.sponsoredEvent = self.sponsoredEvent;
     [self.navigationController pushViewController:redemptionViewController animated:YES];
     [redemptionViewController refreshSponsoredEventData];

@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "BeaconImage.h"
 #import "User.h"
+#import <SendBirdSDK/SendBirdSDK.h>
 
 @implementation ChatMessage
 
@@ -40,6 +41,35 @@
     
     self.messageType = messageData[@"chat_type"];
     self.avatarURL = messageData[@"profile_pic"];
+    
+    return self;
+}
+
+- (id)initWithSendBirdData:(SendBirdMessage *)messageData
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+
+    self.sender = [[User alloc] initWithSendBirdUserData:messageData.sender];
+    
+    NSDictionary *contactData = nil;
+    if (![contactData isEmpty]) {
+        self.contactSender = [[Contact alloc] initWithData:contactData];
+    }
+    
+    self.messageString = messageData.message;
+    if ([self.messageString isEqual:[NSNull null]]) {
+        self.messageString = @"";
+    }
+    NSDictionary *imageData = messageData.data;
+    if (![imageData isEmpty]) {
+        self.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
+    }
+    
+    self.messageType = @"";
+    self.avatarURL = [NSURL URLWithString:messageData.sender.imageUrl];
     
     return self;
 }
