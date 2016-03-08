@@ -132,6 +132,8 @@ typedef enum {
 //    [self.view addSubview:self.hotbotImageView];
     
     [self enterContactsMode];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishPermissions) name:kFinishPermissionsAfterPayment object:nil];
 }
 
 - (BOOL)prefersStatusBarHidden

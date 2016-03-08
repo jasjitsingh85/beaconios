@@ -33,6 +33,7 @@
 #import "EventStatus.h"
 #import "HelpPopupView.h"
 #import "FaqViewController.h"
+#import "RedemptionViewController.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -391,7 +392,7 @@
         self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 50.0, 0.0);
     }
     
-    if ([self.deal.checkInCount intValue] > 24 || self.sponsoredEvent) {
+    if ([self.deal.checkInCount intValue] > 24) {
         self.getDealButtonContainer.height = 110;
         self.getDealButtonContainer.y = self.view.height - 110;
         if (self.sponsoredEvent) {
@@ -478,7 +479,8 @@
             } else if (self.sponsoredEvent.isSoldOut) {
                     [self showSoldOutAlert];
             } else {
-                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:@"Are you sure you want to reserve a spot to this event? You'll be charged a $1 non-refundable deposit to hold your spot."];
+                NSString *message = [NSString stringWithFormat:@"Are you sure you want to reserve a spot to this event? You'll be charged $%@ for this ticket.", self.sponsoredEvent.itemPrice];
+                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:message];
                 [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
                     [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
                         SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
@@ -510,15 +512,23 @@
 {
 //    [[[UIAlertView alloc] initWithTitle:@"Reservation Complete" message:@"Your reservation is complete. On the day of the event you will be able to access the voucher." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     
-    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
-    [alertView bk_addButtonWithTitle:@"OK" handler:^{
-        self.sponsoredEvent.eventStatusOption = EventStatusGoing;
-        [self updateReservationButtonStyle];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+    [self.navigationController popViewControllerAnimated:YES];
+//    self.sponsoredEvent.eventStatusOption = EventStatusGoing;
+    RedemptionViewController *redemptionViewController = [[RedemptionViewController alloc] init];
+    redemptionViewController.sponsoredEvent = self.sponsoredEvent;
+    [self.navigationController pushViewController:redemptionViewController animated:YES];
+    [redemptionViewController refreshSponsoredEventData];
     
-    [alertView show];
+//    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
+//    [alertView bk_addButtonWithTitle:@"OK" handler:^{
+//        self.sponsoredEvent.eventStatusOption = EventStatusGoing;
+//        [self updateReservationButtonStyle];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kFeedUpdateNotification object:self];
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }];
+    
+//    [alertView show];
 }
 
 -(void)updateReservationButtonStyle
@@ -528,7 +538,7 @@
         [self.getDealButton setTitle:@"RESERVED" forState:UIControlStateNormal];
     } else {
         self.getDealButton.backgroundColor = [[ThemeManager sharedTheme] redColor];
-        [self.getDealButton setTitle:@"RESERVE YOUR SPOT" forState:UIControlStateNormal];
+        [self.getDealButton setTitle:@"RESERVE TICKET" forState:UIControlStateNormal];
     }
 }
 
@@ -1132,7 +1142,8 @@
         [self.tutorialCell.contentView addSubview:docTextLabel];
         
         if (self.sponsoredEvent) {
-            docTextLabel.text = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged a $1 deposit."];
+            NSString *message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.itemPrice];
+            docTextLabel.text = message;
         } else {
             if (self.venue.deal.isRewardItem) {
                 docTextLabel.text = [NSString stringWithFormat:@"We buy drinks wholesale from %@ to save you money. Tap 'USE FREE DRINK HERE' to get your free drink voucher. To receive drink, just show this voucher to the server.", self.venue.name];

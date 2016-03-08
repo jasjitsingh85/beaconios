@@ -197,11 +197,15 @@
             NSString *dismiss_payment_modal_string = responseObject[@"dismiss_payment_modal"];
             BOOL dismiss_payment_modal = [dismiss_payment_modal_string boolValue];
             if (dismiss_payment_modal) {
-                    if (self.inRegFlow) {
-                        [self.delegate finishPermissions];
-                    }
+//                    if (self.inRegFlow) {
+//                        [self.delegate finishPermissions];
+//                    }
                     [[NSNotificationCenter defaultCenter] postNotificationName:kRefreshCustomerPaymentInfo object:self];
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if (self.inRegFlow) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kFinishPermissionsAfterPayment object:self];
+                    }
+                }];
             } else {
                 [self showCardDeclined];
             }
