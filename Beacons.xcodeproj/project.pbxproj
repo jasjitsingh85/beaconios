@@ -87,10 +87,8 @@
 		4122D6E11C71A73D00A53821 /* helpIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E01C71A73D00A53821 /* helpIcon@2x.png */; };
 		4122D6E31C71A9F600A53821 /* HelpPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6E21C71A9F600A53821 /* HelpPopupView.m */; };
 		4122D6E61C71AD9E00A53821 /* shortModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E51C71AD9E00A53821 /* shortModalBackground@2x.png */; };
-		4122D6E81C71BADC00A53821 /* newFilterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E71C71BADC00A53821 /* newFilterButton@2x.png */; };
 		4122D6EA1C71BCC200A53821 /* newFilterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E91C71BCC200A53821 /* newFilterButton@2x.png */; };
 		4122D6EC1C71BE6900A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */; };
-		4122D6EE1C71BEAA00A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -1727,7 +1725,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Jeff Ames";
 				TargetAttributes = {
 					963399371758512100AF9D89 = {
@@ -1812,7 +1810,6 @@
 				96D1D0D717E818A90033396F /* cameraSmall@2x.png in Resources */,
 				9691D26717FA94AB0095BA80 /* invitedButtonSelected@2x.png in Resources */,
 				96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */,
-				4122D6E81C71BADC00A53821 /* newFilterButton@2x.png in Resources */,
 				4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
@@ -1870,7 +1867,6 @@
 				96C28D3518AAF404001BE498 /* hotspotLogoLarge@2x.png in Resources */,
 				96A90B7118D0D07B008026CC /* backgroundGradient@2x.png in Resources */,
 				96D1D55D199AFEC0007216F3 /* noDealsPlaceholder@2x.png in Resources */,
-				4122D6EE1C71BEAA00A53821 /* newFilterButtonSelected@2x.png in Resources */,
 				969BE31C18D1FF3600E2714A /* iMessageChatBubble@2x.png in Resources */,
 				9671D02D1825739100D03D66 /* helpButton@2x.png in Resources */,
 				41148CB91B7A2A9A00F4CA17 /* selectedFavorite@2x.png in Resources */,
