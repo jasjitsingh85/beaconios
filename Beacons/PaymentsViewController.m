@@ -84,8 +84,8 @@
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
     //
-    dropInViewController.summaryTitle = [NSString stringWithFormat:@"$1 Reservation Deposit"];
-    dropInViewController.summaryDescription = [NSString stringWithFormat:@"You won't be charged the full price until your ticket is redeemed at the door."];
+    dropInViewController.summaryTitle = [NSString stringWithFormat:@"Save Time and Money"];
+    dropInViewController.summaryDescription = [NSString stringWithFormat:@"Save time paying through Hotspot by adding payment before you go out. You only have to add your payment once."];
     //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"SAVE";
