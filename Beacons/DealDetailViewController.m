@@ -203,6 +203,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(completeReservation) name:kConfirmEventReservation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(faqButtonTouched:) name:@"ShowFaq" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(launchRedemptionView) name:kLaunchRedemptionView object:nil];
 }
 
 -(void)showFeeExplanationModal:(id)sender
@@ -431,7 +433,7 @@
 
 }
 
-- (void) getDealButtonTouched:(id)sender
+-(void)launchRedemptionView
 {
     if (self.deal) {
         NSDate *now = [NSDate date];
@@ -446,7 +448,7 @@
         } else {
             if (self.isDealActive) {
                 BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
-                if (!socialExplanationShown) {
+                if (!socialExplanationShown && self.isPublic) {
                     [self showHelpModal:nil];
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
                 } else {
@@ -470,14 +472,14 @@
         }
     } else if (self.sponsoredEvent) {
         BOOL socialExplanationShown = [[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasShownHotspotSocialExplanation];
-        if (!socialExplanationShown) {
+        if (!socialExplanationShown && self.isPublic) {
             [self showHelpModal:nil];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kDefaultsKeyHasShownHotspotSocialExplanation];
         } else {
             if (self.sponsoredEvent.eventStatusOption == EventStatusGoing) {
                 [[[UIAlertView alloc] initWithTitle:@"Already Reserved" message:@"You've already reserved a spot at this event. Your voucher will become active on the day of the event." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else if (self.sponsoredEvent.isSoldOut) {
-                    [self showSoldOutAlert];
+                [self showSoldOutAlert];
             } else {
                 NSString *message = [NSString stringWithFormat:@"Are you sure you want to reserve a spot to this event? You'll be charged $%@ for this ticket.", self.sponsoredEvent.itemPrice];
                 UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:message];
@@ -501,6 +503,13 @@
             }
         }
     }
+    
+}
+
+
+- (void) getDealButtonTouched:(id)sender
+{
+    [self launchRedemptionView];
 }
 
 -(void)showSoldOutAlert

@@ -50,12 +50,12 @@
     headerTitle.textAlignment = NSTextAlignmentLeft;
     //self.headerTitle.centerX = self.tableView.width/2;
     headerTitle.font = [ThemeManager boldFontOfSize:11];
-    headerTitle.y = 150;
+    headerTitle.y = 140;
     headerTitle.numberOfLines = 1;
     headerTitle.text = @"DRINKING IS BETTER WITH FRIENDS";
     [self.imageView addSubview:headerTitle];
     
-    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 150, self.width - 120, 80)];
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 140, self.width - 120, 80)];
     textLabel.width = self.width - 100;
     textLabel.font = [ThemeManager lightFontOfSize:11];
     textLabel.textAlignment = NSTextAlignmentLeft;
@@ -64,18 +64,18 @@
     [self.imageView addSubview:textLabel];
     
     UIImageView *screenshot = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"friendScreenshotForTutorial"]];
-    screenshot.y = 225;
+    screenshot.y = 215;
     screenshot.x = 35;
     [self.imageView addSubview:screenshot];
     
-    UILabel *toggleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 227, 150, 40)];
+    UILabel *toggleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 217, 150, 40)];
     toggleLabel.font = [ThemeManager boldFontOfSize:10];
     toggleLabel.textAlignment = NSTextAlignmentRight;
     toggleLabel.numberOfLines = 2;
     toggleLabel.text = @"Tap here to make a check-in either open or closed to friends";
     [self.imageView addSubview:toggleLabel];
     
-    UILabel *friendManageLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 315, 135, 40)];
+    UILabel *friendManageLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 305, 135, 40)];
     friendManageLabel.font = [ThemeManager boldFontOfSize:10];
     friendManageLabel.textAlignment = NSTextAlignmentRight;
     friendManageLabel.numberOfLines = 2;
@@ -99,14 +99,26 @@
     launchInviteButton.backgroundColor = [[ThemeManager sharedTheme] lightBlueColor];
     launchInviteButton.size = CGSizeMake(200, 30);
     launchInviteButton.centerX = (self.width/2.0);
-    launchInviteButton.y = 386;
+    launchInviteButton.y = 362;
     launchInviteButton.layer.cornerRadius = 3;
-    [launchInviteButton setTitle:@"GOT IT" forState:UIControlStateNormal];
+    [launchInviteButton setTitle:@"CONTINUE" forState:UIControlStateNormal];
     [launchInviteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [launchInviteButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     launchInviteButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
-    [launchInviteButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [launchInviteButton addTarget:self action:@selector(continueToRedemptionView:) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:launchInviteButton];
+    
+    self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //self.doneButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
+    self.doneButton.backgroundColor = [UIColor whiteColor];
+    self.doneButton.size = CGSizeMake(230, 25);
+    self.doneButton.centerX = self.width/2.0;
+    self.doneButton.y = 400;
+    [self.doneButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [self.doneButton setTitleColor:[[ThemeManager sharedTheme] redColor] forState:UIControlStateNormal];
+    self.doneButton.titleLabel.font = [ThemeManager regularFontOfSize:13];
+    [self.doneButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.imageView addSubview:self.doneButton];
     
 //    self.doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 //    //self.doneButton.backgroundColor = [[ThemeManager sharedTheme] blueColor];
@@ -148,6 +160,11 @@
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+}
+
+- (void)continueToRedemptionView:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kLaunchRedemptionView object:self userInfo:nil];
 }
 
 

@@ -89,7 +89,6 @@
 		4122D6E61C71AD9E00A53821 /* shortModalBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E51C71AD9E00A53821 /* shortModalBackground@2x.png */; };
 		4122D6EA1C71BCC200A53821 /* newFilterButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E91C71BCC200A53821 /* newFilterButton@2x.png */; };
 		4122D6EC1C71BE6900A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */; };
-		4122D6EE1C71BEAA00A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6ED1C71BEAA00A53821 /* newFilterButtonSelected@2x.png */; };
 		4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */; };
 		4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F41C87372000A53821 /* EventChatViewController.m */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
@@ -204,6 +203,8 @@
 		41F97BB81BBB9F7F003D1D86 /* contactPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */; };
 		41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */; };
 		41F97BBC1BBC75FF003D1D86 /* paymentPermissions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */; };
+		41FA91C51C99FB520092994E /* VoucherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41FA91C41C99FB520092994E /* VoucherViewController.m */; };
+		41FA91C71C9A08A20092994E /* paymentButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91C61C9A08A20092994E /* paymentButtonSelected@2x.png */; };
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
@@ -648,6 +649,9 @@
 		41F97BB71BBB9F7F003D1D86 /* contactPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contactPermissions@2x.png"; sourceTree = "<group>"; };
 		41F97BB91BBC6DC3003D1D86 /* pushPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pushPermissions@2x.png"; sourceTree = "<group>"; };
 		41F97BBB1BBC75FF003D1D86 /* paymentPermissions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentPermissions@2x.png"; sourceTree = "<group>"; };
+		41FA91C31C99FB400092994E /* VoucherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoucherViewController.h; sourceTree = "<group>"; };
+		41FA91C41C99FB520092994E /* VoucherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoucherViewController.m; sourceTree = "<group>"; };
+		41FA91C61C9A08A20092994E /* paymentButtonSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paymentButtonSelected@2x.png"; sourceTree = "<group>"; };
 		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
 		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
@@ -1282,6 +1286,8 @@
 				412E8C8E1C3C626600E54486 /* RedemptionViewController.m */,
 				4122D6F01C83C90900A53821 /* EventRedemptionViewController.h */,
 				4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */,
+				41FA91C31C99FB400092994E /* VoucherViewController.h */,
+				41FA91C41C99FB520092994E /* VoucherViewController.m */,
 			);
 			name = Deals;
 			sourceTree = "<group>";
@@ -1446,6 +1452,7 @@
 				41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */,
 				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
 				4122D6DE1C6FB10B00A53821 /* eventDrinkIcon@2x.png */,
+				41FA91C61C9A08A20092994E /* paymentButtonSelected@2x.png */,
 				411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */,
 				41FFB0141C15248C00947EEC /* unfollowButton@2x.png */,
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
@@ -1890,6 +1897,7 @@
 				41BEAC271A1DE2200069F932 /* groupsIcon@2x.png in Resources */,
 				96CBCD001805107500D62462 /* chatBubbleOrangeLeft@2x.png in Resources */,
 				41E23A861B33AEFB00676254 /* thumb@2x.png in Resources */,
+				41FA91C71C9A08A20092994E /* paymentButtonSelected@2x.png in Resources */,
 				4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				41CBB0EB1C077A2600B7C4AA /* bigRedPin@2x.png in Resources */,
@@ -2187,6 +2195,7 @@
 				9666524D19786CA300EE85F8 /* DealExplanationView.m in Sources */,
 				41C9870A1C03856700DD595D /* DealDetailImageCell.m in Sources */,
 				96AFE1351938215000209799 /* Deal.m in Sources */,
+				41FA91C51C99FB520092994E /* VoucherViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

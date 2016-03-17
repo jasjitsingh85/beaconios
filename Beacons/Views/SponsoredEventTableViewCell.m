@@ -61,7 +61,6 @@
     
     for (int i = 0; i < events.count; i++) {
         SponsoredEvent *event = events[i];
-        NSLog(@"EVENT: %@", event);
         UIView *eventView = [[UIView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width * i, 0, self.contentView.frame.size.width, 151)];
         [self.eventScroll addSubview:eventView];
         
