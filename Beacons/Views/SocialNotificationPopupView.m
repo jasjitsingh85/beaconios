@@ -164,7 +164,16 @@
 
 - (void)continueToRedemptionView:(id)sender
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kLaunchRedemptionView object:self userInfo:nil];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.backgroundView.alpha = 0;
+        CGFloat angle = -M_1_PI + (float) random()/RAND_MAX *2*M_1_PI;
+        CGAffineTransform transform = CGAffineTransformMakeTranslation(0, self.height);
+        transform = CGAffineTransformRotate(transform, angle);
+        self.imageView.transform = transform;
+    } completion:^(BOOL finished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kLaunchRedemptionView object:self userInfo:nil];
+        [self removeFromSuperview];
+    }];
 }
 
 
