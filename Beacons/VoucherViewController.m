@@ -58,15 +58,16 @@
     self.headerTitle.y = 14;
     [self.view addSubview:self.headerTitle];
     
-    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, self.view.width - 45, 50)];
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width - 45, 150)];
+//    self.headerExplanationText.backgroundColor = [UIColor redColor];
     self.headerExplanationText.centerX = self.view.width/2;
     self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
     self.headerExplanationText.textAlignment = NSTextAlignmentLeft;
-    self.headerExplanationText.numberOfLines = 2;
+    self.headerExplanationText.numberOfLines = 0;
     [self.view addSubview:self.headerExplanationText];
     
     self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.redeemButton.y = 270;
+    self.redeemButton.y = 265;
     self.redeemButton.size = CGSizeMake(self.view.width, 150);
     
     self.voucherTitle = [[UILabel alloc] init];
@@ -106,17 +107,39 @@
     self.serverMessage.font = [ThemeManager boldFontOfSize:11];
     [self.redeemButton addSubview:self.serverMessage];
     
+    UILabel *helpTitle = [[UILabel alloc] init];
+    helpTitle.font = [ThemeManager boldFontOfSize:12];
+    helpTitle.textColor = [UIColor blackColor];
+    helpTitle.text = @"NEED HELP?";
+    helpTitle.width = self.view.width;
+    helpTitle.height = 20;
+    helpTitle.y = 185;
+    helpTitle.centerX = self.view.width/2.0;
+    helpTitle.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:helpTitle];
+    
+    UILabel *helpBody = [[UILabel alloc] init];
+    helpBody.font = [ThemeManager lightFontOfSize:12];
+    helpBody.textColor = [UIColor blackColor];
+    helpBody.text = @"(a human being will pick-up your call)";
+    helpBody.width = self.view.width;
+    helpBody.height = 20;
+    helpBody.y = 200;
+    helpBody.centerX = self.view.width/2.0;
+    helpBody.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:helpBody];
+    
     self.inviteFriendsButton = [[UIButton alloc] init];
     self.inviteFriendsButton.size = CGSizeMake(self.view.width - 50, 35);
     self.inviteFriendsButton.centerX = self.view.width/2;
-    self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:12];
+    self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:14];
     [self.inviteFriendsButton setTitleColor:[[ThemeManager sharedTheme] lightBlueColor] forState:UIControlStateNormal];
     [self.inviteFriendsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
     self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.inviteFriendsButton setTitle:@"SEE IN FACEBOOK" forState:UIControlStateNormal];
-    self.inviteFriendsButton.y = 172;
+    [self.inviteFriendsButton setTitle:@"(425) 202-6228" forState:UIControlStateNormal];
+    self.inviteFriendsButton.y = 222;
     [self.view addSubview:self.inviteFriendsButton];
-    [self.inviteFriendsButton addTarget:self action:@selector(seeFacebookButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteFriendsButton addTarget:self action:@selector(callHelpLine:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.redeemButton];
     [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -132,6 +155,7 @@
     
     self.itemName.text = [self.sponsoredEvent.title uppercaseString];
     self.venueName.text = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
+    self.headerExplanationText.text = self.sponsoredEvent.eventDescription;
     
     [self showVoucherViewForSponsoredEvent];
 }
@@ -144,7 +168,8 @@
     NSString *serverMessageText;
     
     title = @"";
-    UIColor *activeColor = [UIColor colorWithRed:73/255. green:115/255. blue:68/255. alpha:1];
+    UIColor *activeColor = [UIColor whiteColor];
+//    UIColor *activeColor = [UIColor colorWithRed:73/255. green:115/255. blue:68/255. alpha:1];
     UIColor *inactiveColor = [UIColor unnormalizedColorWithRed:156 green:156 blue:156 alpha:255];
     UIColor *accentColor;
     UIColor *backgroundColor;
@@ -160,9 +185,9 @@
         accentColor = color;
         [self.headerIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
         self.headerTitle.text = @"SHOW TICKET AT DOOR";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"We’ll tap your ticket at the door. You aren’t charged until the ticket is redeemed."];
-        [self.redeemButton setImage:[UIImage imageNamed:@"activeVoucher"] forState:UIControlStateNormal];
-        [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIcon"]];
+//        self.headerExplanationText.text = [NSString stringWithFormat:@"We’ll tap your ticket at the door. You aren’t charged until the ticket is redeemed."];
+        [self.redeemButton setImage:[UIImage imageNamed:@"eventRedemptionBackground"] forState:UIControlStateNormal];
+        [self.voucherIcon setImage:[UIImage imageNamed:@"fingerprintIconWhite"]];
     } else if (self.sponsoredEvent.eventStatusOption == EventStatusRedeemed) {
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
@@ -173,7 +198,7 @@
         accentColor = [[ThemeManager sharedTheme] redColor];
         [self.headerIcon setImage:[UIImage imageNamed:@"newDrinkIcon"]];
         self.headerTitle.text = @"DON'T FORGET TO TIP!";
-        self.headerExplanationText.text = [NSString stringWithFormat:@"You're all set. You've been charged $%@. Enjoy your night and don't forget to tip.", self.sponsoredEvent.itemPrice];
+//        self.headerExplanationText.text = [NSString stringWithFormat:@"You're all set. You've been charged $%@. Enjoy your night and don't forget to tip.", self.sponsoredEvent.itemPrice];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
     }
@@ -242,18 +267,20 @@
     }
 }
 
-- (void) seeFacebookButtonTouched:(id)sender
+- (void) callHelpLine:(id)sender
 {
-    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
-    if (isInstalled) {;
-        [[UIApplication sharedApplication] openURL:self.sponsoredEvent.deepLinkURL];
-    } else {
-        self.webView.websiteUrl = self.sponsoredEvent.websiteURL;
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
-        [self presentViewController:navigationController
-                           animated:YES
-                         completion:nil];
-    }
+//    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
+//    if (isInstalled) {;
+//        [[UIApplication sharedApplication] openURL:self.sponsoredEvent.deepLinkURL];
+//    } else {
+//        self.webView.websiteUrl = self.sponsoredEvent.websiteURL;
+//        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
+//        [self presentViewController:navigationController
+//                           animated:YES
+//                         completion:nil];
+//    }
+    NSString *phoneNumber = [@"tel://" stringByAppendingString:@"4252026228"];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }
 
 @end

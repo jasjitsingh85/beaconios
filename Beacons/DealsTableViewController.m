@@ -1023,7 +1023,7 @@ typedef enum dealTypeStates
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 151;
+        return 201;
     } else {
 //        if (indexPath.row == 0){
 //            if ([[NSUserDefaults standardUserDefaults] boolForKey:kDefaultsKeyHasSeenHotspotTile]) {

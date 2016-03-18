@@ -91,6 +91,10 @@
 @property (strong, nonatomic) EventChatViewController *eventChatViewController;
 @property (strong, nonatomic) VoucherViewController *voucherViewController;
 
+@property (strong, nonatomic) UIButton *ticketButton;
+@property (strong, nonatomic) UIButton *chatRoomButton;
+@property (strong, nonatomic) UIButton *matchGameButton;
+
 @end
 
 @implementation EventRedemptionViewController
@@ -114,21 +118,19 @@
     self.voucherViewController = [[VoucherViewController alloc] init];
     
     [self addChildViewController:self.voucherViewController];
-    self.voucherViewController.view.y = 80;
-    self.voucherViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height - 80);
+    self.voucherViewController.view.y = 85;
+    self.voucherViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height - 110);
     [self.view addSubview:self.voucherViewController.view];
     [self.voucherViewController didMoveToParentViewController:self];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@""];
-    
     self.faqViewController = [[FaqViewController alloc] initForModal];
     self.hasCheckedPayment = NO;
     self.dealMode = NO;
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 130, self.view.width, 1)];
-    topBorder.backgroundColor = [[ThemeManager sharedTheme] darkGrayColor];
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 1)];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:205 green:205 blue:205 alpha:255];
     [self.view addSubview:topBorder];
     
     [self loadApplicationIcons];
@@ -139,7 +141,28 @@
 
 -(void) loadApplicationIcons
 {
+    self.ticketButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.ticketButton.size = CGSizeMake(50, 50);
+    self.ticketButton.centerX = self.view.width/6.0;
+    self.ticketButton.y = 70;
+    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateNormal];
+    [self.view addSubview:self.ticketButton];
     
+    UILabel *ticketLabel = [[UILabel alloc] init];
+    ticketLabel.font = [ThemeManager mediumFontOfSize:8];
+    ticketLabel.textColor = [UIColor blackColor];
+    ticketLabel.text = @"TICKET";
+    ticketLabel.width = self.view.width/3.0;
+    ticketLabel.height = 20;
+    ticketLabel.y = 117.5;
+    ticketLabel.centerX = self.view.width/6.0;
+    ticketLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:ticketLabel];
+    
+    UIImageView *nub = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nubForBorder"]];
+    nub.centerX = self.view.width/6.0;
+    nub.y = 136;
+    [self.view addSubview:nub];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -227,7 +250,7 @@
 {
     _sponsoredEvent = sponsoredEvent;
     
-//    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
     
