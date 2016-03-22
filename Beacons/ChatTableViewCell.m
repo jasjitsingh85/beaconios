@@ -79,6 +79,7 @@
         self.chatImageView.hidden = YES;
         
         self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(7, 0, 46, 46)];
+        self.avatarImageView.layer.cornerRadius = self.avatarImageView.height/2.0;
         self.avatarImageView.clipsToBounds = YES;
         self.avatarImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.avatarImageView];
@@ -186,7 +187,7 @@
     CGRect chatBubbleFrame;
     chatBubbleFrame.size.height = chatLabelFrame.size.height + 2*15;
     chatBubbleFrame.size.width = chatLabelFrame.size.width + 3*15;
-    CGFloat bubbleBufferX = 50;
+    CGFloat bubbleBufferX = 55;
     CGFloat avatarBufferX = 7;
     CGRect avatarFrame;
     avatarFrame.size = CGSizeMake(46, 46);

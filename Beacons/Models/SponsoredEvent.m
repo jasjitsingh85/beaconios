@@ -28,6 +28,8 @@
     
     self.eventDescription = dictionary[@"description"];
     
+    self.chatChannelUrl = dictionary[@"chat_channel_url"];
+    
     NSString *isSoldOut = dictionary[@"is_sold_out"];
     self.isSoldOut = [isSoldOut boolValue];
     

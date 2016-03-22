@@ -31,6 +31,7 @@ typedef enum {
 @property (strong, nonatomic) Venue *venue;
 @property (strong, nonatomic) NSString *socialMessage;
 @property (strong, nonatomic) NSString *statusMessage;
+@property (strong, nonatomic) NSString *chatChannelUrl;
 @property (strong, nonatomic) NSURL *websiteURL;
 @property (strong, nonatomic) NSURL *deepLinkURL;
 @property (strong, nonatomic) EventStatus *eventStatus;

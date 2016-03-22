@@ -8,10 +8,11 @@
 
 #import "ChatViewController.h"
 
-@class Beacon;
+@class Beacon, SponsoredEvent;
 @interface EventChatViewController : ChatViewController
 
 @property (strong, nonatomic) Beacon *beacon;
+@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 
 - (void)createChatMessageWithString:(NSString *)messageString;
 - (void)createChatMessageWithImage:(UIImage *)image;

@@ -17,6 +17,8 @@
 #import "SoundPlayer.h"
 #import "User.h"
 #import <SendBirdSDK/SendBirdSDK.h>
+#import "LoadingIndictor.h"
+#import "SponsoredEvent.h"
 
 @interface EventChatViewController ()
 
@@ -28,10 +30,15 @@
 {
     [super viewDidLoad];
     
-    [self initSendBird];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedPushNotificationMessage:) name:kPushNotificationMessageReceived object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+-(void)setSponsoredEvent:(SponsoredEvent *)sponsoredEvent
+{
+    _sponsoredEvent = sponsoredEvent;
+    
+    [self initSendBird];
 }
 
 -(void)initSendBird
@@ -40,16 +47,21 @@
     NSString *APP_ID = @"E646196E-AE50-4BA7-99C9-EADF05C2267B";
     [SendBird initAppId:APP_ID withDeviceId:[SendBird deviceUniqueID]];
     [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:loggedInUser.phoneNumber];
-    [SendBird joinChannel:@"1fc48.TEST"];
+    [SendBird joinChannel:self.sponsoredEvent.chatChannelUrl];
+    
+//    [SendBird loginWithUserId:@"1" andUserName:@"Hotspot" andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:@"1111"];
+//    [SendBird joinChannel:self.sponsoredEvent.chatChannelUrl];
     
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
         [self reloadMessagesFromServerCompletion:nil];
     } errorBlock:^(NSInteger code) {
-        // Error occured due to bad APP_ID (or other unknown reason)
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
     } channelLeftBlock:^(SendBirdChannel *channel) {
         // Calls when the user leaves a channel.
     } messageReceivedBlock:^(SendBirdMessage *message) {
-        [self reloadMessagesFromServerCompletion:nil];
+        [self reloadMessagesFromServerCompletion:^ {
+//            [[SoundPlayer sharedPlayer] vibrate];
+        }];
     } systemMessageReceivedBlock:^(SendBirdSystemMessage *message) {
         // Received a system message
     } broadcastMessageReceivedBlock:^(SendBirdBroadcastMessage *message) {
@@ -147,19 +159,6 @@
 
 - (void)reloadMessagesFromServerCompletion:(void (^)())completion
 {
-//    [[APIClient sharedClient] getMessagesForBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        [self parseMessages:responseObject withCompletion:^(NSArray *messages) {
-//            self.messages = messages;
-//            [self reloadMessages];
-//            if (completion) {
-//                completion();
-//            }
-//        }];
-//
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//    }];
-    
-    // Load last 50 messages then connect to SendBird.
     [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
         long long maxMessageTs = LLONG_MIN;
         for (SendBirdMessageModel *model in queryResult) {
@@ -177,11 +176,11 @@
                 completion();
             }
         }];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
         // Load last 50 messages then connect to SendBird.
         //        [SendBird connectWithMessageTs:maxMessageId];
     } endBlock:^(NSError *error) {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
     }];
     
 }

@@ -130,7 +130,8 @@
     self.ticketButton.size = CGSizeMake(50, 50);
     self.ticketButton.centerX = self.view.width/6.0;
     self.ticketButton.y = 70;
-    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateNormal];
+    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonUnselected"] forState:UIControlStateNormal];
+    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateSelected];
     [self.ticketButton addTarget:self action:@selector(ticketButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [buttonContainer addSubview:self.ticketButton];
     
@@ -150,6 +151,7 @@
     self.chatRoomButton.centerX = self.view.width/2.0;
     self.chatRoomButton.y = 70;
     [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomUnselected"] forState:UIControlStateNormal];
+    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomSelected"] forState:UIControlStateSelected];
     [self.chatRoomButton addTarget:self action:@selector(chatRoomButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [buttonContainer addSubview:self.chatRoomButton];
     
@@ -219,6 +221,13 @@
     
     [self refreshSponsoredEventData];
     
+    [self setInitialState];
+    
+}
+
+-(void)setInitialState
+{
+    [self makeTicketActive];
 }
 
 -(void)ticketButtonTapped:(id)sender
@@ -229,6 +238,7 @@
 
 -(void)chatRoomButtonTapped:(id)sender
 {
+    [self updatePage:1];
     [self scrollToPage:1];
 }
 
@@ -289,7 +299,9 @@
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
     CGFloat pageWidth = self.activityScroll.frame.size.width;
     int page = floor((self.activityScroll.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    [self updatePage:page];
+    if (sender.isDecelerating) {
+        [self updatePage:page];
+    }
 }
 
 -(void)updatePage:(int)page
@@ -297,6 +309,7 @@
     [self updateButtons:page];
     [self animateNubToPage:page];
 }
+
 
 -(void)scrollToPage:(int)page
 {
@@ -315,15 +328,13 @@
              } else if (page == 1) {
                  self.nub.centerX = self.view.width/2.0;
              }
-//             else if (page == 2) {
-//                 self.nub.centerX = self.view.width - self.view.width/6.0;
-//             }
          }
                          completion:^(BOOL finished)
          {
-             
+
          }];
 }
+
 
 -(void)updateButtons:(int)page
 {
@@ -338,22 +349,30 @@
 
 -(void)makeTicketActive
 {
-    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateNormal];
+    if (![self.ticketButton isSelected]) {
+        [self.ticketButton setSelected:YES];
+    }
 }
 
 -(void)makeTicketUnselected
 {
-    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonUnselected"] forState:UIControlStateNormal];
+    if ([self.ticketButton isSelected]) {
+        [self.ticketButton setSelected:NO];
+    }
 }
 
 -(void)makeChatroomActive
 {
-    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomSelected"] forState:UIControlStateNormal];
+    if (![self.chatRoomButton isSelected]) {
+        [self.chatRoomButton setSelected:YES];
+    }
 }
 
 -(void)makeChatroomUnselected
 {
-    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomUnselected"] forState:UIControlStateNormal];
+    if ([self.chatRoomButton isSelected]) {
+        [self.chatRoomButton setSelected:NO];
+    }
 }
 
 //-(void)makeMatchActive
@@ -398,6 +417,8 @@
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
+    
+    self.eventChatViewController.sponsoredEvent = self.sponsoredEvent;
     
     [self.view addSubview:self.activityScroll];
 }
