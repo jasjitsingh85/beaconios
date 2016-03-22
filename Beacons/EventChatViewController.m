@@ -60,7 +60,7 @@
         // Calls when the user leaves a channel.
     } messageReceivedBlock:^(SendBirdMessage *message) {
         [self reloadMessagesFromServerCompletion:^ {
-//            [[SoundPlayer sharedPlayer] vibrate];
+            [[SoundPlayer sharedPlayer] vibrate];
         }];
     } systemMessageReceivedBlock:^(SendBirdSystemMessage *message) {
         // Received a system message
@@ -108,7 +108,6 @@
     [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
         long long maxMessageTs = LLONG_MIN;
         for (SendBirdMessageModel *model in queryResult) {
-            // Add message to an array here.
             NSLog(@"model: %@", model);
             if (maxMessageTs <= [model getMessageTimestamp]) {
                 maxMessageTs = [model getMessageTimestamp];
@@ -187,15 +186,9 @@
 
 - (void)parseMessages:(NSMutableArray *)messagesData withCompletion:(void (^)(NSArray *messages))completion
 {
-//    if (![messagesData.allKeys containsObject:@"messages"]) {
-//        if (completion) {
-//            completion(nil);
-//        }
-//        return;
-//    }
-    
     NSMutableArray *messages = [[NSMutableArray alloc] init];
     for (SendBirdMessage *message in messagesData) {
+        NSLog(@"MESSAGE: %@", message);
         ChatMessage *chatMessage = [[ChatMessage alloc] initWithSendBirdData:message];
         [messages addObject:chatMessage];
     }
