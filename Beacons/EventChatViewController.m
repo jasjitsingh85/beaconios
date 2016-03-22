@@ -49,7 +49,7 @@
     } channelLeftBlock:^(SendBirdChannel *channel) {
         // Calls when the user leaves a channel.
     } messageReceivedBlock:^(SendBirdMessage *message) {
-        // Received a regular chat message
+        [self reloadMessagesFromServerCompletion:nil];
     } systemMessageReceivedBlock:^(SendBirdSystemMessage *message) {
         // Received a system message
     } broadcastMessageReceivedBlock:^(SendBirdBroadcastMessage *message) {

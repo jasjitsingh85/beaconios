@@ -65,7 +65,8 @@ static dispatch_once_t onceToken;
     if (self) {
         self.firstName = [[sender.name componentsSeparatedByString:@" "] objectAtIndex:0];
         self.lastName = [[sender.name componentsSeparatedByString:@" "] objectAtIndex:1];
-        self.userID =  [NSNumber numberWithLongLong:sender.senderId];
+        self.userID =  [NSNumber numberWithInteger:[sender.guestId integerValue]]
+        ;
         NSString *avatarString = sender.imageUrl;
         if (avatarString) {
             self.avatarURL = [NSURL URLWithString:avatarString];

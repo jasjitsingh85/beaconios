@@ -95,9 +95,14 @@
 @property (strong, nonatomic) UIButton *chatRoomButton;
 @property (strong, nonatomic) UIButton *matchGameButton;
 
+@property (strong, nonatomic) UIImageView *nub;
+
+@property (strong, nonatomic) UIScrollView *activityScroll;
+
 @end
 
 @implementation EventRedemptionViewController
+@synthesize activityScroll;
 
 - (void)viewDidLoad
 {
@@ -111,42 +116,23 @@
     [textFriendsButton setImage:[UIImage imageNamed:@"textFriendsIcon"] forState:UIControlStateNormal];
     [textFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-//    self.eventChatViewController = [[EventChatViewController alloc] init];
-//    self.eventChatViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
-//    [self.view addSubview:self.eventChatViewController.view];
-    
-    self.voucherViewController = [[VoucherViewController alloc] init];
-    
-    [self addChildViewController:self.voucherViewController];
-    self.voucherViewController.view.y = 85;
-    self.voucherViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height - 110);
-    [self.view addSubview:self.voucherViewController.view];
-    [self.voucherViewController didMoveToParentViewController:self];
-    
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:@""];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
     self.faqViewController = [[FaqViewController alloc] initForModal];
     self.hasCheckedPayment = NO;
     self.dealMode = NO;
     
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 140, self.view.width, 1)];
-    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:205 green:205 blue:205 alpha:255];
-    [self.view addSubview:topBorder];
+    UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 140)];
+    buttonContainer.backgroundColor = [UIColor whiteColor];
     
-    [self loadApplicationIcons];
-    
-    [self refreshSponsoredEventData];
-    
-}
-
--(void) loadApplicationIcons
-{
     self.ticketButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.ticketButton.size = CGSizeMake(50, 50);
     self.ticketButton.centerX = self.view.width/6.0;
     self.ticketButton.y = 70;
     [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateNormal];
-    [self.view addSubview:self.ticketButton];
+    [self.ticketButton addTarget:self action:@selector(ticketButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonContainer addSubview:self.ticketButton];
     
     UILabel *ticketLabel = [[UILabel alloc] init];
     ticketLabel.font = [ThemeManager mediumFontOfSize:8];
@@ -157,12 +143,98 @@
     ticketLabel.y = 117.5;
     ticketLabel.centerX = self.view.width/6.0;
     ticketLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:ticketLabel];
+    [buttonContainer addSubview:ticketLabel];
     
-    UIImageView *nub = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nubForBorder"]];
-    nub.centerX = self.view.width/6.0;
-    nub.y = 136;
-    [self.view addSubview:nub];
+    self.chatRoomButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.chatRoomButton.size = CGSizeMake(50, 50);
+    self.chatRoomButton.centerX = self.view.width/2.0;
+    self.chatRoomButton.y = 70;
+    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomUnselected"] forState:UIControlStateNormal];
+    [self.chatRoomButton addTarget:self action:@selector(chatRoomButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonContainer addSubview:self.chatRoomButton];
+    
+    UILabel *chatRoomLabel = [[UILabel alloc] init];
+    chatRoomLabel.font = [ThemeManager mediumFontOfSize:8];
+    chatRoomLabel.textColor = [UIColor blackColor];
+    chatRoomLabel.text = @"CHATROOM";
+    chatRoomLabel.width = self.view.width/3.0;
+    chatRoomLabel.height = 20;
+    chatRoomLabel.y = 117.5;
+    chatRoomLabel.centerX = self.view.width/2.0;
+    chatRoomLabel.textAlignment = NSTextAlignmentCenter;
+    [buttonContainer addSubview:chatRoomLabel];
+    
+    self.matchGameButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.matchGameButton.size = CGSizeMake(50, 50);
+    self.matchGameButton.centerX = self.view.width - self.view.width/6.0;
+    self.matchGameButton.y = 70;
+    [self.matchGameButton setImage:[UIImage imageNamed:@"matchDisabled"] forState:UIControlStateNormal];
+    [self.matchGameButton addTarget:self action:@selector(matchGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonContainer addSubview:self.matchGameButton];
+    
+    UILabel *matchLabel = [[UILabel alloc] init];
+    matchLabel.font = [ThemeManager mediumFontOfSize:8];
+    matchLabel.textColor = [UIColor blackColor];
+    matchLabel.text = @"SWIPE & MATCH";
+    matchLabel.width = self.view.width/3.0;
+    matchLabel.height = 20;
+    matchLabel.y = 117.5;
+    matchLabel.centerX = self.view.width - self.view.width/6.0;
+    matchLabel.textAlignment = NSTextAlignmentCenter;
+    [buttonContainer addSubview:matchLabel];
+    
+    self.activityScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 140, self.view.width, self.view.height - 140)];
+    self.activityScroll.backgroundColor = [UIColor whiteColor];
+    self.activityScroll.pagingEnabled = YES;
+    self.activityScroll.showsHorizontalScrollIndicator = NO;
+    self.activityScroll.contentSize = CGSizeMake(self.view.width * 2, self.view.height - 140);
+    self.activityScroll.delegate = self;
+    
+    
+//    [self.activityScroll setUserInteractionEnabled:YES];
+//    [self.view addGestureRecognizer:self.activityScroll.panGestureRecognizer];
+    
+    self.voucherViewController = [[VoucherViewController alloc] init];
+    [self addChildViewController:self.voucherViewController];
+//    self.voucherViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
+    [self.activityScroll addSubview:self.voucherViewController.view];
+    [self.voucherViewController didMoveToParentViewController:self];
+    
+    self.eventChatViewController = [[EventChatViewController alloc] init];
+    [self addChildViewController:self.eventChatViewController];
+    self.eventChatViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
+    self.eventChatViewController.view.x = self.view.width;
+    [self.activityScroll addSubview:self.eventChatViewController.view];
+    [self.eventChatViewController didMoveToParentViewController:self];
+    
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 139, self.view.width, 1)];
+    topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:205 green:205 blue:205 alpha:255];
+    [buttonContainer addSubview:topBorder];
+    
+    self.nub = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nubForBorder"]];
+    self.nub.centerX = self.view.width/6.0;
+    self.nub.y = 135;
+    [buttonContainer addSubview:self.nub];
+    [self.view addSubview:buttonContainer];
+    
+    [self refreshSponsoredEventData];
+    
+}
+
+-(void)ticketButtonTapped:(id)sender
+{
+    [self updatePage:0];
+    [self scrollToPage:0];
+}
+
+-(void)chatRoomButtonTapped:(id)sender
+{
+    [self scrollToPage:1];
+}
+
+-(void)matchGameButtonTapped:(id)sender
+{
+//    [self updatePage:2];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -214,11 +286,84 @@
     
 }
 
-//-(void)viewDidAppear:(BOOL)animated
+- (void)scrollViewDidScroll:(UIScrollView *)sender {
+    CGFloat pageWidth = self.activityScroll.frame.size.width;
+    int page = floor((self.activityScroll.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    [self updatePage:page];
+}
+
+-(void)updatePage:(int)page
+{
+    [self updateButtons:page];
+    [self animateNubToPage:page];
+}
+
+-(void)scrollToPage:(int)page
+{
+    [self.activityScroll setContentOffset:CGPointMake(self.activityScroll.frame.size.width*page, 0.0f) animated:YES];
+}
+
+-(void)animateNubToPage:(int)page
+{
+        [UIView animateWithDuration:0.3
+                              delay:0.0
+                            options: UIViewAnimationCurveEaseOut
+                         animations:^
+         {
+             if (page == 0) {
+                 self.nub.centerX = self.view.width/6.0;
+             } else if (page == 1) {
+                 self.nub.centerX = self.view.width/2.0;
+             }
+//             else if (page == 2) {
+//                 self.nub.centerX = self.view.width - self.view.width/6.0;
+//             }
+         }
+                         completion:^(BOOL finished)
+         {
+             
+         }];
+}
+
+-(void)updateButtons:(int)page
+{
+    if (page == 0) {
+        [self makeTicketActive];
+        [self makeChatroomUnselected];
+    } else if (page == 1) {
+        [self makeTicketUnselected];
+        [self makeChatroomActive];
+    }
+}
+
+-(void)makeTicketActive
+{
+    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonSelected"] forState:UIControlStateNormal];
+}
+
+-(void)makeTicketUnselected
+{
+    [self.ticketButton setImage:[UIImage imageNamed:@"ticketButtonUnselected"] forState:UIControlStateNormal];
+}
+
+-(void)makeChatroomActive
+{
+    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomSelected"] forState:UIControlStateNormal];
+}
+
+-(void)makeChatroomUnselected
+{
+    [self.chatRoomButton setImage:[UIImage imageNamed:@"chatRoomUnselected"] forState:UIControlStateNormal];
+}
+
+//-(void)makeMatchActive
 //{
-//    if (self.beacon.deal.venue.hasPosIntegration) {
-//        [self refreshTab];
-//    }
+//    
+//}
+//
+//-(void)makeMatchUnselected
+//{
+//    [self.matchGameButton setImage:[UIImage imageNamed:@"matchDisabled"] forState:UIControlStateNormal];
 //}
 
 - (void) refreshDeal
@@ -254,8 +399,7 @@
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
     
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    
+    [self.view addSubview:self.activityScroll];
 }
 
 //-(void)showOverlayView

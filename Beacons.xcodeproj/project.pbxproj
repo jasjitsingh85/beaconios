@@ -209,6 +209,16 @@
 		41FA91CB1C9BD2540092994E /* nubForBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91CA1C9BD2540092994E /* nubForBorder@2x.png */; };
 		41FA91CD1C9BD96D0092994E /* eventRedemptionBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91CC1C9BD96D0092994E /* eventRedemptionBackground@2x.png */; };
 		41FA91CF1C9BDA7A0092994E /* fingerprintIconWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91CE1C9BDA7A0092994E /* fingerprintIconWhite@2x.png */; };
+		41FA91D11CA058CA0092994E /* chatRoomDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D01CA058CA0092994E /* chatRoomDisabled@2x.png */; };
+		41FA91D31CA059550092994E /* matchDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D21CA059550092994E /* matchDisabled@2x.png */; };
+		41FA91DC1CA0A8430092994E /* matchSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D41CA0A8430092994E /* matchSelected@2x.png */; };
+		41FA91DD1CA0A8430092994E /* matchUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D51CA0A8430092994E /* matchUnselected@2x.png */; };
+		41FA91DE1CA0A8430092994E /* chatRoomUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D61CA0A8430092994E /* chatRoomUnselected@2x.png */; };
+		41FA91DF1CA0A8430092994E /* chatRoomSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D71CA0A8430092994E /* chatRoomSelected@2x.png */; };
+		41FA91E01CA0A8430092994E /* ticketButtonUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D81CA0A8430092994E /* ticketButtonUnselected@2x.png */; };
+		41FA91E11CA0A8430092994E /* ticketButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D91CA0A8430092994E /* ticketButtonDisabled@2x.png */; };
+		41FA91E21CA0A8430092994E /* matchDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91DA1CA0A8430092994E /* matchDisabled@2x.png */; };
+		41FA91E31CA0A8430092994E /* chatRoomDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91DB1CA0A8430092994E /* chatRoomDisabled@2x.png */; };
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
@@ -660,6 +670,16 @@
 		41FA91CA1C9BD2540092994E /* nubForBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nubForBorder@2x.png"; sourceTree = "<group>"; };
 		41FA91CC1C9BD96D0092994E /* eventRedemptionBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eventRedemptionBackground@2x.png"; sourceTree = "<group>"; };
 		41FA91CE1C9BDA7A0092994E /* fingerprintIconWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fingerprintIconWhite@2x.png"; sourceTree = "<group>"; };
+		41FA91D01CA058CA0092994E /* chatRoomDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatRoomDisabled@2x.png"; sourceTree = "<group>"; };
+		41FA91D21CA059550092994E /* matchDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matchDisabled@2x.png"; sourceTree = "<group>"; };
+		41FA91D41CA0A8430092994E /* matchSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matchSelected@2x.png"; sourceTree = "<group>"; };
+		41FA91D51CA0A8430092994E /* matchUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matchUnselected@2x.png"; sourceTree = "<group>"; };
+		41FA91D61CA0A8430092994E /* chatRoomUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatRoomUnselected@2x.png"; sourceTree = "<group>"; };
+		41FA91D71CA0A8430092994E /* chatRoomSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatRoomSelected@2x.png"; sourceTree = "<group>"; };
+		41FA91D81CA0A8430092994E /* ticketButtonUnselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ticketButtonUnselected@2x.png"; sourceTree = "<group>"; };
+		41FA91D91CA0A8430092994E /* ticketButtonDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ticketButtonDisabled@2x.png"; sourceTree = "<group>"; };
+		41FA91DA1CA0A8430092994E /* matchDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "matchDisabled@2x.png"; sourceTree = "<group>"; };
+		41FA91DB1CA0A8430092994E /* chatRoomDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatRoomDisabled@2x.png"; sourceTree = "<group>"; };
 		41FD06191B37021F00F7DD08 /* bluePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bluePin@2x.png"; sourceTree = "<group>"; };
 		41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenPin@2x.png"; sourceTree = "<group>"; };
 		41FD061D1B3703C900F7DD08 /* purplePin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "purplePin@2x.png"; sourceTree = "<group>"; };
@@ -1465,11 +1485,13 @@
 				41FFB0141C15248C00947EEC /* unfollowButton@2x.png */,
 				41CB5C671C0D69540077485B /* blackHelpButton@2x.png */,
 				41FFB0181C153F7400947EEC /* newGrayPin@2x.png */,
+				41FA91D21CA059550092994E /* matchDisabled@2x.png */,
 				41FFB0281C1A06E700947EEC /* emailIcon@2x.png */,
 				414F740B1C5B383E00CF49C4 /* iconForTab@2x.png */,
 				41FA91C81C9BCBBB0092994E /* ticketButtonSelected@2x.png */,
 				41FFB0191C153F7400947EEC /* newRedPin@2x.png */,
 				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
+				41FA91D01CA058CA0092994E /* chatRoomDisabled@2x.png */,
 				41FA91CE1C9BDA7A0092994E /* fingerprintIconWhite@2x.png */,
 				41C9870E1C042EB400DD595D /* newHappyHourIcon@2x.png */,
 				41C987171C05282D00DD595D /* newHotspotIcon@2x.png */,
@@ -1488,6 +1510,14 @@
 				41FA91CC1C9BD96D0092994E /* eventRedemptionBackground@2x.png */,
 				412E8C951C3ECA4900E54486 /* paymentIcon@2x.png */,
 				4122D6E71C71BADC00A53821 /* newFilterButton@2x.png */,
+				41FA91D41CA0A8430092994E /* matchSelected@2x.png */,
+				41FA91D51CA0A8430092994E /* matchUnselected@2x.png */,
+				41FA91D61CA0A8430092994E /* chatRoomUnselected@2x.png */,
+				41FA91D71CA0A8430092994E /* chatRoomSelected@2x.png */,
+				41FA91D81CA0A8430092994E /* ticketButtonUnselected@2x.png */,
+				41FA91D91CA0A8430092994E /* ticketButtonDisabled@2x.png */,
+				41FA91DA1CA0A8430092994E /* matchDisabled@2x.png */,
+				41FA91DB1CA0A8430092994E /* chatRoomDisabled@2x.png */,
 				412E8C961C3ECA4900E54486 /* redeemIcon@2x.png */,
 				412E8C971C3ECA4900E54486 /* newDrinkIcon@2x.png */,
 				41338FD519FA38CA0022211C /* marker@2x.png */,
@@ -1842,6 +1872,7 @@
 				96CBCCFF1805107500D62462 /* chatBubbleYellowLeft@2x.png in Resources */,
 				4148E9BF1B03D56A0050D3E3 /* goldCoin@2x.png in Resources */,
 				1FE67733175C3C9F006F563C /* Lato-Bold.ttf in Resources */,
+				41FA91E21CA0A8430092994E /* matchDisabled@2x.png in Resources */,
 				1FE67735175C3CB5006F563C /* Lato-Regular.ttf in Resources */,
 				41D716B51BCB3C5B00DF23D2 /* largeCrossout@2x.png in Resources */,
 				4105DAB31B8053370006B888 /* bigGroupIcon@2x.png in Resources */,
@@ -1853,6 +1884,7 @@
 				4105DAB11B80097B0006B888 /* inactiveNavbarClock@2x.png in Resources */,
 				1F465C0B17618B9200F35A8B /* SelectLocationViewController.xib in Resources */,
 				96ED6375181E3545001B7933 /* directionsArrow@2x.png in Resources */,
+				41FA91DD1CA0A8430092994E /* matchUnselected@2x.png in Resources */,
 				41148CBB1B7A6D8A00F4CA17 /* newsfeedIcon@2x.png in Resources */,
 				4105DAB01B80097B0006B888 /* activeNavbarClock@2x.png in Resources */,
 				41C987181C05282D00DD595D /* newHotspotIcon@2x.png in Resources */,
@@ -1887,8 +1919,10 @@
 				96CBCCF71805107500D62462 /* chatBubblePurpleRight@2x.png in Resources */,
 				9671D03218273BE700D03D66 /* LockedViewController.xib in Resources */,
 				41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */,
+				41FA91DE1CA0A8430092994E /* chatRoomUnselected@2x.png in Resources */,
 				4148E9CE1B0874130050D3E3 /* singleGoldCoin@2x.png in Resources */,
 				417CE4961BE53C67009D4B9A /* setupNewsfeed@2x.png in Resources */,
+				41FA91D11CA058CA0092994E /* chatRoomDisabled@2x.png in Resources */,
 				41FD06431B3A316A00F7DD08 /* freeDrinks@2x.png in Resources */,
 				41FD062D1B38F0A800F7DD08 /* composeMessageIcon@2x.png in Resources */,
 				41FD06371B39EF2700F7DD08 /* activeVoucher@2x.png in Resources */,
@@ -1914,6 +1948,7 @@
 				4111AAFF1B65F1B10001C94A /* buttonBackground@2x.png in Resources */,
 				96ED6370181DEBF5001B7933 /* Icon.png in Resources */,
 				41CBB0EB1C077A2600B7C4AA /* bigRedPin@2x.png in Resources */,
+				41FA91E11CA0A8430092994E /* ticketButtonDisabled@2x.png in Resources */,
 				41FD062F1B3902A000F7DD08 /* timeIcon@2x.png in Resources */,
 				414F73FD1C476CBE00CF49C4 /* friendsWhite@2x.png in Resources */,
 				41CBB0E91C0619E200B7C4AA /* instagramLogo@2x.png in Resources */,
@@ -1947,6 +1982,7 @@
 				41FFB0221C19EFDF00947EEC /* hotspotIconBig@2x.png in Resources */,
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
+				41FA91E31CA0A8430092994E /* chatRoomDisabled@2x.png in Resources */,
 				41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				41ED34D81AC9F91400A77A92 /* Default@2x.png in Resources */,
@@ -1964,14 +2000,17 @@
 				4158AE5D1B4389900034BA4A /* mapToggleButton@2x.png in Resources */,
 				96CBCCF81805107500D62462 /* chatBubbleGreenRight@2x.png in Resources */,
 				412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */,
+				41FA91DF1CA0A8430092994E /* chatRoomSelected@2x.png in Resources */,
 				9691D26617FA94AB0095BA80 /* invitedButtonNormal@2x.png in Resources */,
 				415929711AFD8E37002BBCD0 /* mapMarker@2x.png in Resources */,
 				41F97BB61BBB170C003D1D86 /* updatedHelpButton@2x.png in Resources */,
+				41FA91DC1CA0A8430092994E /* matchSelected@2x.png in Resources */,
 				41C4B8361BEFD5A700D471D6 /* filterButton@2x.png in Resources */,
 				96CD6C4D194746A300F69E8E /* dealButtonNormal@2x.png in Resources */,
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				414F74081C54640200CF49C4 /* socialTutorialBackground@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
+				41FA91D31CA059550092994E /* matchDisabled@2x.png in Resources */,
 				41C4B8381BF073B200D471D6 /* updatedBackgroundGradient@2x.png in Resources */,
 				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
@@ -2003,6 +2042,7 @@
 				414F740C1C5B383E00CF49C4 /* iconForTab@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
 				1F36E85617A6170F00D12CB8 /* backArrow@2x.png in Resources */,
+				41FA91E01CA0A8430092994E /* ticketButtonUnselected@2x.png in Resources */,
 				4105DA9C1B7D7DF10006B888 /* facebookIcon@2x.png in Resources */,
 				410FC8A31B3B65D60097EA26 /* pushIcon@2x.png in Resources */,
 				41FD06281B377C6700F7DD08 /* venueIcon@2x.png in Resources */,

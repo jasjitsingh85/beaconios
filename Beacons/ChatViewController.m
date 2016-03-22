@@ -27,19 +27,17 @@
         return nil;
     }
     
-
-    
     return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     
     CGRect textViewContainerFrame;
     textViewContainerFrame.size = CGSizeMake(self.view.frame.size.width, 44);
-    textViewContainerFrame.origin = CGPointMake(0, self.view.frame.size.height - textViewContainerFrame.size.height);
+    textViewContainerFrame.origin = CGPointMake(0, self.view.frame.size.height - textViewContainerFrame.size.height - 140);
     self.textViewContainer = [[UIView alloc] initWithFrame:textViewContainerFrame];
+    self.textViewContainer.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.textViewContainer];
     
     self.cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -67,18 +65,18 @@
     self.textView.returnKeyType = UIReturnKeySend;
     [self.textViewContainer addSubview:self.textView];
     
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 10)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view insertSubview:self.tableView belowSubview:self.textViewContainer];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(64.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, self.view.frame.size.height - self.textView.frame.origin.y, 0.0);
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
-    self.desiredEdgeInsets = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0);
+    self.desiredEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
