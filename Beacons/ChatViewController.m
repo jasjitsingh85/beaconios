@@ -12,6 +12,7 @@
 #import "User.h"
 #import "Theme.h"
 #import "AppDelegate.h"
+#import <SendBirdSDK/SendBirdSDK.h>
 #import "JAPlaceholderTextView.h"
 
 @interface ChatViewController ()
@@ -45,6 +46,7 @@
     cameraButtonFrame.size = CGSizeMake(44, 44);
     cameraButtonFrame.origin = CGPointMake(0, 0.5*(self.textViewContainer.frame.size.height - cameraButtonFrame.size.height));
     self.cameraButton.frame = cameraButtonFrame;
+    [self.cameraButton addTarget:self action:@selector(cameraButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.cameraButton setImage:[UIImage imageNamed:@"cameraSmall"] forState:UIControlStateNormal];
     [self.textViewContainer addSubview:self.cameraButton];
     
@@ -267,8 +269,7 @@
 
 - (void)cameraButtonTouched:(id)sender
 {
-    
-}
 
+}
 
 @end

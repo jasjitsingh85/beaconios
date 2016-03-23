@@ -16,11 +16,14 @@
 #import "ImageViewController.h"
 #import "SoundPlayer.h"
 #import "User.h"
+#import "PhotoManager.h"
 #import <SendBirdSDK/SendBirdSDK.h>
 #import "LoadingIndictor.h"
 #import "SponsoredEvent.h"
+#import <BlocksKit/UIActionSheet+BlocksKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface EventChatViewController ()
+@interface EventChatViewController () <UIImagePickerControllerDelegate>
 
 @end
 
@@ -49,9 +52,6 @@
     [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:loggedInUser.phoneNumber];
     [SendBird joinChannel:self.sponsoredEvent.chatChannelUrl];
     
-//    [SendBird loginWithUserId:@"1" andUserName:@"Hotspot" andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:@"1111"];
-//    [SendBird joinChannel:self.sponsoredEvent.chatChannelUrl];
-    
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
         [self reloadMessagesFromServerCompletion:nil];
     } errorBlock:^(NSInteger code) {
@@ -67,7 +67,9 @@
     } broadcastMessageReceivedBlock:^(SendBirdBroadcastMessage *message) {
         // When broadcast message has been received
     } fileReceivedBlock:^(SendBirdFileLink *fileLink) {
-        // Received a file
+        [self reloadMessagesFromServerCompletion:^ {
+            [[SoundPlayer sharedPlayer] vibrate];
+        }];
     } messagingStartedBlock:^(SendBirdMessagingChannel *channel) {
         // Callback for [SendBird startMessagingWithUserId:]
     } messagingUpdatedBlock:^(SendBirdMessagingChannel *channel) {
@@ -187,10 +189,18 @@
 - (void)parseMessages:(NSMutableArray *)messagesData withCompletion:(void (^)(NSArray *messages))completion
 {
     NSMutableArray *messages = [[NSMutableArray alloc] init];
-    for (SendBirdMessage *message in messagesData) {
-        NSLog(@"MESSAGE: %@", message);
-        ChatMessage *chatMessage = [[ChatMessage alloc] initWithSendBirdData:message];
-        [messages addObject:chatMessage];
+    for (SendBirdMessageModel *messageModel in messagesData) {
+        SEL messageSelector = NSSelectorFromString(@"message");
+        SEL fileSelector = NSSelectorFromString(@"fileInfo");
+        if ([messageModel respondsToSelector:messageSelector]) {
+            SendBirdMessage *message = (SendBirdMessage *)messageModel;
+            ChatMessage *chatMessage = [[ChatMessage alloc] initMessageWithSendBirdData:message];
+            [messages addObject:chatMessage];
+        } else if ([messageModel respondsToSelector:fileSelector]) {
+            SendBirdFileLink *file = (SendBirdFileLink *)messageModel;
+            ChatMessage *chatMessage = [[ChatMessage alloc] initFileWithSendBirdData:file];
+            [messages addObject:chatMessage];
+        }
     }
     
     messages = [[[messages reverseObjectEnumerator] allObjects] mutableCopy];
@@ -233,6 +243,99 @@
 {
     [super didEnterText:text];
     [self createChatMessageWithString:text];
+}
+
+- (void)cameraButtonTouched:(id)sender
+{
+//    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
+//    mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//    NSMutableArray *mediaTypes = [[NSMutableArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
+//    mediaUI.mediaTypes = mediaTypes;
+//    [mediaUI setDelegate:self];
+//    [self presentViewController:mediaUI animated:YES completion:nil];
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Do you want to take a photo or add one from your library?"];
+    [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+    }];
+    [actionSheet bk_addButtonWithTitle:@"Add From Library" handler:^{
+        [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }];
+    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)source
+{
+    [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
+        if (image) {
+            NSData *imageFileData = UIImagePNGRepresentation(image);
+            [SendBird uploadFile:imageFileData type:@"image/jpg" hasSizeOfFile:[imageFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
+                            [SendBird sendFile:fileInfo];
+            }];
+            
+//            UIImage *scaledImage;
+//            CGFloat maxDimension = 720;
+//            if (image.size.width >= image.size.height) {
+//                scaledImage = [image scaledToSize:CGSizeMake(maxDimension, maxDimension*image.size.height/image.size.width)];
+//            }
+//            else {
+//                scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
+//            }
+//            [self updateImage:scaledImage];
+//            self.hasImage = YES;
+//            [[APIClient sharedClient] postImage:scaledImage forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+//            }];
+        }
+    }];
+}
+
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    __block NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+//    __block UIImage *originalImage, *editedImage, *imageToUse;
+//    __block NSURL *imagePath;
+//    __block NSString *imageName;
+//    
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//        if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+//            editedImage = (UIImage *) [info objectForKey:
+//                                       UIImagePickerControllerEditedImage];
+//            originalImage = (UIImage *) [info objectForKey:
+//                                         UIImagePickerControllerOriginalImage];
+//            
+//            if (originalImage) {
+//                imageToUse = originalImage;
+//            } else {
+//                imageToUse = editedImage;
+//            }
+//            
+//            NSData *imageFileData = UIImagePNGRepresentation(imageToUse);
+//            imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+//            imageName = [imagePath lastPathComponent];
+//            
+//            [SendBird uploadFile:imageFileData type:@"image/jpg" hasSizeOfFile:[imageFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
+//                [SendBird sendFile:fileInfo];
+//            }];
+//        }
+//        else if (CFStringCompare ((CFStringRef) mediaType, kUTTypeVideo, 0) == kCFCompareEqualTo) {
+//            NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+//            NSData *videoFileData = [NSData dataWithContentsOfURL:videoURL];
+//            
+//            [SendBird uploadFile:videoFileData type:@"video/mov" hasSizeOfFile:[videoFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
+//                [SendBird sendFile:fileInfo];
+//            }];
+//        }
+//    }];
+//}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        // other codes
+    }];
 }
 
 

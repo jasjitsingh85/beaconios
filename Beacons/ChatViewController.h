@@ -20,7 +20,7 @@
 @end
 
 
-@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, JAPlaceholderTextViewDelegate>
+@interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, JAPlaceholderTextViewDelegate, UIImagePickerControllerDelegate>
 
 @property (strong, nonatomic) UIView *textViewContainer;
 @property (strong, nonatomic) JAPlaceholderTextView *textView;

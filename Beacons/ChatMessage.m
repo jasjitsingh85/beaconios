@@ -45,7 +45,7 @@
     return self;
 }
 
-- (id)initWithSendBirdData:(SendBirdMessage *)messageData
+- (id)initMessageWithSendBirdData:(SendBirdMessage *)messageData
 {
     self = [super init];
     if (!self) {
@@ -59,17 +59,46 @@
         self.contactSender = [[Contact alloc] initWithData:contactData];
     }
     
-    self.messageString = messageData.message;
     if ([self.messageString isEqual:[NSNull null]]) {
         self.messageString = @"";
+    } else {
+        self.messageString = messageData.message;
     }
-    NSDictionary *imageData = messageData.data;
+    
+    NSString *imageData = messageData.data;
     if (![imageData isEmpty]) {
-        self.imageURL = [NSURL URLWithString:imageData[@"image_url"]];
+        self.imageURL = [NSURL URLWithString:imageData];
     }
     
     self.messageType = @"";
     self.avatarURL = [NSURL URLWithString:messageData.sender.imageUrl];
+    
+    return self;
+}
+
+- (id)initFileWithSendBirdData:(SendBirdFileLink *)fileData
+{
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.sender = [[User alloc] initWithSendBirdUserData:fileData.sender];
+    
+    NSDictionary *contactData = nil;
+    if (![contactData isEmpty]) {
+        self.contactSender = [[Contact alloc] initWithData:contactData];
+    }
+    
+    self.messageString = @"";
+    
+    SendBirdFileInfo *fileInfo = fileData.fileInfo;
+    if (![fileInfo isEmpty]) {
+        self.imageURL = [NSURL URLWithString:fileInfo.url];
+    }
+    
+    self.messageType = @"";
+    self.avatarURL = [NSURL URLWithString:fileData.sender.imageUrl];
     
     return self;
 }

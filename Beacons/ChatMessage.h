@@ -26,6 +26,7 @@
 @property (readonly) BOOL isSystemMessage;
 
 - (id)initWithData:(NSDictionary *)messageData;
-- (id)initWithSendBirdData:(SendBirdMessage *)messageData;
+- (id)initMessageWithSendBirdData:(SendBirdMessage *)messageData;
+- (id)initFileWithSendBirdData:(SendBirdFileLink *)fileData;
 
 @end
