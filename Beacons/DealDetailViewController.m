@@ -350,7 +350,7 @@
         UIButton *textFriendsButton = [[UIButton alloc] init];
         [textFriendsButton setImageEdgeInsets:UIEdgeInsetsMake(2, 0, -2, 0)];
         textFriendsButton.size = CGSizeMake(28, 28);
-        [textFriendsButton setImage:[UIImage imageNamed:@"textFriendsIcon"] forState:UIControlStateNormal];
+        [textFriendsButton setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
         [textFriendsButton addTarget:self action:@selector(inviteMoreFriends:) forControlEvents:UIControlEventTouchUpInside];
         
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];

@@ -195,6 +195,7 @@
 		41F1440F1B24DA8C0010BCF1 /* HappyHourVenue.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F1440E1B24DA8C0010BCF1 /* HappyHourVenue.m */; };
 		41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144131B27C3460010BCF1 /* greyPin@2x.png */; };
 		41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144141B27C3460010BCF1 /* redPin@2x.png */; };
+		41F361A81CA30F1E00467A44 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F361A71CA30F1E00467A44 /* share@2x.png */; };
 		41F97BAE1BB5EC19003D1D86 /* libTrackAndAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */; };
 		41F97BB01BB5ECA3003D1D86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */; };
 		41F97BB21BB5ECB3003D1D86 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */; };
@@ -654,6 +655,7 @@
 		41F1440E1B24DA8C0010BCF1 /* HappyHourVenue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HappyHourVenue.m; sourceTree = "<group>"; };
 		41F144131B27C3460010BCF1 /* greyPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyPin@2x.png"; sourceTree = "<group>"; };
 		41F144141B27C3460010BCF1 /* redPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redPin@2x.png"; sourceTree = "<group>"; };
+		41F361A71CA30F1E00467A44 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
 		41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTrackAndAd.a; sourceTree = SOURCE_ROOT; };
 		41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackAndAd.h; sourceTree = SOURCE_ROOT; };
 		41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1676,6 +1678,7 @@
 				969BE31B18D1FF3600E2714A /* iMessageChatBubble@2x.png */,
 				9691D26417FA94AB0095BA80 /* invitedButtonNormal@2x.png */,
 				9691D26517FA94AB0095BA80 /* invitedButtonSelected@2x.png */,
+				41F361A71CA30F1E00467A44 /* share@2x.png */,
 				4158AE5A1B4389900034BA4A /* listToggleButton@2x.png */,
 				4158AE5B1B4389900034BA4A /* mapToggleButton@2x.png */,
 				9671D03318273C0F00D03D66 /* lock@2x.png */,
@@ -1853,6 +1856,7 @@
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
 				4158AE671B46481C0034BA4A /* inviteFriendsModalBackground@2x.png in Resources */,
 				41C987141C042EB400DD595D /* newHappyHourIcon@2x.png in Resources */,
+				41F361A81CA30F1E00467A44 /* share@2x.png in Resources */,
 				41030F6B1B52EB7B00252158 /* helpSign@2x.png in Resources */,
 				96ED6372181DEBF5001B7933 /* Icon-72@2x.png in Resources */,
 				41ED34CC1AC8D73F00A77A92 /* toggleCamera@2x.png in Resources */,
