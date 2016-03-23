@@ -60,7 +60,7 @@
         // Calls when the user leaves a channel.
     } messageReceivedBlock:^(SendBirdMessage *message) {
         [self reloadMessagesFromServerCompletion:^ {
-            [[SoundPlayer sharedPlayer] vibrate];
+//            [[SoundPlayer sharedPlayer] vibrate];
         }];
     } systemMessageReceivedBlock:^(SendBirdSystemMessage *message) {
         // Received a system message
@@ -68,7 +68,7 @@
         // When broadcast message has been received
     } fileReceivedBlock:^(SendBirdFileLink *fileLink) {
         [self reloadMessagesFromServerCompletion:^ {
-            [[SoundPlayer sharedPlayer] vibrate];
+//            [[SoundPlayer sharedPlayer] vibrate];
         }];
     } messagingStartedBlock:^(SendBirdMessagingChannel *channel) {
         // Callback for [SendBird startMessagingWithUserId:]
@@ -268,9 +268,13 @@
 {
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
-            NSData *imageFileData = UIImagePNGRepresentation(image);
+            [self createChatMessageWithImage:image];
+            
+//            NSData *imageFileData = UIImagePNGRepresentation(image);
+            NSData *imageFileData = UIImageJPEGRepresentation(image, 1);
+            NSLog(@"File size is : %.2f MB",(float)imageFileData.length/1024.0f/1024.0f);
             [SendBird uploadFile:imageFileData type:@"image/jpg" hasSizeOfFile:[imageFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
-                            [SendBird sendFile:fileInfo];
+                [SendBird sendFile:fileInfo];
             }];
             
 //            UIImage *scaledImage;
