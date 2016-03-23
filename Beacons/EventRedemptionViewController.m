@@ -170,7 +170,8 @@
     self.matchGameButton.size = CGSizeMake(50, 50);
     self.matchGameButton.centerX = self.view.width - self.view.width/6.0;
     self.matchGameButton.y = 70;
-    [self.matchGameButton setImage:[UIImage imageNamed:@"matchDisabled"] forState:UIControlStateNormal];
+    [self.matchGameButton setImage:[UIImage imageNamed:@"matchUnselected"] forState:UIControlStateNormal];
+    [self.matchGameButton setImage:[UIImage imageNamed:@"matchSelected"] forState:UIControlStateSelected];
     [self.matchGameButton addTarget:self action:@selector(matchGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [buttonContainer addSubview:self.matchGameButton];
     
@@ -189,7 +190,7 @@
     self.activityScroll.backgroundColor = [UIColor whiteColor];
     self.activityScroll.pagingEnabled = YES;
     self.activityScroll.showsHorizontalScrollIndicator = NO;
-    self.activityScroll.contentSize = CGSizeMake(self.view.width * 2, self.view.height - 140);
+    self.activityScroll.contentSize = CGSizeMake(self.view.width * 3, self.view.height - 140);
     self.activityScroll.delegate = self;
     
     
@@ -244,7 +245,8 @@
 
 -(void)matchGameButtonTapped:(id)sender
 {
-//    [self updatePage:2];
+    [self updatePage:2];
+    [self scrollToPage:2];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -327,6 +329,8 @@
                  self.nub.centerX = self.view.width/6.0;
              } else if (page == 1) {
                  self.nub.centerX = self.view.width/2.0;
+             } else if (page == 2) {
+                 self.nub.centerX = self.view.width - self.view.width/6.0;
              }
          }
                          completion:^(BOOL finished)
@@ -341,9 +345,15 @@
     if (page == 0) {
         [self makeTicketActive];
         [self makeChatroomUnselected];
+        [self makeMatchUnselected];
     } else if (page == 1) {
         [self makeTicketUnselected];
         [self makeChatroomActive];
+        [self makeMatchUnselected];
+    } else if (page == 2) {
+        [self makeTicketUnselected];
+        [self makeChatroomUnselected];
+        [self makeMatchActive];
     }
 }
 
@@ -375,15 +385,19 @@
     }
 }
 
-//-(void)makeMatchActive
-//{
-//    
-//}
-//
-//-(void)makeMatchUnselected
-//{
-//    [self.matchGameButton setImage:[UIImage imageNamed:@"matchDisabled"] forState:UIControlStateNormal];
-//}
+-(void)makeMatchActive
+{
+    if (![self.matchGameButton isSelected]) {
+        [self.matchGameButton setSelected:YES];
+    }
+}
+
+-(void)makeMatchUnselected
+{
+    if ([self.matchGameButton isSelected]) {
+        [self.matchGameButton setSelected:NO];
+    }
+}
 
 - (void) refreshDeal
 {
