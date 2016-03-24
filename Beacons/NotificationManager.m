@@ -25,6 +25,8 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
 @property (strong, nonatomic) RemoteNotificationRegistrationSuccessBlock remoteNotificationRegistrationSuccessBlock;
 @property (strong, nonatomic) RemoteNotificationRegistrationFailureBlock remoteNotificationRegistrationFailureBlock;
 
+@property (strong, nonatomic) NSNumber *eventID;
+
 @end
 
 @implementation NotificationManager
@@ -141,6 +143,9 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
     else if ([notificationType isEqualToString:kPushNotificationTypeRecommendation]) {
         NSNumber *recommendationID = userInfo[@"rec"];
         [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSetBeaconWithRecommendationID:recommendationID];
+    } else if ([notificationType isEqualToString:kPushNotificationTypeEventChat]) {
+        self.eventID = userInfo[@"sponsored_event"];
+        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSponsoredEventWithID:self.eventID];
     }
     else if ([notificationType isEqualToString:kPushNotificationTypeNewsfeed]) {
         [self performSelector:@selector(pushFeed:) withObject:nil afterDelay:2.0];

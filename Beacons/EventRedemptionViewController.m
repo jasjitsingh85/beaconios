@@ -56,6 +56,7 @@
 #import "TabViewController.h"
 #import "EventChatViewController.h"
 #import "VoucherViewController.h"
+#import "SwipeViewController.h"
 
 @interface EventRedemptionViewController () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
@@ -90,6 +91,7 @@
 
 @property (strong, nonatomic) EventChatViewController *eventChatViewController;
 @property (strong, nonatomic) VoucherViewController *voucherViewController;
+@property (strong, nonatomic) SwipeViewController *swipeViewController;
 
 @property (strong, nonatomic) UIButton *ticketButton;
 @property (strong, nonatomic) UIButton *chatRoomButton;
@@ -210,6 +212,13 @@
     [self.activityScroll addSubview:self.eventChatViewController.view];
     [self.eventChatViewController didMoveToParentViewController:self];
     
+    self.swipeViewController = [[SwipeViewController alloc] init];
+    [self addChildViewController:self.swipeViewController];
+    self.swipeViewController.view.bounds = CGRectMake(0, 0, self.view.width, self.view.height);
+    self.swipeViewController.view.x = self.view.width * 2;
+    [self.activityScroll addSubview:self.swipeViewController.view];
+    [self.swipeViewController didMoveToParentViewController:self];
+    
     UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 139, self.view.width, 1)];
     topBorder.backgroundColor = [UIColor unnormalizedColorWithRed:205 green:205 blue:205 alpha:255];
     [buttonContainer addSubview:topBorder];
@@ -220,16 +229,18 @@
     [buttonContainer addSubview:self.nub];
     [self.view addSubview:buttonContainer];
     
-    [self refreshSponsoredEventData];
+    [self loadInitialView];
     
-    [self setInitialState];
+    [self refreshSponsoredEventData:self.sponsoredEvent.eventID];
+    
+//    [self setInitialState];
     
 }
 
--(void)setInitialState
-{
-    [self makeTicketActive];
-}
+//-(void)setInitialState
+//{
+//    [self makeTicketActive];
+//}
 
 -(void)ticketButtonTapped:(id)sender
 {
@@ -431,51 +442,31 @@
     self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
-    
     self.eventChatViewController.sponsoredEvent = self.sponsoredEvent;
     
     [self.view addSubview:self.activityScroll];
 }
 
-//-(void)showOverlayView
-//{
-//    [UIView animateWithDuration:0.5
-//                          delay:0.1
-//                        options: UIViewAnimationCurveEaseIn
-//                     animations:^
-//     {
-//         self.overlayView.y = 0;
-//     }
-//                     completion:^(BOOL finished)
-//     {
-//         NSLog(@"Completed");
-//         
-//     }];
-//}
-//
-//-(void)hideOverlayView
-//{
-//    [UIView animateWithDuration:0.5
-//                          delay:0.1
-//                        options: UIViewAnimationCurveEaseOut
-//                     animations:^
-//     {
-//         self.overlayView.y = self.view.height;
-//     }
-//                     completion:^(BOOL finished)
-//     {
-//         NSLog(@"Completed");
-//         
-//     }];
-//}
+-(void)loadInitialView
+{
+    if (self.openToChatRoom || [self.sponsoredEvent.eventStatus.status isEqualToString:@"R"]) {
+        [self updateButtons:1];
+        [self.activityScroll setContentOffset:CGPointMake(self.activityScroll.frame.size.width*1, 0.0f) animated:NO];
+        self.nub.centerX = self.view.width/2.0;
+    } else {
+        [self updateButtons:0];
+        [self.activityScroll setContentOffset:CGPointMake(self.activityScroll.frame.size.width*0, 0.0f) animated:NO];
+        self.nub.centerX = self.view.width/6.0;
+    }
+}
 
--(void)refreshSponsoredEventData
+-(void)refreshSponsoredEventData:(NSNumber *)eventID
 {
     if (!self.sponsoredEvent) {
         return;
     }
     
-    [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] getSponsoredEvent:eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
         [self setSponsoredEvent:sponsoredEvent];
         self.voucherViewController.sponsoredEvent = sponsoredEvent;
@@ -642,7 +633,7 @@
     }
     NSString *smsMessage;
     if (self.sponsoredEvent) {
-        smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come!", self.sponsoredEvent.title, self.sponsoredEvent.venue.name];
+        smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come! Here's the link: %@", self.sponsoredEvent.title, self.sponsoredEvent.venue.name, self.sponsoredEvent.websiteURL];
     } else {
         smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
     }

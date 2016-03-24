@@ -13,14 +13,14 @@
 
 @property (strong, nonatomic) Beacon *beacon;
 @property (assign, nonatomic) BOOL openToInviteView;
-@property (assign, nonatomic) BOOL openToDealView;
+@property (assign, nonatomic) BOOL openToChatRoom;
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 @property (strong, nonatomic) Deal *deal;
 @property (strong, nonatomic) DealStatus *dealStatus;
 
 - (void)refreshBeaconData;
-- (void)refreshSponsoredEventData;
+- (void)refreshSponsoredEventData:(NSNumber *)eventID;
 //- (void)promptForCheckIn;
 - (void)refreshDeal;
 

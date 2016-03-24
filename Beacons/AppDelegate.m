@@ -36,9 +36,11 @@
 #import "LockedViewController.h"
 #import "RandomObjectManager.h"
 #import "Deal.h"
+#import "SponsoredEvent.h"
 #import <Braintree/Braintree.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "EventRedemptionViewController.h"
 
 @interface AppDelegate()
 
@@ -381,9 +383,19 @@
     redemptionTableViewController.beacon = beacon;
     [redemptionTableViewController refreshBeaconData];
     [self.centerNavigationController setSelectedViewController:redemptionTableViewController animated:YES];
-//    if (promptForCheckIn) {
-//        [redemptionTableViewController promptForCheckIn];
-//    }
+}
+
+- (void)setSelectedViewControllerToSponsoredEventWithID:(NSNumber *)sponsoredEventID
+{
+    EventRedemptionViewController *eventRedemptionViewController = [[EventRedemptionViewController alloc] init];
+    [[APIClient sharedClient] getSponsoredEvent:sponsoredEventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+        eventRedemptionViewController.openToChatRoom = YES;
+        eventRedemptionViewController.sponsoredEvent = sponsoredEvent;
+        [self.centerNavigationController setSelectedViewController:eventRedemptionViewController animated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failed");
+    }];
 }
 
 - (void)setSelectedViewControllerToBeaconProfileWithBeacon:(Beacon *)beacon

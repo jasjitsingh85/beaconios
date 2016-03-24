@@ -58,7 +58,7 @@
     self.textView.centerVertically = YES;
     self.textView.minimumSize = textViewFrame.size;
     self.textView.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    self.textView.placeholder = @"Send a group message";
+    self.textView.placeholder = @"Send a message";
     self.textView.placeholderColor = [UIColor darkGrayColor];
     self.textView.font = [ThemeManager lightFontOfSize:15];
     self.textView.layer.cornerRadius = 4;
@@ -67,7 +67,7 @@
     self.textView.returnKeyType = UIReturnKeySend;
     [self.textViewContainer addSubview:self.textView];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height - 10)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view insertSubview:self.tableView belowSubview:self.textViewContainer];
@@ -109,7 +109,7 @@
     [self.tableView reloadData];
     [UIView animateWithDuration:0.5 animations:^{
         UIEdgeInsets contentInsets = self.desiredEdgeInsets;
-        contentInsets.bottom = self.view.frame.size.height - self.textViewContainer.frame.origin.y;
+        contentInsets.bottom = self.view.frame.size.height - self.textViewContainer.frame.origin.y + 10;
         self.tableView.contentInset = contentInsets;
         self.tableView.scrollIndicatorInsets = contentInsets;
     }];

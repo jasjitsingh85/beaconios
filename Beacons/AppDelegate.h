@@ -52,6 +52,7 @@ Deal;
 //- (void)setSelectedViewControllerToVoucherViewWithVoucher:(Voucher *)voucher;
 - (void)setSelectedViewControllerToBeaconProfileWithID:(NSNumber *)beaconID promptForCheckIn:(BOOL)promptForCheckIn;
 - (void)setSelectedViewControllerToSetBeaconWithRecommendationID:(NSNumber *)recommendationID;
+- (void)setSelectedViewControllerToSponsoredEventWithID:(NSNumber *)sponsoredEventID;
 - (void)setSelectedViewControllerToNewsfeed;
 //- (void)setSelectedViewControllerToDealDetailWithDeal:(Deal *)deal animated:(BOOL)animated;
 //- (void)setSelectedViewControllerToDealDetailWithDealID:(NSNumber *)dealID;

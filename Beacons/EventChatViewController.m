@@ -102,6 +102,7 @@
 -(void) sendMessage:(NSString *)message
 {
     [SendBird sendMessage:message];
+    [self sendMessageToServer:message];
 }
 
 - (void) loadPreviousMessages
@@ -110,7 +111,6 @@
     [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
         long long maxMessageTs = LLONG_MIN;
         for (SendBirdMessageModel *model in queryResult) {
-            NSLog(@"model: %@", model);
             if (maxMessageTs <= [model getMessageTimestamp]) {
                 maxMessageTs = [model getMessageTimestamp];
             }
@@ -123,15 +123,6 @@
     }];
 }
 
-//- (void) addMessage:(SendBirdMessageModel *)message
-//{
-//    if ([message isPast]) { // Check if the message is old one.
-//        [self insertObject:message atIndex:0]; // Insert the message at the beginning of the list
-//    }
-//    else {
-//        [self addObject:message]; // Append the mssage at the end of the list
-//    }
-//}
 
 - (void)dealloc
 {
@@ -164,7 +155,6 @@
         long long maxMessageTs = LLONG_MIN;
         for (SendBirdMessageModel *model in queryResult) {
             // Add message to an array here.
-            NSLog(@"model: %@", model);
             if (maxMessageTs <= [model getMessageTimestamp]) {
                 maxMessageTs = [model getMessageTimestamp];
             }
@@ -247,12 +237,6 @@
 
 - (void)cameraButtonTouched:(id)sender
 {
-//    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-//    mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    NSMutableArray *mediaTypes = [[NSMutableArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
-//    mediaUI.mediaTypes = mediaTypes;
-//    [mediaUI setDelegate:self];
-//    [self presentViewController:mediaUI animated:YES completion:nil];
     UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Do you want to take a photo or add one from your library?"];
     [actionSheet bk_addButtonWithTitle:@"Take a Photo" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
@@ -268,72 +252,33 @@
 {
     [[PhotoManager sharedManager] presentImagePickerForSourceType:source fromViewController:self completion:^(UIImage *image, BOOL cancelled) {
         if (image) {
-//            [self createChatMessageWithImage:image];
-            
-//            NSData *imageFileData = UIImagePNGRepresentation(image);
             NSData *imageFileData = UIImageJPEGRepresentation(image, .4);
-            NSLog(@"File size is : %.2f MB",(float)imageFileData.length/1024.0f/1024.0f);
             [SendBird uploadFile:imageFileData type:@"image/jpg" hasSizeOfFile:[imageFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
                 [SendBird sendFile:fileInfo];
+                [self sendFileToServer:fileInfo.url];
             }];
             
-//            UIImage *scaledImage;
-//            CGFloat maxDimension = 720;
-//            if (image.size.width >= image.size.height) {
-//                scaledImage = [image scaledToSize:CGSizeMake(maxDimension, maxDimension*image.size.height/image.size.width)];
-//            }
-//            else {
-//                scaledImage = [image scaledToSize:CGSizeMake(maxDimension*image.size.width/image.size.height, maxDimension)];
-//            }
-//            [self updateImage:scaledImage];
-//            self.hasImage = YES;
-//            [[APIClient sharedClient] postImage:scaledImage forBeaconWithID:self.beacon.beaconID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                
-//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
-//            }];
         }
     }];
 }
 
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    __block NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
-//    __block UIImage *originalImage, *editedImage, *imageToUse;
-//    __block NSURL *imagePath;
-//    __block NSString *imageName;
-//    
-//    [picker dismissViewControllerAnimated:YES completion:^{
-//        if (CFStringCompare ((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-//            editedImage = (UIImage *) [info objectForKey:
-//                                       UIImagePickerControllerEditedImage];
-//            originalImage = (UIImage *) [info objectForKey:
-//                                         UIImagePickerControllerOriginalImage];
-//            
-//            if (originalImage) {
-//                imageToUse = originalImage;
-//            } else {
-//                imageToUse = editedImage;
-//            }
-//            
-//            NSData *imageFileData = UIImagePNGRepresentation(imageToUse);
-//            imagePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
-//            imageName = [imagePath lastPathComponent];
-//            
-//            [SendBird uploadFile:imageFileData type:@"image/jpg" hasSizeOfFile:[imageFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
-//                [SendBird sendFile:fileInfo];
-//            }];
-//        }
-//        else if (CFStringCompare ((CFStringRef) mediaType, kUTTypeVideo, 0) == kCFCompareEqualTo) {
-//            NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
-//            NSData *videoFileData = [NSData dataWithContentsOfURL:videoURL];
-//            
-//            [SendBird uploadFile:videoFileData type:@"video/mov" hasSizeOfFile:[videoFileData length] withCustomField:@"" uploadBlock:^(SendBirdFileInfo *fileInfo, NSError *error) {
-//                [SendBird sendFile:fileInfo];
-//            }];
-//        }
-//    }];
-//}
+-(void)sendFileToServer:(NSString *)imageUrlString
+{
+        [[APIClient sharedClient] postImageMessage:imageUrlString forEventWithID:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"Image Link Sent");
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Image Send Failed");
+        }];
+}
+
+-(void)sendMessageToServer:(NSString *)message
+{
+    [[APIClient sharedClient] postStringMessage:message forEventWithID:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Message Sent");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Message Send Failed");
+    }];
+}
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

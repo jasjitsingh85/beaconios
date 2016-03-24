@@ -15,6 +15,8 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "WebViewController.h"
+#import "TextMessageManager.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
 @interface VoucherViewController ()
 
@@ -58,7 +60,7 @@
     self.headerTitle.y = 14;
     [self.view addSubview:self.headerTitle];
     
-    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width - 45, 150)];
+    self.headerExplanationText = [[UILabel alloc] initWithFrame:CGRectMake(0, 35, self.view.width - 45, 120)];
 //    self.headerExplanationText.backgroundColor = [UIColor redColor];
     self.headerExplanationText.centerX = self.view.width/2;
     self.headerExplanationText.font = [ThemeManager lightFontOfSize:12];
@@ -67,7 +69,7 @@
     [self.view addSubview:self.headerExplanationText];
     
     self.redeemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.redeemButton.y = 265;
+    self.redeemButton.y = 240;
     self.redeemButton.size = CGSizeMake(self.view.width, 150);
     
     self.voucherTitle = [[UILabel alloc] init];
@@ -113,7 +115,7 @@
     helpTitle.text = @"NEED HELP?";
     helpTitle.width = self.view.width;
     helpTitle.height = 20;
-    helpTitle.y = 185;
+    helpTitle.y = 155;
     helpTitle.centerX = self.view.width/2.0;
     helpTitle.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:helpTitle];
@@ -121,10 +123,10 @@
     UILabel *helpBody = [[UILabel alloc] init];
     helpBody.font = [ThemeManager lightFontOfSize:12];
     helpBody.textColor = [UIColor blackColor];
-    helpBody.text = @"(a human being will pick-up your call)";
+    helpBody.text = @"(a human being will pick-up or respond)";
     helpBody.width = self.view.width;
     helpBody.height = 20;
-    helpBody.y = 200;
+    helpBody.y = 170;
     helpBody.centerX = self.view.width/2.0;
     helpBody.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:helpBody];
@@ -137,9 +139,9 @@
     [self.inviteFriendsButton setTitleColor:[[[ThemeManager sharedTheme] lightBlueColor] colorWithAlphaComponent:.5] forState:UIControlStateSelected];
     self.inviteFriendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.inviteFriendsButton setTitle:@"(425) 202-6228" forState:UIControlStateNormal];
-    self.inviteFriendsButton.y = 222;
+    self.inviteFriendsButton.y = 196;
     [self.view addSubview:self.inviteFriendsButton];
-    [self.inviteFriendsButton addTarget:self action:@selector(callHelpLine:) forControlEvents:UIControlEventTouchUpInside];
+    [self.inviteFriendsButton addTarget:self action:@selector(reachSupportTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.redeemButton];
     [self.redeemButton addTarget:self action:@selector(redeemButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
@@ -267,20 +269,34 @@
     }
 }
 
-- (void) callHelpLine:(id)sender
+-(void)reachSupportTapped:(id)sender
 {
-//    BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]];
-//    if (isInstalled) {;
-//        [[UIApplication sharedApplication] openURL:self.sponsoredEvent.deepLinkURL];
-//    } else {
-//        self.webView.websiteUrl = self.sponsoredEvent.websiteURL;
-//        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.webView];
-//        [self presentViewController:navigationController
-//                           animated:YES
-//                         completion:nil];
-//    }
+    UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Would you prefer to call us or text us?"];
+    [actionSheet bk_addButtonWithTitle:@"Call" handler:^{
+        [self callHelpLine];
+    }];
+    [actionSheet bk_addButtonWithTitle:@"Text" handler:^{
+        [self textHelpLine];
+    }];
+    [actionSheet bk_setCancelButtonWithTitle:@"Cancel" handler:nil];
+    [actionSheet showInView:self.view];
+}
+
+- (void) callHelpLine
+{
     NSString *phoneNumber = [@"tel://" stringByAppendingString:@"4252026228"];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+}
+
+- (void) textHelpLine
+{
+    MFMessageComposeViewController *smsModal = [[MFMessageComposeViewController alloc] init];
+    smsModal.messageComposeDelegate = self;
+    NSString *smsMessage;
+    smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - I need help!", self.sponsoredEvent.title, self.sponsoredEvent.venue.name];
+    smsModal.recipients = @[@"4252026228"];
+    smsModal.body = smsMessage;
+    [self presentViewController:smsModal animated:YES completion:nil];
 }
 
 @end

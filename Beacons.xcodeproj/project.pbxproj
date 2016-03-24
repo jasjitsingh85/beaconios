@@ -196,6 +196,7 @@
 		41F144151B27C3470010BCF1 /* greyPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144131B27C3460010BCF1 /* greyPin@2x.png */; };
 		41F144161B27C3470010BCF1 /* redPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F144141B27C3460010BCF1 /* redPin@2x.png */; };
 		41F361A81CA30F1E00467A44 /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F361A71CA30F1E00467A44 /* share@2x.png */; };
+		41F361AB1CA33BC800467A44 /* SwipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41F361AA1CA33BC800467A44 /* SwipeViewController.m */; };
 		41F97BAE1BB5EC19003D1D86 /* libTrackAndAd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */; };
 		41F97BB01BB5ECA3003D1D86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */; };
 		41F97BB21BB5ECB3003D1D86 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41F97BB11BB5ECB3003D1D86 /* AdSupport.framework */; };
@@ -332,7 +333,6 @@
 		96A9872117E517FB007D77B8 /* BeaconStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872017E517FB007D77B8 /* BeaconStatus.m */; };
 		96A9873017E68C44007D77B8 /* PhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9872F17E68C44007D77B8 /* PhotoManager.m */; };
 		96A9873517E6A6C6007D77B8 /* BeaconImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9873417E6A6C6007D77B8 /* BeaconImage.m */; };
-		96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */; };
 		96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */; };
 		96AFCA2018261902003A47F2 /* PermissionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFCA1F18261902003A47F2 /* PermissionsViewController.m */; };
 		96AFE1321938209E00209799 /* DealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AFE1311938209E00209799 /* DealsTableViewController.m */; };
@@ -656,6 +656,8 @@
 		41F144131B27C3460010BCF1 /* greyPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyPin@2x.png"; sourceTree = "<group>"; };
 		41F144141B27C3460010BCF1 /* redPin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redPin@2x.png"; sourceTree = "<group>"; };
 		41F361A71CA30F1E00467A44 /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
+		41F361A91CA33BBB00467A44 /* SwipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeViewController.h; sourceTree = "<group>"; };
+		41F361AA1CA33BC800467A44 /* SwipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeViewController.m; sourceTree = "<group>"; };
 		41F97BAC1BB5EC19003D1D86 /* libTrackAndAd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTrackAndAd.a; sourceTree = SOURCE_ROOT; };
 		41F97BAD1BB5EC19003D1D86 /* TrackAndAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackAndAd.h; sourceTree = SOURCE_ROOT; };
 		41F97BAF1BB5ECA3003D1D86 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -846,8 +848,6 @@
 		96A9872F17E68C44007D77B8 /* PhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoManager.m; sourceTree = "<group>"; };
 		96A9873317E6A6C6007D77B8 /* BeaconImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconImage.h; sourceTree = "<group>"; };
 		96A9873417E6A6C6007D77B8 /* BeaconImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconImage.m; sourceTree = "<group>"; };
-		96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconChatViewController.h; sourceTree = "<group>"; };
-		96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconChatViewController.m; sourceTree = "<group>"; };
 		96AFCA1B1825EB92003A47F2 /* NSError+ServerErrorMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+ServerErrorMessage.h"; sourceTree = "<group>"; };
 		96AFCA1C1825EB92003A47F2 /* NSError+ServerErrorMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+ServerErrorMessage.m"; sourceTree = "<group>"; };
 		96AFCA1E18261902003A47F2 /* PermissionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionsViewController.h; path = ../PermissionsViewController.h; sourceTree = "<group>"; };
@@ -1136,6 +1136,8 @@
 				411B4F811C273A1300CA7100 /* FriendsViewController.m */,
 				411B4F831C273C4200CA7100 /* FriendsTableViewController.h */,
 				411B4F841C273C5800CA7100 /* FriendsTableViewController.m */,
+				41F361A91CA33BBB00467A44 /* SwipeViewController.h */,
+				41F361AA1CA33BC800467A44 /* SwipeViewController.m */,
 			);
 			name = Social;
 			sourceTree = "<group>";
@@ -1749,8 +1751,6 @@
 				96F14C2217D84AF40093C976 /* ChatMessage.m */,
 				96F14C2417D84F0D0093C976 /* ChatTableViewCell.h */,
 				96F14C2517D84F0D0093C976 /* ChatTableViewCell.m */,
-				96ACEC0217E038A9004B30B1 /* BeaconChatViewController.h */,
-				96ACEC0317E038A9004B30B1 /* BeaconChatViewController.m */,
 				4122D6F31C87371100A53821 /* EventChatViewController.h */,
 				4122D6F41C87372000A53821 /* EventChatViewController.m */,
 			);
@@ -2141,7 +2141,6 @@
 				41D716B11BC1CE2D00DF23D2 /* Event.m in Sources */,
 				4105DA961B7AEFBE0006B888 /* FeedItem.m in Sources */,
 				961FE29518D10F7100CF891A /* ExplanationPopupView.m in Sources */,
-				96ACEC0417E038A9004B30B1 /* BeaconChatViewController.m in Sources */,
 				410165ED1BF47B1200F0219C /* VoucherTableViewCell.m in Sources */,
 				96859D0017EFD5D600C1C467 /* InsetTextField.m in Sources */,
 				4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */,
@@ -2160,6 +2159,7 @@
 				96C87C8B175AB97F006EA3A3 /* Theme.m in Sources */,
 				9615F4E3175BEBC6005CF62D /* Beacon.m in Sources */,
 				9615F4E7175BEBE6005CF62D /* User.m in Sources */,
+				41F361AB1CA33BC800467A44 /* SwipeViewController.m in Sources */,
 				1FE67716175C0EA0006F563C /* BeaconAnnotation.m in Sources */,
 				41FD06211B37179600F7DD08 /* DealDetailViewController.m in Sources */,
 				4105DA991B7BC1FE0006B888 /* FeedItemTableViewCell.m in Sources */,

@@ -1068,6 +1068,11 @@ typedef enum dealTypeStates
         SponsoredEvent *event = self.sponsoredEvents[self.eventCell.pageControl.currentPage];
         if (event.eventStatusOption == EventStatusGoing || event.eventStatusOption == EventStatusRedeemed) {
             EventRedemptionViewController *eventRedemptionViewController = [[EventRedemptionViewController alloc] init];
+            if (event.eventStatusOption == EventStatusRedeemed) {
+                eventRedemptionViewController.openToChatRoom = YES;
+            } else {
+                eventRedemptionViewController.openToChatRoom = NO;
+            }
             eventRedemptionViewController.sponsoredEvent = event;
 //            [eventRedemptionViewController refreshSponsoredEventData];
             [self.navigationController pushViewController:eventRedemptionViewController animated:YES];

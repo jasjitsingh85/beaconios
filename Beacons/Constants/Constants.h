@@ -36,6 +36,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kPushNotificationTypeGeneral @"General"
 #define kPushNotificationTypeRecommendation @"Recommendation"
 #define kPushNotificationTypeNewsfeed @"Newsfeed"
+#define kPushNotificationTypeEventChat @"EventChat"
 
 //local notifications
 #define kLocalNotificationTypeKey @"localNotificationTypeKey"

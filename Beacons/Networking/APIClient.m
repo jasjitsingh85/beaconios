@@ -205,18 +205,25 @@ static dispatch_once_t onceToken;
     [[APIClient sharedClient] postPath:@"location/" parameters:parameters success:success failure:failure];
 }
 
-- (void)getMessagesForBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+//- (void)getMessagesForBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+//                           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+//{
+//    NSDictionary *parameters = @{@"beacon" : beaconID};
+//    [[APIClient sharedClient] getPath:@"message/" parameters:parameters success:success failure:failure];
+//}
+
+- (void)postStringMessage:(NSString *)messageText forEventWithID:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSDictionary *parameters = @{@"beacon" : beaconID};
-    [[APIClient sharedClient] getPath:@"message/" parameters:parameters success:success failure:failure];
+    NSDictionary *parameters = @{@"event_id" : eventID,
+                                 @"message" : messageText};
+    [[APIClient sharedClient] postPath:@"message/" parameters:parameters success:success failure:failure];
 }
 
-- (void)postMessageWithText:(NSString *)messageText forBeaconWithID:(NSNumber *)beaconID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)postImageMessage:(NSString *)imageUrl forEventWithID:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
-    NSDictionary *parameters = @{@"beacon" : beaconID,
-                                 @"message" : messageText};
+    NSDictionary *parameters = @{@"event_id" : eventID,
+                                 @"image_url" : imageUrl};
+    
     [[APIClient sharedClient] postPath:@"message/" parameters:parameters success:success failure:failure];
 }
 

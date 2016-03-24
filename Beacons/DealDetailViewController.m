@@ -527,7 +527,7 @@
     EventRedemptionViewController *redemptionViewController = [[EventRedemptionViewController alloc] init];
     redemptionViewController.sponsoredEvent = self.sponsoredEvent;
     [self.navigationController pushViewController:redemptionViewController animated:YES];
-    [redemptionViewController refreshSponsoredEventData];
+    [redemptionViewController refreshSponsoredEventData:self.sponsoredEvent.eventID];
     
 //    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Ticket Reserved" message:@"On the day of the event, you'll be able to access your ticket."];
 //    [alertView bk_addButtonWithTitle:@"OK" handler:^{
@@ -1408,7 +1408,7 @@
 //        [smsModal addAttachmentData:imgData typeIdentifier:@"public.data" filename:@"image.png"];
 //    }
 
-    NSString *smsMessage = [NSString stringWithFormat:@"I’m going to %@ at %@ with Hotspot -- you should come!", self.sponsoredEvent.title, self.venue.name];
+    NSString *smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come! Here's the link: %@", self.sponsoredEvent.title, self.sponsoredEvent.venue.name, self.sponsoredEvent.websiteURL];
     smsModal.body = smsMessage;
     [self presentViewController:smsModal animated:YES completion:nil];
 }
