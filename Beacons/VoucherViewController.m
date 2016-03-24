@@ -123,7 +123,7 @@
     UILabel *helpBody = [[UILabel alloc] init];
     helpBody.font = [ThemeManager lightFontOfSize:12];
     helpBody.textColor = [UIColor blackColor];
-    helpBody.text = @"(a human being will pick-up or respond)";
+    helpBody.text = @"(text or call - an actual human will answer)";
     helpBody.width = self.view.width;
     helpBody.height = 20;
     helpBody.y = 170;
