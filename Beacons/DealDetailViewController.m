@@ -34,6 +34,7 @@
 #import "HelpPopupView.h"
 #import "FaqViewController.h"
 #import "EventRedemptionViewController.h"
+#import "RedemptionConfirmationPopupView.h"
 
 @interface DealDetailViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -97,6 +98,7 @@
 @property (strong, nonatomic) UILabel *checkInText;
 @property (strong, nonatomic) UIImageView *checkInIcon;
 @property (strong, nonatomic) UIButton *helpButton;
+@property (strong, nonatomic) NSNumber *tipAmount;
 
 @property (strong, nonatomic) PaymentsViewController *paymentsViewController;
 
@@ -205,6 +207,8 @@
                                              selector:@selector(faqButtonTouched:) name:@"ShowFaq" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(launchRedemptionView) name:kLaunchRedemptionView object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(confirmPurchase:) name:kConfirmPurchase object:nil];
 }
 
 -(void)showFeeExplanationModal:(id)sender
@@ -481,29 +485,46 @@
             } else if (self.sponsoredEvent.isSoldOut) {
                 [self showSoldOutAlert];
             } else {
-                NSString *message = [NSString stringWithFormat:@"Are you sure you want to reserve a spot to this event? You'll be charged $%@ for this ticket.", self.sponsoredEvent.itemPrice];
-                UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:message];
-                [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
-                    [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
-                        self.sponsoredEvent = sponsoredEvent;
-                        if (!self.sponsoredEvent.isSoldOut) {
-                            [self checkPaymentForEvent];
-                        } else {
-                            [self showSoldOutAlert];
-                        }
-                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    }];
-                }];
-                [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
-                    
-                }];
-                [alertView show];
+                [self showConfirmationModal];
             }
         }
     }
     
+}
+
+-(void)showConfirmationModal
+{
+    RedemptionConfirmationPopupView *modal = [[RedemptionConfirmationPopupView alloc] init];
+    modal.sponsoredEvent = self.sponsoredEvent;
+    [modal show];
+    
+//    NSString *message = [NSString stringWithFormat:@"Are you sure you want to reserve a spot to this event? You'll be charged $%@ for this ticket.", self.sponsoredEvent.itemPrice];
+//    UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Confirmation" message:message];
+//    [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
+//
+//    }];
+//    [alertView bk_setCancelButtonWithTitle:@"Cancel" handler:^ {
+//        
+//    }];
+//    [alertView show];
+}
+
+-(void)confirmPurchase:(NSNotification *)notification
+{
+    NSDictionary *dict = [notification userInfo];
+    self.tipAmount = [dict objectForKey:@"tipAmount"];
+    
+    [[APIClient sharedClient] getSponsoredEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
+        self.sponsoredEvent = sponsoredEvent;
+        if (!self.sponsoredEvent.isSoldOut) {
+            [self checkPaymentForEvent];
+        } else {
+            [self showSoldOutAlert];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }];
 }
 
 
@@ -553,7 +574,7 @@
 
 -(void)completeReservation
 {
-    [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[APIClient sharedClient] reserveTicket:self.sponsoredEvent.eventID isPublic:self.isPublic withTip:self.tipAmount success:^(AFHTTPRequestOperation *operation, id responseObject) {
             SponsoredEvent *sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:responseObject[@"sponsored_event"]];
             self.sponsoredEvent = sponsoredEvent;
             [self showReservationConfirmation];

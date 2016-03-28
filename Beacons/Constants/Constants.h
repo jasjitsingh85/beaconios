@@ -62,6 +62,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #define kConfirmEventReservation @"confirmEventReservation"
 #define kFinishPermissionsAfterPayment @"finishPermissionAfterPayment"
 #define kLaunchRedemptionView @"launchRedemptionView"
+#define kConfirmPurchase @"confirmPurchase"
 
 //random string notifications
 #define kRandomStringsUpdated @"randomStringsUpdated"

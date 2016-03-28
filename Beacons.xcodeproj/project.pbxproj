@@ -91,6 +91,8 @@
 		4122D6EC1C71BE6900A53821 /* newFilterButtonSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */; };
 		4122D6F21C83C91000A53821 /* EventRedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */; };
 		4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F41C87372000A53821 /* EventChatViewController.m */; };
+		412773E31CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */; };
+		412773E51CA8C16C0055A9EA /* confirmationBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -523,6 +525,9 @@
 		4122D6F11C83C91000A53821 /* EventRedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventRedemptionViewController.m; sourceTree = "<group>"; };
 		4122D6F31C87371100A53821 /* EventChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventChatViewController.h; sourceTree = "<group>"; };
 		4122D6F41C87372000A53821 /* EventChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventChatViewController.m; sourceTree = "<group>"; };
+		412773E11CA8C0A80055A9EA /* RedemptionConfirmationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionConfirmationPopupView.h; sourceTree = "<group>"; };
+		412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionConfirmationPopupView.m; sourceTree = "<group>"; };
+		412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirmationBackground@2x.png"; sourceTree = "<group>"; };
 		412E8C8D1C3C625100E54486 /* RedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionViewController.h; sourceTree = "<group>"; };
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
@@ -1068,6 +1073,8 @@
 				4158AE681B4648780034BA4A /* FreeDrinksExplanationPopupView.h */,
 				41CB5C691C0D6EB50077485B /* SocialNotificationPopupView.h */,
 				41CB5C6A1C0D6EC40077485B /* SocialNotificationPopupView.m */,
+				412773E11CA8C0A80055A9EA /* RedemptionConfirmationPopupView.h */,
+				412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */,
 				41030F661B52E6E500252158 /* NeedHelpExplanationPopupView.m */,
 				41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */,
 				4122D6E21C71A9F600A53821 /* HelpPopupView.m */,
@@ -1539,6 +1546,7 @@
 				41CBB0EA1C077A2600B7C4AA /* bigRedPin@2x.png */,
 				414F73FC1C476CBE00CF49C4 /* friendsWhite@2x.png */,
 				41FA91CA1C9BD2540092994E /* nubForBorder@2x.png */,
+				412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */,
 				4109B9BF1B9B706100C3270E /* privateLock@2x.png */,
 				41D716B21BCB279C00DF23D2 /* newsfeedUnfollow@2x.png */,
 				41FFB0161C1538CA00947EEC /* setupNewsfeedWhite@2x.png */,
@@ -1853,6 +1861,7 @@
 				410FC8991B3B3BF20097EA26 /* editMessageBackground@2x.png in Resources */,
 				96CBCD0A1807BC1200D62462 /* addFriendDark@2x.png in Resources */,
 				962FD01F1820D0A400E74268 /* annotationShadowSmall@2x.png in Resources */,
+				412773E51CA8C16C0055A9EA /* confirmationBackground@2x.png in Resources */,
 				96C7FEC6189892B000A79CC3 /* rightArrowBlue@2x.png in Resources */,
 				4158AE671B46481C0034BA4A /* inviteFriendsModalBackground@2x.png in Resources */,
 				41C987141C042EB400DD595D /* newHappyHourIcon@2x.png in Resources */,
@@ -2130,6 +2139,7 @@
 				96859CFA17EFD2E600C1C467 /* UIView+Alignment.m in Sources */,
 				41A8E9281BDF178700337896 /* SetupNewsfeedPopupView.m in Sources */,
 				9671D03118273BE700D03D66 /* LockedViewController.m in Sources */,
+				412773E31CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m in Sources */,
 				96859D0517F3F00B00C1C467 /* KenBurnsView.m in Sources */,
 				9633994C1758512100AF9D89 /* AppDelegate.m in Sources */,
 				96AFCA1D1825EB92003A47F2 /* NSError+ServerErrorMessage.m in Sources */,

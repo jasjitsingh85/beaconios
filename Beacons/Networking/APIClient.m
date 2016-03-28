@@ -557,11 +557,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"background/location/" parameters:parameters success:success failure:failure];
 }
 
-- (void)reserveTicket:(NSNumber *)eventID isPublic:(BOOL)isPublic success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+- (void)reserveTicket:(NSNumber *)eventID isPublic:(BOOL)isPublic withTip:(NSNumber *)tip success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     parameters[@"event_id"] = eventID;
     parameters[@"is_public"] = [NSNumber numberWithBool:isPublic];
+    parameters[@"tip_amount"] = tip;
     
     [[APIClient sharedClient] postPath:@"reserve/" parameters:parameters success:success failure:failure];
 }
