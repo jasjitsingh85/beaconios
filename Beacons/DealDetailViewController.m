@@ -581,6 +581,7 @@
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [self.paymentsViewController openPaymentModalWithEvent:self.sponsoredEvent];
     }];
 
 }

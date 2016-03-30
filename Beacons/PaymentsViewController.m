@@ -53,8 +53,8 @@
     //    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"SAVE";
-    dropInViewController.summaryTitle = @"Save Time and Money";
-    dropInViewController.summaryDescription = @"Save time at the bar by adding payment before you go out. You’re only charged after you’ve redeemed your drink.";
+    dropInViewController.summaryTitle = @"Add Payment";
+    dropInViewController.summaryDescription = @"Save time by linking payment before you go out. You're only charged when you actually buy drinks or tickets.";
     dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
     
     // The way you present your BTDropInViewController instance is up to you.
@@ -84,8 +84,8 @@
     BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
     // This is where you might want to customize your Drop in. (See below.)
     //
-    dropInViewController.summaryTitle = [NSString stringWithFormat:@"Save Time and Money"];
-    dropInViewController.summaryDescription = [NSString stringWithFormat:@"Save time paying through Hotspot by adding payment before you go out. You only have to add your payment once."];
+    dropInViewController.summaryTitle = [NSString stringWithFormat:@"Add Payment"];
+    dropInViewController.summaryDescription = [NSString stringWithFormat:@"Save time by linking payment before you go out. You're only charged when you actually buy drinks or tickets."];
     //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
     //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"SAVE";
@@ -157,8 +157,8 @@
 //    //NSLog(@"ITEM PRICE: %@", deal.itemPrice);
 //    //dropInViewController.displayAmount = [NSString stringWithFormat:@"$%@ per %@", deal.itemPrice, deal.itemName];
     dropInViewController.callToActionText = @"SAVE";
-    dropInViewController.summaryTitle = @"Save Time and Money";
-    dropInViewController.summaryDescription = @"Save time at the bar by adding payment before you go out. You’re only charged after you’ve redeemed your drink.";
+    dropInViewController.summaryTitle = @"Add Payment";
+    dropInViewController.summaryDescription = @"Save time by linking payment before you go out. You're only charged when you actually buy drinks or tickets.";
     dropInViewController.view.tintColor = [[ThemeManager sharedTheme] lightBlueColor];
     
     // The way you present your BTDropInViewController instance is up to you.

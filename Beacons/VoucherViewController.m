@@ -199,7 +199,7 @@
         serverMessageText = @"REDEEMED";
         accentColor = [[ThemeManager sharedTheme] redColor];
         [self.headerIcon setImage:[UIImage imageNamed:@"newDrinkIcon"]];
-        self.headerTitle.text = @"DON'T FORGET TO TIP!";
+        self.headerTitle.text = @"THANKS FOR TIPPING!";
 //        self.headerExplanationText.text = [NSString stringWithFormat:@"You're all set. You've been charged $%@. Enjoy your night and don't forget to tip.", self.sponsoredEvent.itemPrice];
         [self.redeemButton setImage:[UIImage imageNamed:@"redeemedVoucher"] forState:UIControlStateNormal];
         [self.voucherIcon setImage:[UIImage imageNamed:@"redeemIcon"]];
