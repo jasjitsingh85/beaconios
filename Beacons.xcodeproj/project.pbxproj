@@ -93,6 +93,10 @@
 		4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F41C87372000A53821 /* EventChatViewController.m */; };
 		412773E31CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */; };
 		412773E51CA8C16C0055A9EA /* confirmationBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */; };
+		412B41731CB1C93900DF980D /* takePictureButtonLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */; };
+		412B41751CB3142900DF980D /* takePictureButtonSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */; };
+		412B41781CB3436600DF980D /* DatingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B41771CB3436600DF980D /* DatingProfile.m */; };
+		412B417A1CB3732500DF980D /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41791CB3732500DF980D /* settingsButton@2x.png */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -528,6 +532,11 @@
 		412773E11CA8C0A80055A9EA /* RedemptionConfirmationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionConfirmationPopupView.h; sourceTree = "<group>"; };
 		412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionConfirmationPopupView.m; sourceTree = "<group>"; };
 		412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirmationBackground@2x.png"; sourceTree = "<group>"; };
+		412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonLarge@2x.png"; sourceTree = "<group>"; };
+		412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonSmall@2x.png"; sourceTree = "<group>"; };
+		412B41761CB3435B00DF980D /* DatingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatingProfile.h; sourceTree = "<group>"; };
+		412B41771CB3436600DF980D /* DatingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatingProfile.m; sourceTree = "<group>"; };
+		412B41791CB3732500DF980D /* settingsButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsButton@2x.png"; sourceTree = "<group>"; };
 		412E8C8D1C3C625100E54486 /* RedemptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionViewController.h; sourceTree = "<group>"; };
 		412E8C8E1C3C626600E54486 /* RedemptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionViewController.m; sourceTree = "<group>"; };
 		412E8C901C3CC00700E54486 /* cameraIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraIcon@2x.png"; sourceTree = "<group>"; };
@@ -1193,6 +1202,8 @@
 				96A9872017E517FB007D77B8 /* BeaconStatus.m */,
 				9651C795193E5A750083A0FE /* DealStatus.h */,
 				9651C796193E5A750083A0FE /* DealStatus.m */,
+				412B41761CB3435B00DF980D /* DatingProfile.h */,
+				412B41771CB3436600DF980D /* DatingProfile.m */,
 				96D5EEFA19575D6C00786C27 /* DealHours.h */,
 				96D5EEFB19575D6C00786C27 /* DealHours.m */,
 				41D716AF1BC1CE1D00DF23D2 /* Event.h */,
@@ -1490,6 +1501,7 @@
 			children = (
 				41C9870B1C042EB400DD595D /* newDirectionsIcon@2x.png */,
 				41C9870C1C042EB400DD595D /* newHowThisWorksIcon@2x.png */,
+				412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */,
 				4122D6DE1C6FB10B00A53821 /* eventDrinkIcon@2x.png */,
 				41FA91C61C9A08A20092994E /* paymentButtonSelected@2x.png */,
 				411B4F7D1C236EB000CA7100 /* checkInIcon@2x.png */,
@@ -1499,6 +1511,7 @@
 				41FA91D21CA059550092994E /* matchDisabled@2x.png */,
 				41FFB0281C1A06E700947EEC /* emailIcon@2x.png */,
 				414F740B1C5B383E00CF49C4 /* iconForTab@2x.png */,
+				412B41791CB3732500DF980D /* settingsButton@2x.png */,
 				41FA91C81C9BCBBB0092994E /* ticketButtonSelected@2x.png */,
 				41FFB0191C153F7400947EEC /* newRedPin@2x.png */,
 				41C9870D1C042EB400DD595D /* happeningsIcon@2x.png */,
@@ -1539,6 +1552,7 @@
 				4122D6E01C71A73D00A53821 /* helpIcon@2x.png */,
 				41FFB01C1C1549C300947EEC /* mapVenueBackground@2x.png */,
 				411B4F861C27A0B100CA7100 /* friendIcon@2x.png */,
+				412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */,
 				410165EF1BF5A84700F0219C /* grayPin@2x.png */,
 				41F97BB51BBB170C003D1D86 /* updatedHelpButton@2x.png */,
 				41C4B8351BEFD5A700D471D6 /* filterButton@2x.png */,
@@ -2007,6 +2021,7 @@
 				410D19541B5069F5002C5F0F /* yelpLogo@2x.png in Resources */,
 				4122D6DF1C6FB10B00A53821 /* eventDrinkIcon@2x.png in Resources */,
 				41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */,
+				412B41731CB1C93900DF980D /* takePictureButtonLarge@2x.png in Resources */,
 				410FC89B1B3B3E4D0097EA26 /* bottomDivider@2x.png in Resources */,
 				41FD06451B3A46D000F7DD08 /* largeGoldCoin@2x.png in Resources */,
 				9691D26317FA93A50095BA80 /* chatButtonSelected@2x.png in Resources */,
@@ -2034,6 +2049,7 @@
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
 				41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */,
 				418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */,
+				412B417A1CB3732500DF980D /* settingsButton@2x.png in Resources */,
 				414F74061C545EF200CF49C4 /* topBorderWithDropShadow@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
@@ -2041,6 +2057,7 @@
 				410D30F11B85761200E749AA /* emptyNewsfeedIcon@2x.png in Resources */,
 				4158AE6C1B46EF960034BA4A /* contactFriendsModalBackground@2x.png in Resources */,
 				41FD063B1B3A15B400F7DD08 /* fingerprintIcon@2x.png in Resources */,
+				412B41751CB3142900DF980D /* takePictureButtonSmall@2x.png in Resources */,
 				96727DE11800ABC700E75EE9 /* addFriendSelected@2x.png in Resources */,
 				41FA91CD1C9BD96D0092994E /* eventRedemptionBackground@2x.png in Resources */,
 				960631ED194629850011E132 /* lock_closed@2x.png in Resources */,
@@ -2213,6 +2230,7 @@
 				414F73F81C4584D900CF49C4 /* TabItem.m in Sources */,
 				1FA2D50A1765398C00AB657F /* TextMessageManager.m in Sources */,
 				1F9CEB3F176D1F2C00529037 /* ContactManager.m in Sources */,
+				412B41781CB3436600DF980D /* DatingProfile.m in Sources */,
 				96D52D251838415300496923 /* SecretSettingsViewController.m in Sources */,
 				96CBCD05180676E600D62462 /* UIView+Shadow.m in Sources */,
 				1FEAEE0117701C9B0090A7C2 /* LoadingIndictor.m in Sources */,

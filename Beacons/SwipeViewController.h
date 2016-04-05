@@ -11,4 +11,6 @@
 @class SponsoredEvent;
 @interface SwipeViewController : UIViewController
 
+@property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
+
 @end

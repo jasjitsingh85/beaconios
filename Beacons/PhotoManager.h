@@ -12,5 +12,6 @@
 
 + (instancetype)sharedManager;
 - (void)presentImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType fromViewController:(UIViewController *)viewController completion:(void (^)(UIImage *image, BOOL cancelled))completion;
+- (void)presentImagePickerForSourceTypeFrontCamera:(UIImagePickerControllerSourceType)sourceType fromViewController:(UIViewController *)viewController completion:(void (^)(UIImage *image, BOOL cancelled))completion;
 
 @end

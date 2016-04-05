@@ -25,7 +25,7 @@ static dispatch_once_t onceToken;
 + (APIClient *)sharedClient
 {
     if (!_serverPath) {
-        _serverPath = kBaseURLStringProduction;
+        _serverPath = kBaseURLStringStaging;
     }
     dispatch_once(&onceToken, ^{
         _sharedClient = [[APIClient alloc] initWithBaseURL:[NSURL URLWithString:_serverPath]];
@@ -233,6 +233,20 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     NSData *imageData = UIImageJPEGRepresentation(image, 0.9);
     NSDictionary *parameters = @{@"beacon" : beaconID};
     NSString *imageName = beaconID.stringValue;
+    NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:@"image/" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:imageData name:@"image" fileName:[imageName stringByAppendingString:@".jpg"] mimeType:@"image/jpg"];
+    }];
+    request.timeoutInterval = 10*60;
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
+
+- (void)postImage:(UIImage *)image withImageName:(NSString *)imageName success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    NSDictionary *parameters = @{};
     NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:@"image/" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:imageData name:@"image" fileName:[imageName stringByAppendingString:@".jpg"] mimeType:@"image/jpg"];
     }];
@@ -586,6 +600,21 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     parameters[@"is_interested"] = [NSNumber numberWithBool:0];
     
     [[APIClient sharedClient] postPath:@"reserve/" parameters:parameters success:success failure:failure];
+}
+
+- (void)getDatingData:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"event_id" : eventID};
+    [[APIClient sharedClient] getPath:@"swipe-match/" parameters:parameters success:success failure:failure];
+}
+
+- (void)postDatingProfile:(NSString *)imageUrl andGender:(NSString *)userGender andPreference:(NSString *)userPreference andEventID:(NSNumber *)event_id success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"image_url" : imageUrl,
+                                 @"user_gender" : userGender,
+                                 @"user_preference" : userPreference,
+                                 @"event_id" : event_id};
+    [[APIClient sharedClient] postPath:@"swipe-match/" parameters:parameters success:success failure:failure];
 }
 
 @end

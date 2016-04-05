@@ -92,6 +92,7 @@ PODS:
   - Foursquare-iOS-API (2.0)
   - Kochava (20160209)
   - MBProgressHUD (0.9.2)
+  - MDCSwipeToChoose (0.2.3)
   - Mixpanel (2.3.6)
   - MSDynamicsDrawerViewController (1.0.2)
   - SDWebImage (3.7.5):
@@ -118,6 +119,7 @@ DEPENDENCIES:
   - Foursquare-iOS-API (~> 2.0)
   - Kochava
   - MBProgressHUD
+  - MDCSwipeToChoose
   - Mixpanel (~> 2.3.6)
   - MSDynamicsDrawerViewController (~> 1.0.0)
   - SDWebImage (~> 3.7)
@@ -143,6 +145,7 @@ SPEC CHECKSUMS:
   Foursquare-iOS-API: 724e6781f713cab2df8eef2e78f15c2af6bf6378
   Kochava: 7d6adac39fcd5aa0c9747324ce2df888dd3a69fe
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   Mixpanel: dc56111f1b327b38e0ae5a805f33f5d0c9e7f7f2
   MSDynamicsDrawerViewController: 7c95dcc55f5558a778294a3983efbcb85e9a9942
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461

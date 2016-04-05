@@ -230,17 +230,12 @@
     [self.view addSubview:buttonContainer];
     
     [self loadInitialView];
-    
-    [self refreshSponsoredEventData:self.sponsoredEvent.eventID];
-    
-//    [self setInitialState];
-    
 }
 
-//-(void)setInitialState
-//{
-//    [self makeTicketActive];
-//}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self refreshSponsoredEventData:self.sponsoredEvent.eventID];
+}
 
 -(void)ticketButtonTapped:(id)sender
 {
@@ -443,6 +438,7 @@
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
     self.eventChatViewController.sponsoredEvent = self.sponsoredEvent;
+    self.swipeViewController.sponsoredEvent = self.sponsoredEvent;
     
     [self.view addSubview:self.activityScroll];
 }

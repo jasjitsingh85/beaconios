@@ -40,6 +40,20 @@ typedef void (^PhotoPickerCompletionBlock)(UIImage *image, BOOL cancelled);
     [viewController presentViewController:imagePickerController animated:YES completion:nil];
 }
 
+- (void)presentImagePickerForSourceTypeFrontCamera:(UIImagePickerControllerSourceType)sourceType fromViewController:(UIViewController *)viewController completion:(void (^)(UIImage *image, BOOL cancelled))completion
+{
+    self.photoPickerCompletionBlock = completion;
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+    imagePickerController.sourceType = sourceType;
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;   
+    }
+    imagePickerController.allowsEditing = YES;
+    imagePickerController.delegate = self;
+    [viewController presentViewController:imagePickerController animated:YES completion:nil];
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
 //    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
