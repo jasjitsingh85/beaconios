@@ -25,7 +25,7 @@
 @property (strong, nonatomic) UISegmentedControl *userGender;
 @property (strong, nonatomic) UISegmentedControl *userPreference;
 @property (strong, nonatomic) UIImageView *profilePicture;
-@property (strong, nonatomic) UIImageView *changePicture;
+@property (strong, nonatomic) UILabel *changePicture;
 @property (strong, nonatomic) NSURL *profilePictureImageUrl;
 @property (assign, nonatomic) BOOL *pictureAdded;
 @property (strong, nonatomic) DatingProfile *datingProfile;
@@ -117,11 +117,23 @@
     [self.profilePicture setImage:[UIImage imageNamed:@"takePictureButtonLarge"]];
     [self.setupView addSubview:self.profilePicture];
     
-    self.changePicture = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"takePictureButtonSmall"]];
-    self.changePicture.y = 5;
-    self.changePicture.x = 160;
+    UIView *blackBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 175, 200, 25)];
+    blackBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+    [self.profilePicture addSubview:blackBackground];
+    
+    self.changePicture = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+    self.changePicture.font = [ThemeManager boldFontOfSize:10];
+    self.changePicture.textColor = [UIColor whiteColor];
+    self.changePicture.text = @"CHANGE PICTURE";
+    self.changePicture.textAlignment = NSTextAlignmentCenter;
     self.changePicture.hidden = YES;
-    [self.profilePicture addSubview:self.changePicture];
+    [blackBackground addSubview:self.changePicture];
+    
+//    self.changePicture = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"takePictureButtonSmall"]];
+//    self.changePicture.y = 0;
+//    self.changePicture.x = 160;
+//    self.changePicture.hidden = NO;
+//    [blackBackground addSubview:self.changePicture];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cameraButtonTouched:)];
     [self.profilePicture addGestureRecognizer:tap];
