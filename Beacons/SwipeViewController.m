@@ -233,9 +233,10 @@
     int count = 0;
     for(int index=0; index < 4 || index < self.matches.count; index++)
     {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5 + (count * 80), 5 , 70, 70)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5 + (count * 75), 10 , 70, 70)];
         if (index < self.matches.count) {
-        
+            DatingProfile *datingProfile = self.matches[index];
+            [imageView sd_setImageWithURL:datingProfile.imageURL];
         } else {
             imageView.image = [UIImage imageNamed:@"blankMatch"];
         }
