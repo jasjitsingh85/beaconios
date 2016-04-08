@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 
-@class SponsoredEvent;
-@interface SwipeViewController : UIViewController
+@class SponsoredEvent, DatingProfile;
+@interface SwipeViewController : UIViewController <MDCSwipeToChooseDelegate>
 
 @property (strong, nonatomic) SponsoredEvent *sponsoredEvent;
 

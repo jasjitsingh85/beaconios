@@ -93,6 +93,7 @@
 		4122D6F51C87372000A53821 /* EventChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6F41C87372000A53821 /* EventChatViewController.m */; };
 		412773E31CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */; };
 		412773E51CA8C16C0055A9EA /* confirmationBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */; };
+		412A70A31CB7CB57005443A5 /* blankMatch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412A70A21CB7CB57005443A5 /* blankMatch@2x.png */; };
 		412B41731CB1C93900DF980D /* takePictureButtonLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */; };
 		412B41751CB3142900DF980D /* takePictureButtonSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */; };
 		412B41781CB3436600DF980D /* DatingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B41771CB3436600DF980D /* DatingProfile.m */; };
@@ -532,6 +533,7 @@
 		412773E11CA8C0A80055A9EA /* RedemptionConfirmationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedemptionConfirmationPopupView.h; sourceTree = "<group>"; };
 		412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionConfirmationPopupView.m; sourceTree = "<group>"; };
 		412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirmationBackground@2x.png"; sourceTree = "<group>"; };
+		412A70A21CB7CB57005443A5 /* blankMatch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blankMatch@2x.png"; sourceTree = "<group>"; };
 		412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonLarge@2x.png"; sourceTree = "<group>"; };
 		412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonSmall@2x.png"; sourceTree = "<group>"; };
 		412B41761CB3435B00DF980D /* DatingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatingProfile.h; sourceTree = "<group>"; };
@@ -1528,6 +1530,7 @@
 				4122D6EB1C71BE6900A53821 /* newFilterButtonSelected@2x.png */,
 				414F74011C47738700CF49C4 /* smallModalBackground@2x.png */,
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
+				412A70A21CB7CB57005443A5 /* blankMatch@2x.png */,
 				4122D6E51C71AD9E00A53821 /* shortModalBackground@2x.png */,
 				41FFB0261C1A007B00947EEC /* newFacebookWhite@2x.png */,
 				412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */,
@@ -1935,6 +1938,7 @@
 				410FC89F1B3B4FAA0097EA26 /* hotspotLogoNavRed.png in Resources */,
 				96727DE01800ABC700E75EE9 /* addFriendNormal@2x.png in Resources */,
 				41E6B3EA1AEE33D800D34EAF /* addFriends@2x.png in Resources */,
+				412A70A31CB7CB57005443A5 /* blankMatch@2x.png in Resources */,
 				9690F2C817FFE5980010EFA3 /* menuButton@2x.png in Resources */,
 				9691D26217FA93A50095BA80 /* chatButtonNormal@2x.png in Resources */,
 				96CBCCF31805107500D62462 /* chatBubbleOrangeRight@2x.png in Resources */,

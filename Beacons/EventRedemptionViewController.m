@@ -57,6 +57,7 @@
 #import "EventChatViewController.h"
 #import "VoucherViewController.h"
 #import "SwipeViewController.h"
+#import "DatingProfile.h"
 
 @interface EventRedemptionViewController () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
@@ -232,7 +233,7 @@
     [self loadInitialView];
 }
 
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [self refreshSponsoredEventData:self.sponsoredEvent.eventID];
 }
@@ -434,14 +435,37 @@
 {
     _sponsoredEvent = sponsoredEvent;
     
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
+//    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.title];
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
     self.eventChatViewController.sponsoredEvent = self.sponsoredEvent;
     self.swipeViewController.sponsoredEvent = self.sponsoredEvent;
     
+//    [self loadSwipeView];
+    
     [self.view addSubview:self.activityScroll];
 }
+
+//-(void) loadSwipeView
+//{
+//    [[APIClient sharedClient] getDatingData:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        if ([responseObject[@"dating_profile"] isEmpty]) {
+//            self.swipeViewController.datingProfile = nil;
+//        } else {
+//            NSDictionary *datingProfile = responseObject[@"dating_profile"][0];
+//            self.swipeViewController.datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfile];
+//            NSMutableArray *datingQueueArray = [[NSMutableArray alloc] init];
+//            for (NSDictionary *datingProfileJSON in responseObject[@"dating_queue"]) {
+//                DatingProfile *datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfileJSON];
+//                [datingQueueArray addObject:datingProfile];
+//            }
+//            self.swipeViewController.datingQueue = datingQueueArray;
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"FAILED");
+//    }];
+//}
 
 -(void)loadInitialView
 {

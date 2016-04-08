@@ -668,13 +668,13 @@ typedef enum dealTypeStates
         [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
         [locationTracker fetchCurrentLocation:^(CLLocation *location) {
             //REMOVE THIS LINE AFTER DEMO
-            //CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
+            CLLocation *staticLocation = [[CLLocation alloc] initWithLatitude:47.667759 longitude:-122.312766];
             //REMOVE THIS LINE AFTER DEMO
-            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
-            //[self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+//            [self loadDealsNearCoordinate:location.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
+            [self loadDealsNearCoordinate:staticLocation.coordinate withRadius:[NSString stringWithFormat:@"%f", self.initialRadius] withCompletion:^{
                 self.loadingDeals = NO;
-                //self.mapCenter = staticLocation.coordinate;
-                self.mapCenter = location.coordinate;
+                self.mapCenter = staticLocation.coordinate;
+//                self.mapCenter = location.coordinate;
                 [self updateMapCoordinates];
                 [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
                 [[AnalyticsManager sharedManager] viewedDeals:self.selectedVenues.count];
@@ -719,7 +719,7 @@ typedef enum dealTypeStates
     self.mapCenter = [self.mapView centerCoordinate];
     NSString *radiusString = [NSString stringWithFormat:@"%f", [self getRadius]];
     [self loadDealsNearCoordinate:self.mapCenter withRadius:radiusString withCompletion:^{
-        //[self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
+//    [self loadDealsNearCoordinate:staticLocation.coordinate withCompletion:^{
         self.loadingDeals = NO;
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
         [self hideRedoSearchContainer:YES];

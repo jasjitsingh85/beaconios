@@ -617,4 +617,12 @@ failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
     [[APIClient sharedClient] postPath:@"swipe-match/" parameters:parameters success:success failure:failure];
 }
 
+- (void)swipeComplete:(NSNumber *)datingProfileID withSelection:(BOOL)isSelected forEvent:(NSNumber *)eventID success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+{
+    NSDictionary *parameters = @{@"dating_profile_id" : datingProfileID,
+                                 @"is_selected" : [NSNumber numberWithBool:isSelected],
+                                 @"event_id" : eventID};
+    [[APIClient sharedClient] putPath:@"swipe-match/" parameters:parameters success:success failure:failure];
+}
+
 @end

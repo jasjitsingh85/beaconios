@@ -22,19 +22,23 @@
 @property (strong, nonatomic) UILabel *headerExplanationText;
 @property (strong, nonatomic) UIView *setupView;
 @property (strong, nonatomic) UIView *mainView;
+@property (strong, nonatomic) UIView *queueView;
+@property (strong, nonatomic) UIView *blackBackground;
 @property (strong, nonatomic) UISegmentedControl *userGender;
 @property (strong, nonatomic) UISegmentedControl *userPreference;
 @property (strong, nonatomic) UIImageView *profilePicture;
 @property (strong, nonatomic) UILabel *changePicture;
 @property (strong, nonatomic) NSURL *profilePictureImageUrl;
 @property (assign, nonatomic) BOOL *pictureAdded;
+@property (strong, nonatomic) NSArray *matches;
+@property (strong, nonatomic) UIScrollView *matchesView;
+@property (strong, nonatomic) MDCSwipeToChooseViewOptions *options;
 @property (strong, nonatomic) DatingProfile *datingProfile;
 @property (strong, nonatomic) NSArray *datingQueue;
-@property (strong, nonatomic) MDCSwipeToChooseViewOptions *options;
 
 @end
 
-@implementation SwipeViewController
+@implementation SwipeViewController 
 
 - (void)viewDidLoad
 {
@@ -42,6 +46,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.datingQueue = [[NSArray alloc] init];
+    self.matches = [[NSArray alloc] init];
     
     self.mainView = [[UIView alloc] initWithFrame:self.view.frame];
     self.mainView.backgroundColor = [UIColor whiteColor];
@@ -67,6 +72,10 @@
     self.headerExplanationText.numberOfLines = 0;
     self.headerExplanationText.text = @"You're out of matches for now. Check back later to see more people!";
     [self.mainView addSubview:self.headerExplanationText];
+    
+    self.queueView = [[UIView alloc] initWithFrame:self.view.frame];
+    self.queueView.backgroundColor = [UIColor clearColor];
+    [self.mainView addSubview:self.queueView];
     
     UILabel *genderLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 12, self.view.width, 20)];
     genderLabel.textAlignment = NSTextAlignmentLeft;
@@ -117,23 +126,17 @@
     [self.profilePicture setImage:[UIImage imageNamed:@"takePictureButtonLarge"]];
     [self.setupView addSubview:self.profilePicture];
     
-    UIView *blackBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 175, 200, 25)];
-    blackBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
-    [self.profilePicture addSubview:blackBackground];
+    self.blackBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 175, 200, 25)];
+    self.blackBackground.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
+    self.blackBackground.hidden = YES;
+    [self.profilePicture addSubview:self.blackBackground];
     
     self.changePicture = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
     self.changePicture.font = [ThemeManager boldFontOfSize:10];
     self.changePicture.textColor = [UIColor whiteColor];
     self.changePicture.text = @"CHANGE PICTURE";
     self.changePicture.textAlignment = NSTextAlignmentCenter;
-    self.changePicture.hidden = YES;
-    [blackBackground addSubview:self.changePicture];
-    
-//    self.changePicture = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"takePictureButtonSmall"]];
-//    self.changePicture.y = 0;
-//    self.changePicture.x = 160;
-//    self.changePicture.hidden = NO;
-//    [blackBackground addSubview:self.changePicture];
+    [self.blackBackground addSubview:self.changePicture];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cameraButtonTouched:)];
     [self.profilePicture addGestureRecognizer:tap];
@@ -153,8 +156,9 @@
     
     self.options = [MDCSwipeToChooseViewOptions new];
     self.options.likedText = @"LIKE";
-    self.options.likedColor = [[ThemeManager sharedTheme] redColor];
-    self.options.nopeColor = [[ThemeManager sharedTheme] lightBlueColor];
+    self.options.delegate = self;
+    self.options.likedColor = [[ThemeManager sharedTheme] greenColor];
+    self.options.nopeColor = [[ThemeManager sharedTheme] redColor];
     self.options.nopeText = @"NOPE";
     self.options.onPan = ^(MDCPanState *state){
         if (state.thresholdRatio == 1.f && state.direction == MDCSwipeDirectionLeft) {
@@ -179,19 +183,81 @@
     [settingsButton setImage:[UIImage imageNamed:@"settingsButton"] forState:UIControlStateNormal];
     [settingsButton addTarget:self action:@selector(settingsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.mainView addSubview:settingsButton];
+    
+    self.matchesView= [[UIScrollView alloc] init];
+    self.matchesView.frame=CGRectMake(0, 336, self.view.frame.size.width, 94);
+    self.matchesView.delegate = self;
+    self.matchesView.scrollEnabled = YES;
+    self.matchesView.showsHorizontalScrollIndicator = NO;
+    int scrollWidth = 100;
+    [self.mainView addSubview:self.matchesView];
+    
+    [self.matchesView setUserInteractionEnabled:YES];
+    [self.mainView addGestureRecognizer:self.matchesView.panGestureRecognizer];
+}
+
+-(void) loadSwipeView
+{
+    [[APIClient sharedClient] getDatingData:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject[@"dating_profile"] isEmpty]) {
+            self.datingProfile = nil;
+            [self loadAndShowSetupView];
+        } else {
+            NSDictionary *datingProfile = responseObject[@"dating_profile"][0];
+            self.datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfile];
+            [self loadDatingProfileInSetupView];
+            
+            NSMutableArray *datingQueueArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *datingProfileJSON in responseObject[@"dating_queue"]) {
+                DatingProfile *datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfileJSON];
+                [datingQueueArray addObject:datingProfile];
+            }
+            self.datingQueue = datingQueueArray;
+            [self loadAndShowMainView];
+            
+            NSMutableArray *matchesArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *datingProfileJSON in responseObject[@"matches"]) {
+                DatingProfile *datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfileJSON];
+                [matchesArray addObject:datingProfile];
+            }
+            self.matches = matchesArray;
+            [self loadMatches];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"FAILED");
+    }];
+}
+
+-(void)loadMatches
+{
+    int count = 0;
+    for(int index=0; index < 4 || index < self.matches.count; index++)
+    {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5 + (count * 80), 5 , 70, 70)];
+        if (index < self.matches.count) {
+        
+        } else {
+            imageView.image = [UIImage imageNamed:@"blankMatch"];
+        }
+        
+        [self.matchesView addSubview:imageView];
+        
+        count += 1;
+    }
+    
+    self.matchesView.contentSize = CGSizeMake(80 * count, 80);
 }
 
 -(void) loadDatingProfilesInMainView
 {
+    [self.queueView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     for (DatingProfile *profile in self.datingQueue) {
         MDCSwipeToChooseView *view = [[MDCSwipeToChooseView alloc] initWithFrame:CGRectMake(30, 30, self.view.width - 60, self.view.width - 60) options:self.options];
-        NSData *imageData = [NSData dataWithContentsOfURL:profile.imageURL];
-        view.imageView.image = [UIImage imageWithData:imageData];
-        [self.mainView addSubview:view];
+        view.tag = [profile.datingProfileID integerValue];
+        [view.imageView sd_setImageWithURL:profile.imageURL];
+        [self.queueView addSubview:view];
     }
 }
-
-#pragma mark - MDCSwipeToChooseDelegate Callbacks
 
 // This is called when a user didn't fully swipe left or right.
 - (void)viewDidCancelSwipe:(UIView *)view {
@@ -200,25 +266,38 @@
 
 // Sent before a choice is made. Cancel the choice by returning `NO`. Otherwise return `YES`.
 - (BOOL)view:(UIView *)view shouldBeChosenWithDirection:(MDCSwipeDirection)direction {
-    if (direction == MDCSwipeDirectionLeft) {
-        return YES;
-    } else {
-        // Snap the view back and cancel the choice.
-        [UIView animateWithDuration:0.16 animations:^{
-            view.transform = CGAffineTransformIdentity;
-            view.center = [view superview].center;
-        }];
-        return NO;
-    }
+//    if (direction == MDCSwipeDirectionLeft) {
+//        return YES;
+//    } else {
+//        // Snap the view back and cancel the choice.
+//        [UIView animateWithDuration:0.16 animations:^{
+//            view.transform = CGAffineTransformIdentity;
+//            view.center = [view superview].center;
+//        }];
+//        return NO;
+//    }
+    return YES;
 }
 
 // This is called then a user swipes the view fully left or right.
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
+    NSNumber *datingProfileID = [NSNumber numberWithInteger:view.tag];
     if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"Photo deleted!");
+        NSLog(@"SWIPED LEFT!");
+        [self swipeComplete:datingProfileID withSelection:NO];
     } else {
-        NSLog(@"Photo saved!");
+        NSLog(@"SWIPED RIGHT!");
+        [self swipeComplete:datingProfileID withSelection:YES];
     }
+}
+
+-(void)swipeComplete:(NSNumber *)datingProfileID withSelection:(BOOL)isSelected
+{
+    [[APIClient sharedClient] swipeComplete:datingProfileID withSelection:isSelected forEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failure");
+    }];
 }
 
 -(NSString *)getValueFromIndex:(NSInteger)index
@@ -232,8 +311,28 @@
     }
 }
 
+-(void) updateUserGenderInSetupView
+{
+    if ([self.datingProfile.userGender isEqualToString:@"M" ]) {
+        [self.userGender setSelectedSegmentIndex:0];
+    } else if ([self.datingProfile.userGender isEqualToString:@"F"]) {
+        [self.userGender setSelectedSegmentIndex:1];
+    }
+}
+
+-(void) updateUserPreferenceInSetupView
+{
+    if ([self.datingProfile.userPreference isEqualToString:@"M" ]) {
+        [self.userPreference setSelectedSegmentIndex:0];
+    } else if ([self.datingProfile.userPreference isEqualToString:@"F"]) {
+        [self.userPreference setSelectedSegmentIndex:1];
+    }
+}
+
 -(void) loadDatingProfileInSetupView
 {
+    [self updateUserGenderInSetupView];
+    [self updateUserPreferenceInSetupView];
     self.profilePictureImageUrl = self.datingProfile.imageURL;
     [self showPictureInView];
 }
@@ -298,7 +397,7 @@
 
 -(void) showPictureInView
 {
-    self.changePicture.hidden = NO;
+    self.blackBackground.hidden = NO;
     [self.profilePicture sd_setImageWithURL:self.profilePictureImageUrl];
 }
 
@@ -342,24 +441,7 @@
 {
     _sponsoredEvent = sponsoredEvent;
     
-    [[APIClient sharedClient] getDatingData:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([responseObject[@"dating_profile"] isEmpty]) {
-            [self loadAndShowSetupView];
-        } else {
-            NSDictionary *datingProfile = responseObject[@"dating_profile"][0];
-            self.datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfile];
-            [self loadDatingProfileInSetupView];
-            NSMutableArray *datingQueueArray = [[NSMutableArray alloc] init];
-            for (NSDictionary *datingProfileJSON in responseObject[@"dating_queue"]) {
-                DatingProfile *datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfileJSON];
-                [datingQueueArray addObject:datingProfile];
-            }
-            self.datingQueue = datingQueueArray;
-            [self loadAndShowMainView];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"FAILED");
-    }];
+    [self loadSwipeView];
 }
 
 @end
