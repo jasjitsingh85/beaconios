@@ -20,9 +20,9 @@
     
     self.datingProfileID = dictionary[@"id"];
     
-    NSDictionary *userDictionary = dictionary[@"user"];
+    NSDictionary *userDictionary = dictionary[@"dating_profile"];
     if (!isEmpty(userDictionary)) {
-        self.user = [[User alloc] initWithUserDictionary:userDictionary];
+        self.user = [[User alloc] initWithData:userDictionary];
     }
 
     self.imageURL = [NSURL URLWithString:dictionary[@"image_url"]];

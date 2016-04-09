@@ -15,6 +15,7 @@
 #import <BlocksKit/UIActionSheet+BlocksKit.h>
 #import "DatingProfile.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
+#import "User.h"
 
 @interface SwipeViewController ()
 
@@ -187,9 +188,9 @@
     self.matchesView= [[UIScrollView alloc] init];
     self.matchesView.frame=CGRectMake(0, 336, self.view.frame.size.width, 94);
     self.matchesView.delegate = self;
+    self.matchesView.backgroundColor = [UIColor whiteColor];
     self.matchesView.scrollEnabled = YES;
     self.matchesView.showsHorizontalScrollIndicator = NO;
-    int scrollWidth = 100;
     [self.mainView addSubview:self.matchesView];
     
     [self.matchesView setUserInteractionEnabled:YES];
@@ -231,9 +232,18 @@
 -(void)loadMatches
 {
     int count = 0;
+    [self.matchesView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
     for(int index=0; index < 4 || index < self.matches.count; index++)
     {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(12.5 + (count * 75), 10 , 70, 70)];
+        imageView.layer.cornerRadius = 35;
+        imageView.clipsToBounds = YES;
+        imageView.userInteractionEnabled = YES;
+        imageView.tag = index;
+        UITapGestureRecognizer *singleFingerTap =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(matchTapped:)];
+        [imageView addGestureRecognizer:singleFingerTap];
         if (index < self.matches.count) {
             DatingProfile *datingProfile = self.matches[index];
             [imageView sd_setImageWithURL:datingProfile.imageURL];
@@ -247,6 +257,16 @@
     }
     
     self.matchesView.contentSize = CGSizeMake(80 * count, 80);
+}
+
+-(void) matchTapped:(id)sender
+{
+    UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
+    if (tapRecognizer.view.tag < self.matches.count) {
+        DatingProfile *datingProfile = self.matches[tapRecognizer.view.tag];
+        NSString *message = [NSString stringWithFormat:@"You've matched with %@. So you know be social and when you see them, make sure to say hi.", datingProfile.user.fullName];
+        [[[UIAlertView alloc] initWithTitle:@"Matched!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 -(void) loadDatingProfilesInMainView
@@ -284,18 +304,36 @@
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
     NSNumber *datingProfileID = [NSNumber numberWithInteger:view.tag];
     if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"SWIPED LEFT!");
         [self swipeComplete:datingProfileID withSelection:NO];
     } else {
-        NSLog(@"SWIPED RIGHT!");
         [self swipeComplete:datingProfileID withSelection:YES];
     }
+}
+
+-(void)reloadMatches
+{
+    [[APIClient sharedClient] getDatingData:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSMutableArray *matchesArray = [[NSMutableArray alloc] init];
+            for (NSDictionary *datingProfileJSON in responseObject[@"matches"]) {
+                DatingProfile *datingProfile = [[DatingProfile alloc] initWithDictionary:datingProfileJSON];
+                [matchesArray addObject:datingProfile];
+            }
+            self.matches = matchesArray;
+            [self loadMatches];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"FAILED");
+    }];
 }
 
 -(void)swipeComplete:(NSNumber *)datingProfileID withSelection:(BOOL)isSelected
 {
     [[APIClient sharedClient] swipeComplete:datingProfileID withSelection:isSelected forEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success");
+        if (isSelected) {
+            if (![responseObject[@"dating_profile_match"] isEmpty]) {
+                [[[UIAlertView alloc] initWithTitle:@"Matched!" message:@"Working" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [self reloadMatches];
+            }
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Failure");
     }];

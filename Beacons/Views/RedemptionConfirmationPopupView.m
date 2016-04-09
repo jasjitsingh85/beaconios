@@ -73,9 +73,8 @@
     [launchInviteButton addTarget:self action:@selector(confirmPurchase:) forControlEvents:UIControlEventTouchUpInside];
     [self.imageView addSubview:launchInviteButton];
     
-    self.tipControl = [[UISegmentedControl alloc] initWithItems:@[@"NO TIP", @"$1", @"$2", @"$3"]];
+    self.tipControl = [[UISegmentedControl alloc] initWithItems:@[@"NO TIP", @"18%", @"20%", @"25%"]];
     [self.tipControl setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor unnormalizedColorWithRed:112 green:112 blue:112 alpha:255], NSFontAttributeName : [ThemeManager boldFontOfSize:10]} forState:UIControlStateNormal];
-    [self.tipControl setSelectedSegmentIndex:0];
     self.tipControl.width = 200;
     self.tipControl.height = 30;
     self.tipControl.centerX = self.width/2;
@@ -102,9 +101,24 @@
     return self;
 }
 
+-(void) updateTipAmount
+{
+    NSInteger index = self.tipControl.selectedSegmentIndex;
+    if (index == 1) {
+        self.tipAmount = [NSNumber numberWithFloat:(0.18 * [self.sponsoredEvent.itemPrice floatValue])];
+    } else if (index == 2) {
+        self.tipAmount = [NSNumber numberWithFloat:(0.20 * [self.sponsoredEvent.itemPrice floatValue])];
+    } else if (index == 3) {
+        self.tipAmount = [NSNumber numberWithFloat:(0.25 * [self.sponsoredEvent.itemPrice floatValue])];
+    } else {
+        self.tipAmount = [NSNumber numberWithFloat:0.0];
+    }
+}
+
 -(void)computeTotalAndUpdateText
 {
-    self.tipAmount = [NSNumber numberWithInteger:self.tipControl.selectedSegmentIndex];
+    [self updateTipAmount];
+//    self.tipAmount = [NSNumber numberWithInteger:self.tipControl.selectedSegmentIndex];
     self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.itemPrice floatValue])];
     [self updateBodyText];
 }
@@ -114,7 +128,8 @@
 }
 
 -(void)updateBodyText {
-    self.textBody.text = [NSString stringWithFormat:@"Add a tip for bar-staff so you don't have to bring cash. You'll be charged $%@ when you tap 'CONFIRM'", self.totalAmount];
+    NSString *formattedNumber = [NSString stringWithFormat:@"%.02f", [self.totalAmount floatValue]];
+    self.textBody.text = [NSString stringWithFormat:@"Add a tip for bar-staff so you don't have to bring cash. You'll be charged $%@ when you tap 'CONFIRM'", formattedNumber];
 }
 
 -(void)setSponsoredEvent:(SponsoredEvent *)sponsoredEvent
@@ -153,17 +168,21 @@
 
 - (void)confirmPurchase:(id)sender
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        self.backgroundView.alpha = 0;
-        CGFloat angle = -M_1_PI + (float) random()/RAND_MAX *2*M_1_PI;
-        CGAffineTransform transform = CGAffineTransformMakeTranslation(0, self.height);
-        transform = CGAffineTransformRotate(transform, angle);
-        self.imageView.transform = transform;
-    } completion:^(BOOL finished) {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:self.tipAmount forKey:@"tipAmount"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kConfirmPurchase object:self userInfo:userInfo];
-        [self removeFromSuperview];
-    }];
+    if (self.tipControl.selectedSegmentIndex != -1) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.backgroundView.alpha = 0;
+            CGFloat angle = -M_1_PI + (float) random()/RAND_MAX *2*M_1_PI;
+            CGAffineTransform transform = CGAffineTransformMakeTranslation(0, self.height);
+            transform = CGAffineTransformRotate(transform, angle);
+            self.imageView.transform = transform;
+        } completion:^(BOOL finished) {
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:self.tipAmount forKey:@"tipAmount"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kConfirmPurchase object:self userInfo:userInfo];
+            [self removeFromSuperview];
+        }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Select Tip" message:@"Please select a tip amount before confirming purchase" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
 }
 
 
