@@ -140,10 +140,11 @@ typedef void (^RemoteNotificationRegistrationFailureBlock)(NSError *error);
             [[AppDelegate sharedAppDelegate] setSelectedViewControllerToBeaconProfileWithID:beaconID promptForCheckIn:NO];
         }
     }
-    else if ([notificationType isEqualToString:kPushNotificationTypeRecommendation]) {
-        NSNumber *recommendationID = userInfo[@"rec"];
-        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSetBeaconWithRecommendationID:recommendationID];
-    } else if ([notificationType isEqualToString:kPushNotificationTypeEventChat]) {
+//    else if ([notificationType isEqualToString:kPushNotificationTypeRecommendation]) {
+//        NSNumber *recommendationID = userInfo[@"rec"];
+//        [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSetBeaconWithRecommendationID:recommendationID];
+//    }
+    else if ([notificationType isEqualToString:kPushNotificationTypeEventChat]) {
         self.eventID = userInfo[@"sponsored_event"];
         [[AppDelegate sharedAppDelegate] setSelectedViewControllerToSponsoredEventWithID:self.eventID];
     }

@@ -58,6 +58,7 @@
 #import "VoucherViewController.h"
 #import "SwipeViewController.h"
 #import "DatingProfile.h"
+#import "EnablePushPopupView.h"
 
 @interface EventRedemptionViewController () <UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
@@ -102,6 +103,11 @@
 
 @property (strong, nonatomic) UIScrollView *activityScroll;
 
+@property (assign, nonatomic) BOOL hasShownPushModal;
+@property (strong, nonatomic) EnablePushPopupView *modal;
+
+@property (assign, nonatomic) int page;
+
 @end
 
 @implementation EventRedemptionViewController
@@ -123,8 +129,10 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textFriendsButton];
     
     self.faqViewController = [[FaqViewController alloc] initForModal];
+    self.modal = [[EnablePushPopupView alloc] init];
     self.hasCheckedPayment = NO;
     self.dealMode = NO;
+    self.hasShownPushModal = NO;
     
     UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 140)];
     buttonContainer.backgroundColor = [UIColor whiteColor];
@@ -231,7 +239,9 @@
     [self.view addSubview:buttonContainer];
     
     [self loadInitialView];
+
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -265,9 +275,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillHide:) name:@"UIKeyboardWillHideNotification" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(showLoadingIndicator:) name:@"ShowLoadingInRedemptionView" object:nil];
+                                                 selector:@selector(showLoadingIndicator:) name:kStartLoadingForEvent object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(hideLoadingIndicator:) name:@"HideLoadingInRedemptionView" object:nil];
+                                                 selector:@selector(hideLoadingIndicator:) name:kEndLoadingForEvent object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(showFaq:) name:@"ShowFaq" object:nil];
     }
@@ -350,17 +360,30 @@
 -(void)updateButtons:(int)page
 {
     if (page == 0) {
+        self.page = 0;
         [self makeTicketActive];
         [self makeChatroomUnselected];
         [self makeMatchUnselected];
     } else if (page == 1) {
+        self.page = 1;
         [self makeTicketUnselected];
         [self makeChatroomActive];
         [self makeMatchUnselected];
+        [self checkPushPermissions];
     } else if (page == 2) {
+        self.page = 2;
         [self makeTicketUnselected];
         [self makeChatroomUnselected];
         [self makeMatchActive];
+        [self checkPushPermissions];
+    }
+}
+
+-(void)checkPushPermissions
+{
+    if (!self.hasShownPushModal && ![[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
+        [self.modal show];
+        self.hasShownPushModal = YES;
     }
 }
 
@@ -764,7 +787,9 @@
 
 -(void)showLoadingIndicator:(id)sender
 {
-    [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    if (self.page != 0) {
+         [LoadingIndictor showLoadingIndicatorInView:self.view animated:YES];
+    }
 }
 
 -(void)hideLoadingIndicator:(id)sender

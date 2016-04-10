@@ -151,6 +151,7 @@
 
 - (void)reloadMessagesFromServerCompletion:(void (^)())completion
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStartLoadingForEvent object:self userInfo:nil];
     [[SendBird queryMessageListInChannel:[SendBird getChannelUrl]] prevWithMessageTs:LLONG_MAX andLimit:50 resultBlock:^(NSMutableArray *queryResult) {
         long long maxMessageTs = LLONG_MIN;
         for (SendBirdMessageModel *model in queryResult) {
@@ -167,11 +168,11 @@
                 completion();
             }
         }];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kEndLoadingForEvent object:self userInfo:nil];
         // Load last 50 messages then connect to SendBird.
         //        [SendBird connectWithMessageTs:maxMessageId];
     } endBlock:^(NSError *error) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"HideLoadingInRedemptionView" object:self userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kEndLoadingForEvent object:self userInfo:nil];
     }];
     
 }

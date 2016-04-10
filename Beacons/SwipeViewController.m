@@ -330,7 +330,10 @@
     [[APIClient sharedClient] swipeComplete:datingProfileID withSelection:isSelected forEvent:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (isSelected) {
             if (![responseObject[@"dating_profile_match"] isEmpty]) {
-                [[[UIAlertView alloc] initWithTitle:@"Matched!" message:@"Working" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                NSDictionary *datingProfile = responseObject[@"dating_profile_match"][0];
+                DatingProfile *profile = [[DatingProfile alloc] initWithDictionary:datingProfile];
+                NSString *message = [NSString stringWithFormat:@"You've matched with %@. So you know be social and when you see them, make sure to say hi.", profile.user.fullName];
+                [[[UIAlertView alloc] initWithTitle:@"Matched!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 [self reloadMatches];
             }
         }
@@ -378,6 +381,7 @@
 
 - (void)saveButtonTouched:(id)sender
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStartLoadingForEvent object:self userInfo:nil];
     NSString *userGender = [self getValueFromIndex:self.userGender.selectedSegmentIndex];
     NSString *userPreference = [self getValueFromIndex:self.userPreference.selectedSegmentIndex];
     if (self.profilePictureImageUrl && userGender && userPreference) {
@@ -391,10 +395,13 @@
             }
             self.datingQueue = datingQueueArray;
             [self loadAndShowMainView];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kEndLoadingForEvent object:self userInfo:nil];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kEndLoadingForEvent object:self userInfo:nil];
             NSLog(@"FAILED");
         }];
     } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kEndLoadingForEvent object:self userInfo:nil];
         [[[UIAlertView alloc] initWithTitle:@"Profile Incomplete" message:@"Please ensure you've selected your gender, preference, and added an image" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
@@ -456,7 +463,7 @@
 -(void)loadAndShowSetupView
 {
     [UIView transitionWithView:self.setupView
-                      duration:0.6
+                      duration:0.4
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:NULL
                     completion:NULL];

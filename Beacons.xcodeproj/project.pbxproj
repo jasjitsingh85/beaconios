@@ -94,6 +94,7 @@
 		412773E31CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */; };
 		412773E51CA8C16C0055A9EA /* confirmationBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */; };
 		412A70A31CB7CB57005443A5 /* blankMatch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412A70A21CB7CB57005443A5 /* blankMatch@2x.png */; };
+		412A70A61CB90D17005443A5 /* EnablePushPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412A70A51CB90D17005443A5 /* EnablePushPopupView.m */; };
 		412B41731CB1C93900DF980D /* takePictureButtonLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */; };
 		412B41751CB3142900DF980D /* takePictureButtonSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */; };
 		412B41781CB3436600DF980D /* DatingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B41771CB3436600DF980D /* DatingProfile.m */; };
@@ -534,6 +535,8 @@
 		412773E21CA8C0B70055A9EA /* RedemptionConfirmationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedemptionConfirmationPopupView.m; sourceTree = "<group>"; };
 		412773E41CA8C16C0055A9EA /* confirmationBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "confirmationBackground@2x.png"; sourceTree = "<group>"; };
 		412A70A21CB7CB57005443A5 /* blankMatch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blankMatch@2x.png"; sourceTree = "<group>"; };
+		412A70A41CB90D07005443A5 /* EnablePushPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnablePushPopupView.h; sourceTree = "<group>"; };
+		412A70A51CB90D17005443A5 /* EnablePushPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnablePushPopupView.m; sourceTree = "<group>"; };
 		412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonLarge@2x.png"; sourceTree = "<group>"; };
 		412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "takePictureButtonSmall@2x.png"; sourceTree = "<group>"; };
 		412B41761CB3435B00DF980D /* DatingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatingProfile.h; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 				41030F651B52E6DA00252158 /* NeedHelpExplanationPopupView.h */,
 				4122D6E21C71A9F600A53821 /* HelpPopupView.m */,
 				4122D6E41C71AA0100A53821 /* HelpPopupView.h */,
+				412A70A41CB90D07005443A5 /* EnablePushPopupView.h */,
+				412A70A51CB90D17005443A5 /* EnablePushPopupView.m */,
 				41A8E9291BDF17A000337896 /* SetupNewsfeedPopupView.h */,
 				41A8E9271BDF178700337896 /* SetupNewsfeedPopupView.m */,
 				414F73FE1C476FC600CF49C4 /* FindFriendsPopupView.h */,
@@ -2277,6 +2282,7 @@
 				966C3F001929824F0082E2C6 /* NSURL+InterApp.m in Sources */,
 				41CB5C6B1C0D6EC40077485B /* SocialNotificationPopupView.m in Sources */,
 				411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */,
+				412A70A61CB90D17005443A5 /* EnablePushPopupView.m in Sources */,
 				963B7656189C3D87006C6845 /* UIImageView+AnimationCompletion.m in Sources */,
 				41338FDA19FE12080022211C /* DealTableViewEventCell.m in Sources */,
 				966AC11D17CADBFA0093BB69 /* BeaconManager.m in Sources */,
