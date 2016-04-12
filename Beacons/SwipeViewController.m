@@ -200,7 +200,8 @@
 -(void) loadSwipeView
 {
     [[APIClient sharedClient] getDatingData:self.sponsoredEvent.eventID success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([responseObject[@"dating_profile"] isEmpty]) {
+        NSDictionary *datingProfile = responseObject[@"dating_profile"];
+        if ([datingProfile count] == 0) {
             self.datingProfile = nil;
             [self loadAndShowSetupView];
         } else {
