@@ -382,6 +382,7 @@
 - (void)saveButtonTouched:(id)sender
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kStartLoadingForEvent object:self userInfo:nil];
+    NSLog(@"IMAGE URL: %@", self.profilePictureImageUrl);
     NSString *userGender = [self getValueFromIndex:self.userGender.selectedSegmentIndex];
     NSString *userPreference = [self getValueFromIndex:self.userPreference.selectedSegmentIndex];
     if (self.profilePictureImageUrl && userGender && userPreference) {
@@ -409,7 +410,7 @@
 - (void)cameraButtonTouched:(id)sender
 {
     UIActionSheet *actionSheet = [UIActionSheet bk_actionSheetWithTitle:@"Do you want to take a photo or add one from your library?"];
-    [actionSheet bk_addButtonWithTitle:@"Take a (Sexy) Selfie" handler:^{
+    [actionSheet bk_addButtonWithTitle:@"Take a Selfie" handler:^{
         [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
     }];
     [actionSheet bk_addButtonWithTitle:@"Add From Library" handler:^{
@@ -431,7 +432,8 @@
             } else {
                 finalImage = image;
             }
-            [[APIClient sharedClient] postImage:finalImage withImageName:@"user_picture" success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *imageName = [self randomStringWithLength:10];
+            [[APIClient sharedClient] postImage:finalImage withImageName:imageName success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 self.profilePictureImageUrl = [NSURL URLWithString:responseObject[@"image_url"]];
                 [self showPictureInView];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -439,6 +441,17 @@
             }];
         }
     }];
+}
+
+-(NSString *) randomStringWithLength: (int) len {
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random_uniform([letters length])]];
+    }
+    
+    return randomString;
 }
 
 -(void) showPictureInView
