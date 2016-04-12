@@ -265,7 +265,7 @@
     UITapGestureRecognizer *tapRecognizer = (UITapGestureRecognizer *)sender;
     if (tapRecognizer.view.tag < self.matches.count) {
         DatingProfile *datingProfile = self.matches[tapRecognizer.view.tag];
-        NSString *message = [NSString stringWithFormat:@"You've matched with %@. So you know be social and when you see them, make sure to say hi.", datingProfile.user.fullName];
+        NSString *message = [NSString stringWithFormat:@"You and %@ matched. So make sure to say hi when you see them.", datingProfile.user.fullName];
         [[[UIAlertView alloc] initWithTitle:@"Matched!" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
