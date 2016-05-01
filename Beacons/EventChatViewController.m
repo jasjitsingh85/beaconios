@@ -51,6 +51,7 @@
     [SendBird initAppId:APP_ID withDeviceId:[SendBird deviceUniqueID]];
     [SendBird loginWithUserId:[loggedInUser.userID stringValue] andUserName:loggedInUser.fullName andUserImageUrl:[loggedInUser.avatarURL absoluteString] andAccessToken:loggedInUser.phoneNumber];
     [SendBird joinChannel:self.sponsoredEvent.chatChannelUrl];
+//    [SendBird joinChannel:@"1fc48.24"];
     
     [SendBird setEventHandlerConnectBlock:^(SendBirdChannel *channel) {
         [self reloadMessagesFromServerCompletion:nil];

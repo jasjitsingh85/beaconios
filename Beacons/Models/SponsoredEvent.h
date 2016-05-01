@@ -22,6 +22,8 @@ typedef enum {
 
 @property (strong, nonatomic) NSNumber *eventID;
 @property (strong, nonatomic) NSNumber *itemPrice;
+@property (strong, nonatomic) NSString *itemName;
+@property (strong, nonatomic) NSNumber *presaleItemPrice;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *eventDescription;
 @property (strong, nonatomic) NSDate *startTime;
@@ -36,6 +38,7 @@ typedef enum {
 @property (strong, nonatomic) NSURL *deepLinkURL;
 @property (strong, nonatomic) EventStatus *eventStatus;
 @property (assign, nonatomic) EventStatusOption eventStatusOption;
+@property (assign, nonatomic) BOOL presaleActive;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 - (NSString *)getDateAsString;

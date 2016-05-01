@@ -24,6 +24,8 @@
     
     self.itemPrice = dictionary[@"item_price"];
     
+    self.presaleItemPrice = dictionary[@"presale_item_price"];
+        
     self.title = dictionary[@"title"];
     
     self.eventDescription = dictionary[@"description"];
@@ -32,6 +34,11 @@
     
     NSString *isSoldOut = dictionary[@"is_sold_out"];
     self.isSoldOut = [isSoldOut boolValue];
+    
+    NSString *presaleActive = dictionary[@"presale_active"];
+    self.presaleActive = [presaleActive boolValue];
+    
+    self.itemName = dictionary[@"item_name"];
     
     NSDictionary *event_status = dictionary[@"event_status"];
     if (event_status == (id)[NSNull null]) {

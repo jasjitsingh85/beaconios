@@ -24,6 +24,9 @@
     
     self.status = dictionary[@"status"];
     
+    NSString *isPresale = dictionary[@"is_presale"];
+    self.isPresale = [isPresale boolValue];
+    
 //    if ([dictionary objectForKey:@"event"]) {
 //        self.sponsoredEvent = [[SponsoredEvent alloc] initWithDictionary:dictionary[@"event"]];
 //    }

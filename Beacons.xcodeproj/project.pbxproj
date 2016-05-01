@@ -98,7 +98,6 @@
 		412B41731CB1C93900DF980D /* takePictureButtonLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41721CB1C93900DF980D /* takePictureButtonLarge@2x.png */; };
 		412B41751CB3142900DF980D /* takePictureButtonSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41741CB3142900DF980D /* takePictureButtonSmall@2x.png */; };
 		412B41781CB3436600DF980D /* DatingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B41771CB3436600DF980D /* DatingProfile.m */; };
-		412B417A1CB3732500DF980D /* settingsButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412B41791CB3732500DF980D /* settingsButton@2x.png */; };
 		412E8C8F1C3C626600E54486 /* RedemptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412E8C8E1C3C626600E54486 /* RedemptionViewController.m */; };
 		412E8C911C3CC00700E54486 /* cameraIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C901C3CC00700E54486 /* cameraIcon@2x.png */; };
 		412E8C931C3CC9F500E54486 /* addPhotoBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 412E8C921C3CC9F500E54486 /* addPhotoBox@2x.png */; };
@@ -220,7 +219,6 @@
 		41FA91CD1C9BD96D0092994E /* eventRedemptionBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91CC1C9BD96D0092994E /* eventRedemptionBackground@2x.png */; };
 		41FA91CF1C9BDA7A0092994E /* fingerprintIconWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91CE1C9BDA7A0092994E /* fingerprintIconWhite@2x.png */; };
 		41FA91D11CA058CA0092994E /* chatRoomDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D01CA058CA0092994E /* chatRoomDisabled@2x.png */; };
-		41FA91D31CA059550092994E /* matchDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D21CA059550092994E /* matchDisabled@2x.png */; };
 		41FA91DC1CA0A8430092994E /* matchSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D41CA0A8430092994E /* matchSelected@2x.png */; };
 		41FA91DD1CA0A8430092994E /* matchUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D51CA0A8430092994E /* matchUnselected@2x.png */; };
 		41FA91DE1CA0A8430092994E /* chatRoomUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D61CA0A8430092994E /* chatRoomUnselected@2x.png */; };
@@ -228,7 +226,6 @@
 		41FA91E01CA0A8430092994E /* ticketButtonUnselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D81CA0A8430092994E /* ticketButtonUnselected@2x.png */; };
 		41FA91E11CA0A8430092994E /* ticketButtonDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91D91CA0A8430092994E /* ticketButtonDisabled@2x.png */; };
 		41FA91E21CA0A8430092994E /* matchDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91DA1CA0A8430092994E /* matchDisabled@2x.png */; };
-		41FA91E31CA0A8430092994E /* chatRoomDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FA91DB1CA0A8430092994E /* chatRoomDisabled@2x.png */; };
 		41FD061A1B37021F00F7DD08 /* bluePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD06191B37021F00F7DD08 /* bluePin@2x.png */; };
 		41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061B1B3702DE00F7DD08 /* greenPin@2x.png */; };
 		41FD061E1B3703C900F7DD08 /* purplePin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41FD061D1B3703C900F7DD08 /* purplePin@2x.png */; };
@@ -1818,7 +1815,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Jeff Ames";
 				TargetAttributes = {
 					963399371758512100AF9D89 = {
@@ -2018,7 +2015,6 @@
 				41FFB0221C19EFDF00947EEC /* hotspotIconBig@2x.png in Resources */,
 				41E23A841B33A9B100676254 /* slider@2x.png in Resources */,
 				960631EB194625320011E132 /* lock_open@2x.png in Resources */,
-				41FA91E31CA0A8430092994E /* chatRoomDisabled@2x.png in Resources */,
 				41FD06391B39EF7500F7DD08 /* redeemedVoucher@2x.png in Resources */,
 				9647102C17DEE81900878C19 /* hotspotLogoNav@2x.png in Resources */,
 				41ED34D81AC9F91400A77A92 /* Default@2x.png in Resources */,
@@ -2047,7 +2043,6 @@
 				96CF5AE618E8E1BD000D77C2 /* plusCircleUnselected@2x.png in Resources */,
 				414F74081C54640200CF49C4 /* socialTutorialBackground@2x.png in Resources */,
 				96CBCCF61805107500D62462 /* chatBubblePinkRight@2x.png in Resources */,
-				41FA91D31CA059550092994E /* matchDisabled@2x.png in Resources */,
 				41C4B8381BF073B200D471D6 /* updatedBackgroundGradient@2x.png in Resources */,
 				41148CB31B7998D900F4CA17 /* trayIcon@2x.png in Resources */,
 				415353B31A962C9E009A4DD5 /* manyFriendButton@2x.png in Resources */,
@@ -2058,7 +2053,6 @@
 				41030F6D1B5C27F000252158 /* homeIcon@2x.png in Resources */,
 				41F97BBA1BBC6DC3003D1D86 /* pushPermissions@2x.png in Resources */,
 				418366AD1C2DA85C0037D55A /* friends@2x.png in Resources */,
-				412B417A1CB3732500DF980D /* settingsButton@2x.png in Resources */,
 				414F74061C545EF200CF49C4 /* topBorderWithDropShadow@2x.png in Resources */,
 				41FD061C1B3702DE00F7DD08 /* greenPin@2x.png in Resources */,
 				96CBCCF51805107500D62462 /* chatBubbleBlueRight@2x.png in Resources */,
