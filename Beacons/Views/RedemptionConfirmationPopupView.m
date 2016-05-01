@@ -119,7 +119,11 @@
 {
     [self updateTipAmount];
 //    self.tipAmount = [NSNumber numberWithInteger:self.tipControl.selectedSegmentIndex];
-    self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.itemPrice floatValue])];
+    if (self.sponsoredEvent.presaleActive) {
+           self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.presaleItemPrice floatValue])];
+    } else {
+        self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.itemPrice floatValue])];
+    }
     [self updateBodyText];
 }
 

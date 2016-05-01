@@ -920,7 +920,7 @@
             [self.sponsoredEventCell.contentView addSubview:venueIcon];
             
             UILabel *eventHeadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 10, self.view.width, 30)];
-            eventHeadingLabel.text = [self.sponsoredEvent.title uppercaseString];
+            eventHeadingLabel.text = [self.sponsoredEvent.itemName uppercaseString];
             eventHeadingLabel.font = [ThemeManager boldFontOfSize:12];
             eventHeadingLabel.textAlignment = NSTextAlignmentLeft;
             [self.sponsoredEventCell.contentView addSubview:eventHeadingLabel];
@@ -1173,7 +1173,12 @@
         [self.tutorialCell.contentView addSubview:docTextLabel];
         
         if (self.sponsoredEvent) {
-            NSString *message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.itemPrice];
+            NSString *message;
+            if (self.sponsoredEvent.presaleActive) {
+                message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.presaleItemPrice];
+            } else {
+                message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.itemPrice];
+            }
             docTextLabel.text = message;
         } else {
             if (self.venue.deal.isRewardItem) {

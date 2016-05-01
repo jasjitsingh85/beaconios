@@ -155,7 +155,7 @@
 {
     _sponsoredEvent = sponsoredEvent;
     
-    self.itemName.text = [self.sponsoredEvent.title uppercaseString];
+    self.itemName.text = [self.sponsoredEvent.itemName uppercaseString];
     self.venueName.text = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
     self.headerExplanationText.text = self.sponsoredEvent.eventDescription;
     
@@ -181,7 +181,7 @@
         color = activeColor;
         backgroundColor = [UIColor unnormalizedColorWithRed:229 green:243 blue:228 alpha:255];
         voucherTitleText = @"VOUCHER FOR:";
-        itemNameText = [NSString stringWithFormat:@"%@", [self.sponsoredEvent.title uppercaseString]];
+        itemNameText = [NSString stringWithFormat:@"%@", [self.sponsoredEvent.itemName uppercaseString]];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
         serverMessageText = @"SERVER ONLY: TAP TO REDEEM";
         accentColor = color;
@@ -258,7 +258,7 @@
         return;
     } else {
         NSString *message;
-        message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@. They are paying through the Hotspot app, so don’t charge them in person.", self.sponsoredEvent.itemPrice];
+        message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer's ticket will be redeemed. They have paid through the Hotspot app, so don’t charge them in person."];
         UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
         [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
             [self redeemEvent];
@@ -293,7 +293,7 @@
     MFMessageComposeViewController *smsModal = [[MFMessageComposeViewController alloc] init];
     smsModal.messageComposeDelegate = self;
     NSString *smsMessage;
-    smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - I need help!", self.sponsoredEvent.title, self.sponsoredEvent.venue.name];
+    smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - I need help!", self.sponsoredEvent.itemName, self.sponsoredEvent.venue.name];
     smsModal.recipients = @[@"4252026228"];
     smsModal.body = smsMessage;
     [self presentViewController:smsModal animated:YES completion:nil];

@@ -459,7 +459,7 @@
     _sponsoredEvent = sponsoredEvent;
     
 //    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.venue.name];
-    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:self.sponsoredEvent.title];
+    self.navigationItem.titleView = [[NavigationBarTitleLabel alloc] initWithTitle:[NSString stringWithFormat:@"%@ at %@", self.sponsoredEvent.itemName, self.sponsoredEvent.venue.name]];
     
     self.voucherViewController.sponsoredEvent = self.sponsoredEvent;
     self.eventChatViewController.sponsoredEvent = self.sponsoredEvent;
@@ -676,7 +676,7 @@
     }
     NSString *smsMessage;
     if (self.sponsoredEvent) {
-        smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come! Here's the link: %@", self.sponsoredEvent.title, self.sponsoredEvent.venue.name, self.sponsoredEvent.websiteURL];
+        smsMessage = [NSString stringWithFormat:@"I’m at the %@ event at %@ - you should come! Here's the link: %@", self.sponsoredEvent.itemName, self.sponsoredEvent.venue.name, self.sponsoredEvent.websiteURL];
     } else {
         smsMessage = [NSString stringWithFormat:@"I’m at %@ getting a $%@ %@ with Hotspot -- you should come!", self.deal.venue.name, self.deal.itemPrice, self.deal.itemName];
     }

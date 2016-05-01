@@ -81,24 +81,18 @@
         UILabel *eventTitleLineOne = [[UILabel alloc] init];
         eventTitleLineOne.x = 15;
         eventTitleLineOne.height = 26;
-        eventTitleLineOne.y = 75;
+        eventTitleLineOne.y = 70;
         eventTitleLineOne.font = [ThemeManager boldFontOfSize:14];
         eventTitleLineOne.backgroundColor = [[ThemeManager sharedTheme] redColor];
         eventTitleLineOne.textColor = [UIColor whiteColor];
         
-        NSLog(@"PRESALE ACTIVE: %d", event.presaleActive);
-        NSLog(@"PRESALE Price: %@", event.presaleItemPrice);
+        UIImageView *presaleDiscount = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"presaleDiscount"]];
+        presaleDiscount.y = 50;
+        presaleDiscount.hidden = YES;
+        [eventView addSubview:presaleDiscount];
+        
         if (event.presaleActive) {
-            NSString *marketPriceString = [NSString stringWithFormat:@"$%@", event.itemPrice];
-//            self.marketPriceLabel.text = marketPriceString;
-//            self.descriptionLabel.text = [NSString stringWithFormat:@"  %@ FOR", [venue.deal.itemName uppercaseString]];
-//            CGSize textSize = [self.descriptionLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager boldFontOfSize:13]}];
-//            
-//            CGFloat descriptionLabelWidth;
-//            //if (textSize.width < self.contentView.width * .6) {
-//            descriptionLabelWidth = textSize.width;
-//            self.marketPriceLabel.x = descriptionLabelWidth + 3;
-//            CGSize marketLabelTextSize = [self.marketPriceLabel.text sizeWithAttributes:@{NSFontAttributeName:[ThemeManager regularFontOfSize:12]}];
+            
             NSString *eventTitle = [NSString stringWithFormat:@"  %@ FOR $%@ $%@  ", [event.itemName uppercaseString], event.itemPrice, event.presaleItemPrice];
             eventTitleLineOne.text = eventTitle;
             NSRange range = [eventTitle rangeOfString:[NSString stringWithFormat:@"$%@", event.itemPrice]];
@@ -106,12 +100,16 @@
             [attributedText addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
             [attributedText addAttribute:NSFontAttributeName value:[ThemeManager lightFontOfSize:13] range:range];
             eventTitleLineOne.attributedText = attributedText;
+            eventTitleLineOne.width = [self widthOfString:eventTitleLineOne.text withFont:eventTitleLineOne.font];
+            
+            presaleDiscount.hidden = NO;
+            presaleDiscount.x = eventTitleLineOne.width + 20;
         } else {
             NSString *eventTitle = [NSString stringWithFormat:@"  %@ FOR $%@  ", [event.itemName uppercaseString], event.itemPrice];
             eventTitleLineOne.text = eventTitle;
+            eventTitleLineOne.width = [self widthOfString:eventTitleLineOne.text withFont:eventTitleLineOne.font];
         }
         
-        eventTitleLineOne.width = [self widthOfString:eventTitleLineOne.text withFont:eventTitleLineOne.font];
         //eventTitleLineOne.adjustsFontSizeToFitWidth = YES;
         //        [eventTitle setShadowWithColor:[UIColor blackColor] opacity:0.8 radius:2 offset:CGSizeMake(0, 1) shouldDrawPath:NO];
         eventTitleLineOne.textAlignment = NSTextAlignmentLeft;

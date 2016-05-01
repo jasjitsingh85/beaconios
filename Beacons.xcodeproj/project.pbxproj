@@ -82,6 +82,7 @@
 		411B4F851C273C5800CA7100 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 411B4F841C273C5800CA7100 /* FriendsTableViewController.m */; };
 		411B4F871C27A0B100CA7100 /* friendIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 411B4F861C27A0B100CA7100 /* friendIcon@2x.png */; };
 		411DF2D11AC61229005B2A75 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 411DF2D01AC61229005B2A75 /* AVFoundation.framework */; };
+		4121B6291CD5CF630050776C /* presaleDiscount@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4121B6281CD5CF630050776C /* presaleDiscount@2x.png */; };
 		4122D6DD1C6DE44500A53821 /* EventStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 4122D6DC1C6DE44500A53821 /* EventStatus.m */; };
 		4122D6DF1C6FB10B00A53821 /* eventDrinkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6DE1C6FB10B00A53821 /* eventDrinkIcon@2x.png */; };
 		4122D6E11C71A73D00A53821 /* helpIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4122D6E01C71A73D00A53821 /* helpIcon@2x.png */; };
@@ -513,6 +514,7 @@
 		411B4F841C273C5800CA7100 /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
 		411B4F861C27A0B100CA7100 /* friendIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendIcon@2x.png"; sourceTree = "<group>"; };
 		411DF2D01AC61229005B2A75 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4121B6281CD5CF630050776C /* presaleDiscount@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "presaleDiscount@2x.png"; sourceTree = "<group>"; };
 		4122D6DB1C6DE43600A53821 /* EventStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventStatus.h; sourceTree = "<group>"; };
 		4122D6DC1C6DE44500A53821 /* EventStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventStatus.m; sourceTree = "<group>"; };
 		4122D6DE1C6FB10B00A53821 /* eventDrinkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eventDrinkIcon@2x.png"; sourceTree = "<group>"; };
@@ -1534,6 +1536,7 @@
 				41C987101C042EB400DD595D /* happyHourIcon@2x.png */,
 				412A70A21CB7CB57005443A5 /* blankMatch@2x.png */,
 				4122D6E51C71AD9E00A53821 /* shortModalBackground@2x.png */,
+				4121B6281CD5CF630050776C /* presaleDiscount@2x.png */,
 				41FFB0261C1A007B00947EEC /* newFacebookWhite@2x.png */,
 				412E8C941C3ECA4900E54486 /* textFriendsIcon@2x.png */,
 				41FA91CC1C9BD96D0092994E /* eventRedemptionBackground@2x.png */,
@@ -2071,6 +2074,7 @@
 				968515EB18E8F0DA005EAE10 /* minusCircleUnselected@2x.png in Resources */,
 				96DB2DFB19538D82005E1F93 /* happyHoursIcon@2x.png in Resources */,
 				41FD06291B377C6700F7DD08 /* dollarSign@2x.png in Resources */,
+				4121B6291CD5CF630050776C /* presaleDiscount@2x.png in Resources */,
 				414F740E1C60968E00CF49C4 /* newPaymentIcon@2x.png in Resources */,
 				414F740C1C5B383E00CF49C4 /* iconForTab@2x.png in Resources */,
 				41FD063D1B3A1EF800F7DD08 /* redeemedIcon@2x.png in Resources */,
