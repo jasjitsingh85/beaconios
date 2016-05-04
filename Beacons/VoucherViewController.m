@@ -194,7 +194,7 @@
         color = inactiveColor;
         backgroundColor = [UIColor colorWithRed:243/255. green:243/255. blue:243/255. alpha:1];
         voucherTitleText = @"VOUCHER REDEEMED";
-        itemNameText = [NSString stringWithFormat:@"PAID $%@", self.sponsoredEvent.itemPrice];
+        itemNameText = [NSString stringWithFormat:@"PAID"];
         venueNameText = [NSString stringWithFormat:@"@ %@", [self.sponsoredEvent.venue.name uppercaseString]];
         serverMessageText = @"REDEEMED";
         accentColor = [[ThemeManager sharedTheme] redColor];

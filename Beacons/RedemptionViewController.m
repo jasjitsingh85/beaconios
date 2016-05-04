@@ -1073,7 +1073,7 @@
             return;
         } else {
             NSString *message;
-            message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@. They are paying through the Hotspot app, so don’t charge them in person.", self.sponsoredEvent.itemPrice];
+            message = [NSString stringWithFormat:@"Tap ‘CONFIRM’ and the customer will be charged $%@. They are paying through the Hotspot app, so don’t charge them in person.", self.sponsoredEvent.currentItemPrice];
             UIAlertView *alertView = [UIAlertView bk_alertViewWithTitle:@"Staff Only" message:message];
             [alertView bk_addButtonWithTitle:@"Confirm" handler:^{
                 [self redeemEvent];

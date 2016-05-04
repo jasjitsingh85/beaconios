@@ -27,7 +27,7 @@
 #import "VoucherTableViewCell.h"
 #import "APIClient.h"
 #import "PaymentsViewController.h"
-#import "AppInviteViewController.h"
+//#import "AppInviteViewController.h"
 #import "ContactManager.h"
 #import "FriendsViewController.h"
 
@@ -49,7 +49,7 @@
 @property (strong, nonatomic) UIButton *promoButton;
 @property (strong, nonatomic) UIButton *groupsButton;
 @property (strong, nonatomic) UIButton *paymentButton;
-@property (strong, nonatomic) UIButton *inviteFriendsButton;
+//@property (strong, nonatomic) UIButton *inviteFriendsButton;
 @property (strong, nonatomic) UIButton *homeButton;
 @property (strong, nonatomic) UIView *emptyBeaconView;
 @property (strong, nonatomic) NSDictionary *daySeparatedBeacons;
@@ -178,21 +178,21 @@
     self.shareContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.shareContainer];
     
-    self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.inviteFriendsButton setTitle:@"FREE DRINKS" forState:UIControlStateNormal];
-    [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
-    self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
-    self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
-    [self.inviteFriendsButton setFrame:CGRectMake(0, 0, self.shareContainer.size.width, 50)];
-    self.inviteFriendsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    self.inviteFriendsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
-    [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    self.inviteFriendsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.inviteFriendsButton setTitle:@"FREE DRINKS" forState:UIControlStateNormal];
+//    [self.inviteFriendsButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+//    self.inviteFriendsButton.titleLabel.font = [ThemeManager boldFontOfSize:18];
+//    self.inviteFriendsButton.titleLabel.textColor = [UIColor whiteColor];
+//    [self.inviteFriendsButton setFrame:CGRectMake(0, 0, self.shareContainer.size.width, 50)];
+//    self.inviteFriendsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    self.inviteFriendsButton.contentEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+//    [self.inviteFriendsButton addTarget:self action:@selector(inviteFriendsButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"freeDrinks"]];
-    shareIcon.frame = CGRectMake(16, 8, 30, 30);
-    shareIcon.contentMode=UIViewContentModeScaleAspectFill;
-    [self.inviteFriendsButton addSubview:shareIcon];
-    [self.shareContainer addSubview:self.inviteFriendsButton];
+//    UIImageView *shareIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"freeDrinks"]];
+//    shareIcon.frame = CGRectMake(16, 8, 30, 30);
+//    shareIcon.contentMode=UIViewContentModeScaleAspectFill;
+//    [self.inviteFriendsButton addSubview:shareIcon];
+//    [self.shareContainer addSubview:self.inviteFriendsButton];
     
     self.promoContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 100 + self.tableView.frame.size.height, self.menuViewContainer.frame.size.width, 50)];
     [self.menuViewContainer addSubview:self.promoContainer];
@@ -483,17 +483,17 @@
     [[AppDelegate sharedAppDelegate].centerNavigationController setSelectedViewController:friendsViewController animated:YES];
 }
 
-- (void)inviteFriendsButtonTouched:(id)sender
-{
-        AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
-        UINavigationController *navigationController =
-        [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
-        navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
-        navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
-        [self presentViewController:navigationController animated:YES completion:nil];
-    
-}
+//- (void)inviteFriendsButtonTouched:(id)sender
+//{
+//        AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
+//        UINavigationController *navigationController =
+//        [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
+//        navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+//        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+//        navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+//        [self presentViewController:navigationController animated:YES completion:nil];
+//    
+//}
 
 - (void)paymentButtonTouched:(id)sender
 {
@@ -649,9 +649,9 @@
     }
 
     if (itemCount == 0) {
-        self.shareContainer.frame = CGRectMake(0, 70 + (50 * itemCount), self.menuViewContainer.frame.size.width, 50);
+        self.shareContainer.frame = CGRectMake(0, 70 + (50 * itemCount), self.menuViewContainer.frame.size.width, 0);
     } else {
-        self.shareContainer.frame = CGRectMake(0, 120 + (50 * itemCount), self.menuViewContainer.frame.size.width, 50);
+        self.shareContainer.frame = CGRectMake(0, 120 + (50 * itemCount), self.menuViewContainer.frame.size.width, 0);
     }
     
     self.promoContainer.frame = CGRectMake(0, self.shareContainer.origin.y + self.shareContainer.size.height, self.menuViewContainer.frame.size.width, 50);

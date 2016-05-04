@@ -581,6 +581,7 @@
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This card was declined. Please try again with another payment option." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [self.paymentsViewController openPaymentModalWithEvent:self.sponsoredEvent];
     }];
 
@@ -599,7 +600,6 @@
             [self payWithCardOnFile];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
     }];
 }
@@ -609,8 +609,9 @@
     [[APIClient sharedClient] postPurchaseForEvent:^(AFHTTPRequestOperation *operation, id responseObject) {
         [self completeReservation];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Something went wrong. Please try again soon." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [LoadingIndictor hideLoadingIndicatorForView:self.view animated:YES];
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:@"This card was declined. Please try again with another payment option." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self.paymentsViewController openPaymentModalWithEvent:self.sponsoredEvent];
     }];
 }
 
@@ -1174,11 +1175,7 @@
         
         if (self.sponsoredEvent) {
             NSString *message;
-            if (self.sponsoredEvent.presaleActive) {
-                message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.presaleItemPrice];
-            } else {
-                message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.itemPrice];
-            }
+            message = [NSString stringWithFormat:@"We partner with venues to host events. Space is limited to ensure a great experience, so you must reserve a ticket through the app to get in. When you tap 'RESERVE' you'll be charged $%@.", self.sponsoredEvent.currentItemPrice];
             docTextLabel.text = message;
         } else {
             if (self.venue.deal.isRewardItem) {

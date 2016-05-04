@@ -105,11 +105,11 @@
 {
     NSInteger index = self.tipControl.selectedSegmentIndex;
     if (index == 1) {
-        self.tipAmount = [NSNumber numberWithFloat:(0.18 * [self.sponsoredEvent.itemPrice floatValue])];
+        self.tipAmount = [NSNumber numberWithFloat:(0.18 * [self.sponsoredEvent.currentItemPrice floatValue])];
     } else if (index == 2) {
-        self.tipAmount = [NSNumber numberWithFloat:(0.20 * [self.sponsoredEvent.itemPrice floatValue])];
+        self.tipAmount = [NSNumber numberWithFloat:(0.20 * [self.sponsoredEvent.currentItemPrice floatValue])];
     } else if (index == 3) {
-        self.tipAmount = [NSNumber numberWithFloat:(0.25 * [self.sponsoredEvent.itemPrice floatValue])];
+        self.tipAmount = [NSNumber numberWithFloat:(0.25 * [self.sponsoredEvent.currentItemPrice floatValue])];
     } else {
         self.tipAmount = [NSNumber numberWithFloat:0.0];
     }
@@ -119,11 +119,7 @@
 {
     [self updateTipAmount];
 //    self.tipAmount = [NSNumber numberWithInteger:self.tipControl.selectedSegmentIndex];
-    if (self.sponsoredEvent.presaleActive) {
-           self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.presaleItemPrice floatValue])];
-    } else {
-        self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.itemPrice floatValue])];
-    }
+    self.totalAmount = [NSNumber numberWithFloat:([self.tipAmount floatValue] + [self.sponsoredEvent.currentItemPrice floatValue])];
     [self updateBodyText];
 }
 

@@ -33,7 +33,7 @@
 #import "RewardManager.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FreeDrinksExplanationPopupView.h"
-#import "AppInviteViewController.h"
+//#import "AppInviteViewController.h"
 #import "FilterViewController.h"
 #import "FaqViewController.h"
 #import "FeedItem.h"
@@ -198,7 +198,7 @@ typedef enum dealTypeStates
 //    [self.filterButton addTarget:self action:@selector(filterButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
 //    [filterHeader addSubview:self.filterButton];
     
-    [self checkToLaunchInvitationModal];
+//    [self checkToLaunchInvitationModal];
     
     self.mapViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.size.width, self.view.size.height)];
     self.mapViewContainer.hidden = YES;
@@ -425,17 +425,17 @@ typedef enum dealTypeStates
     [modal show];
 }
 
-- (void)launchInviteFriends
-{
-
-        AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
-        UINavigationController *navigationController =
-        [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
-        navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
-        navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
-        [self presentViewController:navigationController animated:YES completion:nil];
-}
+//- (void)launchInviteFriends
+//{
+//
+//        AppInviteViewController *appInviteViewController = [[AppInviteViewController alloc] init];
+//        UINavigationController *navigationController =
+//        [[UINavigationController alloc] initWithRootViewController:appInviteViewController];
+//        navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+//        navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor], NSFontAttributeName : [ThemeManager lightFontOfSize:17]};
+//        navigationController.navigationBar.tintColor = [[ThemeManager sharedTheme] redColor];
+//        [self presentViewController:navigationController animated:YES completion:nil];
+//}
 
 - (void) getFavoriteFeed
 {
@@ -501,16 +501,16 @@ typedef enum dealTypeStates
     self.notificationIcon.hidden = YES;
 }
 
-- (void) checkToLaunchInvitationModal
-{
-    
-    NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
-    
-    if ((launchCount) % 3 == 0) {
-        [self launchInviteFriends];
-
-    }
-}
+//- (void) checkToLaunchInvitationModal
+//{
+//    
+//    NSInteger launchCount = [[NSUserDefaults standardUserDefaults] integerForKey:@"launchCount"];
+//    
+//    if ((launchCount) % 3 == 0) {
+//        [self launchInviteFriends];
+//
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {

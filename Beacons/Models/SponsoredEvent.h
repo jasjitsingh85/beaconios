@@ -24,6 +24,7 @@ typedef enum {
 @property (strong, nonatomic) NSNumber *itemPrice;
 @property (strong, nonatomic) NSString *itemName;
 @property (strong, nonatomic) NSNumber *presaleItemPrice;
+@property (strong, nonatomic) NSNumber *currentItemPrice;
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *eventDescription;
 @property (strong, nonatomic) NSDate *startTime;

@@ -89,8 +89,15 @@
         self.statusMessage = @"";
     }
     
+    if (self.presaleActive) {
+        self.currentItemPrice = self.presaleItemPrice;
+    } else {
+        self.currentItemPrice = self.itemPrice;
+    }
+    
     return self;
 }
+
 
 -(NSString *)getDateAsString
 {
